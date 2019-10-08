@@ -277,9 +277,10 @@ export default class AdminType extends Component {
                 </div>
                 <br/>
                 <div className="row">
-                    <div className="col-6 ag-theme-bootstrap" style={{ height: '180px', width: '400px' }}>
+                    <div className="col-6 ag-theme-bootstrap" style={{ width: '400px' }}>
                         <AgGridReact
                             ref="agGrid"
+                            domLayout="autoHeight"
                             rowSelection={this.state.rowSelection}
                             onRowSelected={this.onRowSelected.bind(this)}
                             columnDefs={this.state.columnDefs}

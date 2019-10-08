@@ -80181,11 +80181,11 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-6 ag-theme-bootstrap",
         style: {
-          height: '180px',
           width: '400px'
         }
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(ag_grid_react__WEBPACK_IMPORTED_MODULE_10__["AgGridReact"], {
         ref: "agGrid",
+        domLayout: "autoHeight",
         rowSelection: this.state.rowSelection,
         onRowSelected: this.onRowSelected.bind(this),
         columnDefs: this.state.columnDefs,
