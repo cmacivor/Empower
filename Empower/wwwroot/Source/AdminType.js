@@ -2,7 +2,6 @@
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-bootstrap.css'
-//import { RowNode, GridApi } from 'ag-grid-community';
 
 export default class AdminType extends Component {
 
@@ -15,7 +14,7 @@ export default class AdminType extends Component {
             isVisible: false,
             name: '',
             description: '',
-            active: '',
+            active: true,
             ID: '',
             CreatedBy: '',
             CreatedDate: '',
@@ -64,6 +63,8 @@ export default class AdminType extends Component {
 
     SaveNew = async() => {
 
+        console.log(this.state.active);
+
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
         let token = sessionStorage.getItem("token");
@@ -75,7 +76,7 @@ export default class AdminType extends Component {
         var postData = {
             Name: this.state.name,
             Description: this.state.description,
-            active: this.state.active,
+            Active: this.state.active,
             CreatedDate: new Date().toLocaleString(), //this.state.CreatedDate,
             CreatedBy:  currentUser, //this.state.CreatedBy,
             UpdatedDate: new Date().toLocaleString(),
@@ -118,6 +119,62 @@ export default class AdminType extends Component {
 
     }
 
+    UpdateSelectedRow = async () => {
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+        let token = sessionStorage.getItem("token");
+
+        let currentUser = sessionStorage.getItem("userName");
+
+        let fullAddress = apiAddress + '/api/AddressType/Update';
+
+        var postData = {
+            ID: this.state.ID,
+            Name: this.state.name,
+            Description: this.state.description,
+            Active: this.state.active, 
+            CreatedDate: this.state.CreatedDate,
+            CreatedBy: this.state.CreatedBy,
+            UpdatedDate: new Date().toLocaleString(),
+            UpdatedBy: currentUser
+        };
+
+        try {
+
+            const response = await fetch(fullAddress, {
+                method: 'put',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(postData)
+            });
+
+
+            //second call
+            const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {
+                //method: 'put',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+
+            let refreshedData = await refreshResponse.json();
+
+            this.setState({ rowData: refreshedData, name: '', description: '' });
+
+        } catch (error) {
+            //alert(error);
+            console.log(error);
+            alert('an error occurred while saving the data.');
+        }  
+    }
+
+
     SaveClickEventHandler = async () => {
         if (this.state && !this.state.ID) {
             //console.log('its null')
@@ -125,6 +182,9 @@ export default class AdminType extends Component {
                          
         } else {
             this.UpdateSelectedRow();
+            this.state.ID = '';
+            this.state.CreatedBy = '';
+            this.state.CreatedDate = '';
         }      
     }
 
@@ -180,7 +240,6 @@ export default class AdminType extends Component {
 
         let fullAddress = apiAddress + '/api/AddressType/GetAll';
 
-
         fetch(fullAddress, {
             mode: 'cors',
             headers: {
@@ -191,20 +250,21 @@ export default class AdminType extends Component {
     }
 
     setActive = event => {
-        console.log(event.target.value);
+        //console.log(event.target.value);
 
-        const {name, value } = event.target;
+        //const {name, value } = event.target;
 
-        this.setState({ 
-            [name]: value
-        });
+        if (event.target.value === "yes") {
+            this.setState({ 
+                active: true
+            });
+        }
 
-        //console.log(name);
-        console.log(value);
-
-        //console.log(this.state.active);
-
-
+        if (event.target.value == "no") {
+            this.setState({ 
+                active: false
+            });
+        }       
     }
 
 
@@ -232,6 +292,9 @@ export default class AdminType extends Component {
                     this.state.isVisible &&
                     <div className="col-6">
                            <form>
+                                <input type="hidden" id="txtID" name="ID" value={this.state.ID} />
+                                <input type="hidden" id="txtCreatedBy" name="CreatedBy" value={this.state.CreatedBy} />
+                                <input type="hidden" id="txtCreatedDate" name="CreatedDate" value={this.props.CreatedDate} />
                                 <div className="form-group">
                                     <input type="text" className="form-control" onChange={e => this.handleChange(e, "name") } value={this.state.name}  name="name" id="txtName" placeholder="Name"/>
                                 </div>
@@ -253,7 +316,7 @@ export default class AdminType extends Component {
                                     </div>
                                 </div>        
                             </form>
-                            <button type="button" onClick={this.SaveNew} disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>
+                            <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>
                             <button type="button" onClick={this.hideForm } className="btn btn-primary" value="Cancel">Cancel</button>       
                     </div>  
                     }

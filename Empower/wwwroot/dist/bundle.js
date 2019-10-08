@@ -79822,7 +79822,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- //import { RowNode, GridApi } from 'ag-grid-community';
+
 
 var AdminType =
 /*#__PURE__*/
@@ -79846,6 +79846,7 @@ function (_Component) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              console.log(_this.state.active);
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
               currentUser = sessionStorage.getItem("userName");
@@ -79853,7 +79854,7 @@ function (_Component) {
               postData = {
                 Name: _this.state.name,
                 Description: _this.state.description,
-                active: _this.state.active,
+                Active: _this.state.active,
                 CreatedDate: new Date().toLocaleString(),
                 //this.state.CreatedDate,
                 CreatedBy: currentUser,
@@ -79861,8 +79862,8 @@ function (_Component) {
                 UpdatedDate: new Date().toLocaleString(),
                 UpdatedBy: currentUser
               };
-              _context.prev = 5;
-              _context.next = 8;
+              _context.prev = 6;
+              _context.next = 9;
               return fetch(fullAddress, {
                 method: 'post',
                 mode: 'cors',
@@ -79873,9 +79874,89 @@ function (_Component) {
                 body: JSON.stringify(postData)
               });
 
-            case 8:
+            case 9:
               response = _context.sent;
-              _context.next = 11;
+              _context.next = 12;
+              return fetch(apiAddress + '/api/AddressType/GetAll', {
+                //method: 'put',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                }
+              });
+
+            case 12:
+              refreshResponse = _context.sent;
+              _context.next = 15;
+              return refreshResponse.json();
+
+            case 15:
+              refreshedData = _context.sent;
+
+              _this.setState({
+                rowData: refreshedData,
+                name: '',
+                description: ''
+              });
+
+              _context.next = 23;
+              break;
+
+            case 19:
+              _context.prev = 19;
+              _context.t0 = _context["catch"](6);
+              //alert(error);
+              console.log(_context.t0);
+              alert('an error occurred while saving the data.');
+
+            case 23:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[6, 19]]);
+    })));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
+    /*#__PURE__*/
+    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var apiAddress, token, currentUser, fullAddress, postData, response, refreshResponse, refreshedData;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              apiAddress = sessionStorage.getItem("baseApiAddress");
+              token = sessionStorage.getItem("token");
+              currentUser = sessionStorage.getItem("userName");
+              fullAddress = apiAddress + '/api/AddressType/Update';
+              postData = {
+                ID: _this.state.ID,
+                Name: _this.state.name,
+                Description: _this.state.description,
+                Active: _this.state.active,
+                CreatedDate: _this.state.CreatedDate,
+                CreatedBy: _this.state.CreatedBy,
+                UpdatedDate: new Date().toLocaleString(),
+                UpdatedBy: currentUser
+              };
+              _context2.prev = 5;
+              _context2.next = 8;
+              return fetch(fullAddress, {
+                method: 'put',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(postData)
+              });
+
+            case 8:
+              response = _context2.sent;
+              _context2.next = 11;
               return fetch(apiAddress + '/api/AddressType/GetAll', {
                 //method: 'put',
                 mode: 'cors',
@@ -79886,12 +79967,12 @@ function (_Component) {
               });
 
             case 11:
-              refreshResponse = _context.sent;
-              _context.next = 14;
+              refreshResponse = _context2.sent;
+              _context2.next = 14;
               return refreshResponse.json();
 
             case 14:
-              refreshedData = _context.sent;
+              refreshedData = _context2.sent;
 
               _this.setState({
                 rowData: refreshedData,
@@ -79899,46 +79980,50 @@ function (_Component) {
                 description: ''
               });
 
-              _context.next = 22;
+              _context2.next = 22;
               break;
 
             case 18:
-              _context.prev = 18;
-              _context.t0 = _context["catch"](5);
+              _context2.prev = 18;
+              _context2.t0 = _context2["catch"](5);
               //alert(error);
-              console.log(_context.t0);
+              console.log(_context2.t0);
               alert('an error occurred while saving the data.');
 
             case 22:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee, null, [[5, 18]]);
+      }, _callee2, null, [[5, 18]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               if (_this.state && !_this.state.ID) {
                 //console.log('its null')
                 _this.SaveNew();
               } else {
                 _this.UpdateSelectedRow();
+
+                _this.state.ID = '';
+                _this.state.CreatedBy = '';
+                _this.state.CreatedDate = '';
               }
 
             case 1:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleChange", function (e, field) {
@@ -79962,15 +80047,19 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
-      console.log(event.target.value);
-      var _event$target = event.target,
-          name = _event$target.name,
-          value = _event$target.value;
+      //console.log(event.target.value);
+      //const {name, value } = event.target;
+      if (event.target.value === "yes") {
+        _this.setState({
+          active: true
+        });
+      }
 
-      _this.setState(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()({}, name, value)); //console.log(name);
-
-
-      console.log(value); //console.log(this.state.active);
+      if (event.target.value == "no") {
+        _this.setState({
+          active: false
+        });
+      }
     });
 
     _this.state = {
@@ -79979,7 +80068,7 @@ function (_Component) {
       isVisible: false,
       name: '',
       description: '',
-      active: '',
+      active: true,
       ID: '',
       CreatedBy: '',
       CreatedDate: '',
@@ -80108,7 +80197,22 @@ function (_Component) {
         onGridReady: this.onGridReady
       })), this.state.isVisible && react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-6"
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
+        type: "hidden",
+        id: "txtID",
+        name: "ID",
+        value: this.state.ID
+      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
+        type: "hidden",
+        id: "txtCreatedBy",
+        name: "CreatedBy",
+        value: this.state.CreatedBy
+      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
+        type: "hidden",
+        id: "txtCreatedDate",
+        name: "CreatedDate",
+        value: this.props.CreatedDate
+      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
         type: "text",
@@ -80161,7 +80265,7 @@ function (_Component) {
         name: "active"
       }), ' ', "No")))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         type: "button",
-        onClick: this.SaveNew,
+        onClick: this.SaveClickEventHandler,
         disabled: this.state.saveButtonDisabled,
         className: "btn btn-primary mr-2"
       }, "Save"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
