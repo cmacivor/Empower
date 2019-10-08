@@ -79856,9 +79856,7 @@ function (_Component) {
                 Description: _this.state.description,
                 Active: _this.state.active,
                 CreatedDate: new Date().toLocaleString(),
-                //this.state.CreatedDate,
                 CreatedBy: currentUser,
-                //this.state.CreatedBy,
                 UpdatedDate: new Date().toLocaleString(),
                 UpdatedBy: currentUser
               };
@@ -79878,7 +79876,6 @@ function (_Component) {
               response = _context.sent;
               _context.next = 12;
               return fetch(apiAddress + '/api/AddressType/GetAll', {
-                //method: 'put',
                 mode: 'cors',
                 headers: {
                   'Content-Type': 'application/json',
@@ -79906,7 +79903,6 @@ function (_Component) {
             case 19:
               _context.prev = 19;
               _context.t0 = _context["catch"](6);
-              //alert(error);
               console.log(_context.t0);
               alert('an error occurred while saving the data.');
 
@@ -79958,7 +79954,6 @@ function (_Component) {
               response = _context2.sent;
               _context2.next = 11;
               return fetch(apiAddress + '/api/AddressType/GetAll', {
-                //method: 'put',
                 mode: 'cors',
                 headers: {
                   'Content-Type': 'application/json',
@@ -79986,7 +79981,6 @@ function (_Component) {
             case 18:
               _context2.prev = 18;
               _context2.t0 = _context2["catch"](5);
-              //alert(error);
               console.log(_context2.t0);
               alert('an error occurred while saving the data.');
 
@@ -80008,7 +80002,6 @@ function (_Component) {
           switch (_context3.prev = _context3.next) {
             case 0:
               if (_this.state && !_this.state.ID) {
-                //console.log('its null')
                 _this.SaveNew();
               } else {
                 _this.UpdateSelectedRow();
@@ -80047,8 +80040,6 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
-      //console.log(event.target.value);
-      //const {name, value } = event.target;
       if (event.target.value === "yes") {
         _this.setState({
           active: true
@@ -80124,7 +80115,12 @@ function (_Component) {
     key: "hideForm",
     value: function hideForm() {
       this.setState({
-        isVisible: false
+        isVisible: false,
+        name: '',
+        description: '',
+        ID: '',
+        CreatedBy: '',
+        CreatedDate: ''
       });
     }
   }, {

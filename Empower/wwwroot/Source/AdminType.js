@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { AgGridReact, AgGridColumn } from 'ag-grid-react';
+import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-bootstrap.css'
 
@@ -77,8 +77,8 @@ export default class AdminType extends Component {
             Name: this.state.name,
             Description: this.state.description,
             Active: this.state.active,
-            CreatedDate: new Date().toLocaleString(), //this.state.CreatedDate,
-            CreatedBy:  currentUser, //this.state.CreatedBy,
+            CreatedDate: new Date().toLocaleString(), 
+            CreatedBy:  currentUser, 
             UpdatedDate: new Date().toLocaleString(),
             UpdatedBy: currentUser
         };
@@ -98,8 +98,7 @@ export default class AdminType extends Component {
 
 
             //second call to get updated rows
-            const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {
-                //method: 'put',
+            const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
@@ -112,7 +111,6 @@ export default class AdminType extends Component {
             this.setState({ rowData: refreshedData, name: '', description: '' });
 
         } catch (error) {
-            //alert(error);
             console.log(error);
             alert('an error occurred while saving the data.');
         }
@@ -154,8 +152,7 @@ export default class AdminType extends Component {
 
 
             //second call
-            const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {
-                //method: 'put',
+            const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
@@ -168,7 +165,6 @@ export default class AdminType extends Component {
             this.setState({ rowData: refreshedData, name: '', description: '' });
 
         } catch (error) {
-            //alert(error);
             console.log(error);
             alert('an error occurred while saving the data.');
         }  
@@ -177,7 +173,6 @@ export default class AdminType extends Component {
 
     SaveClickEventHandler = async () => {
         if (this.state && !this.state.ID) {
-            //console.log('its null')
             this.SaveNew();
                          
         } else {
@@ -213,7 +208,14 @@ export default class AdminType extends Component {
     }
 
     hideForm() {
-        this.setState({ isVisible: false });
+        this.setState({ 
+            isVisible: false,
+            name: '',
+            description: '',
+            ID: '',
+            CreatedBy: '',
+            CreatedDate: '',
+         });
     }
 
     onRowSelected(event) {
@@ -250,9 +252,6 @@ export default class AdminType extends Component {
     }
 
     setActive = event => {
-        //console.log(event.target.value);
-
-        //const {name, value } = event.target;
 
         if (event.target.value === "yes") {
             this.setState({ 
