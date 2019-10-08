@@ -1,0 +1,30 @@
+﻿@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<input id="hdnToken" type="hidden" value="@Model.Token" />
+<input id="hdnUserName" type="hidden" value="@Model.UserName" />
+<input id="hdnBaseApiAddress" type="hidden" value="@Model.BaseApiAddress"/>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div id="root"></div>
+
+<script>
+    window.onload = function()
+    {
+        let token = document.getElementById("hdnToken").value;
+
+        let userName = document.getElementById("hdnUserName").value;
+
+        let baseApiAddress = document.getElementById("hdnBaseApiAddress").value;
+
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("userName", userName);
+        sessionStorage.setItem("baseApiAddress", baseApiAddress);
+    };
+</script>

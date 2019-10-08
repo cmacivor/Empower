@@ -1,0 +1,29 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="row centerLoginForm">
+    <div class="col-lg-4 formlogin">
+         <div style="@Model.ErrorMessageStyle" class="alert alert-danger">
+             Authentication failed. Please ensure you're using the correct user name and password
+         </div>
+        <form method="post" asp-controller="Login" asp-action="Authenticate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="text" required class="form-control" asp-for="UserName" placeholder="User Name"/>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="password" required class="form-control" asp-for="Password" placeholder="Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-info btn-block" value="Login" />
+            </div>
+        </form>
+    </div>
+</div>
+
