@@ -80088,13 +80088,13 @@ function (_Component) {
         headerName: "Description",
         field: "Description",
         sortable: true,
-        width: 200,
+        width: 290,
         floatCell: true,
         headerClass: 'agGridHeader'
       }, {
         headerName: "DeleteButton",
         field: "price",
-        width: 50,
+        width: 100,
         cellRenderer: "childMessageRenderer"
       }],
       rowSelection: "single",
@@ -80195,7 +80195,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-6 ag-theme-bootstrap",
         style: {
-          width: '100%'
+          width: '400px'
         }
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(ag_grid_react__WEBPACK_IMPORTED_MODULE_10__["AgGridReact"], {
         ref: "agGrid",

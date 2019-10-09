@@ -43,7 +43,7 @@ export default class AdminType extends Component {
                 headerName: "Description",
                 field: "Description",                   
                 sortable: true,
-                width: 200,
+                width: 290,
                 floatCell: true,
                 headerClass: 'agGridHeader'
                
@@ -51,7 +51,7 @@ export default class AdminType extends Component {
             {
                 headerName: "DeleteButton",
                 field: "price",
-                width: 50,
+                width: 100,
                 cellRenderer: "childMessageRenderer"
             }],
             rowSelection: "single",
@@ -288,7 +288,7 @@ export default class AdminType extends Component {
                 </div>
                 <br/>
                 <div className="row">
-                    <div className="col-6 ag-theme-bootstrap" style={{ width: '100%' }}>
+                    <div className="col-6 ag-theme-bootstrap" style={{ width: '400px' }}>
                         <AgGridReact
                             ref="agGrid"
                             domLayout="autoHeight"
