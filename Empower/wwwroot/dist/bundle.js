@@ -79848,7 +79848,6 @@ function (_Component) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log(_this.state.active);
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
               currentUser = sessionStorage.getItem("userName");
@@ -79862,8 +79861,8 @@ function (_Component) {
                 UpdatedDate: new Date().toLocaleString(),
                 UpdatedBy: currentUser
               };
-              _context.prev = 6;
-              _context.next = 9;
+              _context.prev = 5;
+              _context.next = 8;
               return fetch(fullAddress, {
                 method: 'post',
                 mode: 'cors',
@@ -79874,9 +79873,9 @@ function (_Component) {
                 body: JSON.stringify(postData)
               });
 
-            case 9:
+            case 8:
               response = _context.sent;
-              _context.next = 12;
+              _context.next = 11;
               return fetch(apiAddress + '/api/AddressType/GetAll', {
                 mode: 'cors',
                 headers: {
@@ -79885,12 +79884,12 @@ function (_Component) {
                 }
               });
 
-            case 12:
+            case 11:
               refreshResponse = _context.sent;
-              _context.next = 15;
+              _context.next = 14;
               return refreshResponse.json();
 
-            case 15:
+            case 14:
               refreshedData = _context.sent;
 
               _this.setState({
@@ -79899,57 +79898,46 @@ function (_Component) {
                 description: ''
               });
 
-              _context.next = 23;
+              _context.next = 22;
               break;
 
-            case 19:
-              _context.prev = 19;
-              _context.t0 = _context["catch"](6);
+            case 18:
+              _context.prev = 18;
+              _context.t0 = _context["catch"](5);
               console.log(_context.t0);
               alert('an error occurred while saving the data.');
 
-            case 23:
+            case 22:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[6, 19]]);
+      }, _callee, null, [[5, 18]]);
     })));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "DeleteSelectedRow",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var apiAddress, token, currentUser, fullAddress, postData, response, refreshResponse, refreshedData;
+      var selectedRowId, apiAddress, token, currentUser, fullAddress, response, refreshResponse, refreshedData;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
+              selectedRowId = _this.state.ID;
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
-              currentUser = sessionStorage.getItem("userName");
-              fullAddress = apiAddress + '/api/AddressType/Update';
-              postData = {
-                ID: _this.state.ID,
-                Name: _this.state.name,
-                Description: _this.state.description,
-                Active: _this.state.active,
-                CreatedDate: _this.state.CreatedDate,
-                CreatedBy: _this.state.CreatedBy,
-                UpdatedDate: new Date().toLocaleString(),
-                UpdatedBy: currentUser
-              };
+              currentUser = sessionStorage.getItem("userName"); //let fullAddress = apiAddress + '/api/AddressType/Delete?id=selectedRowId';
+
+              fullAddress = apiAddress + "/api/AddressType/Delete/".concat(selectedRowId);
               _context2.prev = 5;
               _context2.next = 8;
               return fetch(fullAddress, {
-                method: 'put',
                 mode: 'cors',
                 headers: {
-                  'Content-Type': 'application/json',
                   'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(postData)
+                }
               });
 
             case 8:
@@ -79984,7 +79972,7 @@ function (_Component) {
               _context2.prev = 18;
               _context2.t0 = _context2["catch"](5);
               console.log(_context2.t0);
-              alert('an error occurred while saving the data.');
+              alert('an error occurred while deleting the data.');
 
             case 22:
             case "end":
@@ -79994,14 +79982,92 @@ function (_Component) {
       }, _callee2, null, [[5, 18]]);
     })));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var apiAddress, token, currentUser, fullAddress, postData, response, refreshResponse, refreshedData;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
+            case 0:
+              apiAddress = sessionStorage.getItem("baseApiAddress");
+              token = sessionStorage.getItem("token");
+              currentUser = sessionStorage.getItem("userName");
+              fullAddress = apiAddress + '/api/AddressType/Update';
+              postData = {
+                ID: _this.state.ID,
+                Name: _this.state.name,
+                Description: _this.state.description,
+                Active: _this.state.active,
+                CreatedDate: _this.state.CreatedDate,
+                CreatedBy: _this.state.CreatedBy,
+                UpdatedDate: new Date().toLocaleString(),
+                UpdatedBy: currentUser
+              };
+              _context3.prev = 5;
+              _context3.next = 8;
+              return fetch(fullAddress, {
+                method: 'put',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(postData)
+              });
+
+            case 8:
+              response = _context3.sent;
+              _context3.next = 11;
+              return fetch(apiAddress + '/api/AddressType/GetAll', {
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                }
+              });
+
+            case 11:
+              refreshResponse = _context3.sent;
+              _context3.next = 14;
+              return refreshResponse.json();
+
+            case 14:
+              refreshedData = _context3.sent;
+
+              _this.setState({
+                rowData: refreshedData,
+                name: '',
+                description: ''
+              });
+
+              _context3.next = 22;
+              break;
+
+            case 18:
+              _context3.prev = 18;
+              _context3.t0 = _context3["catch"](5);
+              console.log(_context3.t0);
+              alert('an error occurred while saving the data.');
+
+            case 22:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[5, 18]]);
+    })));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
+    /*#__PURE__*/
+    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               if (_this.state && !_this.state.ID) {
                 _this.SaveNew();
@@ -80015,10 +80081,10 @@ function (_Component) {
 
             case 1:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleChange", function (e, field) {
@@ -80182,8 +80248,7 @@ function (_Component) {
         CreatedBy: selected.CreatedBy,
         CreatedDate: selected.CreatedDate,
         addButtonDisabled: true,
-        isDeleteConfirmButtonVisible: true //isSaveButtonVisible: false
-
+        isDeleteConfirmButtonVisible: true
       });
       this.showForm();
     }
@@ -80290,6 +80355,7 @@ function (_Component) {
         value: "no",
         name: "active"
       }), ' ', "No")))), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
+        onClick: this.DeleteSelectedRow,
         className: "btn btn-danger mr-2"
       }, "Confirm") : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         type: "button",

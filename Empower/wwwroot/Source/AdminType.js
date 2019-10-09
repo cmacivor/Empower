@@ -72,8 +72,6 @@ export default class AdminType extends Component {
 
     SaveNew = async() => {
 
-        console.log(this.state.active);
-
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
         let token = sessionStorage.getItem("token");
@@ -124,6 +122,50 @@ export default class AdminType extends Component {
             alert('an error occurred while saving the data.');
         }
 
+    }
+
+    DeleteSelectedRow = async() => {
+
+        let selectedRowId = this.state.ID;
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+        let token = sessionStorage.getItem("token");
+
+        let currentUser = sessionStorage.getItem("userName");
+
+        //let fullAddress = apiAddress + '/api/AddressType/Delete?id=selectedRowId';
+
+        let fullAddress = apiAddress + `/api/AddressType/Delete/${selectedRowId}`;
+        
+        try {
+               const response =  await fetch(fullAddress, {
+                    mode: 'cors',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+
+                
+                //second call
+                const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+
+                let refreshedData = await refreshResponse.json();
+
+                this.setState({ rowData: refreshedData, name: '', description: '' });
+
+        }
+        catch(error)
+        {
+            console.log(error);
+            alert('an error occurred while deleting the data.');
+        }
     }
 
     UpdateSelectedRow = async () => {
@@ -287,8 +329,7 @@ export default class AdminType extends Component {
             CreatedBy: selected.CreatedBy,
             CreatedDate: selected.CreatedDate,
             addButtonDisabled: true,
-            isDeleteConfirmButtonVisible: true,
-            //isSaveButtonVisible: false
+            isDeleteConfirmButtonVisible: true,           
         });
 
         this.showForm();
@@ -347,7 +388,7 @@ export default class AdminType extends Component {
                                     </div>
                                 </div>        
                             </form>
-                            {this.state.isDeleteConfirmButtonVisible ? <button className="btn btn-danger mr-2">Confirm</button> : 
+                            {this.state.isDeleteConfirmButtonVisible ? <button onClick={this.DeleteSelectedRow} className="btn btn-danger mr-2">Confirm</button> : 
                             <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>}
                             <button type="button" onClick={this.hideForm } className="btn btn-primary" value="Cancel">Cancel</button>       
                     </div>  
