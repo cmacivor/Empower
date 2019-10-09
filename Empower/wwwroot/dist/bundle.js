@@ -80058,6 +80058,8 @@ function (_Component) {
     _this.state = {
       saveButtonDisabled: true,
       addButtonDisabled: false,
+      isDeleteConfirmButtonVisible: false,
+      //isSaveButtonVisible: false,
       isVisible: false,
       name: '',
       description: '',
@@ -80129,7 +80131,8 @@ function (_Component) {
         description: '',
         ID: '',
         CreatedBy: '',
-        CreatedDate: ''
+        CreatedDate: '',
+        isDeleteConfirmButtonVisible: false
       });
     }
   }, {
@@ -80171,7 +80174,18 @@ function (_Component) {
   }, {
     key: "methodFromParent",
     value: function methodFromParent(cell) {
-      alert("Parent Component Method from " + cell + "!");
+      var selected = this.refs.agGrid.api.getSelectedRows()[0];
+      this.setState({
+        name: selected.Name,
+        description: selected.Description,
+        ID: selected.ID,
+        CreatedBy: selected.CreatedBy,
+        CreatedDate: selected.CreatedDate,
+        addButtonDisabled: true,
+        isDeleteConfirmButtonVisible: true //isSaveButtonVisible: false
+
+      });
+      this.showForm();
     }
   }, {
     key: "render",
@@ -80275,7 +80289,9 @@ function (_Component) {
         },
         value: "no",
         name: "active"
-      }), ' ', "No")))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
+      }), ' ', "No")))), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
+        className: "btn btn-danger mr-2"
+      }, "Confirm") : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         type: "button",
         onClick: this.SaveClickEventHandler,
         disabled: this.state.saveButtonDisabled,

@@ -13,6 +13,8 @@ export default class AdminType extends Component {
         this.state = {
             saveButtonDisabled: true,
             addButtonDisabled: false,
+            isDeleteConfirmButtonVisible: false,
+            //isSaveButtonVisible: false,
             isVisible: false,
             name: '',
             description: '',
@@ -222,6 +224,7 @@ export default class AdminType extends Component {
             ID: '',
             CreatedBy: '',
             CreatedDate: '',
+            isDeleteConfirmButtonVisible: false
          });
     }
 
@@ -274,7 +277,22 @@ export default class AdminType extends Component {
     }
 
     methodFromParent(cell) {
-        alert("Parent Component Method from " + cell + "!");
+
+        let selected = this.refs.agGrid.api.getSelectedRows()[0];
+
+        this.setState({
+            name: selected.Name,
+            description: selected.Description,
+            ID: selected.ID,
+            CreatedBy: selected.CreatedBy,
+            CreatedDate: selected.CreatedDate,
+            addButtonDisabled: true,
+            isDeleteConfirmButtonVisible: true,
+            //isSaveButtonVisible: false
+        });
+
+        this.showForm();
+
       }
 
 
@@ -329,7 +347,8 @@ export default class AdminType extends Component {
                                     </div>
                                 </div>        
                             </form>
-                            <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>
+                            {this.state.isDeleteConfirmButtonVisible ? <button className="btn btn-danger mr-2">Confirm</button> : 
+                            <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>}
                             <button type="button" onClick={this.hideForm } className="btn btn-primary" value="Cancel">Cancel</button>       
                     </div>  
                     }
