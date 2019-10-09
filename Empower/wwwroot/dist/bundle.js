@@ -79879,22 +79879,36 @@ function (_Component) {
               return _this.loadGrid();
 
             case 11:
-              _context.next = 17;
+              _this.resetState();
+
+              _context.next = 18;
               break;
 
-            case 13:
-              _context.prev = 13;
+            case 14:
+              _context.prev = 14;
               _context.t0 = _context["catch"](5);
               console.log(_context.t0);
               alert('an error occurred while saving the data.');
 
-            case 17:
+            case 18:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[5, 13]]);
+      }, _callee, null, [[5, 14]]);
     })));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
+      _this.setState({
+        isVisible: false,
+        name: '',
+        description: '',
+        ID: '',
+        CreatedBy: '',
+        CreatedDate: '',
+        isDeleteConfirmButtonVisible: false
+      });
+    });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "DeleteSelectedRow",
     /*#__PURE__*/
@@ -79909,8 +79923,7 @@ function (_Component) {
               selectedRowId = _this.state.ID;
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
-              currentUser = sessionStorage.getItem("userName"); //let fullAddress = apiAddress + '/api/AddressType/Delete?id=selectedRowId';
-
+              currentUser = sessionStorage.getItem("userName");
               fullAddress = apiAddress + "/api/AddressType/Delete/".concat(selectedRowId);
               _context2.prev = 5;
               _context2.next = 8;
@@ -79927,21 +79940,23 @@ function (_Component) {
               return _this.loadGrid();
 
             case 11:
-              _context2.next = 17;
+              _this.resetState();
+
+              _context2.next = 18;
               break;
 
-            case 13:
-              _context2.prev = 13;
+            case 14:
+              _context2.prev = 14;
               _context2.t0 = _context2["catch"](5);
               console.log(_context2.t0);
               alert('an error occurred while deleting the data.');
 
-            case 17:
+            case 18:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[5, 13]]);
+      }, _callee2, null, [[5, 14]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
@@ -79986,21 +80001,23 @@ function (_Component) {
               return _this.loadGrid();
 
             case 11:
-              _context3.next = 17;
+              _this.resetState();
+
+              _context3.next = 18;
               break;
 
-            case 13:
-              _context3.prev = 13;
+            case 14:
+              _context3.prev = 14;
               _context3.t0 = _context3["catch"](5);
               console.log(_context3.t0);
               alert('an error occurred while saving the data.');
 
-            case 17:
+            case 18:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[5, 13]]);
+      }, _callee3, null, [[5, 14]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
@@ -80103,7 +80120,6 @@ function (_Component) {
       saveButtonDisabled: true,
       addButtonDisabled: false,
       isDeleteConfirmButtonVisible: false,
-      //isSaveButtonVisible: false,
       isVisible: false,
       name: '',
       description: '',
@@ -80176,7 +80192,8 @@ function (_Component) {
         ID: '',
         CreatedBy: '',
         CreatedDate: '',
-        isDeleteConfirmButtonVisible: false
+        isDeleteConfirmButtonVisible: false,
+        active: true
       });
     }
   }, {

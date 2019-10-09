@@ -14,7 +14,6 @@ export default class AdminType extends Component {
             saveButtonDisabled: true,
             addButtonDisabled: false,
             isDeleteConfirmButtonVisible: false,
-            //isSaveButtonVisible: false,
             isVisible: false,
             name: '',
             description: '',
@@ -105,25 +104,27 @@ export default class AdminType extends Component {
                 body: JSON.stringify(postData)
             });
 
-
-            //second call to get updated rows
-            // const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
-            //     mode: 'cors',
-            //     headers: {
-            //         'Authorization': 'Bearer ' + token
-            //     }
-            // });
-
-            // let refreshedData = await refreshResponse.json();
-
-            // this.setState({ rowData: refreshedData, name: '', description: '' });
             await this.loadGrid();
+
+            this.resetState();
 
         } catch (error) {
             console.log(error);
             alert('an error occurred while saving the data.');
         }
 
+    }
+
+    resetState = () => {
+        this.setState({ 
+            isVisible: false,
+            name: '',
+            description: '',
+            ID: '',
+            CreatedBy: '',
+            CreatedDate: '',
+            isDeleteConfirmButtonVisible: false
+         });
     }
 
     DeleteSelectedRow = async() => {
@@ -136,8 +137,6 @@ export default class AdminType extends Component {
 
         let currentUser = sessionStorage.getItem("userName");
 
-        //let fullAddress = apiAddress + '/api/AddressType/Delete?id=selectedRowId';
-
         let fullAddress = apiAddress + `/api/AddressType/Delete/${selectedRowId}`;
         
         try {
@@ -148,20 +147,9 @@ export default class AdminType extends Component {
                     }
                 });
 
-                
-                // //second call
-                // const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
-                //     mode: 'cors',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //         'Authorization': 'Bearer ' + token
-                //     }
-                // });
-
-                // let refreshedData = await refreshResponse.json();
-
-                // this.setState({ rowData: refreshedData, name: '', description: '' });
                 await this.loadGrid();
+
+                this.resetState();
 
         }
         catch(error)
@@ -204,20 +192,9 @@ export default class AdminType extends Component {
                 body: JSON.stringify(postData)
             });
 
-
-            //second call
-            // const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
-            //     mode: 'cors',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': 'Bearer ' + token
-            //     }
-            // });
-
-            // let refreshedData = await refreshResponse.json();
-
-            // this.setState({ rowData: refreshedData, name: '', description: '' });
             await this.loadGrid();
+
+            this.resetState();
 
         } catch (error) {
             console.log(error);
@@ -270,7 +247,8 @@ export default class AdminType extends Component {
             ID: '',
             CreatedBy: '',
             CreatedDate: '',
-            isDeleteConfirmButtonVisible: false
+            isDeleteConfirmButtonVisible: false,
+            active: true
          });
     }
 
