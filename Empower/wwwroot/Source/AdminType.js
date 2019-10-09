@@ -1,7 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import ChildMessageRenderer from './ChildMessageRenderer'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-bootstrap.css'
+
 
 export default class AdminType extends Component {
 
@@ -49,9 +51,14 @@ export default class AdminType extends Component {
             {
                 headerName: "DeleteButton",
                 field: "price",
-                width: 50
+                width: 50,
+                cellRenderer: "childMessageRenderer"
             }],
-            rowSelection: "single"
+            rowSelection: "single",
+            context: { componentParent: this },
+            frameworkComponents: {
+                childMessageRenderer: ChildMessageRenderer
+            }
       
         }
         
@@ -266,6 +273,10 @@ export default class AdminType extends Component {
         }       
     }
 
+    methodFromParent(cell) {
+        alert("Parent Component Method from " + cell + "!");
+      }
+
 
     render() {
         return (
@@ -277,7 +288,7 @@ export default class AdminType extends Component {
                 </div>
                 <br/>
                 <div className="row">
-                    <div className="col-6 ag-theme-bootstrap" style={{ width: '400px' }}>
+                    <div className="col-6 ag-theme-bootstrap" style={{ width: '100%' }}>
                         <AgGridReact
                             ref="agGrid"
                             domLayout="autoHeight"
@@ -285,6 +296,8 @@ export default class AdminType extends Component {
                             onRowSelected={this.onRowSelected.bind(this)}
                             columnDefs={this.state.columnDefs}
                             rowData={this.state.rowData}
+                            context={this.state.context}
+                            frameworkComponents={this.state.frameworkComponents}
                             onGridReady={this.onGridReady}>
                         </AgGridReact>
                     </div>

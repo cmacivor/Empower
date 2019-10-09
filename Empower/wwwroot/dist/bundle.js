@@ -79806,10 +79806,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var ag_grid_react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ag-grid-react */ "./node_modules/ag-grid-react/main.js");
 /* harmony import */ var ag_grid_react__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(ag_grid_react__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ag-grid-community/dist/styles/ag-grid.css */ "./node_modules/ag-grid-community/dist/styles/ag-grid.css");
-/* harmony import */ var ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ag-grid-community/dist/styles/ag-theme-bootstrap.css */ "./node_modules/ag-grid-community/dist/styles/ag-theme-bootstrap.css");
-/* harmony import */ var ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _ChildMessageRenderer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ChildMessageRenderer */ "./wwwroot/source/ChildMessageRenderer.js");
+/* harmony import */ var ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ag-grid-community/dist/styles/ag-grid.css */ "./node_modules/ag-grid-community/dist/styles/ag-grid.css");
+/* harmony import */ var ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ag-grid-community/dist/styles/ag-theme-bootstrap.css */ "./node_modules/ag-grid-community/dist/styles/ag-theme-bootstrap.css");
+/* harmony import */ var ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_13__);
+
 
 
 
@@ -80092,9 +80094,16 @@ function (_Component) {
       }, {
         headerName: "DeleteButton",
         field: "price",
-        width: 50
+        width: 50,
+        cellRenderer: "childMessageRenderer"
       }],
-      rowSelection: "single"
+      rowSelection: "single",
+      context: {
+        componentParent: _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this)
+      },
+      frameworkComponents: {
+        childMessageRenderer: _ChildMessageRenderer__WEBPACK_IMPORTED_MODULE_11__["default"]
+      }
     };
 
     _this.loadGrid();
@@ -80160,6 +80169,11 @@ function (_Component) {
       });
     }
   }, {
+    key: "methodFromParent",
+    value: function methodFromParent(cell) {
+      alert("Parent Component Method from " + cell + "!");
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -80181,7 +80195,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-6 ag-theme-bootstrap",
         style: {
-          width: '400px'
+          width: '100%'
         }
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(ag_grid_react__WEBPACK_IMPORTED_MODULE_10__["AgGridReact"], {
         ref: "agGrid",
@@ -80190,6 +80204,8 @@ function (_Component) {
         onRowSelected: this.onRowSelected.bind(this),
         columnDefs: this.state.columnDefs,
         rowData: this.state.rowData,
+        context: this.state.context,
+        frameworkComponents: this.state.frameworkComponents,
         onGridReady: this.onGridReady
       })), this.state.isVisible && react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-6"
@@ -80277,6 +80293,80 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_9__["Component"]);
 
 
+
+/***/ }),
+
+/***/ "./wwwroot/source/ChildMessageRenderer.js":
+/*!************************************************!*\
+  !*** ./wwwroot/source/ChildMessageRenderer.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ChildMessageRenderer; });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
+
+
+
+
+
+
+
+
+var ChildMessageRenderer =
+/*#__PURE__*/
+function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(ChildMessageRenderer, _Component);
+
+  function ChildMessageRenderer(props) {
+    var _this;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, ChildMessageRenderer);
+
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ChildMessageRenderer).call(this, props));
+    _this.invokeParentMethod = _this.invokeParentMethod.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    return _this;
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(ChildMessageRenderer, [{
+    key: "invokeParentMethod",
+    value: function invokeParentMethod() {
+      this.props.context.componentParent.methodFromParent("Row: ".concat(this.props.node.rowIndex, ", Col: ").concat(this.props.colDef.headerName));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("button", {
+        style: {
+          height: 20,
+          lineHeight: 0.5
+        },
+        onClick: this.invokeParentMethod,
+        className: "btn btn-info"
+      }, "Delete"));
+    }
+  }]);
+
+  return ChildMessageRenderer;
+}(react__WEBPACK_IMPORTED_MODULE_6__["Component"]);
+
+
+;
 
 /***/ }),
 
