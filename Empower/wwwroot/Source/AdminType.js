@@ -70,6 +70,8 @@ export default class AdminType extends Component {
         this.hideForm = this.hideForm.bind(this);
     }
 
+    
+
     SaveNew = async() => {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -105,17 +107,17 @@ export default class AdminType extends Component {
 
 
             //second call to get updated rows
-            const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-            });
+            // const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
+            //     mode: 'cors',
+            //     headers: {
+            //         'Authorization': 'Bearer ' + token
+            //     }
+            // });
 
-            let refreshedData = await refreshResponse.json();
+            // let refreshedData = await refreshResponse.json();
 
-            this.setState({ rowData: refreshedData, name: '', description: '' });
+            // this.setState({ rowData: refreshedData, name: '', description: '' });
+            await this.loadGrid();
 
         } catch (error) {
             console.log(error);
@@ -147,18 +149,19 @@ export default class AdminType extends Component {
                 });
 
                 
-                //second call
-                const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + token
-                    }
-                });
+                // //second call
+                // const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
+                //     mode: 'cors',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //         'Authorization': 'Bearer ' + token
+                //     }
+                // });
 
-                let refreshedData = await refreshResponse.json();
+                // let refreshedData = await refreshResponse.json();
 
-                this.setState({ rowData: refreshedData, name: '', description: '' });
+                // this.setState({ rowData: refreshedData, name: '', description: '' });
+                await this.loadGrid();
 
         }
         catch(error)
@@ -203,17 +206,18 @@ export default class AdminType extends Component {
 
 
             //second call
-            const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                }
-            });
+            // const refreshResponse = await fetch(apiAddress + '/api/AddressType/GetAll', {                
+            //     mode: 'cors',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': 'Bearer ' + token
+            //     }
+            // });
 
-            let refreshedData = await refreshResponse.json();
+            // let refreshedData = await refreshResponse.json();
 
-            this.setState({ rowData: refreshedData, name: '', description: '' });
+            // this.setState({ rowData: refreshedData, name: '', description: '' });
+            await this.loadGrid();
 
         } catch (error) {
             console.log(error);
@@ -286,7 +290,7 @@ export default class AdminType extends Component {
         this.showForm();
     }
 
-    loadGrid() {
+    loadGrid = async() => {
         //get the route, use it to call the correct api
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 

@@ -79843,7 +79843,7 @@ function (_Component) {
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var apiAddress, token, currentUser, fullAddress, postData, response, refreshResponse, refreshedData;
+      var apiAddress, token, currentUser, fullAddress, postData, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -79876,43 +79876,24 @@ function (_Component) {
             case 8:
               response = _context.sent;
               _context.next = 11;
-              return fetch(apiAddress + '/api/AddressType/GetAll', {
-                mode: 'cors',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + token
-                }
-              });
+              return _this.loadGrid();
 
             case 11:
-              refreshResponse = _context.sent;
-              _context.next = 14;
-              return refreshResponse.json();
-
-            case 14:
-              refreshedData = _context.sent;
-
-              _this.setState({
-                rowData: refreshedData,
-                name: '',
-                description: ''
-              });
-
-              _context.next = 22;
+              _context.next = 17;
               break;
 
-            case 18:
-              _context.prev = 18;
+            case 13:
+              _context.prev = 13;
               _context.t0 = _context["catch"](5);
               console.log(_context.t0);
               alert('an error occurred while saving the data.');
 
-            case 22:
+            case 17:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[5, 18]]);
+      }, _callee, null, [[5, 13]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "DeleteSelectedRow",
@@ -79920,7 +79901,7 @@ function (_Component) {
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var selectedRowId, apiAddress, token, currentUser, fullAddress, response, refreshResponse, refreshedData;
+      var selectedRowId, apiAddress, token, currentUser, fullAddress, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -79943,43 +79924,24 @@ function (_Component) {
             case 8:
               response = _context2.sent;
               _context2.next = 11;
-              return fetch(apiAddress + '/api/AddressType/GetAll', {
-                mode: 'cors',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + token
-                }
-              });
+              return _this.loadGrid();
 
             case 11:
-              refreshResponse = _context2.sent;
-              _context2.next = 14;
-              return refreshResponse.json();
-
-            case 14:
-              refreshedData = _context2.sent;
-
-              _this.setState({
-                rowData: refreshedData,
-                name: '',
-                description: ''
-              });
-
-              _context2.next = 22;
+              _context2.next = 17;
               break;
 
-            case 18:
-              _context2.prev = 18;
+            case 13:
+              _context2.prev = 13;
               _context2.t0 = _context2["catch"](5);
               console.log(_context2.t0);
               alert('an error occurred while deleting the data.');
 
-            case 22:
+            case 17:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[5, 18]]);
+      }, _callee2, null, [[5, 13]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
@@ -79987,7 +79949,7 @@ function (_Component) {
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var apiAddress, token, currentUser, fullAddress, postData, response, refreshResponse, refreshedData;
+      var apiAddress, token, currentUser, fullAddress, postData, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
@@ -80021,43 +79983,24 @@ function (_Component) {
             case 8:
               response = _context3.sent;
               _context3.next = 11;
-              return fetch(apiAddress + '/api/AddressType/GetAll', {
-                mode: 'cors',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + token
-                }
-              });
+              return _this.loadGrid();
 
             case 11:
-              refreshResponse = _context3.sent;
-              _context3.next = 14;
-              return refreshResponse.json();
-
-            case 14:
-              refreshedData = _context3.sent;
-
-              _this.setState({
-                rowData: refreshedData,
-                name: '',
-                description: ''
-              });
-
-              _context3.next = 22;
+              _context3.next = 17;
               break;
 
-            case 18:
-              _context3.prev = 18;
+            case 13:
+              _context3.prev = 13;
               _context3.t0 = _context3["catch"](5);
               console.log(_context3.t0);
               alert('an error occurred while saving the data.');
 
-            case 22:
+            case 17:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[5, 18]]);
+      }, _callee3, null, [[5, 13]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
@@ -80106,6 +80049,41 @@ function (_Component) {
         });
       }
     });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "loadGrid",
+    /*#__PURE__*/
+    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      var apiAddress, token, fullAddress;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              //get the route, use it to call the correct api
+              apiAddress = sessionStorage.getItem("baseApiAddress");
+              token = sessionStorage.getItem("token");
+              fullAddress = apiAddress + '/api/AddressType/GetAll';
+              fetch(fullAddress, {
+                mode: 'cors',
+                headers: {
+                  'Authorization': 'Bearer ' + token
+                }
+              }).then(function (result) {
+                return result.json();
+              }).then(function (rowData) {
+                return _this.setState({
+                  rowData: rowData
+                });
+              });
+
+            case 4:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
       if (event.target.value === "yes") {
@@ -80216,28 +80194,6 @@ function (_Component) {
       this.showForm();
     }
   }, {
-    key: "loadGrid",
-    value: function loadGrid() {
-      var _this2 = this;
-
-      //get the route, use it to call the correct api
-      var apiAddress = sessionStorage.getItem("baseApiAddress");
-      var token = sessionStorage.getItem("token");
-      var fullAddress = apiAddress + '/api/AddressType/GetAll';
-      fetch(fullAddress, {
-        mode: 'cors',
-        headers: {
-          'Authorization': 'Bearer ' + token
-        }
-      }).then(function (result) {
-        return result.json();
-      }).then(function (rowData) {
-        return _this2.setState({
-          rowData: rowData
-        });
-      });
-    }
-  }, {
     key: "methodFromParent",
     value: function methodFromParent(cell) {
       var selected = this.refs.agGrid.api.getSelectedRows()[0];
@@ -80255,7 +80211,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "row"
@@ -80309,7 +80265,7 @@ function (_Component) {
         type: "text",
         className: "form-control",
         onChange: function onChange(e) {
-          return _this3.handleChange(e, "name");
+          return _this2.handleChange(e, "name");
         },
         value: this.state.name,
         name: "name",
@@ -80321,7 +80277,7 @@ function (_Component) {
         type: "textarea",
         name: "description",
         onChange: function onChange(e) {
-          return _this3.handleChange(e, "description");
+          return _this2.handleChange(e, "description");
         },
         className: "form-control",
         id: "txtDescription",
