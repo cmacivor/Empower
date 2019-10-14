@@ -18,6 +18,8 @@ export default class AdminType extends Component {
             name: '',
             description: '',
             active: true,
+            originallySelectedName: '',
+            originallySelectedDescription: '',
             ID: '',
             CreatedBy: '',
             CreatedDate: '',
@@ -215,6 +217,16 @@ export default class AdminType extends Component {
         }      
     }
 
+    ResetClickEventHandler = async() => {
+        
+        await this.loadGrid();
+
+        this.setState({
+            name: this.state.originallySelectedName,
+            description: this.state.originallySelectedDescription
+        });
+    }
+
     handleChange = (e, field) => {
 
         if (this.state.saveButtonDisabled === true) {
@@ -259,6 +271,8 @@ export default class AdminType extends Component {
         this.setState({
             name: selected.Name,
             description: selected.Description,
+            originallySelectedName: selected.Name,
+            originallySelectedDescription: selected.Description,
             ID: selected.ID,
             CreatedBy: selected.CreatedBy,
             CreatedDate: selected.CreatedDate,
@@ -353,7 +367,7 @@ export default class AdminType extends Component {
                                     <input type="text" className="form-control" onChange={e => this.handleChange(e, "name") } value={this.state.name}  name="name" id="txtName" placeholder="Name"/>
                                 </div>
                                 <div className="form-group">
-                                    <input type="textarea" name="description" onChange={e => this.handleChange(e, "description")} className="form-control" id="txtDescription" value={this.state.description} placeholder="Description" />
+                                    <textarea name="description" onChange={e => this.handleChange(e, "description")} className="form-control" id="txtDescription" value={this.state.description} placeholder="Description"></textarea>
                                 </div>
                                 <div onChange={this.setActive }>
                                     <div className="form-check-inline">
@@ -372,6 +386,7 @@ export default class AdminType extends Component {
                             </form>
                             {this.state.isDeleteConfirmButtonVisible ? <button onClick={this.DeleteSelectedRow} className="btn btn-danger mr-2">Confirm</button> : 
                             <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>}
+                            <button type="button" onClick={this.ResetClickEventHandler} className="btn btn-primary mr-2" value="Reset">Reset</button>
                             <button type="button" onClick={this.hideForm } className="btn btn-primary" value="Cancel">Cancel</button>       
                     </div>  
                     }
