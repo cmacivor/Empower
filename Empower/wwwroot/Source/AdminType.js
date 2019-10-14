@@ -18,8 +18,8 @@ export default class AdminType extends Component {
             name: '',
             description: '',
             active: true,
-            originallySelectedName: '',
-            originallySelectedDescription: '',
+            //originallySelectedName: '',
+            //originallySelectedDescription: '',
             ID: '',
             CreatedBy: '',
             CreatedDate: '',
@@ -98,12 +98,12 @@ export default class AdminType extends Component {
 
     SaveNew = async() => {
 
-        await this.Validate();
+        // await this.Validate();
 
-        if (this.state.ErrorMessage !== '') {
-            this.showForm();
-            return;
-        }
+        // if (this.state.ErrorMessage !== '') {
+        //     this.showForm();
+        //     return;
+        // }
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
@@ -193,12 +193,12 @@ export default class AdminType extends Component {
 
     UpdateSelectedRow = async () => {
 
-        await this.Validate();
+        // await this.Validate();
 
-        if (this.state.ErrorMessage !== '') {
-            this.showForm();
-            return;
-        }
+        // if (this.state.ErrorMessage !== '') {
+        //     this.showForm();
+        //     return;
+        // }
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
@@ -254,15 +254,15 @@ export default class AdminType extends Component {
         }      
     }
 
-    ResetClickEventHandler = async() => {
+    // ResetClickEventHandler = async() => {
         
-        await this.loadGrid();
+    //     await this.loadGrid();
 
-        this.setState({
-            name: this.state.originallySelectedName,
-            description: this.state.originallySelectedDescription
-        });
-    }
+    //     this.setState({
+    //         name: this.state.originallySelectedName,
+    //         description: this.state.originallySelectedDescription
+    //     });
+    // }
 
     handleChange = (e, field) => {
 
@@ -307,15 +307,15 @@ export default class AdminType extends Component {
          });
     }
 
-    onRowSelected(event) {
+    onRowSelected = (event) => {
 
-        let selected = this.refs.agGrid.api.getSelectedRows()[0];
+        let selected =  this.refs.agGrid.api.getSelectedRows()[0];
 
         this.setState({
             name: selected.Name,
             description: selected.Description,
-            originallySelectedName: selected.Name,
-            originallySelectedDescription: selected.Description,
+            //originallySelectedName: selected.Name,
+            //originallySelectedDescription: selected.Description,
             ID: selected.ID,
             CreatedBy: selected.CreatedBy,
             CreatedDate: selected.CreatedDate,
@@ -391,7 +391,7 @@ export default class AdminType extends Component {
                             ref="agGrid"
                             domLayout="autoHeight"
                             rowSelection={this.state.rowSelection}
-                            onRowSelected={this.onRowSelected.bind(this)}
+                            onRowSelected={this.onRowSelected}
                             columnDefs={this.state.columnDefs}
                             rowData={this.state.rowData}
                             context={this.state.context}
@@ -402,7 +402,7 @@ export default class AdminType extends Component {
                     { 
                     this.state.isVisible &&
                     <div className="col-6">
-                       {this.state.ErrorMessage !== '' ? <div className="alert alert-danger" role="alert">{this.state.ErrorMessage}</div> : <div></div> }
+                       {/* {this.state.ErrorMessage !== '' ? <div className="alert alert-danger" role="alert">{this.state.ErrorMessage}</div> : <div></div> } */}
                            <form>
                                 <input type="hidden" id="txtID" name="ID" value={this.state.ID} />
                                 <input type="hidden" id="txtCreatedBy" name="CreatedBy" value={this.state.CreatedBy} />
@@ -430,7 +430,7 @@ export default class AdminType extends Component {
                             </form>
                             {this.state.isDeleteConfirmButtonVisible ? <button onClick={this.DeleteSelectedRow} className="btn btn-danger mr-2">Confirm</button> : 
                             <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>}
-                            <button type="button" onClick={this.ResetClickEventHandler} className="btn btn-primary mr-2" value="Reset">Reset</button>
+                            {/* <button type="button" onClick={this.ResetClickEventHandler} className="btn btn-primary mr-2" value="Reset">Reset</button> */}
                             <button type="button" onClick={this.hideForm } className="btn btn-primary" value="Cancel">Cancel</button>       
                     </div>  
                     }
