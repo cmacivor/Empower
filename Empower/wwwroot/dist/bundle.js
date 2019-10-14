@@ -79838,16 +79838,65 @@ function (_Component) {
 
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(AdminType).call(this, props));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveNew",
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "Validate",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var apiAddress, token, currentUser, fullAddress, postData, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              if (_this.state.name === '' || _this.state.description === '') {
+                _this.setState({
+                  ErrorMessage: "Both fields must contain a value."
+                });
+              }
+
+              if (_this.state.name.length > 20) {
+                _this.setState({
+                  ErrorMessage: "the Name field must be 20 characters or less."
+                });
+              }
+
+              if (_this.state.description.length > 100) {
+                _this.setState({
+                  ErrorMessage: "the Description field must 100 characters or less."
+                });
+              }
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    })));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveNew",
+    /*#__PURE__*/
+    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var apiAddress, token, currentUser, fullAddress, postData, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return _this.Validate();
+
+            case 2:
+              if (!(_this.state.ErrorMessage !== '')) {
+                _context2.next = 5;
+                break;
+              }
+
+              _this.showForm();
+
+              return _context2.abrupt("return");
+
+            case 5:
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
               currentUser = sessionStorage.getItem("userName");
@@ -79861,8 +79910,8 @@ function (_Component) {
                 UpdatedDate: new Date().toLocaleString(),
                 UpdatedBy: currentUser
               };
-              _context.prev = 5;
-              _context.next = 8;
+              _context2.prev = 10;
+              _context2.next = 13;
               return fetch(fullAddress, {
                 method: 'post',
                 mode: 'cors',
@@ -79873,29 +79922,29 @@ function (_Component) {
                 body: JSON.stringify(postData)
               });
 
-            case 8:
-              response = _context.sent;
-              _context.next = 11;
+            case 13:
+              response = _context2.sent;
+              _context2.next = 16;
               return _this.loadGrid();
 
-            case 11:
+            case 16:
               _this.resetState();
 
-              _context.next = 18;
+              _context2.next = 23;
               break;
 
-            case 14:
-              _context.prev = 14;
-              _context.t0 = _context["catch"](5);
-              console.log(_context.t0);
+            case 19:
+              _context2.prev = 19;
+              _context2.t0 = _context2["catch"](10);
+              console.log(_context2.t0);
               alert('an error occurred while saving the data.');
 
-            case 18:
+            case 23:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee, null, [[5, 14]]);
+      }, _callee2, null, [[10, 19]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
@@ -79914,85 +79963,24 @@ function (_Component) {
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
       var selectedRowId, apiAddress, token, currentUser, fullAddress, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               selectedRowId = _this.state.ID;
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
               currentUser = sessionStorage.getItem("userName");
               fullAddress = apiAddress + "/api/AddressType/Delete/".concat(selectedRowId);
-              _context2.prev = 5;
-              _context2.next = 8;
+              _context3.prev = 5;
+              _context3.next = 8;
               return fetch(fullAddress, {
                 mode: 'cors',
                 headers: {
                   'Authorization': 'Bearer ' + token
                 }
-              });
-
-            case 8:
-              response = _context2.sent;
-              _context2.next = 11;
-              return _this.loadGrid();
-
-            case 11:
-              _this.resetState();
-
-              _context2.next = 18;
-              break;
-
-            case 14:
-              _context2.prev = 14;
-              _context2.t0 = _context2["catch"](5);
-              console.log(_context2.t0);
-              alert('an error occurred while deleting the data.');
-
-            case 18:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[5, 14]]);
-    })));
-
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var apiAddress, token, currentUser, fullAddress, postData, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              apiAddress = sessionStorage.getItem("baseApiAddress");
-              token = sessionStorage.getItem("token");
-              currentUser = sessionStorage.getItem("userName");
-              fullAddress = apiAddress + '/api/AddressType/Update';
-              postData = {
-                ID: _this.state.ID,
-                Name: _this.state.name,
-                Description: _this.state.description,
-                Active: _this.state.active,
-                CreatedDate: _this.state.CreatedDate,
-                CreatedBy: _this.state.CreatedBy,
-                UpdatedDate: new Date().toLocaleString(),
-                UpdatedBy: currentUser
-              };
-              _context3.prev = 5;
-              _context3.next = 8;
-              return fetch(fullAddress, {
-                method: 'put',
-                mode: 'cors',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(postData)
               });
 
             case 8:
@@ -80010,7 +79998,7 @@ function (_Component) {
               _context3.prev = 14;
               _context3.t0 = _context3["catch"](5);
               console.log(_context3.t0);
-              alert('an error occurred while saving the data.');
+              alert('an error occurred while deleting the data.');
 
             case 18:
             case "end":
@@ -80020,14 +80008,89 @@ function (_Component) {
       }, _callee3, null, [[5, 14]]);
     })));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var apiAddress, token, currentUser, fullAddress, postData, response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return _this.Validate();
+
+            case 2:
+              if (!(_this.state.ErrorMessage !== '')) {
+                _context4.next = 5;
+                break;
+              }
+
+              _this.showForm();
+
+              return _context4.abrupt("return");
+
+            case 5:
+              apiAddress = sessionStorage.getItem("baseApiAddress");
+              token = sessionStorage.getItem("token");
+              currentUser = sessionStorage.getItem("userName");
+              fullAddress = apiAddress + '/api/AddressType/Update';
+              postData = {
+                ID: _this.state.ID,
+                Name: _this.state.name,
+                Description: _this.state.description,
+                Active: _this.state.active,
+                CreatedDate: _this.state.CreatedDate,
+                CreatedBy: _this.state.CreatedBy,
+                UpdatedDate: new Date().toLocaleString(),
+                UpdatedBy: currentUser
+              };
+              _context4.prev = 10;
+              _context4.next = 13;
+              return fetch(fullAddress, {
+                method: 'put',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(postData)
+              });
+
+            case 13:
+              response = _context4.sent;
+              _context4.next = 16;
+              return _this.loadGrid();
+
+            case 16:
+              _this.resetState();
+
+              _context4.next = 23;
+              break;
+
+            case 19:
+              _context4.prev = 19;
+              _context4.t0 = _context4["catch"](10);
+              console.log(_context4.t0);
+              alert('an error occurred while saving the data.');
+
+            case 23:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, null, [[10, 19]]);
+    })));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
+    /*#__PURE__*/
+    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               if (_this.state && !_this.state.ID) {
                 _this.SaveNew();
@@ -80041,22 +80104,22 @@ function (_Component) {
 
             case 1:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "ResetClickEventHandler",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
-              _context5.next = 2;
+              _context6.next = 2;
               return _this.loadGrid();
 
             case 2:
@@ -80067,10 +80130,10 @@ function (_Component) {
 
             case 3:
             case "end":
-              return _context5.stop();
+              return _context6.stop();
           }
         }
-      }, _callee5);
+      }, _callee6);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleChange", function (e, field) {
@@ -80091,17 +80154,23 @@ function (_Component) {
           description: e.target.value
         });
       }
+
+      if (_this.state.name !== '' && _this.state.description !== '') {
+        _this.setState({
+          ErrorMessage: ''
+        });
+      }
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "loadGrid",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
       var apiAddress, token, fullAddress;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context7.prev = _context7.next) {
             case 0:
               //get the route, use it to call the correct api
               apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -80122,10 +80191,10 @@ function (_Component) {
 
             case 4:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6);
+      }, _callee7);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
@@ -80155,6 +80224,8 @@ function (_Component) {
       ID: '',
       CreatedBy: '',
       CreatedDate: '',
+      ErrorMessage: '',
+      ShowErrorMessage: false,
       columnDefs: [{
         headerName: "ID",
         field: "ID",
@@ -80291,7 +80362,10 @@ function (_Component) {
         onGridReady: this.onGridReady
       })), this.state.isVisible && react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-6"
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
+      }, this.state.ErrorMessage !== '' ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+        className: "alert alert-danger",
+        role: "alert"
+      }, this.state.ErrorMessage) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
         type: "hidden",
         id: "txtID",
         name: "ID",

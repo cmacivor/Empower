@@ -23,6 +23,8 @@ export default class AdminType extends Component {
             ID: '',
             CreatedBy: '',
             CreatedDate: '',
+            ErrorMessage: '',
+            ShowErrorMessage: false,
           columnDefs: [
             {
                 headerName: "ID", field: "ID", hide: true
@@ -71,9 +73,37 @@ export default class AdminType extends Component {
         this.hideForm = this.hideForm.bind(this);
     }
 
+
+    Validate = async() => {
+
+        if (this.state.name === '' || this.state.description === '') {
+            this.setState({
+                ErrorMessage: "Both fields must contain a value."
+            });
+        }       
+
+        if (this.state.name.length > 20) {
+            this.setState({
+                ErrorMessage: "the Name field must be 20 characters or less."
+            });
+        }
+        if (this.state.description.length > 100) {
+            this.setState({
+                ErrorMessage: "the Description field must 100 characters or less."
+            });
+        }
+    }
+
     
 
     SaveNew = async() => {
+
+        await this.Validate();
+
+        if (this.state.ErrorMessage !== '') {
+            this.showForm();
+            return;
+        }
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
@@ -163,6 +193,13 @@ export default class AdminType extends Component {
 
     UpdateSelectedRow = async () => {
 
+        await this.Validate();
+
+        if (this.state.ErrorMessage !== '') {
+            this.showForm();
+            return;
+        }
+
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
         let token = sessionStorage.getItem("token");
@@ -243,6 +280,12 @@ export default class AdminType extends Component {
         if (field === "description") {
             this.setState({
                 description: e.target.value
+            });
+        }
+
+        if (this.state.name !== '' && this.state.description !== '') {
+            this.setState({
+                ErrorMessage: ''
             });
         }
     }
@@ -359,6 +402,7 @@ export default class AdminType extends Component {
                     { 
                     this.state.isVisible &&
                     <div className="col-6">
+                       {this.state.ErrorMessage !== '' ? <div className="alert alert-danger" role="alert">{this.state.ErrorMessage}</div> : <div></div> }
                            <form>
                                 <input type="hidden" id="txtID" name="ID" value={this.state.ID} />
                                 <input type="hidden" id="txtCreatedBy" name="CreatedBy" value={this.state.CreatedBy} />
