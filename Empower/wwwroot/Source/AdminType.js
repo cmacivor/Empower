@@ -18,8 +18,8 @@ export default class AdminType extends Component {
             name: '',
             description: '',
             active: true,
-            //originallySelectedName: '',
-            //originallySelectedDescription: '',
+            originallySelectedName: '',
+            originallySelectedDescription: '',
             ID: '',
             CreatedBy: '',
             CreatedDate: '',
@@ -254,15 +254,15 @@ export default class AdminType extends Component {
         }      
     }
 
-    // ResetClickEventHandler = async() => {
+    ResetClickEventHandler = async() => {
         
-    //     await this.loadGrid();
+        await this.loadGrid();
 
-    //     this.setState({
-    //         name: this.state.originallySelectedName,
-    //         description: this.state.originallySelectedDescription
-    //     });
-    // }
+        this.setState({
+            name: this.state.originallySelectedName,
+            description: this.state.originallySelectedDescription
+        });
+    }
 
     handleChange = (e, field) => {
 
@@ -294,6 +294,18 @@ export default class AdminType extends Component {
         this.setState({ isVisible: true });
     }
 
+    AddButtonClickHandler = () => {
+        this.showForm();
+        this.setState({ 
+            name: '',
+            description: '',
+            ID: '',
+            CreatedBy: '',
+            CreatedDate: '',
+            isDeleteConfirmButtonVisible: false
+         });
+    }
+
     hideForm() {
         this.setState({ 
             isVisible: false,
@@ -314,8 +326,8 @@ export default class AdminType extends Component {
         this.setState({
             name: selected.Name,
             description: selected.Description,
-            //originallySelectedName: selected.Name,
-            //originallySelectedDescription: selected.Description,
+            originallySelectedName: selected.Name,
+            originallySelectedDescription: selected.Description,
             ID: selected.ID,
             CreatedBy: selected.CreatedBy,
             CreatedDate: selected.CreatedDate,
@@ -381,7 +393,7 @@ export default class AdminType extends Component {
             <div>
                 <div className="row">
                     <div className="col-6">
-                        <input id="btnAdd" style={{cursor: 'pointer' }} onClick={this.showForm} className="btn btn-primary" defaultValue="Add" />
+                        <input id="btnAdd" style={{cursor: 'pointer' }} onClick={this.AddButtonClickHandler} className="btn btn-primary" defaultValue="Add" />
                     </div>
                 </div>
                 <br/>
@@ -430,7 +442,7 @@ export default class AdminType extends Component {
                             </form>
                             {this.state.isDeleteConfirmButtonVisible ? <button onClick={this.DeleteSelectedRow} className="btn btn-danger mr-2">Confirm</button> : 
                             <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>}
-                            {/* <button type="button" onClick={this.ResetClickEventHandler} className="btn btn-primary mr-2" value="Reset">Reset</button> */}
+                            <button type="button" onClick={this.ResetClickEventHandler} className="btn btn-primary mr-2" value="Reset">Reset</button>
                             <button type="button" onClick={this.hideForm } className="btn btn-primary" value="Cancel">Cancel</button>       
                     </div>  
                     }

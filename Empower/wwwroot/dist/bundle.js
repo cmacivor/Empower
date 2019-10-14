@@ -80092,6 +80092,32 @@ function (_Component) {
       }, _callee5);
     })));
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "ResetClickEventHandler",
+    /*#__PURE__*/
+    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return _this.loadGrid();
+
+            case 2:
+              _this.setState({
+                name: _this.state.originallySelectedName,
+                description: _this.state.originallySelectedDescription
+              });
+
+            case 3:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    })));
+
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleChange", function (e, field) {
       if (_this.state.saveButtonDisabled === true) {
         _this.setState({
@@ -80118,14 +80144,27 @@ function (_Component) {
       }
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "AddButtonClickHandler", function () {
+      _this.showForm();
+
+      _this.setState({
+        name: '',
+        description: '',
+        ID: '',
+        CreatedBy: '',
+        CreatedDate: '',
+        isDeleteConfirmButtonVisible: false
+      });
+    });
+
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "onRowSelected", function (event) {
       var selected = _this.refs.agGrid.api.getSelectedRows()[0];
 
       _this.setState({
         name: selected.Name,
         description: selected.Description,
-        //originallySelectedName: selected.Name,
-        //originallySelectedDescription: selected.Description,
+        originallySelectedName: selected.Name,
+        originallySelectedDescription: selected.Description,
         ID: selected.ID,
         CreatedBy: selected.CreatedBy,
         CreatedDate: selected.CreatedDate,
@@ -80139,11 +80178,11 @@ function (_Component) {
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
       var apiAddress, token, fullAddress;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context7.prev = _context7.next) {
             case 0:
               //get the route, use it to call the correct api
               apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -80164,10 +80203,10 @@ function (_Component) {
 
             case 4:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
         }
-      }, _callee6);
+      }, _callee7);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
@@ -80192,8 +80231,8 @@ function (_Component) {
       name: '',
       description: '',
       active: true,
-      //originallySelectedName: '',
-      //originallySelectedDescription: '',
+      originallySelectedName: '',
+      originallySelectedDescription: '',
       ID: '',
       CreatedBy: '',
       CreatedDate: '',
@@ -80297,7 +80336,7 @@ function (_Component) {
         style: {
           cursor: 'pointer'
         },
-        onClick: this.showForm,
+        onClick: this.AddButtonClickHandler,
         className: "btn btn-primary",
         defaultValue: "Add"
       }))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
@@ -80393,6 +80432,11 @@ function (_Component) {
         disabled: this.state.saveButtonDisabled,
         className: "btn btn-primary mr-2"
       }, "Save"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
+        type: "button",
+        onClick: this.ResetClickEventHandler,
+        className: "btn btn-primary mr-2",
+        value: "Reset"
+      }, "Reset"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         type: "button",
         onClick: this.hideForm,
         className: "btn btn-primary",
