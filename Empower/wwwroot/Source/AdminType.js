@@ -136,6 +136,75 @@ export default class AdminType extends Component {
                 body: JSON.stringify(postData)
             });
 
+            if (response.status === 400) {
+
+                var responseData = await response.json();
+                
+                console.log(responseData);
+
+                //this works
+                console.log(responseData.Message);
+
+                //this works
+                console.log(responseData.ModelState);
+
+                //it's a Javascript object
+                console.dir(responseData.ModelState);
+
+                //the property we need is called "entity.name"
+                console.log(Object.keys(responseData.ModelState));
+
+                //Need to get errors this way. This produces an array.
+                console.log(responseData.ModelState["entity.Name"]);
+
+
+                //this doesn't work, throws TypeError cannot read property Name of undefined
+                //console.log(responseData.ModelState.entity.Name[0]);
+
+
+                //doesn't work. undefined.
+                //console.log(responseData.ModelState.entity);
+                
+
+                //this doesn't work - undefined
+                //console.log(responseData.ModelState.Name);
+
+                //this doesn't work. undefined
+                //console.log(responseData.ModelState[0]);
+
+
+                //this doesn't work. anything after ModelState doesn't work.
+                //console.log(responseData.ModelState.Name);
+
+                //console.log(responseData.ModelState.entity);
+                
+                //console.log(errors);
+                // responseData.ModelState.forEach(item => {
+                //     console.log(item);
+                // });
+
+            }
+
+            //let errors = await response.ModelState;
+
+            //console.log(errors);
+            //console.log(response.ModelState);
+
+            // .then(result =>
+            //     {
+            //         //console.log(result);
+            //         if (result.status === 400) {
+            //             //console.log(result.status);
+
+            //             //console.log(result.json());
+            //             console.log(result);
+
+            //             let modelErrors = result.json();
+            //             console.log(modelErrors);
+            //         }
+
+            //     });
+           
             await this.loadGrid();
 
             this.resetState();

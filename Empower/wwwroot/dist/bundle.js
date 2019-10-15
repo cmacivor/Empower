@@ -79878,7 +79878,7 @@ function (_Component) {
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var apiAddress, token, currentUser, fullAddress, postData, response;
+      var apiAddress, token, currentUser, fullAddress, postData, response, responseData;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -79915,27 +79915,64 @@ function (_Component) {
 
             case 8:
               response = _context2.sent;
-              _context2.next = 11;
+
+              if (!(response.status === 400)) {
+                _context2.next = 19;
+                break;
+              }
+
+              _context2.next = 12;
+              return response.json();
+
+            case 12:
+              responseData = _context2.sent;
+              console.log(responseData); //this works
+
+              console.log(responseData.Message); //this works
+
+              console.log(responseData.ModelState); //it's a Javascript object
+
+              console.dir(responseData.ModelState); //the property we need is called "entity.name"
+
+              console.log(Object.keys(responseData.ModelState));
+              console.log(responseData.ModelState["entity.Name"]); //this doesn't work, throws TypeError cannot read property Name of undefined
+              //console.log(responseData.ModelState.entity.Name[0]);
+              //doesn't work. undefined.
+              //console.log(responseData.ModelState.entity);
+              //this doesn't work - undefined
+              //console.log(responseData.ModelState.Name);
+              //this doesn't work. undefined
+              //console.log(responseData.ModelState[0]);
+              //this doesn't work. anything after ModelState doesn't work.
+              //console.log(responseData.ModelState.Name);
+              //console.log(responseData.ModelState.entity);
+              //console.log(errors);
+              // responseData.ModelState.forEach(item => {
+              //     console.log(item);
+              // });
+
+            case 19:
+              _context2.next = 21;
               return _this.loadGrid();
 
-            case 11:
+            case 21:
               _this.resetState();
 
-              _context2.next = 18;
+              _context2.next = 28;
               break;
 
-            case 14:
-              _context2.prev = 14;
+            case 24:
+              _context2.prev = 24;
               _context2.t0 = _context2["catch"](5);
               console.log(_context2.t0);
               alert('an error occurred while saving the data.');
 
-            case 18:
+            case 28:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[5, 14]]);
+      }, _callee2, null, [[5, 24]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
