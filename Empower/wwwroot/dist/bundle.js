@@ -79878,7 +79878,7 @@ function (_Component) {
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var apiAddress, token, currentUser, fullAddress, postData, response, responseData;
+      var apiAddress, token, currentUser, fullAddress, postData, response, responseData, errors;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -79917,7 +79917,7 @@ function (_Component) {
               response = _context2.sent;
 
               if (!(response.status === 400)) {
-                _context2.next = 19;
+                _context2.next = 15;
                 break;
               }
 
@@ -79926,53 +79926,54 @@ function (_Component) {
 
             case 12:
               responseData = _context2.sent;
-              console.log(responseData); //this works
+              errors = responseData.ModelState["entity.Name"];
+              errors.forEach(function (error) {
+                //console.log(item);
+                _this.state.ErrorMessage += error; //console.log(this.state.isVisible);
 
-              console.log(responseData.Message); //this works
+                _this.setState({
+                  //ErrorMessage
+                  isVisible: true
+                }); // this.setState((prevState, props) => {
+                //     //return {counter: prevState.counter + props.step};
+                //     return {isVisible: prevState.isVisible };
+                //   });
+                //this.state.isVisible = true;
+                // this.setState( () => {
+                //     //ErrorMessage : error,
+                //     //isVisible: true
+                //     //this.state.ErrorMessage: error
+                // });
+                //this.showForm();
 
-              console.log(responseData.ModelState); //it's a Javascript object
+              }); //this.showForm();
+              //Need to get errors this way. This produces an array.
+              //console.log(responseData.ModelState["entity.Name"]);
 
-              console.dir(responseData.ModelState); //the property we need is called "entity.name"
-
-              console.log(Object.keys(responseData.ModelState));
-              console.log(responseData.ModelState["entity.Name"]); //this doesn't work, throws TypeError cannot read property Name of undefined
-              //console.log(responseData.ModelState.entity.Name[0]);
-              //doesn't work. undefined.
-              //console.log(responseData.ModelState.entity);
-              //this doesn't work - undefined
-              //console.log(responseData.ModelState.Name);
-              //this doesn't work. undefined
-              //console.log(responseData.ModelState[0]);
-              //this doesn't work. anything after ModelState doesn't work.
-              //console.log(responseData.ModelState.Name);
-              //console.log(responseData.ModelState.entity);
-              //console.log(errors);
-              // responseData.ModelState.forEach(item => {
-              //     console.log(item);
-              // });
-
-            case 19:
-              _context2.next = 21;
+            case 15:
+              _context2.next = 17;
               return _this.loadGrid();
 
-            case 21:
-              _this.resetState();
+            case 17:
+              if (_this.state.ErrorMessage === '') {
+                _this.resetState();
+              }
 
-              _context2.next = 28;
+              _context2.next = 24;
               break;
 
-            case 24:
-              _context2.prev = 24;
+            case 20:
+              _context2.prev = 20;
               _context2.t0 = _context2["catch"](5);
               console.log(_context2.t0);
               alert('an error occurred while saving the data.');
 
-            case 28:
+            case 24:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[5, 24]]);
+      }, _callee2, null, [[5, 20]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
@@ -80181,6 +80182,12 @@ function (_Component) {
       }
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "showForm", function () {
+      _this.setState({
+        isVisible: true
+      });
+    });
+
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "AddButtonClickHandler", function () {
       _this.showForm();
 
@@ -80316,21 +80323,14 @@ function (_Component) {
       }
     };
 
-    _this.loadGrid();
+    _this.loadGrid(); //this.showForm = this.showForm.bind(this);
 
-    _this.showForm = _this.showForm.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
+
     _this.hideForm = _this.hideForm.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     return _this;
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(AdminType, [{
-    key: "showForm",
-    value: function showForm() {
-      this.setState({
-        isVisible: true
-      });
-    }
-  }, {
     key: "hideForm",
     value: function hideForm() {
       this.setState({
@@ -80393,9 +80393,12 @@ function (_Component) {
         context: this.state.context,
         frameworkComponents: this.state.frameworkComponents,
         onGridReady: this.onGridReady
-      })), this.state.isVisible && react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+      })), this.state.isVisible === true ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-6"
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
+      }, this.state.ErrorMessage !== '' ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+        className: "alert alert-danger",
+        role: "alert"
+      }, this.state.ErrorMessage) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
         type: "hidden",
         id: "txtID",
         name: "ID",
@@ -80478,7 +80481,7 @@ function (_Component) {
         onClick: this.hideForm,
         className: "btn btn-primary",
         value: "Cancel"
-      }, "Cancel"))));
+      }, "Cancel")) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null)));
     }
   }]);
 

@@ -69,7 +69,7 @@ export default class AdminType extends Component {
         
         this.loadGrid(); 
 
-        this.showForm = this.showForm.bind(this);
+        //this.showForm = this.showForm.bind(this);
         this.hideForm = this.hideForm.bind(this);
     }
 
@@ -138,82 +138,55 @@ export default class AdminType extends Component {
 
             if (response.status === 400) {
 
-                var responseData = await response.json();
+                let responseData = await response.json();
                 
-                console.log(responseData);
+                let errors = responseData.ModelState["entity.Name"];
 
-                //this works
-                console.log(responseData.Message);
+                errors.forEach(error => {
 
-                //this works
-                console.log(responseData.ModelState);
+                    //console.log(item);
+                    this.state.ErrorMessage += error;
+                    //console.log(this.state.isVisible);
 
-                //it's a Javascript object
-                console.dir(responseData.ModelState);
+                    this.setState({
+                        //ErrorMessage
+                        isVisible: true
+                    });
 
-                //the property we need is called "entity.name"
-                console.log(Object.keys(responseData.ModelState));
+                   
+
+                    // this.setState((prevState, props) => {
+                    //     //return {counter: prevState.counter + props.step};
+                    //     return {isVisible: prevState.isVisible };
+                    //   });
+                    //this.state.isVisible = true;
+                    // this.setState( () => {
+                    //     //ErrorMessage : error,
+                    //     //isVisible: true
+                    //     //this.state.ErrorMessage: error
+                    // });
+                    
+                   //this.showForm();
+
+                });
+
+
+                //this.showForm();
 
                 //Need to get errors this way. This produces an array.
-                console.log(responseData.ModelState["entity.Name"]);
-
-
-                //this doesn't work, throws TypeError cannot read property Name of undefined
-                //console.log(responseData.ModelState.entity.Name[0]);
-
-
-                //doesn't work. undefined.
-                //console.log(responseData.ModelState.entity);
-                
-
-                //this doesn't work - undefined
-                //console.log(responseData.ModelState.Name);
-
-                //this doesn't work. undefined
-                //console.log(responseData.ModelState[0]);
-
-
-                //this doesn't work. anything after ModelState doesn't work.
-                //console.log(responseData.ModelState.Name);
-
-                //console.log(responseData.ModelState.entity);
-                
-                //console.log(errors);
-                // responseData.ModelState.forEach(item => {
-                //     console.log(item);
-                // });
-
+                //console.log(responseData.ModelState["entity.Name"]);
             }
 
-            //let errors = await response.ModelState;
-
-            //console.log(errors);
-            //console.log(response.ModelState);
-
-            // .then(result =>
-            //     {
-            //         //console.log(result);
-            //         if (result.status === 400) {
-            //             //console.log(result.status);
-
-            //             //console.log(result.json());
-            //             console.log(result);
-
-            //             let modelErrors = result.json();
-            //             console.log(modelErrors);
-            //         }
-
-            //     });
-           
             await this.loadGrid();
 
-            this.resetState();
+            if (this.state.ErrorMessage === '') {
+                this.resetState();
+            }
 
         } catch (error) {
             console.log(error);
             alert('an error occurred while saving the data.');
         }
-
     }
 
     resetState = () => {
@@ -359,7 +332,7 @@ export default class AdminType extends Component {
         }
     }
 
-    showForm() {
+    showForm = () => {
         this.setState({ isVisible: true });
     }
 
@@ -481,39 +454,40 @@ export default class AdminType extends Component {
                         </AgGridReact>
                     </div>
                     { 
-                    this.state.isVisible &&
-                    <div className="col-6">
-                       {/* {this.state.ErrorMessage !== '' ? <div className="alert alert-danger" role="alert">{this.state.ErrorMessage}</div> : <div></div> } */}
-                           <form>
-                                <input type="hidden" id="txtID" name="ID" value={this.state.ID} />
-                                <input type="hidden" id="txtCreatedBy" name="CreatedBy" value={this.state.CreatedBy} />
-                                <input type="hidden" id="txtCreatedDate" name="CreatedDate" value={this.props.CreatedDate} />
-                                <div className="form-group">
-                                    <input type="text" className="form-control" onChange={e => this.handleChange(e, "name") } value={this.state.name}  name="name" id="txtName" placeholder="Name"/>
-                                </div>
-                                <div className="form-group">
-                                    <textarea name="description" onChange={e => this.handleChange(e, "description")} className="form-control" id="txtDescription" value={this.state.description} placeholder="Description"></textarea>
-                                </div>
-                                <div onChange={this.setActive }>
-                                    <div className="form-check-inline">
-                                        <div className="form-group">
-                                            <input id="rdYes" type="radio" style={{cursor: 'pointer' }} defaultChecked value="yes" name="active"/>{' '}
-                                            Yes
-                                        </div>                          
+                    this.state.isVisible === true ?
+                        <div className="col-6">
+                        {this.state.ErrorMessage !== '' ? <div className="alert alert-danger" role="alert">{this.state.ErrorMessage}</div> : <div></div> }
+                            <form>
+                                    <input type="hidden" id="txtID" name="ID" value={this.state.ID} />
+                                    <input type="hidden" id="txtCreatedBy" name="CreatedBy" value={this.state.CreatedBy} />
+                                    <input type="hidden" id="txtCreatedDate" name="CreatedDate" value={this.props.CreatedDate} />
+                                    <div className="form-group">
+                                        <input type="text" className="form-control" onChange={e => this.handleChange(e, "name") } value={this.state.name}  name="name" id="txtName" placeholder="Name"/>
                                     </div>
-                                    <div className="form-check-inline">
-                                        <div className="form-group">
-                                            <input id="rdNo" type="radio" style={{cursor: 'pointer' }} value="no" name="active"/>{' '}
-                                            No
-                                        </div>                          
+                                    <div className="form-group">
+                                        <textarea name="description" onChange={e => this.handleChange(e, "description")} className="form-control" id="txtDescription" value={this.state.description} placeholder="Description"></textarea>
                                     </div>
-                                </div>        
-                            </form>
-                            {this.state.isDeleteConfirmButtonVisible ? <button onClick={this.DeleteSelectedRow} className="btn btn-danger mr-2">Confirm</button> : 
-                            <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>}
-                            <button type="button" onClick={this.ResetClickEventHandler} className="btn btn-primary mr-2" value="Reset">Reset</button>
-                            <button type="button" onClick={this.hideForm } className="btn btn-primary" value="Cancel">Cancel</button>       
-                    </div>  
+                                    <div onChange={this.setActive }>
+                                        <div className="form-check-inline">
+                                            <div className="form-group">
+                                                <input id="rdYes" type="radio" style={{cursor: 'pointer' }} defaultChecked value="yes" name="active"/>{' '}
+                                                Yes
+                                            </div>                          
+                                        </div>
+                                        <div className="form-check-inline">
+                                            <div className="form-group">
+                                                <input id="rdNo" type="radio" style={{cursor: 'pointer' }} value="no" name="active"/>{' '}
+                                                No
+                                            </div>                          
+                                        </div>
+                                    </div>        
+                                </form>
+                                {this.state.isDeleteConfirmButtonVisible ? <button onClick={this.DeleteSelectedRow} className="btn btn-danger mr-2">Confirm</button> : 
+                                <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>}
+                                <button type="button" onClick={this.ResetClickEventHandler} className="btn btn-primary mr-2" value="Reset">Reset</button>
+                                <button type="button" onClick={this.hideForm } className="btn btn-primary" value="Cancel">Cancel</button>       
+                        </div> 
+                    : <div></div> 
                     }
                 </div>
             </div>
