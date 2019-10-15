@@ -69,7 +69,6 @@ export default class AdminType extends Component {
         
         this.loadGrid(); 
 
-        //this.showForm = this.showForm.bind(this);
         this.hideForm = this.hideForm.bind(this);
     }
 
@@ -98,12 +97,7 @@ export default class AdminType extends Component {
 
     SaveNew = async() => {
 
-        // await this.Validate();
 
-        // if (this.state.ErrorMessage !== '') {
-        //     this.showForm();
-        //     return;
-        // }
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
@@ -143,38 +137,12 @@ export default class AdminType extends Component {
                 let errors = responseData.ModelState["entity.Name"];
 
                 errors.forEach(error => {
-
-                    //console.log(item);
                     this.state.ErrorMessage += error;
-                    //console.log(this.state.isVisible);
-
-                    this.setState({
-                        //ErrorMessage
-                        isVisible: true
-                    });
-
-                   
-
-                    // this.setState((prevState, props) => {
-                    //     //return {counter: prevState.counter + props.step};
-                    //     return {isVisible: prevState.isVisible };
-                    //   });
-                    //this.state.isVisible = true;
-                    // this.setState( () => {
-                    //     //ErrorMessage : error,
-                    //     //isVisible: true
-                    //     //this.state.ErrorMessage: error
-                    // });
                     
-                   //this.showForm();
-
+                    this.setState({
+                        isVisible: true
+                    });                   
                 });
-
-
-                //this.showForm();
-
-                //Need to get errors this way. This produces an array.
-                //console.log(responseData.ModelState["entity.Name"]);
             }
 
             await this.loadGrid();
@@ -234,13 +202,6 @@ export default class AdminType extends Component {
     }
 
     UpdateSelectedRow = async () => {
-
-        // await this.Validate();
-
-        // if (this.state.ErrorMessage !== '') {
-        //     this.showForm();
-        //     return;
-        // }
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
