@@ -2,10 +2,13 @@
 
 module.exports = {
     mode: 'development',
-    entry: './wwwroot/source/app.js',
+    entry: {
+        admintypeapp: './wwwroot/source/app.js',
+        serviceprogramcategoryapp: './wwwroot/source/serviceprogramcategoryapp.js'
+    },
     output: {
         path: path.resolve(__dirname, 'wwwroot/dist'),
-        filename: 'AdminTypeBundle.js',
+        filename: '[name].bundle.js',
         publicPath: 'dist/'
     },
     devtool: 'source-map',
