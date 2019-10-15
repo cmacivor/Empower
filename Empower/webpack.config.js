@@ -5,7 +5,7 @@ module.exports = {
     entry: './wwwroot/source/app.js',
     output: {
         path: path.resolve(__dirname, 'wwwroot/dist'),
-        filename: 'bundle.js',
+        filename: 'AdminTypeBundle.js',
         publicPath: 'dist/'
     },
     devtool: 'source-map',

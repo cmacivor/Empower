@@ -79883,11 +79883,6 @@ function (_Component) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              // await this.Validate();
-              // if (this.state.ErrorMessage !== '') {
-              //     this.showForm();
-              //     return;
-              // }
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
               currentUser = sessionStorage.getItem("userName");
@@ -79928,27 +79923,12 @@ function (_Component) {
               responseData = _context2.sent;
               errors = responseData.ModelState["entity.Name"];
               errors.forEach(function (error) {
-                //console.log(item);
-                _this.state.ErrorMessage += error; //console.log(this.state.isVisible);
+                _this.state.ErrorMessage += error;
 
                 _this.setState({
-                  //ErrorMessage
                   isVisible: true
-                }); // this.setState((prevState, props) => {
-                //     //return {counter: prevState.counter + props.step};
-                //     return {isVisible: prevState.isVisible };
-                //   });
-                //this.state.isVisible = true;
-                // this.setState( () => {
-                //     //ErrorMessage : error,
-                //     //isVisible: true
-                //     //this.state.ErrorMessage: error
-                // });
-                //this.showForm();
-
-              }); //this.showForm();
-              //Need to get errors this way. This produces an array.
-              //console.log(responseData.ModelState["entity.Name"]);
+                });
+              });
 
             case 15:
               _context2.next = 17;
@@ -80047,11 +80027,6 @@ function (_Component) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              // await this.Validate();
-              // if (this.state.ErrorMessage !== '') {
-              //     this.showForm();
-              //     return;
-              // }
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
               currentUser = sessionStorage.getItem("userName");
@@ -80323,8 +80298,7 @@ function (_Component) {
       }
     };
 
-    _this.loadGrid(); //this.showForm = this.showForm.bind(this);
-
+    _this.loadGrid();
 
     _this.hideForm = _this.hideForm.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     return _this;
@@ -80668,4 +80642,4 @@ function (_React$Component) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=AdminTypeBundle.js.map
