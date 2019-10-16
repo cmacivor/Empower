@@ -73,8 +73,7 @@ export default class AdminType extends Component {
         this.loadGrid(); 
 
         this.hideForm = this.hideForm.bind(this);
-
-        console.log(getCurrentUrl());
+       
     }    
 
     SaveNew = async() => {
@@ -85,7 +84,10 @@ export default class AdminType extends Component {
 
         let currentUser = sessionStorage.getItem("userName");
 
-        let fullAddress = apiAddress + '/api/AddressType/Create';
+        let adminType = getCurrentUrl();
+
+        //let fullAddress = apiAddress + '/api/AddressType/Create';
+        let fullAddress = `${apiAddress}/api/${adminType}/Create`;
 
         var postData = {
             Name: this.state.name,
@@ -160,7 +162,11 @@ export default class AdminType extends Component {
 
         let currentUser = sessionStorage.getItem("userName");
 
-        let fullAddress = apiAddress + `/api/AddressType/Delete/${selectedRowId}`;
+        //let fullAddress = apiAddress + `/api/AddressType/Delete/${selectedRowId}`;
+
+        let adminType = getCurrentUrl();
+
+        let fullAddress = `${apiAddress}/api/${adminType}/Delete/${selectedRowId}`;
         
         try {
                const response =  await fetch(fullAddress, {
@@ -190,7 +196,10 @@ export default class AdminType extends Component {
 
         let currentUser = sessionStorage.getItem("userName");
 
-        let fullAddress = apiAddress + '/api/AddressType/Update';
+        let adminType = getCurrentUrl();
+
+        //let fullAddress = apiAddress + '/api/AddressType/Update';
+        let fullAddress = `${apiAddress}/api/${adminType}/Update`;
 
         var postData = {
             ID: this.state.ID,
@@ -327,7 +336,11 @@ export default class AdminType extends Component {
 
         let token = sessionStorage.getItem("token");
 
-        let fullAddress = apiAddress + '/api/AddressType/GetAll';
+        //let fullAddress = apiAddress + '/api/AddressType/GetAll';
+
+        let adminType = getCurrentUrl();
+
+        let fullAddress = `${apiAddress}/api/${adminType}/GetAll`;
 
         fetch(fullAddress, {
             mode: 'cors',
