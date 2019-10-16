@@ -79811,6 +79811,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ag-grid-community/dist/styles/ag-theme-bootstrap.css */ "./node_modules/ag-grid-community/dist/styles/ag-theme-bootstrap.css");
 /* harmony import */ var ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
 
 
 
@@ -79825,6 +79826,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // import getcurrentUrl from './commonAdmin';
+
+__webpack_require__(/*! .//commonAdmin */ "./wwwroot/source/commonAdmin.js");
 
 var AdminType =
 /*#__PURE__*/
@@ -79838,50 +79842,15 @@ function (_Component) {
 
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(AdminType).call(this, props));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "Validate",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (_this.state.name === '' || _this.state.description === '') {
-                _this.setState({
-                  ErrorMessage: "Both fields must contain a value."
-                });
-              }
-
-              if (_this.state.name.length > 20) {
-                _this.setState({
-                  ErrorMessage: "the Name field must be 20 characters or less."
-                });
-              }
-
-              if (_this.state.description.length > 100) {
-                _this.setState({
-                  ErrorMessage: "the Description field must 100 characters or less."
-                });
-              }
-
-            case 3:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    })));
-
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveNew",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var apiAddress, token, currentUser, fullAddress, postData, response, responseData, errors;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context.prev = _context.next) {
             case 0:
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
@@ -79896,8 +79865,8 @@ function (_Component) {
                 UpdatedDate: new Date().toLocaleString(),
                 UpdatedBy: currentUser
               };
-              _context2.prev = 5;
-              _context2.next = 8;
+              _context.prev = 5;
+              _context.next = 8;
               return fetch(fullAddress, {
                 method: 'post',
                 mode: 'cors',
@@ -79909,18 +79878,18 @@ function (_Component) {
               });
 
             case 8:
-              response = _context2.sent;
+              response = _context.sent;
 
               if (!(response.status === 400)) {
-                _context2.next = 15;
+                _context.next = 15;
                 break;
               }
 
-              _context2.next = 12;
+              _context.next = 12;
               return response.json();
 
             case 12:
-              responseData = _context2.sent;
+              responseData = _context.sent;
               errors = responseData.ModelState["entity.Name"];
               errors.forEach(function (error) {
                 _this.state.ErrorMessage += error;
@@ -79931,7 +79900,7 @@ function (_Component) {
               });
 
             case 15:
-              _context2.next = 17;
+              _context.next = 17;
               return _this.loadGrid();
 
             case 17:
@@ -79939,21 +79908,21 @@ function (_Component) {
                 _this.resetState();
               }
 
-              _context2.next = 24;
+              _context.next = 24;
               break;
 
             case 20:
-              _context2.prev = 20;
-              _context2.t0 = _context2["catch"](5);
-              console.log(_context2.t0);
+              _context.prev = 20;
+              _context.t0 = _context["catch"](5);
+              console.log(_context.t0);
               alert('an error occurred while saving the data.');
 
             case 24:
             case "end":
-              return _context2.stop();
+              return _context.stop();
           }
         }
-      }, _callee2, null, [[5, 20]]);
+      }, _callee, null, [[5, 20]]);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
@@ -79973,24 +79942,85 @@ function (_Component) {
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
       var selectedRowId, apiAddress, token, currentUser, fullAddress, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               selectedRowId = _this.state.ID;
               apiAddress = sessionStorage.getItem("baseApiAddress");
               token = sessionStorage.getItem("token");
               currentUser = sessionStorage.getItem("userName");
               fullAddress = apiAddress + "/api/AddressType/Delete/".concat(selectedRowId);
-              _context3.prev = 5;
-              _context3.next = 8;
+              _context2.prev = 5;
+              _context2.next = 8;
               return fetch(fullAddress, {
                 mode: 'cors',
                 headers: {
                   'Authorization': 'Bearer ' + token
                 }
+              });
+
+            case 8:
+              response = _context2.sent;
+              _context2.next = 11;
+              return _this.loadGrid();
+
+            case 11:
+              _this.resetState();
+
+              _context2.next = 18;
+              break;
+
+            case 14:
+              _context2.prev = 14;
+              _context2.t0 = _context2["catch"](5);
+              console.log(_context2.t0);
+              alert('an error occurred while deleting the data.');
+
+            case 18:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[5, 14]]);
+    })));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
+    /*#__PURE__*/
+    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var apiAddress, token, currentUser, fullAddress, postData, response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              apiAddress = sessionStorage.getItem("baseApiAddress");
+              token = sessionStorage.getItem("token");
+              currentUser = sessionStorage.getItem("userName");
+              fullAddress = apiAddress + '/api/AddressType/Update';
+              postData = {
+                ID: _this.state.ID,
+                Name: _this.state.name,
+                Description: _this.state.description,
+                Active: _this.state.active,
+                CreatedDate: _this.state.CreatedDate,
+                CreatedBy: _this.state.CreatedBy,
+                UpdatedDate: new Date().toLocaleString(),
+                UpdatedBy: currentUser
+              };
+              _context3.prev = 5;
+              _context3.next = 8;
+              return fetch(fullAddress, {
+                method: 'put',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(postData)
               });
 
             case 8:
@@ -80008,7 +80038,7 @@ function (_Component) {
               _context3.prev = 14;
               _context3.t0 = _context3["catch"](5);
               console.log(_context3.t0);
-              alert('an error occurred while deleting the data.');
+              alert('an error occurred while saving the data.');
 
             case 18:
             case "end":
@@ -80018,75 +80048,14 @@ function (_Component) {
       }, _callee3, null, [[5, 14]]);
     })));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      var apiAddress, token, currentUser, fullAddress, postData, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              apiAddress = sessionStorage.getItem("baseApiAddress");
-              token = sessionStorage.getItem("token");
-              currentUser = sessionStorage.getItem("userName");
-              fullAddress = apiAddress + '/api/AddressType/Update';
-              postData = {
-                ID: _this.state.ID,
-                Name: _this.state.name,
-                Description: _this.state.description,
-                Active: _this.state.active,
-                CreatedDate: _this.state.CreatedDate,
-                CreatedBy: _this.state.CreatedBy,
-                UpdatedDate: new Date().toLocaleString(),
-                UpdatedBy: currentUser
-              };
-              _context4.prev = 5;
-              _context4.next = 8;
-              return fetch(fullAddress, {
-                method: 'put',
-                mode: 'cors',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(postData)
-              });
-
-            case 8:
-              response = _context4.sent;
-              _context4.next = 11;
-              return _this.loadGrid();
-
-            case 11:
-              _this.resetState();
-
-              _context4.next = 18;
-              break;
-
-            case 14:
-              _context4.prev = 14;
-              _context4.t0 = _context4["catch"](5);
-              console.log(_context4.t0);
-              alert('an error occurred while saving the data.');
-
-            case 18:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4, null, [[5, 14]]);
-    })));
-
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               if (_this.state && !_this.state.ID) {
                 _this.SaveNew();
@@ -80100,22 +80069,22 @@ function (_Component) {
 
             case 1:
             case "end":
-              return _context5.stop();
+              return _context4.stop();
           }
         }
-      }, _callee5);
+      }, _callee4);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "ResetClickEventHandler",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
-              _context6.next = 2;
+              _context5.next = 2;
               return _this.loadGrid();
 
             case 2:
@@ -80126,10 +80095,10 @@ function (_Component) {
 
             case 3:
             case "end":
-              return _context6.stop();
+              return _context5.stop();
           }
         }
-      }, _callee6);
+      }, _callee5);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleChange", function (e, field) {
@@ -80198,11 +80167,11 @@ function (_Component) {
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
       var apiAddress, token, fullAddress;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context7.prev = _context7.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
               //get the route, use it to call the correct api
               apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -80223,10 +80192,10 @@ function (_Component) {
 
             case 4:
             case "end":
-              return _context7.stop();
+              return _context6.stop();
           }
         }
-      }, _callee7);
+      }, _callee6);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
@@ -80302,6 +80271,7 @@ function (_Component) {
     _this.loadGrid();
 
     _this.hideForm = _this.hideForm.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
+    console.log(Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getCurrentUrl"])());
     return _this;
   }
 
@@ -80561,6 +80531,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AdminType__WEBPACK_IMPORTED_MODULE_3__["default"], null), document.getElementById('root'));
+
+/***/ }),
+
+/***/ "./wwwroot/source/commonAdmin.js":
+/*!***************************************!*\
+  !*** ./wwwroot/source/commonAdmin.js ***!
+  \***************************************/
+/*! exports provided: getCurrentUrl */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCurrentUrl", function() { return getCurrentUrl; });
+// export function getAuthData() {
+//     let data = sessionStorage.getItem('authorizationData');
+//     let json = JSON.parse(data);
+//     return json;
+// }
+function getCurrentUrl() {
+  var currentHref = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+  return currentHref;
+}
 
 /***/ }),
 

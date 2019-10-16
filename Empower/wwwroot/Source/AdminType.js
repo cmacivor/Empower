@@ -3,6 +3,9 @@ import { AgGridReact } from 'ag-grid-react';
 import ChildMessageRenderer from './ChildMessageRenderer'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-bootstrap.css'
+import { getCurrentUrl } from './commonAdmin';
+// import getcurrentUrl from './commonAdmin';
+require ('.//commonAdmin');
 
 
 export default class AdminType extends Component {
@@ -70,34 +73,11 @@ export default class AdminType extends Component {
         this.loadGrid(); 
 
         this.hideForm = this.hideForm.bind(this);
-    }
 
-
-    Validate = async() => {
-
-        if (this.state.name === '' || this.state.description === '') {
-            this.setState({
-                ErrorMessage: "Both fields must contain a value."
-            });
-        }       
-
-        if (this.state.name.length > 20) {
-            this.setState({
-                ErrorMessage: "the Name field must be 20 characters or less."
-            });
-        }
-        if (this.state.description.length > 100) {
-            this.setState({
-                ErrorMessage: "the Description field must 100 characters or less."
-            });
-        }
-    }
-
-    
+        console.log(getCurrentUrl());
+    }    
 
     SaveNew = async() => {
-
-
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
