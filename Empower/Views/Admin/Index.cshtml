@@ -8,10 +8,20 @@
 <h1>@Model.AdminType</h1>
 <div id="root"></div>
 
-@section scripts {
-
-    <script src="~/dist/bundle.js"></script>
+@if (Model.AdminType == "serviceprogramcategory")
+{
+    @section scripts {
+        <script src="~/dist/serviceprogramcategoryapp.bundle.js"></script>
+    }
 }
+else
+{
+    @section scripts {
+        <script src="~/dist/admintypeapp.bundle.js"></script>
+    }
+}
+
+
 
 
 
