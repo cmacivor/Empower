@@ -4,7 +4,6 @@ import ChildMessageRenderer from './ChildMessageRenderer'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-bootstrap.css'
 import { getCurrentUrl } from './commonAdmin';
-// import getcurrentUrl from './commonAdmin';
 require ('.//commonAdmin');
 
 
@@ -86,7 +85,6 @@ export default class AdminType extends Component {
 
         let adminType = getCurrentUrl();
 
-        //let fullAddress = apiAddress + '/api/AddressType/Create';
         let fullAddress = `${apiAddress}/api/${adminType}/Create`;
 
         var postData = {
@@ -98,6 +96,11 @@ export default class AdminType extends Component {
             UpdatedDate: new Date().toLocaleString(),
             UpdatedBy: currentUser
         };
+
+        if (adminType === "assessmenttype") {
+            postData.SystemID = 3
+        }
+        
 
         try {
 
@@ -162,8 +165,6 @@ export default class AdminType extends Component {
 
         let currentUser = sessionStorage.getItem("userName");
 
-        //let fullAddress = apiAddress + `/api/AddressType/Delete/${selectedRowId}`;
-
         let adminType = getCurrentUrl();
 
         let fullAddress = `${apiAddress}/api/${adminType}/Delete/${selectedRowId}`;
@@ -198,7 +199,6 @@ export default class AdminType extends Component {
 
         let adminType = getCurrentUrl();
 
-        //let fullAddress = apiAddress + '/api/AddressType/Update';
         let fullAddress = `${apiAddress}/api/${adminType}/Update`;
 
         var postData = {
@@ -335,8 +335,6 @@ export default class AdminType extends Component {
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
         let token = sessionStorage.getItem("token");
-
-        //let fullAddress = apiAddress + '/api/AddressType/GetAll';
 
         let adminType = getCurrentUrl();
 

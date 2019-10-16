@@ -40,6 +40,7 @@ namespace Empower.Controllers
                 TempData["Token"] = loginResult.access_token;
                 TempData["UserName"] = loginResult.userName;
                 TempData["baseApiAddress"] = loginResult.baseApiAddress;
+                TempData["systemID"] = loginResult.systemID;
 
                 if (loginResult.StatusCode == System.Net.HttpStatusCode.OK)
                 {

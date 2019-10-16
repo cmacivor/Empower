@@ -27,6 +27,7 @@ namespace Empower.Controllers
             var token = (string)TempData["Token"];
             var userName = (string)TempData["UserName"];
             var baseApiAddress = (string)TempData["baseApiAddress"];
+            var systemID = (string)TempData["systemID"];
 
             if (token == null || userName == null)
             {
@@ -37,7 +38,8 @@ namespace Empower.Controllers
             {
                 Token = token,                
                 UserName = userName,
-                BaseApiAddress = baseApiAddress
+                BaseApiAddress = baseApiAddress,
+                SystemID = systemID
             };
 
             return View(viewModel);

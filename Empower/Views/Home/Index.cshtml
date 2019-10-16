@@ -7,6 +7,7 @@
 <input id="hdnToken" type="hidden" value="@Model.Token" />
 <input id="hdnUserName" type="hidden" value="@Model.UserName" />
 <input id="hdnBaseApiAddress" type="hidden" value="@Model.BaseApiAddress"/>
+<input id="hdnSystemID" type="hidden" value="@Model.SystemID"/>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -23,8 +24,11 @@
 
         let baseApiAddress = document.getElementById("hdnBaseApiAddress").value;
 
+        let systemID = document.getElementById("hdnSystemID").value;
+
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("userName", userName);
         sessionStorage.setItem("baseApiAddress", baseApiAddress);
+        sessionStorage.setItem("systemID", systemID);
     };
 </script>
