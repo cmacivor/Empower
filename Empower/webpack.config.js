@@ -3,7 +3,7 @@
 module.exports = {
     mode: 'development',
     entry: {
-        admintypeapp: './wwwroot/source/app.js',
+        admintypeapp: './wwwroot/source/admintypeapp.js',
         serviceprogramcategoryapp: './wwwroot/source/serviceprogramcategoryapp.js'
     },
     output: {

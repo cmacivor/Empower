@@ -165,7 +165,8 @@ export default class AdminType extends Component {
             ID: '',
             CreatedBy: '',
             CreatedDate: '',
-            isDeleteConfirmButtonVisible: false
+            isDeleteConfirmButtonVisible: false,
+            active: true
          });
     }
 

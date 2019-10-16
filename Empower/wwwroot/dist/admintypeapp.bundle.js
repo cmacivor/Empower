@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./wwwroot/source/app.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./wwwroot/source/admintypeapp.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -79964,7 +79964,8 @@ function (_Component) {
         ID: '',
         CreatedBy: '',
         CreatedDate: '',
-        isDeleteConfirmButtonVisible: false
+        isDeleteConfirmButtonVisible: false,
+        active: true
       });
     });
 
@@ -80540,10 +80541,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./wwwroot/source/app.js":
-/*!*******************************!*\
-  !*** ./wwwroot/source/app.js ***!
-  \*******************************/
+/***/ "./wwwroot/source/admintypeapp.js":
+/*!****************************************!*\
+  !*** ./wwwroot/source/admintypeapp.js ***!
+  \****************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
