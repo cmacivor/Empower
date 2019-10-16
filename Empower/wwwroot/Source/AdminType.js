@@ -75,7 +75,7 @@ export default class AdminType extends Component {
        
     }    
 
-    SaveNew = async() => {
+    SaveNew = () => {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
@@ -105,7 +105,7 @@ export default class AdminType extends Component {
         try {
 
             //create the new record
-            const response = await fetch(fullAddress, {
+            const response =  fetch(fullAddress, {
                 method: 'post',
                 mode: 'cors',
                 headers: {
@@ -117,7 +117,7 @@ export default class AdminType extends Component {
 
             if (response.status === 400) {
 
-                let responseData = await response.json();
+                let responseData = response.json();
                 
                 let errors = responseData.ModelState["entity.Name"];
 
@@ -130,7 +130,7 @@ export default class AdminType extends Component {
                 });
             }
 
-            await this.loadGrid();
+             this.loadGrid();
 
             if (this.state.ErrorMessage === '') {
                 this.resetState();
