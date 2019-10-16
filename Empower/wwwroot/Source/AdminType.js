@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import ChildMessageRenderer from './ChildMessageRenderer'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-bootstrap.css'
-import { getCurrentUrl } from './commonAdmin';
+import { getCurrentUrl, getSessionData } from './commonAdmin';
 require ('.//commonAdmin');
 
 
@@ -77,40 +77,42 @@ export default class AdminType extends Component {
 
     SaveNew = () => {
 
-        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        // let apiAddress = sessionStorage.getItem("baseApiAddress");
 
-        let token = sessionStorage.getItem("token");
+        // let token = sessionStorage.getItem("token");
 
-        let currentUser = sessionStorage.getItem("userName");
+        // let currentUser = sessionStorage.getItem("userName");
 
-        let adminType = getCurrentUrl();
+        // let adminType = getCurrentUrl();
 
-        let fullAddress = `${apiAddress}/api/${adminType}/Create`;
+        // let fullAddress = `${apiAddress}/api/${adminType}/Create`;
+
+        let sessionStorageData = getSessionData();
 
         var postData = {
             Name: this.state.name,
             Description: this.state.description,
             Active: this.state.active,
             CreatedDate: new Date().toLocaleString(), 
-            CreatedBy:  currentUser, 
+            CreatedBy:  sessionStorageData.CurrentUser, //currentUser, 
             UpdatedDate: new Date().toLocaleString(),
-            UpdatedBy: currentUser
+            UpdatedBy: sessionStorageData.CurrentUser //currentUser
         };
 
-        if (adminType === "assessmenttype") {
-            postData.SystemID = 3
+        if (sessionStorageData.AdminType === "assessmenttype") {
+            postData.SystemID = sessionStorage.SystemID
         }
         
 
         try {
 
             //create the new record
-            fetch(fullAddress, {
+            fetch(sessionStorageData.CreateApiUrl, {
                 method: 'post',
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
                 },
                 body: JSON.stringify(postData)
             }).then(response => {
@@ -191,15 +193,17 @@ export default class AdminType extends Component {
 
     UpdateSelectedRow = () => {
 
-        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        // let apiAddress = sessionStorage.getItem("baseApiAddress");
 
-        let token = sessionStorage.getItem("token");
+        // let token = sessionStorage.getItem("token");
 
-        let currentUser = sessionStorage.getItem("userName");
+        // let currentUser = sessionStorage.getItem("userName");
 
-        let adminType = getCurrentUrl();
+        // let adminType = getCurrentUrl();
 
-        let fullAddress = `${apiAddress}/api/${adminType}/Update`;
+        // let fullAddress = `${apiAddress}/api/${adminType}/Update`;
+
+        let sessionStorageData = getSessionData();
 
         var postData = {
             ID: this.state.ID,
@@ -209,21 +213,21 @@ export default class AdminType extends Component {
             CreatedDate: this.state.CreatedDate,
             CreatedBy: this.state.CreatedBy,
             UpdatedDate: new Date().toLocaleString(),
-            UpdatedBy: currentUser
+            UpdatedBy: sessionStorageData.CurrentUser //currentUser
         };
 
-        if (adminType === "assessmenttype") {
-            postData.SystemID = 3
+        if (sessionStorageData.AdminType  === "assessmenttype") {
+            postData.SystemID = sessionStorageData.SystemID  //3
         }
 
         try {
 
-            fetch(fullAddress, {
+            fetch(sessionStorageData.UpdateApiUrl, {
                 method: 'put',
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
                 },
                 body: JSON.stringify(postData)
             }).then(response => {

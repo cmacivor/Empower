@@ -79843,33 +79843,36 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(AdminType).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveNew", function () {
-      var apiAddress = sessionStorage.getItem("baseApiAddress");
-      var token = sessionStorage.getItem("token");
-      var currentUser = sessionStorage.getItem("userName");
-      var adminType = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getCurrentUrl"])();
-      var fullAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Create");
+      // let apiAddress = sessionStorage.getItem("baseApiAddress");
+      // let token = sessionStorage.getItem("token");
+      // let currentUser = sessionStorage.getItem("userName");
+      // let adminType = getCurrentUrl();
+      // let fullAddress = `${apiAddress}/api/${adminType}/Create`;
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
       var postData = {
         Name: _this.state.name,
         Description: _this.state.description,
         Active: _this.state.active,
         CreatedDate: new Date().toLocaleString(),
-        CreatedBy: currentUser,
+        CreatedBy: sessionStorageData.CurrentUser,
+        //currentUser, 
         UpdatedDate: new Date().toLocaleString(),
-        UpdatedBy: currentUser
+        UpdatedBy: sessionStorageData.CurrentUser //currentUser
+
       };
 
-      if (adminType === "assessmenttype") {
-        postData.SystemID = 3;
+      if (sessionStorageData.AdminType === "assessmenttype") {
+        postData.SystemID = sessionStorage.SystemID;
       }
 
       try {
         //create the new record
-        fetch(fullAddress, {
+        fetch(sessionStorageData.CreateApiUrl, {
           method: 'post',
           mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + sessionStorageData.Token
           },
           body: JSON.stringify(postData)
         }).then(function (response) {
@@ -79961,11 +79964,12 @@ function (_Component) {
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow", function () {
-      var apiAddress = sessionStorage.getItem("baseApiAddress");
-      var token = sessionStorage.getItem("token");
-      var currentUser = sessionStorage.getItem("userName");
-      var adminType = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getCurrentUrl"])();
-      var fullAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
+      // let apiAddress = sessionStorage.getItem("baseApiAddress");
+      // let token = sessionStorage.getItem("token");
+      // let currentUser = sessionStorage.getItem("userName");
+      // let adminType = getCurrentUrl();
+      // let fullAddress = `${apiAddress}/api/${adminType}/Update`;
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
       var postData = {
         ID: _this.state.ID,
         Name: _this.state.name,
@@ -79974,20 +79978,21 @@ function (_Component) {
         CreatedDate: _this.state.CreatedDate,
         CreatedBy: _this.state.CreatedBy,
         UpdatedDate: new Date().toLocaleString(),
-        UpdatedBy: currentUser
+        UpdatedBy: sessionStorageData.CurrentUser //currentUser
+
       };
 
-      if (adminType === "assessmenttype") {
-        postData.SystemID = 3;
+      if (sessionStorageData.AdminType === "assessmenttype") {
+        postData.SystemID = sessionStorageData.SystemID; //3
       }
 
       try {
-        fetch(fullAddress, {
+        fetch(sessionStorageData.UpdateApiUrl, {
           method: 'put',
           mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + sessionStorageData.Token
           },
           body: JSON.stringify(postData)
         }).then(function (response) {
@@ -80491,20 +80496,34 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*!***************************************!*\
   !*** ./wwwroot/source/commonAdmin.js ***!
   \***************************************/
-/*! exports provided: getCurrentUrl */
+/*! exports provided: getCurrentUrl, getSessionData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCurrentUrl", function() { return getCurrentUrl; });
-// export function getAuthData() {
-//     let data = sessionStorage.getItem('authorizationData');
-//     let json = JSON.parse(data);
-//     return json;
-// }
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSessionData", function() { return getSessionData; });
 function getCurrentUrl() {
   var currentHref = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
   return currentHref;
+}
+function getSessionData() {
+  var apiAddress = sessionStorage.getItem("baseApiAddress");
+  var token = sessionStorage.getItem("token");
+  var currentUser = sessionStorage.getItem("userName");
+  var systemID = sessionStorage.getItem("systemID");
+  var adminType = getCurrentUrl();
+  var fullCreateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Create");
+  var fullUpdateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
+  var sessionData = {
+    Token: token,
+    CurrentUser: currentUser,
+    AdminType: getCurrentUrl(),
+    SystemID: systemID,
+    CreateApiUrl: fullCreateAddress,
+    UpdateApiUrl: fullUpdateAddress
+  };
+  return sessionData;
 }
 
 /***/ }),
