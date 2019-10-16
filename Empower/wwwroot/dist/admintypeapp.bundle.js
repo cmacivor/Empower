@@ -79864,7 +79864,7 @@ function (_Component) {
 
       try {
         //create the new record
-        var response = fetch(fullAddress, {
+        fetch(fullAddress, {
           method: 'post',
           mode: 'cors',
           headers: {
@@ -79872,25 +79872,25 @@ function (_Component) {
             'Authorization': 'Bearer ' + token
           },
           body: JSON.stringify(postData)
-        });
+        }).then(function (response) {
+          if (response.status === 400) {
+            var responseData = response.json();
+            var errors = responseData.ModelState["entity.Name"];
+            errors.forEach(function (error) {
+              _this.state.ErrorMessage += error;
 
-        if (response.status === 400) {
-          var responseData = response.json();
-          var errors = responseData.ModelState["entity.Name"];
-          errors.forEach(function (error) {
-            _this.state.ErrorMessage += error;
-
-            _this.setState({
-              isVisible: true
+              _this.setState({
+                isVisible: true
+              });
             });
-          });
-        }
+          }
 
-        _this.loadGrid();
+          _this.loadGrid();
 
-        if (_this.state.ErrorMessage === '') {
-          _this.resetState();
-        }
+          if (_this.state.ErrorMessage === '') {
+            _this.resetState();
+          }
+        });
       } catch (error) {
         console.log(error);
         alert('an error occurred while saving the data.');
@@ -79982,7 +79982,7 @@ function (_Component) {
       }
 
       try {
-        var response = fetch(fullAddress, {
+        fetch(fullAddress, {
           method: 'put',
           mode: 'cors',
           headers: {
@@ -79990,11 +79990,11 @@ function (_Component) {
             'Authorization': 'Bearer ' + token
           },
           body: JSON.stringify(postData)
+        }).then(function (response) {
+          _this.loadGrid();
+
+          _this.resetState();
         });
-
-        _this.loadGrid();
-
-        _this.resetState();
       } catch (error) {
         console.log(error);
         alert('an error occurred while saving the data.');

@@ -105,7 +105,7 @@ export default class AdminType extends Component {
         try {
 
             //create the new record
-            const response =  fetch(fullAddress, {
+            fetch(fullAddress, {
                 method: 'post',
                 mode: 'cors',
                 headers: {
@@ -113,28 +113,28 @@ export default class AdminType extends Component {
                     'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(postData)
-            });
+            }).then(response => {
+                if (response.status === 400) {
 
-            if (response.status === 400) {
-
-                let responseData = response.json();
-                
-                let errors = responseData.ModelState["entity.Name"];
-
-                errors.forEach(error => {
-                    this.state.ErrorMessage += error;
+                    let responseData = response.json();
                     
-                    this.setState({
-                        isVisible: true
-                    });                   
-                });
-            }
-
-             this.loadGrid();
-
-            if (this.state.ErrorMessage === '') {
-                this.resetState();
-            }
+                    let errors = responseData.ModelState["entity.Name"];
+    
+                    errors.forEach(error => {
+                        this.state.ErrorMessage += error;
+                        
+                        this.setState({
+                            isVisible: true
+                        });                   
+                    });
+                }
+    
+                 this.loadGrid();
+    
+                if (this.state.ErrorMessage === '') {
+                    this.resetState();
+                }
+            });
 
         } catch (error) {
             console.log(error);
@@ -218,7 +218,7 @@ export default class AdminType extends Component {
 
         try {
 
-            const response =  fetch(fullAddress, {
+            fetch(fullAddress, {
                 method: 'put',
                 mode: 'cors',
                 headers: {
@@ -226,11 +226,11 @@ export default class AdminType extends Component {
                     'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(postData)
+            }).then(response => {
+                this.loadGrid();
+
+                this.resetState();
             });
-
-             this.loadGrid();
-
-            this.resetState();
 
         } catch (error) {
             console.log(error);
