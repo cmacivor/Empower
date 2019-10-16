@@ -79960,76 +79960,55 @@ function (_Component) {
       }, _callee, null, [[6, 15]]);
     })));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var apiAddress, token, currentUser, adminType, fullAddress, postData, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              apiAddress = sessionStorage.getItem("baseApiAddress");
-              token = sessionStorage.getItem("token");
-              currentUser = sessionStorage.getItem("userName");
-              adminType = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getCurrentUrl"])();
-              fullAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
-              postData = {
-                ID: _this.state.ID,
-                Name: _this.state.name,
-                Description: _this.state.description,
-                Active: _this.state.active,
-                CreatedDate: _this.state.CreatedDate,
-                CreatedBy: _this.state.CreatedBy,
-                UpdatedDate: new Date().toLocaleString(),
-                UpdatedBy: currentUser
-              };
-              _context2.prev = 6;
-              _context2.next = 9;
-              return fetch(fullAddress, {
-                method: 'put',
-                mode: 'cors',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(postData)
-              });
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow", function () {
+      var apiAddress = sessionStorage.getItem("baseApiAddress");
+      var token = sessionStorage.getItem("token");
+      var currentUser = sessionStorage.getItem("userName");
+      var adminType = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getCurrentUrl"])();
+      var fullAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
+      var postData = {
+        ID: _this.state.ID,
+        Name: _this.state.name,
+        Description: _this.state.description,
+        Active: _this.state.active,
+        CreatedDate: _this.state.CreatedDate,
+        CreatedBy: _this.state.CreatedBy,
+        UpdatedDate: new Date().toLocaleString(),
+        UpdatedBy: currentUser
+      };
 
-            case 9:
-              response = _context2.sent;
-              _context2.next = 12;
-              return _this.loadGrid();
+      if (adminType === "assessmenttype") {
+        postData.SystemID = 3;
+      }
 
-            case 12:
-              _this.resetState();
+      try {
+        var response = fetch(fullAddress, {
+          method: 'put',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify(postData)
+        });
 
-              _context2.next = 19;
-              break;
+        _this.loadGrid();
 
-            case 15:
-              _context2.prev = 15;
-              _context2.t0 = _context2["catch"](6);
-              console.log(_context2.t0);
-              alert('an error occurred while saving the data.');
-
-            case 19:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[6, 15]]);
-    })));
+        _this.resetState();
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while saving the data.');
+      }
+    });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               if (_this.state && !_this.state.ID) {
                 _this.SaveNew();
@@ -80043,22 +80022,22 @@ function (_Component) {
 
             case 1:
             case "end":
-              return _context3.stop();
+              return _context2.stop();
           }
         }
-      }, _callee3);
+      }, _callee2);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "ResetClickEventHandler",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
-              _context4.next = 2;
+              _context3.next = 2;
               return _this.loadGrid();
 
             case 2:
@@ -80069,10 +80048,10 @@ function (_Component) {
 
             case 3:
             case "end":
-              return _context4.stop();
+              return _context3.stop();
           }
         }
-      }, _callee4);
+      }, _callee3);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleChange", function (e, field) {
@@ -80141,11 +80120,11 @@ function (_Component) {
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
       var apiAddress, token, adminType, fullAddress;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               //get the route, use it to call the correct api
               apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -80167,10 +80146,10 @@ function (_Component) {
 
             case 5:
             case "end":
-              return _context5.stop();
+              return _context4.stop();
           }
         }
-      }, _callee5);
+      }, _callee4);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {

@@ -189,7 +189,7 @@ export default class AdminType extends Component {
         }
     }
 
-    UpdateSelectedRow = async () => {
+    UpdateSelectedRow = () => {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
@@ -212,9 +212,13 @@ export default class AdminType extends Component {
             UpdatedBy: currentUser
         };
 
+        if (adminType === "assessmenttype") {
+            postData.SystemID = 3
+        }
+
         try {
 
-            const response = await fetch(fullAddress, {
+            const response =  fetch(fullAddress, {
                 method: 'put',
                 mode: 'cors',
                 headers: {
@@ -224,7 +228,7 @@ export default class AdminType extends Component {
                 body: JSON.stringify(postData)
             });
 
-            await this.loadGrid();
+             this.loadGrid();
 
             this.resetState();
 
