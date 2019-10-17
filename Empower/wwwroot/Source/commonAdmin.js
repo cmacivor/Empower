@@ -21,13 +21,19 @@ export function getSessionData() {
 
     let fullUpdateAddress = `${apiAddress}/api/${adminType}/Update`;
 
+    let fullDeleteAddress = `${apiAddress}/api/${adminType}/Delete`;
+
+    let fullGetAllAdress = `${apiAddress}/api/${adminType}/GetAll`;
+
     let sessionData = {
         Token: token,
         CurrentUser: currentUser,
         AdminType : getCurrentUrl(),
         SystemID: systemID,
         CreateApiUrl: fullCreateAddress,
-        UpdateApiUrl: fullUpdateAddress     
+        UpdateApiUrl: fullUpdateAddress,
+        DeleteApiUrl: fullDeleteAddress,
+        GetAllApiUrl: fullGetAllAdress     
     }
 
     return sessionData;

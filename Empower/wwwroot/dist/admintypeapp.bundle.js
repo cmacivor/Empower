@@ -79843,11 +79843,6 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(AdminType).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveNew", function () {
-      // let apiAddress = sessionStorage.getItem("baseApiAddress");
-      // let token = sessionStorage.getItem("token");
-      // let currentUser = sessionStorage.getItem("userName");
-      // let adminType = getCurrentUrl();
-      // let fullAddress = `${apiAddress}/api/${adminType}/Create`;
       var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
       var postData = {
         Name: _this.state.name,
@@ -79855,14 +79850,12 @@ function (_Component) {
         Active: _this.state.active,
         CreatedDate: new Date().toLocaleString(),
         CreatedBy: sessionStorageData.CurrentUser,
-        //currentUser, 
         UpdatedDate: new Date().toLocaleString(),
-        UpdatedBy: sessionStorageData.CurrentUser //currentUser
-
+        UpdatedBy: sessionStorageData.CurrentUser
       };
 
       if (sessionStorageData.AdminType === "assessmenttype") {
-        postData.SystemID = sessionStorage.SystemID;
+        postData.SystemID = sessionStorageData.SystemID;
       }
 
       try {
@@ -79913,62 +79906,34 @@ function (_Component) {
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "DeleteSelectedRow",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var selectedRowId, apiAddress, token, currentUser, adminType, fullAddress, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              selectedRowId = _this.state.ID;
-              apiAddress = sessionStorage.getItem("baseApiAddress");
-              token = sessionStorage.getItem("token");
-              currentUser = sessionStorage.getItem("userName");
-              adminType = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getCurrentUrl"])();
-              fullAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Delete/").concat(selectedRowId);
-              _context.prev = 6;
-              _context.next = 9;
-              return fetch(fullAddress, {
-                mode: 'cors',
-                headers: {
-                  'Authorization': 'Bearer ' + token
-                }
-              });
-
-            case 9:
-              response = _context.sent;
-              _context.next = 12;
-              return _this.loadGrid();
-
-            case 12:
-              _this.resetState();
-
-              _context.next = 19;
-              break;
-
-            case 15:
-              _context.prev = 15;
-              _context.t0 = _context["catch"](6);
-              console.log(_context.t0);
-              alert('an error occurred while deleting the data.');
-
-            case 19:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, null, [[6, 15]]);
-    })));
-
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow", function () {
-      // let apiAddress = sessionStorage.getItem("baseApiAddress");
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "DeleteSelectedRow", function () {
+      var selectedRowId = _this.state.ID; // let apiAddress = sessionStorage.getItem("baseApiAddress");
       // let token = sessionStorage.getItem("token");
       // let currentUser = sessionStorage.getItem("userName");
       // let adminType = getCurrentUrl();
-      // let fullAddress = `${apiAddress}/api/${adminType}/Update`;
+      // let fullAddress = `${apiAddress}/api/${adminType}/Delete/${selectedRowId}`;
+
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+      var fullDeleteUrl = "".concat(sessionStorageData.DeleteApiUrl, "/").concat(selectedRowId); //sessionStorageData.DeleteApiUrl
+
+      try {
+        fetch(fullDeleteUrl, {
+          mode: 'cors',
+          headers: {
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+          }
+        }).then(function (result) {
+          _this.loadGrid();
+
+          _this.resetState();
+        });
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while deleting the data.');
+      }
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow", function () {
       var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
       var postData = {
         ID: _this.state.ID,
@@ -79978,12 +79943,11 @@ function (_Component) {
         CreatedDate: _this.state.CreatedDate,
         CreatedBy: _this.state.CreatedBy,
         UpdatedDate: new Date().toLocaleString(),
-        UpdatedBy: sessionStorageData.CurrentUser //currentUser
-
+        UpdatedBy: sessionStorageData.CurrentUser
       };
 
       if (sessionStorageData.AdminType === "assessmenttype") {
-        postData.SystemID = sessionStorageData.SystemID; //3
+        postData.SystemID = sessionStorageData.SystemID;
       }
 
       try {
@@ -80010,10 +79974,10 @@ function (_Component) {
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context.prev = _context.next) {
             case 0:
               if (_this.state && !_this.state.ID) {
                 _this.SaveNew();
@@ -80027,22 +79991,22 @@ function (_Component) {
 
             case 1:
             case "end":
-              return _context2.stop();
+              return _context.stop();
           }
         }
-      }, _callee2);
+      }, _callee);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "ResetClickEventHandler",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context3.next = 2;
+              _context2.next = 2;
               return _this.loadGrid();
 
             case 2:
@@ -80053,10 +80017,10 @@ function (_Component) {
 
             case 3:
             case "end":
-              return _context3.stop();
+              return _context2.stop();
           }
         }
-      }, _callee3);
+      }, _callee2);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleChange", function (e, field) {
@@ -80125,21 +80089,22 @@ function (_Component) {
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      var apiAddress, token, adminType, fullAddress;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var sessionStorageData;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               //get the route, use it to call the correct api
-              apiAddress = sessionStorage.getItem("baseApiAddress");
-              token = sessionStorage.getItem("token");
-              adminType = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getCurrentUrl"])();
-              fullAddress = "".concat(apiAddress, "/api/").concat(adminType, "/GetAll");
-              fetch(fullAddress, {
+              // let apiAddress = sessionStorage.getItem("baseApiAddress");
+              // let token = sessionStorage.getItem("token");
+              // let adminType = getCurrentUrl();
+              // let fullAddress = `${apiAddress}/api/${adminType}/GetAll`;
+              sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+              fetch(sessionStorageData.GetAllApiUrl, {
                 mode: 'cors',
                 headers: {
-                  'Authorization': 'Bearer ' + token
+                  'Authorization': 'Bearer ' + sessionStorageData.Token
                 }
               }).then(function (result) {
                 return result.json();
@@ -80149,12 +80114,12 @@ function (_Component) {
                 });
               });
 
-            case 5:
+            case 2:
             case "end":
-              return _context4.stop();
+              return _context3.stop();
           }
         }
-      }, _callee4);
+      }, _callee3);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
@@ -80515,13 +80480,17 @@ function getSessionData() {
   var adminType = getCurrentUrl();
   var fullCreateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Create");
   var fullUpdateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
+  var fullDeleteAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Delete");
+  var fullGetAllAdress = "".concat(apiAddress, "/api/").concat(adminType, "/GetAll");
   var sessionData = {
     Token: token,
     CurrentUser: currentUser,
     AdminType: getCurrentUrl(),
     SystemID: systemID,
     CreateApiUrl: fullCreateAddress,
-    UpdateApiUrl: fullUpdateAddress
+    UpdateApiUrl: fullUpdateAddress,
+    DeleteApiUrl: fullDeleteAddress,
+    GetAllApiUrl: fullGetAllAdress
   };
   return sessionData;
 }

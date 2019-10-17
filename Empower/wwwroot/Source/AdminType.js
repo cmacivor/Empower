@@ -77,16 +77,6 @@ export default class AdminType extends Component {
 
     SaveNew = () => {
 
-        // let apiAddress = sessionStorage.getItem("baseApiAddress");
-
-        // let token = sessionStorage.getItem("token");
-
-        // let currentUser = sessionStorage.getItem("userName");
-
-        // let adminType = getCurrentUrl();
-
-        // let fullAddress = `${apiAddress}/api/${adminType}/Create`;
-
         let sessionStorageData = getSessionData();
 
         var postData = {
@@ -94,13 +84,13 @@ export default class AdminType extends Component {
             Description: this.state.description,
             Active: this.state.active,
             CreatedDate: new Date().toLocaleString(), 
-            CreatedBy:  sessionStorageData.CurrentUser, //currentUser, 
+            CreatedBy:  sessionStorageData.CurrentUser, 
             UpdatedDate: new Date().toLocaleString(),
-            UpdatedBy: sessionStorageData.CurrentUser //currentUser
+            UpdatedBy: sessionStorageData.CurrentUser 
         };
 
         if (sessionStorageData.AdminType === "assessmenttype") {
-            postData.SystemID = sessionStorage.SystemID
+            postData.SystemID = sessionStorageData.SystemID
         }
         
 
@@ -157,32 +147,25 @@ export default class AdminType extends Component {
          });
     }
 
-    DeleteSelectedRow = async() => {
+    DeleteSelectedRow = () => {
 
         let selectedRowId = this.state.ID;
 
-        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let sessionStorageData = getSessionData();
 
-        let token = sessionStorage.getItem("token");
+        let fullDeleteUrl = `${sessionStorageData.DeleteApiUrl}/${selectedRowId}`; 
 
-        let currentUser = sessionStorage.getItem("userName");
-
-        let adminType = getCurrentUrl();
-
-        let fullAddress = `${apiAddress}/api/${adminType}/Delete/${selectedRowId}`;
-        
         try {
-               const response =  await fetch(fullAddress, {
+               fetch(fullDeleteUrl, {
                     mode: 'cors',
                     headers: {
-                        'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + sessionStorageData.Token
                     }
+                }).then(result => {
+                    this.loadGrid();
+
+                    this.resetState();
                 });
-
-                await this.loadGrid();
-
-                this.resetState();
-
         }
         catch(error)
         {
@@ -192,16 +175,6 @@ export default class AdminType extends Component {
     }
 
     UpdateSelectedRow = () => {
-
-        // let apiAddress = sessionStorage.getItem("baseApiAddress");
-
-        // let token = sessionStorage.getItem("token");
-
-        // let currentUser = sessionStorage.getItem("userName");
-
-        // let adminType = getCurrentUrl();
-
-        // let fullAddress = `${apiAddress}/api/${adminType}/Update`;
 
         let sessionStorageData = getSessionData();
 
@@ -213,11 +186,11 @@ export default class AdminType extends Component {
             CreatedDate: this.state.CreatedDate,
             CreatedBy: this.state.CreatedBy,
             UpdatedDate: new Date().toLocaleString(),
-            UpdatedBy: sessionStorageData.CurrentUser //currentUser
+            UpdatedBy: sessionStorageData.CurrentUser 
         };
 
         if (sessionStorageData.AdminType  === "assessmenttype") {
-            postData.SystemID = sessionStorageData.SystemID  //3
+            postData.SystemID = sessionStorageData.SystemID  
         }
 
         try {
@@ -340,18 +313,20 @@ export default class AdminType extends Component {
 
     loadGrid = async() => {
         //get the route, use it to call the correct api
-        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        // let apiAddress = sessionStorage.getItem("baseApiAddress");
 
-        let token = sessionStorage.getItem("token");
+        // let token = sessionStorage.getItem("token");
 
-        let adminType = getCurrentUrl();
+        // let adminType = getCurrentUrl();
 
-        let fullAddress = `${apiAddress}/api/${adminType}/GetAll`;
+        // let fullAddress = `${apiAddress}/api/${adminType}/GetAll`;
 
-        fetch(fullAddress, {
+        let sessionStorageData = getSessionData();
+
+        fetch(sessionStorageData.GetAllApiUrl, {
             mode: 'cors',
             headers: {
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + sessionStorageData.Token
             }
         }).then(result => result.json())
             .then(rowData => this.setState({ rowData }));
