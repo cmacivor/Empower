@@ -3,7 +3,7 @@ import { AgGridReact } from 'ag-grid-react';
 import ChildMessageRenderer from './ChildMessageRenderer'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-bootstrap.css'
-import { getCurrentUrl, getSessionData } from './commonAdmin';
+import { getSessionData, Api } from './commonAdmin';
 require ('.//commonAdmin');
 
 
@@ -70,6 +70,7 @@ export default class AdminType extends Component {
         }
         
         this.loadGrid(); 
+    
 
         this.hideForm = this.hideForm.bind(this);
        
@@ -312,24 +313,18 @@ export default class AdminType extends Component {
     }
 
     loadGrid = async() => {
-        //get the route, use it to call the correct api
-        // let apiAddress = sessionStorage.getItem("baseApiAddress");
 
-        // let token = sessionStorage.getItem("token");
+        // let sessionStorageData = getSessionData();
 
-        // let adminType = getCurrentUrl();
+        // fetch(sessionStorageData.GetAllApiUrl, {
+        //     mode: 'cors',
+        //     headers: {
+        //         'Authorization': 'Bearer ' + sessionStorageData.Token
+        //     }
+        // }).then(result => result.json())
+        //     .then(rowData => this.setState({ rowData }));
 
-        // let fullAddress = `${apiAddress}/api/${adminType}/GetAll`;
-
-        let sessionStorageData = getSessionData();
-
-        fetch(sessionStorageData.GetAllApiUrl, {
-            mode: 'cors',
-            headers: {
-                'Authorization': 'Bearer ' + sessionStorageData.Token
-            }
-        }).then(result => result.json())
-            .then(rowData => this.setState({ rowData }));
+        await Api.getAll().then(rowData => this.setState({ rowData }));
     }
 
     setActive = event => {

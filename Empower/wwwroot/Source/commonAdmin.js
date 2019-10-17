@@ -38,3 +38,31 @@ export function getSessionData() {
 
     return sessionData;
 }
+
+
+export class Api {
+    static async getAll() {
+
+        let sessionStorageData = getSessionData();
+
+        return  fetch(sessionStorageData.GetAllApiUrl, {
+            mode: 'cors',
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json());
+    }
+}
+
+// export  function loadNewGrid( ) {
+//     let sessionStorageData = getSessionData();
+
+
+    // fetch(sessionStorageData.GetAllApiUrl, {
+    //     mode: 'cors',
+    //     headers: {
+    //         'Authorization': 'Bearer ' + sessionStorageData.Token
+    //     }
+    // }).then(result => result.json())
+    //     .then(rowData => this.setState({ rowData }));
+//}
