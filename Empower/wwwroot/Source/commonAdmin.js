@@ -41,6 +41,7 @@ export function getSessionData() {
 
 
 export class Api {
+
     static async getAll() {
 
         let sessionStorageData = getSessionData();
@@ -52,17 +53,50 @@ export class Api {
             }
         }).then(result => result.json());
     }
+
+    static async saveNew(postData) {
+
+        let sessionStorageData = getSessionData();
+
+        try {
+
+            //create the new record
+           return fetch(sessionStorageData.CreateApiUrl, {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                },
+                body: JSON.stringify(postData)
+            });
+            // }).then(response => {
+            //     if (response.status === 400) {
+
+            //         let responseData = response.json();
+                    
+            //         let errors = responseData.ModelState["entity.Name"];
+    
+            //         errors.forEach(error => {
+            //             this.state.ErrorMessage += error;
+                        
+            //             this.setState({
+            //                 isVisible: true
+            //             });                   
+            //         });
+            //     }
+    
+            //      this.loadGrid();
+    
+            //     if (this.state.ErrorMessage === '') {
+            //         this.resetState();
+            //     }
+
+            // });
+
+        } catch (error) {
+            console.log(error);
+            alert('an error occurred while saving the data.');
+        }
+    }
 }
-
-// export  function loadNewGrid( ) {
-//     let sessionStorageData = getSessionData();
-
-
-    // fetch(sessionStorageData.GetAllApiUrl, {
-    //     mode: 'cors',
-    //     headers: {
-    //         'Authorization': 'Bearer ' + sessionStorageData.Token
-    //     }
-    // }).then(result => result.json())
-    //     .then(rowData => this.setState({ rowData }));
-//}

@@ -95,44 +95,121 @@ export default class AdminType extends Component {
         }
         
 
-        try {
+       let promise =   Api.saveNew(postData).then(response => {return response });
 
-            //create the new record
-            fetch(sessionStorageData.CreateApiUrl, {
-                method: 'post',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + sessionStorageData.Token
-                },
-                body: JSON.stringify(postData)
-            }).then(response => {
-                if (response.status === 400) {
+       promise.then(result => {
+           //console.log('first then call: ' + result.status);
+           if (result.status === 400) {
+                return result.json();  //send the error message to the next then() call
+           } else {    
+               this.loadGrid();
 
-                    let responseData = response.json();
-                    
-                    let errors = responseData.ModelState["entity.Name"];
-    
-                    errors.forEach(error => {
-                        this.state.ErrorMessage += error;
-                        
-                        this.setState({
-                            isVisible: true
-                        });                   
-                    });
-                }
-    
-                 this.loadGrid();
-    
-                if (this.state.ErrorMessage === '') {
+              if (this.state.ErrorMessage === '') {
                     this.resetState();
                 }
+            // }}
+           }
+       }).then((result) => {
+            console.log(promise);
+            
+            //undefined
+            //console.log(promise.Response);
+
+            console.log(result);
+
+            // if (promise.Response.status === 400) {
+
+            //     //let responseData = result.json();
+                
+            let errors = result.ModelState["entity.Name"];
+
+            errors.forEach(error => {
+                this.state.ErrorMessage += error;
+                
+                this.setState({
+                    isVisible: true
+                });                   
             });
 
-        } catch (error) {
-            console.log(error);
-            alert('an error occurred while saving the data.');
-        }
+            // } else {
+
+            //     this.loadGrid();
+
+            //     if (this.state.ErrorMessage === '') {
+            //         this.resetState();
+            //     }
+            // }
+       });
+
+            //if (response.status === 400) {
+
+                // response.then(function(result) {
+                //     console.log(result);
+                // });
+
+               // let responseData =  response.then  //.json();
+                
+                //console.log(responseData);
+
+                //let errors = responseData.ModelState["entity.Name"];
+
+                // errors.forEach(error => {
+                //     this.state.ErrorMessage += error;
+                    
+                //     this.setState({
+                //         isVisible: true
+                //     });                   
+                // });
+
+            
+            // }
+            
+            // this.loadGrid();
+
+            // if (this.state.ErrorMessage === '') {
+            //     this.resetState();
+            // }
+        //});
+  
+
+        //try {
+
+            //create the new record
+            // fetch(sessionStorageData.CreateApiUrl, {
+            //     method: 'post',
+            //     mode: 'cors',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Authorization': 'Bearer ' + sessionStorageData.Token
+            //     },
+            //     body: JSON.stringify(postData)
+            // }).then(response => {
+            //     if (response.status === 400) {
+
+            //         let responseData = response.json();
+                    
+            //         let errors = responseData.ModelState["entity.Name"];
+    
+            //         errors.forEach(error => {
+            //             this.state.ErrorMessage += error;
+                        
+            //             this.setState({
+            //                 isVisible: true
+            //             });                   
+            //         });
+            //     }
+    
+            //      this.loadGrid();
+    
+            //     if (this.state.ErrorMessage === '') {
+            //         this.resetState();
+            //     }
+            // });
+
+        // } catch (error) {
+        //     console.log(error);
+        //     alert('an error occurred while saving the data.');
+        // }
     }
 
     resetState = () => {
@@ -313,16 +390,6 @@ export default class AdminType extends Component {
     }
 
     loadGrid = async() => {
-
-        // let sessionStorageData = getSessionData();
-
-        // fetch(sessionStorageData.GetAllApiUrl, {
-        //     mode: 'cors',
-        //     headers: {
-        //         'Authorization': 'Bearer ' + sessionStorageData.Token
-        //     }
-        // }).then(result => result.json())
-        //     .then(rowData => this.setState({ rowData }));
 
         await Api.getAll().then(rowData => this.setState({ rowData }));
     }
