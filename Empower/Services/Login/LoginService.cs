@@ -31,9 +31,7 @@ namespace Empower.Services.Login
             dict.Add("username", loginParameters.UserName);
             dict.Add("password", loginParameters.Password);
             
-            //TODO: figure out how to use the BaseAddress instead here...not sure why it needs to be set here as well 
-            //var request = new HttpRequestMessage(HttpMethod.Post, "/applications/empowerapi/token")
-            var request = new HttpRequestMessage(HttpMethod.Post, "/token")
+            var request = new HttpRequestMessage(HttpMethod.Post, _httpClient.BaseAddress + "/token")
             {
                 Content = new FormUrlEncodedContent(dict)
             };

@@ -70,29 +70,6 @@ export class Api {
                 },
                 body: JSON.stringify(postData)
             });
-            // }).then(response => {
-            //     if (response.status === 400) {
-
-            //         let responseData = response.json();
-                    
-            //         let errors = responseData.ModelState["entity.Name"];
-    
-            //         errors.forEach(error => {
-            //             this.state.ErrorMessage += error;
-                        
-            //             this.setState({
-            //                 isVisible: true
-            //             });                   
-            //         });
-            //     }
-    
-            //      this.loadGrid();
-    
-            //     if (this.state.ErrorMessage === '') {
-            //         this.resetState();
-            //     }
-
-            // });
 
         } catch (error) {
             console.log(error);

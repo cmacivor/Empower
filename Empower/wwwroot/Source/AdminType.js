@@ -94,11 +94,9 @@ export default class AdminType extends Component {
             postData.SystemID = sessionStorageData.SystemID
         }
         
-
        let promise =   Api.saveNew(postData).then(response => {return response });
 
        promise.then(result => {
-           //console.log('first then call: ' + result.status);
            if (result.status === 400) {
                 return result.json();  //send the error message to the next then() call
            } else {    
@@ -107,20 +105,8 @@ export default class AdminType extends Component {
               if (this.state.ErrorMessage === '') {
                     this.resetState();
                 }
-            // }}
            }
-       }).then((result) => {
-            console.log(promise);
-            
-            //undefined
-            //console.log(promise.Response);
-
-            console.log(result);
-
-            // if (promise.Response.status === 400) {
-
-            //     //let responseData = result.json();
-                
+       }).then((result) => {               
             let errors = result.ModelState["entity.Name"];
 
             errors.forEach(error => {
@@ -130,86 +116,7 @@ export default class AdminType extends Component {
                     isVisible: true
                 });                   
             });
-
-            // } else {
-
-            //     this.loadGrid();
-
-            //     if (this.state.ErrorMessage === '') {
-            //         this.resetState();
-            //     }
-            // }
        });
-
-            //if (response.status === 400) {
-
-                // response.then(function(result) {
-                //     console.log(result);
-                // });
-
-               // let responseData =  response.then  //.json();
-                
-                //console.log(responseData);
-
-                //let errors = responseData.ModelState["entity.Name"];
-
-                // errors.forEach(error => {
-                //     this.state.ErrorMessage += error;
-                    
-                //     this.setState({
-                //         isVisible: true
-                //     });                   
-                // });
-
-            
-            // }
-            
-            // this.loadGrid();
-
-            // if (this.state.ErrorMessage === '') {
-            //     this.resetState();
-            // }
-        //});
-  
-
-        //try {
-
-            //create the new record
-            // fetch(sessionStorageData.CreateApiUrl, {
-            //     method: 'post',
-            //     mode: 'cors',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'Authorization': 'Bearer ' + sessionStorageData.Token
-            //     },
-            //     body: JSON.stringify(postData)
-            // }).then(response => {
-            //     if (response.status === 400) {
-
-            //         let responseData = response.json();
-                    
-            //         let errors = responseData.ModelState["entity.Name"];
-    
-            //         errors.forEach(error => {
-            //             this.state.ErrorMessage += error;
-                        
-            //             this.setState({
-            //                 isVisible: true
-            //             });                   
-            //         });
-            //     }
-    
-            //      this.loadGrid();
-    
-            //     if (this.state.ErrorMessage === '') {
-            //         this.resetState();
-            //     }
-            // });
-
-        // } catch (error) {
-        //     console.log(error);
-        //     alert('an error occurred while saving the data.');
-        // }
     }
 
     resetState = () => {
