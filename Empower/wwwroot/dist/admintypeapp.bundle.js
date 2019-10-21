@@ -79862,7 +79862,6 @@ function (_Component) {
         return response;
       });
       promise.then(function (result) {
-        //console.log('first then call: ' + result.status);
         if (result.status === 400) {
           return result.json(); //send the error message to the next then() call
         } else {
@@ -79870,16 +79869,9 @@ function (_Component) {
 
           if (_this.state.ErrorMessage === '') {
             _this.resetState();
-          } // }}
-
+          }
         }
       }).then(function (result) {
-        console.log(promise); //undefined
-        //console.log(promise.Response);
-
-        console.log(result); // if (promise.Response.status === 400) {
-        //     //let responseData = result.json();
-
         var errors = result.ModelState["entity.Name"];
         errors.forEach(function (error) {
           _this.state.ErrorMessage += error;
@@ -79887,61 +79879,8 @@ function (_Component) {
           _this.setState({
             isVisible: true
           });
-        }); // } else {
-        //     this.loadGrid();
-        //     if (this.state.ErrorMessage === '') {
-        //         this.resetState();
-        //     }
-        // }
-      }); //if (response.status === 400) {
-      // response.then(function(result) {
-      //     console.log(result);
-      // });
-      // let responseData =  response.then  //.json();
-      //console.log(responseData);
-      //let errors = responseData.ModelState["entity.Name"];
-      // errors.forEach(error => {
-      //     this.state.ErrorMessage += error;
-      //     this.setState({
-      //         isVisible: true
-      //     });                   
-      // });
-      // }
-      // this.loadGrid();
-      // if (this.state.ErrorMessage === '') {
-      //     this.resetState();
-      // }
-      //});
-      //try {
-      //create the new record
-      // fetch(sessionStorageData.CreateApiUrl, {
-      //     method: 'post',
-      //     mode: 'cors',
-      //     headers: {
-      //         'Content-Type': 'application/json',
-      //         'Authorization': 'Bearer ' + sessionStorageData.Token
-      //     },
-      //     body: JSON.stringify(postData)
-      // }).then(response => {
-      //     if (response.status === 400) {
-      //         let responseData = response.json();
-      //         let errors = responseData.ModelState["entity.Name"];
-      //         errors.forEach(error => {
-      //             this.state.ErrorMessage += error;
-      //             this.setState({
-      //                 isVisible: true
-      //             });                   
-      //         });
-      //     }
-      //      this.loadGrid();
-      //     if (this.state.ErrorMessage === '') {
-      //         this.resetState();
-      //     }
-      // });
-      // } catch (error) {
-      //     console.log(error);
-      //     alert('an error occurred while saving the data.');
-      // }
+        });
+      });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
@@ -80560,7 +80499,7 @@ function () {
               case 0:
                 sessionStorageData = getSessionData();
                 return _context.abrupt("return", fetch(sessionStorageData.GetAllApiUrl, {
-                  mode: 'cors',
+                  mode: 'no-cors',
                   headers: {
                     'Authorization': 'Bearer ' + sessionStorageData.Token
                   }
@@ -80597,7 +80536,7 @@ function () {
                 _context2.prev = 1;
                 return _context2.abrupt("return", fetch(sessionStorageData.CreateApiUrl, {
                   method: 'post',
-                  mode: 'cors',
+                  mode: 'no-cors',
                   headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + sessionStorageData.Token

@@ -47,7 +47,7 @@ export class Api {
         let sessionStorageData = getSessionData();
 
         return  fetch(sessionStorageData.GetAllApiUrl, {
-            mode: 'cors',
+            mode: 'no-cors',
             headers: {
                 'Authorization': 'Bearer ' + sessionStorageData.Token
             }
@@ -63,7 +63,7 @@ export class Api {
             //create the new record
            return fetch(sessionStorageData.CreateApiUrl, {
                 method: 'post',
-                mode: 'cors',
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + sessionStorageData.Token
