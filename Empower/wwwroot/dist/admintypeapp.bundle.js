@@ -79991,16 +79991,14 @@ function (_Component) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.next = 2;
-              return _this.loadGrid();
+              _this.loadGrid();
 
-            case 2:
               _this.setState({
                 name: _this.state.originallySelectedName,
                 description: _this.state.originallySelectedDescription
               });
 
-            case 3:
+            case 2:
             case "end":
               return _context2.stop();
           }
@@ -80070,29 +80068,13 @@ function (_Component) {
       _this.showForm();
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "loadGrid",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].getAll().then(function (rowData) {
-                return _this.setState({
-                  rowData: rowData
-                });
-              });
-
-            case 2:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    })));
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "loadGrid", function () {
+      _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].getAll().then(function (rowData) {
+        return _this.setState({
+          rowData: rowData
+        });
+      });
+    });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
       if (event.target.value === "yes") {
@@ -80463,6 +80445,7 @@ function getSessionData() {
   var currentUser = sessionStorage.getItem("userName");
   var systemID = sessionStorage.getItem("systemID");
   var adminType = getCurrentUrl();
+  console.log(adminType);
   var fullCreateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Create");
   var fullUpdateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
   var fullDeleteAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Delete");
@@ -80488,55 +80471,34 @@ function () {
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Api, null, [{
     key: "getAll",
+    value: function getAll() {
+      var sessionStorageData = getSessionData();
+      console.log(sessionStorageData);
+      return fetch(sessionStorageData.GetAllApiUrl, {
+        //mode: 'cors',
+        headers: {
+          'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+      }).then(function (result) {
+        return result.json();
+      });
+    }
+  }, {
+    key: "saveNew",
     value: function () {
-      var _getAll = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _saveNew = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(postData) {
         var sessionStorageData;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 sessionStorageData = getSessionData();
-                return _context.abrupt("return", fetch(sessionStorageData.GetAllApiUrl, {
-                  mode: 'no-cors',
-                  headers: {
-                    'Authorization': 'Bearer ' + sessionStorageData.Token
-                  }
-                }).then(function (result) {
-                  return result.json();
-                }));
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function getAll() {
-        return _getAll.apply(this, arguments);
-      }
-
-      return getAll;
-    }()
-  }, {
-    key: "saveNew",
-    value: function () {
-      var _saveNew = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(postData) {
-        var sessionStorageData;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                sessionStorageData = getSessionData();
-                _context2.prev = 1;
-                return _context2.abrupt("return", fetch(sessionStorageData.CreateApiUrl, {
+                _context.prev = 1;
+                return _context.abrupt("return", fetch(sessionStorageData.CreateApiUrl, {
                   method: 'post',
-                  mode: 'no-cors',
+                  mode: 'cors',
                   headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + sessionStorageData.Token
@@ -80545,17 +80507,17 @@ function () {
                 }));
 
               case 5:
-                _context2.prev = 5;
-                _context2.t0 = _context2["catch"](1);
-                console.log(_context2.t0);
+                _context.prev = 5;
+                _context.t0 = _context["catch"](1);
+                console.log(_context.t0);
                 alert('an error occurred while saving the data.');
 
               case 9:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, null, [[1, 5]]);
+        }, _callee, null, [[1, 5]]);
       }));
 
       function saveNew(_x) {

@@ -215,7 +215,7 @@ export default class AdminType extends Component {
 
     ResetClickEventHandler = async() => {
         
-        await this.loadGrid();
+        this.loadGrid();
 
         this.setState({
             name: this.state.originallySelectedName,
@@ -296,9 +296,9 @@ export default class AdminType extends Component {
         this.showForm();
     }
 
-    loadGrid = async() => {
+    loadGrid = () => {
 
-        await Api.getAll().then(rowData => this.setState({ rowData }));
+         Api.getAll().then(rowData => this.setState({ rowData }));
     }
 
     setActive = event => {

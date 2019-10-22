@@ -17,6 +17,8 @@ export function getSessionData() {
 
     let adminType = getCurrentUrl();
 
+    console.log(adminType);
+
     let fullCreateAddress = `${apiAddress}/api/${adminType}/Create`;
 
     let fullUpdateAddress = `${apiAddress}/api/${adminType}/Update`;
@@ -42,12 +44,14 @@ export function getSessionData() {
 
 export class Api {
 
-    static async getAll() {
+    static getAll() {
 
         let sessionStorageData = getSessionData();
 
+        console.log(sessionStorageData);
+
         return  fetch(sessionStorageData.GetAllApiUrl, {
-            mode: 'no-cors',
+            //mode: 'cors',
             headers: {
                 'Authorization': 'Bearer ' + sessionStorageData.Token
             }
@@ -63,7 +67,7 @@ export class Api {
             //create the new record
            return fetch(sessionStorageData.CreateApiUrl, {
                 method: 'post',
-                mode: 'no-cors',
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + sessionStorageData.Token
