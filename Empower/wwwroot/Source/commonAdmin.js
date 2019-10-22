@@ -17,8 +17,6 @@ export function getSessionData() {
 
     let adminType = getCurrentUrl();
 
-    console.log(adminType);
-
     let fullCreateAddress = `${apiAddress}/api/${adminType}/Create`;
 
     let fullUpdateAddress = `${apiAddress}/api/${adminType}/Update`;
@@ -47,8 +45,6 @@ export class Api {
     static getAll() {
 
         let sessionStorageData = getSessionData();
-
-        console.log(sessionStorageData);
 
         return  fetch(sessionStorageData.GetAllApiUrl, {
             //mode: 'cors',

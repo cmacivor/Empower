@@ -79863,7 +79863,15 @@ function (_Component) {
       });
       promise.then(function (result) {
         if (result.status === 400) {
-          return result.json(); //send the error message to the next then() call
+          //return result.json();  //send the error message to the next then() call
+          var errors = result.json();
+          errors.forEach(function (error) {
+            _this.state.ErrorMessage += error;
+
+            _this.setState({
+              isVisible: true
+            });
+          });
         } else {
           _this.loadGrid();
 
@@ -79871,16 +79879,15 @@ function (_Component) {
             _this.resetState();
           }
         }
-      }).then(function (result) {
-        var errors = result.ModelState["entity.Name"];
-        errors.forEach(function (error) {
-          _this.state.ErrorMessage += error;
-
-          _this.setState({
-            isVisible: true
-          });
-        });
-      });
+      }); //    .then((result) => {               
+      //         let errors = result.ModelState["entity.Name"];
+      //         errors.forEach(error => {
+      //             this.state.ErrorMessage += error;
+      //             this.setState({
+      //                 isVisible: true
+      //             });                   
+      //         });
+      //    });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
@@ -80445,7 +80452,6 @@ function getSessionData() {
   var currentUser = sessionStorage.getItem("userName");
   var systemID = sessionStorage.getItem("systemID");
   var adminType = getCurrentUrl();
-  console.log(adminType);
   var fullCreateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Create");
   var fullUpdateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
   var fullDeleteAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Delete");
@@ -80473,7 +80479,6 @@ function () {
     key: "getAll",
     value: function getAll() {
       var sessionStorageData = getSessionData();
-      console.log(sessionStorageData);
       return fetch(sessionStorageData.GetAllApiUrl, {
         //mode: 'cors',
         headers: {

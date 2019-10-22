@@ -98,7 +98,17 @@ export default class AdminType extends Component {
 
        promise.then(result => {
            if (result.status === 400) {
-                return result.json();  //send the error message to the next then() call
+                //return result.json();  //send the error message to the next then() call
+                let errors = result.json();
+
+                errors.forEach(error => {
+                    this.state.ErrorMessage += error;
+                    
+                    this.setState({
+                        isVisible: true
+                    });                   
+                });
+
            } else {    
                this.loadGrid();
 
@@ -106,17 +116,18 @@ export default class AdminType extends Component {
                     this.resetState();
                 }
            }
-       }).then((result) => {               
-            let errors = result.ModelState["entity.Name"];
-
-            errors.forEach(error => {
-                this.state.ErrorMessage += error;
-                
-                this.setState({
-                    isVisible: true
-                });                   
-            });
        });
+    //    .then((result) => {               
+    //         let errors = result.ModelState["entity.Name"];
+
+    //         errors.forEach(error => {
+    //             this.state.ErrorMessage += error;
+                
+    //             this.setState({
+    //                 isVisible: true
+    //             });                   
+    //         });
+    //    });
     }
 
     resetState = () => {
