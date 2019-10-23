@@ -108,50 +108,24 @@ export default class AdminType extends Component {
             } 
 
         }).then(finalResult => {
-            //console.log(finalResult.ModelState);
-
-            //console.log(finalResult.ModelState["entity.Name"]);
-
-            //console.log(finalResult.ModelState["entity.Description"]);
-            if (finalResult !== undefined && finalResult !== null && finalResult.ModelState !== null) {
-                let nameError = finalResult.ModelState["entity.Name"];
-                //console.log(nameError);
-                //let descriptionError = finalResult.ModelState["entity.Description"];
-    
-                nameError.forEach(error => {
-    
-                    this.state.ErrorMessage += error;
-                    
-                    this.setState({
-                        isVisible: true
-                    });  
-                });  
-            }
+            this.handleError(finalResult);
                     
         }).catch(this.showAlert());
+    }
 
-    //    promise.then(result => {
-    //        if (result.status === 400) {
-    //             let errors = result.json();
+    handleError = (finalResult) => {
+        if (finalResult !== undefined && finalResult !== null && finalResult.ModelState !== null) {
+            let nameError = finalResult.ModelState["entity.Name"];
 
-    //             console.log(errors);
+            nameError.forEach(error => {
 
-    //             // errors.forEach(error => {
-    //             //     this.state.ErrorMessage += error;
-                    
-    //             //     this.setState({
-    //             //         isVisible: true
-    //             //     });                   
-    //             // });
-
-    //        } else {    
-    //            this.loadGrid();
-
-    //           if (this.state.ErrorMessage === '') {
-    //                 this.resetState();
-    //             }
-    //        }
-    //    });
+                this.state.ErrorMessage += error;
+                
+                this.setState({
+                    isVisible: true
+                });  
+            });  
+        }
     }
 
     showAlert = (error) => {

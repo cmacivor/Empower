@@ -79872,38 +79872,21 @@ function (_Component) {
           return result.json();
         }
       }).then(function (finalResult) {
-        //console.log(finalResult.ModelState);
-        //console.log(finalResult.ModelState["entity.Name"]);
-        //console.log(finalResult.ModelState["entity.Description"]);
-        if (finalResult !== undefined && finalResult !== null && finalResult.ModelState !== null) {
-          var nameError = finalResult.ModelState["entity.Name"]; //console.log(nameError);
-          //let descriptionError = finalResult.ModelState["entity.Description"];
+        _this.handleError(finalResult);
+      })["catch"](_this.showAlert());
+    });
 
-          nameError.forEach(function (error) {
-            _this.state.ErrorMessage += error;
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleError", function (finalResult) {
+      if (finalResult !== undefined && finalResult !== null && finalResult.ModelState !== null) {
+        var nameError = finalResult.ModelState["entity.Name"];
+        nameError.forEach(function (error) {
+          _this.state.ErrorMessage += error;
 
-            _this.setState({
-              isVisible: true
-            });
+          _this.setState({
+            isVisible: true
           });
-        }
-      })["catch"](_this.showAlert()); //    promise.then(result => {
-      //        if (result.status === 400) {
-      //             let errors = result.json();
-      //             console.log(errors);
-      //             // errors.forEach(error => {
-      //             //     this.state.ErrorMessage += error;
-      //             //     this.setState({
-      //             //         isVisible: true
-      //             //     });                   
-      //             // });
-      //        } else {    
-      //            this.loadGrid();
-      //           if (this.state.ErrorMessage === '') {
-      //                 this.resetState();
-      //             }
-      //        }
-      //    });
+        });
+      }
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "showAlert", function (error) {//error is undefined here
