@@ -94,28 +94,69 @@ export default class AdminType extends Component {
             postData.SystemID = sessionStorageData.SystemID
         }
         
-       let promise =   Api.SaveNew(postData).then(response => {return response });
+       let promise = Api.SaveNew(postData).then(response => {return response });
 
-       promise.then(result => {
-           if (result.status === 400) {
-                let errors = result.json();
+        promise.then(result => {
+            if (result.status === 200) {
+                this.loadGrid();
 
-                errors.forEach(error => {
+                if (this.state.ErrorMessage === '') {
+                    this.resetState();
+                }
+            } else {
+                return result.json();
+            } 
+
+        }).then(finalResult => {
+            //console.log(finalResult.ModelState);
+
+            //console.log(finalResult.ModelState["entity.Name"]);
+
+            //console.log(finalResult.ModelState["entity.Description"]);
+            if (finalResult !== undefined && finalResult !== null && finalResult.ModelState !== null) {
+                let nameError = finalResult.ModelState["entity.Name"];
+                //console.log(nameError);
+                //let descriptionError = finalResult.ModelState["entity.Description"];
+    
+                nameError.forEach(error => {
+    
                     this.state.ErrorMessage += error;
                     
                     this.setState({
                         isVisible: true
-                    });                   
-                });
+                    });  
+                });  
+            }
+                    
+        }).catch(this.showAlert());
 
-           } else {    
-               this.loadGrid();
+    //    promise.then(result => {
+    //        if (result.status === 400) {
+    //             let errors = result.json();
 
-              if (this.state.ErrorMessage === '') {
-                    this.resetState();
-                }
-           }
-       });
+    //             console.log(errors);
+
+    //             // errors.forEach(error => {
+    //             //     this.state.ErrorMessage += error;
+                    
+    //             //     this.setState({
+    //             //         isVisible: true
+    //             //     });                   
+    //             // });
+
+    //        } else {    
+    //            this.loadGrid();
+
+    //           if (this.state.ErrorMessage === '') {
+    //                 this.resetState();
+    //             }
+    //        }
+    //    });
+    }
+
+    showAlert = (error) => {
+        //error is undefined here
+        //console.log(error);
     }
 
     resetState = () => {
@@ -167,26 +208,34 @@ export default class AdminType extends Component {
             postData.SystemID = sessionStorageData.SystemID  
         }
 
-        try {
+        let promise = Api.UpdateRow(postData);
 
-            fetch(sessionStorageData.UpdateApiUrl, {
-                method: 'put',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + sessionStorageData.Token
-                },
-                body: JSON.stringify(postData)
-            }).then(response => {
-                this.loadGrid();
+        promise.then(result => {
+            this.loadGrid();
 
-                this.resetState();
-            });
+            this.resetState();
+        });
 
-        } catch (error) {
-            console.log(error);
-            alert('an error occurred while saving the data.');
-        }  
+        // try {
+
+        //     fetch(sessionStorageData.UpdateApiUrl, {
+        //         method: 'put',
+        //         mode: 'cors',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': 'Bearer ' + sessionStorageData.Token
+        //         },
+        //         body: JSON.stringify(postData)
+        //     }).then(response => {
+        //         this.loadGrid();
+
+        //         this.resetState();
+        //     });
+
+        // } catch (error) {
+        //     console.log(error);
+        //     alert('an error occurred while saving the data.');
+        // }  
     }
 
 

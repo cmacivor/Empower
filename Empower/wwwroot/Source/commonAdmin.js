@@ -54,6 +54,29 @@ export class Api {
         }).then(result => result.json());
     }
 
+    static UpdateRow(postData) {
+        
+        let sessionStorageData = getSessionData();
+
+        try {
+
+           return fetch(sessionStorageData.UpdateApiUrl, {
+                method: 'put',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                },
+                body: JSON.stringify(postData)
+            }); 
+
+        } catch (error) {
+            console.log(error);
+            alert('an error occurred while saving the data.');
+        }
+        
+    } 
+
     static DeleteRow(fullDeleteUrl, token) {
         
         try {

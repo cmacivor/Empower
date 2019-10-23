@@ -79862,23 +79862,52 @@ function (_Component) {
         return response;
       });
       promise.then(function (result) {
-        if (result.status === 400) {
-          var errors = result.json();
-          errors.forEach(function (error) {
+        if (result.status === 200) {
+          _this.loadGrid();
+
+          if (_this.state.ErrorMessage === '') {
+            _this.resetState();
+          }
+        } else {
+          return result.json();
+        }
+      }).then(function (finalResult) {
+        //console.log(finalResult.ModelState);
+        //console.log(finalResult.ModelState["entity.Name"]);
+        //console.log(finalResult.ModelState["entity.Description"]);
+        if (finalResult !== undefined && finalResult !== null && finalResult.ModelState !== null) {
+          var nameError = finalResult.ModelState["entity.Name"]; //console.log(nameError);
+          //let descriptionError = finalResult.ModelState["entity.Description"];
+
+          nameError.forEach(function (error) {
             _this.state.ErrorMessage += error;
 
             _this.setState({
               isVisible: true
             });
           });
-        } else {
-          _this.loadGrid();
-
-          if (_this.state.ErrorMessage === '') {
-            _this.resetState();
-          }
         }
-      });
+      })["catch"](_this.showAlert()); //    promise.then(result => {
+      //        if (result.status === 400) {
+      //             let errors = result.json();
+      //             console.log(errors);
+      //             // errors.forEach(error => {
+      //             //     this.state.ErrorMessage += error;
+      //             //     this.setState({
+      //             //         isVisible: true
+      //             //     });                   
+      //             // });
+      //        } else {    
+      //            this.loadGrid();
+      //           if (this.state.ErrorMessage === '') {
+      //                 this.resetState();
+      //             }
+      //        }
+      //    });
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "showAlert", function (error) {//error is undefined here
+      //console.log(error);
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
@@ -79903,22 +79932,7 @@ function (_Component) {
         _this.loadGrid();
 
         _this.resetState();
-      }); // try {
-      //        fetch(fullDeleteUrl, {
-      //             mode: 'cors',
-      //             headers: {
-      //                 'Authorization': 'Bearer ' + sessionStorageData.Token
-      //             }
-      //         }).then(result => {
-      //             this.loadGrid();
-      //             this.resetState();
-      //         });
-      // }
-      // catch(error)
-      // {
-      //     console.log(error);
-      //     alert('an error occurred while deleting the data.');
-      // }
+      });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow", function () {
@@ -79938,24 +79952,28 @@ function (_Component) {
         postData.SystemID = sessionStorageData.SystemID;
       }
 
-      try {
-        fetch(sessionStorageData.UpdateApiUrl, {
-          method: 'put',
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + sessionStorageData.Token
-          },
-          body: JSON.stringify(postData)
-        }).then(function (response) {
-          _this.loadGrid();
+      var promise = _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].UpdateRow(postData);
+      promise.then(function (result) {
+        _this.loadGrid();
 
-          _this.resetState();
-        });
-      } catch (error) {
-        console.log(error);
-        alert('an error occurred while saving the data.');
-      }
+        _this.resetState();
+      }); // try {
+      //     fetch(sessionStorageData.UpdateApiUrl, {
+      //         method: 'put',
+      //         mode: 'cors',
+      //         headers: {
+      //             'Content-Type': 'application/json',
+      //             'Authorization': 'Bearer ' + sessionStorageData.Token
+      //         },
+      //         body: JSON.stringify(postData)
+      //     }).then(response => {
+      //         this.loadGrid();
+      //         this.resetState();
+      //     });
+      // } catch (error) {
+      //     console.log(error);
+      //     alert('an error occurred while saving the data.');
+      // }  
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
@@ -80483,6 +80501,26 @@ function () {
       }).then(function (result) {
         return result.json();
       });
+    }
+  }, {
+    key: "UpdateRow",
+    value: function UpdateRow(postData) {
+      var sessionStorageData = getSessionData();
+
+      try {
+        return fetch(sessionStorageData.UpdateApiUrl, {
+          method: 'put',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+          },
+          body: JSON.stringify(postData)
+        });
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while saving the data.');
+      }
     }
   }, {
     key: "DeleteRow",
