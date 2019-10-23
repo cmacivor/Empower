@@ -25,6 +25,9 @@ export function getSessionData() {
 
     let fullGetAllAdress = `${apiAddress}/api/${adminType}/GetAll`;
 
+    //ServiceProgramCategory urls
+    
+
     let sessionData = {
         Token: token,
         CurrentUser: currentUser,

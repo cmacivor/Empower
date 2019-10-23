@@ -128,9 +128,8 @@ export default class AdminType extends Component {
         }
     }
 
-    showAlert = (error) => {
-        //error is undefined here
-        //console.log(error);
+    showAlert = () => {
+       alert('an error occurred while saving the data.');
     }
 
     resetState = () => {
@@ -182,34 +181,23 @@ export default class AdminType extends Component {
             postData.SystemID = sessionStorageData.SystemID  
         }
 
-        let promise = Api.UpdateRow(postData);
+        let promise = Api.UpdateRow(postData).then(response => {return response });
 
         promise.then(result => {
-            this.loadGrid();
+            if (result.status === 200) {
+                this.loadGrid();
 
-            this.resetState();
-        });
+                if (this.state.ErrorMessage === '') {
+                    this.resetState();
+                }
+            } else {
+                return result.json();
+            } 
 
-        // try {
-
-        //     fetch(sessionStorageData.UpdateApiUrl, {
-        //         method: 'put',
-        //         mode: 'cors',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + sessionStorageData.Token
-        //         },
-        //         body: JSON.stringify(postData)
-        //     }).then(response => {
-        //         this.loadGrid();
-
-        //         this.resetState();
-        //     });
-
-        // } catch (error) {
-        //     console.log(error);
-        //     alert('an error occurred while saving the data.');
-        // }  
+        }).then(finalResult => {
+            this.handleError(finalResult);
+                    
+        }).catch(this.showAlert());
     }
 
 
