@@ -15,5 +15,7 @@ namespace Empower.Models
         public string Token { get; set; }
 
         public string BaseApiAddress { get; set; }
+
+        public string  SystemID { get; set; }
     }
 }

@@ -95,6 +95,8 @@ namespace Empower.Authentication
 
         public string baseApiAddress { get; set; }
 
+        public string systemID { get; set; }
+
         public System.Net.HttpStatusCode StatusCode { get; set; }
 
         public string ResponseMessage { get; set; }

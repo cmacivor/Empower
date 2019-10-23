@@ -79811,6 +79811,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(ag_grid_community_dist_styles_ag_grid_css__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ag-grid-community/dist/styles/ag-theme-bootstrap.css */ "./node_modules/ag-grid-community/dist/styles/ag-theme-bootstrap.css");
 /* harmony import */ var ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(ag_grid_community_dist_styles_ag_theme_bootstrap_css__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
 
 
 
@@ -79825,6 +79826,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+__webpack_require__(/*! .//commonAdmin */ "./wwwroot/source/commonAdmin.js");
 
 var AdminType =
 /*#__PURE__*/
@@ -79838,123 +79842,56 @@ function (_Component) {
 
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(AdminType).call(this, props));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "Validate",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              if (_this.state.name === '' || _this.state.description === '') {
-                _this.setState({
-                  ErrorMessage: "Both fields must contain a value."
-                });
-              }
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveNew", function () {
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+      var postData = {
+        Name: _this.state.name,
+        Description: _this.state.description,
+        Active: _this.state.active,
+        CreatedDate: new Date().toLocaleString(),
+        CreatedBy: sessionStorageData.CurrentUser,
+        UpdatedDate: new Date().toLocaleString(),
+        UpdatedBy: sessionStorageData.CurrentUser
+      };
 
-              if (_this.state.name.length > 20) {
-                _this.setState({
-                  ErrorMessage: "the Name field must be 20 characters or less."
-                });
-              }
+      if (sessionStorageData.AdminType === "assessmenttype") {
+        postData.SystemID = sessionStorageData.SystemID;
+      }
 
-              if (_this.state.description.length > 100) {
-                _this.setState({
-                  ErrorMessage: "the Description field must 100 characters or less."
-                });
-              }
+      var promise = _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].SaveNew(postData).then(function (response) {
+        return response;
+      });
+      promise.then(function (result) {
+        if (result.status === 200) {
+          _this.loadGrid();
 
-            case 3:
-            case "end":
-              return _context.stop();
+          if (_this.state.ErrorMessage === '') {
+            _this.resetState();
           }
+        } else {
+          return result.json();
         }
-      }, _callee);
-    })));
+      }).then(function (finalResult) {
+        _this.handleError(finalResult);
+      }); //.catch(this.showAlert());
+    });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveNew",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var apiAddress, token, currentUser, fullAddress, postData, response, responseData, errors;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              apiAddress = sessionStorage.getItem("baseApiAddress");
-              token = sessionStorage.getItem("token");
-              currentUser = sessionStorage.getItem("userName");
-              fullAddress = apiAddress + '/api/AddressType/Create';
-              postData = {
-                Name: _this.state.name,
-                Description: _this.state.description,
-                Active: _this.state.active,
-                CreatedDate: new Date().toLocaleString(),
-                CreatedBy: currentUser,
-                UpdatedDate: new Date().toLocaleString(),
-                UpdatedBy: currentUser
-              };
-              _context2.prev = 5;
-              _context2.next = 8;
-              return fetch(fullAddress, {
-                method: 'post',
-                mode: 'cors',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(postData)
-              });
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleError", function (finalResult) {
+      if (finalResult !== undefined && finalResult !== null && finalResult.ModelState !== null) {
+        var nameError = finalResult.ModelState["entity.Name"];
+        nameError.forEach(function (error) {
+          _this.state.ErrorMessage += error;
 
-            case 8:
-              response = _context2.sent;
+          _this.setState({
+            isVisible: true
+          });
+        });
+      }
+    });
 
-              if (!(response.status === 400)) {
-                _context2.next = 15;
-                break;
-              }
-
-              _context2.next = 12;
-              return response.json();
-
-            case 12:
-              responseData = _context2.sent;
-              errors = responseData.ModelState["entity.Name"];
-              errors.forEach(function (error) {
-                _this.state.ErrorMessage += error;
-
-                _this.setState({
-                  isVisible: true
-                });
-              });
-
-            case 15:
-              _context2.next = 17;
-              return _this.loadGrid();
-
-            case 17:
-              if (_this.state.ErrorMessage === '') {
-                _this.resetState();
-              }
-
-              _context2.next = 24;
-              break;
-
-            case 20:
-              _context2.prev = 20;
-              _context2.t0 = _context2["catch"](5);
-              console.log(_context2.t0);
-              alert('an error occurred while saving the data.');
-
-            case 24:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[5, 20]]);
-    })));
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "showAlert", function () {
+      alert('an error occurred while saving the data.');
+    });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
       _this.setState({
@@ -79969,124 +79906,61 @@ function (_Component) {
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "DeleteSelectedRow",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var selectedRowId, apiAddress, token, currentUser, fullAddress, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              selectedRowId = _this.state.ID;
-              apiAddress = sessionStorage.getItem("baseApiAddress");
-              token = sessionStorage.getItem("token");
-              currentUser = sessionStorage.getItem("userName");
-              fullAddress = apiAddress + "/api/AddressType/Delete/".concat(selectedRowId);
-              _context3.prev = 5;
-              _context3.next = 8;
-              return fetch(fullAddress, {
-                mode: 'cors',
-                headers: {
-                  'Authorization': 'Bearer ' + token
-                }
-              });
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "DeleteSelectedRow", function () {
+      var selectedRowId = _this.state.ID;
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+      var fullDeleteUrl = "".concat(sessionStorageData.DeleteApiUrl, "/").concat(selectedRowId);
+      var promise = _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].DeleteRow(fullDeleteUrl, sessionStorageData.Token);
+      promise.then(function (result) {
+        _this.loadGrid();
 
-            case 8:
-              response = _context3.sent;
-              _context3.next = 11;
-              return _this.loadGrid();
+        _this.resetState();
+      });
+    });
 
-            case 11:
-              _this.resetState();
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow", function () {
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+      var postData = {
+        ID: _this.state.ID,
+        Name: _this.state.name,
+        Description: _this.state.description,
+        Active: _this.state.active,
+        CreatedDate: _this.state.CreatedDate,
+        CreatedBy: _this.state.CreatedBy,
+        UpdatedDate: new Date().toLocaleString(),
+        UpdatedBy: sessionStorageData.CurrentUser
+      };
 
-              _context3.next = 18;
-              break;
+      if (sessionStorageData.AdminType === "assessmenttype") {
+        postData.SystemID = sessionStorageData.SystemID;
+      }
 
-            case 14:
-              _context3.prev = 14;
-              _context3.t0 = _context3["catch"](5);
-              console.log(_context3.t0);
-              alert('an error occurred while deleting the data.');
+      var promise = _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].UpdateRow(postData).then(function (response) {
+        return response;
+      });
+      promise.then(function (result) {
+        if (result.status === 200) {
+          _this.loadGrid();
 
-            case 18:
-            case "end":
-              return _context3.stop();
+          if (_this.state.ErrorMessage === '') {
+            _this.resetState();
           }
+        } else {
+          return result.json();
         }
-      }, _callee3, null, [[5, 14]]);
-    })));
-
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      var apiAddress, token, currentUser, fullAddress, postData, response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              apiAddress = sessionStorage.getItem("baseApiAddress");
-              token = sessionStorage.getItem("token");
-              currentUser = sessionStorage.getItem("userName");
-              fullAddress = apiAddress + '/api/AddressType/Update';
-              postData = {
-                ID: _this.state.ID,
-                Name: _this.state.name,
-                Description: _this.state.description,
-                Active: _this.state.active,
-                CreatedDate: _this.state.CreatedDate,
-                CreatedBy: _this.state.CreatedBy,
-                UpdatedDate: new Date().toLocaleString(),
-                UpdatedBy: currentUser
-              };
-              _context4.prev = 5;
-              _context4.next = 8;
-              return fetch(fullAddress, {
-                method: 'put',
-                mode: 'cors',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(postData)
-              });
-
-            case 8:
-              response = _context4.sent;
-              _context4.next = 11;
-              return _this.loadGrid();
-
-            case 11:
-              _this.resetState();
-
-              _context4.next = 18;
-              break;
-
-            case 14:
-              _context4.prev = 14;
-              _context4.t0 = _context4["catch"](5);
-              console.log(_context4.t0);
-              alert('an error occurred while saving the data.');
-
-            case 18:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      }, _callee4, null, [[5, 14]]);
-    })));
+      }).then(function (finalResult) {
+        _this.handleError(finalResult);
+      }); //.catch(this.showAlert());
+    });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context.prev = _context.next) {
             case 0:
               if (_this.state && !_this.state.ID) {
                 _this.SaveNew();
@@ -80100,36 +79974,34 @@ function (_Component) {
 
             case 1:
             case "end":
-              return _context5.stop();
+              return _context.stop();
           }
         }
-      }, _callee5);
+      }, _callee);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "ResetClickEventHandler",
     /*#__PURE__*/
     _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context6.prev = _context6.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context6.next = 2;
-              return _this.loadGrid();
+              _this.loadGrid();
 
-            case 2:
               _this.setState({
                 name: _this.state.originallySelectedName,
                 description: _this.state.originallySelectedDescription
               });
 
-            case 3:
+            case 2:
             case "end":
-              return _context6.stop();
+              return _context2.stop();
           }
         }
-      }, _callee6);
+      }, _callee2);
     })));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleChange", function (e, field) {
@@ -80194,40 +80066,13 @@ function (_Component) {
       _this.showForm();
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "loadGrid",
-    /*#__PURE__*/
-    _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-      var apiAddress, token, fullAddress;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-        while (1) {
-          switch (_context7.prev = _context7.next) {
-            case 0:
-              //get the route, use it to call the correct api
-              apiAddress = sessionStorage.getItem("baseApiAddress");
-              token = sessionStorage.getItem("token");
-              fullAddress = apiAddress + '/api/AddressType/GetAll';
-              fetch(fullAddress, {
-                mode: 'cors',
-                headers: {
-                  'Authorization': 'Bearer ' + token
-                }
-              }).then(function (result) {
-                return result.json();
-              }).then(function (rowData) {
-                return _this.setState({
-                  rowData: rowData
-                });
-              });
-
-            case 4:
-            case "end":
-              return _context7.stop();
-          }
-        }
-      }, _callee7);
-    })));
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "loadGrid", function () {
+      _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].getAll().then(function (rowData) {
+        return _this.setState({
+          rowData: rowData
+        });
+      });
+    });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
       if (event.target.value === "yes") {
@@ -80561,6 +80406,162 @@ __webpack_require__.r(__webpack_exports__);
 
 
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AdminType__WEBPACK_IMPORTED_MODULE_3__["default"], null), document.getElementById('root'));
+
+/***/ }),
+
+/***/ "./wwwroot/source/commonAdmin.js":
+/*!***************************************!*\
+  !*** ./wwwroot/source/commonAdmin.js ***!
+  \***************************************/
+/*! exports provided: getCurrentUrl, getSessionData, Api */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCurrentUrl", function() { return getCurrentUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSessionData", function() { return getSessionData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Api", function() { return Api; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+function getCurrentUrl() {
+  var currentHref = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+  return currentHref;
+}
+function getSessionData() {
+  var apiAddress = sessionStorage.getItem("baseApiAddress");
+  var token = sessionStorage.getItem("token");
+  var currentUser = sessionStorage.getItem("userName");
+  var systemID = sessionStorage.getItem("systemID");
+  var adminType = getCurrentUrl();
+  var fullCreateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Create");
+  var fullUpdateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
+  var fullDeleteAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Delete");
+  var fullGetAllAdress = "".concat(apiAddress, "/api/").concat(adminType, "/GetAll"); //ServiceProgramCategory urls
+
+  var sessionData = {
+    Token: token,
+    CurrentUser: currentUser,
+    AdminType: getCurrentUrl(),
+    SystemID: systemID,
+    CreateApiUrl: fullCreateAddress,
+    UpdateApiUrl: fullUpdateAddress,
+    DeleteApiUrl: fullDeleteAddress,
+    GetAllApiUrl: fullGetAllAdress
+  };
+  return sessionData;
+}
+var Api =
+/*#__PURE__*/
+function () {
+  function Api() {
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, Api);
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Api, null, [{
+    key: "getAll",
+    value: function getAll() {
+      var sessionStorageData = getSessionData();
+      return fetch(sessionStorageData.GetAllApiUrl, {
+        //mode: 'cors',
+        headers: {
+          'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+      }).then(function (result) {
+        return result.json();
+      });
+    }
+  }, {
+    key: "UpdateRow",
+    value: function UpdateRow(postData) {
+      var sessionStorageData = getSessionData();
+
+      try {
+        return fetch(sessionStorageData.UpdateApiUrl, {
+          method: 'put',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+          },
+          body: JSON.stringify(postData)
+        });
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while saving the data.');
+      }
+    }
+  }, {
+    key: "DeleteRow",
+    value: function DeleteRow(fullDeleteUrl, token) {
+      try {
+        return fetch(fullDeleteUrl, {
+          mode: 'cors',
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while deleting the data.');
+      }
+    }
+  }, {
+    key: "SaveNew",
+    value: function () {
+      var _SaveNew = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(postData) {
+        var sessionStorageData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                sessionStorageData = getSessionData();
+                _context.prev = 1;
+                return _context.abrupt("return", fetch(sessionStorageData.CreateApiUrl, {
+                  method: 'post',
+                  mode: 'cors',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                  },
+                  body: JSON.stringify(postData)
+                }));
+
+              case 5:
+                _context.prev = 5;
+                _context.t0 = _context["catch"](1);
+                console.log(_context.t0);
+                alert('an error occurred while saving the data.');
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 5]]);
+      }));
+
+      function SaveNew(_x) {
+        return _SaveNew.apply(this, arguments);
+      }
+
+      return SaveNew;
+    }()
+  }]);
+
+  return Api;
+}();
 
 /***/ }),
 

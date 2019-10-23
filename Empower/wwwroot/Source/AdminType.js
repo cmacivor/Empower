@@ -3,6 +3,8 @@ import { AgGridReact } from 'ag-grid-react';
 import ChildMessageRenderer from './ChildMessageRenderer'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-bootstrap.css'
+import { getSessionData, Api } from './commonAdmin';
+require ('.//commonAdmin');
 
 
 export default class AdminType extends Component {
@@ -68,93 +70,66 @@ export default class AdminType extends Component {
         }
         
         this.loadGrid(); 
-
-        this.hideForm = this.hideForm.bind(this);
-    }
-
-
-    Validate = async() => {
-
-        if (this.state.name === '' || this.state.description === '') {
-            this.setState({
-                ErrorMessage: "Both fields must contain a value."
-            });
-        }       
-
-        if (this.state.name.length > 20) {
-            this.setState({
-                ErrorMessage: "the Name field must be 20 characters or less."
-            });
-        }
-        if (this.state.description.length > 100) {
-            this.setState({
-                ErrorMessage: "the Description field must 100 characters or less."
-            });
-        }
-    }
-
     
 
-    SaveNew = async() => {
+        this.hideForm = this.hideForm.bind(this);
+       
+    }    
 
+    SaveNew = () => {
 
-
-        let apiAddress = sessionStorage.getItem("baseApiAddress");
-
-        let token = sessionStorage.getItem("token");
-
-        let currentUser = sessionStorage.getItem("userName");
-
-        let fullAddress = apiAddress + '/api/AddressType/Create';
+        let sessionStorageData = getSessionData();
 
         var postData = {
             Name: this.state.name,
             Description: this.state.description,
             Active: this.state.active,
             CreatedDate: new Date().toLocaleString(), 
-            CreatedBy:  currentUser, 
+            CreatedBy:  sessionStorageData.CurrentUser, 
             UpdatedDate: new Date().toLocaleString(),
-            UpdatedBy: currentUser
+            UpdatedBy: sessionStorageData.CurrentUser 
         };
 
-        try {
-
-            //create the new record
-            const response = await fetch(fullAddress, {
-                method: 'post',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(postData)
-            });
-
-            if (response.status === 400) {
-
-                let responseData = await response.json();
-                
-                let errors = responseData.ModelState["entity.Name"];
-
-                errors.forEach(error => {
-                    this.state.ErrorMessage += error;
-                    
-                    this.setState({
-                        isVisible: true
-                    });                   
-                });
-            }
-
-            await this.loadGrid();
-
-            if (this.state.ErrorMessage === '') {
-                this.resetState();
-            }
-
-        } catch (error) {
-            console.log(error);
-            alert('an error occurred while saving the data.');
+        if (sessionStorageData.AdminType === "assessmenttype") {
+            postData.SystemID = sessionStorageData.SystemID
         }
+        
+       let promise = Api.SaveNew(postData).then(response => {return response });
+
+        promise.then(result => {
+            if (result.status === 200) {
+                this.loadGrid();
+
+                if (this.state.ErrorMessage === '') {
+                    this.resetState();
+                }
+            } else {
+                return result.json();
+            } 
+
+        }).then(finalResult => {
+            this.handleError(finalResult);
+                    
+        });//.catch(this.showAlert());
+    }
+
+    handleError = (finalResult) => {
+        if (finalResult !== undefined && finalResult !== null && finalResult.ModelState !== null) {
+            let nameError = finalResult.ModelState["entity.Name"];
+
+            nameError.forEach(error => {
+
+                this.state.ErrorMessage += error;
+                
+                this.setState({
+                    isVisible: true
+                });  
+            });  
+        }
+    }
+
+    showAlert = () => {
+       alert('an error occurred while saving the data.');
     }
 
     resetState = () => {
@@ -170,47 +145,26 @@ export default class AdminType extends Component {
          });
     }
 
-    DeleteSelectedRow = async() => {
+    DeleteSelectedRow = () => {
 
         let selectedRowId = this.state.ID;
 
-        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let sessionStorageData = getSessionData();
 
-        let token = sessionStorage.getItem("token");
+        let fullDeleteUrl = `${sessionStorageData.DeleteApiUrl}/${selectedRowId}`; 
 
-        let currentUser = sessionStorage.getItem("userName");
+        let promise = Api.DeleteRow(fullDeleteUrl, sessionStorageData.Token);
 
-        let fullAddress = apiAddress + `/api/AddressType/Delete/${selectedRowId}`;
-        
-        try {
-               const response =  await fetch(fullAddress, {
-                    mode: 'cors',
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    }
-                });
+        promise.then(result => {
+            this.loadGrid();
 
-                await this.loadGrid();
-
-                this.resetState();
-
-        }
-        catch(error)
-        {
-            console.log(error);
-            alert('an error occurred while deleting the data.');
-        }
+            this.resetState();
+        });
     }
 
-    UpdateSelectedRow = async () => {
+    UpdateSelectedRow = () => {
 
-        let apiAddress = sessionStorage.getItem("baseApiAddress");
-
-        let token = sessionStorage.getItem("token");
-
-        let currentUser = sessionStorage.getItem("userName");
-
-        let fullAddress = apiAddress + '/api/AddressType/Update';
+        let sessionStorageData = getSessionData();
 
         var postData = {
             ID: this.state.ID,
@@ -220,29 +174,30 @@ export default class AdminType extends Component {
             CreatedDate: this.state.CreatedDate,
             CreatedBy: this.state.CreatedBy,
             UpdatedDate: new Date().toLocaleString(),
-            UpdatedBy: currentUser
+            UpdatedBy: sessionStorageData.CurrentUser 
         };
 
-        try {
+        if (sessionStorageData.AdminType  === "assessmenttype") {
+            postData.SystemID = sessionStorageData.SystemID  
+        }
 
-            const response = await fetch(fullAddress, {
-                method: 'put',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(postData)
-            });
+        let promise = Api.UpdateRow(postData).then(response => {return response });
 
-            await this.loadGrid();
+        promise.then(result => {
+            if (result.status === 200) {
+                this.loadGrid();
 
-            this.resetState();
+                if (this.state.ErrorMessage === '') {
+                    this.resetState();
+                }
+            } else {
+                return result.json();
+            } 
 
-        } catch (error) {
-            console.log(error);
-            alert('an error occurred while saving the data.');
-        }  
+        }).then(finalResult => {
+            this.handleError(finalResult);
+                    
+        }); //.catch(this.showAlert());
     }
 
 
@@ -260,7 +215,7 @@ export default class AdminType extends Component {
 
     ResetClickEventHandler = async() => {
         
-        await this.loadGrid();
+        this.loadGrid();
 
         this.setState({
             name: this.state.originallySelectedName,
@@ -341,21 +296,9 @@ export default class AdminType extends Component {
         this.showForm();
     }
 
-    loadGrid = async() => {
-        //get the route, use it to call the correct api
-        let apiAddress = sessionStorage.getItem("baseApiAddress");
+    loadGrid = () => {
 
-        let token = sessionStorage.getItem("token");
-
-        let fullAddress = apiAddress + '/api/AddressType/GetAll';
-
-        fetch(fullAddress, {
-            mode: 'cors',
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        }).then(result => result.json())
-            .then(rowData => this.setState({ rowData }));
+         Api.getAll().then(rowData => this.setState({ rowData }));
     }
 
     setActive = event => {

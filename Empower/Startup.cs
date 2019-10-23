@@ -60,6 +60,14 @@ namespace Empower
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            //set up apsettings.json. Look at this SO post for more info: https://stackoverflow.com/questions/31453495/how-to-read-appsettings-values-from-json-file-in-asp-net-core
+            //also this: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-3.0
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
             app.UseRouting();
 
             app.UseAuthorization();
