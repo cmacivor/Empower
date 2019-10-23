@@ -54,7 +54,25 @@ export class Api {
         }).then(result => result.json());
     }
 
-    static async saveNew(postData) {
+    static DeleteRow(fullDeleteUrl, token) {
+        
+        try {
+               return fetch(fullDeleteUrl, {
+                    mode: 'cors',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+            }
+            catch(error)
+            {
+                console.log(error);
+                alert('an error occurred while deleting the data.');
+            }
+
+    }
+
+    static async SaveNew(postData) {
 
         let sessionStorageData = getSessionData();
 

@@ -79858,12 +79858,11 @@ function (_Component) {
         postData.SystemID = sessionStorageData.SystemID;
       }
 
-      var promise = _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].saveNew(postData).then(function (response) {
+      var promise = _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].SaveNew(postData).then(function (response) {
         return response;
       });
       promise.then(function (result) {
         if (result.status === 400) {
-          //return result.json();  //send the error message to the next then() call
           var errors = result.json();
           errors.forEach(function (error) {
             _this.state.ErrorMessage += error;
@@ -79879,15 +79878,7 @@ function (_Component) {
             _this.resetState();
           }
         }
-      }); //    .then((result) => {               
-      //         let errors = result.ModelState["entity.Name"];
-      //         errors.forEach(error => {
-      //             this.state.ErrorMessage += error;
-      //             this.setState({
-      //                 isVisible: true
-      //             });                   
-      //         });
-      //    });
+      });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "resetState", function () {
@@ -79907,22 +79898,27 @@ function (_Component) {
       var selectedRowId = _this.state.ID;
       var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
       var fullDeleteUrl = "".concat(sessionStorageData.DeleteApiUrl, "/").concat(selectedRowId);
+      var promise = _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].DeleteRow(fullDeleteUrl, sessionStorageData.Token);
+      promise.then(function (result) {
+        _this.loadGrid();
 
-      try {
-        fetch(fullDeleteUrl, {
-          mode: 'cors',
-          headers: {
-            'Authorization': 'Bearer ' + sessionStorageData.Token
-          }
-        }).then(function (result) {
-          _this.loadGrid();
-
-          _this.resetState();
-        });
-      } catch (error) {
-        console.log(error);
-        alert('an error occurred while deleting the data.');
-      }
+        _this.resetState();
+      }); // try {
+      //        fetch(fullDeleteUrl, {
+      //             mode: 'cors',
+      //             headers: {
+      //                 'Authorization': 'Bearer ' + sessionStorageData.Token
+      //             }
+      //         }).then(result => {
+      //             this.loadGrid();
+      //             this.resetState();
+      //         });
+      // }
+      // catch(error)
+      // {
+      //     console.log(error);
+      //     alert('an error occurred while deleting the data.');
+      // }
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "UpdateSelectedRow", function () {
@@ -80489,9 +80485,24 @@ function () {
       });
     }
   }, {
-    key: "saveNew",
+    key: "DeleteRow",
+    value: function DeleteRow(fullDeleteUrl, token) {
+      try {
+        return fetch(fullDeleteUrl, {
+          mode: 'cors',
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        });
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while deleting the data.');
+      }
+    }
+  }, {
+    key: "SaveNew",
     value: function () {
-      var _saveNew = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+      var _SaveNew = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(postData) {
         var sessionStorageData;
@@ -80525,11 +80536,11 @@ function () {
         }, _callee, null, [[1, 5]]);
       }));
 
-      function saveNew(_x) {
-        return _saveNew.apply(this, arguments);
+      function SaveNew(_x) {
+        return _SaveNew.apply(this, arguments);
       }
 
-      return saveNew;
+      return SaveNew;
     }()
   }]);
 

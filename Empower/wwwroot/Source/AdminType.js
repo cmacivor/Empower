@@ -94,11 +94,10 @@ export default class AdminType extends Component {
             postData.SystemID = sessionStorageData.SystemID
         }
         
-       let promise =   Api.saveNew(postData).then(response => {return response });
+       let promise =   Api.SaveNew(postData).then(response => {return response });
 
        promise.then(result => {
            if (result.status === 400) {
-                //return result.json();  //send the error message to the next then() call
                 let errors = result.json();
 
                 errors.forEach(error => {
@@ -117,17 +116,6 @@ export default class AdminType extends Component {
                 }
            }
        });
-    //    .then((result) => {               
-    //         let errors = result.ModelState["entity.Name"];
-
-    //         errors.forEach(error => {
-    //             this.state.ErrorMessage += error;
-                
-    //             this.setState({
-    //                 isVisible: true
-    //             });                   
-    //         });
-    //    });
     }
 
     resetState = () => {
@@ -151,23 +139,13 @@ export default class AdminType extends Component {
 
         let fullDeleteUrl = `${sessionStorageData.DeleteApiUrl}/${selectedRowId}`; 
 
-        try {
-               fetch(fullDeleteUrl, {
-                    mode: 'cors',
-                    headers: {
-                        'Authorization': 'Bearer ' + sessionStorageData.Token
-                    }
-                }).then(result => {
-                    this.loadGrid();
+        let promise = Api.DeleteRow(fullDeleteUrl, sessionStorageData.Token);
 
-                    this.resetState();
-                });
-        }
-        catch(error)
-        {
-            console.log(error);
-            alert('an error occurred while deleting the data.');
-        }
+        promise.then(result => {
+            this.loadGrid();
+
+            this.resetState();
+        });
     }
 
     UpdateSelectedRow = () => {
