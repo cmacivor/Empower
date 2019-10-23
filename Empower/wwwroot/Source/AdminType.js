@@ -110,7 +110,7 @@ export default class AdminType extends Component {
         }).then(finalResult => {
             this.handleError(finalResult);
                     
-        }).catch(this.showAlert());
+        });//.catch(this.showAlert());
     }
 
     handleError = (finalResult) => {
@@ -197,7 +197,7 @@ export default class AdminType extends Component {
         }).then(finalResult => {
             this.handleError(finalResult);
                     
-        }).catch(this.showAlert());
+        }); //.catch(this.showAlert());
     }
 
 

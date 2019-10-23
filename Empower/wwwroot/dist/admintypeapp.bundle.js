@@ -79873,7 +79873,7 @@ function (_Component) {
         }
       }).then(function (finalResult) {
         _this.handleError(finalResult);
-      })["catch"](_this.showAlert());
+      }); //.catch(this.showAlert());
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleError", function (finalResult) {
@@ -79950,7 +79950,7 @@ function (_Component) {
         }
       }).then(function (finalResult) {
         _this.handleError(finalResult);
-      })["catch"](_this.showAlert());
+      }); //.catch(this.showAlert());
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveClickEventHandler",
@@ -80446,7 +80446,8 @@ function getSessionData() {
   var fullCreateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Create");
   var fullUpdateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
   var fullDeleteAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Delete");
-  var fullGetAllAdress = "".concat(apiAddress, "/api/").concat(adminType, "/GetAll");
+  var fullGetAllAdress = "".concat(apiAddress, "/api/").concat(adminType, "/GetAll"); //ServiceProgramCategory urls
+
   var sessionData = {
     Token: token,
     CurrentUser: currentUser,
