@@ -1,6 +1,5 @@
 node_modules/
 bin/
 obj/
-Properties/
 .vscode/
 .vs/
