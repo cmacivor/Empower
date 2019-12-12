@@ -29,11 +29,15 @@ namespace Empower.Controllers
             var baseApiAddress = (string)TempData["baseApiAddress"];
             var systemID = (string)TempData["systemID"];
 
+            
             if (token == null || userName == null)
             {
                 return RedirectToAction("Authenticate", "Login");
             }
-            
+
+            var authResponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+
+
             var viewModel = new HomeViewModel
             {
                 Token = token,                

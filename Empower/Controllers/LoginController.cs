@@ -37,6 +37,8 @@ namespace Empower.Controllers
 
                 var loginResult = await _loginService.Login(loginParams);
 
+                HttpContext.Session.Set<AuthenticationResponse>("AuthenticationResponse", loginResult);
+
                 TempData["Token"] = loginResult.access_token;
                 TempData["UserName"] = loginResult.userName;
                 TempData["baseApiAddress"] = loginResult.baseApiAddress;
