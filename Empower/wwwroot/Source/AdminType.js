@@ -56,7 +56,7 @@ export default class AdminType extends Component {
                
             },
             {
-                headerName: "",
+                headerName: "DeleteButton",
                 field: "price",
                 width: 100,
                 cellRenderer: "childMessageRenderer"
@@ -302,10 +302,6 @@ export default class AdminType extends Component {
     }
 
     setActive = event => {
-
-        this.setState({
-            saveButtonDisabled: false
-        });
 
         if (event.target.value === "yes") {
             this.setState({ 
