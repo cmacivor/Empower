@@ -80075,6 +80075,10 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "setActive", function (event) {
+      _this.setState({
+        saveButtonDisabled: false
+      });
+
       if (event.target.value === "yes") {
         _this.setState({
           active: true
@@ -80130,7 +80134,7 @@ function (_Component) {
         floatCell: true,
         headerClass: 'agGridHeader'
       }, {
-        headerName: "DeleteButton",
+        headerName: "",
         field: "price",
         width: 100,
         cellRenderer: "childMessageRenderer"
