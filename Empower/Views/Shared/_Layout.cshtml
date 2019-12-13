@@ -89,8 +89,8 @@
                             <a class="nav-link dropdown-toggle header-navlink hover-navlink" style="color:#EFEFEF" id="loginDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @authResponse.userName
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="loginDropdownMenuLink">
-                                <a class="dropdown-item" onclick="Login.RemoveAuthDataFromLocalStorageAndLogOut()" href="login">
+                            <div class="dropdown-menu" aria-labelledby="loginDropdownMenuLink">         
+                                <a class="dropdown-item" href="@Url.Action("LogOut", "Home")">
                                     <span class="oi oi-plus" aria-hidden="true"></span> Log Out
                                 </a>
                             </div>

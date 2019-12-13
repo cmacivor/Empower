@@ -12,8 +12,7 @@ namespace Empower.Controllers
 {
     public class HomeController : Controller
     {
-        //private const string AuthenticationResponse = "AuthenticationResponse";
-
+        
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -40,6 +39,13 @@ namespace Empower.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Authenticate", "Login");
         }
 
         public IActionResult Privacy()
