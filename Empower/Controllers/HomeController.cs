@@ -23,29 +23,20 @@ namespace Empower.Controllers
 
         //main React app will go here
         public IActionResult Index()
-        {
-            //first check to see if we're authenticated
-            //TODO: consider finding a better way to do this...maybe store auth data in a singleton? Could just store in session, the traditional way, and handle it that way?
-            var token = (string)TempData["Token"];
-            var userName = (string)TempData["UserName"];
-            var baseApiAddress = (string)TempData["baseApiAddress"];
-            var systemID = (string)TempData["systemID"];
+        {            
+            var authResponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
 
-            
-            if (token == null || userName == null)
+            if (authResponse == null)
             {
                 return RedirectToAction("Authenticate", "Login");
             }
-
-            //var authResponse = HttpContext.Session.Get<AuthenticationResponse>(AuthenticationResponse);
-
-
+            
             var viewModel = new HomeViewModel
             {
-                Token = token,                
-                UserName = userName,
-                BaseApiAddress = baseApiAddress,
-                SystemID = systemID
+                Token = authResponse.access_token,              
+                UserName = authResponse.userName, 
+                BaseApiAddress = authResponse.baseApiAddress, 
+                SystemID = authResponse.systemID  
             };
 
             return View(viewModel);
