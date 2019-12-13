@@ -1,9 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Empower.Authentication
-@*@inject IHttpContextAccessor HttpContextAccessor*@
 
 @{ 
-    //var authResponse = HttpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
     var authResponse = Context.Session.Get<AuthenticationResponse>("AuthenticationResponse");
     
 }
