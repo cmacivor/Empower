@@ -12,6 +12,8 @@ namespace Empower.Controllers
 {
     public class HomeController : Controller
     {
+        //private const string AuthenticationResponse = "AuthenticationResponse";
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -35,7 +37,7 @@ namespace Empower.Controllers
                 return RedirectToAction("Authenticate", "Login");
             }
 
-            var authResponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+            //var authResponse = HttpContext.Session.Get<AuthenticationResponse>(AuthenticationResponse);
 
 
             var viewModel = new HomeViewModel

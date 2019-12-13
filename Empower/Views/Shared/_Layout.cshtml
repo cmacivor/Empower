@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using Empower.Authentication
+@*@inject IHttpContextAccessor HttpContextAccessor*@
+
+@{ 
+    //var authResponse = HttpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+    var authResponse = Context.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+    
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -79,7 +89,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle header-navlink hover-navlink" style="color:#EFEFEF" id="loginDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
+                                @authResponse.userName
                             </a>
                             <div class="dropdown-menu" aria-labelledby="loginDropdownMenuLink">
                                 <a class="dropdown-item" onclick="Login.RemoveAuthDataFromLocalStorageAndLogOut()" href="login">
