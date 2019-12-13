@@ -38,6 +38,13 @@ namespace Empower
 
             services.AddHttpClient<ILoginService, LoginService>();
 
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10); //For easy testing TODO: will want to increase this
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             //app settings file
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
@@ -59,6 +66,7 @@ namespace Empower
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             //set up apsettings.json. Look at this SO post for more info: https://stackoverflow.com/questions/31453495/how-to-read-appsettings-values-from-json-file-in-asp-net-core
             //also this: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-3.0

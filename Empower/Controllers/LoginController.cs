@@ -37,10 +37,7 @@ namespace Empower.Controllers
 
                 var loginResult = await _loginService.Login(loginParams);
 
-                TempData["Token"] = loginResult.access_token;
-                TempData["UserName"] = loginResult.userName;
-                TempData["baseApiAddress"] = loginResult.baseApiAddress;
-                TempData["systemID"] = loginResult.systemID;
+                HttpContext.Session.Set<AuthenticationResponse>("AuthenticationResponse", loginResult);
 
                 if (loginResult.StatusCode == System.Net.HttpStatusCode.OK)
                 {
