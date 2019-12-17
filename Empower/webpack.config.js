@@ -4,7 +4,8 @@ module.exports = {
     mode: 'development',
     entry: {
         admintypeapp: './wwwroot/source/admintypeapp.js',
-        serviceprogramcategoryapp: './wwwroot/source/serviceprogramcategoryapp.js'
+        serviceprogramcategoryapp: './wwwroot/source/serviceprogramcategoryapp.js',
+        casemanagementapp: './wwwroot/source/casemanagementapp.js'
     },
     output: {
         path: path.resolve(__dirname, 'wwwroot/dist'),
