@@ -7,8 +7,13 @@ export default class CaseManagement extends Component {
     render() {
         return (
             <Tabs onSelect={(index, label) => console.log(label + ' selected')}>
-                <Tab label="Tab1">Tab 1 content</Tab>
-                <Tab label="Tab2">Tab 2 content</Tab>
+                <Tab label="Search">Search content</Tab>
+                <Tab label="Participant Info">Participant info content</Tab>
+                <Tab label="Supplemental">Supplemental content</Tab>
+                <Tab label="Address">Address content</Tab>
+                <Tab label="Family Info">Family Info</Tab>
+                <Tab label="Program">Program</Tab>
+                <Tab label="Assessment">Assessment</Tab>
             </Tabs>
         );
     }
