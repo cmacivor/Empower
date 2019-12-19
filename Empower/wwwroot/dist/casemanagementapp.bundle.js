@@ -149,6 +149,32 @@ module.exports = _createClass;
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js":
 /*!***************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/getPrototypeOf.js ***!
@@ -33787,10 +33813,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+
+
 
 
 
@@ -33801,47 +33833,95 @@ __webpack_require__.r(__webpack_exports__);
 var SearchClientProfile =
 /*#__PURE__*/
 function (_Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(SearchClientProfile, _Component);
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(SearchClientProfile, _Component);
 
   function SearchClientProfile(props) {
+    var _this;
+
     _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, SearchClientProfile);
 
-    return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(SearchClientProfile).call(this, props));
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(SearchClientProfile).call(this, props));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "ClearSearchFields", function () {
+      _this.setState({
+        firstName: '',
+        lastName: ''
+      });
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "HandleSearchFieldChange", function (event, field) {
+      _this.setState({
+        isSearchButtonDisabled: false //firstName: event.target.value,
+        //lastName: event.target.value
+
+      });
+
+      if (field === "firstname") {
+        _this.setState({
+          firstName: event.target.value
+        });
+      }
+
+      if (field === "lastname") {
+        _this.setState({
+          lastName: event.target.value
+        });
+      }
+    });
+
+    _this.state = {
+      isSearchButtonDisabled: true,
+      firstName: '',
+      lastName: ''
+    };
+    return _this;
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(SearchClientProfile, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
-      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-3"
-      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
         "class": "form-control",
+        onChange: function onChange(e) {
+          return _this2.HandleSearchFieldChange(e, "lastname");
+        },
+        value: this.state.lastName,
         placeholder: "Enter Last Name"
-      })), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-3"
-      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
         className: "form-control",
+        onChange: function onChange(e) {
+          return _this2.HandleSearchFieldChange(e, "firstname");
+        },
+        value: this.state.firstName,
         placeholder: "Enter First Name"
-      })), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-auto"
-      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
         type: "submit",
+        disabled: this.state.isSearchButtonDisabled,
         className: "btn btn-primary mb-2"
-      }, "Search")), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+      }, "Search")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-auto"
-      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
         type: "button",
+        onClick: this.ClearSearchFields,
         className: "btn btn-primary mb-2"
       }, "Clear Search"))));
     }
   }]);
 
   return SearchClientProfile;
-}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_7__["Component"]);
 
 
 
