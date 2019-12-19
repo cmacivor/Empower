@@ -33851,9 +33851,7 @@ function (_Component) {
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "HandleSearchFieldChange", function (event, field) {
       _this.setState({
-        isSearchButtonDisabled: false //firstName: event.target.value,
-        //lastName: event.target.value
-
+        isSearchButtonDisabled: false
       });
 
       if (field === "firstname") {
@@ -33866,6 +33864,31 @@ function (_Component) {
         _this.setState({
           lastName: event.target.value
         });
+      }
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "SearchButtonClickHandler", function () {
+      var apiAddress = sessionStorage.getItem("baseApiAddress");
+      var token = sessionStorage.getItem("token");
+      var fullSearchAddress = "".concat(apiAddress, "/api/ClientProfile/Search");
+      var postData = {
+        lastName: _this.state.lastName
+      };
+
+      try {
+        var result = fetch(fullSearchAddress, {
+          method: 'post',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify(postData)
+        });
+        console.log(result);
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while searching;');
       }
     });
 
@@ -33888,7 +33911,7 @@ function (_Component) {
         className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        "class": "form-control",
+        className: "form-control",
         onChange: function onChange(e) {
           return _this2.HandleSearchFieldChange(e, "lastname");
         },
@@ -33908,6 +33931,7 @@ function (_Component) {
         className: "col-auto"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
         type: "submit",
+        onClick: this.SearchButtonClickHandler,
         disabled: this.state.isSearchButtonDisabled,
         className: "btn btn-primary mb-2"
       }, "Search")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
