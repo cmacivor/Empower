@@ -33713,6 +33713,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap-tabs */ "./node_modules/react-bootstrap-tabs/index.js");
 /* harmony import */ var react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _SearchClientProfile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SearchClientProfile */ "./wwwroot/source/SearchClientProfile.js");
+
 
 
 
@@ -33736,12 +33738,15 @@ function (_Component) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tabs"], {
+        style: {
+          cursor: 'pointer'
+        },
         onSelect: function onSelect(index, label) {
           return console.log(label + ' selected');
         }
       }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
         label: "Search"
-      }, "Search content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_SearchClientProfile__WEBPACK_IMPORTED_MODULE_7__["default"], null)), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
         label: "Participant Info"
       }, "Participant info content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
         label: "Supplemental"
@@ -33758,6 +33763,84 @@ function (_Component) {
   }]);
 
   return CaseManagement;
+}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]);
+
+
+
+/***/ }),
+
+/***/ "./wwwroot/source/SearchClientProfile.js":
+/*!***********************************************!*\
+  !*** ./wwwroot/source/SearchClientProfile.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchClientProfile; });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+
+var SearchClientProfile =
+/*#__PURE__*/
+function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(SearchClientProfile, _Component);
+
+  function SearchClientProfile(props) {
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, SearchClientProfile);
+
+    return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(SearchClientProfile).call(this, props));
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(SearchClientProfile, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "form-row"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "col-3"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("input", {
+        type: "text",
+        "class": "form-control",
+        placeholder: "Enter Last Name"
+      })), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "col-3"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        placeholder: "Enter First Name"
+      })), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "col-auto"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary mb-2"
+      }, "Search")), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "col-auto"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-primary mb-2"
+      }, "Clear Search"))));
+    }
+  }]);
+
+  return SearchClientProfile;
 }(react__WEBPACK_IMPORTED_MODULE_5__["Component"]);
 
 
