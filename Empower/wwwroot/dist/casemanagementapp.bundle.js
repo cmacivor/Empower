@@ -33740,10 +33740,20 @@ function (_Component) {
           return console.log(label + ' selected');
         }
       }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
-        label: "Tab1"
-      }, "Tab 1 content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
-        label: "Tab2"
-      }, "Tab 2 content"));
+        label: "Search"
+      }, "Search content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        label: "Participant Info"
+      }, "Participant info content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        label: "Supplemental"
+      }, "Supplemental content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        label: "Address"
+      }, "Address content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        label: "Family Info"
+      }, "Family Info"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        label: "Program"
+      }, "Program"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        label: "Assessment"
+      }, "Assessment"));
     }
   }]);
 
