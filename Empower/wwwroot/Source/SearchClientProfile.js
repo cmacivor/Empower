@@ -1,22 +1,21 @@
 import React, { Component, useState } from 'react';
 import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap4';
+import SearchGrid from './SearchGrid';
 
 export default class SearchClientProfile extends Component { 
 
     constructor(props) {
         super(props);
 
-        // const [rows, setRows] = useState([]);
-        // const [columns] = useState([
-        //     { name: 'FirstName', title: 'First Name' },
-        //     { name: 'LastName', title: 'Last Name' }
-            
-        //   ]);
-
         this.state = {
             isSearchButtonDisabled: true,
             firstName: '',
-            lastName: ''
+            lastName: '',
+            columns: [
+                { name: 'FirstName', title: 'First Name' },
+                { name: 'Last Name', title: 'Last Name' },        
+              ],
+            rows: []
         }
     }
 
@@ -84,8 +83,11 @@ export default class SearchClientProfile extends Component {
                 } 
     
             }).then(finalResult => {
-                console.log(finalResult);
-            })
+                //console.log(finalResult);
+                this.setState({
+                    rows: finalResult
+                });
+            });
         }
         catch(error)
         {
@@ -116,15 +118,8 @@ export default class SearchClientProfile extends Component {
                 </div>
                 <br/>
                 <Grid
-                    rows={[
-                    { id: 0, product: 'DevExtreme', owner: 'DevExpress' },
-                    { id: 1, product: 'DevExtreme Reactive', owner: 'DevExpress' },
-                    ]}
-                    columns={[
-                    { name: 'id', title: 'ID' },
-                    { name: 'product', title: 'Product' },
-                    { name: 'owner', title: 'Owner' },
-                    ]}>
+                    rows={this.state.rows }
+                    columns={this.state.columns}>
                     <Table />
                     <TableHeaderRow />
                 </Grid>
