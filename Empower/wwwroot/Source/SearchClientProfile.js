@@ -13,7 +13,12 @@ export default class SearchClientProfile extends Component {
             lastName: '',
             columns: [
                 { name: 'FirstName', title: 'First Name' },
-                { name: 'Last Name', title: 'Last Name' },        
+                { name: 'LastName', title: 'Last Name' },
+                { name: 'MiddleName', title: 'Middle Name' },
+                { name: 'StateORVCIN', title: 'State/VCIN #' },
+                { name: 'SSN', title: 'SSN' },
+                { name: 'DOB', title: 'Birth Date' }, 
+                { name: 'Gender', title: 'Gender' },        
               ],
             rows: []
         }
@@ -68,22 +73,15 @@ export default class SearchClientProfile extends Component {
                 body: JSON.stringify(postData)
             }); 
 
-            //console.log(result);
             promise.then(result =>  {
                 if (result.status === 200) {
                     return result.json();
-                    //console.log(result);
-                    //this.loadGrid();
-    
-                    // if (this.state.ErrorMessage === '') {
-                    //     this.resetState();
-                    // }
+                
                 } else {
                     return result.json();
                 } 
     
             }).then(finalResult => {
-                //console.log(finalResult);
                 this.setState({
                     rows: finalResult
                 });
@@ -117,12 +115,14 @@ export default class SearchClientProfile extends Component {
                     </div>
                 </div>
                 <br/>
-                <Grid
-                    rows={this.state.rows }
-                    columns={this.state.columns}>
-                    <Table />
-                    <TableHeaderRow />
-                </Grid>
+                <div  >
+                    <Grid
+                        rows={this.state.rows }
+                        columns={this.state.columns}>
+                        <Table />
+                        <TableHeaderRow />
+                    </Grid>
+                </div>
             </div>
         );
     }

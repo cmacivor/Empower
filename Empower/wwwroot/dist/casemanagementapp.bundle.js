@@ -50362,6 +50362,21 @@ function (_Component) {
       }, {
         name: 'Last Name',
         title: 'Last Name'
+      }, {
+        name: 'MiddleName',
+        title: 'Middle Name'
+      }, {
+        name: 'StateORVCIN',
+        title: 'State/VCIN #'
+      }, {
+        name: 'SSN',
+        title: 'SSN'
+      }, {
+        name: 'DOB',
+        title: 'Birth Date'
+      }, {
+        name: 'Gender',
+        title: 'Gender'
       }],
       rows: []
     };
