@@ -50273,7 +50273,7 @@ function (_Component) {
         name: 'SSN',
         title: 'SSN'
       }, {
-        name: 'DOB',
+        name: 'FormattedBirthDate',
         title: 'Birth Date'
       }, {
         name: 'Gender',

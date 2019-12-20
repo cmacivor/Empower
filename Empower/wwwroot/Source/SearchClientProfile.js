@@ -17,7 +17,7 @@ export default class SearchClientProfile extends Component {
                 { name: 'MiddleName', title: 'Middle Name' },
                 { name: 'StateORVCIN', title: 'State/VCIN #' },
                 { name: 'SSN', title: 'SSN' },
-                { name: 'DOB', title: 'Birth Date' }, 
+                { name: 'FormattedBirthDate', title: 'Birth Date' }, 
                 { name: 'Gender', title: 'Gender' },        
               ],
             rows: [],
