@@ -33872,11 +33872,12 @@ function (_Component) {
       var token = sessionStorage.getItem("token");
       var fullSearchAddress = "".concat(apiAddress, "/api/ClientProfile/Search");
       var postData = {
-        lastName: _this.state.lastName
+        lastName: _this.state.lastName,
+        firstName: _this.state.firstName
       };
 
       try {
-        var result = fetch(fullSearchAddress, {
+        var promise = fetch(fullSearchAddress, {
           method: 'post',
           mode: 'cors',
           headers: {
@@ -33884,8 +33885,21 @@ function (_Component) {
             'Authorization': 'Bearer ' + token
           },
           body: JSON.stringify(postData)
+        }); //console.log(result);
+
+        promise.then(function (result) {
+          if (result.status === 200) {
+            return result.json(); //console.log(result);
+            //this.loadGrid();
+            // if (this.state.ErrorMessage === '') {
+            //     this.resetState();
+            // }
+          } else {
+            return result.json();
+          }
+        }).then(function (finalResult) {
+          console.log(finalResult);
         });
-        console.log(result);
       } catch (error) {
         console.log(error);
         alert('an error occurred while searching;');

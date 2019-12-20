@@ -45,12 +45,13 @@ export default class SearchClientProfile extends Component {
         let fullSearchAddress = `${apiAddress}/api/ClientProfile/Search`;
 
         let postData = {
-            lastName: this.state.lastName
+            lastName: this.state.lastName,
+            firstName: this.state.firstName
         }
 
         try
         {
-           var result = fetch(fullSearchAddress, {
+           var promise = fetch(fullSearchAddress, {
                 method: 'post',
                 mode: 'cors',
                 headers: {
@@ -60,7 +61,23 @@ export default class SearchClientProfile extends Component {
                 body: JSON.stringify(postData)
             }); 
 
-            console.log(result);
+            //console.log(result);
+            promise.then(result =>  {
+                if (result.status === 200) {
+                    return result.json();
+                    //console.log(result);
+                    //this.loadGrid();
+    
+                    // if (this.state.ErrorMessage === '') {
+                    //     this.resetState();
+                    // }
+                } else {
+                    return result.json();
+                } 
+    
+            }).then(finalResult => {
+                console.log(finalResult);
+            })
         }
         catch(error)
         {
