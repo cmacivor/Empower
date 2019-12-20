@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap4';
-import SearchGrid from './SearchGrid';
+
 
 export default class SearchClientProfile extends Component { 
 
