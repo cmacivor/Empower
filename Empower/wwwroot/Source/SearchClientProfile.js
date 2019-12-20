@@ -20,7 +20,8 @@ export default class SearchClientProfile extends Component {
                 { name: 'DOB', title: 'Birth Date' }, 
                 { name: 'Gender', title: 'Gender' },        
               ],
-            rows: []
+            rows: [],
+            isGridVisible: false
         }
     }
 
@@ -83,7 +84,8 @@ export default class SearchClientProfile extends Component {
     
             }).then(finalResult => {
                 this.setState({
-                    rows: finalResult
+                    rows: finalResult,
+                    isGridVisible: true
                 });
             });
         }
@@ -115,14 +117,18 @@ export default class SearchClientProfile extends Component {
                     </div>
                 </div>
                 <br/>
-                <div  >
+                {
+                    this.state.isGridVisible === true ?
+                    
                     <Grid
                         rows={this.state.rows }
                         columns={this.state.columns}>
                         <Table />
                         <TableHeaderRow />
-                    </Grid>
-                </div>
+                    </Grid> : <div></div>
+                
+                }
+
             </div>
         );
     }

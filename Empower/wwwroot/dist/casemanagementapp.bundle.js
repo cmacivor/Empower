@@ -50328,22 +50328,17 @@ function (_Component) {
             'Authorization': 'Bearer ' + token
           },
           body: JSON.stringify(postData)
-        }); //console.log(result);
-
+        });
         promise.then(function (result) {
           if (result.status === 200) {
-            return result.json(); //console.log(result);
-            //this.loadGrid();
-            // if (this.state.ErrorMessage === '') {
-            //     this.resetState();
-            // }
+            return result.json();
           } else {
             return result.json();
           }
         }).then(function (finalResult) {
-          //console.log(finalResult);
           _this.setState({
-            rows: finalResult
+            rows: finalResult,
+            isGridVisible: true
           });
         });
       } catch (error) {
@@ -50360,7 +50355,7 @@ function (_Component) {
         name: 'FirstName',
         title: 'First Name'
       }, {
-        name: 'Last Name',
+        name: 'LastName',
         title: 'Last Name'
       }, {
         name: 'MiddleName',
@@ -50378,7 +50373,8 @@ function (_Component) {
         name: 'Gender',
         title: 'Gender'
       }],
-      rows: []
+      rows: [],
+      isGridVisible: false
     };
     return _this;
   }
@@ -50423,10 +50419,10 @@ function (_Component) {
         type: "button",
         onClick: this.ClearSearchFields,
         className: "btn btn-primary mb-2"
-      }, "Clear Search"))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__["Grid"], {
+      }, "Clear Search"))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), this.state.isGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__["Grid"], {
         rows: this.state.rows,
         columns: this.state.columns
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__["Table"], null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__["TableHeaderRow"], null)));
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__["Table"], null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__["TableHeaderRow"], null)) : react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null));
     }
   }]);
 
