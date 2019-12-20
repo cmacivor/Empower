@@ -30,6 +30,9 @@
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/runtime": "^7.7.7",
+    "@devexpress/dx-react-core": "^2.3.2",
+    "@devexpress/dx-react-grid": "^2.3.2",
+    "@devexpress/dx-react-grid-bootstrap4": "^2.3.2",
     "ag-grid-community": "^21.2.2",
     "ag-grid-react": "^21.2.2",
     "bootstrap": "^4.4.1",

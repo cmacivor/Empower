@@ -1,9 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap4';
 
 export default class SearchClientProfile extends Component { 
 
     constructor(props) {
         super(props);
+
+        // const [rows, setRows] = useState([]);
+        // const [columns] = useState([
+        //     { name: 'FirstName', title: 'First Name' },
+        //     { name: 'LastName', title: 'Last Name' }
+            
+        //   ]);
 
         this.state = {
             isSearchButtonDisabled: true,
@@ -106,6 +114,20 @@ export default class SearchClientProfile extends Component {
                         <button type="button" onClick={this.ClearSearchFields} className="btn btn-primary mb-2">Clear Search</button>
                     </div>
                 </div>
+                <br/>
+                <Grid
+                    rows={[
+                    { id: 0, product: 'DevExtreme', owner: 'DevExpress' },
+                    { id: 1, product: 'DevExtreme Reactive', owner: 'DevExpress' },
+                    ]}
+                    columns={[
+                    { name: 'id', title: 'ID' },
+                    { name: 'product', title: 'Product' },
+                    { name: 'owner', title: 'Owner' },
+                    ]}>
+                    <Table />
+                    <TableHeaderRow />
+                </Grid>
             </div>
         );
     }
