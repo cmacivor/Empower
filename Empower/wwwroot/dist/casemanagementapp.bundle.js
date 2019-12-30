@@ -50257,7 +50257,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_10__["Table"].Row, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, restProps, {
         // eslint-disable-next-line no-alert
         onClick: function onClick() {
-          return alert(JSON.stringify(row));
+          return _this.GetSelectedRow(row);
         } //   style={{
         //     cursor: 'pointer',
         //     ...styles[row.sector.toLowerCase()],
@@ -50361,6 +50361,11 @@ function (_Component) {
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(SearchClientProfile, [{
+    key: "GetSelectedRow",
+    value: function GetSelectedRow(row) {
+      console.log(row);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;

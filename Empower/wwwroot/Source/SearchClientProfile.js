@@ -28,7 +28,7 @@ export default class SearchClientProfile extends Component {
      TableComponent = ({ ...restProps }) => (
         <Table.Table
           {...restProps}
-          className="table-striped table-hover"
+          className="table-hover"
         />
       );
 
@@ -36,13 +36,17 @@ export default class SearchClientProfile extends Component {
         <Table.Row
           {...restProps}
           // eslint-disable-next-line no-alert
-          onClick={() => alert(JSON.stringify(row))}
+          onClick={() => this.GetSelectedRow(row) }
         //   style={{
         //     cursor: 'pointer',
         //     ...styles[row.sector.toLowerCase()],
         //   }}
         />
       );
+
+    GetSelectedRow(row) {
+        console.log(row);
+    }
       
 
     ClearSearchFields = () => {
