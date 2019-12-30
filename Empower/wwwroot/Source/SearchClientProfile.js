@@ -25,6 +25,26 @@ export default class SearchClientProfile extends Component {
         }
     }
 
+    //  TableComponent = ({ ...restProps }) => (
+    //     <Table.Table
+    //       {...restProps}
+    //       className="table-striped"
+    //     />
+    //   );
+
+    TableRow = ({ row, ...restProps }) => (
+        <Table.Row
+          {...restProps}
+          // eslint-disable-next-line no-alert
+          onClick={() => alert(JSON.stringify(row))}
+        //   style={{
+        //     cursor: 'pointer',
+        //     ...styles[row.sector.toLowerCase()],
+        //   }}
+        />
+      );
+      
+
     ClearSearchFields = () => {
         this.setState({
             firstName: '',
@@ -120,10 +140,10 @@ export default class SearchClientProfile extends Component {
                 {
                     this.state.isGridVisible === true ?
                     
-                    <Grid
+                    <Grid className="card"
                         rows={this.state.rows }
                         columns={this.state.columns}>
-                        <Table />
+                        <Table rowComponent={this.TableRow}  />
                         <TableHeaderRow />
                     </Grid> : <div></div>
                 

@@ -267,6 +267,38 @@ module.exports = _inheritsLoose;
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/objectWithoutProperties.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var objectWithoutPropertiesLoose = __webpack_require__(/*! ./objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js");
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js":
 /*!*****************************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js ***!
@@ -50165,23 +50197,29 @@ function (_Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SearchClientProfile; });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @devexpress/dx-react-grid-bootstrap4 */ "./node_modules/@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.es.js");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @devexpress/dx-react-grid-bootstrap4 */ "./node_modules/@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.es.js");
+
+
 
 
 
@@ -50195,23 +50233,39 @@ __webpack_require__.r(__webpack_exports__);
 var SearchClientProfile =
 /*#__PURE__*/
 function (_Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(SearchClientProfile, _Component);
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_7___default()(SearchClientProfile, _Component);
 
   function SearchClientProfile(props) {
     var _this;
 
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, SearchClientProfile);
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, SearchClientProfile);
 
-    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(SearchClientProfile).call(this, props));
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(SearchClientProfile).call(this, props));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "ClearSearchFields", function () {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "TableRow", function (_ref) {
+      var row = _ref.row,
+          restProps = _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1___default()(_ref, ["row"]);
+
+      return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_10__["Table"].Row, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0___default()({}, restProps, {
+        // eslint-disable-next-line no-alert
+        onClick: function onClick() {
+          return alert(JSON.stringify(row));
+        } //   style={{
+        //     cursor: 'pointer',
+        //     ...styles[row.sector.toLowerCase()],
+        //   }}
+
+      }));
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "ClearSearchFields", function () {
       _this.setState({
         firstName: '',
         lastName: ''
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "HandleSearchFieldChange", function (event, field) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "HandleSearchFieldChange", function (event, field) {
       _this.setState({
         isSearchButtonDisabled: false
       });
@@ -50229,7 +50283,7 @@ function (_Component) {
       }
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "SearchButtonClickHandler", function () {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SearchButtonClickHandler", function () {
       var apiAddress = sessionStorage.getItem("baseApiAddress");
       var token = sessionStorage.getItem("token");
       var fullSearchAddress = "".concat(apiAddress, "/api/ClientProfile/Search");
@@ -50296,18 +50350,24 @@ function (_Component) {
       isGridVisible: false
     };
     return _this;
-  }
+  } //  TableComponent = ({ ...restProps }) => (
+  //     <Table.Table
+  //       {...restProps}
+  //       className="table-striped"
+  //     />
+  //   );
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(SearchClientProfile, [{
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(SearchClientProfile, [{
     key: "render",
     value: function render() {
       var _this2 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "form-row"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-3"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
         type: "text",
         className: "form-control",
         onChange: function onChange(e) {
@@ -50315,9 +50375,9 @@ function (_Component) {
         },
         value: this.state.lastName,
         placeholder: "Enter Last Name"
-      })), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-3"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
         type: "text",
         className: "form-control",
         onChange: function onChange(e) {
@@ -50325,28 +50385,31 @@ function (_Component) {
         },
         value: this.state.firstName,
         placeholder: "Enter First Name"
-      })), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-auto"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         type: "submit",
         onClick: this.SearchButtonClickHandler,
         disabled: this.state.isSearchButtonDisabled,
         className: "btn btn-primary mb-2"
-      }, "Search")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }, "Search")), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-auto"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         type: "button",
         onClick: this.ClearSearchFields,
         className: "btn btn-primary mb-2"
-      }, "Clear Search"))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), this.state.isGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__["Grid"], {
+      }, "Clear Search"))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("br", null), this.state.isGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_10__["Grid"], {
+        className: "card",
         rows: this.state.rows,
         columns: this.state.columns
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__["Table"], null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_8__["TableHeaderRow"], null)) : react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null));
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_10__["Table"], {
+        rowComponent: this.TableRow
+      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_10__["TableHeaderRow"], null)) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null));
     }
   }]);
 
   return SearchClientProfile;
-}(react__WEBPACK_IMPORTED_MODULE_7__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]);
 
 
 
