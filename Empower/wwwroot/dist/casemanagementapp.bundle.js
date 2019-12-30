@@ -53021,20 +53021,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _SearchClientProfile__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchClientProfile */ "./wwwroot/source/SearchClientProfile.js");
-/* harmony import */ var react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap/Nav */ "./node_modules/react-bootstrap/esm/Nav.js");
-/* harmony import */ var react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap/Tabs */ "./node_modules/react-bootstrap/esm/Tabs.js");
-/* harmony import */ var react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap/Tab */ "./node_modules/react-bootstrap/esm/Tab.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _SearchClientProfile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SearchClientProfile */ "./wwwroot/source/SearchClientProfile.js");
+/* harmony import */ var react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap/Nav */ "./node_modules/react-bootstrap/esm/Nav.js");
+/* harmony import */ var react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap/Tabs */ "./node_modules/react-bootstrap/esm/Tabs.js");
+/* harmony import */ var react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap/Tab */ "./node_modules/react-bootstrap/esm/Tab.js");
 
 
 
 
 
- // import {Tabs, Tab } from 'react-bootstrap-tabs'
+
 
 
 
@@ -53044,7 +53046,7 @@ __webpack_require__.r(__webpack_exports__);
 var CaseManagement =
 /*#__PURE__*/
 function (_Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(CaseManagement, _Component);
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(CaseManagement, _Component);
 
   function CaseManagement(props) {
     var _this;
@@ -53057,43 +53059,54 @@ function (_Component) {
       isParticipantTabDisabled: true,
       defaultTab: "search"
     };
+    _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
     return _this;
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(CaseManagement, [{
+    key: "EnableTabs",
+    value: function EnableTabs() {
+      this.setState({
+        isTabDisabled: false,
+        defaultTab: "participantinfo"
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_9__["default"], {
         defaultActiveKey: this.state.defaultTab,
         id: "caseManagementTabs"
-      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__["default"], {
         eventKey: "search",
         title: "Search"
-      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_SearchClientProfile__WEBPACK_IMPORTED_MODULE_6__["default"], null)), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(_SearchClientProfile__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        EnableTabs: this.EnableTabs
+      })), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__["default"], {
         eventKey: "participantinfo",
         title: "Participant Info",
         disabled: this.state.isTabDisabled
-      }, "participant info content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, "participant info content"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
-      }, "supplemental content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, "supplemental content"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__["default"], {
         eventKey: "address",
         title: "Address",
         disabled: this.state.isTabDisabled
-      }, "address content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, "address content"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__["default"], {
         eventKey: "familyinfo",
         title: "Family Info",
         disabled: this.state.isTabDisabled
-      }, "Family info content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, "Family info content"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__["default"], {
         eventKey: "program",
         title: "Program",
         disabled: this.state.isTabDisabled
-      }, "program content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, "program content"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__["default"], {
         eventKey: "assessment",
         title: "Assessment",
         disabled: this.state.isTabDisabled
-      }, "assessment content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }, "assessment content"), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__["default"], {
         eventKey: "contact",
         title: "Contact",
         disabled: this.state.isTabDisabled
@@ -53102,7 +53115,7 @@ function (_Component) {
   }]);
 
   return CaseManagement;
-}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_6__["Component"]);
 
 
 
@@ -53284,6 +53297,7 @@ function (_Component) {
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(SearchClientProfile, [{
     key: "GetSelectedRow",
     value: function GetSelectedRow(row) {
+      this.props.EnableTabs();
       console.log(row);
       var apiAddress = sessionStorage.getItem("baseApiAddress");
       var token = sessionStorage.getItem("token");

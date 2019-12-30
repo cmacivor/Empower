@@ -45,6 +45,7 @@ export default class SearchClientProfile extends Component {
       );
 
     GetSelectedRow(row) {
+        this.props.EnableTabs();
         console.log(row);
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -74,6 +75,7 @@ export default class SearchClientProfile extends Component {
     
             }).then(finalResult => {
                 console.log(finalResult);
+                
             });
         }
         catch(error)

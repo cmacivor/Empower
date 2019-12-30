@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import {Tabs, Tab } from 'react-bootstrap-tabs'
 import Search from './SearchClientProfile'
 import Nav from 'react-bootstrap/Nav'
 import Tabs from 'react-bootstrap/Tabs'
@@ -16,6 +15,15 @@ export default class CaseManagement extends Component {
             isParticipantTabDisabled: true,
             defaultTab: "search"
         }
+
+        this.EnableTabs = this.EnableTabs.bind(this);
+    }
+
+    EnableTabs() {
+        this.setState({
+            isTabDisabled: false,
+            defaultTab: "participantinfo"
+        });
     }
 
     render() {
@@ -23,7 +31,7 @@ export default class CaseManagement extends Component {
             <div>         
                 <Tabs defaultActiveKey={this.state.defaultTab} id="caseManagementTabs">
                     <Tab eventKey="search" title="Search">
-                       <Search/>
+                       <Search EnableTabs={this.EnableTabs} />
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={this.state.isTabDisabled}>
                        participant info content
