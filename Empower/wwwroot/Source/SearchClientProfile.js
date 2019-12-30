@@ -25,12 +25,12 @@ export default class SearchClientProfile extends Component {
         }
     }
 
-    //  TableComponent = ({ ...restProps }) => (
-    //     <Table.Table
-    //       {...restProps}
-    //       className="table-striped"
-    //     />
-    //   );
+     TableComponent = ({ ...restProps }) => (
+        <Table.Table
+          {...restProps}
+          className="table-striped"
+        />
+      );
 
     TableRow = ({ row, ...restProps }) => (
         <Table.Row
@@ -143,7 +143,7 @@ export default class SearchClientProfile extends Component {
                     <Grid className="card"
                         rows={this.state.rows }
                         columns={this.state.columns}>
-                        <Table rowComponent={this.TableRow}  />
+                        <Table tableComponent={this.TableComponent} rowComponent={this.TableRow}  />
                         <TableHeaderRow />
                     </Grid> : <div></div>
                 
