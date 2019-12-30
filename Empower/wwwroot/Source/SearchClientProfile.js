@@ -46,6 +46,41 @@ export default class SearchClientProfile extends Component {
 
     GetSelectedRow(row) {
         console.log(row);
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+        let token = sessionStorage.getItem("token");
+        
+        let clientProfileAddress = `${apiAddress}/api/ClientProfile/${row.ID}`;
+
+        try
+        {
+           var promise = fetch(clientProfileAddress, {
+                method: 'get',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }               
+            }); 
+
+            promise.then(result =>  {
+                if (result.status === 200) {
+                    return result.json();
+                
+                } else {
+                    return result.json();
+                } 
+    
+            }).then(finalResult => {
+                console.log(finalResult);
+            });
+        }
+        catch(error)
+        {
+            console.log(error);
+            alert('an error occurred while retrieving the Client Profile;');
+        }
     }
       
 

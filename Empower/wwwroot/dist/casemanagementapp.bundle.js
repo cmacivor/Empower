@@ -50246,7 +50246,7 @@ function (_Component) {
       var restProps = _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, _ref);
 
       return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_10__["Table"].Table, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, restProps, {
-        className: "table-striped table-hover"
+        className: "table-hover"
       }));
     });
 
@@ -50364,6 +50364,32 @@ function (_Component) {
     key: "GetSelectedRow",
     value: function GetSelectedRow(row) {
       console.log(row);
+      var apiAddress = sessionStorage.getItem("baseApiAddress");
+      var token = sessionStorage.getItem("token");
+      var clientProfileAddress = "".concat(apiAddress, "/api/ClientProfile/").concat(row.ID);
+
+      try {
+        var promise = fetch(clientProfileAddress, {
+          method: 'get',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }
+        });
+        promise.then(function (result) {
+          if (result.status === 200) {
+            return result.json();
+          } else {
+            return result.json();
+          }
+        }).then(function (finalResult) {
+          console.log(finalResult);
+        });
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while retrieving the Client Profile;');
+      }
     }
   }, {
     key: "render",
