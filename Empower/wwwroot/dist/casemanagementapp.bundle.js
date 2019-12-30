@@ -50246,7 +50246,7 @@ function (_Component) {
       var restProps = _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, _ref);
 
       return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_10__["Table"].Table, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, restProps, {
-        className: "table-striped"
+        className: "table-striped table-hover"
       }));
     });
 

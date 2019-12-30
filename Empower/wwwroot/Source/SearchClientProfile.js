@@ -28,7 +28,7 @@ export default class SearchClientProfile extends Component {
      TableComponent = ({ ...restProps }) => (
         <Table.Table
           {...restProps}
-          className="table-striped"
+          className="table-striped table-hover"
         />
       );
 
