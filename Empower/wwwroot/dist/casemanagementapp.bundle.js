@@ -53199,9 +53199,19 @@ function (_Component) {
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(ParticipantInfo, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("label", {
+        "for": "txtFirstName"
+      }, "Last Name *"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "input-group mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "txtLastName"
+      }))), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
         className: "col-6"
       }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("label", {
         "for": "txtFirstName"
@@ -53211,9 +53221,51 @@ function (_Component) {
         type: "text",
         className: "form-control",
         id: "txtFirstName"
+      })))), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "form-row"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("label", {
+        "for": "txtFirstName"
+      }, "Middle Name "), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "input-group mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "txtMiddleName"
       }))), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
         className: "col-6"
-      }));
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("label", {
+        "for": "txtFirstName"
+      }, "SSN"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "input-group mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "txtSSN"
+      })))), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "form-row"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("label", {
+        "for": "txtFirstName"
+      }, "FBI/NCIC Number "), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "input-group mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "txtFbiNcicNumber"
+      }))), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("label", {
+        "for": "txtFirstName"
+      }, "Date of Birth *"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "input-group mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        id: "txtDob"
+      })))));
     }
   }]);
 
