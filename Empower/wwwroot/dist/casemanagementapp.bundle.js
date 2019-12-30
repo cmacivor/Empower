@@ -53054,7 +53054,8 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(CaseManagement).call(this, props));
     _this.state = {
       isTabDisabled: true,
-      isParticipantTabDisabled: true
+      isParticipantTabDisabled: true,
+      defaultTab: "search"
     };
     return _this;
   }
@@ -53063,45 +53064,40 @@ function (_Component) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_8__["default"], {
-        defaultActiveKey: "familyinfo",
+        defaultActiveKey: this.state.defaultTab,
         id: "caseManagementTabs"
       }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
         eventKey: "search",
         title: "Search"
       }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_SearchClientProfile__WEBPACK_IMPORTED_MODULE_6__["default"], null)), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
         eventKey: "participantinfo",
-        title: "Participant Info"
+        title: "Participant Info",
+        disabled: this.state.isTabDisabled
       }, "participant info content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
         eventKey: "supplemental",
-        title: "Supplemental"
+        title: "Supplemental",
+        disabled: this.state.isTabDisabled
       }, "supplemental content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
         eventKey: "address",
-        title: "Address"
+        title: "Address",
+        disabled: this.state.isTabDisabled
       }, "address content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
         eventKey: "familyinfo",
-        title: "Family Info"
+        title: "Family Info",
+        disabled: this.state.isTabDisabled
       }, "Family info content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
         eventKey: "program",
-        title: "Program"
+        title: "Program",
+        disabled: this.state.isTabDisabled
       }, "program content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
         eventKey: "assessment",
-        title: "Assessment"
+        title: "Assessment",
+        disabled: this.state.isTabDisabled
       }, "assessment content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_9__["default"], {
         eventKey: "contact",
         title: "Contact",
-        disabled: true
-      }, "contact content"))) // <br></br>
-      // <br></br>
-      // <Tabs style={{cursor: 'pointer' }} onSelect={(index, label) => console.log(label + ' selected')}>
-      //     <Tab label="Search"><Search/></Tab>
-      //     <Tab disabled={ this.state.isParticipantTabDisabled } label="Participant Info">Participant info content</Tab>
-      //     <Tab disabled={ this.state.isTabDisabled } label="Supplemental">Supplemental content</Tab>
-      //     <Tab disabled={ this.state.isTabDisabled } label="Address">Address content</Tab>
-      //     <Tab disabled={ this.state.isTabDisabled } label="Family Info">Family Info</Tab>
-      //     <Tab disabled={ this.state.isTabDisabled } label="Program">Program</Tab>
-      //     <Tab disabled={ this.state.isTabDisabled } label="Assessment">Assessment</Tab>
-      // </Tabs>
-      ;
+        disabled: this.state.isTabDisabled
+      }, "contact content")));
     }
   }]);
 

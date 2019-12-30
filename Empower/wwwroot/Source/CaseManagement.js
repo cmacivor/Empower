@@ -13,82 +13,41 @@ export default class CaseManagement extends Component {
 
         this.state = {
             isTabDisabled: true,
-            isParticipantTabDisabled: true
+            isParticipantTabDisabled: true,
+            defaultTab: "search"
         }
     }
 
     render() {
         return (
-            <div>
-                {/* <Nav variant="tabs" defaultActiveKey="/search">
-                    <Nav.Item>
-                        <Nav.Link href="/search">Search</Nav.Link>
-                        
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="/participantinfo">Participant Info</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="/supplemental" >Supplemental</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="/address" >Address</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="/familyinfo" >familyinfo</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="/program" >program</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="/assessment" >Assessment</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link eventKey="disabled" disabled>
-                        Disabled
-                        </Nav.Link>
-                    </Nav.Item>
-                </Nav> */}
-         
-                <Tabs defaultActiveKey="familyinfo" id="caseManagementTabs">
+            <div>         
+                <Tabs defaultActiveKey={this.state.defaultTab} id="caseManagementTabs">
                     <Tab eventKey="search" title="Search">
                        <Search/>
                     </Tab>
-                    <Tab eventKey="participantinfo" title="Participant Info">
+                    <Tab eventKey="participantinfo" title="Participant Info" disabled={this.state.isTabDisabled}>
                        participant info content
                     </Tab>
-                    <Tab eventKey="supplemental" title="Supplemental">
+                    <Tab eventKey="supplemental" title="Supplemental" disabled={this.state.isTabDisabled}>
                        supplemental content
                     </Tab>
-                    <Tab eventKey="address" title="Address">
+                    <Tab eventKey="address" title="Address" disabled={this.state.isTabDisabled}>
                        address content
                     </Tab>
-                    <Tab eventKey="familyinfo" title="Family Info">
+                    <Tab eventKey="familyinfo" title="Family Info" disabled={this.state.isTabDisabled}>
                        Family info content
                     </Tab>
-                    <Tab eventKey="program" title="Program">
+                    <Tab eventKey="program" title="Program" disabled={this.state.isTabDisabled}>
                        program content
                     </Tab>
-                    <Tab eventKey="assessment" title="Assessment">
+                    <Tab eventKey="assessment" title="Assessment" disabled={this.state.isTabDisabled}>
                        assessment content
                     </Tab>
-                    <Tab eventKey="contact" title="Contact" disabled>
+                    <Tab eventKey="contact" title="Contact" disabled={this.state.isTabDisabled}>
                         contact content
                     </Tab>
                 </Tabs>
-            </div>
-
-            // <br></br>
-            // <br></br>
-            // <Tabs style={{cursor: 'pointer' }} onSelect={(index, label) => console.log(label + ' selected')}>
-            //     <Tab label="Search"><Search/></Tab>
-            //     <Tab disabled={ this.state.isParticipantTabDisabled } label="Participant Info">Participant info content</Tab>
-            //     <Tab disabled={ this.state.isTabDisabled } label="Supplemental">Supplemental content</Tab>
-            //     <Tab disabled={ this.state.isTabDisabled } label="Address">Address content</Tab>
-            //     <Tab disabled={ this.state.isTabDisabled } label="Family Info">Family Info</Tab>
-            //     <Tab disabled={ this.state.isTabDisabled } label="Program">Program</Tab>
-            //     <Tab disabled={ this.state.isTabDisabled } label="Assessment">Assessment</Tab>
-            // </Tabs>
+            </div>    
         );
     }
 }
