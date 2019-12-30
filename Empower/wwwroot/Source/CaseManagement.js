@@ -13,23 +13,32 @@ export default class CaseManagement extends Component {
         this.state = {
             isTabDisabled: true,
             isParticipantTabDisabled: true,
-            defaultTab: "search"
+            defaultTab: "search",
+            activeTab: "search"
         }
 
         this.EnableTabs = this.EnableTabs.bind(this);
+        this.SetActiveTab = this.SetActiveTab.bind(this);
     }
 
     EnableTabs() {
         this.setState({
             isTabDisabled: false,
-            defaultTab: "participantinfo"
+            defaultTab: "participantinfo",
+            activeTab: "participantinfo"
+        });
+    }
+
+    SetActiveTab(key) {
+        this.setState({
+            activeTab: key
         });
     }
 
     render() {
         return (
             <div>         
-                <Tabs defaultActiveKey={this.state.defaultTab} id="caseManagementTabs">
+                <Tabs defaultActiveKey={this.state.defaultTab} activeKey={this.state.activeTab} onSelect={k => this.SetActiveTab(k) } id="caseManagementTabs">
                     <Tab eventKey="search" title="Search">
                        <Search EnableTabs={this.EnableTabs} />
                     </Tab>

@@ -53057,9 +53057,11 @@ function (_Component) {
     _this.state = {
       isTabDisabled: true,
       isParticipantTabDisabled: true,
-      defaultTab: "search"
+      defaultTab: "search",
+      activeTab: "search"
     };
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
     return _this;
   }
 
@@ -53068,14 +53070,28 @@ function (_Component) {
     value: function EnableTabs() {
       this.setState({
         isTabDisabled: false,
-        defaultTab: "participantinfo"
+        defaultTab: "participantinfo",
+        activeTab: "participantinfo"
+      });
+    }
+  }, {
+    key: "SetActiveTab",
+    value: function SetActiveTab(key) {
+      this.setState({
+        activeTab: key
       });
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_9__["default"], {
         defaultActiveKey: this.state.defaultTab,
+        activeKey: this.state.activeTab,
+        onSelect: function onSelect(k) {
+          return _this2.SetActiveTab(k);
+        },
         id: "caseManagementTabs"
       }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_10__["default"], {
         eventKey: "search",
