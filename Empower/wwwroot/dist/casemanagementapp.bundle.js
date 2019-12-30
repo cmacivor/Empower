@@ -50101,10 +50101,17 @@ var CaseManagement =
 function (_Component) {
   _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(CaseManagement, _Component);
 
-  function CaseManagement() {
+  function CaseManagement(props) {
+    var _this;
+
     _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, CaseManagement);
 
-    return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(CaseManagement).apply(this, arguments));
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(CaseManagement).call(this, props));
+    _this.state = {
+      isTabDisabled: true,
+      isParticipantTabDisabled: true
+    };
+    return _this;
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(CaseManagement, [{
@@ -50120,16 +50127,22 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
         label: "Search"
       }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_SearchClientProfile__WEBPACK_IMPORTED_MODULE_7__["default"], null)), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        disabled: this.state.isParticipantTabDisabled,
         label: "Participant Info"
       }, "Participant info content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        disabled: this.state.isTabDisabled,
         label: "Supplemental"
       }, "Supplemental content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        disabled: this.state.isTabDisabled,
         label: "Address"
       }, "Address content"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        disabled: this.state.isTabDisabled,
         label: "Family Info"
       }, "Family Info"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        disabled: this.state.isTabDisabled,
         label: "Program"
       }, "Program"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(react_bootstrap_tabs__WEBPACK_IMPORTED_MODULE_6__["Tab"], {
+        disabled: this.state.isTabDisabled,
         label: "Assessment"
       }, "Assessment"));
     }
