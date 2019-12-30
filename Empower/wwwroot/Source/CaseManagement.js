@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Search from './SearchClientProfile'
+import ParticipantInfo from './ParticipantInfo'
 import Nav from 'react-bootstrap/Nav'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
@@ -43,7 +44,7 @@ export default class CaseManagement extends Component {
                        <Search EnableTabs={this.EnableTabs} />
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={this.state.isTabDisabled}>
-                       participant info content
+                       <ParticipantInfo/>
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={this.state.isTabDisabled}>
                        supplemental content
