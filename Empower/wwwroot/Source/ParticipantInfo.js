@@ -37,9 +37,11 @@ export default class ParticipantInfo extends Component {
     }
 
     handleDatePickerChange = date => {
-        this.setState({
-            dateOfBirth: date
-        });
+        // this.setState({
+        //     dateOfBirth: date
+        // });
+
+        console.log(date);
     }
 
     datePickerOnClick = () => {
@@ -94,13 +96,14 @@ export default class ParticipantInfo extends Component {
                     <div className="col-6">
                         <label htmlFor="txtFirstName"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
-                            <DatePicker selected={this.state.dateOfBirth }
-                            onChange={this.handleDatePickerChange}
-                             customInput={<Input 
-                            onChange={this.handleDatePickerChange} 
-                            value={this.state.dateOfBirth} 
-                            id="txtDob" 
-                            onClick={this.datePickerOnClick} /> } />
+                            <DatePicker selected={ this.state.dateOfBirth }
+                            onChange={date => this.handleDatePickerChange({date})}
+                             customInput={
+                             <Input 
+                                onChange={this.handleDatePickerChange} 
+                                value={this.state.dateOfBirth} 
+                                id="txtDob" 
+                                onClick={this.datePickerOnClick} /> } />
 
                             {/* <input type="text" className="form-control" id="txtDob"></input> */}
                         </div>

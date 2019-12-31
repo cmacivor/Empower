@@ -62129,9 +62129,10 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleDatePickerChange", function (date) {
-      _this.setState({
-        dateOfBirth: date
-      });
+      // this.setState({
+      //     dateOfBirth: date
+      // });
+      console.log(date);
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "datePickerOnClick", function () {
@@ -62163,6 +62164,8 @@ function (_Component) {
     //     </button>
     //   );
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -62227,7 +62230,11 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_8___default.a, {
         selected: this.state.dateOfBirth,
-        onChange: this.handleDatePickerChange,
+        onChange: function onChange(date) {
+          return _this2.handleDatePickerChange({
+            date: date
+          });
+        },
         customInput: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(Input, {
           onChange: this.handleDatePickerChange,
           value: this.state.dateOfBirth,
