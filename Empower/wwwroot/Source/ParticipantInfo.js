@@ -1,4 +1,8 @@
 import React, { Component, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+//import 'react-bo'
+//import 'bootstrap/dist/css/bootstrap.css';
 
 
 export default class ParticipantInfo extends Component {
@@ -16,24 +20,37 @@ export default class ParticipantInfo extends Component {
             alias: '',
             firsName: '',
             ssn: '',
-            dateOfBirth: '',
+            dateOfBirth: new Date(),
             currentAge: '',
             gender: ''            
         }
     }
 
+    handleDatePickerChange = date => {
+        this.setState({
+            dateOfBirth: date
+        });
+    }
+
+    ExampleCustomInput = ({ value, onClick }) => (
+        <button className="btn btn-primary" onClick={onClick}>
+          {value}
+        </button>
+      );
+
     render() {
         return (
             <div>
+                <br></br>
                 <div className="form-row">
                     <div className="col-6">
-                        <label for="txtFirstName"><strong>Last Name *</strong></label>
+                        <label htmlFor="txtFirstName"><strong>Last Name *</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" className="form-control" id="txtLastName"></input>
                         </div>
                     </div>
                     <div className="col-6">
-                        <label for="txtFirstName"><strong> First Name *</strong></label>
+                        <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" className="form-control" id="txtFirstName"></input>
                         </div>
@@ -41,13 +58,13 @@ export default class ParticipantInfo extends Component {
                 </div>
                 <div className="form-row">
                     <div className="col-6">
-                        <label for="txtFirstName"><strong>Middle Name</strong></label>
+                        <label htmlFor="txtFirstName"><strong>Middle Name</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" className="form-control" id="txtMiddleName"></input>
                         </div>
                     </div>
                     <div className="col-6">
-                        <label for="txtFirstName"><strong> SSN</strong></label>
+                        <label htmlFor="txtFirstName"><strong> SSN</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" className="form-control" id="txtSSN"></input>
                         </div>
@@ -55,15 +72,18 @@ export default class ParticipantInfo extends Component {
                 </div>
                 <div className="form-row">
                     <div className="col-6">
-                        <label for="txtFirstName"><strong> FBI/NCIC Number </strong></label>
+                        <label htmlFor="txtFirstName"><strong> FBI/NCIC Number </strong></label>
                         <div className="input-group mb-3">
                             <input type="text" className="form-control" id="txtFbiNcicNumber"></input>
                         </div>
                     </div>
                     <div className="col-6">
-                        <label for="txtFirstName"><strong> Date of Birth *</strong></label>
+                        <label htmlFor="txtFirstName"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtDob"></input>
+                            <DatePicker selected={this.state.dateOfBirth }
+                            onChange={this.handleDatePickerChange} customInput={<this.ExampleCustomInput/>} />
+
+                            {/* <input type="text" className="form-control" id="txtDob"></input> */}
                         </div>
                     </div>
                 </div>
