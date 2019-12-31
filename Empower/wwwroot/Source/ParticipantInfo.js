@@ -4,6 +4,16 @@ import 'react-datepicker/dist/react-datepicker.css';
 //import 'react-bo'
 //import 'bootstrap/dist/css/bootstrap.css';
 
+const Input = ({onChange, placeholder, value, isSecure, id, onClick}) => (
+	<input
+        onChange={onChange}
+        className="form-control"
+		value={value}
+		id={id}
+		onClick={onClick}
+	/>
+);
+
 
 export default class ParticipantInfo extends Component {
 
@@ -32,11 +42,15 @@ export default class ParticipantInfo extends Component {
         });
     }
 
-    ExampleCustomInput = ({ value, onClick }) => (
-        <button className="btn btn-primary" onClick={onClick}>
-          {value}
-        </button>
-      );
+    datePickerOnClick = () => {
+        alert('on click');
+    }
+
+    // ExampleCustomInput = ({ value, onClick }) => (
+    //     <button className="btn btn-primary" onClick={onClick}>
+    //       {value}
+    //     </button>
+    //   );
 
     render() {
         return (
@@ -81,7 +95,12 @@ export default class ParticipantInfo extends Component {
                         <label htmlFor="txtFirstName"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
                             <DatePicker selected={this.state.dateOfBirth }
-                            onChange={this.handleDatePickerChange} customInput={<this.ExampleCustomInput/>} />
+                            onChange={this.handleDatePickerChange}
+                             customInput={<Input 
+                            onChange={this.handleDatePickerChange} 
+                            value={this.state.dateOfBirth} 
+                            id="txtDob" 
+                            onClick={this.datePickerOnClick} /> } />
 
                             {/* <input type="text" className="form-control" id="txtDob"></input> */}
                         </div>

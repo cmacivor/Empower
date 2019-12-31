@@ -62100,6 +62100,22 @@ __webpack_require__.r(__webpack_exports__);
  //import 'react-bo'
 //import 'bootstrap/dist/css/bootstrap.css';
 
+var Input = function Input(_ref) {
+  var onChange = _ref.onChange,
+      placeholder = _ref.placeholder,
+      value = _ref.value,
+      isSecure = _ref.isSecure,
+      id = _ref.id,
+      onClick = _ref.onClick;
+  return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+    onChange: onChange,
+    className: "form-control",
+    value: value,
+    id: id,
+    onClick: onClick
+  });
+};
+
 var ParticipantInfo =
 /*#__PURE__*/
 function (_Component) {
@@ -62118,13 +62134,8 @@ function (_Component) {
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "ExampleCustomInput", function (_ref) {
-      var value = _ref.value,
-          onClick = _ref.onClick;
-      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
-        className: "btn btn-primary",
-        onClick: onClick
-      }, value);
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "datePickerOnClick", function () {
+      alert('on click');
     });
 
     _this.state = {
@@ -62146,6 +62157,11 @@ function (_Component) {
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(ParticipantInfo, [{
     key: "render",
+    // ExampleCustomInput = ({ value, onClick }) => (
+    //     <button className="btn btn-primary" onClick={onClick}>
+    //       {value}
+    //     </button>
+    //   );
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
@@ -62212,7 +62228,12 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_8___default.a, {
         selected: this.state.dateOfBirth,
         onChange: this.handleDatePickerChange,
-        customInput: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(this.ExampleCustomInput, null)
+        customInput: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(Input, {
+          onChange: this.handleDatePickerChange,
+          value: this.state.dateOfBirth,
+          id: "txtDob",
+          onClick: this.datePickerOnClick
+        })
       })))));
     }
   }]);
