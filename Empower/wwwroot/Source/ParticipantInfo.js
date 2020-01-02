@@ -61,22 +61,33 @@ export default class ParticipantInfo extends Component {
             <div>
                 <br></br>
                 <div className="form-row">
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" className="form-control" id="txtLastName"></input>
                         </div>
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" className="form-control" id="txtFirstName"></input>
                         </div>
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" className="form-control" id="txtMiddleName"></input>
+                        </div>
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
+                        <div className="dropdown">
+                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Please Select
+                            </button>
+                            <div className="dropdown-menu">
+                                {suffixOptions}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,15 +118,7 @@ export default class ParticipantInfo extends Component {
                 </div>
                 <div className="form-row">
                     <div className="col-4">
-                        <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
-                        <div className="dropdown">
-                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Please Select
-                            </button>
-                            <div className="dropdown-menu">
-                                {suffixOptions}
-                            </div>
-                        </div>
+                  
                        
                     </div>
                 </div>

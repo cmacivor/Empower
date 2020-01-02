@@ -80606,7 +80606,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtLastName"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Last Name *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80616,7 +80616,7 @@ function (_Component) {
         className: "form-control",
         id: "txtLastName"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtFirstName"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " First Name *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80626,7 +80626,7 @@ function (_Component) {
         className: "form-control",
         id: "txtFirstName"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtMiddleName"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Middle Name")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80635,7 +80635,19 @@ function (_Component) {
         type: "text",
         className: "form-control",
         id: "txtMiddleName"
-      })))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-3"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "ddlSuffix"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-primary dropdown-toggle",
+        "data-toggle": "dropdown"
+      }, "Please Select"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown-menu"
+      }, suffixOptions)))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-4"
@@ -80675,17 +80687,7 @@ function (_Component) {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-4"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
-        htmlFor: "ddlSuffix"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "dropdown"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
-        type: "button",
-        className: "btn btn-primary dropdown-toggle",
-        "data-toggle": "dropdown"
-      }, "Suffix"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "dropdown-menu"
-      }, suffixOptions)))));
+      })));
     }
   }]);
 
