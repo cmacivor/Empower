@@ -79788,9 +79788,9 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-6"
+        className: "col-4"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
-        htmlFor: "txtFirstName"
+        htmlFor: "txtLastName"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Last Name *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
@@ -79798,7 +79798,7 @@ function (_Component) {
         className: "form-control",
         id: "txtLastName"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-6"
+        className: "col-4"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtFirstName"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " First Name *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -79807,34 +79807,32 @@ function (_Component) {
         type: "text",
         className: "form-control",
         id: "txtFirstName"
-      })))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "form-row"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-6"
+      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-4"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
-        htmlFor: "txtFirstName"
+        htmlFor: "txtMiddleName"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Middle Name")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
         className: "form-control",
         id: "txtMiddleName"
-      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-6"
+      })))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "form-row"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-4"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
-        htmlFor: "txtFirstName"
+        htmlFor: "txtSSN"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " SSN")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
         className: "form-control",
         id: "txtSSN"
-      })))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "form-row"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-6"
+      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-4"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
-        htmlFor: "txtFirstName"
+        htmlFor: "txtFbiNcicNumber"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " FBI/NCIC Number ")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
@@ -79842,7 +79840,7 @@ function (_Component) {
         className: "form-control",
         id: "txtFbiNcicNumber"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-6"
+        className: "col-4"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtFirstName"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " Date of Birth *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
