@@ -79739,39 +79739,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- //import 'react-bo'
-//import 'bootstrap/dist/css/bootstrap.css';
-// const Input = ({onChange, placeholder, value, isSecure, id, onClick}) => (
-// 	<input
-//         onChange={onChange}
-//         className="form-control"
-// 		value={value}
-// 		id={id}
-// 		onClick={onClick}
-// 	/>
-// );
-// class DatePickerBase extends Component {
-//     constructor(props) {
-//         super(props);
-//         // this.state = {
-//         //     id = '',
-//         //     inputValue = '',
-//         // }
-//     }
-//     // onClickHandler = () => {
-//     //     alert('on click handler fired');
-//     // }
-//     // onChangeHandler = () => {
-//     //     alert('on change handler fired');
-//     // }
-//     render() {
-//         return (
-//             <div>
-//                 <input id={this.props.id} value={this.props.value} className="form-control" onChange={this.props.onChangeHandler} onClick={this.props.onClickHandler}></input>
-//             </div>
-//         )
-//     }
-// }
+
 
 var ParticipantInfo =
 /*#__PURE__*/
@@ -79786,17 +79754,9 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleDatePickerChange", function (date) {
-      // this.setState({
-      //     dateOfBirth: date
-      // });
-      //console.log(date.date);
-      //let formattedDate = moment(date.date).format('MM/DD/YYYY');
       _this.setState({
         dateOfBirth: date.date
-      }); //console.log(formattedDate);
-      //let formattedDate = moment(date, 'YYYY-MM-DD[T]HH:mm:ss').format();
-      //console.log(formattedDate);
-
+      });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "datePickerOnClick", function () {
@@ -79822,11 +79782,6 @@ function (_Component) {
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(ParticipantInfo, [{
     key: "render",
-    // ExampleCustomInput = ({ value, onClick }) => (
-    //     <button className="btn btn-primary" onClick={onClick}>
-    //       {value}
-    //     </button>
-    //   );
     value: function render() {
       var _this2 = this;
 
