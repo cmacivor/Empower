@@ -79789,10 +79789,14 @@ function (_Component) {
       // this.setState({
       //     dateOfBirth: date
       // });
-      console.log(date); //let formattedDate = moment(datetoISOString()).format('MM/DD/YYYY');
-      //console.log(formattedDate);
+      //console.log(date.date);
+      //let formattedDate = moment(date.date).format('MM/DD/YYYY');
+      _this.setState({
+        dateOfBirth: date.date
+      }); //console.log(formattedDate);
       //let formattedDate = moment(date, 'YYYY-MM-DD[T]HH:mm:ss').format();
       //console.log(formattedDate);
+
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "datePickerOnClick", function () {

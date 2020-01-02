@@ -71,9 +71,13 @@ export default class ParticipantInfo extends Component {
         //     dateOfBirth: date
         // });
 
-        console.log(date);
+        //console.log(date.date);
 
-        //let formattedDate = moment(datetoISOString()).format('MM/DD/YYYY');
+        //let formattedDate = moment(date.date).format('MM/DD/YYYY');
+
+        this.setState({
+            dateOfBirth: date.date
+        })
 
         //console.log(formattedDate);
 
