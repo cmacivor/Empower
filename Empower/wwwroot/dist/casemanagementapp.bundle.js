@@ -62099,22 +62099,37 @@ __webpack_require__.r(__webpack_exports__);
 
  //import 'react-bo'
 //import 'bootstrap/dist/css/bootstrap.css';
-
-var Input = function Input(_ref) {
-  var onChange = _ref.onChange,
-      placeholder = _ref.placeholder,
-      value = _ref.value,
-      isSecure = _ref.isSecure,
-      id = _ref.id,
-      onClick = _ref.onClick;
-  return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
-    onChange: onChange,
-    className: "form-control",
-    value: value,
-    id: id,
-    onClick: onClick
-  });
-};
+// const Input = ({onChange, placeholder, value, isSecure, id, onClick}) => (
+// 	<input
+//         onChange={onChange}
+//         className="form-control"
+// 		value={value}
+// 		id={id}
+// 		onClick={onClick}
+// 	/>
+// );
+// class DatePickerBase extends Component {
+//     constructor(props) {
+//         super(props);
+//         // this.state = {
+//         //     id = '',
+//         //     inputValue = '',
+//         // }
+//     }
+//     // onClickHandler = () => {
+//     //     alert('on click handler fired');
+//     // }
+//     // onChangeHandler = () => {
+//     //     alert('on change handler fired');
+//     // }
+//     render() {
+//         return (
+//             <div>
+//                 <input id={this.props.id} value={this.props.value} className="form-control" onChange={this.props.onChangeHandler} onClick={this.props.onClickHandler}></input>
+//             </div>
+//         )
+//     }
+// }
 
 var ParticipantInfo =
 /*#__PURE__*/
@@ -62235,12 +62250,7 @@ function (_Component) {
             date: date
           });
         },
-        customInput: react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(Input, {
-          onChange: this.handleDatePickerChange,
-          value: this.state.dateOfBirth,
-          id: "txtDob",
-          onClick: this.datePickerOnClick
-        })
+        className: "form-control"
       })))));
     }
   }]);

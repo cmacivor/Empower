@@ -4,15 +4,43 @@ import 'react-datepicker/dist/react-datepicker.css';
 //import 'react-bo'
 //import 'bootstrap/dist/css/bootstrap.css';
 
-const Input = ({onChange, placeholder, value, isSecure, id, onClick}) => (
-	<input
-        onChange={onChange}
-        className="form-control"
-		value={value}
-		id={id}
-		onClick={onClick}
-	/>
-);
+// const Input = ({onChange, placeholder, value, isSecure, id, onClick}) => (
+// 	<input
+//         onChange={onChange}
+//         className="form-control"
+// 		value={value}
+// 		id={id}
+// 		onClick={onClick}
+// 	/>
+// );
+
+// class DatePickerBase extends Component {
+       
+//     constructor(props) {
+//         super(props);
+//         // this.state = {
+//         //     id = '',
+//         //     inputValue = '',
+
+//         // }
+//     }
+    
+//     // onClickHandler = () => {
+//     //     alert('on click handler fired');
+//     // }
+
+//     // onChangeHandler = () => {
+//     //     alert('on change handler fired');
+//     // }
+
+//     render() {
+//         return (
+//             <div>
+//                 <input id={this.props.id} value={this.props.value} className="form-control" onChange={this.props.onChangeHandler} onClick={this.props.onClickHandler}></input>
+//             </div>
+//         )
+//     }
+// }
 
 
 export default class ParticipantInfo extends Component {
@@ -96,14 +124,31 @@ export default class ParticipantInfo extends Component {
                     <div className="col-6">
                         <label htmlFor="txtFirstName"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
-                            <DatePicker selected={ this.state.dateOfBirth }
+                        <DatePicker
+                             selected={ this.state.dateOfBirth }
+                             onChange={date => this.handleDatePickerChange({date})}
+                             className="form-control"                             
+                         />
+
+                        {/* <DatePicker 
+                            selected = { this.state.dateOfBirth }
+                            onChange = { date => this.handleDatePickerChange({date})}
+                            customInput = {
+                                <DatePickerBase 
+                                    id="txtDob"
+                                    value={this.state.dateOfBirth}
+                                    onChangeHandler={this.handleDatePickerChange} 
+                                    onClickHandler = {this.datePickerOnClick} />
+                            }/> */}
+
+                            {/* <DatePicker selected={ this.state.dateOfBirth }
                             onChange={date => this.handleDatePickerChange({date})}
                              customInput={
                              <Input 
                                 onChange={this.handleDatePickerChange} 
                                 value={this.state.dateOfBirth} 
                                 id="txtDob" 
-                                onClick={this.datePickerOnClick} /> } />
+                                onClick={this.datePickerOnClick} /> } /> */}
 
                             {/* <input type="text" className="form-control" id="txtDob"></input> */}
                         </div>
