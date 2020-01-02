@@ -47,8 +47,12 @@ export default class ParticipantInfo extends Component {
     render() {
         //console.log(this.state.suffixes);
 
+        // let suffixOptions = this.state.suffixes.map((suffix) =>
+        //     <option key = {suffix.ID }>{suffix.Name}</option>
+        // );
+
         let suffixOptions = this.state.suffixes.map((suffix) =>
-            <option key = {suffix.ID }>{suffix.Name}</option>
+           <a className="dropdown-item">{suffix.Name}</a>
         );
 
         console.log(suffixOptions);
@@ -104,9 +108,15 @@ export default class ParticipantInfo extends Component {
                 <div className="form-row">
                     <div className="col-4">
                         <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
-                        <select>
-                            {suffixOptions}
-                        </select>
+                        <div className="dropdown">
+                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Please Select
+                            </button>
+                            <div className="dropdown-menu">
+                                {suffixOptions}
+                            </div>
+                        </div>
+                       
                     </div>
                 </div>
 

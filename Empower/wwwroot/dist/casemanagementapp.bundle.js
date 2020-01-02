@@ -80594,9 +80594,12 @@ function (_Component) {
       var _this2 = this;
 
       //console.log(this.state.suffixes);
+      // let suffixOptions = this.state.suffixes.map((suffix) =>
+      //     <option key = {suffix.ID }>{suffix.Name}</option>
+      // );
       var suffixOptions = this.state.suffixes.map(function (suffix) {
-        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("option", {
-          key: suffix.ID
+        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
+          className: "dropdown-item"
         }, suffix.Name);
       });
       console.log(suffixOptions);
@@ -80674,7 +80677,15 @@ function (_Component) {
         className: "col-4"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "ddlSuffix"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("select", null, suffixOptions))));
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-primary dropdown-toggle",
+        "data-toggle": "dropdown"
+      }, "Suffix"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown-menu"
+      }, suffixOptions)))));
     }
   }]);
 
