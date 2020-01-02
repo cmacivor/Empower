@@ -80156,6 +80156,21 @@ function () {
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(Api, null, [{
+    key: "getConfigDataByType",
+    value: function getConfigDataByType(api) {
+      var apiAddress = sessionStorage.getItem("baseApiAddress");
+      var fullGetAllAdress = "".concat(apiAddress, "/api/").concat(api, "/GetAll");
+      var sessionStorageData = getSessionData();
+      return fetch(fullGetAllAdress, {
+        //mode: 'cors',
+        headers: {
+          'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+      }).then(function (result) {
+        return result.json();
+      });
+    }
+  }, {
     key: "getAll",
     value: function getAll() {
       var sessionStorageData = getSessionData();

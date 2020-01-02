@@ -3,6 +3,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'moment';
 import moment from 'moment';
+import { Api } from './commonAdmin';
+require ('.//commonAdmin');
 
 export default class ParticipantInfo extends Component {
 
@@ -21,8 +23,15 @@ export default class ParticipantInfo extends Component {
             ssn: '',
             dateOfBirth: new Date(),
             currentAge: '',
-            gender: ''            
+            gender: '',
+            suffixes:  []      
         }
+
+        //Api.getAll().then(rowData => this.setState({ rowData }));
+        Api.getConfigDataByType("Suffix").then(suffixes => this.setState({suffixes}));
+
+        //console.log(this.state.suffixes);
+
     }
 
     handleDatePickerChange = date => {
@@ -36,6 +45,14 @@ export default class ParticipantInfo extends Component {
     }
 
     render() {
+        //console.log(this.state.suffixes);
+
+        let suffixOptions = this.state.suffixes.map((suffix) =>
+            <option key = {suffix.ID }>{suffix.Name}</option>
+        );
+
+        console.log(suffixOptions);
+
         return (
             <div>
                 <br></br>
@@ -82,6 +99,14 @@ export default class ParticipantInfo extends Component {
                              className="form-control"                             
                          />
                         </div>
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="col-4">
+                        <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
+                        <select>
+                            {suffixOptions}
+                        </select>
                     </div>
                 </div>
 
