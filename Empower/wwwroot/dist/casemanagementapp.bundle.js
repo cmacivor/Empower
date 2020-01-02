@@ -80525,6 +80525,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_10__);
 /* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+/* harmony import */ var _SuffixDropdown__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./SuffixDropdown */ "./wwwroot/source/SuffixDropdown.js");
 
 
 
@@ -80540,6 +80541,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 __webpack_require__(/*! .//commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+
 
 var ParticipantInfo =
 /*#__PURE__*/
@@ -80575,15 +80578,10 @@ function (_Component) {
       ssn: '',
       dateOfBirth: new Date(),
       currentAge: '',
-      gender: '',
-      suffixes: []
-    }; //Api.getAll().then(rowData => this.setState({ rowData }));
+      gender: '' //suffixes:  []      
 
-    _commonAdmin__WEBPACK_IMPORTED_MODULE_11__["Api"].getConfigDataByType("Suffix").then(function (suffixes) {
-      return _this.setState({
-        suffixes: suffixes
-      });
-    }); //console.log(this.state.suffixes);
+    }; //Api.getAll().then(rowData => this.setState({ rowData }));
+    //console.log(this.state.suffixes);
 
     return _this;
   }
@@ -80597,12 +80595,10 @@ function (_Component) {
       // let suffixOptions = this.state.suffixes.map((suffix) =>
       //     <option key = {suffix.ID }>{suffix.Name}</option>
       // );
-      var suffixOptions = this.state.suffixes.map(function (suffix) {
-        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
-          className: "dropdown-item"
-        }, suffix.Name);
-      });
-      console.log(suffixOptions);
+      // let suffixOptions = this.state.suffixes.map((suffix) =>
+      //    <a className="dropdown-item">{suffix.Name}</a>
+      // );
+      //console.log(suffixOptions);
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80639,15 +80635,7 @@ function (_Component) {
         className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "ddlSuffix"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "dropdown"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
-        type: "button",
-        className: "btn btn-primary dropdown-toggle",
-        "data-toggle": "dropdown"
-      }, "Please Select"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "dropdown-menu"
-      }, suffixOptions)))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_SuffixDropdown__WEBPACK_IMPORTED_MODULE_12__["default"], null))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-4"
@@ -80956,6 +80944,89 @@ function (_Component) {
 
   return SearchClientProfile;
 }(react__WEBPACK_IMPORTED_MODULE_9__["Component"]);
+
+
+
+/***/ }),
+
+/***/ "./wwwroot/source/SuffixDropdown.js":
+/*!******************************************!*\
+  !*** ./wwwroot/source/SuffixDropdown.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SuffixDropDown; });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+
+
+
+
+
+
+
+__webpack_require__(/*! .//commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+var SuffixDropDown =
+/*#__PURE__*/
+function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(SuffixDropDown, _Component);
+
+  function SuffixDropDown(props) {
+    var _this;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, SuffixDropDown);
+
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(SuffixDropDown).call(this, props));
+    _this.state = {
+      suffixes: []
+    };
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_6__["Api"].getConfigDataByType("Suffix").then(function (suffixes) {
+      return _this.setState({
+        suffixes: suffixes
+      });
+    });
+    return _this;
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(SuffixDropDown, [{
+    key: "render",
+    value: function render() {
+      var suffixOptions = this.state.suffixes.map(function (suffix) {
+        return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("a", {
+          key: suffix.ID,
+          className: "dropdown-item"
+        }, suffix.Name);
+      });
+      return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-primary dropdown-toggle",
+        "data-toggle": "dropdown"
+      }, "Please Select"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+        className: "dropdown-menu"
+      }, suffixOptions)));
+    }
+  }]);
+
+  return SuffixDropDown;
+}(react__WEBPACK_IMPORTED_MODULE_5__["Component"]);
 
 
 

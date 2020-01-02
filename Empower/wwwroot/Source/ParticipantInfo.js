@@ -5,6 +5,7 @@ import 'moment';
 import moment from 'moment';
 import { Api } from './commonAdmin';
 require ('.//commonAdmin');
+import SuffixDropdown from './SuffixDropdown';
 
 export default class ParticipantInfo extends Component {
 
@@ -24,11 +25,11 @@ export default class ParticipantInfo extends Component {
             dateOfBirth: new Date(),
             currentAge: '',
             gender: '',
-            suffixes:  []      
+            //suffixes:  []      
         }
 
         //Api.getAll().then(rowData => this.setState({ rowData }));
-        Api.getConfigDataByType("Suffix").then(suffixes => this.setState({suffixes}));
+       
 
         //console.log(this.state.suffixes);
 
@@ -51,11 +52,11 @@ export default class ParticipantInfo extends Component {
         //     <option key = {suffix.ID }>{suffix.Name}</option>
         // );
 
-        let suffixOptions = this.state.suffixes.map((suffix) =>
-           <a className="dropdown-item">{suffix.Name}</a>
-        );
+        // let suffixOptions = this.state.suffixes.map((suffix) =>
+        //    <a className="dropdown-item">{suffix.Name}</a>
+        // );
 
-        console.log(suffixOptions);
+        //console.log(suffixOptions);
 
         return (
             <div>
@@ -81,14 +82,15 @@ export default class ParticipantInfo extends Component {
                     </div>
                     <div className="col-3">
                         <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
-                        <div className="dropdown">
+                        <SuffixDropdown />
+                        {/* <div className="dropdown">
                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 Please Select
                             </button>
                             <div className="dropdown-menu">
                                 {suffixOptions}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="form-row">
