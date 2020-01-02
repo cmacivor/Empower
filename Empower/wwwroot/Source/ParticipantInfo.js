@@ -1,6 +1,8 @@
 import React, { Component, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'moment';
+import moment from 'moment';
 //import 'react-bo'
 //import 'bootstrap/dist/css/bootstrap.css';
 
@@ -70,6 +72,14 @@ export default class ParticipantInfo extends Component {
         // });
 
         console.log(date);
+
+        //let formattedDate = moment(datetoISOString()).format('MM/DD/YYYY');
+
+        //console.log(formattedDate);
+
+        //let formattedDate = moment(date, 'YYYY-MM-DD[T]HH:mm:ss').format();
+
+        //console.log(formattedDate);
     }
 
     datePickerOnClick = () => {
@@ -126,6 +136,7 @@ export default class ParticipantInfo extends Component {
                         <div className="input-group mb-3">
                         <DatePicker
                              selected={ this.state.dateOfBirth }
+                             
                              onChange={date => this.handleDatePickerChange({date})}
                              className="form-control"                             
                          />
