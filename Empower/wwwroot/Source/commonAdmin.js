@@ -45,6 +45,22 @@ export function getSessionData() {
 
 export class Api {
 
+    static getConfigDataByType(api) {
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+        let fullGetAllAdress = `${apiAddress}/api/${api}/GetAll`;
+
+        let sessionStorageData = getSessionData();
+
+        return  fetch(fullGetAllAdress, {
+            //mode: 'cors',
+            headers: {
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json());
+    }
+
     static getAll() {
 
         let sessionStorageData = getSessionData();
