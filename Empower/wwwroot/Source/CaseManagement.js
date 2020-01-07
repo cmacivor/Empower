@@ -33,7 +33,12 @@ export default class CaseManagement extends Component {
                 { name: 'Gender', title: 'Gender' },        
               ],
             rows: [],
-            isGridVisible: false
+            isGridVisible: false,
+
+            //Participant Info (CWB) / Adult Info (Adult) / Juvenile Info (Juvenile)
+            infoTabLastName: '',
+            infoTabFirstName: '',
+            infoTabMiddleName: '' 
         }
 
         this.EnableTabs = this.EnableTabs.bind(this);
@@ -69,8 +74,7 @@ export default class CaseManagement extends Component {
 
     GetSelectedRow(row) {
         this.EnableTabs();
-        console.log(row);
-
+        
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
         let token = sessionStorage.getItem("token");
@@ -97,7 +101,10 @@ export default class CaseManagement extends Component {
                 } 
     
             }).then(finalResult => {
-                console.log(finalResult);
+                console.log(finalResult.ClientProfile.Person.LastName);
+                this.setState({
+                    infoTabLastName: finalResult.ClientProfile.Person.LastName
+                });
                 
             });
         }
@@ -180,6 +187,16 @@ export default class CaseManagement extends Component {
         }
     }
 
+    infoTabOnChangeHandler = (e, field) => {
+        console.log("infoTabHandler getting fired. " + e + ' ' + field);
+
+        if (field === "txtLastName") {
+            this.setState({
+                lastName:  e.target.value
+            });
+        }
+    }
+
     render() {
         return (
             <div>         
@@ -216,7 +233,7 @@ export default class CaseManagement extends Component {
                     }
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={this.state.isTabDisabled}>
-                       <ParticipantInfo/>
+                       <ParticipantInfo lastName={this.state.infoTabLastName} infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={this.state.isTabDisabled}>
                        supplemental content

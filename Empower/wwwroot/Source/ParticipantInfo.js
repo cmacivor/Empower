@@ -45,6 +45,8 @@ export default class ParticipantInfo extends Component {
         alert('on click');
     }
 
+ 
+
     render() {
         //console.log(this.state.suffixes);
 
@@ -58,6 +60,8 @@ export default class ParticipantInfo extends Component {
 
         //console.log(suffixOptions);
 
+        let onChangeHandler = this.props.infoTabOnChangeHandler;
+
         return (
             <div>
                 <br></br>
@@ -65,7 +69,7 @@ export default class ParticipantInfo extends Component {
                     <div className="col-3">
                         <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtLastName"></input>
+                            <input type="text" defaultValue={this.props.lastName} onChange={e => onChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName"></input>
                         </div>
                     </div>
                     <div className="col-3">

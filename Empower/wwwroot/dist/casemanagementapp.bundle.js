@@ -80502,6 +80502,16 @@ function (_Component) {
       }
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "infoTabOnChangeHandler", function (e, field) {
+      console.log("infoTabHandler getting fired. " + e + ' ' + field);
+
+      if (field === "txtLastName") {
+        _this.setState({
+          lastName: e.target.value
+        });
+      }
+    });
+
     _this.state = {
       //Tab State
       isTabDisabled: true,
@@ -80535,7 +80545,11 @@ function (_Component) {
         title: 'Gender'
       }],
       rows: [],
-      isGridVisible: false
+      isGridVisible: false,
+      //Participant Info (CWB) / Adult Info (Adult) / Juvenile Info (Juvenile)
+      infoTabLastName: '',
+      infoTabFirstName: '',
+      infoTabMiddleName: ''
     };
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
@@ -80561,8 +80575,9 @@ function (_Component) {
   }, {
     key: "GetSelectedRow",
     value: function GetSelectedRow(row) {
+      var _this2 = this;
+
       this.EnableTabs();
-      console.log(row);
       var apiAddress = sessionStorage.getItem("baseApiAddress");
       var token = sessionStorage.getItem("token");
       var clientProfileAddress = "".concat(apiAddress, "/api/ClientProfile/").concat(row.ID);
@@ -80583,7 +80598,11 @@ function (_Component) {
             return result.json();
           }
         }).then(function (finalResult) {
-          console.log(finalResult);
+          console.log(finalResult.ClientProfile.Person.LastName);
+
+          _this2.setState({
+            infoTabLastName: finalResult.ClientProfile.Person.LastName
+          });
         });
       } catch (error) {
         console.log(error);
@@ -80593,13 +80612,13 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_13__["default"], {
         defaultActiveKey: this.state.defaultTab,
         activeKey: this.state.activeTab,
         onSelect: function onSelect(k) {
-          return _this2.SetActiveTab(k);
+          return _this3.SetActiveTab(k);
         },
         id: "caseManagementTabs"
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
@@ -80613,7 +80632,7 @@ function (_Component) {
         type: "text",
         className: "form-control",
         onChange: function onChange(e) {
-          return _this2.HandleSearchFieldChange(e, "lastname");
+          return _this3.HandleSearchFieldChange(e, "lastname");
         },
         value: this.state.lastName,
         placeholder: "Enter Last Name"
@@ -80623,7 +80642,7 @@ function (_Component) {
         type: "text",
         className: "form-control",
         onChange: function onChange(e) {
-          return _this2.HandleSearchFieldChange(e, "firstname");
+          return _this3.HandleSearchFieldChange(e, "firstname");
         },
         value: this.state.firstName,
         placeholder: "Enter First Name"
@@ -80651,7 +80670,10 @@ function (_Component) {
         eventKey: "participantinfo",
         title: "Participant Info",
         disabled: this.state.isTabDisabled
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_ParticipantInfo__WEBPACK_IMPORTED_MODULE_11__["default"], null)), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_ParticipantInfo__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        lastName: this.state.infoTabLastName,
+        infoTabOnChangeHandler: this.infoTabOnChangeHandler
+      })), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -80793,6 +80815,7 @@ function (_Component) {
       //    <a className="dropdown-item">{suffix.Name}</a>
       // );
       //console.log(suffixOptions);
+      var onChangeHandler = this.props.infoTabOnChangeHandler;
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80803,6 +80826,10 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
+        defaultValue: this.props.lastName,
+        onChange: function onChange(e) {
+          return onChangeHandler(e, "txtLastName");
+        },
         className: "form-control",
         id: "txtLastName"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
