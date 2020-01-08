@@ -235,10 +235,17 @@ export default class CaseManagement extends Component {
         this.setState({
             clientSuffix: suffix
         });
-    } 
+    }
+    
+    handleDateOfBirthChange = (dateOfBirth) => {
+        this.setState({
+            clientDateOfBirth: dateOfBirth
+        });
+    }
 
     testState = () => {
         console.log(this.state.clientSuffix);
+        console.log(this.state.clientDateOfBirth);
     }
 
     render() {
@@ -288,6 +295,7 @@ export default class CaseManagement extends Component {
                         dateOfBirth={this.state.clientDateOfBirth }
                         infoTabSuffix={this.state.clientSuffix}
                         onSuffixChange={this.handleSuffixChange}
+                        onDateOfBirthChange={this.handleDateOfBirthChange}
                         infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={this.state.isTabDisabled}>

@@ -29,9 +29,11 @@ export default class ParticipantInfo extends Component {
     }
 
     handleDatePickerChange = date => {
+        //this is for display- actual value is held in parent component
         this.setState({
             dateOfBirth: date.date
         });
+        this.props.onDateOfBirthChange(date);
     }
 
     datePickerOnClick = () => {
