@@ -36,13 +36,13 @@ export default class CaseManagement extends Component {
             isGridVisible: false,
 
             //Participant Info (CWB) / Adult Info (Adult) / Juvenile Info (Juvenile)
-            infoTabLastName: '',
-            infoTabFirstName: '',
-            infoTabMiddleName: '',
-            infoTabSSN: '',
-            infoTabFbiNcicNumber: '',
-            infoTabDateOfBirth: new Date(),
-            infoTabSuffix: 'III'
+            clientLastName: '',
+            clientFirstName: '',
+            clientMiddleName: '',
+            clientSSN: '',
+            clientFbiNcicNumber: '',
+            clientDateOfBirth: new Date(),
+            clientSuffix: 'Please Select'
 
         }
 
@@ -108,12 +108,12 @@ export default class CaseManagement extends Component {
             }).then(finalResult => {
                 console.log(finalResult);
                 this.setState({
-                    infoTabLastName: finalResult.ClientProfile.Person.LastName,
-                    infoTabFirstName: finalResult.ClientProfile.Person.FirstName,
-                    infoTabMiddleName: finalResult.ClientProfile.Person.MiddleName,
-                    infoTabSSN: finalResult.ClientProfile.Person.SSN,
-                    infoTabFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
-                    infoTabDateOfBirth: finalResult.ClientProfile.Person.DOB
+                    clientLastName: finalResult.ClientProfile.Person.LastName,
+                    clientFirstName: finalResult.ClientProfile.Person.FirstName,
+                    clientMiddleName: finalResult.ClientProfile.Person.MiddleName,
+                    clientSSN: finalResult.ClientProfile.Person.SSN,
+                    clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
+                    clientDateOfBirth: finalResult.ClientProfile.Person.DOB
                 });
                 
             });
@@ -198,35 +198,34 @@ export default class CaseManagement extends Component {
     }
 
     infoTabOnChangeHandler = (e, field) => {
-        console.log("infoTabHandler getting fired. " + e + ' ' + field);
 
         if (field === "txtLastName") {
             this.setState({
-                infoTabLastName:  e.target.value
+                clientLastName:  e.target.value
             });
         }
 
         if (field === "txtFirstName") {
             this.setState({
-                infoTabFirstName:  e.target.value
+                clientFirstName:  e.target.value
             });
         }
 
         if (field === "txtMiddleName") {
             this.setState({
-                infoTabMiddleName:  e.target.value
+                clientMiddleName:  e.target.value
             });
         }
 
         if (field === "txtSSN") {
             this.setState({
-                infoTabSSN:  e.target.value
+                clientSSN:  e.target.value
             });
         }
 
         if (field === "txtFbiNcicNumber") {
             this.setState({
-                infoTabFbiNcicNumber:  e.target.value
+                clientFbiNcicNumber:  e.target.value
             });
         }
     }
@@ -234,12 +233,12 @@ export default class CaseManagement extends Component {
     //parent change handler for all Suffix dropdowns.
     handleSuffixChange = (suffix) => {
         this.setState({
-            infoTabSuffix: suffix
+            clientSuffix: suffix
         });
     } 
 
     testState = () => {
-        console.log(this.state.infoTabSuffix);
+        console.log(this.state.clientSuffix);
     }
 
     render() {
@@ -280,13 +279,13 @@ export default class CaseManagement extends Component {
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={this.state.isTabDisabled}>
                        <ParticipantInfo
-                        lastName={this.state.infoTabLastName}
-                        firstName={this.state.infoTabFirstName}
-                        middleName={this.state.infoTabMiddleName}
-                        ssn={this.state.infoTabSSN}
+                        lastName={this.state.clientLastName}
+                        firstName={this.state.clientFirstName}
+                        middleName={this.state.clientMiddleName}
+                        ssn={this.state.clientSSN}
                         fbiNcicNumber={this.state.fbiNcicNumber}                        
-                        ssn={this.state.infoTabSSN}
-                        infoTabSuffix={this.state.infoTabSuffix}
+                        ssn={this.state.clientSSN}
+                        infoTabSuffix={this.state.clientSuffix}
                         onSuffixChange={this.handleSuffixChange}
                         infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
                     </Tab>

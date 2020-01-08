@@ -8,7 +8,7 @@ export default class SuffixDropDown extends Component {
 
         this.state = {
             suffixes:  [],
-            selectedValue: (this.props.selected !== '' || this.props.selected !== null) ? this.props.selected : ''    
+            selectedValue: this.props.selected     
         }
 
         Api.getConfigDataByType("Suffix").then(suffixes => this.setState({suffixes}));

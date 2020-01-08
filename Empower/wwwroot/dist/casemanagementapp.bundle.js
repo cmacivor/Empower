@@ -80503,48 +80503,45 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "infoTabOnChangeHandler", function (e, field) {
-      console.log("infoTabHandler getting fired. " + e + ' ' + field);
-
       if (field === "txtLastName") {
         _this.setState({
-          infoTabLastName: e.target.value
+          clientLastName: e.target.value
         });
       }
 
       if (field === "txtFirstName") {
         _this.setState({
-          infoTabFirstName: e.target.value
+          clientFirstName: e.target.value
         });
       }
 
       if (field === "txtMiddleName") {
         _this.setState({
-          infoTabMiddleName: e.target.value
+          clientMiddleName: e.target.value
         });
       }
 
       if (field === "txtSSN") {
         _this.setState({
-          infoTabSSN: e.target.value
+          clientSSN: e.target.value
         });
       }
 
       if (field === "txtFbiNcicNumber") {
         _this.setState({
-          infoTabFbiNcicNumber: e.target.value
+          clientFbiNcicNumber: e.target.value
         });
       }
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleSuffixChange", function (suffix) {
-      //console.log('this is case management, the suffix is ' + suffix);
       _this.setState({
-        infoTabSuffix: suffix
+        clientSuffix: suffix
       });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "testState", function () {
-      console.log(_this.state.infoTabSuffix);
+      console.log(_this.state.clientSuffix);
     });
 
     _this.state = {
@@ -80582,13 +80579,13 @@ function (_Component) {
       rows: [],
       isGridVisible: false,
       //Participant Info (CWB) / Adult Info (Adult) / Juvenile Info (Juvenile)
-      infoTabLastName: '',
-      infoTabFirstName: '',
-      infoTabMiddleName: '',
-      infoTabSSN: '',
-      infoTabFbiNcicNumber: '',
-      infoTabDateOfBirth: new Date(),
-      infoTabSuffix: 'III'
+      clientLastName: '',
+      clientFirstName: '',
+      clientMiddleName: '',
+      clientSSN: '',
+      clientFbiNcicNumber: '',
+      clientDateOfBirth: new Date(),
+      clientSuffix: 'Please Select'
     };
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
@@ -80640,12 +80637,12 @@ function (_Component) {
           console.log(finalResult);
 
           _this2.setState({
-            infoTabLastName: finalResult.ClientProfile.Person.LastName,
-            infoTabFirstName: finalResult.ClientProfile.Person.FirstName,
-            infoTabMiddleName: finalResult.ClientProfile.Person.MiddleName,
-            infoTabSSN: finalResult.ClientProfile.Person.SSN,
-            infoTabFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
-            infoTabDateOfBirth: finalResult.ClientProfile.Person.DOB
+            clientLastName: finalResult.ClientProfile.Person.LastName,
+            clientFirstName: finalResult.ClientProfile.Person.FirstName,
+            clientMiddleName: finalResult.ClientProfile.Person.MiddleName,
+            clientSSN: finalResult.ClientProfile.Person.SSN,
+            clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
+            clientDateOfBirth: finalResult.ClientProfile.Person.DOB
           });
         });
       } catch (error) {
@@ -80719,12 +80716,12 @@ function (_Component) {
         title: "Participant Info",
         disabled: this.state.isTabDisabled
       }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_ParticipantInfo__WEBPACK_IMPORTED_MODULE_11__["default"], (_React$createElement = {
-        lastName: this.state.infoTabLastName,
-        firstName: this.state.infoTabFirstName,
-        middleName: this.state.infoTabMiddleName,
-        ssn: this.state.infoTabSSN,
+        lastName: this.state.clientLastName,
+        firstName: this.state.clientFirstName,
+        middleName: this.state.clientMiddleName,
+        ssn: this.state.clientSSN,
         fbiNcicNumber: this.state.fbiNcicNumber
-      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.infoTabSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.infoTabSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -81297,7 +81294,7 @@ function (_Component) {
 
     _this.state = {
       suffixes: [],
-      selectedValue: _this.props.selected !== '' || _this.props.selected !== null ? _this.props.selected : ''
+      selectedValue: _this.props.selected
     };
     _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Suffix").then(function (suffixes) {
       return _this.setState({
