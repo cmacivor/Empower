@@ -75,13 +75,13 @@ export default class ParticipantInfo extends Component {
                     <div className="col-3">
                         <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtFirstName"></input>
+                            <input type="text" defaultValue={this.props.firstName} onChange={e => onChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName"></input>
                         </div>
                     </div>
                     <div className="col-3">
                         <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtMiddleName"></input>
+                            <input type="text" defaultValue={this.props.middleName} onChange={e => onChangeHandler(e, "txtMiddleName")} className="form-control" id="txtMiddleName"></input>
                         </div>
                     </div>
                     <div className="col-3">
@@ -101,19 +101,19 @@ export default class ParticipantInfo extends Component {
                     <div className="col-4">
                         <label htmlFor="txtSSN"><strong> SSN</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtSSN"></input>
+                            <input type="text" defaultValue={this.props.ssn} onChange={e => onChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
                         </div>
                     </div>
                     <div className="col-4">
                         <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtFbiNcicNumber"></input>
+                            <input type="text" defaultValue={this.props.fbiNcicNumber} onChange={e => onChangeHandler(e, "txtFbiNcicNumber")} className="form-control" id="txtFbiNcicNumber"></input>
                         </div>
                     </div>
                     <div className="col-4">
-                        <label htmlFor="txtFirstName"><strong> Date of Birth *</strong></label>
+                        <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
-                        <DatePicker
+                        <DatePicker 
                              selected={ this.state.dateOfBirth }
                              
                              onChange={date => this.handleDatePickerChange({date})}

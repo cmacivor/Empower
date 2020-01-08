@@ -38,7 +38,11 @@ export default class CaseManagement extends Component {
             //Participant Info (CWB) / Adult Info (Adult) / Juvenile Info (Juvenile)
             infoTabLastName: '',
             infoTabFirstName: '',
-            infoTabMiddleName: '' 
+            infoTabMiddleName: '',
+            infoTabSSN: '',
+            infoTabFbiNcicNumber: '',
+            infoTabDateOfBirth: new Date(),
+
         }
 
         this.EnableTabs = this.EnableTabs.bind(this);
@@ -101,9 +105,14 @@ export default class CaseManagement extends Component {
                 } 
     
             }).then(finalResult => {
-                console.log(finalResult.ClientProfile.Person.LastName);
+                console.log(finalResult);
                 this.setState({
-                    infoTabLastName: finalResult.ClientProfile.Person.LastName
+                    infoTabLastName: finalResult.ClientProfile.Person.LastName,
+                    infoTabFirstName: finalResult.ClientProfile.Person.FirstName,
+                    infoTabMiddleName: finalResult.ClientProfile.Person.MiddleName,
+                    infoTabSSN: finalResult.ClientProfile.Person.SSN,
+                    infoTabFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
+                    infoTabDateOfBirth: finalResult.ClientProfile.Person.DOB
                 });
                 
             });
@@ -192,7 +201,31 @@ export default class CaseManagement extends Component {
 
         if (field === "txtLastName") {
             this.setState({
-                lastName:  e.target.value
+                infoTabLastName:  e.target.value
+            });
+        }
+
+        if (field === "txtFirstName") {
+            this.setState({
+                infoTabFirstName:  e.target.value
+            });
+        }
+
+        if (field === "txtMiddleName") {
+            this.setState({
+                infoTabMiddleName:  e.target.value
+            });
+        }
+
+        if (field === "txtSSN") {
+            this.setState({
+                infoTabSSN:  e.target.value
+            });
+        }
+
+        if (field === "txtFbiNcicNumber") {
+            this.setState({
+                infoTabFbiNcicNumber:  e.target.value
             });
         }
     }
@@ -233,7 +266,14 @@ export default class CaseManagement extends Component {
                     }
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={this.state.isTabDisabled}>
-                       <ParticipantInfo lastName={this.state.infoTabLastName} infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
+                       <ParticipantInfo
+                        lastName={this.state.infoTabLastName}
+                        firstName={this.state.infoTabFirstName}
+                        middleName={this.state.infoTabMiddleName}
+                        ssn={this.state.infoTabSSN}
+                        fbiNcicNumber={this.state.fbiNcicNumber}                        
+                        ssn={this.state.infoTabSSN}
+                        infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={this.state.isTabDisabled}>
                        supplemental content

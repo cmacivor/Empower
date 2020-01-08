@@ -80507,7 +80507,31 @@ function (_Component) {
 
       if (field === "txtLastName") {
         _this.setState({
-          lastName: e.target.value
+          infoTabLastName: e.target.value
+        });
+      }
+
+      if (field === "txtFirstName") {
+        _this.setState({
+          infoTabFirstName: e.target.value
+        });
+      }
+
+      if (field === "txtMiddleName") {
+        _this.setState({
+          infoTabMiddleName: e.target.value
+        });
+      }
+
+      if (field === "txtSSN") {
+        _this.setState({
+          infoTabSSN: e.target.value
+        });
+      }
+
+      if (field === "txtFbiNcicNumber") {
+        _this.setState({
+          infoTabFbiNcicNumber: e.target.value
         });
       }
     });
@@ -80549,7 +80573,10 @@ function (_Component) {
       //Participant Info (CWB) / Adult Info (Adult) / Juvenile Info (Juvenile)
       infoTabLastName: '',
       infoTabFirstName: '',
-      infoTabMiddleName: ''
+      infoTabMiddleName: '',
+      infoTabSSN: '',
+      infoTabFbiNcicNumber: '',
+      infoTabDateOfBirth: new Date()
     };
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
@@ -80598,10 +80625,15 @@ function (_Component) {
             return result.json();
           }
         }).then(function (finalResult) {
-          console.log(finalResult.ClientProfile.Person.LastName);
+          console.log(finalResult);
 
           _this2.setState({
-            infoTabLastName: finalResult.ClientProfile.Person.LastName
+            infoTabLastName: finalResult.ClientProfile.Person.LastName,
+            infoTabFirstName: finalResult.ClientProfile.Person.FirstName,
+            infoTabMiddleName: finalResult.ClientProfile.Person.MiddleName,
+            infoTabSSN: finalResult.ClientProfile.Person.SSN,
+            infoTabFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
+            infoTabDateOfBirth: finalResult.ClientProfile.Person.DOB
           });
         });
       } catch (error) {
@@ -80612,7 +80644,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this3 = this,
+          _React$createElement;
 
       return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_13__["default"], {
         defaultActiveKey: this.state.defaultTab,
@@ -80670,10 +80703,13 @@ function (_Component) {
         eventKey: "participantinfo",
         title: "Participant Info",
         disabled: this.state.isTabDisabled
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_ParticipantInfo__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_ParticipantInfo__WEBPACK_IMPORTED_MODULE_11__["default"], (_React$createElement = {
         lastName: this.state.infoTabLastName,
-        infoTabOnChangeHandler: this.infoTabOnChangeHandler
-      })), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        firstName: this.state.infoTabFirstName,
+        middleName: this.state.infoTabMiddleName,
+        ssn: this.state.infoTabSSN,
+        fbiNcicNumber: this.state.fbiNcicNumber
+      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.infoTabSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -80840,6 +80876,10 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
+        defaultValue: this.props.firstName,
+        onChange: function onChange(e) {
+          return onChangeHandler(e, "txtFirstName");
+        },
         className: "form-control",
         id: "txtFirstName"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80850,6 +80890,10 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
+        defaultValue: this.props.middleName,
+        onChange: function onChange(e) {
+          return onChangeHandler(e, "txtMiddleName");
+        },
         className: "form-control",
         id: "txtMiddleName"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80866,6 +80910,10 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
+        defaultValue: this.props.ssn,
+        onChange: function onChange(e) {
+          return onChangeHandler(e, "txtSSN");
+        },
         className: "form-control",
         id: "txtSSN"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80876,12 +80924,16 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
+        defaultValue: this.props.fbiNcicNumber,
+        onChange: function onChange(e) {
+          return onChangeHandler(e, "txtFbiNcicNumber");
+        },
         className: "form-control",
         id: "txtFbiNcicNumber"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-4"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
-        htmlFor: "txtFirstName"
+        htmlFor: "txtDateOfBirth"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " Date of Birth *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_8___default.a, {
