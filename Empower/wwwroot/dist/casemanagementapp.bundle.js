@@ -81274,12 +81274,16 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(SuffixDropDown).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
-      console.log(event);
-      console.log(event.target);
-      console.log(event.target.value); // this.setState({
-      //     selectedValue: event.target.value
-      // });
-      // console.log('the new suffix is ' + this.state.selectedValue);
+      // console.log(event);
+      // console.log(event.target);
+      // console.log(event.target.value);
+      // console.log(event.target.key);
+      console.log(event.currentTarget.getAttribute('value'));
+
+      _this.setState({
+        selectedValue: event.currentTarget.getAttribute('value')
+      }); // console.log('the new suffix is ' + this.state.selectedValue);
+
     });
 
     _this.state = {
@@ -81302,9 +81306,8 @@ function (_Component) {
       var suffixOptions = this.state.suffixes.map(function (suffix) {
         return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
           key: suffix.ID,
-          onClick: function onClick(e) {
-            return _this2.onSelectHandler(e);
-          },
+          value: suffix.Name,
+          onClick: _this2.onSelectHandler,
           className: "dropdown-item"
         }, suffix.Name);
       });

@@ -16,12 +16,15 @@ export default class SuffixDropDown extends Component {
     }
 
     onSelectHandler = (event) => {
-        console.log(event);
-        console.log(event.target);
-        console.log(event.target.value);
-        // this.setState({
-        //     selectedValue: event.target.value
-        // });
+        // console.log(event);
+        // console.log(event.target);
+        // console.log(event.target.value);
+        // console.log(event.target.key);
+
+        console.log(event.currentTarget.getAttribute('value'));
+        this.setState({
+            selectedValue: event.currentTarget.getAttribute('value')
+        });
 
         // console.log('the new suffix is ' + this.state.selectedValue);
     }
@@ -30,7 +33,7 @@ export default class SuffixDropDown extends Component {
     render() {
 
         let suffixOptions = this.state.suffixes.map((suffix) =>
-        <a key={suffix.ID} onClick={e => this.onSelectHandler(e)} className="dropdown-item">{suffix.Name}</a>
+        <a key={suffix.ID} value={suffix.Name} onClick={this.onSelectHandler} className="dropdown-item">{suffix.Name}</a>
         );
 
         return (
