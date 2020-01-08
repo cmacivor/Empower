@@ -21,7 +21,7 @@ export default class SuffixDropDown extends Component {
         });
 
         let valueToSendToParent = event.currentTarget.getAttribute('value');
-        console.log('this is the suffix dropdown: ' + valueToSendToParent);
+        //pass the selected suffix value to the parent- could be one of several components
         this.props.onSelectSuffix(valueToSendToParent);
 
     }

@@ -231,9 +231,16 @@ export default class CaseManagement extends Component {
         }
     }
 
+    //parent change handler for all Suffix dropdowns.
     handleSuffixChange = (suffix) => {
-        console.log('this is case management, the suffix is ' + suffix);
+        this.setState({
+            infoTabSuffix: suffix
+        });
     } 
+
+    testState = () => {
+        console.log(this.state.infoTabSuffix);
+    }
 
     render() {
         return (
@@ -255,6 +262,7 @@ export default class CaseManagement extends Component {
                         </div>
                         <div className="col-auto">
                             <button type="button" onClick={this.ClearSearchFields} className="btn btn-primary mb-2">Clear Search</button>
+                            <button type="button" onClick={this.testState}>Test state</button>
                         </div>
                     </div>
                     <br/>

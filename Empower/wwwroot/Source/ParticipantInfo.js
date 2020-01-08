@@ -39,16 +39,8 @@ export default class ParticipantInfo extends Component {
     }
 
     handleSuffixChange = (suffix) => {
-        console.log('this is the participant component, suffix is ' + suffix);
-
-        //now pass it to CaseManagement
+        //pass it to CaseManagement
         this.props.onSuffixChange(suffix);
-
-        // this.setState({
-        //     Suffix: suffix
-        // });
-
-        // console.log('this is the participant info, Suffix is changed to ' + this.state.Suffix);
     }
 
  
