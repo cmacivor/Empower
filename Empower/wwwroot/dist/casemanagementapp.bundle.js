@@ -80536,6 +80536,10 @@ function (_Component) {
       }
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleSuffixChange", function (suffix) {
+      console.log('this is case management, the suffix is ' + suffix);
+    });
+
     _this.state = {
       //Tab State
       isTabDisabled: true,
@@ -80576,7 +80580,8 @@ function (_Component) {
       infoTabMiddleName: '',
       infoTabSSN: '',
       infoTabFbiNcicNumber: '',
-      infoTabDateOfBirth: new Date()
+      infoTabDateOfBirth: new Date(),
+      infoTabSuffix: 'III'
     };
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
@@ -80709,7 +80714,7 @@ function (_Component) {
         middleName: this.state.infoTabMiddleName,
         ssn: this.state.infoTabSSN,
         fbiNcicNumber: this.state.fbiNcicNumber
-      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.infoTabSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.infoTabSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.infoTabSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -80818,11 +80823,20 @@ function (_Component) {
       alert('on click');
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleSuffixChange", function (suffix) {
+      console.log('this is the participant component, suffix is ' + suffix); //now pass it to CaseManagement
+
+      _this.props.onSuffixChange(suffix); // this.setState({
+      //     Suffix: suffix
+      // });
+      // console.log('this is the participant info, Suffix is changed to ' + this.state.Suffix);
+
+    });
+
     _this.state = {
       lastName: '',
       middleName: '',
       fbiNcicNumber: '',
-      Suffix: '',
       race: '',
       stateVCIN: '',
       alias: '',
@@ -80832,9 +80846,7 @@ function (_Component) {
       currentAge: '',
       gender: '' //suffixes:  []      
 
-    }; //Api.getAll().then(rowData => this.setState({ rowData }));
-    //console.log(this.state.suffixes);
-
+    };
     return _this;
   }
 
@@ -80843,14 +80855,6 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      //console.log(this.state.suffixes);
-      // let suffixOptions = this.state.suffixes.map((suffix) =>
-      //     <option key = {suffix.ID }>{suffix.Name}</option>
-      // );
-      // let suffixOptions = this.state.suffixes.map((suffix) =>
-      //    <a className="dropdown-item">{suffix.Name}</a>
-      // );
-      //console.log(suffixOptions);
       var onChangeHandler = this.props.infoTabOnChangeHandler;
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
@@ -80900,7 +80904,10 @@ function (_Component) {
         className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "ddlSuffix"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_SuffixDropdown__WEBPACK_IMPORTED_MODULE_12__["default"], null))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_SuffixDropdown__WEBPACK_IMPORTED_MODULE_12__["default"], {
+        onSelectSuffix: this.handleSuffixChange,
+        selected: this.props.infoTabSuffix
+      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-4"
@@ -81274,21 +81281,19 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(SuffixDropDown).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
-      // console.log(event);
-      // console.log(event.target);
-      // console.log(event.target.value);
-      // console.log(event.target.key);
-      console.log(event.currentTarget.getAttribute('value'));
-
       _this.setState({
         selectedValue: event.currentTarget.getAttribute('value')
-      }); // console.log('the new suffix is ' + this.state.selectedValue);
+      });
 
+      var valueToSendToParent = event.currentTarget.getAttribute('value');
+      console.log('this is the suffix dropdown: ' + valueToSendToParent);
+
+      _this.props.onSelectSuffix(valueToSendToParent);
     });
 
     _this.state = {
       suffixes: [],
-      selectedValue: 'Please Select'
+      selectedValue: _this.props.selected !== '' || _this.props.selected !== null ? _this.props.selected : ''
     };
     _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Suffix").then(function (suffixes) {
       return _this.setState({

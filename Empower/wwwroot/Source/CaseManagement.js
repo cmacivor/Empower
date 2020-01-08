@@ -42,6 +42,7 @@ export default class CaseManagement extends Component {
             infoTabSSN: '',
             infoTabFbiNcicNumber: '',
             infoTabDateOfBirth: new Date(),
+            infoTabSuffix: 'III'
 
         }
 
@@ -230,6 +231,10 @@ export default class CaseManagement extends Component {
         }
     }
 
+    handleSuffixChange = (suffix) => {
+        console.log('this is case management, the suffix is ' + suffix);
+    } 
+
     render() {
         return (
             <div>         
@@ -273,6 +278,8 @@ export default class CaseManagement extends Component {
                         ssn={this.state.infoTabSSN}
                         fbiNcicNumber={this.state.fbiNcicNumber}                        
                         ssn={this.state.infoTabSSN}
+                        infoTabSuffix={this.state.infoTabSuffix}
+                        onSuffixChange={this.handleSuffixChange}
                         infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={this.state.isTabDisabled}>

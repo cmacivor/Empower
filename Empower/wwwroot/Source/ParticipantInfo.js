@@ -15,8 +15,7 @@ export default class ParticipantInfo extends Component {
         this.state = {
             lastName: '',
             middleName: '',
-            fbiNcicNumber: '',
-            Suffix: '',
+            fbiNcicNumber: '',            
             race: '',
             stateVCIN: '',
             alias: '',
@@ -27,12 +26,6 @@ export default class ParticipantInfo extends Component {
             gender: '',
             //suffixes:  []      
         }
-
-        //Api.getAll().then(rowData => this.setState({ rowData }));
-       
-
-        //console.log(this.state.suffixes);
-
     }
 
     handleDatePickerChange = date => {
@@ -45,20 +38,23 @@ export default class ParticipantInfo extends Component {
         alert('on click');
     }
 
+    handleSuffixChange = (suffix) => {
+        console.log('this is the participant component, suffix is ' + suffix);
+
+        //now pass it to CaseManagement
+        this.props.onSuffixChange(suffix);
+
+        // this.setState({
+        //     Suffix: suffix
+        // });
+
+        // console.log('this is the participant info, Suffix is changed to ' + this.state.Suffix);
+    }
+
  
 
     render() {
-        //console.log(this.state.suffixes);
 
-        // let suffixOptions = this.state.suffixes.map((suffix) =>
-        //     <option key = {suffix.ID }>{suffix.Name}</option>
-        // );
-
-        // let suffixOptions = this.state.suffixes.map((suffix) =>
-        //    <a className="dropdown-item">{suffix.Name}</a>
-        // );
-
-        //console.log(suffixOptions);
 
         let onChangeHandler = this.props.infoTabOnChangeHandler;
 
@@ -86,15 +82,7 @@ export default class ParticipantInfo extends Component {
                     </div>
                     <div className="col-3">
                         <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
-                        <SuffixDropdown />
-                        {/* <div className="dropdown">
-                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Please Select
-                            </button>
-                            <div className="dropdown-menu">
-                                {suffixOptions}
-                            </div>
-                        </div> */}
+                        <SuffixDropdown onSelectSuffix={this.handleSuffixChange} selected={this.props.infoTabSuffix} />          
                     </div>
                 </div>
                 <div className="form-row">
@@ -128,50 +116,6 @@ export default class ParticipantInfo extends Component {
                        
                     </div>
                 </div>
-
-
-
-
-                {/* <div className="form-row">
-                    <div className="col-6">
-                        
-                    </div>
-                    <div className="col-6">
-                    
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className="col-6">
-                   
-                    </div>
-                    <div className="col-6">
-                        <label htmlFor="txtFirstName"><strong> SSN</strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtSSN"></input>
-                        </div>
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className="col-6">
-                        <label htmlFor="txtFirstName"><strong> FBI/NCIC Number </strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtFbiNcicNumber"></input>
-                        </div>
-                    </div>
-                    <div className="col-6">
-                        <label htmlFor="txtFirstName"><strong> Date of Birth *</strong></label>
-                        <div className="input-group mb-3">
-                        <DatePicker
-                             selected={ this.state.dateOfBirth }
-                             
-                             onChange={date => this.handleDatePickerChange({date})}
-                             className="form-control"                             
-                         />
-                        </div>
-                    </div>
-                </div> */}
-
-
             </div>
      
         )

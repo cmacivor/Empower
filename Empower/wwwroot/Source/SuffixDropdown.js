@@ -8,7 +8,7 @@ export default class SuffixDropDown extends Component {
 
         this.state = {
             suffixes:  [],
-            selectedValue: 'Please Select'   
+            selectedValue: (this.props.selected !== '' || this.props.selected !== null) ? this.props.selected : ''    
         }
 
         Api.getConfigDataByType("Suffix").then(suffixes => this.setState({suffixes}));
@@ -16,17 +16,14 @@ export default class SuffixDropDown extends Component {
     }
 
     onSelectHandler = (event) => {
-        // console.log(event);
-        // console.log(event.target);
-        // console.log(event.target.value);
-        // console.log(event.target.key);
-
-        console.log(event.currentTarget.getAttribute('value'));
         this.setState({
             selectedValue: event.currentTarget.getAttribute('value')
         });
 
-        // console.log('the new suffix is ' + this.state.selectedValue);
+        let valueToSendToParent = event.currentTarget.getAttribute('value');
+        console.log('this is the suffix dropdown: ' + valueToSendToParent);
+        this.props.onSelectSuffix(valueToSendToParent);
+
     }
 
 
