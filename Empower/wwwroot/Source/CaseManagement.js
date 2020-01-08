@@ -285,6 +285,7 @@ export default class CaseManagement extends Component {
                         ssn={this.state.clientSSN}
                         fbiNcicNumber={this.state.fbiNcicNumber}                        
                         ssn={this.state.clientSSN}
+                        dateOfBirth={this.state.clientDateOfBirth }
                         infoTabSuffix={this.state.clientSuffix}
                         onSuffixChange={this.handleSuffixChange}
                         infoTabOnChangeHandler={this.infoTabOnChangeHandler} />

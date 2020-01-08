@@ -21,7 +21,7 @@ export default class ParticipantInfo extends Component {
             alias: '',
             firsName: '',
             ssn: '',
-            dateOfBirth: new Date(),
+            dateOfBirth: this.props.dateOfBirth, //new Date(),
             currentAge: '',
             gender: '',
             //suffixes:  []      
