@@ -80658,7 +80658,7 @@ function (_Component) {
 
           var duration = moment__WEBPACK_IMPORTED_MODULE_15___default.a.duration(difference, 'milliseconds'); //console.log(duration);
 
-          var diffInYears = duration.asYears();
+          var diffInYears = Math.round(duration.asYears());
           console.log(diffInYears);
 
           _this2.setState({
@@ -80845,6 +80845,12 @@ function (_Component) {
     _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, ParticipantInfo);
 
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props)); //calculate age
+    // let difference = moment(new Date()).diff(this.props.dateOfBirth);
+    // let duration = moment.duration(difference, 'milliseconds');
+    // let differenceInDays = duration.asYears();
+    // console.log(difference);
+    // console.log(duration);
+    // console.log(differenceInDays);
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleDatePickerChange", function (date) {
       //this is for display- actual value is held in parent component
@@ -80862,15 +80868,9 @@ function (_Component) {
       _this.props.onSuffixChange(suffix);
     });
 
-    var difference = moment__WEBPACK_IMPORTED_MODULE_10___default()(new Date()).diff(_this.props.dateOfBirth);
-    var duration = moment__WEBPACK_IMPORTED_MODULE_10___default.a.duration(difference, 'milliseconds');
-    var differenceInDays = duration.asYears();
-    console.log(difference);
-    console.log(duration);
-    console.log(differenceInDays);
     _this.state = {
-      dateOfBirth: _this.props.dateOfBirth,
-      currentAge: differenceInDays
+      dateOfBirth: _this.props.dateOfBirth //currentAge: differenceInDays,                
+
     };
     return _this;
   }
@@ -80965,6 +80965,17 @@ function (_Component) {
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "txtCurrentAge"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Current Age")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "inpu-group mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+        type: "text",
+        readOnly: true,
+        value: this.props.currentAge,
+        className: "form-control"
+      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-3"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtDateOfBirth"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " Date of Birth *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "input-group mb-3"
@@ -80975,17 +80986,6 @@ function (_Component) {
             date: date
           });
         },
-        className: "form-control"
-      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-3"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
-        htmlFor: "txtCurrentAge"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Current Age")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "inpu-group mb-3"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
-        type: "text",
-        readOnly: true,
-        value: this.props.currentAge,
         className: "form-control"
       })))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"

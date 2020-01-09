@@ -13,17 +13,17 @@ export default class ParticipantInfo extends Component {
         super(props);
 
         //calculate age
-        let difference = moment(new Date()).diff(this.props.dateOfBirth);
-        let duration = moment.duration(difference, 'milliseconds');
-        let differenceInDays = duration.asYears();
-        console.log(difference);
-        console.log(duration);
-        console.log(differenceInDays);
+        // let difference = moment(new Date()).diff(this.props.dateOfBirth);
+        // let duration = moment.duration(difference, 'milliseconds');
+        // let differenceInDays = duration.asYears();
+        // console.log(difference);
+        // console.log(duration);
+        // console.log(differenceInDays);
 
         this.state = {
           
             dateOfBirth: this.props.dateOfBirth,  
-            currentAge: differenceInDays,                
+            //currentAge: differenceInDays,                
         }
     }
 
@@ -90,6 +90,12 @@ export default class ParticipantInfo extends Component {
                         </div>
                     </div>
                     <div className="col-3">
+                        <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
+                        <div className="inpu-group mb-3">
+                            <input type="text" readOnly value={this.props.currentAge} className="form-control"></input>
+                        </div>
+                    </div>
+                    <div className="col-3">
                         <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
                         <DatePicker 
@@ -99,13 +105,7 @@ export default class ParticipantInfo extends Component {
                              className="form-control"                             
                          />
                         </div>
-                    </div>
-                    <div className="col-3">
-                        <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
-                        <div className="inpu-group mb-3">
-                            <input type="text" readOnly value={this.props.currentAge} className="form-control"></input>
-                        </div>
-                    </div>
+                    </div>  
                 </div>
                 <div className="form-row">
                     <div className="col-4">

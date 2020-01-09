@@ -121,7 +121,7 @@ export default class CaseManagement extends Component {
                  //console.log(difference);
                  let duration = moment.duration(difference, 'milliseconds');
                  //console.log(duration);
-                 let diffInYears = duration.asYears();
+                 let diffInYears = Math.round(duration.asYears());
                  console.log(diffInYears);
               
                 this.setState({
