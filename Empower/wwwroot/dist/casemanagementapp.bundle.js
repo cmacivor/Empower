@@ -80833,17 +80833,17 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleDatePickerChange", function (date) {
-      console.log('this is the participant info. dateofbirth is: ' + _this.props.dateOfBirth);
-      console.log('this is the local state: ' + _this.state.dateOfBirth);
-      console.log('formatted date (L) : ' + moment__WEBPACK_IMPORTED_MODULE_10___default()(_this.props.dateOfBirth).format('L')); //this one is the correct one
-
-      console.log('utc string: ' + date.date.toUTCString());
-      console.log('date object: ' + date); //let formattedDate =  moment(date.date).format('L');
+      console.log('this is the participant info. dateofbirth is: ' + _this.props.dateOfBirth); // console.log('formatted date (L) : ' + moment(this.props.dateOfBirth).format('L')); //this one is the correct one
+      //console.log('utc string: ' + date.date.toUTCString());
+      //console.log('date object: ' + date);
+      //let formattedDate =  moment(date.date).format('L');
       //this is for display- actual value is held in parent component
 
       _this.setState({
         dateOfBirth: date.date
       });
+
+      console.log('this is the local state: ' + _this.state.dateOfBirth);
 
       _this.props.onDateOfBirthChange(date.date);
     });
@@ -80853,9 +80853,10 @@ function (_Component) {
       _this.props.onSuffixChange(suffix);
     });
 
+    var testDate = moment__WEBPACK_IMPORTED_MODULE_10___default()(_this.props.dateOfBirth);
     _this.state = {
-      dateOfBirth: _this.props.dateOfBirth,
-      //new Date(),
+      dateOfBirth: testDate.toDate(),
+      //this.props.dateOfBirth, //new Date(),
       currentAge: ''
     };
     return _this;
@@ -80955,7 +80956,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " Date of Birth *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_8___default.a, {
-        selected: this.state.dateOfBirth,
+        selected: new Date('December 17, 1995 03:24:00'),
         onChange: function onChange(date) {
           return _this2.handleDatePickerChange({
             date: date

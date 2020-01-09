@@ -12,9 +12,11 @@ export default class ParticipantInfo extends Component {
     constructor(props){
         super(props);
 
+        let testDate = moment(this.props.dateOfBirth);
+
         this.state = {
           
-            dateOfBirth: this.props.dateOfBirth, //new Date(),
+            dateOfBirth: testDate.toDate(), //this.props.dateOfBirth, //new Date(),
             currentAge: '',                
         }
     }
@@ -22,11 +24,11 @@ export default class ParticipantInfo extends Component {
     handleDatePickerChange = date => {
 
         console.log('this is the participant info. dateofbirth is: ' + this.props.dateOfBirth);
-        console.log('this is the local state: '  + this.state.dateOfBirth);
-        console.log('formatted date (L) : ' + moment(this.props.dateOfBirth).format('L')); //this one is the correct one
+       
+       // console.log('formatted date (L) : ' + moment(this.props.dateOfBirth).format('L')); //this one is the correct one
         
-        console.log('utc string: ' + date.date.toUTCString());
-        console.log('date object: ' + date);
+        //console.log('utc string: ' + date.date.toUTCString());
+        //console.log('date object: ' + date);
 
         //let formattedDate =  moment(date.date).format('L');
 
@@ -34,6 +36,7 @@ export default class ParticipantInfo extends Component {
         this.setState({
             dateOfBirth: date.date
         });
+        console.log('this is the local state: '  + this.state.dateOfBirth);
         this.props.onDateOfBirthChange(date.date);
     }
 
@@ -97,7 +100,7 @@ export default class ParticipantInfo extends Component {
                         <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
                         <DatePicker 
-                             selected={ this.state.dateOfBirth }
+                             selected={ new Date('December 17, 1995 03:24:00') }
                              
                              onChange={date => this.handleDatePickerChange({date})}
                              className="form-control"                             
