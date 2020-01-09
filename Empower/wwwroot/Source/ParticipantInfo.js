@@ -13,22 +13,25 @@ export default class ParticipantInfo extends Component {
         super(props);
 
         this.state = {
-            lastName: '',
-            middleName: '',
-            fbiNcicNumber: '',            
-            race: '',
-            stateVCIN: '',
-            alias: '',
-            firsName: '',
-            ssn: '',
+            //lastName: '',
+            //middleName: '',
+            //fbiNcicNumber: '',            
+            //race: '',
+            //stateVCIN: '',
+            //alias: '',
+            //firsName: '',
+            //ssn: '',
             dateOfBirth: this.props.dateOfBirth, //new Date(),
             currentAge: '',
-            gender: '',
+            //gender: '',
             //suffixes:  []      
         }
     }
 
     handleDatePickerChange = date => {
+
+        console.log('this is the participant info. dateofbirth is: ' + this.props.dateOfBirth);
+
         //this is for display- actual value is held in parent component
         this.setState({
             dateOfBirth: date.date
@@ -36,9 +39,9 @@ export default class ParticipantInfo extends Component {
         this.props.onDateOfBirthChange(date);
     }
 
-    datePickerOnClick = () => {
-        alert('on click');
-    }
+    // datePickerOnClick = () => {
+    //     alert('on click');
+    // }
 
     handleSuffixChange = (suffix) => {
         //pass it to CaseManagement
