@@ -80838,13 +80838,14 @@ function (_Component) {
       console.log('formatted date (L) : ' + moment__WEBPACK_IMPORTED_MODULE_10___default()(_this.props.dateOfBirth).format('L')); //this one is the correct one
 
       console.log('utc string: ' + date.date.toUTCString());
-      var formattedDate = moment__WEBPACK_IMPORTED_MODULE_10___default()(date.date).format('L'); //this is for display- actual value is held in parent component
+      console.log('date object: ' + date); //let formattedDate =  moment(date.date).format('L');
+      //this is for display- actual value is held in parent component
 
       _this.setState({
         dateOfBirth: date.date
       });
 
-      _this.props.onDateOfBirthChange(formattedDate);
+      _this.props.onDateOfBirthChange(date.date);
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleSuffixChange", function (suffix) {
@@ -80853,19 +80854,9 @@ function (_Component) {
     });
 
     _this.state = {
-      //lastName: '',
-      //middleName: '',
-      //fbiNcicNumber: '',            
-      //race: '',
-      //stateVCIN: '',
-      //alias: '',
-      //firsName: '',
-      //ssn: '',
       dateOfBirth: _this.props.dateOfBirth,
       //new Date(),
-      currentAge: '' //gender: '',
-      //suffixes:  []      
-
+      currentAge: ''
     };
     return _this;
   }

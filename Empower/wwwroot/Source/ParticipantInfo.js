@@ -13,18 +13,9 @@ export default class ParticipantInfo extends Component {
         super(props);
 
         this.state = {
-            //lastName: '',
-            //middleName: '',
-            //fbiNcicNumber: '',            
-            //race: '',
-            //stateVCIN: '',
-            //alias: '',
-            //firsName: '',
-            //ssn: '',
+          
             dateOfBirth: this.props.dateOfBirth, //new Date(),
-            currentAge: '',
-            //gender: '',
-            //suffixes:  []      
+            currentAge: '',                
         }
     }
 
@@ -35,14 +26,15 @@ export default class ParticipantInfo extends Component {
         console.log('formatted date (L) : ' + moment(this.props.dateOfBirth).format('L')); //this one is the correct one
         
         console.log('utc string: ' + date.date.toUTCString());
+        console.log('date object: ' + date);
 
-        let formattedDate =  moment(date.date).format('L');
+        //let formattedDate =  moment(date.date).format('L');
 
         //this is for display- actual value is held in parent component
         this.setState({
             dateOfBirth: date.date
         });
-        this.props.onDateOfBirthChange(formattedDate);
+        this.props.onDateOfBirthChange(date.date);
     }
 
     // datePickerOnClick = () => {
