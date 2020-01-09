@@ -109,7 +109,7 @@ export default class ParticipantInfo extends Component {
                         <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
                         <DatePicker 
-                             selected={ this.state.dateOfBirth }
+                             selected={ this.props.dateOfBirth }
                              
                              onChange={date => this.handleDatePickerChange({date})}
                              className="form-control"                             

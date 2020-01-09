@@ -80970,7 +80970,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " Date of Birth *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_8___default.a, {
-        selected: this.state.dateOfBirth,
+        selected: this.props.dateOfBirth,
         onChange: function onChange(date) {
           return _this2.handleDatePickerChange({
             date: date
