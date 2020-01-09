@@ -109,13 +109,11 @@ export default class CaseManagement extends Component {
             }).then(finalResult => {
                 console.log(finalResult);
 
-                    //convert to Date object
+                 //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
                  let birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
                  let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
                  let utcBirthDate = new Date(formattedBirthDate);
-                 console.log('this is a test in case magmt: ' + new Date('December 17, 1995 03:24:00'));
-                 console.log('this is the converted: ' + utcBirthDate);
-
+              
                 this.setState({
                     clientLastName: finalResult.ClientProfile.Person.LastName,
                     clientFirstName: finalResult.ClientProfile.Person.FirstName,

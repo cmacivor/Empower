@@ -80646,13 +80646,11 @@ function (_Component) {
             return result.json();
           }
         }).then(function (finalResult) {
-          console.log(finalResult); //convert to Date object
+          console.log(finalResult); //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
 
           var birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
           var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
           var utcBirthDate = new Date(formattedBirthDate);
-          console.log('this is a test in case magmt: ' + new Date('December 17, 1995 03:24:00'));
-          console.log('this is the converted: ' + utcBirthDate);
 
           _this2.setState({
             clientLastName: finalResult.ClientProfile.Person.LastName,
@@ -80839,15 +80837,6 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleDatePickerChange", function (date) {
-      //console.log('this is the participant info. dateofbirth is: ' + this.props.dateOfBirth);
-      //console.log('to the date: ' + new Date(this.props.dateOfBirth));
-      //let test = new Date(this.props.dateOfBirth)
-      //console.log(' utc string:  ' + test.toUTCString());
-      //console.log(' iso string ' + test.toISOString());
-      // console.log('formatted date (L) : ' + moment(this.props.dateOfBirth).format('L')); //this one is the correct one
-      //console.log('utc string: ' + date.date.toUTCString());
-      //console.log('date object: ' + date);
-      //let formattedDate =  moment(date.date).format('L');
       //this is for display- actual value is held in parent component
       _this.setState({
         dateOfBirth: date.date
@@ -80862,11 +80851,6 @@ function (_Component) {
       //pass it to CaseManagement
       _this.props.onSuffixChange(suffix);
     });
-
-    console.log('this is the participant info constructor. dateofbirth is: ' + _this.props.dateOfBirth); //convert to Date object
-    // let birthDateJavascriptDateObject = new Date(this.props.dateOfBirth);
-    // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-    // let utcBirthDate = new Date(formattedBirthDate);
 
     _this.state = {
       dateOfBirth: _this.props.dateOfBirth,

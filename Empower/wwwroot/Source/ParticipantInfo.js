@@ -12,34 +12,14 @@ export default class ParticipantInfo extends Component {
     constructor(props){
         super(props);
 
-        console.log('this is the participant info constructor. dateofbirth is: ' + this.props.dateOfBirth);
-
-        //convert to Date object
-        // let birthDateJavascriptDateObject = new Date(this.props.dateOfBirth);
-        // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-        // let utcBirthDate = new Date(formattedBirthDate);
-
         this.state = {
           
-            dateOfBirth: this.props.dateOfBirth, //utcBirthDate, //testDate.toDate(), //props.dateOfBirth comes from the database as an ISO string. But the DatePicker needs it to be a UTC string
+            dateOfBirth: this.props.dateOfBirth,  
             currentAge: '',                
         }
     }
 
     handleDatePickerChange = date => {
-
-        //console.log('this is the participant info. dateofbirth is: ' + this.props.dateOfBirth);
-        //console.log('to the date: ' + new Date(this.props.dateOfBirth));
-        //let test = new Date(this.props.dateOfBirth)
-        //console.log(' utc string:  ' + test.toUTCString());
-        //console.log(' iso string ' + test.toISOString());
-
-       // console.log('formatted date (L) : ' + moment(this.props.dateOfBirth).format('L')); //this one is the correct one
-        
-        //console.log('utc string: ' + date.date.toUTCString());
-        //console.log('date object: ' + date);
-
-        //let formattedDate =  moment(date.date).format('L');
 
         //this is for display- actual value is held in parent component
         this.setState({
@@ -48,10 +28,6 @@ export default class ParticipantInfo extends Component {
         console.log('this is the local state: '  + this.state.dateOfBirth);
         this.props.onDateOfBirthChange(date.date);
     }
-
-    // datePickerOnClick = () => {
-    //     alert('on click');
-    // }
 
     handleSuffixChange = (suffix) => {
         //pass it to CaseManagement
