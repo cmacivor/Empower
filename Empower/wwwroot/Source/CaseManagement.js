@@ -42,11 +42,11 @@ export default class CaseManagement extends Component {
             clientMiddleName: '',
             clientSSN: '',
             clientFbiNcicNumber: '',
-            // clientDateOfBirth: new Date('December 17, 1995 03:24:00'),
             clientDateOfBirth: new Date(),
             clientCurrentAge: '',
-            clientSuffix: 'Please Select'
-
+            clientSuffix: 'Please Select',
+            clientStateVCIN: '',
+            clientAlias: ''
         }
 
         this.EnableTabs = this.EnableTabs.bind(this);
@@ -122,7 +122,7 @@ export default class CaseManagement extends Component {
                  let duration = moment.duration(difference, 'milliseconds');
                  //console.log(duration);
                  let diffInYears = Math.round(duration.asYears());
-                 console.log(diffInYears);
+                 //console.log(diffInYears);
               
                 this.setState({
                     clientLastName: finalResult.ClientProfile.Person.LastName,
@@ -131,7 +131,9 @@ export default class CaseManagement extends Component {
                     clientSSN: finalResult.ClientProfile.Person.SSN,
                     clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
                     clientDateOfBirth: utcBirthDate,
-                    clientCurrentAge: diffInYears.toString()
+                    clientCurrentAge: diffInYears.toString(),
+                    clientStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
+                    clientAlias: finalResult.ClientProfile.Person.Alias
                 });
                 
             });
@@ -246,6 +248,18 @@ export default class CaseManagement extends Component {
                 clientFbiNcicNumber:  e.target.value
             });
         }
+
+        if (field === "txtStateVCIN") {
+            this.setState({
+                clientStateVCIN:  e.target.value
+            });
+        }
+
+        if (field === "txtAlias") {
+            this.setState({
+                clientAlias:  e.target.value
+            });
+        }
     }
 
     //parent change handler for all Suffix dropdowns.
@@ -314,6 +328,8 @@ export default class CaseManagement extends Component {
                         ssn={this.state.clientSSN}
                         dateOfBirth={this.state.clientDateOfBirth }
                         currentAge={this.state.clientCurrentAge}
+                        stateVCIN={this.state.clientStateVCIN}
+                        alias={this.state.clientAlias}
                         infoTabSuffix={this.state.clientSuffix}
                         onSuffixChange={this.handleSuffixChange}
                         onDateOfBirthChange={this.handleDateOfBirthChange}

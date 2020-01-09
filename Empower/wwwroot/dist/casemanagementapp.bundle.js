@@ -80535,6 +80535,18 @@ function (_Component) {
           clientFbiNcicNumber: e.target.value
         });
       }
+
+      if (field === "txtStateVCIN") {
+        _this.setState({
+          clientStateVCIN: e.target.value
+        });
+      }
+
+      if (field === "txtAlias") {
+        _this.setState({
+          clientAlias: e.target.value
+        });
+      }
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleSuffixChange", function (suffix) {
@@ -80596,10 +80608,11 @@ function (_Component) {
       clientMiddleName: '',
       clientSSN: '',
       clientFbiNcicNumber: '',
-      // clientDateOfBirth: new Date('December 17, 1995 03:24:00'),
       clientDateOfBirth: new Date(),
       clientCurrentAge: '',
-      clientSuffix: 'Please Select'
+      clientSuffix: 'Please Select',
+      clientStateVCIN: '',
+      clientAlias: ''
     };
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
@@ -80668,7 +80681,9 @@ function (_Component) {
             clientSSN: finalResult.ClientProfile.Person.SSN,
             clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
             clientDateOfBirth: utcBirthDate,
-            clientCurrentAge: diffInYears.toString()
+            clientCurrentAge: diffInYears.toString(),
+            clientStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
+            clientAlias: finalResult.ClientProfile.Person.Alias
           });
         });
       } catch (error) {
@@ -80747,7 +80762,7 @@ function (_Component) {
         middleName: this.state.clientMiddleName,
         ssn: this.state.clientSSN,
         fbiNcicNumber: this.state.fbiNcicNumber
-      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -80990,8 +81005,34 @@ function (_Component) {
       })))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
-      })));
+        className: "col-3"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "txtStateVCIN"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "State/VCIN Number")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "input-group mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+        type: "text",
+        defaultValue: this.props.stateVCIN,
+        onChange: function onChange(e) {
+          return onChangeHandler(e, "txtStateVCIN");
+        },
+        className: "form-control",
+        id: "txtStateVCIN"
+      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-3"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "txtAlias"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Alias")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "input-group mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+        type: "text",
+        defaultValue: this.props.alias,
+        onChange: function onChange(e) {
+          return onChangeHandler(e, "txtAlias");
+        },
+        className: "form-control",
+        id: "txtAlias"
+      })))));
     }
   }]);
 

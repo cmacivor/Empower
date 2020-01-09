@@ -108,9 +108,17 @@ export default class ParticipantInfo extends Component {
                     </div>  
                 </div>
                 <div className="form-row">
-                    <div className="col-4">
-                  
-                       
+                    <div className="col-3">
+                        <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" defaultValue={this.props.stateVCIN} onChange={e => onChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
+                        </div>                       
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="txtAlias"><strong>Alias</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" defaultValue={this.props.alias} onChange={e => onChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
+                        </div>
                     </div>
                 </div>
             </div>
