@@ -15,13 +15,13 @@ export default class ParticipantInfo extends Component {
         console.log('this is the participant info constructor. dateofbirth is: ' + this.props.dateOfBirth);
 
         //convert to Date object
-        let birthDateJavascriptDateObject = new Date(this.props.dateOfBirth);
-        let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-        let utcBirthDate = new Date(formattedBirthDate);
+        // let birthDateJavascriptDateObject = new Date(this.props.dateOfBirth);
+        // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+        // let utcBirthDate = new Date(formattedBirthDate);
 
         this.state = {
           
-            dateOfBirth: utcBirthDate, //testDate.toDate(), //props.dateOfBirth comes from the database as an ISO string. But the DatePicker needs it to be a UTC string
+            dateOfBirth: this.props.dateOfBirth, //utcBirthDate, //testDate.toDate(), //props.dateOfBirth comes from the database as an ISO string. But the DatePicker needs it to be a UTC string
             currentAge: '',                
         }
     }

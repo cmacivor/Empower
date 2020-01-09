@@ -80646,7 +80646,13 @@ function (_Component) {
             return result.json();
           }
         }).then(function (finalResult) {
-          console.log(finalResult);
+          console.log(finalResult); //convert to Date object
+
+          var birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
+          var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+          var utcBirthDate = new Date(formattedBirthDate);
+          console.log('this is a test in case magmt: ' + new Date('December 17, 1995 03:24:00'));
+          console.log('this is the converted: ' + utcBirthDate);
 
           _this2.setState({
             clientLastName: finalResult.ClientProfile.Person.LastName,
@@ -80654,7 +80660,7 @@ function (_Component) {
             clientMiddleName: finalResult.ClientProfile.Person.MiddleName,
             clientSSN: finalResult.ClientProfile.Person.SSN,
             clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
-            clientDateOfBirth: finalResult.ClientProfile.Person.DOB
+            clientDateOfBirth: utcBirthDate
           });
         });
       } catch (error) {
@@ -80858,13 +80864,13 @@ function (_Component) {
     });
 
     console.log('this is the participant info constructor. dateofbirth is: ' + _this.props.dateOfBirth); //convert to Date object
+    // let birthDateJavascriptDateObject = new Date(this.props.dateOfBirth);
+    // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+    // let utcBirthDate = new Date(formattedBirthDate);
 
-    var birthDateJavascriptDateObject = new Date(_this.props.dateOfBirth);
-    var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-    var utcBirthDate = new Date(formattedBirthDate);
     _this.state = {
-      dateOfBirth: utcBirthDate,
-      //testDate.toDate(), //props.dateOfBirth comes from the database as an ISO string. But the DatePicker needs it to be a UTC string
+      dateOfBirth: _this.props.dateOfBirth,
+      //utcBirthDate, //testDate.toDate(), //props.dateOfBirth comes from the database as an ISO string. But the DatePicker needs it to be a UTC string
       currentAge: ''
     };
     return _this;

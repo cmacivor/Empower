@@ -108,13 +108,21 @@ export default class CaseManagement extends Component {
     
             }).then(finalResult => {
                 console.log(finalResult);
+
+                    //convert to Date object
+                 let birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
+                 let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+                 let utcBirthDate = new Date(formattedBirthDate);
+                 console.log('this is a test in case magmt: ' + new Date('December 17, 1995 03:24:00'));
+                 console.log('this is the converted: ' + utcBirthDate);
+
                 this.setState({
                     clientLastName: finalResult.ClientProfile.Person.LastName,
                     clientFirstName: finalResult.ClientProfile.Person.FirstName,
                     clientMiddleName: finalResult.ClientProfile.Person.MiddleName,
                     clientSSN: finalResult.ClientProfile.Person.SSN,
                     clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
-                    clientDateOfBirth: finalResult.ClientProfile.Person.DOB
+                    clientDateOfBirth: utcBirthDate
                 });
                 
             });
