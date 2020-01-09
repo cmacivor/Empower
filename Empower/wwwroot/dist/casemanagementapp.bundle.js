@@ -80596,7 +80596,8 @@ function (_Component) {
       clientMiddleName: '',
       clientSSN: '',
       clientFbiNcicNumber: '',
-      clientDateOfBirth: new Date('December 17, 1995 03:24:00'),
+      // clientDateOfBirth: new Date('December 17, 1995 03:24:00'),
+      clientDateOfBirth: new Date(),
       clientSuffix: 'Please Select'
     };
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
@@ -80854,7 +80855,6 @@ function (_Component) {
 
     _this.state = {
       dateOfBirth: _this.props.dateOfBirth,
-      //utcBirthDate, //testDate.toDate(), //props.dateOfBirth comes from the database as an ISO string. But the DatePicker needs it to be a UTC string
       currentAge: ''
     };
     return _this;
@@ -80920,7 +80920,7 @@ function (_Component) {
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtSSN"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " SSN")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80934,7 +80934,7 @@ function (_Component) {
         className: "form-control",
         id: "txtSSN"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtFbiNcicNumber"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " FBI/NCIC Number ")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80948,7 +80948,7 @@ function (_Component) {
         className: "form-control",
         id: "txtFbiNcicNumber"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtDateOfBirth"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, " Date of Birth *")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80960,6 +80960,17 @@ function (_Component) {
             date: date
           });
         },
+        className: "form-control"
+      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-1"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "txtCurrentAge"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Current Age")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "inpu-group mb-3"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+        type: "text",
+        readOnly: true,
+        value: this.state.currentAge,
         className: "form-control"
       })))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"

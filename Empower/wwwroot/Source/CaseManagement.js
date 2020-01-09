@@ -42,7 +42,8 @@ export default class CaseManagement extends Component {
             clientMiddleName: '',
             clientSSN: '',
             clientFbiNcicNumber: '',
-            clientDateOfBirth: new Date('December 17, 1995 03:24:00'),
+            // clientDateOfBirth: new Date('December 17, 1995 03:24:00'),
+            clientDateOfBirth: new Date(),
             clientSuffix: 'Please Select'
 
         }

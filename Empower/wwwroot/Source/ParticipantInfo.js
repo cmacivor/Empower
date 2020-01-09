@@ -69,19 +69,19 @@ export default class ParticipantInfo extends Component {
                     </div>
                 </div>
                 <div className="form-row">
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="txtSSN"><strong> SSN</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" defaultValue={this.props.ssn} onChange={e => onChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
                         </div>
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
                         <div className="input-group mb-3">
                             <input type="text" defaultValue={this.props.fbiNcicNumber} onChange={e => onChangeHandler(e, "txtFbiNcicNumber")} className="form-control" id="txtFbiNcicNumber"></input>
                         </div>
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
                         <DatePicker 
@@ -90,6 +90,12 @@ export default class ParticipantInfo extends Component {
                              onChange={date => this.handleDatePickerChange({date})}
                              className="form-control"                             
                          />
+                        </div>
+                    </div>
+                    <div className="col-1">
+                        <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
+                        <div className="inpu-group mb-3">
+                            <input type="text" readOnly value={this.state.currentAge} className="form-control"></input>
                         </div>
                     </div>
                 </div>
