@@ -80598,6 +80598,7 @@ function (_Component) {
       clientFbiNcicNumber: '',
       // clientDateOfBirth: new Date('December 17, 1995 03:24:00'),
       clientDateOfBirth: new Date(),
+      clientCurrentAge: '',
       clientSuffix: 'Please Select'
     };
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
@@ -80651,7 +80652,14 @@ function (_Component) {
 
           var birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
           var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-          var utcBirthDate = new Date(formattedBirthDate);
+          var utcBirthDate = new Date(formattedBirthDate); //calculate age in years
+
+          var difference = moment__WEBPACK_IMPORTED_MODULE_15___default()(new Date()).diff(birthDateJavascriptDateObject); //console.log(difference);
+
+          var duration = moment__WEBPACK_IMPORTED_MODULE_15___default.a.duration(difference, 'milliseconds'); //console.log(duration);
+
+          var diffInYears = duration.asYears();
+          console.log(diffInYears);
 
           _this2.setState({
             clientLastName: finalResult.ClientProfile.Person.LastName,
@@ -80659,7 +80667,8 @@ function (_Component) {
             clientMiddleName: finalResult.ClientProfile.Person.MiddleName,
             clientSSN: finalResult.ClientProfile.Person.SSN,
             clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
-            clientDateOfBirth: utcBirthDate
+            clientDateOfBirth: utcBirthDate,
+            clientCurrentAge: diffInYears.toString()
           });
         });
       } catch (error) {
@@ -80738,7 +80747,7 @@ function (_Component) {
         middleName: this.state.clientMiddleName,
         ssn: this.state.clientSSN,
         fbiNcicNumber: this.state.fbiNcicNumber
-      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -80835,7 +80844,7 @@ function (_Component) {
 
     _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, ParticipantInfo);
 
-    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props));
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props)); //calculate age
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleDatePickerChange", function (date) {
       //this is for display- actual value is held in parent component
@@ -80853,9 +80862,15 @@ function (_Component) {
       _this.props.onSuffixChange(suffix);
     });
 
+    var difference = moment__WEBPACK_IMPORTED_MODULE_10___default()(new Date()).diff(_this.props.dateOfBirth);
+    var duration = moment__WEBPACK_IMPORTED_MODULE_10___default.a.duration(difference, 'milliseconds');
+    var differenceInDays = duration.asYears();
+    console.log(difference);
+    console.log(duration);
+    console.log(differenceInDays);
     _this.state = {
       dateOfBirth: _this.props.dateOfBirth,
-      currentAge: ''
+      currentAge: differenceInDays
     };
     return _this;
   }
@@ -80962,7 +80977,7 @@ function (_Component) {
         },
         className: "form-control"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-1"
+        className: "col-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtCurrentAge"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Current Age")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -80970,7 +80985,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
         readOnly: true,
-        value: this.state.currentAge,
+        value: this.props.currentAge,
         className: "form-control"
       })))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "form-row"

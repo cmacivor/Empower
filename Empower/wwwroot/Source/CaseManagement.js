@@ -44,6 +44,7 @@ export default class CaseManagement extends Component {
             clientFbiNcicNumber: '',
             // clientDateOfBirth: new Date('December 17, 1995 03:24:00'),
             clientDateOfBirth: new Date(),
+            clientCurrentAge: '',
             clientSuffix: 'Please Select'
 
         }
@@ -113,7 +114,15 @@ export default class CaseManagement extends Component {
                  //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
                  let birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
                  let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-                 let utcBirthDate = new Date(formattedBirthDate);
+                 let utcBirthDate = new Date(formattedBirthDate); 
+                 
+                 //calculate age in years
+                 let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
+                 //console.log(difference);
+                 let duration = moment.duration(difference, 'milliseconds');
+                 //console.log(duration);
+                 let diffInYears = duration.asYears();
+                 console.log(diffInYears);
               
                 this.setState({
                     clientLastName: finalResult.ClientProfile.Person.LastName,
@@ -121,7 +130,8 @@ export default class CaseManagement extends Component {
                     clientMiddleName: finalResult.ClientProfile.Person.MiddleName,
                     clientSSN: finalResult.ClientProfile.Person.SSN,
                     clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
-                    clientDateOfBirth: utcBirthDate
+                    clientDateOfBirth: utcBirthDate,
+                    clientCurrentAge: diffInYears.toString()
                 });
                 
             });
@@ -303,6 +313,7 @@ export default class CaseManagement extends Component {
                         fbiNcicNumber={this.state.fbiNcicNumber}                        
                         ssn={this.state.clientSSN}
                         dateOfBirth={this.state.clientDateOfBirth }
+                        currentAge={this.state.clientCurrentAge}
                         infoTabSuffix={this.state.clientSuffix}
                         onSuffixChange={this.handleSuffixChange}
                         onDateOfBirthChange={this.handleDateOfBirthChange}

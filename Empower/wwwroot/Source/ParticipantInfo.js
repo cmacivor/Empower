@@ -12,10 +12,18 @@ export default class ParticipantInfo extends Component {
     constructor(props){
         super(props);
 
+        //calculate age
+        let difference = moment(new Date()).diff(this.props.dateOfBirth);
+        let duration = moment.duration(difference, 'milliseconds');
+        let differenceInDays = duration.asYears();
+        console.log(difference);
+        console.log(duration);
+        console.log(differenceInDays);
+
         this.state = {
           
             dateOfBirth: this.props.dateOfBirth,  
-            currentAge: '',                
+            currentAge: differenceInDays,                
         }
     }
 
@@ -92,10 +100,10 @@ export default class ParticipantInfo extends Component {
                          />
                         </div>
                     </div>
-                    <div className="col-1">
+                    <div className="col-3">
                         <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
                         <div className="inpu-group mb-3">
-                            <input type="text" readOnly value={this.state.currentAge} className="form-control"></input>
+                            <input type="text" readOnly value={this.props.currentAge} className="form-control"></input>
                         </div>
                     </div>
                 </div>
