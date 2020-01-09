@@ -239,6 +239,8 @@ export default class CaseManagement extends Component {
     }
     
     handleDateOfBirthChange = (dateOfBirth) => {
+        console.log('handleDateOfBirthChange in CaseManagement: ' + dateOfBirth);
+
         this.setState({
             clientDateOfBirth: dateOfBirth
         });

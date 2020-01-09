@@ -31,12 +31,18 @@ export default class ParticipantInfo extends Component {
     handleDatePickerChange = date => {
 
         console.log('this is the participant info. dateofbirth is: ' + this.props.dateOfBirth);
+        console.log('this is the local state: '  + this.state.dateOfBirth);
+        console.log('formatted date (L) : ' + moment(this.props.dateOfBirth).format('L')); //this one is the correct one
+        
+        console.log('utc string: ' + date.date.toUTCString());
+
+        let formattedDate =  moment(date.date).format('L');
 
         //this is for display- actual value is held in parent component
         this.setState({
             dateOfBirth: date.date
         });
-        this.props.onDateOfBirthChange(date);
+        this.props.onDateOfBirthChange(formattedDate);
     }
 
     // datePickerOnClick = () => {

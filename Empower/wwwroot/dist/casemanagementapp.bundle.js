@@ -80544,6 +80544,8 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleDateOfBirthChange", function (dateOfBirth) {
+      console.log('handleDateOfBirthChange in CaseManagement: ' + dateOfBirth);
+
       _this.setState({
         clientDateOfBirth: dateOfBirth
       });
@@ -80831,13 +80833,18 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleDatePickerChange", function (date) {
-      console.log('this is the participant info. dateofbirth is: ' + _this.props.dateOfBirth); //this is for display- actual value is held in parent component
+      console.log('this is the participant info. dateofbirth is: ' + _this.props.dateOfBirth);
+      console.log('this is the local state: ' + _this.state.dateOfBirth);
+      console.log('formatted date (L) : ' + moment__WEBPACK_IMPORTED_MODULE_10___default()(_this.props.dateOfBirth).format('L')); //this one is the correct one
+
+      console.log('utc string: ' + date.date.toUTCString());
+      var formattedDate = moment__WEBPACK_IMPORTED_MODULE_10___default()(date.date).format('L'); //this is for display- actual value is held in parent component
 
       _this.setState({
         dateOfBirth: date.date
       });
 
-      _this.props.onDateOfBirthChange(date);
+      _this.props.onDateOfBirthChange(formattedDate);
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleSuffixChange", function (suffix) {
