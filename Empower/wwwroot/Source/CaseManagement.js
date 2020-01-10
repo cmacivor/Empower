@@ -341,6 +341,7 @@ export default class CaseManagement extends Component {
                         infoTabSuffix={this.state.clientSuffix}
                         infoTabRace={this.state.clientRace}
                         onSuffixChange={this.handleSuffixChange}
+                        onRaceChange={this.handleRaceChange}
                         onDateOfBirthChange={this.handleDateOfBirthChange}
                         infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
                     </Tab>

@@ -8,7 +8,8 @@ export default class SuffixDropDown extends Component {
 
         this.state = {
             races:  [],
-            selectedValue: this.props.selected     
+            selectedValue: this.props.selected,
+            selectedDescription: 'Please Select'     
         }
 
         Api.getConfigDataByType("Race").then(races => this.setState({races}));
@@ -16,26 +17,26 @@ export default class SuffixDropDown extends Component {
 
     onSelectHandler = (event) => {
         this.setState({
-            selectedValue: event.currentTarget.getAttribute('value')
+            selectedDescription: event.currentTarget.getAttribute('description')
         });
 
-        let valueToSendToParent = event.currentTarget.getAttribute('value');
+        let valueToSendToParent = event.currentTarget.getAttribute('key');
         //pass the selected suffix value to the parent- could be one of several components
-        this.props.onSelectSuffix(valueToSendToParent);
+        this.props.onSelectRace(valueToSendToParent);
     }
 
 
     render() {
 
         let raceOptions = this.state.races.map((race) =>
-            <a key={race.ID} value={race.ID} onClick={this.onSelectHandler} className="dropdown-item">{race.Description}</a>
+            <a key={race.ID} description={race.Description} onClick={this.onSelectHandler} className="dropdown-item">{race.Description}</a>
         );
 
         return (
             <div>
                 <div className="dropdown">
                     <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        {this.state.selectedValue}
+                        {this.state.selectedDescription }
                     </button>
                     <div className="dropdown-menu">
                         {raceOptions}
