@@ -81138,35 +81138,17 @@ function (_Component) {
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
       console.log(_this.props.raceDescription); //console.log('the race value being passed is: ' + this.props.selected);
-      //let raceID = this.props.selected;
-      //console.log(' the array is ' + this.state.races); //this works
-      //let item = this.state.races.filter(function(race) {
-      // return race.ID === raceID
-      //});
-      //console.log(item[0]);
-      // this.setState({
-      //     selectedDescription: item[0].Description
-      // });
-      // let raceOptions = this.state.races.map((race) => {
-      //     //console.log(race);
-      //     if (this.props.selected === race.ID) {
-      //         // this.setState({
-      //         //     selectedDescription: race.Description
-      //         // });
-      //         return race;
-      //     }
-      // });
-      // console.log(raceOptions);
 
-      console.log('in dropdown: ' + event.currentTarget.getAttribute('description'));
+      console.log('in dropdown: ' + event.currentTarget.getAttribute('description')); //description is getting the correct value
+
+      console.log('this is he key: ' + event.currentTarget.getAttribute('value'));
 
       _this.setState({
         selectedDescription: event.currentTarget.getAttribute('description')
-      });
+      }); //let valueToSendToParent = event.currentTarget.getAttribute('key');
+      //pass the selected suffix value to the parent- could be one of several components
+      //this.props.onSelectRace(valueToSendToParent);
 
-      var valueToSendToParent = event.currentTarget.getAttribute('key'); //pass the selected suffix value to the parent- could be one of several components
-
-      _this.props.onSelectRace(valueToSendToParent);
     });
 
     var previouslySelectedRace = _this.props.selected;
@@ -81191,6 +81173,7 @@ function (_Component) {
       var raceOptions = this.state.races.map(function (race) {
         return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
           key: race.ID,
+          value: race.ID,
           description: race.Description,
           onClick: _this2.onSelectHandler,
           className: "dropdown-item"
@@ -81202,7 +81185,7 @@ function (_Component) {
         type: "button",
         className: "btn btn-primary dropdown-toggle",
         "data-toggle": "dropdown"
-      }, this.state.selectedDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }, this.props.raceDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "dropdown-menu"
       }, raceOptions)));
     }
