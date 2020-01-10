@@ -81117,7 +81117,28 @@ function (_Component) {
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
       console.log('the race value being passed is: ' + _this.props.selected);
-      console.log(' the array is ' + _this.state.races);
+      var raceID = _this.props.selected;
+      console.log(' the array is ' + _this.state.races); //this works
+
+      var item = _this.state.races.filter(function (race) {
+        return race.ID === raceID;
+      });
+
+      console.log(item[0]);
+
+      _this.setState({
+        selectedDescription: item[0].Description
+      }); // let raceOptions = this.state.races.map((race) => {
+      //     //console.log(race);
+      //     if (this.props.selected === race.ID) {
+      //         // this.setState({
+      //         //     selectedDescription: race.Description
+      //         // });
+      //         return race;
+      //     }
+      // });
+      // console.log(raceOptions);
+
 
       _this.setState({
         selectedDescription: event.currentTarget.getAttribute('description')
@@ -81130,8 +81151,8 @@ function (_Component) {
 
     _this.state = {
       races: [],
-      selectedValue: _this.props.selected //selectedDescription: 'Please Select'     
-
+      selectedValue: _this.props.selected,
+      selectedDescription: 'Please Select'
     };
     _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Race").then(function (races) {
       return _this.setState({
@@ -81160,7 +81181,7 @@ function (_Component) {
         type: "button",
         className: "btn btn-primary dropdown-toggle",
         "data-toggle": "dropdown"
-      }, this.props.selected), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }, this.state.selectedDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "dropdown-menu"
       }, raceOptions)));
     }

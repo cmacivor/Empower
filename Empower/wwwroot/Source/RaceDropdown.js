@@ -9,21 +9,38 @@ export default class RaceDropDown extends Component {
         this.state = {
             races:  [],
             selectedValue: this.props.selected,
-            //selectedDescription: 'Please Select'     
+            selectedDescription: 'Please Select'     
         }
 
         Api.getConfigDataByType("Race").then(races => this.setState({races}));
-
-        
+  
     }
 
     onSelectHandler = (event) => {
 
         console.log('the race value being passed is: ' + this.props.selected);
+        let raceID = this.props.selected;
+        console.log(' the array is ' + this.state.races); //this works
+        let item = this.state.races.filter(function(race) {
+            return race.ID === raceID
+        });
+        console.log(item[0]);
 
-        console.log(' the array is ' + this.state.races);
-         
+        this.setState({
+            selectedDescription: item[0].Description
+        });
 
+        // let raceOptions = this.state.races.map((race) => {
+        //     //console.log(race);
+        //     if (this.props.selected === race.ID) {
+        //         // this.setState({
+        //         //     selectedDescription: race.Description
+        //         // });
+        //         return race;
+        //     }
+        // });
+        // console.log(raceOptions);
+           
         this.setState({
             selectedDescription: event.currentTarget.getAttribute('description')
         });
@@ -44,8 +61,8 @@ export default class RaceDropDown extends Component {
             <div>
                 <div className="dropdown">
                     <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        {/* {this.state.selectedValue } */}
-                        {this.props.selected }
+                        {this.state.selectedDescription }
+                        {/* {this.props.selected } this correctly sets the value when passed from above */ } 
                     </button>
                     <div className="dropdown-menu">
                         {raceOptions}
