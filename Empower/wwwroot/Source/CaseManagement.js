@@ -46,7 +46,8 @@ export default class CaseManagement extends Component {
             clientCurrentAge: '',
             clientSuffix: 'Please Select',
             clientStateVCIN: '',
-            clientAlias: ''
+            clientAlias: '',
+            clientRace: 'Please Select'
         }
 
         this.EnableTabs = this.EnableTabs.bind(this);
@@ -268,6 +269,12 @@ export default class CaseManagement extends Component {
             clientSuffix: suffix
         });
     }
+
+    handleRaceChange = (race) => {
+        this.setState({
+            clientRace: race
+        });
+    }
     
     handleDateOfBirthChange = (dateOfBirth) => {
         console.log('handleDateOfBirthChange in CaseManagement: ' + dateOfBirth);
@@ -280,6 +287,7 @@ export default class CaseManagement extends Component {
     testState = () => {
         console.log(this.state.clientSuffix);
         console.log(this.state.clientDateOfBirth);
+        console.log(this.state.clientRace);
     }
 
     render() {
@@ -331,6 +339,7 @@ export default class CaseManagement extends Component {
                         stateVCIN={this.state.clientStateVCIN}
                         alias={this.state.clientAlias}
                         infoTabSuffix={this.state.clientSuffix}
+                        infoTabRace={this.state.clientRace}
                         onSuffixChange={this.handleSuffixChange}
                         onDateOfBirthChange={this.handleDateOfBirthChange}
                         infoTabOnChangeHandler={this.infoTabOnChangeHandler} />

@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Api } from './commonAdmin';
 require ('.//commonAdmin');
 import SuffixDropdown from './SuffixDropdown';
+import RaceDropdown from './RaceDropdown';
 
 export default class ParticipantInfo extends Component {
 
@@ -42,7 +43,9 @@ export default class ParticipantInfo extends Component {
         this.props.onSuffixChange(suffix);
     }
 
- 
+    handleRaceChange = (race) => {
+        this.props.onRaceChange(race);
+    }
 
     render() {
 
@@ -119,6 +122,10 @@ export default class ParticipantInfo extends Component {
                         <div className="input-group mb-3">
                             <input type="text" defaultValue={this.props.alias} onChange={e => onChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
                         </div>
+                    </div>
+                    <div className="col-3">
+                       <label html="ddlRace"><strong>Race/Ethnicity *</strong> </label>
+                        <RaceDropdown onSelectRace={this.handleRaceChange } selected={this.props.infoTabRace} />
                     </div>
                 </div>
             </div>
