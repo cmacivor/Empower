@@ -13,14 +13,6 @@ export default class ParticipantInfo extends Component {
     constructor(props){
         super(props);
 
-        //calculate age
-        // let difference = moment(new Date()).diff(this.props.dateOfBirth);
-        // let duration = moment.duration(difference, 'milliseconds');
-        // let differenceInDays = duration.asYears();
-        // console.log(difference);
-        // console.log(duration);
-        // console.log(differenceInDays);
-
         this.state = {
           
             dateOfBirth: this.props.dateOfBirth,  
@@ -44,8 +36,6 @@ export default class ParticipantInfo extends Component {
     }
 
     handleRaceChange = (race) => {
-        //console.log('this is participant info race description: ' + this.props.raceDescription);
-
         this.props.onRaceChange(race);
     }
 

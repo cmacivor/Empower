@@ -80899,13 +80899,7 @@ function (_Component) {
 
     _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, ParticipantInfo);
 
-    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props)); //calculate age
-    // let difference = moment(new Date()).diff(this.props.dateOfBirth);
-    // let duration = moment.duration(difference, 'milliseconds');
-    // let differenceInDays = duration.asYears();
-    // console.log(difference);
-    // console.log(duration);
-    // console.log(differenceInDays);
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(ParticipantInfo).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleDatePickerChange", function (date) {
       //this is for display- actual value is held in parent component
@@ -80923,7 +80917,6 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleRaceChange", function (race) {
-      //console.log('this is participant info race description: ' + this.props.raceDescription);
       _this.props.onRaceChange(race);
     });
 
@@ -81158,11 +81151,7 @@ function (_Component) {
 
       console.log('in dropdown: ' + event.currentTarget.getAttribute('description')); //description is getting the correct value
 
-      console.log('this is he key: ' + event.currentTarget.getAttribute('value')); // this.setState({
-      //     selectedDescription: event.currentTarget.getAttribute('description')
-      // });
-      //let valueToSendToParent = event.currentTarget.getAttribute('key');
-      //pass the selected suffix value to the parent- could be one of several components
+      console.log('this is he key: ' + event.currentTarget.getAttribute('value')); //pass the selected suffix value to the parent- could be one of several components
 
       _this.props.onSelectRace(event.currentTarget.getAttribute('value'));
 
@@ -81185,16 +81174,6 @@ function (_Component) {
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(RaceDropDown, [{
     key: "render",
-    // componentDidUpdate(nextProps) {
-    //     console.log(nextProps.raceDescription);
-    // }
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     console.log('getDerivedStateFromProps firing. nextProps: ' + nextProps.raceDescription);
-    //     console.log('getDerivedStateFromProps firing. prevState: ' + prevState.selectedDescription);
-    //     return {
-    //         selectedDescription: 'this is test'    
-    //     };
-    //    }
     value: function render() {
       var _this2 = this;
 

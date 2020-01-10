@@ -27,29 +27,10 @@ export default class RaceDropDown extends Component {
         console.log('this is he key: ' + event.currentTarget.getAttribute('value'));
 
 
-        // this.setState({
-        //     selectedDescription: event.currentTarget.getAttribute('description')
-        // });
-
-        //let valueToSendToParent = event.currentTarget.getAttribute('key');
-
         //pass the selected suffix value to the parent- could be one of several components
         this.props.onSelectRace(event.currentTarget.getAttribute('value'));
         this.props.onSelectRaceDescription(event.currentTarget.getAttribute('description'));
     }
-
-    // componentDidUpdate(nextProps) {
-    //     console.log(nextProps.raceDescription);
-    // }
-
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     console.log('getDerivedStateFromProps firing. nextProps: ' + nextProps.raceDescription);
-    //     console.log('getDerivedStateFromProps firing. prevState: ' + prevState.selectedDescription);
-
-    //     return {
-    //         selectedDescription: 'this is test'    
-    //     };
-    //    }
 
     render() {
 
@@ -60,8 +41,7 @@ export default class RaceDropDown extends Component {
         return (
             <div>
                 <div className="dropdown">
-                    <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        {/* {this.state.selectedDescription } */}
+                    <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
                         {this.props.raceDescription}
                     </button>
                     <div className="dropdown-menu">
