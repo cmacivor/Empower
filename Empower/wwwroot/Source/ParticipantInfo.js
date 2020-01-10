@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Api } from './commonAdmin';
 require ('.//commonAdmin');
 import SuffixDropdown from './SuffixDropdown';
-import RaceDropdown from './RaceDropdown';
+import RaceDropDown from './RaceDropdown';
 
 export default class ParticipantInfo extends Component {
 
@@ -48,7 +48,6 @@ export default class ParticipantInfo extends Component {
     }
 
     render() {
-
 
         let onChangeHandler = this.props.infoTabOnChangeHandler;
 
@@ -125,7 +124,7 @@ export default class ParticipantInfo extends Component {
                     </div>
                     <div className="col-3">
                        <label html="ddlRace"><strong>Race/Ethnicity *</strong> </label>
-                        <RaceDropdown onSelectRace={this.handleRaceChange } selected={this.props.infoTabRace} />
+                        <RaceDropDown onSelectRace={this.handleRaceChange } selected={this.props.infoTabRace} />
                     </div>
                 </div>
             </div>

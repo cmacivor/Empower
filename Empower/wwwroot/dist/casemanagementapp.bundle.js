@@ -80556,9 +80556,9 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleRaceChange", function (race) {
-      _this.setState({
-        clientRace: race
-      });
+      console.log('this is the handleRaceChange in CaseManagement: ' + race); // this.setState({
+      //     clientRace: race
+      // });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleDateOfBirthChange", function (dateOfBirth) {
@@ -80620,7 +80620,7 @@ function (_Component) {
       clientSuffix: 'Please Select',
       clientStateVCIN: '',
       clientAlias: '',
-      clientRace: 'Please Select'
+      clientRace: 0
     };
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
@@ -80690,7 +80690,8 @@ function (_Component) {
             clientDateOfBirth: utcBirthDate,
             clientCurrentAge: diffInYears.toString(),
             clientStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
-            clientAlias: finalResult.ClientProfile.Person.Alias
+            clientAlias: finalResult.ClientProfile.Person.Alias,
+            clientRace: finalResult.ClientProfile.Person.RaceID
           });
         });
       } catch (error) {
@@ -81072,7 +81073,7 @@ function (_Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SuffixDropDown; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RaceDropDown; });
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
@@ -81102,19 +81103,22 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
 
-var SuffixDropDown =
+var RaceDropDown =
 /*#__PURE__*/
 function (_Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(SuffixDropDown, _Component);
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(RaceDropDown, _Component);
 
-  function SuffixDropDown(props) {
+  function RaceDropDown(props) {
     var _this;
 
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, SuffixDropDown);
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, RaceDropDown);
 
-    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(SuffixDropDown).call(this, props));
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(RaceDropDown).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
+      console.log('the race value being passed is: ' + _this.props.selected);
+      console.log(' the array is ' + _this.state.races);
+
       _this.setState({
         selectedDescription: event.currentTarget.getAttribute('description')
       });
@@ -81126,8 +81130,8 @@ function (_Component) {
 
     _this.state = {
       races: [],
-      selectedValue: _this.props.selected,
-      selectedDescription: 'Please Select'
+      selectedValue: _this.props.selected //selectedDescription: 'Please Select'     
+
     };
     _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Race").then(function (races) {
       return _this.setState({
@@ -81137,7 +81141,7 @@ function (_Component) {
     return _this;
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(SuffixDropDown, [{
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(RaceDropDown, [{
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -81156,13 +81160,13 @@ function (_Component) {
         type: "button",
         className: "btn btn-primary dropdown-toggle",
         "data-toggle": "dropdown"
-      }, this.state.selectedDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }, this.props.selected), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "dropdown-menu"
       }, raceOptions)));
     }
   }]);
 
-  return SuffixDropDown;
+  return RaceDropDown;
 }(react__WEBPACK_IMPORTED_MODULE_7__["Component"]);
 
 

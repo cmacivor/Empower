@@ -2,20 +2,28 @@ import React, { Component } from 'react';
 import { Api } from './commonAdmin';
 require ('./commonAdmin');
 
-export default class SuffixDropDown extends Component {
+export default class RaceDropDown extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             races:  [],
             selectedValue: this.props.selected,
-            selectedDescription: 'Please Select'     
+            //selectedDescription: 'Please Select'     
         }
 
         Api.getConfigDataByType("Race").then(races => this.setState({races}));
+
+        
     }
 
     onSelectHandler = (event) => {
+
+        console.log('the race value being passed is: ' + this.props.selected);
+
+        console.log(' the array is ' + this.state.races);
+         
+
         this.setState({
             selectedDescription: event.currentTarget.getAttribute('description')
         });
@@ -36,7 +44,8 @@ export default class SuffixDropDown extends Component {
             <div>
                 <div className="dropdown">
                     <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        {this.state.selectedDescription }
+                        {/* {this.state.selectedValue } */}
+                        {this.props.selected }
                     </button>
                     <div className="dropdown-menu">
                         {raceOptions}
