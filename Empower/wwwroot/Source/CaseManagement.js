@@ -262,7 +262,7 @@ export default class CaseManagement extends Component {
         }
     }
 
-    //parent change handler for all Suffix dropdowns.
+    //parent change handler for Suffix dropdown in Info Tab.
     handleSuffixChange = (suffix) => {
         this.setState({
             clientSuffix: suffix
