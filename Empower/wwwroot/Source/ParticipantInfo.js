@@ -34,7 +34,7 @@ export default class ParticipantInfo extends Component {
         this.setState({
             dateOfBirth: date.date
         });
-        console.log('this is the local state: '  + this.state.dateOfBirth);
+        //console.log('this is the local state: '  + this.state.dateOfBirth);
         this.props.onDateOfBirthChange(date.date);
     }
 
@@ -44,7 +44,7 @@ export default class ParticipantInfo extends Component {
     }
 
     handleRaceChange = (race) => {
-        console.log('this is participant info race description: ' + this.props.raceDescription);
+        //console.log('this is participant info race description: ' + this.props.raceDescription);
 
         this.props.onRaceChange(race);
     }

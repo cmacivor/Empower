@@ -6,9 +6,11 @@ export default class RaceDropDown extends Component {
     constructor(props) {
         super(props);
 
+        let previouslySelectedRace = this.props.selected;
+
         this.state = {
             races:  [],
-            selectedValue: this.props.selected,
+            selectedValue: previouslySelectedRace,
             selectedDescription: this.props.raceDescription     
         }
 
@@ -40,7 +42,9 @@ export default class RaceDropDown extends Component {
         //     }
         // });
         // console.log(raceOptions);
-           
+
+        console.log('in dropdown: ' + event.currentTarget.getAttribute('description'));
+
         this.setState({
             selectedDescription: event.currentTarget.getAttribute('description')
         });
@@ -61,7 +65,7 @@ export default class RaceDropDown extends Component {
             <div>
                 <div className="dropdown">
                     <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        {this.props.raceDescription }
+                        {this.state.selectedDescription }
                         {/* {this.props.selected } this correctly sets the value when passed from above */ } 
                     </button>
                     <div className="dropdown-menu">

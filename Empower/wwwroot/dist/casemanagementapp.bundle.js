@@ -80693,14 +80693,12 @@ function (_Component) {
           //for the race dropdown
           //Api.getConfigDataByType("Race").then(races => this.setState({races}));
           //Api.getConfigDataByType("Race").then(races => this.setState({races}));
-
-          console.log(_this2.state.races);
+          //console.log(this.state.races);
 
           var raceObjectByClientRaceID = _this2.state.races.filter(function (race) {
             return race.ID === finalResult.ClientProfile.Person.RaceID;
-          });
+          }); //console.log(raceObjectByClientRaceID);
 
-          console.log(raceObjectByClientRaceID);
 
           _this2.setState({
             clientLastName: finalResult.ClientProfile.Person.LastName,
@@ -80903,9 +80901,8 @@ function (_Component) {
       //this is for display- actual value is held in parent component
       _this.setState({
         dateOfBirth: date.date
-      });
+      }); //console.log('this is the local state: '  + this.state.dateOfBirth);
 
-      console.log('this is the local state: ' + _this.state.dateOfBirth);
 
       _this.props.onDateOfBirthChange(date.date);
     });
@@ -80916,8 +80913,7 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleRaceChange", function (race) {
-      console.log('this is participant info race description: ' + _this.props.raceDescription);
-
+      //console.log('this is participant info race description: ' + this.props.raceDescription);
       _this.props.onRaceChange(race);
     });
 
@@ -81162,6 +81158,8 @@ function (_Component) {
       // });
       // console.log(raceOptions);
 
+      console.log('in dropdown: ' + event.currentTarget.getAttribute('description'));
+
       _this.setState({
         selectedDescription: event.currentTarget.getAttribute('description')
       });
@@ -81171,9 +81169,10 @@ function (_Component) {
       _this.props.onSelectRace(valueToSendToParent);
     });
 
+    var previouslySelectedRace = _this.props.selected;
     _this.state = {
       races: [],
-      selectedValue: _this.props.selected,
+      selectedValue: previouslySelectedRace,
       selectedDescription: _this.props.raceDescription
     };
     _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Race").then(function (races) {
@@ -81203,7 +81202,7 @@ function (_Component) {
         type: "button",
         className: "btn btn-primary dropdown-toggle",
         "data-toggle": "dropdown"
-      }, this.props.raceDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }, this.state.selectedDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "dropdown-menu"
       }, raceOptions)));
     }

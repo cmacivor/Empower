@@ -135,12 +135,12 @@ export default class CaseManagement extends Component {
                  //Api.getConfigDataByType("Race").then(races => this.setState({races}));
                  //Api.getConfigDataByType("Race").then(races => this.setState({races}));
             
-                 console.log(this.state.races);
+                 //console.log(this.state.races);
 
                  let raceObjectByClientRaceID = this.state.races.filter(function(race) {
                     return race.ID === finalResult.ClientProfile.Person.RaceID
                 });
-                console.log(raceObjectByClientRaceID);
+                //console.log(raceObjectByClientRaceID);
               
                 this.setState({
                     clientLastName: finalResult.ClientProfile.Person.LastName,
