@@ -6,6 +6,7 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import moment from 'moment';
 import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap4';
+import { Api } from './commonAdmin';
 
 
 export default class CaseManagement extends Component { 
@@ -47,8 +48,12 @@ export default class CaseManagement extends Component {
             clientSuffix: 'Please Select',
             clientStateVCIN: '',
             clientAlias: '',
-            clientRace: 0
+            clientRaceID: 0,
+            races:  [],
+            clientRaceDescription: 'Please Select'
         }
+
+        Api.getConfigDataByType("Race").then(races => this.setState({races}));
 
         this.EnableTabs = this.EnableTabs.bind(this);
         this.SetActiveTab = this.SetActiveTab.bind(this);
@@ -117,6 +122,7 @@ export default class CaseManagement extends Component {
                  let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
                  let utcBirthDate = new Date(formattedBirthDate); 
                  
+                 //for the age box
                  //calculate age in years
                  let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
                  //console.log(difference);
@@ -124,6 +130,17 @@ export default class CaseManagement extends Component {
                  //console.log(duration);
                  let diffInYears = Math.round(duration.asYears());
                  //console.log(diffInYears);
+
+                 //for the race dropdown
+                 //Api.getConfigDataByType("Race").then(races => this.setState({races}));
+                 //Api.getConfigDataByType("Race").then(races => this.setState({races}));
+            
+                 console.log(this.state.races);
+
+                 let raceObjectByClientRaceID = this.state.races.filter(function(race) {
+                    return race.ID === finalResult.ClientProfile.Person.RaceID
+                });
+                console.log(raceObjectByClientRaceID);
               
                 this.setState({
                     clientLastName: finalResult.ClientProfile.Person.LastName,
@@ -135,7 +152,8 @@ export default class CaseManagement extends Component {
                     clientCurrentAge: diffInYears.toString(),
                     clientStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
                     clientAlias: finalResult.ClientProfile.Person.Alias,
-                    clientRace: finalResult.ClientProfile.Person.RaceID
+                    clientRaceID: finalResult.ClientProfile.Person.RaceID,
+                    clientRaceDescription: raceObjectByClientRaceID[0].Description
                 });
                 
             });
@@ -289,7 +307,7 @@ export default class CaseManagement extends Component {
     testState = () => {
         console.log(this.state.clientSuffix);
         console.log(this.state.clientDateOfBirth);
-        console.log(this.state.clientRace);
+        console.log(this.state.clientRaceID);
     }
 
     render() {
@@ -341,7 +359,8 @@ export default class CaseManagement extends Component {
                         stateVCIN={this.state.clientStateVCIN}
                         alias={this.state.clientAlias}
                         infoTabSuffix={this.state.clientSuffix}
-                        infoTabRace={this.state.clientRace}
+                        infoTabRace={this.state.clientRaceID}
+                        raceDescription={this.state.clientRaceDescription }
                         onSuffixChange={this.handleSuffixChange}
                         onRaceChange={this.handleRaceChange}
                         onDateOfBirthChange={this.handleDateOfBirthChange}

@@ -80394,6 +80394,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @devexpress/dx-react-grid-bootstrap4 */ "./node_modules/@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.es.js");
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
 
 
 
@@ -80572,7 +80574,7 @@ function (_Component) {
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "testState", function () {
       console.log(_this.state.clientSuffix);
       console.log(_this.state.clientDateOfBirth);
-      console.log(_this.state.clientRace);
+      console.log(_this.state.clientRaceID);
     });
 
     _this.state = {
@@ -80620,8 +80622,15 @@ function (_Component) {
       clientSuffix: 'Please Select',
       clientStateVCIN: '',
       clientAlias: '',
-      clientRace: 0
+      clientRaceID: 0,
+      races: [],
+      clientRaceDescription: 'Please Select'
     };
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_17__["Api"].getConfigDataByType("Race").then(function (races) {
+      return _this.setState({
+        races: races
+      });
+    });
     _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
     return _this;
@@ -80673,13 +80682,25 @@ function (_Component) {
 
           var birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
           var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-          var utcBirthDate = new Date(formattedBirthDate); //calculate age in years
+          var utcBirthDate = new Date(formattedBirthDate); //for the age box
+          //calculate age in years
 
           var difference = moment__WEBPACK_IMPORTED_MODULE_15___default()(new Date()).diff(birthDateJavascriptDateObject); //console.log(difference);
 
           var duration = moment__WEBPACK_IMPORTED_MODULE_15___default.a.duration(difference, 'milliseconds'); //console.log(duration);
 
           var diffInYears = Math.round(duration.asYears()); //console.log(diffInYears);
+          //for the race dropdown
+          //Api.getConfigDataByType("Race").then(races => this.setState({races}));
+          //Api.getConfigDataByType("Race").then(races => this.setState({races}));
+
+          console.log(_this2.state.races);
+
+          var raceObjectByClientRaceID = _this2.state.races.filter(function (race) {
+            return race.ID === finalResult.ClientProfile.Person.RaceID;
+          });
+
+          console.log(raceObjectByClientRaceID);
 
           _this2.setState({
             clientLastName: finalResult.ClientProfile.Person.LastName,
@@ -80691,7 +80712,8 @@ function (_Component) {
             clientCurrentAge: diffInYears.toString(),
             clientStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
             clientAlias: finalResult.ClientProfile.Person.Alias,
-            clientRace: finalResult.ClientProfile.Person.RaceID
+            clientRaceID: finalResult.ClientProfile.Person.RaceID,
+            clientRaceDescription: raceObjectByClientRaceID[0].Description
           });
         });
       } catch (error) {
@@ -80770,7 +80792,7 @@ function (_Component) {
         middleName: this.state.clientMiddleName,
         ssn: this.state.clientSSN,
         fbiNcicNumber: this.state.fbiNcicNumber
-      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabRace", this.state.clientRace), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceChange", this.handleRaceChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabRace", this.state.clientRaceID), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "raceDescription", this.state.clientRaceDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceChange", this.handleRaceChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -80894,6 +80916,8 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleRaceChange", function (race) {
+      console.log('this is participant info race description: ' + _this.props.raceDescription);
+
       _this.props.onRaceChange(race);
     });
 
@@ -81052,7 +81076,8 @@ function (_Component) {
         html: "ddlRace"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Race/Ethnicity *"), " "), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_RaceDropdown__WEBPACK_IMPORTED_MODULE_13__["default"], {
         onSelectRace: this.handleRaceChange,
-        selected: this.props.infoTabRace
+        selected: this.props.infoTabRace,
+        raceDescription: this.props.raceDescription
       }))));
     }
   }]);
@@ -81116,19 +81141,17 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(RaceDropDown).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
-      console.log('the race value being passed is: ' + _this.props.selected);
-      var raceID = _this.props.selected;
-      console.log(' the array is ' + _this.state.races); //this works
-
-      var item = _this.state.races.filter(function (race) {
-        return race.ID === raceID;
-      });
-
-      console.log(item[0]);
-
-      _this.setState({
-        selectedDescription: item[0].Description
-      }); // let raceOptions = this.state.races.map((race) => {
+      console.log(_this.props.raceDescription); //console.log('the race value being passed is: ' + this.props.selected);
+      //let raceID = this.props.selected;
+      //console.log(' the array is ' + this.state.races); //this works
+      //let item = this.state.races.filter(function(race) {
+      // return race.ID === raceID
+      //});
+      //console.log(item[0]);
+      // this.setState({
+      //     selectedDescription: item[0].Description
+      // });
+      // let raceOptions = this.state.races.map((race) => {
       //     //console.log(race);
       //     if (this.props.selected === race.ID) {
       //         // this.setState({
@@ -81138,7 +81161,6 @@ function (_Component) {
       //     }
       // });
       // console.log(raceOptions);
-
 
       _this.setState({
         selectedDescription: event.currentTarget.getAttribute('description')
@@ -81152,7 +81174,7 @@ function (_Component) {
     _this.state = {
       races: [],
       selectedValue: _this.props.selected,
-      selectedDescription: 'Please Select'
+      selectedDescription: _this.props.raceDescription
     };
     _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Race").then(function (races) {
       return _this.setState({
@@ -81181,7 +81203,7 @@ function (_Component) {
         type: "button",
         className: "btn btn-primary dropdown-toggle",
         "data-toggle": "dropdown"
-      }, this.state.selectedDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+      }, this.props.raceDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "dropdown-menu"
       }, raceOptions)));
     }

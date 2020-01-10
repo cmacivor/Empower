@@ -9,7 +9,7 @@ export default class RaceDropDown extends Component {
         this.state = {
             races:  [],
             selectedValue: this.props.selected,
-            selectedDescription: 'Please Select'     
+            selectedDescription: this.props.raceDescription     
         }
 
         Api.getConfigDataByType("Race").then(races => this.setState({races}));
@@ -17,18 +17,18 @@ export default class RaceDropDown extends Component {
     }
 
     onSelectHandler = (event) => {
+        console.log(this.props.raceDescription);
+        //console.log('the race value being passed is: ' + this.props.selected);
+        //let raceID = this.props.selected;
+        //console.log(' the array is ' + this.state.races); //this works
+        //let item = this.state.races.filter(function(race) {
+           // return race.ID === raceID
+        //});
+        //console.log(item[0]);
 
-        console.log('the race value being passed is: ' + this.props.selected);
-        let raceID = this.props.selected;
-        console.log(' the array is ' + this.state.races); //this works
-        let item = this.state.races.filter(function(race) {
-            return race.ID === raceID
-        });
-        console.log(item[0]);
-
-        this.setState({
-            selectedDescription: item[0].Description
-        });
+        // this.setState({
+        //     selectedDescription: item[0].Description
+        // });
 
         // let raceOptions = this.state.races.map((race) => {
         //     //console.log(race);
@@ -61,7 +61,7 @@ export default class RaceDropDown extends Component {
             <div>
                 <div className="dropdown">
                     <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        {this.state.selectedDescription }
+                        {this.props.raceDescription }
                         {/* {this.props.selected } this correctly sets the value when passed from above */ } 
                     </button>
                     <div className="dropdown-menu">
