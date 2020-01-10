@@ -291,9 +291,17 @@ export default class CaseManagement extends Component {
 
     handleRaceChange = (race) => {
         console.log('this is the handleRaceChange in CaseManagement: ' + race);
-        // this.setState({
-        //     clientRace: race
-        // });
+        this.setState({
+            clientRaceID: race
+        });
+    }
+
+    handleRaceDescriptionChange = (raceDescription) => {
+        console.log('this is the handleRaceDescriptionChange in CaseManagememtn: ' + raceDescription);
+
+        this.setState({
+            clientRaceDescription: raceDescription
+        })
     }
     
     handleDateOfBirthChange = (dateOfBirth) => {
@@ -363,6 +371,7 @@ export default class CaseManagement extends Component {
                         raceDescription={this.state.clientRaceDescription }
                         onSuffixChange={this.handleSuffixChange}
                         onRaceChange={this.handleRaceChange}
+                        onRaceDescriptionChange={this.handleRaceDescriptionChange}
                         onDateOfBirthChange={this.handleDateOfBirthChange}
                         infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
                     </Tab>

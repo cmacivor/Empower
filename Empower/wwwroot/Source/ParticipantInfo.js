@@ -49,6 +49,11 @@ export default class ParticipantInfo extends Component {
         this.props.onRaceChange(race);
     }
 
+    handleRaceDescriptionChange = (raceDescription) => {
+        console.log('this is the handleRaceDescriptionChange in Participant Info: ' + raceDescription);
+        this.props.onRaceDescriptionChange(raceDescription);
+    }
+
     render() {
 
         let onChangeHandler = this.props.infoTabOnChangeHandler;
@@ -126,7 +131,7 @@ export default class ParticipantInfo extends Component {
                     </div>
                     <div className="col-3">
                        <label html="ddlRace"><strong>Race/Ethnicity *</strong> </label>
-                        <RaceDropDown onSelectRace={this.handleRaceChange } selected={this.props.infoTabRace} raceDescription={this.props.raceDescription } />
+                        <RaceDropDown onSelectRace={this.handleRaceChange } onSelectRaceDescription={this.handleRaceDescriptionChange} selected={this.props.infoTabRace} raceDescription={this.props.raceDescription } />
                     </div>
                 </div>
             </div>

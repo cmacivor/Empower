@@ -80558,9 +80558,19 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleRaceChange", function (race) {
-      console.log('this is the handleRaceChange in CaseManagement: ' + race); // this.setState({
-      //     clientRace: race
-      // });
+      console.log('this is the handleRaceChange in CaseManagement: ' + race);
+
+      _this.setState({
+        clientRaceID: race
+      });
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleRaceDescriptionChange", function (raceDescription) {
+      console.log('this is the handleRaceDescriptionChange in CaseManagememtn: ' + raceDescription);
+
+      _this.setState({
+        clientRaceDescription: raceDescription
+      });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleDateOfBirthChange", function (dateOfBirth) {
@@ -80790,7 +80800,7 @@ function (_Component) {
         middleName: this.state.clientMiddleName,
         ssn: this.state.clientSSN,
         fbiNcicNumber: this.state.fbiNcicNumber
-      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabRace", this.state.clientRaceID), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "raceDescription", this.state.clientRaceDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceChange", this.handleRaceChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabRace", this.state.clientRaceID), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "raceDescription", this.state.clientRaceDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceChange", this.handleRaceChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceDescriptionChange", this.handleRaceDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -80915,6 +80925,12 @@ function (_Component) {
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleRaceChange", function (race) {
       //console.log('this is participant info race description: ' + this.props.raceDescription);
       _this.props.onRaceChange(race);
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleRaceDescriptionChange", function (raceDescription) {
+      console.log('this is the handleRaceDescriptionChange in Participant Info: ' + raceDescription);
+
+      _this.props.onRaceDescriptionChange(raceDescription);
     });
 
     _this.state = {
@@ -81072,6 +81088,7 @@ function (_Component) {
         html: "ddlRace"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Race/Ethnicity *"), " "), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_RaceDropdown__WEBPACK_IMPORTED_MODULE_13__["default"], {
         onSelectRace: this.handleRaceChange,
+        onSelectRaceDescription: this.handleRaceDescriptionChange,
         selected: this.props.infoTabRace,
         raceDescription: this.props.raceDescription
       }))));
@@ -81148,6 +81165,8 @@ function (_Component) {
       //pass the selected suffix value to the parent- could be one of several components
 
       _this.props.onSelectRace(event.currentTarget.getAttribute('value'));
+
+      _this.props.onSelectRaceDescription(event.currentTarget.getAttribute('description'));
     });
 
     var previouslySelectedRace = _this.props.selected;
@@ -81166,6 +81185,16 @@ function (_Component) {
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(RaceDropDown, [{
     key: "render",
+    // componentDidUpdate(nextProps) {
+    //     console.log(nextProps.raceDescription);
+    // }
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     console.log('getDerivedStateFromProps firing. nextProps: ' + nextProps.raceDescription);
+    //     console.log('getDerivedStateFromProps firing. prevState: ' + prevState.selectedDescription);
+    //     return {
+    //         selectedDescription: 'this is test'    
+    //     };
+    //    }
     value: function render() {
       var _this2 = this;
 
@@ -81187,15 +81216,6 @@ function (_Component) {
       }, this.props.raceDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "dropdown-menu"
       }, raceOptions)));
-    }
-  }], [{
-    key: "getDerivedStateFromProps",
-    value: function getDerivedStateFromProps(nextProps, prevState) {
-      console.log('getDerivedStateFromProps firing. nextProps: ' + nextProps.raceDescription);
-      console.log('getDerivedStateFromProps firing. prevState: ' + prevState.selectedDescription);
-      return {
-        selectedDescription: 'this is test'
-      };
     }
   }]);
 

@@ -35,16 +35,21 @@ export default class RaceDropDown extends Component {
 
         //pass the selected suffix value to the parent- could be one of several components
         this.props.onSelectRace(event.currentTarget.getAttribute('value'));
+        this.props.onSelectRaceDescription(event.currentTarget.getAttribute('description'));
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        console.log('getDerivedStateFromProps firing. nextProps: ' + nextProps.raceDescription);
-        console.log('getDerivedStateFromProps firing. prevState: ' + prevState.selectedDescription);
+    // componentDidUpdate(nextProps) {
+    //     console.log(nextProps.raceDescription);
+    // }
 
-        return {
-            selectedDescription: 'this is test'    
-        };
-       }
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     console.log('getDerivedStateFromProps firing. nextProps: ' + nextProps.raceDescription);
+    //     console.log('getDerivedStateFromProps firing. prevState: ' + prevState.selectedDescription);
+
+    //     return {
+    //         selectedDescription: 'this is test'    
+    //     };
+    //    }
 
     render() {
 
