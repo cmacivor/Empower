@@ -26,16 +26,25 @@ export default class RaceDropDown extends Component {
         console.log('in dropdown: ' + event.currentTarget.getAttribute('description')); //description is getting the correct value
         console.log('this is he key: ' + event.currentTarget.getAttribute('value'));
 
-        this.setState({
-            selectedDescription: event.currentTarget.getAttribute('description')
-        });
+
+        // this.setState({
+        //     selectedDescription: event.currentTarget.getAttribute('description')
+        // });
 
         //let valueToSendToParent = event.currentTarget.getAttribute('key');
 
         //pass the selected suffix value to the parent- could be one of several components
-        //this.props.onSelectRace(valueToSendToParent);
+        this.props.onSelectRace(event.currentTarget.getAttribute('value'));
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        console.log('getDerivedStateFromProps firing. nextProps: ' + nextProps.raceDescription);
+        console.log('getDerivedStateFromProps firing. prevState: ' + prevState.selectedDescription);
+
+        return {
+            selectedDescription: 'this is test'    
+        };
+       }
 
     render() {
 
