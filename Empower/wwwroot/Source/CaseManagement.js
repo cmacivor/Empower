@@ -158,36 +158,49 @@ export default class CaseManagement extends Component {
                 let genderObjectByClientGenderID = this.state.genders.filter(function(gender) {
                     return gender.ID === finalResult.ClientProfile.Person.GenderID
                 });
-             
+
+                //need to create variables for each- if it's null, set to empty string for controlled components
+                let lastName = (finalResult.ClientProfile.Person.LastName !== null)  ? finalResult.ClientProfile.Person.LastName : '';
+                let firstName = (finalResult.ClientProfile.Person.FirstName !== null)  ? finalResult.ClientProfile.Person.FirstName : '';
+                let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
+                let ssn = (finalResult.ClientProfile.Person.SSN != null)  ? finalResult.ClientProfile.Person.SSN : '';
+                let fbiNcicNumber = (finalResult.ClientProfile.Person.FBINCIC !== null) ? finalResult.ClientProfile.Person.FBINCIC : '';
+                let stateVcin = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
+                let alias = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
+                let raceID = (finalResult.ClientProfile.Person.RaceID !== null) ? finalResult.ClientProfile.Person.RaceID : 0;
+                let raceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
+                let genderID = (finalResult.ClientProfile.Person.GenderID !== null) ?  finalResult.ClientProfile.Person.GenderID : 0;
+                let genderDescription = (genderObjectByClientGenderID !== null) ? genderObjectByClientGenderID[0].Description : '';
+
                 this.setState({
-                    clientLastName: finalResult.ClientProfile.Person.LastName,
-                    clientFirstName: finalResult.ClientProfile.Person.FirstName,
-                    clientMiddleName: finalResult.ClientProfile.Person.MiddleName,
-                    clientSSN: finalResult.ClientProfile.Person.SSN,
-                    clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
+                    clientLastName: lastName,
+                    clientFirstName: firstName,
+                    clientMiddleName: middleName,
+                    clientSSN: ssn,
+                    clientFbiNcicNumber: fbiNcicNumber,
                     clientDateOfBirth: utcBirthDate,
                     clientCurrentAge: diffInYears.toString(),
-                    clientStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
-                    clientAlias: finalResult.ClientProfile.Person.Alias,
-                    clientRaceID: finalResult.ClientProfile.Person.RaceID,
-                    clientRaceDescription: raceObjectByClientRaceID[0].Description,
-                    clientGenderID: finalResult.ClientProfile.Person.GenderID,
-                    clientGenderDescription: genderObjectByClientGenderID[0].Description,
+                    clientStateVCIN: stateVcin,
+                    clientAlias: alias,
+                    clientRaceID: raceID,
+                    clientRaceDescription: raceDescription,
+                    clientGenderID: genderID,
+                    clientGenderDescription: genderDescription,
 
                     //state values for reset button
-                    originalLastName:  finalResult.ClientProfile.Person.LastName,
-                    originalFirstName: finalResult.ClientProfile.Person.FirstName,
-                    originalMiddleName: finalResult.ClientProfile.Person.MiddleName,
-                    originalSsn: finalResult.ClientProfile.Person.SSN,
-                    originalFbiNcic: finalResult.ClientProfile.Person.FBINCIC,
+                    originalLastName:  lastName,
+                    originalFirstName: firstName,
+                    originalMiddleName: middleName,
+                    originalSsn: ssn,
+                    originalFbiNcic: fbiNcicNumber,
                     originalDateOfBirth: utcBirthDate,
                     originalAge: diffInYears.toString(),
-                    originalStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
-                    originalAlias: finalResult.ClientProfile.Person.Alias,
-                    originalRaceID: finalResult.ClientProfile.Person.RaceID,
-                    originalRaceDescription: raceObjectByClientRaceID[0].Description,
-                    originalGenderID: finalResult.ClientProfile.Person.GenderID,
-                    originalGenderDescription: genderObjectByClientGenderID[0].Description,
+                    originalStateVCIN: stateVcin,
+                    originalAlias: alias,
+                    originalRaceID: raceID,
+                    originalRaceDescription: raceDescription,
+                    originalGenderID: genderID,
+                    originalGenderDescription: genderDescription,
                 });
                 
             });

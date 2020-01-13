@@ -80764,36 +80764,49 @@ function (_Component) {
 
           var genderObjectByClientGenderID = _this2.state.genders.filter(function (gender) {
             return gender.ID === finalResult.ClientProfile.Person.GenderID;
-          });
+          }); //need to create variables for each- if it's null, set to empty string for controlled components
+
+
+          var lastName = finalResult.ClientProfile.Person.LastName !== null ? finalResult.ClientProfile.Person.LastName : '';
+          var firstName = finalResult.ClientProfile.Person.FirstName !== null ? finalResult.ClientProfile.Person.FirstName : '';
+          var middleName = finalResult.ClientProfile.Person.MiddleName !== null ? finalResult.ClientProfile.Person.MiddleName : '';
+          var ssn = finalResult.ClientProfile.Person.SSN != null ? finalResult.ClientProfile.Person.SSN : '';
+          var fbiNcicNumber = finalResult.ClientProfile.Person.FBINCIC !== null ? finalResult.ClientProfile.Person.FBINCIC : '';
+          var stateVcin = finalResult.ClientProfile.Person.StateORVCIN !== null ? finalResult.ClientProfile.Person.StateORVCIN : '';
+          var alias = finalResult.ClientProfile.Person.StateORVCIN !== null ? finalResult.ClientProfile.Person.StateORVCIN : '';
+          var raceID = finalResult.ClientProfile.Person.RaceID !== null ? finalResult.ClientProfile.Person.RaceID : 0;
+          var raceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
+          var genderID = finalResult.ClientProfile.Person.GenderID !== null ? finalResult.ClientProfile.Person.GenderID : 0;
+          var genderDescription = genderObjectByClientGenderID !== null ? genderObjectByClientGenderID[0].Description : '';
 
           _this2.setState({
-            clientLastName: finalResult.ClientProfile.Person.LastName,
-            clientFirstName: finalResult.ClientProfile.Person.FirstName,
-            clientMiddleName: finalResult.ClientProfile.Person.MiddleName,
-            clientSSN: finalResult.ClientProfile.Person.SSN,
-            clientFbiNcicNumber: finalResult.ClientProfile.Person.FBINCIC,
+            clientLastName: lastName,
+            clientFirstName: firstName,
+            clientMiddleName: middleName,
+            clientSSN: ssn,
+            clientFbiNcicNumber: fbiNcicNumber,
             clientDateOfBirth: utcBirthDate,
             clientCurrentAge: diffInYears.toString(),
-            clientStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
-            clientAlias: finalResult.ClientProfile.Person.Alias,
-            clientRaceID: finalResult.ClientProfile.Person.RaceID,
-            clientRaceDescription: raceObjectByClientRaceID[0].Description,
-            clientGenderID: finalResult.ClientProfile.Person.GenderID,
-            clientGenderDescription: genderObjectByClientGenderID[0].Description,
+            clientStateVCIN: stateVcin,
+            clientAlias: alias,
+            clientRaceID: raceID,
+            clientRaceDescription: raceDescription,
+            clientGenderID: genderID,
+            clientGenderDescription: genderDescription,
             //state values for reset button
-            originalLastName: finalResult.ClientProfile.Person.LastName,
-            originalFirstName: finalResult.ClientProfile.Person.FirstName,
-            originalMiddleName: finalResult.ClientProfile.Person.MiddleName,
-            originalSsn: finalResult.ClientProfile.Person.SSN,
-            originalFbiNcic: finalResult.ClientProfile.Person.FBINCIC,
+            originalLastName: lastName,
+            originalFirstName: firstName,
+            originalMiddleName: middleName,
+            originalSsn: ssn,
+            originalFbiNcic: fbiNcicNumber,
             originalDateOfBirth: utcBirthDate,
             originalAge: diffInYears.toString(),
-            originalStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
-            originalAlias: finalResult.ClientProfile.Person.Alias,
-            originalRaceID: finalResult.ClientProfile.Person.RaceID,
-            originalRaceDescription: raceObjectByClientRaceID[0].Description,
-            originalGenderID: finalResult.ClientProfile.Person.GenderID,
-            originalGenderDescription: genderObjectByClientGenderID[0].Description
+            originalStateVCIN: stateVcin,
+            originalAlias: alias,
+            originalRaceID: raceID,
+            originalRaceDescription: raceDescription,
+            originalGenderID: genderID,
+            originalGenderDescription: genderDescription
           });
         });
       } catch (error) {
@@ -81204,7 +81217,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.middleName,
+        value: this.props.middleName,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtMiddleName");
         },
