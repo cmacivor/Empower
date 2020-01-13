@@ -59,6 +59,7 @@ export default class CaseManagement extends Component {
         }
 
         Api.getConfigDataByType("Race").then(races => this.setState({races}));
+        Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
 
         this.EnableTabs = this.EnableTabs.bind(this);
         this.SetActiveTab = this.SetActiveTab.bind(this);
@@ -136,17 +137,14 @@ export default class CaseManagement extends Component {
                  let diffInYears = Math.round(duration.asYears());
                  //console.log(diffInYears);
 
-                 //for the race dropdown
-                 //Api.getConfigDataByType("Race").then(races => this.setState({races}));
-                 //Api.getConfigDataByType("Race").then(races => this.setState({races}));
-            
-                 //console.log(this.state.races);
-
                  let raceObjectByClientRaceID = this.state.races.filter(function(race) {
                     return race.ID === finalResult.ClientProfile.Person.RaceID
                 });
-                //console.log(raceObjectByClientRaceID);
-              
+
+                let genderObjectByClientGenderID = this.state.genders.filter(function(gender) {
+                    return gender.ID === finalResult.ClientProfile.Person.GenderID
+                });
+             
                 this.setState({
                     clientLastName: finalResult.ClientProfile.Person.LastName,
                     clientFirstName: finalResult.ClientProfile.Person.FirstName,
@@ -158,7 +156,9 @@ export default class CaseManagement extends Component {
                     clientStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
                     clientAlias: finalResult.ClientProfile.Person.Alias,
                     clientRaceID: finalResult.ClientProfile.Person.RaceID,
-                    clientRaceDescription: raceObjectByClientRaceID[0].Description
+                    clientRaceDescription: raceObjectByClientRaceID[0].Description,
+                    clientGenderID: finalResult.ClientProfile.Person.GenderID,
+                    clientGenderDescription: genderObjectByClientGenderID[0].Description
                 });
                 
             });
@@ -386,6 +386,7 @@ export default class CaseManagement extends Component {
                         infoTabSuffix={this.state.clientSuffix}
                         infoTabRace={this.state.clientRaceID}
                         raceDescription={this.state.clientRaceDescription }
+                        genderDescription={this.state.clientGenderDescription}
                         onSuffixChange={this.handleSuffixChange}
                         onRaceChange={this.handleRaceChange}
                         onRaceDescriptionChange={this.handleRaceDescriptionChange}
