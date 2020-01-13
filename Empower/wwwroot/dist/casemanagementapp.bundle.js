@@ -80593,6 +80593,28 @@ function (_Component) {
       });
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handlePartipantInfoResetClick", function () {
+      console.log('this is handlePartipantInfoResetClick in case management');
+      console.log('original state: ' + _this.state.originalLastName);
+      console.log('the state: ' + _this.state.clientLastName);
+
+      _this.setState({
+        clientLastName: _this.state.originalLastName,
+        clientFirstName: _this.state.originalFirstName,
+        clientMiddleName: _this.state.originalMiddleName,
+        clientSuffix: _this.state.originalSuffix,
+        clientSSN: _this.state.originalSsn,
+        clientStateVCIN: _this.state.originalStateVCIN,
+        clientFbiNcicNumber: _this.state.originalFbiNcic,
+        clientDateOfBirth: _this.state.originalDateOfBirth,
+        clientAlias: _this.state.originalAlias,
+        clientRaceID: _this.state.originalRaceID,
+        clientRaceDescription: _this.state.originalRaceDescription,
+        clientGenderID: _this.state.originalGenderID,
+        clientGenderDescription: _this.state.clientGenderDescription
+      });
+    });
+
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "testState", function () {
       console.log(_this.state.clientSuffix);
       console.log(_this.state.clientDateOfBirth);
@@ -80649,7 +80671,22 @@ function (_Component) {
       clientRaceDescription: 'Please Select',
       clientGenderID: 0,
       genders: [],
-      clientGenderDescription: 'Please Select'
+      clientGenderDescription: 'Please Select',
+      //have to handle reset button- store original state in separate set of variables
+      originalLastName: '',
+      originalFirstName: '',
+      originalMiddleName: '',
+      originalSuffix: '',
+      originalSsn: '',
+      originalFbiNcic: '',
+      originalAge: 0,
+      originalDateOfBirth: new Date(),
+      originalStateVCIN: '',
+      originalAlias: '',
+      originalRaceID: 0,
+      originalRaceDescription: '',
+      originalGenderID: 0,
+      originalGenderDescription: ''
     };
     _commonAdmin__WEBPACK_IMPORTED_MODULE_17__["Api"].getConfigDataByType("Race").then(function (races) {
       return _this.setState({
@@ -80720,10 +80757,6 @@ function (_Component) {
           var duration = moment__WEBPACK_IMPORTED_MODULE_15___default.a.duration(difference, 'milliseconds'); //console.log(duration);
 
           var diffInYears = Math.round(duration.asYears()); //console.log(diffInYears);
-          //for the race dropdown
-          //Api.getConfigDataByType("Race").then(races => this.setState({races}));
-          //Api.getConfigDataByType("Race").then(races => this.setState({races}));
-          //console.log(this.state.races);
 
           var raceObjectByClientRaceID = _this2.state.races.filter(function (race) {
             return race.ID === finalResult.ClientProfile.Person.RaceID;
@@ -80732,8 +80765,6 @@ function (_Component) {
           var genderObjectByClientGenderID = _this2.state.genders.filter(function (gender) {
             return gender.ID === finalResult.ClientProfile.Person.GenderID;
           });
-
-          console.log(genderObjectByClientGenderID);
 
           _this2.setState({
             clientLastName: finalResult.ClientProfile.Person.LastName,
@@ -80748,7 +80779,21 @@ function (_Component) {
             clientRaceID: finalResult.ClientProfile.Person.RaceID,
             clientRaceDescription: raceObjectByClientRaceID[0].Description,
             clientGenderID: finalResult.ClientProfile.Person.GenderID,
-            clientGenderDescription: genderObjectByClientGenderID[0].Description
+            clientGenderDescription: genderObjectByClientGenderID[0].Description,
+            //state values for reset button
+            originalLastName: finalResult.ClientProfile.Person.LastName,
+            originalFirstName: finalResult.ClientProfile.Person.FirstName,
+            originalMiddleName: finalResult.ClientProfile.Person.MiddleName,
+            originalSsn: finalResult.ClientProfile.Person.SSN,
+            originalFbiNcic: finalResult.ClientProfile.Person.FBINCIC,
+            originalDateOfBirth: utcBirthDate,
+            originalAge: diffInYears.toString(),
+            originalStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
+            originalAlias: finalResult.ClientProfile.Person.Alias,
+            originalRaceID: finalResult.ClientProfile.Person.RaceID,
+            originalRaceDescription: raceObjectByClientRaceID[0].Description,
+            originalGenderID: finalResult.ClientProfile.Person.GenderID,
+            originalGenderDescription: genderObjectByClientGenderID[0].Description
           });
         });
       } catch (error) {
@@ -80827,7 +80872,7 @@ function (_Component) {
         middleName: this.state.clientMiddleName,
         ssn: this.state.clientSSN,
         fbiNcicNumber: this.state.fbiNcicNumber
-      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabRace", this.state.clientRaceID), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "raceDescription", this.state.clientRaceDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "genderDescription", this.state.clientGenderDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceChange", this.handleRaceChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceDescriptionChange", this.handleRaceDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onGenderChange", this.handleGenderChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onGenderDescriptionChange", this.handleGenderDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabRace", this.state.clientRaceID), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "raceDescription", this.state.clientRaceDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "genderDescription", this.state.clientGenderDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceChange", this.handleRaceChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceDescriptionChange", this.handleRaceDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onGenderChange", this.handleGenderChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onGenderDescriptionChange", this.handleGenderDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "participantInfoResetClick", this.handlePartipantInfoResetClick), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -81073,8 +81118,43 @@ function (_Component) {
       _this.props.onGenderDescriptionChange(genderDescription);
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleUpdateClick", function () {
+      _this.props.participantInfoResetClick();
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleResetClick", function () {
+      // var participantInfo = {
+      //     lastName: this.state.originalLastName,
+      //     firstName: this.state.originalFirstName,
+      //     middleName: this.state.originalMiddleName,
+      //     ssn: this.state.originalSsn,
+      //     fbiNcicNumber: this.state.originalFbiNcic,
+      //     dateOfBirth: this.state.originalDateOfBirth,
+      //     suffix: this.state.originalSuffix,
+      //     currentAge: this.state.originalAge,
+      //     race: this.state.originalRace,
+      //     gender: this.state.originalGender,
+      //     stateVCIN: this.state.originalStateVCIN,
+      //     alias: this.state.alias
+      // }
+      _this.props.participantInfoResetClick(); //console.log('this is handleResetClick in participant info'); this worked
+
+    });
+
     _this.state = {
-      dateOfBirth: _this.props.dateOfBirth //currentAge: differenceInDays,                
+      dateOfBirth: _this.props.dateOfBirth //have to handle reset button- store original state in separate set of variables
+      // originalLastName: this.props.originalLastName,
+      // originalFirstName: this.props.originalFirstName,
+      // originalMiddleName: this.props.middleName,
+      // originalSuffix: this.props.infoTabSuffix,
+      // originalSsn: this.props.ssn,
+      // originalFbiNcic: this.props.fbiNcicNumber,
+      // originalAge: this.props.currentAge,
+      // originalDateOfBirth: this.props.dateOfBirth,
+      // originalStateVCIN: this.props.stateVCIN,
+      // originalAlias: this.props.alias,
+      // originalRace: this.props.infoTabRace,
+      // originalGender: this.props.infoTabGender,
 
     };
     return _this;
@@ -81096,7 +81176,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.lastName,
+        value: this.props.lastName,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtLastName");
         },
@@ -81110,7 +81190,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.firstName,
+        value: this.props.firstName,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtFirstName");
         },
@@ -81124,7 +81204,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.middleName,
+        value: this.props.middleName,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtMiddleName");
         },
@@ -81147,7 +81227,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.ssn,
+        value: this.props.ssn,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtSSN");
         },
@@ -81161,7 +81241,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.fbiNcicNumber,
+        value: this.props.fbiNcicNumber,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtFbiNcicNumber");
         },
@@ -81202,7 +81282,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.stateVCIN,
+        value: this.props.stateVCIN,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtStateVCIN");
         },
@@ -81216,7 +81296,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.alias,
+        value: this.props.alias,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtAlias");
         },
@@ -81242,7 +81322,21 @@ function (_Component) {
         onSelectGenderDescription: this.handleGenderDescriptionChange,
         selected: this.props.infoTabGender,
         genderDescription: this.props.genderDescription
-      }))));
+      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "form-row"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-4"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
+        id: "btnUpdate",
+        className: "btn btn-primary",
+        onClick: this.handleUpdateClick
+      }, "Update")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-4"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
+        id: "btnReset",
+        className: "btn btn-primary",
+        onClick: this.handleResetClick
+      }, "Reset"))));
     }
   }]);
 

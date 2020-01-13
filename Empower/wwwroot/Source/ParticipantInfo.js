@@ -17,7 +17,21 @@ export default class ParticipantInfo extends Component {
         this.state = {
           
             dateOfBirth: this.props.dateOfBirth,  
-            //currentAge: differenceInDays,                
+            
+            //have to handle reset button- store original state in separate set of variables
+            // originalLastName: this.props.originalLastName,
+            // originalFirstName: this.props.originalFirstName,
+            // originalMiddleName: this.props.middleName,
+            // originalSuffix: this.props.infoTabSuffix,
+            // originalSsn: this.props.ssn,
+            // originalFbiNcic: this.props.fbiNcicNumber,
+            // originalAge: this.props.currentAge,
+            // originalDateOfBirth: this.props.dateOfBirth,
+            // originalStateVCIN: this.props.stateVCIN,
+            // originalAlias: this.props.alias,
+            // originalRace: this.props.infoTabRace,
+            // originalGender: this.props.infoTabGender,
+
         }
     }
 
@@ -53,9 +67,36 @@ export default class ParticipantInfo extends Component {
         this.props.onGenderDescriptionChange(genderDescription);
     }
 
+    handleUpdateClick = () => {
+        this.props.participantInfoResetClick();
+    }
+
+    handleResetClick = () => {
+        // var participantInfo = {
+        //     lastName: this.state.originalLastName,
+        //     firstName: this.state.originalFirstName,
+        //     middleName: this.state.originalMiddleName,
+        //     ssn: this.state.originalSsn,
+        //     fbiNcicNumber: this.state.originalFbiNcic,
+        //     dateOfBirth: this.state.originalDateOfBirth,
+        //     suffix: this.state.originalSuffix,
+        //     currentAge: this.state.originalAge,
+        //     race: this.state.originalRace,
+        //     gender: this.state.originalGender,
+        //     stateVCIN: this.state.originalStateVCIN,
+        //     alias: this.state.alias
+        // }
+
+        this.props.participantInfoResetClick();
+        //console.log('this is handleResetClick in participant info'); this worked
+
+
+    }
+
     render() {
 
         let onChangeHandler = this.props.infoTabOnChangeHandler;
+        
 
         return (
             <div>
@@ -64,7 +105,7 @@ export default class ParticipantInfo extends Component {
                     <div className="col-3">
                         <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" defaultValue={this.props.lastName} onChange={e => onChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName"></input>
+                            <input type="text"  value={this.props.lastName} onChange={e => onChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName"></input>
                         </div>
                     </div>
                     <div className="col-3">
@@ -137,6 +178,14 @@ export default class ParticipantInfo extends Component {
                     <div className="col-4">
                         <label htmlFor="ddlGender"><strong>Gender*</strong></label>
                         <GenderDropDown onSelectGender={this.handleGenderChange} onSelectGenderDescription={this.handleGenderDescriptionChange} selected={this.props.infoTabGender} genderDescription={this.props.genderDescription}/>
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="col-4">
+                        <button id="btnUpdate" className="btn btn-primary" onClick={this.handleUpdateClick}>Update</button>
+                    </div>
+                    <div className="col-4">
+                        <button id="btnReset" className="btn btn-primary" onClick={this.handleResetClick }>Reset</button>
                     </div>
                 </div>
             </div>

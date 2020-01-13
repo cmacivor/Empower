@@ -55,7 +55,21 @@ export default class CaseManagement extends Component {
             genders: [],
             clientGenderDescription: 'Please Select',
 
-
+             //have to handle reset button- store original state in separate set of variables
+             originalLastName: '',
+             originalFirstName: '',
+             originalMiddleName: '',
+             originalSuffix: '',
+             originalSsn: '',
+             originalFbiNcic: '',
+             originalAge: 0,
+             originalDateOfBirth: new Date(),
+             originalStateVCIN: '',
+             originalAlias: '',
+             originalRaceID: 0,
+             originalRaceDescription: '',
+             originalGenderID: 0,
+             originalGenderDescription: ''
         }
 
         Api.getConfigDataByType("Race").then(races => this.setState({races}));
@@ -158,7 +172,22 @@ export default class CaseManagement extends Component {
                     clientRaceID: finalResult.ClientProfile.Person.RaceID,
                     clientRaceDescription: raceObjectByClientRaceID[0].Description,
                     clientGenderID: finalResult.ClientProfile.Person.GenderID,
-                    clientGenderDescription: genderObjectByClientGenderID[0].Description
+                    clientGenderDescription: genderObjectByClientGenderID[0].Description,
+
+                    //state values for reset button
+                    originalLastName:  finalResult.ClientProfile.Person.LastName,
+                    originalFirstName: finalResult.ClientProfile.Person.FirstName,
+                    originalMiddleName: finalResult.ClientProfile.Person.MiddleName,
+                    originalSsn: finalResult.ClientProfile.Person.SSN,
+                    originalFbiNcic: finalResult.ClientProfile.Person.FBINCIC,
+                    originalDateOfBirth: utcBirthDate,
+                    originalAge: diffInYears.toString(),
+                    originalStateVCIN: finalResult.ClientProfile.Person.StateORVCIN,
+                    originalAlias: finalResult.ClientProfile.Person.Alias,
+                    originalRaceID: finalResult.ClientProfile.Person.RaceID,
+                    originalRaceDescription: raceObjectByClientRaceID[0].Description,
+                    originalGenderID: finalResult.ClientProfile.Person.GenderID,
+                    originalGenderDescription: genderObjectByClientGenderID[0].Description,
                 });
                 
             });
@@ -329,6 +358,29 @@ export default class CaseManagement extends Component {
         });
     }
 
+    handlePartipantInfoResetClick = () => {
+        console.log('this is handlePartipantInfoResetClick in case management');
+
+        console.log('original state: ' + this.state.originalLastName);
+        console.log('the state: ' + this.state.clientLastName);
+
+        this.setState({
+            clientLastName: this.state.originalLastName,
+            clientFirstName: this.state.originalFirstName,
+            clientMiddleName: this.state.originalMiddleName,
+            clientSuffix: this.state.originalSuffix,
+            clientSSN: this.state.originalSsn,
+            clientStateVCIN: this.state.originalStateVCIN,
+            clientFbiNcicNumber: this.state.originalFbiNcic,
+            clientDateOfBirth: this.state.originalDateOfBirth,
+            clientAlias: this.state.originalAlias,
+            clientRaceID: this.state.originalRaceID,
+            clientRaceDescription: this.state.originalRaceDescription,
+            clientGenderID: this.state.originalGenderID,
+            clientGenderDescription: this.state.clientGenderDescription
+        });
+    }
+
     testState = () => {
         console.log(this.state.clientSuffix);
         console.log(this.state.clientDateOfBirth);
@@ -393,7 +445,8 @@ export default class CaseManagement extends Component {
                         onGenderChange={this.handleGenderChange}
                         onGenderDescriptionChange={this.handleGenderDescriptionChange}
                         onDateOfBirthChange={this.handleDateOfBirthChange}
-                        infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
+                        infoTabOnChangeHandler={this.infoTabOnChangeHandler}
+                        participantInfoResetClick={this.handlePartipantInfoResetClick}/>
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={this.state.isTabDisabled}>
                        supplemental content
