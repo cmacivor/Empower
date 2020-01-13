@@ -111,7 +111,7 @@ export default class ParticipantInfo extends Component {
                     <div className="col-3">
                         <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" defaultValue={this.props.firstName} onChange={e => onChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName"></input>
+                            <input type="text" value={this.props.firstName} onChange={e => onChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName"></input>
                         </div>
                     </div>
                     <div className="col-3">

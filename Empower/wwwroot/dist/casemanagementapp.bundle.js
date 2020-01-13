@@ -81204,7 +81204,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        value: this.props.middleName,
+        defaultValue: this.props.middleName,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtMiddleName");
         },
@@ -81227,7 +81227,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        value: this.props.ssn,
+        defaultValue: this.props.ssn,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtSSN");
         },
@@ -81241,7 +81241,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        value: this.props.fbiNcicNumber,
+        defaultValue: this.props.fbiNcicNumber,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtFbiNcicNumber");
         },
@@ -81282,7 +81282,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        value: this.props.stateVCIN,
+        defaultValue: this.props.stateVCIN,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtStateVCIN");
         },
@@ -81296,7 +81296,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        value: this.props.alias,
+        defaultValue: this.props.alias,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtAlias");
         },
