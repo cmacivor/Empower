@@ -7,6 +7,7 @@ import { Api } from './commonAdmin';
 require ('.//commonAdmin');
 import SuffixDropdown from './SuffixDropdown';
 import RaceDropDown from './RaceDropdown';
+import GenderDropDown from './GenderDropdown';
 
 export default class ParticipantInfo extends Component {
 
@@ -39,9 +40,17 @@ export default class ParticipantInfo extends Component {
         this.props.onRaceChange(race);
     }
 
+    handleGenderChange = (gender) => {
+        this.props.onGenderChange(gender);
+    }
+
     handleRaceDescriptionChange = (raceDescription) => {
         console.log('this is the handleRaceDescriptionChange in Participant Info: ' + raceDescription);
         this.props.onRaceDescriptionChange(raceDescription);
+    }
+
+    handleGenderDescriptionChange = (genderDescription) => {
+        this.props.onGenderDescriptionChange(genderDescription);
     }
 
     render() {
@@ -120,8 +129,14 @@ export default class ParticipantInfo extends Component {
                         </div>
                     </div>
                     <div className="col-3">
-                       <label html="ddlRace"><strong>Race/Ethnicity *</strong> </label>
+                       <label htmlFor="ddlRace"><strong>Race/Ethnicity *</strong> </label>
                         <RaceDropDown onSelectRace={this.handleRaceChange } onSelectRaceDescription={this.handleRaceDescriptionChange} selected={this.props.infoTabRace} raceDescription={this.props.raceDescription } />
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="col-4">
+                        <label htmlFor="ddlGender"><strong>Gender*</strong></label>
+                        <GenderDropDown onSelectGender={this.handleGenderChange} onSelectGenderDescription={this.handleGenderDescriptionChange} selected={this.props.infoTabGender} genderDescription={this.props.genderDescription}/>
                     </div>
                 </div>
             </div>

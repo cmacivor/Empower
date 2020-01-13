@@ -50,7 +50,12 @@ export default class CaseManagement extends Component {
             clientAlias: '',
             clientRaceID: 0,
             races:  [],
-            clientRaceDescription: 'Please Select'
+            clientRaceDescription: 'Please Select',
+            clientGenderID: 0,
+            genders: [],
+            clientGenderDescription: 'Please Select',
+
+
         }
 
         Api.getConfigDataByType("Race").then(races => this.setState({races}));
@@ -303,6 +308,18 @@ export default class CaseManagement extends Component {
             clientRaceDescription: raceDescription
         })
     }
+
+    handleGenderChange = (gender) => {
+        this.setState({
+            clientGenderID: gender
+        });
+    }
+
+    handleGenderDescriptionChange = (genderDescription) => {
+        this.setState({
+            clientGenderDescription: genderDescription
+        });
+    }
     
     handleDateOfBirthChange = (dateOfBirth) => {
         console.log('handleDateOfBirthChange in CaseManagement: ' + dateOfBirth);
@@ -372,6 +389,8 @@ export default class CaseManagement extends Component {
                         onSuffixChange={this.handleSuffixChange}
                         onRaceChange={this.handleRaceChange}
                         onRaceDescriptionChange={this.handleRaceDescriptionChange}
+                        onGenderChange={this.handleGenderChange}
+                        onGenderDescriptionChange={this.handleGenderDescriptionChange}
                         onDateOfBirthChange={this.handleDateOfBirthChange}
                         infoTabOnChangeHandler={this.infoTabOnChangeHandler} />
                     </Tab>
