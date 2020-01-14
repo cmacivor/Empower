@@ -130,31 +130,29 @@ export default class ParticipantInfo extends Component {
                             <input type="text" value={this.props.stateVCIN} onChange={e => onChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
                         </div>                       
                     </div>
-                    <div className="col-3">
+                    <div className="col-2">
                         <label htmlFor="txtAlias"><strong>Alias</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" value={this.props.alias} onChange={e => onChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
                         </div>
                     </div>
-                    <div className="col-3">
+                    <div className="col-2">
+                        <label htmlFor="ddlGender"><strong>Gender*</strong></label>
+                        <GenderDropDown onSelectGender={this.handleGenderChange} onSelectGenderDescription={this.handleGenderDescriptionChange} selected={this.props.infoTabGender} genderDescription={this.props.genderDescription}/>
+                    </div>
+                    <div className="col-4">
                        <label htmlFor="ddlRace"><strong>Race/Ethnicity *</strong> </label>
                         <RaceDropDown onSelectRace={this.handleRaceChange } onSelectRaceDescription={this.handleRaceDescriptionChange} selected={this.props.infoTabRace} raceDescription={this.props.raceDescription } />
                     </div>
                 </div>
-                <div className="form-row">
-                    <div className="col-4">
-                        <label htmlFor="ddlGender"><strong>Gender*</strong></label>
-                        <GenderDropDown onSelectGender={this.handleGenderChange} onSelectGenderDescription={this.handleGenderDescriptionChange} selected={this.props.infoTabGender} genderDescription={this.props.genderDescription}/>
+                <div className="form-row float-right">
+                    <div className="col-auto">
+                        <button id="btnUpdate" className="btn btn-primary mb-2" onClick={this.handleUpdateClick}>Update</button>
                     </div>
-                </div>
-                <div className="form-row">
-                    <div className="col-4">
-                        <button id="btnUpdate" className="btn btn-primary" onClick={this.handleUpdateClick}>Update</button>
+                    <div className="col-auto">
+                        <button id="btnReset" className="btn btn-primary mb-2" onClick={this.handleResetClick }>Reset</button>
                     </div>
-                    <div className="col-4">
-                        <button id="btnReset" className="btn btn-primary" onClick={this.handleResetClick }>Reset</button>
-                    </div>
-                </div>
+                </div>         
             </div>
      
         )

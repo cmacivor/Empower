@@ -81275,7 +81275,7 @@ function (_Component) {
         className: "form-control",
         id: "txtStateVCIN"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-3"
+        className: "col-2"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "txtAlias"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Alias")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -81289,7 +81289,16 @@ function (_Component) {
         className: "form-control",
         id: "txtAlias"
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-3"
+        className: "col-2"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "ddlGender"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Gender*")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_GenderDropdown__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        onSelectGender: this.handleGenderChange,
+        onSelectGenderDescription: this.handleGenderDescriptionChange,
+        selected: this.props.infoTabGender,
+        genderDescription: this.props.genderDescription
+      })), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "col-4"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "ddlRace"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Race/Ethnicity *"), " "), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_RaceDropdown__WEBPACK_IMPORTED_MODULE_13__["default"], {
@@ -81298,29 +81307,18 @@ function (_Component) {
         selected: this.props.infoTabRace,
         raceDescription: this.props.raceDescription
       }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "form-row"
+        className: "form-row float-right"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
-        htmlFor: "ddlGender"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("strong", null, "Gender*")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_GenderDropdown__WEBPACK_IMPORTED_MODULE_14__["default"], {
-        onSelectGender: this.handleGenderChange,
-        onSelectGenderDescription: this.handleGenderDescriptionChange,
-        selected: this.props.infoTabGender,
-        genderDescription: this.props.genderDescription
-      }))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "form-row"
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-auto"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
         id: "btnUpdate",
-        className: "btn btn-primary",
+        className: "btn btn-primary mb-2",
         onClick: this.handleUpdateClick
       }, "Update")), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-4"
+        className: "col-auto"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
         id: "btnReset",
-        className: "btn btn-primary",
+        className: "btn btn-primary mb-2",
         onClick: this.handleResetClick
       }, "Reset"))));
     }
