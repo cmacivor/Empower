@@ -6,6 +6,8 @@ import moment from 'moment';
 import { Api } from './commonAdmin';
 require ('.//commonAdmin');
 import SuffixDropdown from './SuffixDropdown';
+import RaceDropDown from './RaceDropdown';
+import GenderDropDown from './GenderDropdown';
 
 export default class ParticipantInfo extends Component {
 
@@ -13,54 +15,55 @@ export default class ParticipantInfo extends Component {
         super(props);
 
         this.state = {
-            lastName: '',
-            middleName: '',
-            fbiNcicNumber: '',
-            Suffix: '',
-            race: '',
-            stateVCIN: '',
-            alias: '',
-            firsName: '',
-            ssn: '',
-            dateOfBirth: new Date(),
-            currentAge: '',
-            gender: '',
-            //suffixes:  []      
+          
+            dateOfBirth: this.props.dateOfBirth,  
         }
-
-        //Api.getAll().then(rowData => this.setState({ rowData }));
-       
-
-        //console.log(this.state.suffixes);
-
     }
 
     handleDatePickerChange = date => {
+
+        //this is for display- actual value is held in parent component
         this.setState({
             dateOfBirth: date.date
         });
+        //console.log('this is the local state: '  + this.state.dateOfBirth);
+        this.props.onDateOfBirthChange(date.date);
     }
 
-    datePickerOnClick = () => {
-        alert('on click');
+    handleSuffixChange = (suffix) => {
+        //pass it to CaseManagement
+        this.props.onSuffixChange(suffix);
     }
 
- 
+    handleRaceChange = (race) => {
+        this.props.onRaceChange(race);
+    }
+
+    handleGenderChange = (gender) => {
+        this.props.onGenderChange(gender);
+    }
+
+    handleRaceDescriptionChange = (raceDescription) => {
+        console.log('this is the handleRaceDescriptionChange in Participant Info: ' + raceDescription);
+        this.props.onRaceDescriptionChange(raceDescription);
+    }
+
+    handleGenderDescriptionChange = (genderDescription) => {
+        this.props.onGenderDescriptionChange(genderDescription);
+    }
+
+    handleUpdateClick = () => {
+        this.props.participantInfoResetClick();
+    }
+
+    handleResetClick = () => {
+        this.props.participantInfoResetClick();
+    }
 
     render() {
-        //console.log(this.state.suffixes);
-
-        // let suffixOptions = this.state.suffixes.map((suffix) =>
-        //     <option key = {suffix.ID }>{suffix.Name}</option>
-        // );
-
-        // let suffixOptions = this.state.suffixes.map((suffix) =>
-        //    <a className="dropdown-item">{suffix.Name}</a>
-        // );
-
-        //console.log(suffixOptions);
 
         let onChangeHandler = this.props.infoTabOnChangeHandler;
+        
 
         return (
             <div>
@@ -69,109 +72,87 @@ export default class ParticipantInfo extends Component {
                     <div className="col-3">
                         <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" defaultValue={this.props.lastName} onChange={e => onChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName"></input>
+                            <input type="text"  value={this.props.lastName} onChange={e => onChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName"></input>
                         </div>
                     </div>
                     <div className="col-3">
                         <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtFirstName"></input>
+                            <input type="text" value={this.props.firstName} onChange={e => onChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName"></input>
                         </div>
                     </div>
                     <div className="col-3">
                         <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtMiddleName"></input>
+                            <input type="text" value={this.props.middleName} onChange={e => onChangeHandler(e, "txtMiddleName")} className="form-control" id="txtMiddleName"></input>
                         </div>
                     </div>
                     <div className="col-3">
                         <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
-                        <SuffixDropdown />
-                        {/* <div className="dropdown">
-                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Please Select
-                            </button>
-                            <div className="dropdown-menu">
-                                {suffixOptions}
-                            </div>
-                        </div> */}
+                        <SuffixDropdown onSelectSuffix={this.handleSuffixChange} selected={this.props.infoTabSuffix} />          
                     </div>
                 </div>
                 <div className="form-row">
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="txtSSN"><strong> SSN</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtSSN"></input>
+                            <input type="text" value={this.props.ssn} onChange={e => onChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
                         </div>
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                         <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtFbiNcicNumber"></input>
+                            <input type="text" value={this.props.fbiNcicNumber} onChange={e => onChangeHandler(e, "txtFbiNcicNumber")} className="form-control" id="txtFbiNcicNumber"></input>
                         </div>
                     </div>
-                    <div className="col-4">
-                        <label htmlFor="txtFirstName"><strong> Date of Birth *</strong></label>
+                    <div className="col-3">
+                        <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
+                        <div className="inpu-group mb-3">
+                            <input type="text" readOnly value={this.props.currentAge} className="form-control"></input>
+                        </div>
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
-                        <DatePicker
-                             selected={ this.state.dateOfBirth }
+                        <DatePicker 
+                             selected={ this.props.dateOfBirth }
                              
                              onChange={date => this.handleDatePickerChange({date})}
                              className="form-control"                             
                          />
                         </div>
-                    </div>
+                    </div>  
                 </div>
                 <div className="form-row">
+                    <div className="col-3">
+                        <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" value={this.props.stateVCIN} onChange={e => onChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
+                        </div>                       
+                    </div>
+                    <div className="col-2">
+                        <label htmlFor="txtAlias"><strong>Alias</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" value={this.props.alias} onChange={e => onChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
+                        </div>
+                    </div>
+                    <div className="col-2">
+                        <label htmlFor="ddlGender"><strong>Gender*</strong></label>
+                        <GenderDropDown onSelectGender={this.handleGenderChange} onSelectGenderDescription={this.handleGenderDescriptionChange} selected={this.props.infoTabGender} genderDescription={this.props.genderDescription}/>
+                    </div>
                     <div className="col-4">
-                  
-                       
+                       <label htmlFor="ddlRace"><strong>Race/Ethnicity *</strong> </label>
+                        <RaceDropDown onSelectRace={this.handleRaceChange } onSelectRaceDescription={this.handleRaceDescriptionChange} selected={this.props.infoTabRace} raceDescription={this.props.raceDescription } />
                     </div>
                 </div>
-
-
-
-
-                {/* <div className="form-row">
-                    <div className="col-6">
-                        
+                <div className="form-row float-right">
+                    <div className="col-auto">
+                        <button id="btnUpdate" className="btn btn-primary mb-2" onClick={this.handleUpdateClick}>Update</button>
                     </div>
-                    <div className="col-6">
-                    
+                    <div className="col-auto">
+                        <button id="btnReset" className="btn btn-primary mb-2" onClick={this.handleResetClick }>Reset</button>
                     </div>
-                </div>
-                <div className="form-row">
-                    <div className="col-6">
-                   
-                    </div>
-                    <div className="col-6">
-                        <label htmlFor="txtFirstName"><strong> SSN</strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtSSN"></input>
-                        </div>
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className="col-6">
-                        <label htmlFor="txtFirstName"><strong> FBI/NCIC Number </strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" className="form-control" id="txtFbiNcicNumber"></input>
-                        </div>
-                    </div>
-                    <div className="col-6">
-                        <label htmlFor="txtFirstName"><strong> Date of Birth *</strong></label>
-                        <div className="input-group mb-3">
-                        <DatePicker
-                             selected={ this.state.dateOfBirth }
-                             
-                             onChange={date => this.handleDatePickerChange({date})}
-                             className="form-control"                             
-                         />
-                        </div>
-                    </div>
-                </div> */}
-
-
+                </div>         
             </div>
      
         )
