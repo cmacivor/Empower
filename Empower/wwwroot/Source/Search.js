@@ -77,18 +77,18 @@ const Search = () => {
         }
     }
 
-    // TableComponent = ({ ...restProps }) => (
-    //     <Table.Table
-    //       {...restProps}
-    //       className="table-hover"
-    //     />
-    //   );
+   const TableComponent = ({ ...restProps }) => (
+        <Table.Table
+          {...restProps}
+          className="table-hover"
+        />
+      );
 
-    // TableRow = ({ row, ...restProps }) => (
-    //     <Table.Row
-    //       {...restProps}
-    //       onClick={() => GetSelectedRow(row) }/>
-    //   );
+   const TableRow = ({ row, ...restProps }) => (
+        <Table.Row
+          {...restProps}
+          onClick={() => GetSelectedRow(row) }/>
+      );
 
     function ClearSearchFields() {
         setLastName('');
@@ -229,7 +229,7 @@ const Search = () => {
                     <Grid className="card"
                         rows={rows }
                         columns={columns}>
-                        <Table></Table>
+                        <Table tableComponent={TableComponent} rowComponent={TableRow}></Table>
                         <TableHeaderRow />
                     </Grid> : <div></div>
                 

@@ -81493,14 +81493,20 @@ function (_Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @devexpress/dx-react-grid-bootstrap4 */ "./node_modules/@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.es.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js");
+/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @devexpress/dx-react-grid-bootstrap4 */ "./node_modules/@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.es.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+
 
 
 
@@ -81508,17 +81514,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Search = function Search() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState, 2),
       lastName = _useState2[0],
       setLastName = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
-      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
+      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState3, 2),
       firstName = _useState4[0],
       setFirstName = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([{
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([{
     name: 'FirstName',
     title: 'First Name'
   }, {
@@ -81540,16 +81546,16 @@ var Search = function Search() {
     name: 'Gender',
     title: 'Gender'
   }]),
-      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState5, 1),
+      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState5, 1),
       columns = _useState6[0];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
-      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState7, 2),
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
+      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState7, 2),
       rows = _useState8[0],
       setRows = _useState8[1];
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
-      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState9, 2),
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
+      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState9, 2),
       isGridVisible = _useState10[0],
       setGridVisible = _useState10[1];
 
@@ -81599,18 +81605,26 @@ var Search = function Search() {
       console.log(error);
       alert('an error occurred while searching;');
     }
-  } // TableComponent = ({ ...restProps }) => (
-  //     <Table.Table
-  //       {...restProps}
-  //       className="table-hover"
-  //     />
-  //   );
-  // TableRow = ({ row, ...restProps }) => (
-  //     <Table.Row
-  //       {...restProps}
-  //       onClick={() => GetSelectedRow(row) }/>
-  //   );
+  }
 
+  var TableComponent = function TableComponent(_ref) {
+    var restProps = _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, _ref);
+
+    return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__["Table"].Table, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, restProps, {
+      className: "table-hover"
+    }));
+  };
+
+  var TableRow = function TableRow(_ref2) {
+    var row = _ref2.row,
+        restProps = _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default()(_ref2, ["row"]);
+
+    return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__["Table"].Row, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, restProps, {
+      onClick: function onClick() {
+        return GetSelectedRow(row);
+      }
+    }));
+  };
 
   function ClearSearchFields() {
     setLastName('');
@@ -81708,41 +81722,44 @@ var Search = function Search() {
     // }
   }
 
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
     className: "form-row"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
     className: "col-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("input", {
     type: "text",
     className: "form-control",
     onChange: handleLastNameChange,
     value: lastName,
     placeholder: "Enter Last Name"
-  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  })), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
     className: "col-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("input", {
     type: "text",
     className: "form-control",
     onChange: handleFirstNameChange,
     value: firstName,
     placeholder: "Enter First Name"
-  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  })), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
     className: "col-auto"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
     type: "submit",
     onClick: SearchButtonClickHandler,
     className: "btn btn-primary mb-2"
-  }, "Search")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }, "Search")), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
     className: "col-auto"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
     type: "button",
     onClick: ClearSearchFields,
     className: "btn btn-primary mb-2"
-  }, "Clear Search"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), isGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_2__["Grid"], {
+  }, "Clear Search"))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), isGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__["Grid"], {
     className: "card",
     rows: rows,
     columns: columns
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_2__["Table"], null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_2__["TableHeaderRow"], null)) : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null));
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__["Table"], {
+    tableComponent: TableComponent,
+    rowComponent: TableRow
+  }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__["TableHeaderRow"], null)) : react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Search);
