@@ -374,7 +374,10 @@ export default class CaseManagement extends Component {
     handlePartipantInfoResetClick = () => {
         console.log('this is handlePartipantInfoResetClick in case management');
 
-        console.log('original state: ' + this.state.originalLastName);
+        console.log('original state: ' + this.state.originalGenderID);
+        console.log('original state description: ' + this.state.originalRaceDescription);
+
+
         console.log('the state: ' + this.state.clientLastName);
 
         this.setState({
@@ -389,8 +392,9 @@ export default class CaseManagement extends Component {
             clientAlias: this.state.originalAlias,
             clientRaceID: this.state.originalRaceID,
             clientRaceDescription: this.state.originalRaceDescription,
+
             clientGenderID: this.state.originalGenderID,
-            clientGenderDescription: this.state.clientGenderDescription
+            clientGenderDescription: this.state.originalGenderDescription
         });
     }
 

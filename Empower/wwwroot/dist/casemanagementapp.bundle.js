@@ -80595,7 +80595,8 @@ function (_Component) {
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handlePartipantInfoResetClick", function () {
       console.log('this is handlePartipantInfoResetClick in case management');
-      console.log('original state: ' + _this.state.originalLastName);
+      console.log('original state: ' + _this.state.originalGenderID);
+      console.log('original state description: ' + _this.state.originalRaceDescription);
       console.log('the state: ' + _this.state.clientLastName);
 
       _this.setState({
@@ -80611,7 +80612,7 @@ function (_Component) {
         clientRaceID: _this.state.originalRaceID,
         clientRaceDescription: _this.state.originalRaceDescription,
         clientGenderID: _this.state.originalGenderID,
-        clientGenderDescription: _this.state.clientGenderDescription
+        clientGenderDescription: _this.state.originalGenderDescription
       });
     });
 
@@ -81140,20 +81141,7 @@ function (_Component) {
     });
 
     _this.state = {
-      dateOfBirth: _this.props.dateOfBirth //have to handle reset button- store original state in separate set of variables
-      // originalLastName: this.props.originalLastName,
-      // originalFirstName: this.props.originalFirstName,
-      // originalMiddleName: this.props.middleName,
-      // originalSuffix: this.props.infoTabSuffix,
-      // originalSsn: this.props.ssn,
-      // originalFbiNcic: this.props.fbiNcicNumber,
-      // originalAge: this.props.currentAge,
-      // originalDateOfBirth: this.props.dateOfBirth,
-      // originalStateVCIN: this.props.stateVCIN,
-      // originalAlias: this.props.alias,
-      // originalRace: this.props.infoTabRace,
-      // originalGender: this.props.infoTabGender,
-
+      dateOfBirth: _this.props.dateOfBirth
     };
     return _this;
   }
