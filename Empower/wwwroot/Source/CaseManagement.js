@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Search from './SearchClientProfile'
+import Search from './Search'
 import ParticipantInfo from './ParticipantInfo'
 import Nav from 'react-bootstrap/Nav'
 import Tabs from 'react-bootstrap/Tabs'
@@ -213,76 +213,76 @@ export default class CaseManagement extends Component {
     }
       
 
-    ClearSearchFields = () => {
-        this.setState({
-            firstName: '',
-            lastName: ''
-        });
-    }
+    // ClearSearchFields = () => {
+    //     this.setState({
+    //         firstName: '',
+    //         lastName: ''
+    //     });
+    // }
 
-    HandleSearchFieldChange = (event, field) => {
-        this.setState({
-            isSearchButtonDisabled: false,            
-        });
+    // HandleSearchFieldChange = (event, field) => {
+    //     this.setState({
+    //         isSearchButtonDisabled: false,            
+    //     });
 
-        if (field === "firstname") {
-            this.setState({
-                firstName: event.target.value
-            });
-        }
+    //     if (field === "firstname") {
+    //         this.setState({
+    //             firstName: event.target.value
+    //         });
+    //     }
 
-        if (field === "lastname") {
-            this.setState({
-                lastName: event.target.value
-            });
-        }
-    }
+    //     if (field === "lastname") {
+    //         this.setState({
+    //             lastName: event.target.value
+    //         });
+    //     }
+    // }
 
-    SearchButtonClickHandler = () => {
-        let apiAddress = sessionStorage.getItem("baseApiAddress");
+    // SearchButtonClickHandler = () => {
+    //     let apiAddress = sessionStorage.getItem("baseApiAddress");
 
-        let token = sessionStorage.getItem("token");
+    //     let token = sessionStorage.getItem("token");
         
-        let fullSearchAddress = `${apiAddress}/api/ClientProfile/Search`;
+    //     let fullSearchAddress = `${apiAddress}/api/ClientProfile/Search`;
 
-        let postData = {
-            lastName: this.state.lastName,
-            firstName: this.state.firstName
-        }
+    //     let postData = {
+    //         lastName: this.state.lastName,
+    //         firstName: this.state.firstName
+    //     }
 
-        try
-        {
-           var promise = fetch(fullSearchAddress, {
-                method: 'post',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(postData)
-            }); 
+    //     try
+    //     {
+    //        var promise = fetch(fullSearchAddress, {
+    //             method: 'post',
+    //             mode: 'cors',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': 'Bearer ' + token
+    //             },
+    //             body: JSON.stringify(postData)
+    //         }); 
 
-            promise.then(result =>  {
-                if (result.status === 200) {
-                    return result.json();
+    //         promise.then(result =>  {
+    //             if (result.status === 200) {
+    //                 return result.json();
                 
-                } else {
-                    return result.json();
-                } 
+    //             } else {
+    //                 return result.json();
+    //             } 
     
-            }).then(finalResult => {
-                this.setState({
-                    rows: finalResult,
-                    isGridVisible: true
-                });
-            });
-        }
-        catch(error)
-        {
-            console.log(error);
-            alert('an error occurred while searching;');
-        }
-    }
+    //         }).then(finalResult => {
+    //             this.setState({
+    //                 rows: finalResult,
+    //                 isGridVisible: true
+    //             });
+    //         });
+    //     }
+    //     catch(error)
+    //     {
+    //         console.log(error);
+    //         alert('an error occurred while searching;');
+    //     }
+    // }
 
     infoTabOnChangeHandler = (e, field) => {
 
@@ -398,18 +398,19 @@ export default class CaseManagement extends Component {
         });
     }
 
-    testState = () => {
-        console.log(this.state.clientSuffix);
-        console.log(this.state.clientDateOfBirth);
-        console.log(this.state.clientRaceID);
-    }
+    // testState = () => {
+    //     console.log(this.state.clientSuffix);
+    //     console.log(this.state.clientDateOfBirth);
+    //     console.log(this.state.clientRaceID);
+    // }
 
     render() {
         return (
             <div>         
                 <Tabs defaultActiveKey={this.state.defaultTab} activeKey={this.state.activeTab} onSelect={k => this.SetActiveTab(k) } id="caseManagementTabs">
                     <Tab eventKey="search" title="Search">
-                    <br></br>
+                    <Search></Search>
+                    {/* <br></br>
                     <h4>Search Client Profiles</h4>
                     <p>Please search for an existing Client Profile, before creating a new one.</p>
                     <div className="form-row">
@@ -438,7 +439,7 @@ export default class CaseManagement extends Component {
                             <TableHeaderRow />
                         </Grid> : <div></div>
                     
-                    }
+                    } */}
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={this.state.isTabDisabled}>
                        <ParticipantInfo
