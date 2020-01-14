@@ -17,21 +17,6 @@ export default class ParticipantInfo extends Component {
         this.state = {
           
             dateOfBirth: this.props.dateOfBirth,  
-            
-            //have to handle reset button- store original state in separate set of variables
-            // originalLastName: this.props.originalLastName,
-            // originalFirstName: this.props.originalFirstName,
-            // originalMiddleName: this.props.middleName,
-            // originalSuffix: this.props.infoTabSuffix,
-            // originalSsn: this.props.ssn,
-            // originalFbiNcic: this.props.fbiNcicNumber,
-            // originalAge: this.props.currentAge,
-            // originalDateOfBirth: this.props.dateOfBirth,
-            // originalStateVCIN: this.props.stateVCIN,
-            // originalAlias: this.props.alias,
-            // originalRace: this.props.infoTabRace,
-            // originalGender: this.props.infoTabGender,
-
         }
     }
 

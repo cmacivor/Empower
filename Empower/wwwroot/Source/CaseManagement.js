@@ -444,6 +444,7 @@ export default class CaseManagement extends Component {
                         ssn={this.state.clientSSN}
                         fbiNcicNumber={this.state.fbiNcicNumber}                        
                         ssn={this.state.clientSSN}
+                        fbiNcicNumber={this.state.clientFbiNcicNumber}
                         dateOfBirth={this.state.clientDateOfBirth }
                         currentAge={this.state.clientCurrentAge}
                         stateVCIN={this.state.clientStateVCIN}
