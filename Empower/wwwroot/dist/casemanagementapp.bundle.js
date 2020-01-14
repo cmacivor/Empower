@@ -81136,22 +81136,7 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleResetClick", function () {
-      // var participantInfo = {
-      //     lastName: this.state.originalLastName,
-      //     firstName: this.state.originalFirstName,
-      //     middleName: this.state.originalMiddleName,
-      //     ssn: this.state.originalSsn,
-      //     fbiNcicNumber: this.state.originalFbiNcic,
-      //     dateOfBirth: this.state.originalDateOfBirth,
-      //     suffix: this.state.originalSuffix,
-      //     currentAge: this.state.originalAge,
-      //     race: this.state.originalRace,
-      //     gender: this.state.originalGender,
-      //     stateVCIN: this.state.originalStateVCIN,
-      //     alias: this.state.alias
-      // }
-      _this.props.participantInfoResetClick(); //console.log('this is handleResetClick in participant info'); this worked
-
+      _this.props.participantInfoResetClick();
     });
 
     _this.state = {
@@ -81240,7 +81225,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.ssn,
+        value: this.props.ssn,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtSSN");
         },
@@ -81254,7 +81239,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.fbiNcicNumber,
+        value: this.props.fbiNcicNumber,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtFbiNcicNumber");
         },
@@ -81295,7 +81280,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.stateVCIN,
+        value: this.props.stateVCIN,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtStateVCIN");
         },
@@ -81309,7 +81294,7 @@ function (_Component) {
         className: "input-group mb-3"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
         type: "text",
-        defaultValue: this.props.alias,
+        value: this.props.alias,
         onChange: function onChange(e) {
           return onChangeHandler(e, "txtAlias");
         },

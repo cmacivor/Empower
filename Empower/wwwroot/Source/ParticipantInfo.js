@@ -72,25 +72,7 @@ export default class ParticipantInfo extends Component {
     }
 
     handleResetClick = () => {
-        // var participantInfo = {
-        //     lastName: this.state.originalLastName,
-        //     firstName: this.state.originalFirstName,
-        //     middleName: this.state.originalMiddleName,
-        //     ssn: this.state.originalSsn,
-        //     fbiNcicNumber: this.state.originalFbiNcic,
-        //     dateOfBirth: this.state.originalDateOfBirth,
-        //     suffix: this.state.originalSuffix,
-        //     currentAge: this.state.originalAge,
-        //     race: this.state.originalRace,
-        //     gender: this.state.originalGender,
-        //     stateVCIN: this.state.originalStateVCIN,
-        //     alias: this.state.alias
-        // }
-
         this.props.participantInfoResetClick();
-        //console.log('this is handleResetClick in participant info'); this worked
-
-
     }
 
     render() {
@@ -129,13 +111,13 @@ export default class ParticipantInfo extends Component {
                     <div className="col-3">
                         <label htmlFor="txtSSN"><strong> SSN</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" defaultValue={this.props.ssn} onChange={e => onChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
+                            <input type="text" value={this.props.ssn} onChange={e => onChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
                         </div>
                     </div>
                     <div className="col-3">
                         <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" defaultValue={this.props.fbiNcicNumber} onChange={e => onChangeHandler(e, "txtFbiNcicNumber")} className="form-control" id="txtFbiNcicNumber"></input>
+                            <input type="text" value={this.props.fbiNcicNumber} onChange={e => onChangeHandler(e, "txtFbiNcicNumber")} className="form-control" id="txtFbiNcicNumber"></input>
                         </div>
                     </div>
                     <div className="col-3">
@@ -160,13 +142,13 @@ export default class ParticipantInfo extends Component {
                     <div className="col-3">
                         <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" defaultValue={this.props.stateVCIN} onChange={e => onChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
+                            <input type="text" value={this.props.stateVCIN} onChange={e => onChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
                         </div>                       
                     </div>
                     <div className="col-3">
                         <label htmlFor="txtAlias"><strong>Alias</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" defaultValue={this.props.alias} onChange={e => onChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
+                            <input type="text" value={this.props.alias} onChange={e => onChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
                         </div>
                     </div>
                     <div className="col-3">
