@@ -7,6 +7,7 @@ import Tab from 'react-bootstrap/Tab'
 import moment from 'moment';
 import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap4';
 import { Api } from './commonAdmin';
+import Info from './Info';
 
 
 export default class CaseManagement extends Component { 
@@ -442,7 +443,11 @@ export default class CaseManagement extends Component {
                     } */}
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={this.state.isTabDisabled}>
-                       <ParticipantInfo
+                        <Info
+                            
+                         />
+
+                                               {/* <ParticipantInfo
                         lastName={this.state.clientLastName}
                         firstName={this.state.clientFirstName}
                         middleName={this.state.clientMiddleName}
@@ -465,7 +470,8 @@ export default class CaseManagement extends Component {
                         onGenderDescriptionChange={this.handleGenderDescriptionChange}
                         onDateOfBirthChange={this.handleDateOfBirthChange}
                         infoTabOnChangeHandler={this.infoTabOnChangeHandler}
-                        participantInfoResetClick={this.handlePartipantInfoResetClick}/>
+                        participantInfoResetClick={this.handlePartipantInfoResetClick}
+                        /> */}
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={this.state.isTabDisabled}>
                        supplemental content

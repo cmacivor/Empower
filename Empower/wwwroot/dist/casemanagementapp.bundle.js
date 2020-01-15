@@ -80483,6 +80483,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var _devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @devexpress/dx-react-grid-bootstrap4 */ "./node_modules/@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.es.js");
 /* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+/* harmony import */ var _Info__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Info */ "./wwwroot/source/Info.js");
+
 
 
 
@@ -80887,8 +80889,7 @@ function (_Component) {
     //     console.log(this.state.clientRaceID);
     // }
     value: function render() {
-      var _this2 = this,
-          _React$createElement;
+      var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_11__["default"], {
         defaultActiveKey: this.state.defaultTab,
@@ -80906,13 +80907,7 @@ function (_Component) {
         eventKey: "participantinfo",
         title: "Participant Info",
         disabled: this.state.isTabDisabled
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_ParticipantInfo__WEBPACK_IMPORTED_MODULE_9__["default"], (_React$createElement = {
-        lastName: this.state.clientLastName,
-        firstName: this.state.clientFirstName,
-        middleName: this.state.clientMiddleName,
-        ssn: this.state.clientSSN,
-        fbiNcicNumber: this.state.fbiNcicNumber
-      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "fbiNcicNumber", this.state.clientFbiNcicNumber), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "infoTabRace", this.state.clientRaceID), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "raceDescription", this.state.clientRaceDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "genderDescription", this.state.clientGenderDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onRaceChange", this.handleRaceChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onRaceDescriptionChange", this.handleRaceDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onGenderChange", this.handleGenderChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onGenderDescriptionChange", this.handleGenderDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "participantInfoResetClick", this.handlePartipantInfoResetClick), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_Info__WEBPACK_IMPORTED_MODULE_16__["default"], null)), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
@@ -81054,6 +81049,78 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_7__["Component"]);
 
 
+
+/***/ }),
+
+/***/ "./wwwroot/source/Info.js":
+/*!********************************!*\
+  !*** ./wwwroot/source/Info.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+var Info = function Info(props) {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(props.lastName),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+      lastName = _useState2[0],
+      setLastName = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(props.firstName),
+      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
+      firstName = _useState4[0],
+      setFirstName = _useState4[1]; // const [middleName, setMiddleName] = useState('');
+  // const [ssn, setSsn] = useState('');
+  // const [fbiNcicNumber, setFbiNcicNumber] = useState('');
+  // const [dateOfBirth, setDateOfBirth] = useState(new Date());
+  // const [currentAge, setCurrentAge] = useState('');
+  // const [suffix, setSuffix] = useState('Please Select');
+  // const [stateVcin, setStateVcin] = useState('');
+  // const [alias, setAlias] = useState('');
+
+
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtLastName"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Last Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "input-group mb-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    value: lastName,
+    onChange: function onChange(e) {
+      return onChangeHandler(e, "txtLastName");
+    },
+    className: "form-control",
+    id: "txtLastName"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtFirstName"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " First Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "input-group mb-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    value: firstName,
+    onChange: function onChange(e) {
+      return onChangeHandler(e, "txtFirstName");
+    },
+    className: "form-control",
+    id: "txtFirstName"
+  })))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Info);
 
 /***/ }),
 
@@ -81488,6 +81555,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+/* harmony import */ var _useClientProfile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./useClientProfile */ "./wwwroot/source/useClientProfile.js");
+
 
 
 
@@ -81551,8 +81620,10 @@ var Search = function Search(props) {
   var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
       _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState13, 2),
       isGridVisible = _useState14[0],
-      setGridVisible = _useState14[1]; //Api.getConfigDataByType("Race").then(races => this.setState({races}));
+      setGridVisible = _useState14[1]; //client profile
 
+
+  var clienProfile = Object(_useClientProfile__WEBPACK_IMPORTED_MODULE_7__["useClientProfile"])(); //Api.getConfigDataByType("Race").then(races => this.setState({races}));
 
   _commonAdmin__WEBPACK_IMPORTED_MODULE_6__["Api"].getConfigDataByType("Race").then(function (races) {
     return setRaces({
@@ -81638,6 +81709,10 @@ var Search = function Search(props) {
     setFirstName('');
   }
 
+  function testMethod() {
+    console.log(clienProfile);
+  }
+
   function GetSelectedRow(row) {
     //console.log(row);
     props.enableTabsHandler();
@@ -81673,17 +81748,15 @@ var Search = function Search(props) {
         //console.log(duration);
         //let diffInYears = Math.round(duration.asYears());
         //console.log(diffInYears);
+        //console.log(races);
+        //console.log(genders);
 
-        console.log(races);
-        console.log(genders);
         var raceObjectByClientRaceID = races.races.filter(function (race) {
           return race.ID === finalResult.ClientProfile.Person.RaceID;
         });
         var genderObjectByClientGenderID = genders.genders.filter(function (gender) {
           return gender.ID === finalResult.ClientProfile.Person.GenderID;
-        });
-        console.log(raceObjectByClientRaceID);
-        console.log(genderObjectByClientGenderID); //need to create variables for each- if it's null, set to empty string for controlled components
+        }); //need to create variables for each- if it's null, set to empty string for controlled components
 
         var lastName = finalResult.ClientProfile.Person.LastName !== null ? finalResult.ClientProfile.Person.LastName : '';
         var firstName = finalResult.ClientProfile.Person.FirstName !== null ? finalResult.ClientProfile.Person.FirstName : '';
@@ -81761,7 +81834,10 @@ var Search = function Search(props) {
     type: "button",
     onClick: ClearSearchFields,
     className: "btn btn-primary mb-2"
-  }, "Clear Search"))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), isGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__["Grid"], {
+  }, "Clear Search"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+    type: "button",
+    onClick: testMethod
+  }, "Test state"))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), isGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__["Grid"], {
     className: "card",
     rows: rows,
     columns: columns
@@ -82069,6 +82145,41 @@ function () {
 
   return Api;
 }();
+
+/***/ }),
+
+/***/ "./wwwroot/source/useClientProfile.js":
+/*!********************************************!*\
+  !*** ./wwwroot/source/useClientProfile.js ***!
+  \********************************************/
+/*! exports provided: useClientProfile */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useClientProfile", function() { return useClientProfile; });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function useClientProfile(props) {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('Craig'),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+      lastName = _useState2[0],
+      setLastName = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('MacIvor'),
+      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
+      firstName = _useState4[0],
+      setFirstName = _useState4[1];
+
+  return {
+    lastName: lastName,
+    firstName: firstName
+  };
+}
 
 /***/ })
 

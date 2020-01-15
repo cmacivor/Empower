@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap4';
 import moment from 'moment';
 import { Api } from './commonAdmin';
+import { useClientProfile} from './useClientProfile';
+
 
 const Search = (props) => {
     const [lastName, setLastName] = useState('');
@@ -21,6 +23,11 @@ const Search = (props) => {
       ]);
      const [rows, setRows] = useState([]);
      const [isGridVisible, setGridVisible] = useState(false);
+
+
+     //client profile
+    const clienProfile = useClientProfile();
+
 
      //Api.getConfigDataByType("Race").then(races => this.setState({races}));
      Api.getConfigDataByType("Race").then(races => setRaces({races}));
@@ -105,6 +112,10 @@ const Search = (props) => {
         setFirstName('');
     }
 
+    function testMethod() {
+        console.log(clienProfile);
+    }
+
     function GetSelectedRow(row) {
         //console.log(row);
 
@@ -153,8 +164,8 @@ const Search = (props) => {
                  //let diffInYears = Math.round(duration.asYears());
                  //console.log(diffInYears);
 
-                console.log(races);
-                console.log(genders);
+                //console.log(races);
+                //console.log(genders);
 
                  let raceObjectByClientRaceID = races.races.filter(function(race) {
                     return race.ID === finalResult.ClientProfile.Person.RaceID
@@ -233,6 +244,7 @@ const Search = (props) => {
                     </div>
                     <div className="col-auto">
                         <button type="button" onClick={ClearSearchFields} className="btn btn-primary mb-2">Clear Search</button>
+                        <button type="button" onClick={testMethod}>Test state</button>
                     </div>
                 </div>
                 <br/>
