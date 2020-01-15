@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CaseManagement from './CaseManagement';
+//import CaseManagement from './CaseManagement';
+import CaseManagementFunction from  './CaseManagementFunction';
 
 ReactDOM.render(
-    <CaseManagement/>,
+    <CaseManagementFunction/>,
     document.getElementById('root')
 );
