@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap4';
 import moment from 'moment';
 import { Api } from './commonAdmin';
-import { useClientProfile} from './useClientProfile';
+//import { useClientProfile} from './useClientProfile';
+import {useStore} from './store';
 
 
 const Search = (props) => {
@@ -24,9 +25,12 @@ const Search = (props) => {
      const [rows, setRows] = useState([]);
      const [isGridVisible, setGridVisible] = useState(false);
 
+     //to test the global state
+     const {state, dispatch} = useStore();
+
 
      //client profile
-    const clienProfile = useClientProfile();
+    //const clienProfile = useClientProfile();
 
 
      //Api.getConfigDataByType("Race").then(races => this.setState({races}));
@@ -247,6 +251,12 @@ const Search = (props) => {
                         <button type="button" onClick={testMethod}>Test state</button>
                     </div>
                 </div>
+                <br/>
+                {state.count}
+                <button onClick={() => dispatch({type: "increment", message:"Incremented"})}>+</button>
+                <button onClick={() => dispatch({type: "decrement", message: "Decremented"})}>-</button>
+                <button onClick={() => dispatch({type: "reset", message: "Reset"})}>Reset</button>
+                {state.message}
                 <br/>
                 {
                     isGridVisible === true ?

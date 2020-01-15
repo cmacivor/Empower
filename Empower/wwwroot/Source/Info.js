@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {useStore} from './store';
 
 const Info = (props) => {
     const [lastName, setLastName] = useState(props.lastName);
@@ -12,7 +13,8 @@ const Info = (props) => {
     // const [stateVcin, setStateVcin] = useState('');
     // const [alias, setAlias] = useState('');
 
-
+    //to test the global state
+    const {state, dispatch} = useStore();
 
     return <div>
                 <br></br>
@@ -30,6 +32,9 @@ const Info = (props) => {
                         </div>
                     </div>
                 </div>
+                <br></br>
+                {state.count}
+                {state.message}
             </div>;
 
 }

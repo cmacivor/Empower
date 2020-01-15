@@ -71536,6 +71536,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./wwwroot/source/store.js");
+
 
 
 
@@ -71556,7 +71558,12 @@ var Info = function Info(props) {
   // const [suffix, setSuffix] = useState('Please Select');
   // const [stateVcin, setStateVcin] = useState('');
   // const [alias, setAlias] = useState('');
+  //to test the global state
 
+
+  var _useStore = Object(_store__WEBPACK_IMPORTED_MODULE_2__["useStore"])(),
+      state = _useStore.state,
+      dispatch = _useStore.dispatch;
 
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "form-row"
@@ -71588,7 +71595,7 @@ var Info = function Info(props) {
     },
     className: "form-control",
     id: "txtFirstName"
-  })))));
+  })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Info);
@@ -71616,13 +71623,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
-/* harmony import */ var _useClientProfile__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./useClientProfile */ "./wwwroot/source/useClientProfile.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store */ "./wwwroot/source/store.js");
 
 
 
 
 
 
+ //import { useClientProfile} from './useClientProfile';
 
 
 
@@ -71681,10 +71689,15 @@ var Search = function Search(props) {
   var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
       _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState13, 2),
       isGridVisible = _useState14[0],
-      setGridVisible = _useState14[1]; //client profile
+      setGridVisible = _useState14[1]; //to test the global state
 
 
-  var clienProfile = Object(_useClientProfile__WEBPACK_IMPORTED_MODULE_7__["useClientProfile"])(); //Api.getConfigDataByType("Race").then(races => this.setState({races}));
+  var _useStore = Object(_store__WEBPACK_IMPORTED_MODULE_7__["useStore"])(),
+      state = _useStore.state,
+      dispatch = _useStore.dispatch; //client profile
+  //const clienProfile = useClientProfile();
+  //Api.getConfigDataByType("Race").then(races => this.setState({races}));
+
 
   _commonAdmin__WEBPACK_IMPORTED_MODULE_6__["Api"].getConfigDataByType("Race").then(function (races) {
     return setRaces({
@@ -71898,7 +71911,28 @@ var Search = function Search(props) {
   }, "Clear Search"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
     type: "button",
     onClick: testMethod
-  }, "Test state"))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), isGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__["Grid"], {
+  }, "Test state"))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), state.count, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+    onClick: function onClick() {
+      return dispatch({
+        type: "increment",
+        message: "Incremented"
+      });
+    }
+  }, "+"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+    onClick: function onClick() {
+      return dispatch({
+        type: "decrement",
+        message: "Decremented"
+      });
+    }
+  }, "-"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+    onClick: function onClick() {
+      return dispatch({
+        type: "reset",
+        message: "Reset"
+      });
+    }
+  }, "Reset"), state.message, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), isGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_4__["Grid"], {
     className: "card",
     rows: rows,
     columns: columns
@@ -71926,11 +71960,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _CaseManagementFunction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CaseManagementFunction */ "./wwwroot/source/CaseManagementFunction.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./wwwroot/source/store.js");
 
  //import CaseManagement from './CaseManagement';
 
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CaseManagementFunction__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById('root'));
+
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_store__WEBPACK_IMPORTED_MODULE_3__["StoreProvider"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CaseManagementFunction__WEBPACK_IMPORTED_MODULE_2__["default"], null)), document.getElementById('root'));
 
 /***/ }),
 
@@ -72105,38 +72141,73 @@ function () {
 
 /***/ }),
 
-/***/ "./wwwroot/source/useClientProfile.js":
-/*!********************************************!*\
-  !*** ./wwwroot/source/useClientProfile.js ***!
-  \********************************************/
-/*! exports provided: useClientProfile */
+/***/ "./wwwroot/source/store.js":
+/*!*********************************!*\
+  !*** ./wwwroot/source/store.js ***!
+  \*********************************/
+/*! exports provided: StoreProvider, useStore */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useClientProfile", function() { return useClientProfile; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreProvider", function() { return StoreProvider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useStore", function() { return useStore; });
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
+// store.js, from here: https://react.christmas/2019/7
 
-function useClientProfile(props) {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('Craig'),
-      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
-      lastName = _useState2[0],
-      setLastName = _useState2[1];
+var StoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])();
+var initialState = {
+  count: 0,
+  message: ""
+};
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('MacIvor'),
-      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
-      firstName = _useState4[0],
-      setFirstName = _useState4[1];
+var reducer = function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return {
+        count: state.count + 1,
+        message: action.message
+      };
 
-  return {
-    lastName: lastName,
-    firstName: firstName
-  };
-}
+    case "decrement":
+      return {
+        count: state.count - 1,
+        message: action.message
+      };
+
+    case "reset":
+      return {
+        count: 0,
+        message: action.message
+      };
+
+    default:
+      throw new Error("Unhandled action type: ".concat(action.type));
+  }
+};
+
+var StoreProvider = function StoreProvider(_ref) {
+  var children = _ref.children;
+
+  var _useReducer = Object(react__WEBPACK_IMPORTED_MODULE_1__["useReducer"])(reducer, initialState),
+      _useReducer2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useReducer, 2),
+      state = _useReducer2[0],
+      dispatch = _useReducer2[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(StoreContext.Provider, {
+    value: {
+      state: state,
+      dispatch: dispatch
+    }
+  }, children);
+};
+var useStore = function useStore() {
+  return Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(StoreContext);
+};
 
 /***/ })
 
