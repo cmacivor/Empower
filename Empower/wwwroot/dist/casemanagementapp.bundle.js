@@ -80458,37 +80458,31 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CaseManagement; });
-/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/objectWithoutProperties.js");
-/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js");
-/* harmony import */ var _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Search */ "./wwwroot/source/Search.js");
-/* harmony import */ var _ParticipantInfo__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ParticipantInfo */ "./wwwroot/source/ParticipantInfo.js");
-/* harmony import */ var react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-bootstrap/Nav */ "./node_modules/react-bootstrap/esm/Nav.js");
-/* harmony import */ var react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-bootstrap/Tabs */ "./node_modules/react-bootstrap/esm/Tabs.js");
-/* harmony import */ var react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-bootstrap/Tab */ "./node_modules/react-bootstrap/esm/Tab.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @devexpress/dx-react-grid-bootstrap4 */ "./node_modules/@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.es.js");
-/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
-
-
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _Search__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Search */ "./wwwroot/source/Search.js");
+/* harmony import */ var _ParticipantInfo__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ParticipantInfo */ "./wwwroot/source/ParticipantInfo.js");
+/* harmony import */ var react_bootstrap_Nav__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap/Nav */ "./node_modules/react-bootstrap/esm/Nav.js");
+/* harmony import */ var react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-bootstrap/Tabs */ "./node_modules/react-bootstrap/esm/Tabs.js");
+/* harmony import */ var react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-bootstrap/Tab */ "./node_modules/react-bootstrap/esm/Tab.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @devexpress/dx-react-grid-bootstrap4 */ "./node_modules/@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.es.js");
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
 
 
 
@@ -80509,35 +80503,16 @@ __webpack_require__.r(__webpack_exports__);
 var CaseManagement =
 /*#__PURE__*/
 function (_Component) {
-  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_7___default()(CaseManagement, _Component);
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(CaseManagement, _Component);
 
   function CaseManagement(props) {
     var _this;
 
-    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_2___default()(this, CaseManagement);
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, CaseManagement);
 
-    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(CaseManagement).call(this, props));
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(CaseManagement).call(this, props));
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "TableComponent", function (_ref) {
-      var restProps = _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, _ref);
-
-      return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_16__["Table"].Table, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, restProps, {
-        className: "table-hover"
-      }));
-    });
-
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "TableRow", function (_ref2) {
-      var row = _ref2.row,
-          restProps = _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default()(_ref2, ["row"]);
-
-      return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_16__["Table"].Row, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, restProps, {
-        onClick: function onClick() {
-          return _this.GetSelectedRow(row);
-        }
-      }));
-    });
-
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "infoTabOnChangeHandler", function (e, field) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "infoTabOnChangeHandler", function (e, field) {
       if (field === "txtLastName") {
         _this.setState({
           clientLastName: e.target.value
@@ -80581,13 +80556,13 @@ function (_Component) {
       }
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleSuffixChange", function (suffix) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleSuffixChange", function (suffix) {
       _this.setState({
         clientSuffix: suffix
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleRaceChange", function (race) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleRaceChange", function (race) {
       console.log('this is the handleRaceChange in CaseManagement: ' + race);
 
       _this.setState({
@@ -80595,7 +80570,7 @@ function (_Component) {
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleRaceDescriptionChange", function (raceDescription) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleRaceDescriptionChange", function (raceDescription) {
       console.log('this is the handleRaceDescriptionChange in CaseManagememtn: ' + raceDescription);
 
       _this.setState({
@@ -80603,19 +80578,19 @@ function (_Component) {
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleGenderChange", function (gender) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleGenderChange", function (gender) {
       _this.setState({
         clientGenderID: gender
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleGenderDescriptionChange", function (genderDescription) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleGenderDescriptionChange", function (genderDescription) {
       _this.setState({
         clientGenderDescription: genderDescription
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleDateOfBirthChange", function (dateOfBirth) {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handleDateOfBirthChange", function (dateOfBirth) {
       console.log('handleDateOfBirthChange in CaseManagement: ' + dateOfBirth);
 
       _this.setState({
@@ -80623,7 +80598,7 @@ function (_Component) {
       });
     });
 
-    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handlePartipantInfoResetClick", function () {
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "handlePartipantInfoResetClick", function () {
       console.log('this is handlePartipantInfoResetClick in case management');
       console.log('original state: ' + _this.state.originalGenderID);
       console.log('original state description: ' + _this.state.originalRaceDescription);
@@ -80713,22 +80688,22 @@ function (_Component) {
       originalGenderID: 0,
       originalGenderDescription: ''
     };
-    _commonAdmin__WEBPACK_IMPORTED_MODULE_17__["Api"].getConfigDataByType("Race").then(function (races) {
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_15__["Api"].getConfigDataByType("Race").then(function (races) {
       return _this.setState({
         races: races
       });
     });
-    _commonAdmin__WEBPACK_IMPORTED_MODULE_17__["Api"].getConfigDataByType("Gender").then(function (genders) {
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_15__["Api"].getConfigDataByType("Gender").then(function (genders) {
       return _this.setState({
         genders: genders
       });
     });
-    _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
-    _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this));
+    _this.EnableTabs = _this.EnableTabs.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
+    _this.SetActiveTab = _this.SetActiveTab.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this));
     return _this;
   }
 
-  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(CaseManagement, [{
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(CaseManagement, [{
     key: "EnableTabs",
     value: function EnableTabs() {
       this.setState({
@@ -80743,102 +80718,108 @@ function (_Component) {
       this.setState({
         activeTab: key
       });
-    }
-  }, {
-    key: "GetSelectedRow",
-    value: function GetSelectedRow(row) {
-      var _this2 = this;
-
-      this.EnableTabs();
-      var apiAddress = sessionStorage.getItem("baseApiAddress");
-      var token = sessionStorage.getItem("token");
-      var clientProfileAddress = "".concat(apiAddress, "/api/ClientProfile/").concat(row.ID);
-
-      try {
-        var promise = fetch(clientProfileAddress, {
-          method: 'get',
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          }
-        });
-        promise.then(function (result) {
-          if (result.status === 200) {
-            return result.json();
-          } else {
-            return result.json();
-          }
-        }).then(function (finalResult) {
-          console.log(finalResult); //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
-
-          var birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
-          var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-          var utcBirthDate = new Date(formattedBirthDate); //for the age box
-          //calculate age in years
-
-          var difference = moment__WEBPACK_IMPORTED_MODULE_15___default()(new Date()).diff(birthDateJavascriptDateObject); //console.log(difference);
-
-          var duration = moment__WEBPACK_IMPORTED_MODULE_15___default.a.duration(difference, 'milliseconds'); //console.log(duration);
-
-          var diffInYears = Math.round(duration.asYears()); //console.log(diffInYears);
-
-          var raceObjectByClientRaceID = _this2.state.races.filter(function (race) {
-            return race.ID === finalResult.ClientProfile.Person.RaceID;
-          });
-
-          var genderObjectByClientGenderID = _this2.state.genders.filter(function (gender) {
-            return gender.ID === finalResult.ClientProfile.Person.GenderID;
-          }); //need to create variables for each- if it's null, set to empty string for controlled components
-
-
-          var lastName = finalResult.ClientProfile.Person.LastName !== null ? finalResult.ClientProfile.Person.LastName : '';
-          var firstName = finalResult.ClientProfile.Person.FirstName !== null ? finalResult.ClientProfile.Person.FirstName : '';
-          var middleName = finalResult.ClientProfile.Person.MiddleName !== null ? finalResult.ClientProfile.Person.MiddleName : '';
-          var ssn = finalResult.ClientProfile.Person.SSN != null ? finalResult.ClientProfile.Person.SSN : '';
-          var fbiNcicNumber = finalResult.ClientProfile.Person.FBINCIC !== null ? finalResult.ClientProfile.Person.FBINCIC : '';
-          var stateVcin = finalResult.ClientProfile.Person.StateORVCIN !== null ? finalResult.ClientProfile.Person.StateORVCIN : '';
-          var alias = finalResult.ClientProfile.Person.StateORVCIN !== null ? finalResult.ClientProfile.Person.StateORVCIN : '';
-          var raceID = finalResult.ClientProfile.Person.RaceID !== null ? finalResult.ClientProfile.Person.RaceID : 0;
-          var raceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
-          var genderID = finalResult.ClientProfile.Person.GenderID !== null ? finalResult.ClientProfile.Person.GenderID : 0;
-          var genderDescription = genderObjectByClientGenderID !== null ? genderObjectByClientGenderID[0].Description : '';
-
-          _this2.setState({
-            clientLastName: lastName,
-            clientFirstName: firstName,
-            clientMiddleName: middleName,
-            clientSSN: ssn,
-            clientFbiNcicNumber: fbiNcicNumber,
-            clientDateOfBirth: utcBirthDate,
-            clientCurrentAge: diffInYears.toString(),
-            clientStateVCIN: stateVcin,
-            clientAlias: alias,
-            clientRaceID: raceID,
-            clientRaceDescription: raceDescription,
-            clientGenderID: genderID,
-            clientGenderDescription: genderDescription,
-            //state values for reset button
-            originalLastName: lastName,
-            originalFirstName: firstName,
-            originalMiddleName: middleName,
-            originalSsn: ssn,
-            originalFbiNcic: fbiNcicNumber,
-            originalDateOfBirth: utcBirthDate,
-            originalAge: diffInYears.toString(),
-            originalStateVCIN: stateVcin,
-            originalAlias: alias,
-            originalRaceID: raceID,
-            originalRaceDescription: raceDescription,
-            originalGenderID: genderID,
-            originalGenderDescription: genderDescription
-          });
-        });
-      } catch (error) {
-        console.log(error);
-        alert('an error occurred while retrieving the Client Profile;');
-      }
-    } // ClearSearchFields = () => {
+    } // TableComponent = ({ ...restProps }) => (
+    //     <Table.Table
+    //       {...restProps}
+    //       className="table-hover"
+    //     />
+    //   );
+    // TableRow = ({ row, ...restProps }) => (
+    //     <Table.Row
+    //       {...restProps}
+    //       onClick={() => this.GetSelectedRow(row) }/>
+    //   );
+    // GetSelectedRow(row) {
+    //     this.EnableTabs();
+    //     let apiAddress = sessionStorage.getItem("baseApiAddress");
+    //     let token = sessionStorage.getItem("token");
+    //     let clientProfileAddress = `${apiAddress}/api/ClientProfile/${row.ID}`;
+    //     try
+    //     {
+    //        var promise = fetch(clientProfileAddress, {
+    //             method: 'get',
+    //             mode: 'cors',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': 'Bearer ' + token
+    //             }               
+    //         }); 
+    //         promise.then(result =>  {
+    //             if (result.status === 200) {
+    //                 return result.json();
+    //             } else {
+    //                 return result.json();
+    //             } 
+    //         }).then(finalResult => {
+    //             console.log(finalResult);
+    //              //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
+    //              let birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
+    //              let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+    //              let utcBirthDate = new Date(formattedBirthDate); 
+    //              //for the age box
+    //              //calculate age in years
+    //              let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
+    //              //console.log(difference);
+    //              let duration = moment.duration(difference, 'milliseconds');
+    //              //console.log(duration);
+    //              let diffInYears = Math.round(duration.asYears());
+    //              //console.log(diffInYears);
+    //              let raceObjectByClientRaceID = this.state.races.filter(function(race) {
+    //                 return race.ID === finalResult.ClientProfile.Person.RaceID
+    //             });
+    //             let genderObjectByClientGenderID = this.state.genders.filter(function(gender) {
+    //                 return gender.ID === finalResult.ClientProfile.Person.GenderID
+    //             });
+    //             //need to create variables for each- if it's null, set to empty string for controlled components
+    //             let lastName = (finalResult.ClientProfile.Person.LastName !== null)  ? finalResult.ClientProfile.Person.LastName : '';
+    //             let firstName = (finalResult.ClientProfile.Person.FirstName !== null)  ? finalResult.ClientProfile.Person.FirstName : '';
+    //             let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
+    //             let ssn = (finalResult.ClientProfile.Person.SSN != null)  ? finalResult.ClientProfile.Person.SSN : '';
+    //             let fbiNcicNumber = (finalResult.ClientProfile.Person.FBINCIC !== null) ? finalResult.ClientProfile.Person.FBINCIC : '';
+    //             let stateVcin = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
+    //             let alias = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
+    //             let raceID = (finalResult.ClientProfile.Person.RaceID !== null) ? finalResult.ClientProfile.Person.RaceID : 0;
+    //             let raceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
+    //             let genderID = (finalResult.ClientProfile.Person.GenderID !== null) ?  finalResult.ClientProfile.Person.GenderID : 0;
+    //             let genderDescription = (genderObjectByClientGenderID !== null) ? genderObjectByClientGenderID[0].Description : '';
+    //             this.setState({
+    //                 clientLastName: lastName,
+    //                 clientFirstName: firstName,
+    //                 clientMiddleName: middleName,
+    //                 clientSSN: ssn,
+    //                 clientFbiNcicNumber: fbiNcicNumber,
+    //                 clientDateOfBirth: utcBirthDate,
+    //                 clientCurrentAge: diffInYears.toString(),
+    //                 clientStateVCIN: stateVcin,
+    //                 clientAlias: alias,
+    //                 clientRaceID: raceID,
+    //                 clientRaceDescription: raceDescription,
+    //                 clientGenderID: genderID,
+    //                 clientGenderDescription: genderDescription,
+    //                 //state values for reset button
+    //                 originalLastName:  lastName,
+    //                 originalFirstName: firstName,
+    //                 originalMiddleName: middleName,
+    //                 originalSsn: ssn,
+    //                 originalFbiNcic: fbiNcicNumber,
+    //                 originalDateOfBirth: utcBirthDate,
+    //                 originalAge: diffInYears.toString(),
+    //                 originalStateVCIN: stateVcin,
+    //                 originalAlias: alias,
+    //                 originalRaceID: raceID,
+    //                 originalRaceDescription: raceDescription,
+    //                 originalGenderID: genderID,
+    //                 originalGenderDescription: genderDescription,
+    //             });
+    //         });
+    //     }
+    //     catch(error)
+    //     {
+    //         console.log(error);
+    //         alert('an error occurred while retrieving the Client Profile;');
+    //     }
+    // }
+    // ClearSearchFields = () => {
     //     this.setState({
     //         firstName: '',
     //         lastName: ''
@@ -80906,50 +80887,52 @@ function (_Component) {
     //     console.log(this.state.clientRaceID);
     // }
     value: function render() {
-      var _this3 = this,
+      var _this2 = this,
           _React$createElement;
 
-      return react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_13__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_11__["default"], {
         defaultActiveKey: this.state.defaultTab,
         activeKey: this.state.activeTab,
         onSelect: function onSelect(k) {
-          return _this3.SetActiveTab(k);
+          return _this2.SetActiveTab(k);
         },
         id: "caseManagementTabs"
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
         eventKey: "search",
         title: "Search"
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_Search__WEBPACK_IMPORTED_MODULE_10__["default"], null)), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_Search__WEBPACK_IMPORTED_MODULE_8__["default"], {
+        enableTabsHandler: this.EnableTabs
+      })), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
         eventKey: "participantinfo",
         title: "Participant Info",
         disabled: this.state.isTabDisabled
-      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(_ParticipantInfo__WEBPACK_IMPORTED_MODULE_11__["default"], (_React$createElement = {
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(_ParticipantInfo__WEBPACK_IMPORTED_MODULE_9__["default"], (_React$createElement = {
         lastName: this.state.clientLastName,
         firstName: this.state.clientFirstName,
         middleName: this.state.clientMiddleName,
         ssn: this.state.clientSSN,
         fbiNcicNumber: this.state.fbiNcicNumber
-      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "fbiNcicNumber", this.state.clientFbiNcicNumber), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabRace", this.state.clientRaceID), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "raceDescription", this.state.clientRaceDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "genderDescription", this.state.clientGenderDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceChange", this.handleRaceChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onRaceDescriptionChange", this.handleRaceDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onGenderChange", this.handleGenderChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onGenderDescriptionChange", this.handleGenderDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_React$createElement, "participantInfoResetClick", this.handlePartipantInfoResetClick), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "ssn", this.state.clientSSN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "fbiNcicNumber", this.state.clientFbiNcicNumber), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "dateOfBirth", this.state.clientDateOfBirth), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "currentAge", this.state.clientCurrentAge), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "stateVCIN", this.state.clientStateVCIN), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "alias", this.state.clientAlias), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "infoTabSuffix", this.state.clientSuffix), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "infoTabRace", this.state.clientRaceID), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "raceDescription", this.state.clientRaceDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "genderDescription", this.state.clientGenderDescription), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onSuffixChange", this.handleSuffixChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onRaceChange", this.handleRaceChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onRaceDescriptionChange", this.handleRaceDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onGenderChange", this.handleGenderChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onGenderDescriptionChange", this.handleGenderDescriptionChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "onDateOfBirthChange", this.handleDateOfBirthChange), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "infoTabOnChangeHandler", this.infoTabOnChangeHandler), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_React$createElement, "participantInfoResetClick", this.handlePartipantInfoResetClick), _React$createElement))), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
         eventKey: "supplemental",
         title: "Supplemental",
         disabled: this.state.isTabDisabled
-      }, "supplemental content"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, "supplemental content"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
         eventKey: "address",
         title: "Address",
         disabled: this.state.isTabDisabled
-      }, "address content"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, "address content"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
         eventKey: "familyinfo",
         title: "Family Info",
         disabled: this.state.isTabDisabled
-      }, "Family info content"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, "Family info content"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
         eventKey: "program",
         title: "Program",
         disabled: this.state.isTabDisabled
-      }, "program content"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, "program content"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
         eventKey: "assessment",
         title: "Assessment",
         disabled: this.state.isTabDisabled
-      }, "assessment content"), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }, "assessment content"), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_12__["default"], {
         eventKey: "contact",
         title: "Contact",
         disabled: this.state.isTabDisabled
@@ -80958,7 +80941,7 @@ function (_Component) {
   }]);
 
   return CaseManagement;
-}(react__WEBPACK_IMPORTED_MODULE_9__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_7__["Component"]);
 
 
 
@@ -81513,7 +81496,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var Search = function Search() {
+var Search = function Search(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState, 2),
       lastName = _useState2[0],
@@ -81629,11 +81612,19 @@ var Search = function Search() {
   function ClearSearchFields() {
     setLastName('');
     setFirstName('');
-  }
+  } // function EnableTabs() {
+  //     // this.setState({
+  //     //     isTabDisabled: false,
+  //     //     defaultTab: "participantinfo",
+  //     //     activeTab: "participantinfo"
+  //     // });
+  // }
+
 
   function GetSelectedRow(row) {
-    console.log(row); // this.EnableTabs();
-    // let apiAddress = sessionStorage.getItem("baseApiAddress");
+    console.log(row); //this.EnableTabs();
+
+    props.enableTabsHandler(); // let apiAddress = sessionStorage.getItem("baseApiAddress");
     // let token = sessionStorage.getItem("token");
     // let clientProfileAddress = `${apiAddress}/api/ClientProfile/${row.ID}`;
     // try

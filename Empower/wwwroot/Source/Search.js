@@ -3,7 +3,7 @@ import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap
 import moment from 'moment';
 import { Api } from './commonAdmin';
 
-const Search = () => {
+const Search = (props) => {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [columns] = useState([
@@ -95,10 +95,20 @@ const Search = () => {
         setFirstName('');
     }
 
+    // function EnableTabs() {
+
+    //     // this.setState({
+    //     //     isTabDisabled: false,
+    //     //     defaultTab: "participantinfo",
+    //     //     activeTab: "participantinfo"
+    //     // });
+    // }
+
     function GetSelectedRow(row) {
         console.log(row);
 
-        // this.EnableTabs();
+        //this.EnableTabs();
+        props.enableTabsHandler();
         
         // let apiAddress = sessionStorage.getItem("baseApiAddress");
 
