@@ -81507,7 +81507,18 @@ var Search = function Search(props) {
       firstName = _useState4[0],
       setFirstName = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([{
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
+      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState5, 2),
+      races = _useState6[0],
+      setRaces = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
+      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState7, 2),
+      genders = _useState8[0],
+      setGenders = _useState8[1]; //grid state
+
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([{
     name: 'FirstName',
     title: 'First Name'
   }, {
@@ -81529,18 +81540,31 @@ var Search = function Search(props) {
     name: 'Gender',
     title: 'Gender'
   }]),
-      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState5, 1),
-      columns = _useState6[0];
+      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState9, 1),
+      columns = _useState10[0];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
-      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState7, 2),
-      rows = _useState8[0],
-      setRows = _useState8[1];
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
+      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState11, 2),
+      rows = _useState12[0],
+      setRows = _useState12[1];
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
-      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState9, 2),
-      isGridVisible = _useState10[0],
-      setGridVisible = _useState10[1];
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
+      _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState13, 2),
+      isGridVisible = _useState14[0],
+      setGridVisible = _useState14[1]; //Api.getConfigDataByType("Race").then(races => this.setState({races}));
+
+
+  _commonAdmin__WEBPACK_IMPORTED_MODULE_6__["Api"].getConfigDataByType("Race").then(function (races) {
+    return setRaces({
+      races: races
+    });
+  }); //Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
+
+  _commonAdmin__WEBPACK_IMPORTED_MODULE_6__["Api"].getConfigDataByType("Gender").then(function (genders) {
+    return setGenders({
+      genders: genders
+    });
+  });
 
   function handleLastNameChange(event) {
     setLastName(event.target.value);
@@ -81612,105 +81636,99 @@ var Search = function Search(props) {
   function ClearSearchFields() {
     setLastName('');
     setFirstName('');
-  } // function EnableTabs() {
-  //     // this.setState({
-  //     //     isTabDisabled: false,
-  //     //     defaultTab: "participantinfo",
-  //     //     activeTab: "participantinfo"
-  //     // });
-  // }
-
+  }
 
   function GetSelectedRow(row) {
-    console.log(row); //this.EnableTabs();
+    //console.log(row);
+    props.enableTabsHandler();
+    var apiAddress = sessionStorage.getItem("baseApiAddress");
+    var token = sessionStorage.getItem("token");
+    var clientProfileAddress = "".concat(apiAddress, "/api/ClientProfile/").concat(row.ID);
 
-    props.enableTabsHandler(); // let apiAddress = sessionStorage.getItem("baseApiAddress");
-    // let token = sessionStorage.getItem("token");
-    // let clientProfileAddress = `${apiAddress}/api/ClientProfile/${row.ID}`;
-    // try
-    // {
-    //    var promise = fetch(clientProfileAddress, {
-    //         method: 'get',
-    //         mode: 'cors',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': 'Bearer ' + token
-    //         }               
-    //     }); 
-    //     promise.then(result =>  {
-    //         if (result.status === 200) {
-    //             return result.json();
-    //         } else {
-    //             return result.json();
-    //         } 
-    //     }).then(finalResult => {
-    //         console.log(finalResult);
-    //          //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
-    //          let birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
-    //          let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-    //          let utcBirthDate = new Date(formattedBirthDate); 
-    //          //for the age box
-    //          //calculate age in years
-    //          let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
-    //          //console.log(difference);
-    //          let duration = moment.duration(difference, 'milliseconds');
-    //          //console.log(duration);
-    //          let diffInYears = Math.round(duration.asYears());
-    //          //console.log(diffInYears);
-    //          let raceObjectByClientRaceID = this.state.races.filter(function(race) {
-    //             return race.ID === finalResult.ClientProfile.Person.RaceID
-    //         });
-    //         let genderObjectByClientGenderID = this.state.genders.filter(function(gender) {
-    //             return gender.ID === finalResult.ClientProfile.Person.GenderID
-    //         });
-    //         //need to create variables for each- if it's null, set to empty string for controlled components
-    //         let lastName = (finalResult.ClientProfile.Person.LastName !== null)  ? finalResult.ClientProfile.Person.LastName : '';
-    //         let firstName = (finalResult.ClientProfile.Person.FirstName !== null)  ? finalResult.ClientProfile.Person.FirstName : '';
-    //         let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
-    //         let ssn = (finalResult.ClientProfile.Person.SSN != null)  ? finalResult.ClientProfile.Person.SSN : '';
-    //         let fbiNcicNumber = (finalResult.ClientProfile.Person.FBINCIC !== null) ? finalResult.ClientProfile.Person.FBINCIC : '';
-    //         let stateVcin = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
-    //         let alias = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
-    //         let raceID = (finalResult.ClientProfile.Person.RaceID !== null) ? finalResult.ClientProfile.Person.RaceID : 0;
-    //         let raceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
-    //         let genderID = (finalResult.ClientProfile.Person.GenderID !== null) ?  finalResult.ClientProfile.Person.GenderID : 0;
-    //         let genderDescription = (genderObjectByClientGenderID !== null) ? genderObjectByClientGenderID[0].Description : '';
-    //         this.setState({
-    //             clientLastName: lastName,
-    //             clientFirstName: firstName,
-    //             clientMiddleName: middleName,
-    //             clientSSN: ssn,
-    //             clientFbiNcicNumber: fbiNcicNumber,
-    //             clientDateOfBirth: utcBirthDate,
-    //             clientCurrentAge: diffInYears.toString(),
-    //             clientStateVCIN: stateVcin,
-    //             clientAlias: alias,
-    //             clientRaceID: raceID,
-    //             clientRaceDescription: raceDescription,
-    //             clientGenderID: genderID,
-    //             clientGenderDescription: genderDescription,
-    //             //state values for reset button
-    //             originalLastName:  lastName,
-    //             originalFirstName: firstName,
-    //             originalMiddleName: middleName,
-    //             originalSsn: ssn,
-    //             originalFbiNcic: fbiNcicNumber,
-    //             originalDateOfBirth: utcBirthDate,
-    //             originalAge: diffInYears.toString(),
-    //             originalStateVCIN: stateVcin,
-    //             originalAlias: alias,
-    //             originalRaceID: raceID,
-    //             originalRaceDescription: raceDescription,
-    //             originalGenderID: genderID,
-    //             originalGenderDescription: genderDescription,
-    //         });
-    //     });
-    // }
-    // catch(error)
-    // {
-    //     console.log(error);
-    //     alert('an error occurred while retrieving the Client Profile;');
-    // }
+    try {
+      var promise = fetch(clientProfileAddress, {
+        method: 'get',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      promise.then(function (result) {
+        if (result.status === 200) {
+          return result.json();
+        } else {
+          return result.json();
+        }
+      }).then(function (finalResult) {
+        console.log(finalResult); //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
+
+        var birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
+        var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+        var utcBirthDate = new Date(formattedBirthDate); //for the age box
+        //calculate age in years
+        //let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
+        //console.log(difference);
+        //let duration = moment.duration(difference, 'milliseconds');
+        //console.log(duration);
+        //let diffInYears = Math.round(duration.asYears());
+        //console.log(diffInYears);
+
+        console.log(races);
+        console.log(genders);
+        var raceObjectByClientRaceID = races.races.filter(function (race) {
+          return race.ID === finalResult.ClientProfile.Person.RaceID;
+        });
+        var genderObjectByClientGenderID = genders.genders.filter(function (gender) {
+          return gender.ID === finalResult.ClientProfile.Person.GenderID;
+        });
+        console.log(raceObjectByClientRaceID);
+        console.log(genderObjectByClientGenderID); //need to create variables for each- if it's null, set to empty string for controlled components
+
+        var lastName = finalResult.ClientProfile.Person.LastName !== null ? finalResult.ClientProfile.Person.LastName : '';
+        var firstName = finalResult.ClientProfile.Person.FirstName !== null ? finalResult.ClientProfile.Person.FirstName : '';
+        var middleName = finalResult.ClientProfile.Person.MiddleName !== null ? finalResult.ClientProfile.Person.MiddleName : '';
+        var ssn = finalResult.ClientProfile.Person.SSN != null ? finalResult.ClientProfile.Person.SSN : '';
+        var fbiNcicNumber = finalResult.ClientProfile.Person.FBINCIC !== null ? finalResult.ClientProfile.Person.FBINCIC : '';
+        var stateVcin = finalResult.ClientProfile.Person.StateORVCIN !== null ? finalResult.ClientProfile.Person.StateORVCIN : '';
+        var alias = finalResult.ClientProfile.Person.StateORVCIN !== null ? finalResult.ClientProfile.Person.StateORVCIN : '';
+        var raceID = finalResult.ClientProfile.Person.RaceID !== null ? finalResult.ClientProfile.Person.RaceID : 0;
+        var raceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
+        var genderID = finalResult.ClientProfile.Person.GenderID !== null ? finalResult.ClientProfile.Person.GenderID : 0;
+        var genderDescription = genderObjectByClientGenderID !== null ? genderObjectByClientGenderID[0].Description : ''; // this.setState({
+        //     clientLastName: lastName,
+        //     clientFirstName: firstName,
+        //     clientMiddleName: middleName,
+        //     clientSSN: ssn,
+        //     clientFbiNcicNumber: fbiNcicNumber,
+        //     clientDateOfBirth: utcBirthDate,
+        //     clientCurrentAge: diffInYears.toString(),
+        //     clientStateVCIN: stateVcin,
+        //     clientAlias: alias,
+        //     clientRaceID: raceID,
+        //     clientRaceDescription: raceDescription,
+        //     clientGenderID: genderID,
+        //     clientGenderDescription: genderDescription,
+        //     //state values for reset button
+        //     originalLastName:  lastName,
+        //     originalFirstName: firstName,
+        //     originalMiddleName: middleName,
+        //     originalSsn: ssn,
+        //     originalFbiNcic: fbiNcicNumber,
+        //     originalDateOfBirth: utcBirthDate,
+        //     originalAge: diffInYears.toString(),
+        //     originalStateVCIN: stateVcin,
+        //     originalAlias: alias,
+        //     originalRaceID: raceID,
+        //     originalRaceDescription: raceDescription,
+        //     originalGenderID: genderID,
+        //     originalGenderDescription: genderDescription,
+        // });
+      });
+    } catch (error) {
+      console.log(error);
+      alert('an error occurred while retrieving the Client Profile;');
+    }
   }
 
   return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
