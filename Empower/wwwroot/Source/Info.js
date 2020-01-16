@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {useStore} from './StateStores/store';
 import SuffixDropdown from './SuffixDropdown';
+import moment from 'moment';
 
 const Info = (props) => {
 
@@ -15,23 +16,36 @@ const Info = (props) => {
     let clientFirstName = (clientInfo.FirstName !== null)  ? clientInfo.FirstName : '';
     let clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
     let clientSuffixID = (clientInfo.Suffix !== null) ? clientInfo.Suffix : 'Please Select';
+    let clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
+    let clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.SSN : '';
+
+    //calculate age
+    let birthDateJavascriptDateObject = new Date(clientInfo.DOB);
+    let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+    let utcBirthDate = new Date(formattedBirthDate);
+    let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
+    //console.log(difference);
+    let duration = moment.duration(difference, 'milliseconds');
+    //console.log(duration);
+    let diffInYears = Math.round(duration.asYears());
+    //console.log(diffInYears); 
+    
 
     //need to get the suffixValues and get the Name from the suffixID
-    
+
 
     const [lastName, setLastName] = useState(clientLastName);
     const [firstName, setFirstName] = useState(clientFirstName);
     const [middleName, setMiddleName] = useState(clientMiddleName);
     const [suffixID, setSuffixID] = useState(clientSuffixID);
+    const [ssn, setSSN] = useState(clientSSN);
+    const [fbiNcicNumber, setFbiNcicNumber] = useState(clientFbiNcic);
 
     //console.log(clientLastName);
     //console.log(clientFirstName);
 
 
-    // let birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
-    // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-    // let utcBirthDate = new Date(formattedBirthDate); 
-    
+   
     //for the age box
     //calculate age in years
     //let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
@@ -145,6 +159,26 @@ const Info = (props) => {
                     <div className="col-3">
                         <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
                         <SuffixDropdown onSelectSuffix={handleSuffixChange} selected={props.infoTabSuffix} />          
+                    </div>
+                </div>
+                <div className="form-row">
+                <div className="col-3">
+                        <label htmlFor="txtSSN"><strong> SSN</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" value={ssn} onChange={e => infoTabOnChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
+                        </div>
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" value={fbiNcicNumber} onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")} className="form-control" id="txtFbiNcicNumber"></input>
+                        </div>
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
+                        <div className="inpu-group mb-3">
+                            <input type="text" readOnly value={diffInYears} className="form-control"></input>
+                        </div>
                     </div>
                 </div>
                 <br></br>

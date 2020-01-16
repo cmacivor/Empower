@@ -71670,6 +71670,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _StateStores_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./StateStores/store */ "./wwwroot/source/StateStores/store.js");
 /* harmony import */ var _SuffixDropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SuffixDropdown */ "./wwwroot/source/SuffixDropdown.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -71683,7 +71686,19 @@ var Info = function Info(props) {
   var clientLastName = clientInfo.LastName !== null ? clientInfo.LastName : '';
   var clientFirstName = clientInfo.FirstName !== null ? clientInfo.FirstName : '';
   var clientMiddleName = clientInfo.MiddleName !== null ? clientInfo.MiddleName : '';
-  var clientSuffixID = clientInfo.Suffix !== null ? clientInfo.Suffix : 'Please Select'; //need to get the suffixValues and get the Name from the suffixID
+  var clientSuffixID = clientInfo.Suffix !== null ? clientInfo.Suffix : 'Please Select';
+  var clientSSN = clientInfo.SSN !== null ? clientInfo.SSN : '';
+  var clientFbiNcic = clientInfo.FBINCIC !== null ? clientInfo.SSN : ''; //calculate age
+
+  var birthDateJavascriptDateObject = new Date(clientInfo.DOB);
+  var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+  var utcBirthDate = new Date(formattedBirthDate);
+  var difference = moment__WEBPACK_IMPORTED_MODULE_4___default()(new Date()).diff(birthDateJavascriptDateObject); //console.log(difference);
+
+  var duration = moment__WEBPACK_IMPORTED_MODULE_4___default.a.duration(difference, 'milliseconds'); //console.log(duration);
+
+  var diffInYears = Math.round(duration.asYears()); //console.log(diffInYears); 
+  //need to get the suffixValues and get the Name from the suffixID
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
@@ -71703,11 +71718,18 @@ var Info = function Info(props) {
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSuffixID),
       _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState7, 2),
       suffixID = _useState8[0],
-      setSuffixID = _useState8[1]; //console.log(clientLastName);
+      setSuffixID = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSSN),
+      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState9, 2),
+      ssn = _useState10[0],
+      setSSN = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFbiNcic),
+      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState11, 2),
+      fbiNcicNumber = _useState12[0],
+      setFbiNcicNumber = _useState12[1]; //console.log(clientLastName);
   //console.log(clientFirstName);
-  // let birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
-  // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-  // let utcBirthDate = new Date(formattedBirthDate); 
   //for the age box
   //calculate age in years
   //let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
@@ -71840,7 +71862,48 @@ var Info = function Info(props) {
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_SuffixDropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onSelectSuffix: handleSuffixChange,
     selected: props.infoTabSuffix
-  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtSSN"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " SSN")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "input-group mb-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    value: ssn,
+    onChange: function onChange(e) {
+      return infoTabOnChangeHandler(e, "txtSSN");
+    },
+    className: "form-control",
+    id: "txtSSN"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtFbiNcicNumber"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " FBI/NCIC Number ")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "input-group mb-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    value: fbiNcicNumber,
+    onChange: function onChange(e) {
+      return infoTabOnChangeHandler(e, "txtFbiNcicNumber");
+    },
+    className: "form-control",
+    id: "txtFbiNcicNumber"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtCurrentAge"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Current Age")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "inpu-group mb-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    readOnly: true,
+    value: diffInYears,
+    className: "form-control"
+  })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Info);
