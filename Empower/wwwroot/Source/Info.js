@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {useStore} from './StateStores/store';
+import SuffixDropdown from './SuffixDropdown';
 
 const Info = (props) => {
 
@@ -9,12 +10,20 @@ const Info = (props) => {
 
     let clientInfo = props.clientProfile.Person;
 
-   //need to create variables for each- if it's null, set to empty string for controlled components
+   //need to create variables for each- if it's null, set to empty string for React controlled components
     let clientLastName = (clientInfo.LastName !== null)  ? clientInfo.LastName : '';
     let clientFirstName = (clientInfo.FirstName !== null)  ? clientInfo.FirstName : '';
+    let clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
+    let clientSuffixID = (clientInfo.Suffix !== null) ? clientInfo.Suffix : 'Please Select';
+
+    //need to get the suffixValues and get the Name from the suffixID
+    
 
     const [lastName, setLastName] = useState(clientLastName);
     const [firstName, setFirstName] = useState(clientFirstName);
+    const [middleName, setMiddleName] = useState(clientMiddleName);
+    const [suffixID, setSuffixID] = useState(clientSuffixID);
+
     //console.log(clientLastName);
     //console.log(clientFirstName);
 
@@ -71,23 +80,15 @@ const Info = (props) => {
     function infoTabOnChangeHandler (e, field) {
         console.log(e.target.value);
         if (field === "txtLastName") {
-            // this.setState({
-            //     clientLastName:  e.target.value
-            // });
             setLastName(e.target.value);
         }
 
         if (field === "txtFirstName") {
-            // this.setState({
-            //     clientFirstName:  e.target.value
-            // });
             setFirstName(e.target.value);
         }
 
         if (field === "txtMiddleName") {
-            // this.setState({
-            //     clientMiddleName:  e.target.value
-            // });
+            setMiddleName(e.target.value);
         }
 
         if (field === "txtSSN") {
@@ -115,6 +116,11 @@ const Info = (props) => {
         }
     }
 
+    function handleSuffixChange (suffix)  {
+       console.log('this is the handleSuffixChange in Info.js ');
+       console.log(suffix);
+    }
+
     return <div>
                 <br></br>
                 <div className="form-row">
@@ -129,6 +135,16 @@ const Info = (props) => {
                         <div className="input-group mb-3">
                             <input type="text" value={firstName} onChange={e => infoTabOnChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName"></input>
                         </div>
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" value={middleName} onChange={e => infoTabOnChangeHandler(e, "txtMiddleName")} className="form-control" id="txtMiddleName"></input>
+                        </div>
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
+                        <SuffixDropdown onSelectSuffix={handleSuffixChange} selected={props.infoTabSuffix} />          
                     </div>
                 </div>
                 <br></br>
