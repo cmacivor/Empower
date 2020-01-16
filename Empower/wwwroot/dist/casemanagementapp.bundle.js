@@ -80574,6 +80574,116 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
 
 /***/ }),
 
+/***/ "./wwwroot/source/GenderDropdown.js":
+/*!******************************************!*\
+  !*** ./wwwroot/source/GenderDropdown.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GenderDropDown; });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+
+
+
+
+
+
+
+
+
+__webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+var GenderDropDown =
+/*#__PURE__*/
+function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(GenderDropDown, _Component);
+
+  function GenderDropDown(props) {
+    var _this;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, GenderDropDown);
+
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(GenderDropDown).call(this, props));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
+      console.log(_this.props.genderDescription); //console.log('the race value being passed is: ' + this.props.selected);
+
+      console.log('in dropdown: ' + event.currentTarget.getAttribute('description')); //description is getting the correct value
+
+      console.log('this is he key: ' + event.currentTarget.getAttribute('value')); //pass the selected suffix value to the parent- could be one of several components
+
+      _this.props.onSelectGender(event.currentTarget.getAttribute('value'));
+
+      _this.props.onSelectGenderDescription(event.currentTarget.getAttribute('description'));
+    });
+
+    var previouslySelectedGender = _this.props.selected;
+    _this.state = {
+      genders: [],
+      selectedValue: previouslySelectedGender,
+      selectedDescription: _this.props.genderDescription
+    };
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Gender").then(function (genders) {
+      return _this.setState({
+        genders: genders
+      });
+    });
+    return _this;
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(GenderDropDown, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var genderOptions = this.state.genders.map(function (gender) {
+        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
+          key: gender.ID,
+          value: gender.ID,
+          description: gender.Description,
+          onClick: _this2.onSelectHandler,
+          className: "dropdown-item"
+        }, gender.Description);
+      });
+      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-primary dropdown-toggle",
+        "data-toggle": "dropdown"
+      }, this.props.genderDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown-menu"
+      }, genderOptions)));
+    }
+  }]);
+
+  return GenderDropDown;
+}(react__WEBPACK_IMPORTED_MODULE_7__["Component"]);
+
+
+
+/***/ }),
+
 /***/ "./wwwroot/source/Info.js":
 /*!********************************!*\
   !*** ./wwwroot/source/Info.js ***!
@@ -80593,8 +80703,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_datepicker_dist_react_datepicker_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_datepicker_dist_react_datepicker_css__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _StateStores_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./StateStores/store */ "./wwwroot/source/StateStores/store.js");
 /* harmony import */ var _SuffixDropdown__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SuffixDropdown */ "./wwwroot/source/SuffixDropdown.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _RaceDropdown__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RaceDropdown */ "./wwwroot/source/RaceDropdown.js");
+/* harmony import */ var _GenderDropdown__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./GenderDropdown */ "./wwwroot/source/GenderDropdown.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+
+
 
 
 
@@ -80615,17 +80731,21 @@ var Info = function Info(props) {
   var clientSSN = clientInfo.SSN !== null ? clientInfo.SSN : '';
   var clientFbiNcic = clientInfo.FBINCIC !== null ? clientInfo.SSN : '';
   var clientStateVcin = clientInfo.StateORVCIN !== null ? clientInfo.StateORVCIN : '';
-  var clientAlias = clientInfo.Alias !== null ? clientInfo.Alias : ''; //calculate age
+  var clientAlias = clientInfo.Alias !== null ? clientInfo.Alias : ''; //GenderID, RaceID
+
+  var clientGenderID = clientInfo.GenderID !== null ? clientInfo.GenderID : '';
+  var clientRaceID = clientInfo.RaceID !== null ? clientInfo.RaceID : ''; //calculate age
 
   var birthDateJavascriptDateObject = new Date(clientInfo.DOB);
   var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
   var utcBirthDate = new Date(formattedBirthDate);
-  var difference = moment__WEBPACK_IMPORTED_MODULE_6___default()(new Date()).diff(birthDateJavascriptDateObject); //console.log(difference);
+  var difference = moment__WEBPACK_IMPORTED_MODULE_8___default()(new Date()).diff(birthDateJavascriptDateObject); //console.log(difference);
 
-  var duration = moment__WEBPACK_IMPORTED_MODULE_6___default.a.duration(difference, 'milliseconds'); //console.log(duration);
+  var duration = moment__WEBPACK_IMPORTED_MODULE_8___default.a.duration(difference, 'milliseconds'); //console.log(duration);
 
   var diffInYears = Math.round(duration.asYears()); //console.log(diffInYears); 
   //need to get the suffixValues and get the Name from the suffixID
+  //gender values
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
@@ -80670,7 +80790,40 @@ var Info = function Info(props) {
   var _useState17 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientAlias),
       _useState18 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState17, 2),
       alias = _useState18[0],
-      setAlias = _useState18[1]; //console.log(clientLastName);
+      setAlias = _useState18[1];
+
+  var _useState19 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderID),
+      _useState20 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState19, 2),
+      genderID = _useState20[0],
+      setGenderID = _useState20[1];
+
+  var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState21, 2),
+      genders = _useState22[0],
+      setGenders = _useState22[1];
+
+  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
+      _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
+      raceID = _useState24[0],
+      setRaceID = _useState24[1];
+
+  if (!genders.length) {
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_9__["Api"].getConfigDataByType("Gender").then(function (genders) {
+      return setGenders(genders);
+    });
+  }
+
+  var genderObjectByClientGenderID = genders.filter(function (gender) {
+    return gender.ID === clientGenderID;
+  });
+  console.log(genders);
+  console.log(genderObjectByClientGenderID);
+  var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
+
+  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
+      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
+      genderDescription = _useState26[0],
+      setGenderDescription = _useState26[1]; //console.log(clientLastName);
   //console.log(clientFirstName);
   //for the age box
   //calculate age in years
@@ -80684,9 +80837,6 @@ var Info = function Info(props) {
   //console.log(genders);
   //     let raceObjectByClientRaceID = races.races.filter(function(race) {
   //        return race.ID === finalResult.ClientProfile.Person.RaceID
-  //    });
-  //    let genderObjectByClientGenderID = genders.genders.filter(function(gender) {
-  //        return gender.ID === finalResult.ClientProfile.Person.GenderID
   //    });
   //    let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
   //    let ssn = (finalResult.ClientProfile.Person.SSN != null)  ? finalResult.ClientProfile.Person.SSN : '';
@@ -80745,6 +80895,16 @@ var Info = function Info(props) {
     //console.log('this is the date picker in Info.js ');
     //console.log(birthDate);
     setBirthDate(birthDate.date);
+  }
+
+  function handleGenderChange(gender) {
+    console.log('this is the handleGenderChange in Info.js ');
+    console.log(gender);
+  }
+
+  function handleGenderDescriptionChange(genderDescription) {
+    console.log('this is the handlGenderDescription in Info.js');
+    console.log(genderDescription);
   }
 
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
@@ -80883,10 +81043,129 @@ var Info = function Info(props) {
     },
     className: "form-control",
     id: "txtAlias"
-  })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-2"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlGender"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Gender*")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_GenderDropdown__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    onSelectGender: handleGenderChange,
+    onSelectGenderDescription: handleGenderDescriptionChange,
+    selected: genderID,
+    genderDescription: genderDescription
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Info);
+
+/***/ }),
+
+/***/ "./wwwroot/source/RaceDropdown.js":
+/*!****************************************!*\
+  !*** ./wwwroot/source/RaceDropdown.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RaceDropDown; });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+
+
+
+
+
+
+
+
+
+__webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+var RaceDropDown =
+/*#__PURE__*/
+function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(RaceDropDown, _Component);
+
+  function RaceDropDown(props) {
+    var _this;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, RaceDropDown);
+
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(RaceDropDown).call(this, props));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
+      console.log(_this.props.raceDescription); //console.log('the race value being passed is: ' + this.props.selected);
+
+      console.log('in dropdown: ' + event.currentTarget.getAttribute('description')); //description is getting the correct value
+
+      console.log('this is he key: ' + event.currentTarget.getAttribute('value')); //pass the selected suffix value to the parent- could be one of several components
+
+      _this.props.onSelectRace(event.currentTarget.getAttribute('value'));
+
+      _this.props.onSelectRaceDescription(event.currentTarget.getAttribute('description'));
+    });
+
+    var previouslySelectedRace = _this.props.selected;
+    _this.state = {
+      races: [],
+      selectedValue: previouslySelectedRace,
+      selectedDescription: _this.props.raceDescription
+    };
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Race").then(function (races) {
+      return _this.setState({
+        races: races
+      });
+    });
+    return _this;
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(RaceDropDown, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var raceOptions = this.state.races.map(function (race) {
+        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
+          key: race.ID,
+          value: race.ID,
+          description: race.Description,
+          onClick: _this2.onSelectHandler,
+          className: "dropdown-item"
+        }, race.Description);
+      });
+      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-primary dropdown-toggle",
+        "data-toggle": "dropdown"
+      }, this.props.raceDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown-menu"
+      }, raceOptions)));
+    }
+  }]);
+
+  return RaceDropDown;
+}(react__WEBPACK_IMPORTED_MODULE_7__["Component"]);
+
+
 
 /***/ }),
 
