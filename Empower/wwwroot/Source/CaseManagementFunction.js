@@ -33,8 +33,8 @@ const CaseManagementFunction = (props) => {
     function SetClientProfile(clientProfile) {
         console.log('this is SetClientProfile in  CaseManagementFunction ');
         console.log(clientProfile);
-        console.log(clientProfile.ClientProfile);
-        setClientProfile(clientProfile.ClientProfile);
+        //console.log(clientProfile.ClientProfile); //not this one
+        setClientProfile(clientProfile);
     }
 
     return <div>

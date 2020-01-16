@@ -71484,9 +71484,9 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
 
   function SetClientProfile(clientProfile) {
     console.log('this is SetClientProfile in  CaseManagementFunction ');
-    console.log(clientProfile);
-    console.log(clientProfile.ClientProfile);
-    setClientProfile(clientProfile.ClientProfile);
+    console.log(clientProfile); //console.log(clientProfile.ClientProfile); //not this one
+
+    setClientProfile(clientProfile);
   }
 
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -71509,7 +71509,7 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
     title: "Participant Info",
     disabled: isTabDisabled
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Info__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    clientProfile: clientProfile
+    clientProfile: clientProfile.Person
   })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__["default"], {
     eventKey: "supplemental",
     title: "Supplemental",
@@ -71560,15 +71560,52 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Info = function Info(props) {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(props.lastName),
+  console.log(props);
+  if (props.clientProfile === undefined) return null;
+  var clientInfo = props.clientProfile.Person; //need to create variables for each- if it's null, set to empty string for controlled components
+
+  var clientLastName = clientInfo.LastName !== null ? clientInfo.LastName : '';
+  var clientFirstName = clientInfo.FirstName !== null ? clientInfo.FirstName : '';
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
       lastName = _useState2[0],
       setLastName = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(props.firstName),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFirstName),
       _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
       firstName = _useState4[0],
-      setFirstName = _useState4[1]; // const [middleName, setMiddleName] = useState('');
+      setFirstName = _useState4[1]; //console.log(clientLastName);
+  //console.log(clientFirstName);
+  // let birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
+  // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+  // let utcBirthDate = new Date(formattedBirthDate); 
+  //for the age box
+  //calculate age in years
+  //let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
+  //console.log(difference);
+  //let duration = moment.duration(difference, 'milliseconds');
+  //console.log(duration);
+  //let diffInYears = Math.round(duration.asYears());
+  //console.log(diffInYears);
+  //console.log(races);
+  //console.log(genders);
+  //     let raceObjectByClientRaceID = races.races.filter(function(race) {
+  //        return race.ID === finalResult.ClientProfile.Person.RaceID
+  //    });
+  //    let genderObjectByClientGenderID = genders.genders.filter(function(gender) {
+  //        return gender.ID === finalResult.ClientProfile.Person.GenderID
+  //    });
+  //    let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
+  //    let ssn = (finalResult.ClientProfile.Person.SSN != null)  ? finalResult.ClientProfile.Person.SSN : '';
+  //    let fbiNcicNumber = (finalResult.ClientProfile.Person.FBINCIC !== null) ? finalResult.ClientProfile.Person.FBINCIC : '';
+  //    let stateVcin = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
+  //    let alias = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
+  //    let raceID = (finalResult.ClientProfile.Person.RaceID !== null) ? finalResult.ClientProfile.Person.RaceID : 0;
+  //let raceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
+  //let genderID = (finalResult.ClientProfile.Person.GenderID !== null) ?  finalResult.ClientProfile.Person.GenderID : 0;
+  //let genderDescription = (genderObjectByClientGenderID !== null) ? genderObjectByClientGenderID[0].Description : '';
+  // const [middleName, setMiddleName] = useState('');
   // const [ssn, setSsn] = useState('');
   // const [fbiNcicNumber, setFbiNcicNumber] = useState('');
   // const [dateOfBirth, setDateOfBirth] = useState(new Date());
@@ -71583,6 +71620,49 @@ var Info = function Info(props) {
       state = _useStore.state,
       dispatch = _useStore.dispatch;
 
+  function infoTabOnChangeHandler(e, field) {
+    console.log(e.target.value);
+
+    if (field === "txtLastName") {
+      // this.setState({
+      //     clientLastName:  e.target.value
+      // });
+      setLastName(e.target.value);
+    }
+
+    if (field === "txtFirstName") {
+      // this.setState({
+      //     clientFirstName:  e.target.value
+      // });
+      setFirstName(e.target.value);
+    }
+
+    if (field === "txtMiddleName") {// this.setState({
+      //     clientMiddleName:  e.target.value
+      // });
+    }
+
+    if (field === "txtSSN") {// this.setState({
+      //     clientSSN:  e.target.value
+      // });
+    }
+
+    if (field === "txtFbiNcicNumber") {// this.setState({
+      //     clientFbiNcicNumber:  e.target.value
+      // });
+    }
+
+    if (field === "txtStateVCIN") {// this.setState({
+      //     clientStateVCIN:  e.target.value
+      // });
+    }
+
+    if (field === "txtAlias") {// this.setState({
+      //     clientAlias:  e.target.value
+      // });
+    }
+  }
+
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
@@ -71595,7 +71675,7 @@ var Info = function Info(props) {
     type: "text",
     value: lastName,
     onChange: function onChange(e) {
-      return onChangeHandler(e, "txtLastName");
+      return infoTabOnChangeHandler(e, "txtLastName");
     },
     className: "form-control",
     id: "txtLastName"
@@ -71609,7 +71689,7 @@ var Info = function Info(props) {
     type: "text",
     value: firstName,
     onChange: function onChange(e) {
-      return onChangeHandler(e, "txtFirstName");
+      return infoTabOnChangeHandler(e, "txtFirstName");
     },
     className: "form-control",
     id: "txtFirstName"
