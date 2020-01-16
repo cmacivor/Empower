@@ -80726,6 +80726,8 @@ var Info = function Info(props) {
 
   var clientLastName = clientInfo.LastName !== null ? clientInfo.LastName : '';
   var clientFirstName = clientInfo.FirstName !== null ? clientInfo.FirstName : '';
+  console.log('the first name');
+  console.log(clientFirstName);
   var clientMiddleName = clientInfo.MiddleName !== null ? clientInfo.MiddleName : '';
   var clientSuffixID = clientInfo.Suffix !== null ? clientInfo.Suffix : 'Please Select';
   var clientSSN = clientInfo.SSN !== null ? clientInfo.SSN : '';
@@ -80739,12 +80741,9 @@ var Info = function Info(props) {
   var birthDateJavascriptDateObject = new Date(clientInfo.DOB);
   var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
   var utcBirthDate = new Date(formattedBirthDate);
-  var difference = moment__WEBPACK_IMPORTED_MODULE_8___default()(new Date()).diff(birthDateJavascriptDateObject); //console.log(difference);
-
-  var duration = moment__WEBPACK_IMPORTED_MODULE_8___default.a.duration(difference, 'milliseconds'); //console.log(duration);
-
-  var diffInYears = Math.round(duration.asYears()); //console.log(diffInYears); 
-  //need to get the suffixValues and get the Name from the suffixID
+  var difference = moment__WEBPACK_IMPORTED_MODULE_8___default()(new Date()).diff(birthDateJavascriptDateObject);
+  var duration = moment__WEBPACK_IMPORTED_MODULE_8___default.a.duration(difference, 'milliseconds');
+  var diffInYears = Math.round(duration.asYears()); //need to get the suffixValues and get the Name from the suffixID
   //gender values
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
@@ -80808,27 +80807,13 @@ var Info = function Info(props) {
   // let genderObjectByClientGenderID = genders.filter(function(gender) {
   //    return gender.ID === clientGenderID
   // });
-  //console.log(genders);
-  //console.log(genderObjectByClientGenderID);
   //let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
 
 
   var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('clientGenderDescription'),
       _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
       genderDescription = _useState24[0],
-      setGenderDescription = _useState24[1]; //console.log(clientLastName);
-  //console.log(clientFirstName);
-  //for the age box
-  //calculate age in years
-  //let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
-  //console.log(difference);
-  //let duration = moment.duration(difference, 'milliseconds');
-  //console.log(duration);
-  //let diffInYears = Math.round(duration.asYears());
-  //console.log(diffInYears);
-  //console.log(races);
-  //console.log(genders);
-  //     let raceObjectByClientRaceID = races.races.filter(function(race) {
+      setGenderDescription = _useState24[1]; //     let raceObjectByClientRaceID = races.races.filter(function(race) {
   //        return race.ID === finalResult.ClientProfile.Person.RaceID
   //    });
   //    let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
@@ -80847,9 +80832,11 @@ var Info = function Info(props) {
       state = _useStore.state,
       dispatch = _useStore.dispatch;
 
-  function infoTabOnChangeHandler(e, field) {
-    console.log(e.target.value);
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+    setFirstName(clientFirstName);
+  });
 
+  function infoTabOnChangeHandler(e, field) {
     if (field === "txtLastName") {
       setLastName(e.target.value);
     }
@@ -81338,7 +81325,6 @@ var Search = function Search(props) {
   }
 
   function GetSelectedRow(row) {
-    //console.log(row);
     props.enableTabsHandler();
     var apiAddress = sessionStorage.getItem("baseApiAddress");
     var token = sessionStorage.getItem("token");

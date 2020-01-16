@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {useStore} from './StateStores/store';
@@ -20,6 +20,9 @@ const Info = (props) => {
    //need to create variables for each- if it's null, set to empty string for React controlled components
     let clientLastName = (clientInfo.LastName !== null)  ? clientInfo.LastName : '';
     let clientFirstName = (clientInfo.FirstName !== null)  ? clientInfo.FirstName : '';
+    console.log('the first name');
+    console.log(clientFirstName);
+
     let clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
     let clientSuffixID = (clientInfo.Suffix !== null) ? clientInfo.Suffix : 'Please Select';
     let clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
@@ -35,11 +38,11 @@ const Info = (props) => {
     let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
     let utcBirthDate = new Date(formattedBirthDate);
     let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
-    //console.log(difference);
+
     let duration = moment.duration(difference, 'milliseconds');
-    //console.log(duration);
+
     let diffInYears = Math.round(duration.asYears());
-    //console.log(diffInYears); 
+
     
 
     //need to get the suffixValues and get the Name from the suffixID
@@ -71,30 +74,11 @@ const Info = (props) => {
     //    return gender.ID === clientGenderID
     // });
 
-    //console.log(genders);
-    //console.log(genderObjectByClientGenderID);
-
     //let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
     
     const [genderDescription, setGenderDescription] = useState('clientGenderDescription');
 
 
-    //console.log(clientLastName);
-    //console.log(clientFirstName);
-
-
-   
-    //for the age box
-    //calculate age in years
-    //let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
-    //console.log(difference);
-    //let duration = moment.duration(difference, 'milliseconds');
-    //console.log(duration);
-    //let diffInYears = Math.round(duration.asYears());
-    //console.log(diffInYears);
-
-   //console.log(races);
-   //console.log(genders);
 
 //     let raceObjectByClientRaceID = races.races.filter(function(race) {
 //        return race.ID === finalResult.ClientProfile.Person.RaceID
@@ -119,8 +103,12 @@ const Info = (props) => {
     //to test the global state
     const {state, dispatch} = useStore();
 
+    useEffect(() => {
+        setFirstName(clientFirstName);
+    });
+
     function infoTabOnChangeHandler (e, field) {
-        console.log(e.target.value);
+       
         if (field === "txtLastName") {
             setLastName(e.target.value);
         }

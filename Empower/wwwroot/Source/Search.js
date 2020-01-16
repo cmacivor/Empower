@@ -125,7 +125,7 @@ const Search = (props) => {
     }
 
     function GetSelectedRow(row) {
-        //console.log(row);
+      
 
 
         props.enableTabsHandler();
