@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useStore} from './store';
+import {useStore} from './StateStores/store';
 
 const Info = (props) => {
     const [lastName, setLastName] = useState(props.lastName);

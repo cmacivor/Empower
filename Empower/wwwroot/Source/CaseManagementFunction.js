@@ -9,6 +9,7 @@ const CaseManagementFunction = (props) => {
     const [isParticipantTabDisabled, setParticipantTabEnabled] = useState(true);
     const [defaultTab, setDefaultTab] = useState("search");
     const [activeTab, setActiveTab] = useState("search");
+    const [clientProfile, setClientProfile] = useState(Object);
 
     function EnableTabs() {
         setEnabled(false);
@@ -28,13 +29,21 @@ const CaseManagementFunction = (props) => {
         // });
     }
 
+    //to handle clicking on a row in the search grid, so this data is accessible elsewhere
+    function SetClientProfile(clientProfile) {
+        console.log('this is SetClientProfile in  CaseManagementFunction ');
+        console.log(clientProfile);
+        console.log(clientProfile.ClientProfile);
+        setClientProfile(clientProfile.ClientProfile);
+    }
+
     return <div>
             <Tabs defaultActiveKey={defaultTab} activeKey={activeTab} onSelect={k => SetActiveTab(k) } id="caseManagementTabs">
                     <Tab eventKey="search" title="Search">
-                        <Search enableTabsHandler={EnableTabs} ></Search>
+                        <Search enableTabsHandler={EnableTabs} onSearchGridRowClick={e => SetClientProfile(e)} ></Search>
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>
-                        <Info />                       
+                        <Info clientProfile={clientProfile.Person} />                       
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
                        supplemental content

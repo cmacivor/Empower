@@ -2,7 +2,18 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
 const StoreContext = createContext();
+
+
 const initialState = {count: 0, message: ""};
+
+const clientProfileInitialState = {
+  lastName: '',
+  firstName: ''
+}
+
+const infoReducer = (state, action) => {
+
+}
 
 const reducer = (state, action) => {
   switch(action.type) {

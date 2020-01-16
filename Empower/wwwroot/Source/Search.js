@@ -3,7 +3,8 @@ import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap
 import moment from 'moment';
 import { Api } from './commonAdmin';
 //import { useClientProfile} from './useClientProfile';
-import {useStore} from './store';
+import {useStore} from './StateStores/store';
+import PropTypes from 'prop-types';
 
 
 const Search = (props) => {
@@ -39,6 +40,9 @@ const Search = (props) => {
      //Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
      Api.getConfigDataByType("Gender").then(genders => setGenders({genders}));
 
+     function SetClientProfile(clientProfile) {
+         props.onSearchGridRowClick(clientProfile);
+     }
 
     function handleLastNameChange (event)  {
         setLastName(event.target.value);
@@ -153,6 +157,7 @@ const Search = (props) => {
     
             }).then(finalResult => {
                 console.log(finalResult);
+                SetClientProfile(finalResult);
 
                  //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
                  let birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);

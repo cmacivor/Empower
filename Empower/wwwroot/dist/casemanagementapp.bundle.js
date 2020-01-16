@@ -71460,6 +71460,11 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
       activeTab = _useState8[0],
       setActiveTab = _useState8[1];
 
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(Object),
+      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState9, 2),
+      clientProfile = _useState10[0],
+      setClientProfile = _useState10[1];
+
   function EnableTabs() {
     setEnabled(false);
     setDefaultTab("participantinfo");
@@ -71474,6 +71479,14 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
     setActiveTab(key); // this.setState({
     //     activeTab: key
     // });
+  } //to handle clicking on a row in the search grid, so this data is accessible elsewhere
+
+
+  function SetClientProfile(clientProfile) {
+    console.log('this is SetClientProfile in  CaseManagementFunction ');
+    console.log(clientProfile);
+    console.log(clientProfile.ClientProfile);
+    setClientProfile(clientProfile.ClientProfile);
   }
 
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -71487,12 +71500,17 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
     eventKey: "search",
     title: "Search"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Search__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    enableTabsHandler: EnableTabs
+    enableTabsHandler: EnableTabs,
+    onSearchGridRowClick: function onSearchGridRowClick(e) {
+      return SetClientProfile(e);
+    }
   })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__["default"], {
     eventKey: "participantinfo",
     title: "Participant Info",
     disabled: isTabDisabled
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Info__WEBPACK_IMPORTED_MODULE_3__["default"], null)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Info__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    clientProfile: clientProfile
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__["default"], {
     eventKey: "supplemental",
     title: "Supplemental",
     disabled: isTabDisabled
@@ -71536,7 +71554,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./wwwroot/source/store.js");
+/* harmony import */ var _StateStores_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./StateStores/store */ "./wwwroot/source/StateStores/store.js");
 
 
 
@@ -71561,7 +71579,7 @@ var Info = function Info(props) {
   //to test the global state
 
 
-  var _useStore = Object(_store__WEBPACK_IMPORTED_MODULE_2__["useStore"])(),
+  var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_2__["useStore"])(),
       state = _useStore.state,
       dispatch = _useStore.dispatch;
 
@@ -71623,7 +71641,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store */ "./wwwroot/source/store.js");
+/* harmony import */ var _StateStores_store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./StateStores/store */ "./wwwroot/source/StateStores/store.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_8__);
 
 
 
@@ -71631,6 +71651,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
  //import { useClientProfile} from './useClientProfile';
+
 
 
 
@@ -71692,7 +71713,7 @@ var Search = function Search(props) {
       setGridVisible = _useState14[1]; //to test the global state
 
 
-  var _useStore = Object(_store__WEBPACK_IMPORTED_MODULE_7__["useStore"])(),
+  var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_7__["useStore"])(),
       state = _useStore.state,
       dispatch = _useStore.dispatch; //client profile
   //const clienProfile = useClientProfile();
@@ -71710,6 +71731,10 @@ var Search = function Search(props) {
       genders: genders
     });
   });
+
+  function SetClientProfile(clientProfile) {
+    props.onSearchGridRowClick(clientProfile);
+  }
 
   function handleLastNameChange(event) {
     setLastName(event.target.value);
@@ -71810,7 +71835,8 @@ var Search = function Search(props) {
           return result.json();
         }
       }).then(function (finalResult) {
-        console.log(finalResult); //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
+        console.log(finalResult);
+        SetClientProfile(finalResult); //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
 
         var birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
         var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
@@ -71946,6 +71972,82 @@ var Search = function Search(props) {
 
 /***/ }),
 
+/***/ "./wwwroot/source/StateStores/store.js":
+/*!*********************************************!*\
+  !*** ./wwwroot/source/StateStores/store.js ***!
+  \*********************************************/
+/*! exports provided: StoreProvider, useStore */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreProvider", function() { return StoreProvider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useStore", function() { return useStore; });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+// store.js, from here: https://react.christmas/2019/7
+
+var StoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])();
+var initialState = {
+  count: 0,
+  message: ""
+};
+var clientProfileInitialState = {
+  lastName: '',
+  firstName: ''
+};
+
+var infoReducer = function infoReducer(state, action) {};
+
+var reducer = function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return {
+        count: state.count + 1,
+        message: action.message
+      };
+
+    case "decrement":
+      return {
+        count: state.count - 1,
+        message: action.message
+      };
+
+    case "reset":
+      return {
+        count: 0,
+        message: action.message
+      };
+
+    default:
+      throw new Error("Unhandled action type: ".concat(action.type));
+  }
+};
+
+var StoreProvider = function StoreProvider(_ref) {
+  var children = _ref.children;
+
+  var _useReducer = Object(react__WEBPACK_IMPORTED_MODULE_1__["useReducer"])(reducer, initialState),
+      _useReducer2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useReducer, 2),
+      state = _useReducer2[0],
+      dispatch = _useReducer2[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(StoreContext.Provider, {
+    value: {
+      state: state,
+      dispatch: dispatch
+    }
+  }, children);
+};
+var useStore = function useStore() {
+  return Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(StoreContext);
+};
+
+/***/ }),
+
 /***/ "./wwwroot/source/casemanagementapp.js":
 /*!*********************************************!*\
   !*** ./wwwroot/source/casemanagementapp.js ***!
@@ -71960,13 +72062,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _CaseManagementFunction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CaseManagementFunction */ "./wwwroot/source/CaseManagementFunction.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./wwwroot/source/store.js");
+/* harmony import */ var _StateStores_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./StateStores/store */ "./wwwroot/source/StateStores/store.js");
 
  //import CaseManagement from './CaseManagement';
 
 
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_store__WEBPACK_IMPORTED_MODULE_3__["StoreProvider"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CaseManagementFunction__WEBPACK_IMPORTED_MODULE_2__["default"], null)), document.getElementById('root'));
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StateStores_store__WEBPACK_IMPORTED_MODULE_3__["StoreProvider"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CaseManagementFunction__WEBPACK_IMPORTED_MODULE_2__["default"], null)), document.getElementById('root'));
 
 /***/ }),
 
@@ -72138,76 +72240,6 @@ function () {
 
   return Api;
 }();
-
-/***/ }),
-
-/***/ "./wwwroot/source/store.js":
-/*!*********************************!*\
-  !*** ./wwwroot/source/store.js ***!
-  \*********************************/
-/*! exports provided: StoreProvider, useStore */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreProvider", function() { return StoreProvider; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useStore", function() { return useStore; });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-
-// store.js, from here: https://react.christmas/2019/7
-
-var StoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])();
-var initialState = {
-  count: 0,
-  message: ""
-};
-
-var reducer = function reducer(state, action) {
-  switch (action.type) {
-    case "increment":
-      return {
-        count: state.count + 1,
-        message: action.message
-      };
-
-    case "decrement":
-      return {
-        count: state.count - 1,
-        message: action.message
-      };
-
-    case "reset":
-      return {
-        count: 0,
-        message: action.message
-      };
-
-    default:
-      throw new Error("Unhandled action type: ".concat(action.type));
-  }
-};
-
-var StoreProvider = function StoreProvider(_ref) {
-  var children = _ref.children;
-
-  var _useReducer = Object(react__WEBPACK_IMPORTED_MODULE_1__["useReducer"])(reducer, initialState),
-      _useReducer2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useReducer, 2),
-      state = _useReducer2[0],
-      dispatch = _useReducer2[1];
-
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(StoreContext.Provider, {
-    value: {
-      state: state,
-      dispatch: dispatch
-    }
-  }, children);
-};
-var useStore = function useStore() {
-  return Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(StoreContext);
-};
 
 /***/ })
 
