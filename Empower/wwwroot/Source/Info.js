@@ -20,6 +20,8 @@ const Info = (props) => {
     let clientSuffixID = (clientInfo.Suffix !== null) ? clientInfo.Suffix : 'Please Select';
     let clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
     let clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.SSN : '';
+    let clientStateVcin = (clientInfo.StateORVCIN !== null) ? clientInfo.StateORVCIN : '';
+    let clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : ''; 
 
     //calculate age
     let birthDateJavascriptDateObject = new Date(clientInfo.DOB);
@@ -43,6 +45,8 @@ const Info = (props) => {
     const [ssn, setSSN] = useState(clientSSN);
     const [fbiNcicNumber, setFbiNcicNumber] = useState(clientFbiNcic);
     const [birthDate, setBirthDate] = useState(utcBirthDate);
+    const [stateVcin, setStateVcin] = useState(clientStateVcin);
+    const [alias, setAlias] = useState(clientAlias);
 
     //console.log(clientLastName);
     //console.log(clientFirstName);
@@ -82,14 +86,6 @@ const Info = (props) => {
    //let genderDescription = (genderObjectByClientGenderID !== null) ? genderObjectByClientGenderID[0].Description : '';
 
  
-    // const [middleName, setMiddleName] = useState('');
-    // const [ssn, setSsn] = useState('');
-    // const [fbiNcicNumber, setFbiNcicNumber] = useState('');
-    // const [dateOfBirth, setDateOfBirth] = useState(new Date());
-    // const [currentAge, setCurrentAge] = useState('');
-    // const [suffix, setSuffix] = useState('Please Select');
-    // const [stateVcin, setStateVcin] = useState('');
-    // const [alias, setAlias] = useState('');
 
     //to test the global state
     const {state, dispatch} = useStore();
@@ -109,27 +105,19 @@ const Info = (props) => {
         }
 
         if (field === "txtSSN") {
-            // this.setState({
-            //     clientSSN:  e.target.value
-            // });
+           setSSN(e.target.value);
         }
 
         if (field === "txtFbiNcicNumber") {
-            // this.setState({
-            //     clientFbiNcicNumber:  e.target.value
-            // });
+            setFbiNcicNumber(e.target.value);
         }
 
         if (field === "txtStateVCIN") {
-            // this.setState({
-            //     clientStateVCIN:  e.target.value
-            // });
+            setStateVcin(e.target.value);
         }
 
         if (field === "txtAlias") {
-            // this.setState({
-            //     clientAlias:  e.target.value
-            // });
+            setAlias(e.target.value);
         }
     }
 
@@ -171,7 +159,7 @@ const Info = (props) => {
                     </div>
                 </div>
                 <div className="form-row">
-                <div className="col-3">
+                    <div className="col-3">
                         <label htmlFor="txtSSN"><strong> SSN</strong></label>
                         <div className="input-group mb-3">
                             <input type="text" value={ssn} onChange={e => infoTabOnChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
@@ -200,6 +188,20 @@ const Info = (props) => {
                          />
                         </div>
                     </div> 
+                </div>
+                <div className="form-row">
+                <div className="col-3">
+                        <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
+                        </div>                       
+                    </div>
+                    <div className="col-2">
+                        <label htmlFor="txtAlias"><strong>Alias</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" value={alias} onChange={e => infoTabOnChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
+                        </div>
+                    </div>
                 </div>
                 <br></br>
                 {state.count}

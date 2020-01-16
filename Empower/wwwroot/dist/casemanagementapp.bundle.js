@@ -80613,7 +80613,9 @@ var Info = function Info(props) {
   var clientMiddleName = clientInfo.MiddleName !== null ? clientInfo.MiddleName : '';
   var clientSuffixID = clientInfo.Suffix !== null ? clientInfo.Suffix : 'Please Select';
   var clientSSN = clientInfo.SSN !== null ? clientInfo.SSN : '';
-  var clientFbiNcic = clientInfo.FBINCIC !== null ? clientInfo.SSN : ''; //calculate age
+  var clientFbiNcic = clientInfo.FBINCIC !== null ? clientInfo.SSN : '';
+  var clientStateVcin = clientInfo.StateORVCIN !== null ? clientInfo.StateORVCIN : '';
+  var clientAlias = clientInfo.Alias !== null ? clientInfo.Alias : ''; //calculate age
 
   var birthDateJavascriptDateObject = new Date(clientInfo.DOB);
   var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
@@ -80658,7 +80660,17 @@ var Info = function Info(props) {
   var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(utcBirthDate),
       _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState13, 2),
       birthDate = _useState14[0],
-      setBirthDate = _useState14[1]; //console.log(clientLastName);
+      setBirthDate = _useState14[1];
+
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientStateVcin),
+      _useState16 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState15, 2),
+      stateVcin = _useState16[0],
+      setStateVcin = _useState16[1];
+
+  var _useState17 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientAlias),
+      _useState18 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState17, 2),
+      alias = _useState18[0],
+      setAlias = _useState18[1]; //console.log(clientLastName);
   //console.log(clientFirstName);
   //for the age box
   //calculate age in years
@@ -80685,14 +80697,6 @@ var Info = function Info(props) {
   //let raceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
   //let genderID = (finalResult.ClientProfile.Person.GenderID !== null) ?  finalResult.ClientProfile.Person.GenderID : 0;
   //let genderDescription = (genderObjectByClientGenderID !== null) ? genderObjectByClientGenderID[0].Description : '';
-  // const [middleName, setMiddleName] = useState('');
-  // const [ssn, setSsn] = useState('');
-  // const [fbiNcicNumber, setFbiNcicNumber] = useState('');
-  // const [dateOfBirth, setDateOfBirth] = useState(new Date());
-  // const [currentAge, setCurrentAge] = useState('');
-  // const [suffix, setSuffix] = useState('Please Select');
-  // const [stateVcin, setStateVcin] = useState('');
-  // const [alias, setAlias] = useState('');
   //to test the global state
 
 
@@ -80715,24 +80719,20 @@ var Info = function Info(props) {
       setMiddleName(e.target.value);
     }
 
-    if (field === "txtSSN") {// this.setState({
-      //     clientSSN:  e.target.value
-      // });
+    if (field === "txtSSN") {
+      setSSN(e.target.value);
     }
 
-    if (field === "txtFbiNcicNumber") {// this.setState({
-      //     clientFbiNcicNumber:  e.target.value
-      // });
+    if (field === "txtFbiNcicNumber") {
+      setFbiNcicNumber(e.target.value);
     }
 
-    if (field === "txtStateVCIN") {// this.setState({
-      //     clientStateVCIN:  e.target.value
-      // });
+    if (field === "txtStateVCIN") {
+      setStateVcin(e.target.value);
     }
 
-    if (field === "txtAlias") {// this.setState({
-      //     clientAlias:  e.target.value
-      // });
+    if (field === "txtAlias") {
+      setAlias(e.target.value);
     }
   }
 
@@ -80853,6 +80853,36 @@ var Info = function Info(props) {
       });
     },
     className: "form-control"
+  })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtStateVCIN"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "State/VCIN Number")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "input-group mb-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    value: stateVcin,
+    onChange: function onChange(e) {
+      return infoTabOnChangeHandler(e, "txtStateVCIN");
+    },
+    className: "form-control",
+    id: "txtStateVCIN"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-2"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtAlias"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Alias")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "input-group mb-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    value: alias,
+    onChange: function onChange(e) {
+      return infoTabOnChangeHandler(e, "txtAlias");
+    },
+    className: "form-control",
+    id: "txtAlias"
   })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
 };
 
