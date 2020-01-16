@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import {useStore} from './StateStores/store';
 import SuffixDropdown from './SuffixDropdown';
 import moment from 'moment';
@@ -40,6 +42,7 @@ const Info = (props) => {
     const [suffixID, setSuffixID] = useState(clientSuffixID);
     const [ssn, setSSN] = useState(clientSSN);
     const [fbiNcicNumber, setFbiNcicNumber] = useState(clientFbiNcic);
+    const [birthDate, setBirthDate] = useState(utcBirthDate);
 
     //console.log(clientLastName);
     //console.log(clientFirstName);
@@ -135,6 +138,12 @@ const Info = (props) => {
        console.log(suffix);
     }
 
+    function handleDatePickerChange(birthDate) {
+        //console.log('this is the date picker in Info.js ');
+        //console.log(birthDate);
+        setBirthDate(birthDate.date);
+    }
+
     return <div>
                 <br></br>
                 <div className="form-row">
@@ -180,6 +189,17 @@ const Info = (props) => {
                             <input type="text" readOnly value={diffInYears} className="form-control"></input>
                         </div>
                     </div>
+                    <div className="col-3">
+                        <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
+                        <div className="input-group mb-3">
+                        <DatePicker 
+                             selected={ birthDate }
+                             
+                             onChange={date => handleDatePickerChange({date})}
+                             className="form-control"                             
+                         />
+                        </div>
+                    </div> 
                 </div>
                 <br></br>
                 {state.count}
