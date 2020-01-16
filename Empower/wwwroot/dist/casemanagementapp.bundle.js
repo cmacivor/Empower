@@ -80707,7 +80707,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _GenderDropdown__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./GenderDropdown */ "./wwwroot/source/GenderDropdown.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+/* harmony import */ var _useCacheService__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./useCacheService */ "./wwwroot/source/useCacheService.js");
 
 
 
@@ -80795,35 +80795,28 @@ var Info = function Info(props) {
   var _useState19 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderID),
       _useState20 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState19, 2),
       genderID = _useState20[0],
-      setGenderID = _useState20[1];
+      setGenderID = _useState20[1]; //const [genders, setGenders] = useState([]);
 
-  var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+
+  var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
       _useState22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState21, 2),
-      genders = _useState22[0],
-      setGenders = _useState22[1];
+      raceID = _useState22[0],
+      setRaceID = _useState22[1]; //const genders = useCacheService();
+  // if (!genders.length) {
+  //     Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
+  // }
+  // let genderObjectByClientGenderID = genders.filter(function(gender) {
+  //    return gender.ID === clientGenderID
+  // });
+  //console.log(genders);
+  //console.log(genderObjectByClientGenderID);
+  //let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
 
-  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
+
+  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('clientGenderDescription'),
       _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
-      raceID = _useState24[0],
-      setRaceID = _useState24[1];
-
-  if (!genders.length) {
-    _commonAdmin__WEBPACK_IMPORTED_MODULE_9__["Api"].getConfigDataByType("Gender").then(function (genders) {
-      return setGenders(genders);
-    });
-  }
-
-  var genderObjectByClientGenderID = genders.filter(function (gender) {
-    return gender.ID === clientGenderID;
-  });
-  console.log(genders);
-  console.log(genderObjectByClientGenderID);
-  var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
-
-  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
-      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
-      genderDescription = _useState26[0],
-      setGenderDescription = _useState26[1]; //console.log(clientLastName);
+      genderDescription = _useState24[0],
+      setGenderDescription = _useState24[1]; //console.log(clientLastName);
   //console.log(clientFirstName);
   //for the age box
   //calculate age in years
@@ -81213,20 +81206,12 @@ var Search = function Search(props) {
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
       _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState3, 2),
       firstName = _useState4[0],
-      setFirstName = _useState4[1];
-
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
-      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState5, 2),
-      races = _useState6[0],
-      setRaces = _useState6[1];
-
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
-      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState7, 2),
-      genders = _useState8[0],
-      setGenders = _useState8[1]; //grid state
+      setFirstName = _useState4[1]; //const [races, setRaces] = useState([]);
+  //const [genders, setGenders] = useState([]);
+  //grid state
 
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([{
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([{
     name: 'FirstName',
     title: 'First Name'
   }, {
@@ -81248,18 +81233,18 @@ var Search = function Search(props) {
     name: 'Gender',
     title: 'Gender'
   }]),
-      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState9, 1),
-      columns = _useState10[0];
+      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState5, 1),
+      columns = _useState6[0];
 
-  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
-      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState11, 2),
-      rows = _useState12[0],
-      setRows = _useState12[1];
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
+      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState7, 2),
+      rows = _useState8[0],
+      setRows = _useState8[1];
 
-  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
-      _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState13, 2),
-      isGridVisible = _useState14[0],
-      setGridVisible = _useState14[1]; //to test the global state
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
+      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState9, 2),
+      isGridVisible = _useState10[0],
+      setGridVisible = _useState10[1]; //to test the global state
 
 
   var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_7__["useStore"])(),
@@ -81267,19 +81252,10 @@ var Search = function Search(props) {
       dispatch = _useStore.dispatch; //client profile
   //const clienProfile = useClientProfile();
   //Api.getConfigDataByType("Race").then(races => this.setState({races}));
+  //Api.getConfigDataByType("Race").then(races => setRaces({races}));
+  //Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
+  //Api.getConfigDataByType("Gender").then(genders => setGenders({genders}));
 
-
-  _commonAdmin__WEBPACK_IMPORTED_MODULE_6__["Api"].getConfigDataByType("Race").then(function (races) {
-    return setRaces({
-      races: races
-    });
-  }); //Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
-
-  _commonAdmin__WEBPACK_IMPORTED_MODULE_6__["Api"].getConfigDataByType("Gender").then(function (genders) {
-    return setGenders({
-      genders: genders
-    });
-  });
 
   function SetClientProfile(clientProfile) {
     props.onSearchGridRowClick(clientProfile);
@@ -81385,67 +81361,7 @@ var Search = function Search(props) {
         }
       }).then(function (finalResult) {
         console.log(finalResult);
-        SetClientProfile(finalResult); //date of birth comes from the database as an ISO string. But the DatePicker needs it to be a UTC date object
-
-        var birthDateJavascriptDateObject = new Date(finalResult.ClientProfile.Person.DOB);
-        var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-        var utcBirthDate = new Date(formattedBirthDate); //for the age box
-        //calculate age in years
-        //let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
-        //console.log(difference);
-        //let duration = moment.duration(difference, 'milliseconds');
-        //console.log(duration);
-        //let diffInYears = Math.round(duration.asYears());
-        //console.log(diffInYears);
-        //console.log(races);
-        //console.log(genders);
-
-        var raceObjectByClientRaceID = races.races.filter(function (race) {
-          return race.ID === finalResult.ClientProfile.Person.RaceID;
-        });
-        var genderObjectByClientGenderID = genders.genders.filter(function (gender) {
-          return gender.ID === finalResult.ClientProfile.Person.GenderID;
-        }); //need to create variables for each- if it's null, set to empty string for controlled components
-
-        var lastName = finalResult.ClientProfile.Person.LastName !== null ? finalResult.ClientProfile.Person.LastName : '';
-        var firstName = finalResult.ClientProfile.Person.FirstName !== null ? finalResult.ClientProfile.Person.FirstName : '';
-        var middleName = finalResult.ClientProfile.Person.MiddleName !== null ? finalResult.ClientProfile.Person.MiddleName : '';
-        var ssn = finalResult.ClientProfile.Person.SSN != null ? finalResult.ClientProfile.Person.SSN : '';
-        var fbiNcicNumber = finalResult.ClientProfile.Person.FBINCIC !== null ? finalResult.ClientProfile.Person.FBINCIC : '';
-        var stateVcin = finalResult.ClientProfile.Person.StateORVCIN !== null ? finalResult.ClientProfile.Person.StateORVCIN : '';
-        var alias = finalResult.ClientProfile.Person.StateORVCIN !== null ? finalResult.ClientProfile.Person.StateORVCIN : '';
-        var raceID = finalResult.ClientProfile.Person.RaceID !== null ? finalResult.ClientProfile.Person.RaceID : 0;
-        var raceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
-        var genderID = finalResult.ClientProfile.Person.GenderID !== null ? finalResult.ClientProfile.Person.GenderID : 0;
-        var genderDescription = genderObjectByClientGenderID !== null ? genderObjectByClientGenderID[0].Description : ''; // this.setState({
-        //     clientLastName: lastName,
-        //     clientFirstName: firstName,
-        //     clientMiddleName: middleName,
-        //     clientSSN: ssn,
-        //     clientFbiNcicNumber: fbiNcicNumber,
-        //     clientDateOfBirth: utcBirthDate,
-        //     clientCurrentAge: diffInYears.toString(),
-        //     clientStateVCIN: stateVcin,
-        //     clientAlias: alias,
-        //     clientRaceID: raceID,
-        //     clientRaceDescription: raceDescription,
-        //     clientGenderID: genderID,
-        //     clientGenderDescription: genderDescription,
-        //     //state values for reset button
-        //     originalLastName:  lastName,
-        //     originalFirstName: firstName,
-        //     originalMiddleName: middleName,
-        //     originalSsn: ssn,
-        //     originalFbiNcic: fbiNcicNumber,
-        //     originalDateOfBirth: utcBirthDate,
-        //     originalAge: diffInYears.toString(),
-        //     originalStateVCIN: stateVcin,
-        //     originalAlias: alias,
-        //     originalRaceID: raceID,
-        //     originalRaceDescription: raceDescription,
-        //     originalGenderID: genderID,
-        //     originalGenderDescription: genderDescription,
-        // });
+        SetClientProfile(finalResult); //now we get the gender values and dispatch them to the global state
       });
     } catch (error) {
       console.log(error);
@@ -81894,6 +81810,41 @@ function () {
 
   return Api;
 }();
+
+/***/ }),
+
+/***/ "./wwwroot/source/useCacheService.js":
+/*!*******************************************!*\
+  !*** ./wwwroot/source/useCacheService.js ***!
+  \*******************************************/
+/*! exports provided: useCacheService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useCacheService", function() { return useCacheService; });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
+ //import { Api } from './commonAdmin';
+
+
+function useCacheService() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+      genders = _useState2[0],
+      setGenders = _useState2[1];
+
+  _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("Gender").then(function (genders) {
+    return setGenders(genders);
+  });
+  return {
+    genderValues: genders
+  };
+}
 
 /***/ })
 

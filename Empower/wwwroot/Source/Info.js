@@ -6,7 +6,8 @@ import SuffixDropdown from './SuffixDropdown';
 import RaceDropDown from './RaceDropdown';
 import GenderDropDown from './GenderDropdown';
 import moment from 'moment';
-import { Api } from './commonAdmin';
+import {useCacheService} from './useCacheService';
+
 
 const Info = (props) => {
 
@@ -56,24 +57,26 @@ const Info = (props) => {
     const [stateVcin, setStateVcin] = useState(clientStateVcin);
     const [alias, setAlias] = useState(clientAlias);
     const [genderID, setGenderID] = useState(clientGenderID);
-    const [genders, setGenders] = useState([]);
+    //const [genders, setGenders] = useState([]);
     const [raceID, setRaceID] = useState(clientRaceID);
 
-    if (!genders.length) {
-        Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
-    }
+    //const genders = useCacheService();
+
+    // if (!genders.length) {
+    //     Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
+    // }
 
 
-    let genderObjectByClientGenderID = genders.filter(function(gender) {
-       return gender.ID === clientGenderID
-    });
+    // let genderObjectByClientGenderID = genders.filter(function(gender) {
+    //    return gender.ID === clientGenderID
+    // });
 
-    console.log(genders);
-    console.log(genderObjectByClientGenderID);
+    //console.log(genders);
+    //console.log(genderObjectByClientGenderID);
 
-    let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
+    //let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
     
-    const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
+    const [genderDescription, setGenderDescription] = useState('clientGenderDescription');
 
 
     //console.log(clientLastName);
