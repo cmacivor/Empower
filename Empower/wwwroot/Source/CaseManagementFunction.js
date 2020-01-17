@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Search from './Search'
 import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
@@ -10,6 +10,7 @@ const CaseManagementFunction = (props) => {
     const [defaultTab, setDefaultTab] = useState("search");
     const [activeTab, setActiveTab] = useState("search");
     const [clientProfile, setClientProfile] = useState(Object);
+    const infoRef = useRef();
 
     function EnableTabs() {
         setEnabled(false);
@@ -33,8 +34,14 @@ const CaseManagementFunction = (props) => {
     function SetClientProfile(clientProfile) {
         console.log('this is SetClientProfile in  CaseManagementFunction ');
         console.log(clientProfile);
-        //console.log(clientProfile.ClientProfile); //not this one
-        setClientProfile(clientProfile);
+
+        setClientProfile(clientProfile); //updates the local state
+
+        //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
+        console.log('this is the birth date!!!!');
+        console.log(clientProfile.ClientProfile.Person.DOB);
+        infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
+
     }
 
     return <div>
@@ -43,7 +50,7 @@ const CaseManagementFunction = (props) => {
                         <Search enableTabsHandler={EnableTabs} onSearchGridRowClick={e => SetClientProfile(e)} ></Search>
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>
-                        <Info clientProfile={clientProfile.Person} />                       
+                        <Info clientProfile={clientProfile.Person} ref={infoRef} />                       
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
                        supplemental content

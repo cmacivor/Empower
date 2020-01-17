@@ -80498,6 +80498,8 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
       clientProfile = _useState10[0],
       setClientProfile = _useState10[1];
 
+  var infoRef = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
+
   function EnableTabs() {
     setEnabled(false);
     setDefaultTab("participantinfo");
@@ -80517,9 +80519,13 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
 
   function SetClientProfile(clientProfile) {
     console.log('this is SetClientProfile in  CaseManagementFunction ');
-    console.log(clientProfile); //console.log(clientProfile.ClientProfile); //not this one
+    console.log(clientProfile);
+    setClientProfile(clientProfile); //updates the local state
+    //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
 
-    setClientProfile(clientProfile);
+    console.log('this is the birth date!!!!');
+    console.log(clientProfile.ClientProfile.Person.DOB);
+    infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
   }
 
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -80542,7 +80548,8 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
     title: "Participant Info",
     disabled: isTabDisabled
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Info__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    clientProfile: clientProfile.Person
+    clientProfile: clientProfile.Person,
+    ref: infoRef
   })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__["default"], {
     eventKey: "supplemental",
     title: "Supplemental",
@@ -80717,17 +80724,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
 
-
-var Info = function Info(props) {
-  console.log(props);
+var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (props, ref) {
+  // console.log(props);
   if (props.clientProfile === undefined) return null;
   var clientInfo = props.clientProfile.Person; //need to create variables for each- if it's null, set to empty string for React controlled components
 
   var clientLastName = clientInfo.LastName !== null ? clientInfo.LastName : '';
-  var clientFirstName = clientInfo.FirstName !== null ? clientInfo.FirstName : '';
-  console.log('the first name');
-  console.log(clientFirstName);
+  var clientFirstName = clientInfo.FirstName !== null ? clientInfo.FirstName : ''; //console.log('the first name');
+  //console.log(clientFirstName);
+
   var clientMiddleName = clientInfo.MiddleName !== null ? clientInfo.MiddleName : '';
   var clientSuffixID = clientInfo.Suffix !== null ? clientInfo.Suffix : 'Please Select';
   var clientSSN = clientInfo.SSN !== null ? clientInfo.SSN : '';
@@ -80736,15 +80743,15 @@ var Info = function Info(props) {
   var clientAlias = clientInfo.Alias !== null ? clientInfo.Alias : ''; //GenderID, RaceID
 
   var clientGenderID = clientInfo.GenderID !== null ? clientInfo.GenderID : '';
-  var clientRaceID = clientInfo.RaceID !== null ? clientInfo.RaceID : ''; //calculate age
+  var clientRaceID = clientInfo.RaceID !== null ? clientInfo.RaceID : ''; //get the birthdate in UTC format- the datepicker plugin needs it that way
 
   var birthDateJavascriptDateObject = new Date(clientInfo.DOB);
   var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-  var utcBirthDate = new Date(formattedBirthDate);
+  var utcBirthDate = new Date(formattedBirthDate); //calculate age
+
   var difference = moment__WEBPACK_IMPORTED_MODULE_8___default()(new Date()).diff(birthDateJavascriptDateObject);
   var duration = moment__WEBPACK_IMPORTED_MODULE_8___default.a.duration(difference, 'milliseconds');
-  var diffInYears = Math.round(duration.asYears()); //need to get the suffixValues and get the Name from the suffixID
-  //gender values
+  var diffInYears = Math.round(duration.asYears());
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
@@ -80813,7 +80820,19 @@ var Info = function Info(props) {
   var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('clientGenderDescription'),
       _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
       genderDescription = _useState24[0],
-      setGenderDescription = _useState24[1]; //     let raceObjectByClientRaceID = races.races.filter(function(race) {
+      setGenderDescription = _useState24[1];
+
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useImperativeHandle"])(ref, function () {
+    return {
+      updateBirthDate: function updateBirthDate(birthDate) {
+        //get the birthdate in UTC format- the datepicker plugin needs it that way
+        var birthDateJavascriptDateObject = new Date(birthDate);
+        var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+        var utcBirthDate = new Date(formattedBirthDate);
+        setBirthDate(utcBirthDate);
+      }
+    };
+  }); //     let raceObjectByClientRaceID = races.races.filter(function(race) {
   //        return race.ID === finalResult.ClientProfile.Person.RaceID
   //    });
   //    let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
@@ -80827,10 +80846,10 @@ var Info = function Info(props) {
   //let genderDescription = (genderObjectByClientGenderID !== null) ? genderObjectByClientGenderID[0].Description : '';
   //to test the global state
 
-
   var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_4__["useStore"])(),
       state = _useStore.state,
-      dispatch = _useStore.dispatch;
+      dispatch = _useStore.dispatch; // console.log(utcBirthDate);
+
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     setFirstName(clientFirstName);
@@ -81037,8 +81056,7 @@ var Info = function Info(props) {
     selected: genderID,
     genderDescription: genderDescription
   }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
-};
-
+});
 /* harmony default export */ __webpack_exports__["default"] = (Info);
 
 /***/ }),
