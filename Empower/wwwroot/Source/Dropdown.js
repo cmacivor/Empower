@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-//import { Api } from './commonAdmin';
-//require ('./commonAdmin');
 
 export default class DropDown extends Component {
     constructor(props) {
@@ -15,20 +13,10 @@ export default class DropDown extends Component {
             selectedDescription: this.props.valueDescription     
         }
 
-        //Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
-  
     }
 
     onSelectHandler = (event) => {
-        //console.log(this.props.genderDescription);
-        //console.log('the race value being passed is: ' + this.props.selected);
-
-
-        //console.log('in dropdown: ' + event.currentTarget.getAttribute('description')); //description is getting the correct value
-        //console.log('this is he key: ' + event.currentTarget.getAttribute('value'));
-
-
-        //pass the selected suffix value to the parent- could be one of several components
+        //pass the selected suffix value to the parent
         this.props.onSelectValue(event.currentTarget.getAttribute('value'));
         this.props.onSelectValueDescription(event.currentTarget.getAttribute('description'));
     }

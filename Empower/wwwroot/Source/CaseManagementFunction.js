@@ -20,19 +20,11 @@ const CaseManagementFunction = (props) => {
     function EnableTabs() {
         setEnabled(false);
         setDefaultTab("participantinfo");
-        setActiveTab("participantinfo");
-        // this.setState({
-        //     isTabDisabled: false,
-        //     defaultTab: "participantinfo",
-        //     activeTab: "participantinfo"
-        // });
+        setActiveTab("participantinfo");     
     }
 
     function SetActiveTab(key) {
       setActiveTab(key);
-        // this.setState({
-        //     activeTab: key
-        // });
     }
 
     //to handle clicking on a row in the search grid, so this data is accessible elsewhere

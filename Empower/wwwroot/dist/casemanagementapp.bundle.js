@@ -80508,17 +80508,11 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
   function EnableTabs() {
     setEnabled(false);
     setDefaultTab("participantinfo");
-    setActiveTab("participantinfo"); // this.setState({
-    //     isTabDisabled: false,
-    //     defaultTab: "participantinfo",
-    //     activeTab: "participantinfo"
-    // });
+    setActiveTab("participantinfo");
   }
 
   function SetActiveTab(key) {
-    setActiveTab(key); // this.setState({
-    //     activeTab: key
-    // });
+    setActiveTab(key);
   } //to handle clicking on a row in the search grid, so this data is accessible elsewhere
 
 
@@ -80621,8 +80615,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- //import { Api } from './commonAdmin';
-//require ('./commonAdmin');
+
 
 var DropDown =
 /*#__PURE__*/
@@ -80637,11 +80630,7 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(DropDown).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
-      //console.log(this.props.genderDescription);
-      //console.log('the race value being passed is: ' + this.props.selected);
-      //console.log('in dropdown: ' + event.currentTarget.getAttribute('description')); //description is getting the correct value
-      //console.log('this is he key: ' + event.currentTarget.getAttribute('value'));
-      //pass the selected suffix value to the parent- could be one of several components
+      //pass the selected suffix value to the parent
       _this.props.onSelectValue(event.currentTarget.getAttribute('value'));
 
       _this.props.onSelectValueDescription(event.currentTarget.getAttribute('description'));
@@ -80653,8 +80642,7 @@ function (_Component) {
       values: values,
       selectedValue: previouslySelectedValue,
       selectedDescription: _this.props.valueDescription
-    }; //Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
-
+    };
     return _this;
   }
 
@@ -80837,17 +80825,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
  //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
-//this allows the 
+//this allows the updateBirthDate() function to be called from the CaseManagement parent component
 
 var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (props, ref) {
-  // console.log(props);
   if (props.clientProfile === undefined) return null;
   var clientInfo = props.clientProfile.Person; //need to create variables for each- if it's null, set to empty string for React controlled components
 
   var clientLastName = clientInfo.LastName !== null ? clientInfo.LastName : '';
-  var clientFirstName = clientInfo.FirstName !== null ? clientInfo.FirstName : ''; //console.log('the first name');
-  //console.log(clientFirstName);
-
+  var clientFirstName = clientInfo.FirstName !== null ? clientInfo.FirstName : '';
   var clientMiddleName = clientInfo.MiddleName !== null ? clientInfo.MiddleName : '';
   var clientSuffixID = clientInfo.Suffix !== null ? clientInfo.Suffix : 'Please Select';
   var clientSSN = clientInfo.SSN !== null ? clientInfo.SSN : '';
@@ -80858,14 +80843,12 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var clientGenderID = clientInfo.GenderID !== null ? clientInfo.GenderID : '';
   var clientRaceID = clientInfo.RaceID !== null ? clientInfo.RaceID : ''; //get the birthdate in UTC format- the datepicker plugin needs it that way
 
-  var birthDateJavascriptDateObject = new Date(clientInfo.DOB); // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-  // let utcBirthDate = new Date(formattedBirthDate);
-
+  var birthDateJavascriptDateObject = new Date(clientInfo.DOB);
   var utcBirthDate = convertDateToUtcFormat(clientInfo.DOB); //calculate age
 
   var difference = moment__WEBPACK_IMPORTED_MODULE_8___default()(new Date()).diff(birthDateJavascriptDateObject);
   var duration = moment__WEBPACK_IMPORTED_MODULE_8___default.a.duration(difference, 'milliseconds');
-  var diffInYears = Math.round(duration.asYears());
+  var diffInYears = Math.round(duration.asYears()); //set the state variables
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
@@ -80921,7 +80904,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
       _useState22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState21, 2),
       raceID = _useState22[0],
-      setRaceID = _useState22[1]; //const genders = useCacheService(); //this causes 
+      setRaceID = _useState22[1]; //from the cache service, initialized in the parent case management component
 
 
   var genderValues = props.genderValues;
@@ -80931,13 +80914,12 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   });
   var raceObjectByClientRaceID = raceValues.filter(function (race) {
     return race.ID === clientRaceID;
-  }); //console.log('the gender object is ');
-  //console.log(genders);
-
-  console.log(genderObjectByClientGenderID);
-  console.log(raceObjectByClientRaceID);
+  });
   var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
   var clientRaceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
+  console.log('this is the client gender and race description in Info.js');
+  console.log(clientGenderDescription);
+  console.log(clientRaceDescription);
 
   var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
       _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
@@ -80954,38 +80936,25 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useImperativeHandle"])(ref, function () {
     return {
       updateBirthDate: function updateBirthDate(birthDate) {
-        //get the birthdate in UTC format- the datepicker plugin needs it that way
-        // let birthDateJavascriptDateObject = new Date(birthDate);
-        // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-        // let utcBirthDate = new Date(formattedBirthDate);
         var utcBirthDate = convertDateToUtcFormat(birthDate);
         setBirthDate(utcBirthDate);
       }
     };
-  }); //    let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
-  //    let ssn = (finalResult.ClientProfile.Person.SSN != null)  ? finalResult.ClientProfile.Person.SSN : '';
-  //    let fbiNcicNumber = (finalResult.ClientProfile.Person.FBINCIC !== null) ? finalResult.ClientProfile.Person.FBINCIC : '';
-  //    let stateVcin = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
-  //    let alias = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
-  //    let raceID = (finalResult.ClientProfile.Person.RaceID !== null) ? finalResult.ClientProfile.Person.RaceID : 0;
-  //let raceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
-  //let genderID = (finalResult.ClientProfile.Person.GenderID !== null) ?  finalResult.ClientProfile.Person.GenderID : 0;
-  //let genderDescription = (genderObjectByClientGenderID !== null) ? genderObjectByClientGenderID[0].Description : '';
-  //to test the global state
+  }); //to test the global state
 
   var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_4__["useStore"])(),
       state = _useStore.state,
-      dispatch = _useStore.dispatch; // console.log(utcBirthDate);
-
+      dispatch = _useStore.dispatch;
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     setFirstName(clientFirstName);
     setLastName(clientLastName);
     setMiddleName(clientMiddleName);
     setSuffixID(clientSuffixID);
-    setSSN(clientSSN); //setGenderDescription(clientGenderDescription);
-    //setRaceDescription(clientRaceDescription);
-  });
+    setSSN(clientSSN); //setRaceDescription(clientRaceDescription);
+
+    setGenderDescription(clientGenderDescription);
+  }, [clientGenderDescription]);
 
   function convertDateToUtcFormat(date) {
     var birthDateJavascriptDateObject = new Date(date);
@@ -81030,8 +80999,6 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }
 
   function handleDatePickerChange(birthDate) {
-    //console.log('this is the date picker in Info.js ');
-    //console.log(birthDate);
     setBirthDate(birthDate.date);
   }
 
@@ -81359,7 +81326,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- //import { useClientProfile} from './useClientProfile';
 
 
 
@@ -81373,9 +81339,7 @@ var Search = function Search(props) {
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
       _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState3, 2),
       firstName = _useState4[0],
-      setFirstName = _useState4[1]; //const [races, setRaces] = useState([]);
-  //const [genders, setGenders] = useState([]);
-  //grid state
+      setFirstName = _useState4[1]; //grid state
 
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([{
@@ -81416,13 +81380,7 @@ var Search = function Search(props) {
 
   var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_7__["useStore"])(),
       state = _useStore.state,
-      dispatch = _useStore.dispatch; //client profile
-  //const clienProfile = useClientProfile();
-  //Api.getConfigDataByType("Race").then(races => this.setState({races}));
-  //Api.getConfigDataByType("Race").then(races => setRaces({races}));
-  //Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
-  //Api.getConfigDataByType("Gender").then(genders => setGenders({genders}));
-
+      dispatch = _useStore.dispatch;
 
   function SetClientProfile(clientProfile) {
     props.onSearchGridRowClick(clientProfile);
@@ -81462,13 +81420,8 @@ var Search = function Search(props) {
           return result.json();
         }
       }).then(function (finalResult) {
-        //rows = finalResult;
         setRows(finalResult);
-        setGridVisible(true); //isGridVisible === true;
-        // this.setState({
-        //     rows: finalResult,
-        //     isGridVisible: true
-        // });
+        setGridVisible(true);
       });
     } catch (error) {
       console.log(error);
@@ -81527,7 +81480,7 @@ var Search = function Search(props) {
         }
       }).then(function (finalResult) {
         console.log(finalResult);
-        SetClientProfile(finalResult); //now we get the gender values and dispatch them to the global state
+        SetClientProfile(finalResult);
       });
     } catch (error) {
       console.log(error);
@@ -81995,7 +81948,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
 
- //import { Api } from './commonAdmin';
 
 
 function useCacheService() {

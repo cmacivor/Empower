@@ -10,12 +10,8 @@ import {useCacheService} from './useCacheService';
 import DropDown from './Dropdown';
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
-//this allows the 
+//this allows the updateBirthDate() function to be called from the CaseManagement parent component
 const Info = forwardRef((props, ref) => {
-
-   // console.log(props);
-
-
 
     if (props.clientProfile === undefined) return null;
 
@@ -24,8 +20,6 @@ const Info = forwardRef((props, ref) => {
    //need to create variables for each- if it's null, set to empty string for React controlled components
     let clientLastName = (clientInfo.LastName !== null)  ? clientInfo.LastName : '';
     let clientFirstName = (clientInfo.FirstName !== null)  ? clientInfo.FirstName : '';
-    //console.log('the first name');
-    //console.log(clientFirstName);
 
     let clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
     let clientSuffixID = (clientInfo.Suffix !== null) ? clientInfo.Suffix : 'Please Select';
@@ -38,21 +32,16 @@ const Info = forwardRef((props, ref) => {
     let clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
 
     //get the birthdate in UTC format- the datepicker plugin needs it that way
-     let birthDateJavascriptDateObject = new Date(clientInfo.DOB);
-    // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-    // let utcBirthDate = new Date(formattedBirthDate);
+    let birthDateJavascriptDateObject = new Date(clientInfo.DOB);
+    
     let utcBirthDate = convertDateToUtcFormat(clientInfo.DOB);
-
-
 
     //calculate age
     let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
     let duration = moment.duration(difference, 'milliseconds');
     let diffInYears = Math.round(duration.asYears());
 
-
-
- 
+    //set the state variables
     const [lastName, setLastName] = useState(clientLastName);
     const [firstName, setFirstName] = useState(clientFirstName);
     const [middleName, setMiddleName] = useState(clientMiddleName);
@@ -66,8 +55,7 @@ const Info = forwardRef((props, ref) => {
     //const [genders, setGenders] = useState([]);
     const [raceID, setRaceID] = useState(clientRaceID);
 
-    //const genders = useCacheService(); //this causes 
-
+    //from the cache service, initialized in the parent case management component
     const genderValues = props.genderValues;
     const raceValues = props.raceValues;
 
@@ -79,27 +67,21 @@ const Info = forwardRef((props, ref) => {
        return race.ID === clientRaceID
    });
 
-
-     //console.log('the gender object is ');
-     //console.log(genders);
-    console.log(genderObjectByClientGenderID);
-
-    console.log(raceObjectByClientRaceID);
-
     let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
     let clientRaceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
+    console.log('this is the client gender and race description in Info.js');
+    console.log(clientGenderDescription);
+    console.log(clientRaceDescription);
     
     const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
     const [raceDescription, setRaceDescription] = useState(clientRaceDescription);
+
+
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
     useImperativeHandle(ref, () => ({
         updateBirthDate(birthDate) {
 
-            //get the birthdate in UTC format- the datepicker plugin needs it that way
-            // let birthDateJavascriptDateObject = new Date(birthDate);
-            // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-            // let utcBirthDate = new Date(formattedBirthDate);
             let utcBirthDate = convertDateToUtcFormat(birthDate);
 
             setBirthDate(utcBirthDate);
@@ -107,37 +89,21 @@ const Info = forwardRef((props, ref) => {
     }));
 
 
-
-
-
-
-   
-//    let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
-//    let ssn = (finalResult.ClientProfile.Person.SSN != null)  ? finalResult.ClientProfile.Person.SSN : '';
-//    let fbiNcicNumber = (finalResult.ClientProfile.Person.FBINCIC !== null) ? finalResult.ClientProfile.Person.FBINCIC : '';
-//    let stateVcin = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
-//    let alias = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
-//    let raceID = (finalResult.ClientProfile.Person.RaceID !== null) ? finalResult.ClientProfile.Person.RaceID : 0;
-   //let raceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
-   //let genderID = (finalResult.ClientProfile.Person.GenderID !== null) ?  finalResult.ClientProfile.Person.GenderID : 0;
-   //let genderDescription = (genderObjectByClientGenderID !== null) ? genderObjectByClientGenderID[0].Description : '';
-
- 
-
     //to test the global state
     const {state, dispatch} = useStore();
 
-   // console.log(utcBirthDate);
-
+    //this will re-render the first name, last name, middle name, etc each time something changes, but NOT the dropdown values- those are handled in the select event handlers.
+    //otherwise, when a selection in the dropdown is made, the useEffect overwrites what was just selected
     useEffect(() => {
         setFirstName(clientFirstName);
         setLastName(clientLastName);
         setMiddleName(clientMiddleName);
         setSuffixID(clientSuffixID);
         setSSN(clientSSN);
-        //setGenderDescription(clientGenderDescription);
+
         //setRaceDescription(clientRaceDescription);
-    });
+        setGenderDescription(clientGenderDescription);
+    }, [clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
     function convertDateToUtcFormat(date)
     {
@@ -183,9 +149,7 @@ const Info = forwardRef((props, ref) => {
        console.log(suffix);
     }
 
-    function handleDatePickerChange(birthDate) {
-        //console.log('this is the date picker in Info.js ');
-        //console.log(birthDate);
+    function handleDatePickerChange(birthDate) { 
         setBirthDate(birthDate.date);
     }
 

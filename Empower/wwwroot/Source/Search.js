@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Grid, Table, TableHeaderRow } from '@devexpress/dx-react-grid-bootstrap4';
 import moment from 'moment';
 import { Api } from './commonAdmin';
-//import { useClientProfile} from './useClientProfile';
 import {useStore} from './StateStores/store';
 import PropTypes from 'prop-types';
 
@@ -10,8 +9,6 @@ import PropTypes from 'prop-types';
 const Search = (props) => {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
-    //const [races, setRaces] = useState([]);
-    //const [genders, setGenders] = useState([]);
 
     //grid state
     const [columns] = useState([
@@ -28,17 +25,6 @@ const Search = (props) => {
 
      //to test the global state
      const {state, dispatch} = useStore();
-
-
-     //client profile
-    //const clienProfile = useClientProfile();
-
-
-     //Api.getConfigDataByType("Race").then(races => this.setState({races}));
-     //Api.getConfigDataByType("Race").then(races => setRaces({races}));
-
-     //Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
-     //Api.getConfigDataByType("Gender").then(genders => setGenders({genders}));
 
      function SetClientProfile(clientProfile) {
          props.onSearchGridRowClick(clientProfile);
@@ -85,14 +71,8 @@ const Search = (props) => {
                 } 
     
             }).then(finalResult => {
-                //rows = finalResult;
                 setRows(finalResult);
-                setGridVisible(true);
-                //isGridVisible === true;
-                // this.setState({
-                //     rows: finalResult,
-                //     isGridVisible: true
-                // });
+                setGridVisible(true);        
             });
         }
         catch(error)
@@ -126,8 +106,6 @@ const Search = (props) => {
 
     function GetSelectedRow(row) {
       
-
-
         props.enableTabsHandler();
         
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -157,13 +135,7 @@ const Search = (props) => {
     
             }).then(finalResult => {
                 console.log(finalResult);
-                SetClientProfile(finalResult);
-
-                //now we get the gender values and dispatch them to the global state
-
-
-        
-                
+                SetClientProfile(finalResult); 
             });
         }
         catch(error)
