@@ -55,7 +55,10 @@ const CaseManagementFunction = (props) => {
                         <Search enableTabsHandler={EnableTabs} onSearchGridRowClick={e => SetClientProfile(e)} ></Search>
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>
-                        <Info clientProfile={clientProfile.Person} ref={infoRef} genderValues={cacheService.genderValues} />                       
+                        <Info clientProfile={clientProfile.Person} 
+                         ref={infoRef}
+                         genderValues={cacheService.genderValues}
+                         raceValues={cacheService.raceValues} />                       
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
                        supplemental content

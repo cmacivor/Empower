@@ -69,19 +69,28 @@ const Info = forwardRef((props, ref) => {
     //const genders = useCacheService(); //this causes 
 
     const genderValues = props.genderValues;
+    const raceValues = props.raceValues;
 
     let genderObjectByClientGenderID = genderValues.filter(function(gender) {
        return gender.ID === clientGenderID
     });
 
+   let raceObjectByClientRaceID = raceValues.filter(function(race) {
+       return race.ID === clientRaceID
+   });
+
+
      //console.log('the gender object is ');
      //console.log(genders);
     console.log(genderObjectByClientGenderID);
 
+    console.log(raceObjectByClientRaceID);
+
     let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
+    let clientRaceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
     
     const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
-
+    const [raceDescription, setRaceDescription] = useState(clientRaceDescription);
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
     useImperativeHandle(ref, () => ({
@@ -97,9 +106,7 @@ const Info = forwardRef((props, ref) => {
         }
     }));
 
-//     let raceObjectByClientRaceID = races.races.filter(function(race) {
-//        return race.ID === finalResult.ClientProfile.Person.RaceID
-//    });
+
 
 
 
@@ -129,6 +136,7 @@ const Info = forwardRef((props, ref) => {
         setSuffixID(clientSuffixID);
         setSSN(clientSSN);
         setGenderDescription(clientGenderDescription);
+        setRaceDescription(clientRaceDescription);
     });
 
     function convertDateToUtcFormat(date)
@@ -189,6 +197,16 @@ const Info = forwardRef((props, ref) => {
     function handleGenderDescriptionChange(genderDescription) {
         console.log('this is the handlGenderDescription in Info.js');
         console.log(genderDescription);
+    }
+
+    function handleRaceChange(race) {
+        console.log('this is handleRaceChange ');
+        console.log(race);
+    }
+
+    function handleRaceDescriptionChange(raceDescription) {
+        console.log('this is the handleRaceDescriptionChange ');
+        console.log(raceDescription);
     }
 
     return <div>
@@ -274,6 +292,16 @@ const Info = forwardRef((props, ref) => {
                          selected={genderID}
                          valueDescription={genderDescription}
                          values={genderValues}>
+                        </DropDown>
+                    </div>
+                    <div className="col-4">
+                        <label><strong>Race/Ethnicity*</strong></label>
+                        <DropDown
+                            onSelectValue={handleRaceChange}
+                            onSelectValueDescription={handleRaceDescriptionChange}
+                            selected={raceID}
+                            valueDescription={raceDescription}
+                            values={raceValues}>
                         </DropDown>
                     </div>
                 </div>

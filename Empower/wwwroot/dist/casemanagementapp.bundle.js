@@ -80555,7 +80555,8 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Info__WEBPACK_IMPORTED_MODULE_3__["default"], {
     clientProfile: clientProfile.Person,
     ref: infoRef,
-    genderValues: cacheService.genderValues
+    genderValues: cacheService.genderValues,
+    raceValues: cacheService.raceValues
   })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__["default"], {
     eventKey: "supplemental",
     title: "Supplemental",
@@ -80924,18 +80925,29 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
 
 
   var genderValues = props.genderValues;
+  var raceValues = props.raceValues;
   var genderObjectByClientGenderID = genderValues.filter(function (gender) {
     return gender.ID === clientGenderID;
+  });
+  var raceObjectByClientRaceID = raceValues.filter(function (race) {
+    return race.ID === clientRaceID;
   }); //console.log('the gender object is ');
   //console.log(genders);
 
   console.log(genderObjectByClientGenderID);
+  console.log(raceObjectByClientRaceID);
   var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
+  var clientRaceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
 
   var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
       _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
       genderDescription = _useState24[0],
-      setGenderDescription = _useState24[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
+      setGenderDescription = _useState24[1];
+
+  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
+      raceDescription = _useState26[0],
+      setRaceDescription = _useState26[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
   //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
 
 
@@ -80950,10 +80962,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
         setBirthDate(utcBirthDate);
       }
     };
-  }); //     let raceObjectByClientRaceID = races.races.filter(function(race) {
-  //        return race.ID === finalResult.ClientProfile.Person.RaceID
-  //    });
-  //    let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
+  }); //    let middleName = (finalResult.ClientProfile.Person.MiddleName !== null)  ? finalResult.ClientProfile.Person.MiddleName : '';
   //    let ssn = (finalResult.ClientProfile.Person.SSN != null)  ? finalResult.ClientProfile.Person.SSN : '';
   //    let fbiNcicNumber = (finalResult.ClientProfile.Person.FBINCIC !== null) ? finalResult.ClientProfile.Person.FBINCIC : '';
   //    let stateVcin = (finalResult.ClientProfile.Person.StateORVCIN !== null) ? finalResult.ClientProfile.Person.StateORVCIN : '';
@@ -80976,6 +80985,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setSuffixID(clientSuffixID);
     setSSN(clientSSN);
     setGenderDescription(clientGenderDescription);
+    setRaceDescription(clientRaceDescription);
   });
 
   function convertDateToUtcFormat(date) {
@@ -81034,6 +81044,16 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   function handleGenderDescriptionChange(genderDescription) {
     console.log('this is the handlGenderDescription in Info.js');
     console.log(genderDescription);
+  }
+
+  function handleRaceChange(race) {
+    console.log('this is handleRaceChange ');
+    console.log(race);
+  }
+
+  function handleRaceDescriptionChange(raceDescription) {
+    console.log('this is the handleRaceDescriptionChange ');
+    console.log(raceDescription);
   }
 
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
@@ -81182,6 +81202,14 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     selected: genderID,
     valueDescription: genderDescription,
     values: genderValues
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Race/Ethnicity*")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dropdown__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    onSelectValue: handleRaceChange,
+    onSelectValueDescription: handleRaceDescriptionChange,
+    selected: raceID,
+    valueDescription: raceDescription,
+    values: raceValues
   }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
 });
 /* harmony default export */ __webpack_exports__["default"] = (Info);
@@ -81973,13 +82001,22 @@ function useCacheService() {
       genders = _useState2[0],
       setGenders = _useState2[1];
 
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
+      races = _useState4[0],
+      setRaces = _useState4[1];
+
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("Gender").then(function (genders) {
       return setGenders(genders);
     });
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("Race").then(function (races) {
+      return setRaces(races);
+    });
   }, []);
   return {
-    genderValues: genders
+    genderValues: genders,
+    raceValues: races
   };
 }
 
