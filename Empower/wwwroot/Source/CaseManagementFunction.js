@@ -3,6 +3,7 @@ import Search from './Search'
 import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
+import { useCacheService } from './useCacheService';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -11,6 +12,10 @@ const CaseManagementFunction = (props) => {
     const [activeTab, setActiveTab] = useState("search");
     const [clientProfile, setClientProfile] = useState(Object);
     const infoRef = useRef();
+    const cacheService = useCacheService();
+
+    console.log('this is the cacheService in case management');
+    console.log(cacheService);
 
     function EnableTabs() {
         setEnabled(false);

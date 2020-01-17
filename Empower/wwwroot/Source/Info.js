@@ -65,20 +65,20 @@ const Info = forwardRef((props, ref) => {
     //const [genders, setGenders] = useState([]);
     const [raceID, setRaceID] = useState(clientRaceID);
 
-    //const genders = useCacheService();
-
-    // if (!genders.length) {
-    //     Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
-    // }
+    //const genders = useCacheService(); //this causes 
 
 
     // let genderObjectByClientGenderID = genders.filter(function(gender) {
     //    return gender.ID === clientGenderID
     // });
 
+     //console.log('the gender object is ');
+     //console.log(genders);
+    // console.log(genderObjectByClientGenderID);
+
     //let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
     
-    const [genderDescription, setGenderDescription] = useState('clientGenderDescription');
+    const [genderDescription, setGenderDescription] = useState('');
 
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks

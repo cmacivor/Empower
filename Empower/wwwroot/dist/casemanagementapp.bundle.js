@@ -80465,6 +80465,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Info__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Info */ "./wwwroot/source/Info.js");
 /* harmony import */ var react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Tabs */ "./node_modules/react-bootstrap/esm/Tabs.js");
 /* harmony import */ var react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Tab */ "./node_modules/react-bootstrap/esm/Tab.js");
+/* harmony import */ var _useCacheService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./useCacheService */ "./wwwroot/source/useCacheService.js");
+
 
 
 
@@ -80499,6 +80501,9 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
       setClientProfile = _useState10[1];
 
   var infoRef = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
+  var cacheService = Object(_useCacheService__WEBPACK_IMPORTED_MODULE_6__["useCacheService"])();
+  console.log('this is the cacheService in case management');
+  console.log(cacheService);
 
   function EnableTabs() {
     setEnabled(false);
@@ -80725,6 +80730,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
  //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
+//this allows the 
 
 var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (props, ref) {
   // console.log(props);
@@ -80808,20 +80814,22 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
       _useState22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState21, 2),
       raceID = _useState22[0],
-      setRaceID = _useState22[1]; //const genders = useCacheService();
-  // if (!genders.length) {
-  //     Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
-  // }
+      setRaceID = _useState22[1]; //const genders = useCacheService(); //this causes 
   // let genderObjectByClientGenderID = genders.filter(function(gender) {
   //    return gender.ID === clientGenderID
   // });
+  //console.log('the gender object is ');
+  //console.log(genders);
+  // console.log(genderObjectByClientGenderID);
   //let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
 
 
-  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('clientGenderDescription'),
+  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
       _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
       genderDescription = _useState24[0],
-      setGenderDescription = _useState24[1];
+      setGenderDescription = _useState24[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
+  //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
+
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useImperativeHandle"])(ref, function () {
     return {
@@ -81853,11 +81861,16 @@ function useCacheService() {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
       genders = _useState2[0],
-      setGenders = _useState2[1];
+      setGenders = _useState2[1]; // if (!genders.length) {
+  //     Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
+  // }
 
-  _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("Gender").then(function (genders) {
-    return setGenders(genders);
-  });
+
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("Gender").then(function (genders) {
+      return setGenders(genders);
+    });
+  }, []);
   return {
     genderValues: genders
   };
