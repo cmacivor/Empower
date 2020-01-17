@@ -80745,9 +80745,10 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var clientGenderID = clientInfo.GenderID !== null ? clientInfo.GenderID : '';
   var clientRaceID = clientInfo.RaceID !== null ? clientInfo.RaceID : ''; //get the birthdate in UTC format- the datepicker plugin needs it that way
 
-  var birthDateJavascriptDateObject = new Date(clientInfo.DOB);
-  var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-  var utcBirthDate = new Date(formattedBirthDate); //calculate age
+  var birthDateJavascriptDateObject = new Date(clientInfo.DOB); // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+  // let utcBirthDate = new Date(formattedBirthDate);
+
+  var utcBirthDate = convertDateToUtcFormat(clientInfo.DOB); //calculate age
 
   var difference = moment__WEBPACK_IMPORTED_MODULE_8___default()(new Date()).diff(birthDateJavascriptDateObject);
   var duration = moment__WEBPACK_IMPORTED_MODULE_8___default.a.duration(difference, 'milliseconds');
@@ -80826,9 +80827,10 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     return {
       updateBirthDate: function updateBirthDate(birthDate) {
         //get the birthdate in UTC format- the datepicker plugin needs it that way
-        var birthDateJavascriptDateObject = new Date(birthDate);
-        var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-        var utcBirthDate = new Date(formattedBirthDate);
+        // let birthDateJavascriptDateObject = new Date(birthDate);
+        // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+        // let utcBirthDate = new Date(formattedBirthDate);
+        var utcBirthDate = convertDateToUtcFormat(birthDate);
         setBirthDate(utcBirthDate);
       }
     };
@@ -80858,6 +80860,13 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setSuffixID(clientSuffixID);
     setSSN(clientSSN);
   });
+
+  function convertDateToUtcFormat(date) {
+    var birthDateJavascriptDateObject = new Date(date);
+    var formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+    var utcBirthDate = new Date(formattedBirthDate);
+    return utcBirthDate;
+  }
 
   function infoTabOnChangeHandler(e, field) {
     if (field === "txtLastName") {

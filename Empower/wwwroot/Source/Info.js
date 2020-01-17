@@ -36,9 +36,11 @@ const Info = forwardRef((props, ref) => {
     let clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
 
     //get the birthdate in UTC format- the datepicker plugin needs it that way
-    let birthDateJavascriptDateObject = new Date(clientInfo.DOB);
-    let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-    let utcBirthDate = new Date(formattedBirthDate);
+     let birthDateJavascriptDateObject = new Date(clientInfo.DOB);
+    // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+    // let utcBirthDate = new Date(formattedBirthDate);
+    let utcBirthDate = convertDateToUtcFormat(clientInfo.DOB);
+
 
 
     //calculate age
@@ -81,9 +83,10 @@ const Info = forwardRef((props, ref) => {
         updateBirthDate(birthDate) {
 
             //get the birthdate in UTC format- the datepicker plugin needs it that way
-            let birthDateJavascriptDateObject = new Date(birthDate);
-            let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
-            let utcBirthDate = new Date(formattedBirthDate);
+            // let birthDateJavascriptDateObject = new Date(birthDate);
+            // let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+            // let utcBirthDate = new Date(formattedBirthDate);
+            let utcBirthDate = convertDateToUtcFormat(birthDate);
 
             setBirthDate(utcBirthDate);
         }
@@ -121,6 +124,14 @@ const Info = forwardRef((props, ref) => {
         setSuffixID(clientSuffixID);
         setSSN(clientSSN);
     });
+
+    function convertDateToUtcFormat(date)
+    {
+        let birthDateJavascriptDateObject = new Date(date);
+        let formattedBirthDate = birthDateJavascriptDateObject.toUTCString();
+        let utcBirthDate = new Date(formattedBirthDate);
+        return utcBirthDate;
+    }
 
     function infoTabOnChangeHandler (e, field) {
        
