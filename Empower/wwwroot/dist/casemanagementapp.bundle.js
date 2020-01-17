@@ -80554,7 +80554,8 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
     disabled: isTabDisabled
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Info__WEBPACK_IMPORTED_MODULE_3__["default"], {
     clientProfile: clientProfile.Person,
-    ref: infoRef
+    ref: infoRef,
+    genderValues: cacheService.genderValues
   })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__["default"], {
     eventKey: "supplemental",
     title: "Supplemental",
@@ -80815,16 +80816,18 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
       _useState22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState21, 2),
       raceID = _useState22[0],
       setRaceID = _useState22[1]; //const genders = useCacheService(); //this causes 
-  // let genderObjectByClientGenderID = genders.filter(function(gender) {
-  //    return gender.ID === clientGenderID
-  // });
-  //console.log('the gender object is ');
+
+
+  var genderValues = props.genderValues;
+  var genderObjectByClientGenderID = genderValues.filter(function (gender) {
+    return gender.ID === clientGenderID;
+  }); //console.log('the gender object is ');
   //console.log(genders);
-  // console.log(genderObjectByClientGenderID);
-  //let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
 
+  console.log(genderObjectByClientGenderID);
+  var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
 
-  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
       _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
       genderDescription = _useState24[0],
       setGenderDescription = _useState24[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
@@ -80867,6 +80870,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setMiddleName(clientMiddleName);
     setSuffixID(clientSuffixID);
     setSSN(clientSSN);
+    setGenderDescription(clientGenderDescription);
   });
 
   function convertDateToUtcFormat(date) {
@@ -81861,10 +81865,7 @@ function useCacheService() {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
       genders = _useState2[0],
-      setGenders = _useState2[1]; // if (!genders.length) {
-  //     Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
-  // }
-
+      setGenders = _useState2[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("Gender").then(function (genders) {

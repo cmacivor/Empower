@@ -5,10 +5,6 @@ import {  Api } from './commonAdmin';
 export function useCacheService() {
     const [genders, setGenders] = useState([]);
 
-
-    // if (!genders.length) {
-    //     Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
-    // }
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
     }, []);

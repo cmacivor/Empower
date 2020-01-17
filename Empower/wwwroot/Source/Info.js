@@ -67,18 +67,19 @@ const Info = forwardRef((props, ref) => {
 
     //const genders = useCacheService(); //this causes 
 
+    const genderValues = props.genderValues;
 
-    // let genderObjectByClientGenderID = genders.filter(function(gender) {
-    //    return gender.ID === clientGenderID
-    // });
+    let genderObjectByClientGenderID = genderValues.filter(function(gender) {
+       return gender.ID === clientGenderID
+    });
 
      //console.log('the gender object is ');
      //console.log(genders);
-    // console.log(genderObjectByClientGenderID);
+    console.log(genderObjectByClientGenderID);
 
-    //let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
+    let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
     
-    const [genderDescription, setGenderDescription] = useState('');
+    const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
 
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
@@ -126,6 +127,7 @@ const Info = forwardRef((props, ref) => {
         setMiddleName(clientMiddleName);
         setSuffixID(clientSuffixID);
         setSSN(clientSSN);
+        setGenderDescription(clientGenderDescription);
     });
 
     function convertDateToUtcFormat(date)
