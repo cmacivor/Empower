@@ -80834,6 +80834,10 @@ var Info = function Info(props) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     setFirstName(clientFirstName);
+    setLastName(clientLastName);
+    setMiddleName(clientMiddleName);
+    setSuffixID(clientSuffixID);
+    setSSN(clientSSN);
   });
 
   function infoTabOnChangeHandler(e, field) {

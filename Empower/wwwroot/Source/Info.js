@@ -105,6 +105,10 @@ const Info = (props) => {
 
     useEffect(() => {
         setFirstName(clientFirstName);
+        setLastName(clientLastName);
+        setMiddleName(clientMiddleName);
+        setSuffixID(clientSuffixID);
+        setSSN(clientSSN);
     });
 
     function infoTabOnChangeHandler (e, field) {
