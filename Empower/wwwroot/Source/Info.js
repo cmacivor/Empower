@@ -7,6 +7,7 @@ import RaceDropDown from './RaceDropdown';
 import GenderDropDown from './GenderDropdown';
 import moment from 'moment';
 import {useCacheService} from './useCacheService';
+import DropDown from './Dropdown';
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
 //this allows the 
@@ -262,11 +263,18 @@ const Info = forwardRef((props, ref) => {
                     </div>
                     <div className="col-2">
                         <label htmlFor="ddlGender"><strong>Gender*</strong></label>
-                        <GenderDropDown 
+                        {/* <GenderDropDown 
                         onSelectGender={handleGenderChange} 
                         onSelectGenderDescription={handleGenderDescriptionChange} 
                         selected={genderID}
-                        genderDescription={genderDescription}/>
+                        genderDescription={genderDescription}/> */}
+                        <DropDown
+                         onSelectValue={handleGenderChange}
+                         onSelectValueDescription={handleGenderDescriptionChange}
+                         selected={genderID}
+                         valueDescription={genderDescription}
+                         values={genderValues}>
+                        </DropDown>
                     </div>
                 </div>
                 <br></br>

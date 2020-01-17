@@ -80587,6 +80587,109 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
 
 /***/ }),
 
+/***/ "./wwwroot/source/Dropdown.js":
+/*!************************************!*\
+  !*** ./wwwroot/source/Dropdown.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DropDown; });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+
+
+
+
+
+
+
+ //import { Api } from './commonAdmin';
+//require ('./commonAdmin');
+
+var DropDown =
+/*#__PURE__*/
+function (_Component) {
+  _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_5___default()(DropDown, _Component);
+
+  function DropDown(props) {
+    var _this;
+
+    _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0___default()(this, DropDown);
+
+    _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(DropDown).call(this, props));
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
+      //console.log(this.props.genderDescription);
+      //console.log('the race value being passed is: ' + this.props.selected);
+      //console.log('in dropdown: ' + event.currentTarget.getAttribute('description')); //description is getting the correct value
+      //console.log('this is he key: ' + event.currentTarget.getAttribute('value'));
+      //pass the selected suffix value to the parent- could be one of several components
+      _this.props.onSelectValue(event.currentTarget.getAttribute('value'));
+
+      _this.props.onSelectValueDescription(event.currentTarget.getAttribute('description'));
+    });
+
+    var previouslySelectedValue = _this.props.selected;
+    var values = _this.props.values;
+    _this.state = {
+      values: values,
+      selectedValue: previouslySelectedValue,
+      selectedDescription: _this.props.valueDescription
+    }; //Api.getConfigDataByType("Gender").then(genders => this.setState({genders}));
+
+    return _this;
+  }
+
+  _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(DropDown, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var valueOptions = this.state.values.map(function (value) {
+        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
+          key: value.ID,
+          value: value.ID,
+          description: value.Description,
+          onClick: _this2.onSelectHandler,
+          className: "dropdown-item"
+        }, value.Description);
+      });
+      return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-primary dropdown-toggle",
+        "data-toggle": "dropdown"
+      }, this.props.valueDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "dropdown-menu"
+      }, valueOptions)));
+    }
+  }]);
+
+  return DropDown;
+}(react__WEBPACK_IMPORTED_MODULE_7__["Component"]);
+
+
+
+/***/ }),
+
 /***/ "./wwwroot/source/GenderDropdown.js":
 /*!******************************************!*\
   !*** ./wwwroot/source/GenderDropdown.js ***!
@@ -80721,6 +80824,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _useCacheService__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./useCacheService */ "./wwwroot/source/useCacheService.js");
+/* harmony import */ var _Dropdown__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Dropdown */ "./wwwroot/source/Dropdown.js");
+
 
 
 
@@ -81071,11 +81176,12 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "col-2"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "ddlGender"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Gender*")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_GenderDropdown__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    onSelectGender: handleGenderChange,
-    onSelectGenderDescription: handleGenderDescriptionChange,
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Gender*")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dropdown__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    onSelectValue: handleGenderChange,
+    onSelectValueDescription: handleGenderDescriptionChange,
     selected: genderID,
-    genderDescription: genderDescription
+    valueDescription: genderDescription,
+    values: genderValues
   }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
 });
 /* harmony default export */ __webpack_exports__["default"] = (Info);
