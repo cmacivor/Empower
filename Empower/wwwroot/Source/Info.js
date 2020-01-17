@@ -135,8 +135,8 @@ const Info = forwardRef((props, ref) => {
         setMiddleName(clientMiddleName);
         setSuffixID(clientSuffixID);
         setSSN(clientSSN);
-        setGenderDescription(clientGenderDescription);
-        setRaceDescription(clientRaceDescription);
+        //setGenderDescription(clientGenderDescription);
+        //setRaceDescription(clientRaceDescription);
     });
 
     function convertDateToUtcFormat(date)
@@ -192,21 +192,25 @@ const Info = forwardRef((props, ref) => {
     function handleGenderChange(gender){
         console.log('this is the handleGenderChange in Info.js ');
         console.log(gender);
+        setGenderID(gender);
     }
 
     function handleGenderDescriptionChange(genderDescription) {
         console.log('this is the handlGenderDescription in Info.js');
         console.log(genderDescription);
+        setGenderDescription(genderDescription);
     }
 
     function handleRaceChange(race) {
         console.log('this is handleRaceChange ');
         console.log(race);
+        setRaceID(race);
     }
 
     function handleRaceDescriptionChange(raceDescription) {
         console.log('this is the handleRaceDescriptionChange ');
         console.log(raceDescription);
+        setRaceDescription(raceDescription);
     }
 
     return <div>

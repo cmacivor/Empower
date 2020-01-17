@@ -80983,9 +80983,8 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setLastName(clientLastName);
     setMiddleName(clientMiddleName);
     setSuffixID(clientSuffixID);
-    setSSN(clientSSN);
-    setGenderDescription(clientGenderDescription);
-    setRaceDescription(clientRaceDescription);
+    setSSN(clientSSN); //setGenderDescription(clientGenderDescription);
+    //setRaceDescription(clientRaceDescription);
   });
 
   function convertDateToUtcFormat(date) {
@@ -81039,21 +81038,25 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   function handleGenderChange(gender) {
     console.log('this is the handleGenderChange in Info.js ');
     console.log(gender);
+    setGenderID(gender);
   }
 
   function handleGenderDescriptionChange(genderDescription) {
     console.log('this is the handlGenderDescription in Info.js');
     console.log(genderDescription);
+    setGenderDescription(genderDescription);
   }
 
   function handleRaceChange(race) {
     console.log('this is handleRaceChange ');
     console.log(race);
+    setRaceID(race);
   }
 
   function handleRaceDescriptionChange(raceDescription) {
     console.log('this is the handleRaceDescriptionChange ');
     console.log(raceDescription);
+    setRaceDescription(raceDescription);
   }
 
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
