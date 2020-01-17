@@ -9,6 +9,7 @@ import moment from 'moment';
 import {useCacheService} from './useCacheService';
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
+//this allows the 
 const Info = forwardRef((props, ref) => {
 
    // console.log(props);
@@ -79,6 +80,8 @@ const Info = forwardRef((props, ref) => {
     
     const [genderDescription, setGenderDescription] = useState('clientGenderDescription');
 
+    //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
+    //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
     useImperativeHandle(ref, () => ({
         updateBirthDate(birthDate) {
 
