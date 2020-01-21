@@ -8,6 +8,7 @@ import GenderDropDown from './GenderDropdown';
 import moment from 'moment';
 import {useCacheService} from './useCacheService';
 import DropDown from './Dropdown';
+import {useForm} from 'react-hook-form';
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
 //this allows the updateBirthDate() function to be called from the CaseManagement parent component
@@ -38,6 +39,9 @@ const Info = forwardRef((props, ref) => {
     let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
     let duration = moment.duration(difference, 'milliseconds');
     let diffInYears = Math.round(duration.asYears());
+
+    //for validation
+    const {register, handleSubmit, watch, errors } = useForm();
 
     //set the state variables
     const [lastName, setLastName] = useState(clientLastName);
@@ -210,18 +214,19 @@ const Info = forwardRef((props, ref) => {
         setRaceDescription(prevRaceDescription);
     }
 
-    function updateButtonClickHandler() {
-
+    const updateButtonClickHandler = (event) => {
+        event.preventDefault();
     }
 
     return <div>
                 <br></br>
-                  <form onSubmit={updateButtonClickHandler} >
+                  <form onSubmit={handleSubmit(updateButtonClickHandler)} >
                     <div className="form-row">
                         <div className="col-3">
                             <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
                             <div className="input-group mb-3">
-                                <input type="text"  value={lastName} onChange={e => infoTabOnChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName"></input>
+                                <input type="text" ref={register({required: true})} value={lastName} onChange={e => infoTabOnChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName" name="txtLastName"></input>
+                                {errors.txtLastName && <span>This field is required</span> }
                             </div>
                         </div>
                         <div className="col-3">
