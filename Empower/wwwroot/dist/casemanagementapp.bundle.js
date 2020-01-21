@@ -80906,59 +80906,48 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
 
 
   var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
-      _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
-      prevLastName = _useState24[0],
-      setPrevLastName = _useState24[1];
+      _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 1),
+      prevLastName = _useState24[0];
 
   var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFirstName),
-      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
-      prevFirstName = _useState26[0],
-      setPrevFirstName = _useState26[1];
+      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 1),
+      prevFirstName = _useState26[0];
 
   var _useState27 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientMiddleName),
-      _useState28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState27, 2),
-      prevMiddleName = _useState28[0],
-      setPrevMiddleName = _useState28[1];
+      _useState28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState27, 1),
+      prevMiddleName = _useState28[0];
 
   var _useState29 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSuffixID),
-      _useState30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState29, 2),
-      prevSuffixID = _useState30[0],
-      setPrevSuffixID = _useState30[1];
+      _useState30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState29, 1),
+      prevSuffixID = _useState30[0];
 
   var _useState31 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSSN),
-      _useState32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState31, 2),
-      prevSsn = _useState32[0],
-      setPrevSSN = _useState32[1];
+      _useState32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState31, 1),
+      prevSsn = _useState32[0];
 
   var _useState33 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFbiNcic),
-      _useState34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState33, 2),
-      prevFbiNcicNumber = _useState34[0],
-      setPrevFbiNcicNumber = _useState34[1];
+      _useState34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState33, 1),
+      prevFbiNcicNumber = _useState34[0];
 
   var _useState35 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(utcBirthDate),
-      _useState36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState35, 2),
-      prevBirthDate = _useState36[0],
-      setPrevBirthDate = _useState36[1];
+      _useState36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState35, 1),
+      prevBirthDate = _useState36[0];
 
   var _useState37 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientStateVcin),
-      _useState38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState37, 2),
-      prevStateVcin = _useState38[0],
-      setPrevStateVcin = _useState38[1];
+      _useState38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState37, 1),
+      prevStateVcin = _useState38[0];
 
   var _useState39 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientAlias),
-      _useState40 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState39, 2),
-      prevAlias = _useState40[0],
-      setPrevAlias = _useState40[1];
+      _useState40 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState39, 1),
+      prevAlias = _useState40[0];
 
   var _useState41 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderID),
-      _useState42 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState41, 2),
-      prevGenderID = _useState42[0],
-      setPrevGenderID = _useState42[1];
+      _useState42 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState41, 1),
+      prevGenderID = _useState42[0];
 
   var _useState43 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
-      _useState44 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState43, 2),
-      prevRaceID = _useState44[0],
-      setPrevRaceID = _useState44[1]; //from the cache service, initialized in the parent case management component
+      _useState44 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState43, 1),
+      prevRaceID = _useState44[0]; //from the cache service, initialized in the parent case management component
 
 
   var genderValues = props.genderValues;
@@ -80971,9 +80960,6 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   });
   var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
   var clientRaceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
-  console.log('this is the client gender and race description in Info.js');
-  console.log(clientGenderDescription);
-  console.log(clientRaceDescription);
 
   var _useState45 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
       _useState46 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState45, 2),
@@ -80983,7 +80969,15 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var _useState47 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
       _useState48 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState47, 2),
       raceDescription = _useState48[0],
-      setRaceDescription = _useState48[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
+      setRaceDescription = _useState48[1];
+
+  var _useState49 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
+      _useState50 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState49, 1),
+      prevGenderDescription = _useState50[0];
+
+  var _useState51 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+      _useState52 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState51, 1),
+      prevRaceDescription = _useState52[0]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
   //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
 
 
@@ -81093,7 +81087,9 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setAlias(prevAlias);
     setGenderID(prevGenderID);
     setSuffixID(prevSuffixID);
-    setRaceID(setPrevRaceID);
+    setRaceID(prevRaceID);
+    setGenderDescription(prevGenderDescription);
+    setRaceDescription(prevRaceDescription);
   }
 
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {

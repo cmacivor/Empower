@@ -53,17 +53,17 @@ const Info = forwardRef((props, ref) => {
     const [raceID, setRaceID] = useState(clientRaceID);
 
     //variables to hold previous state- for when a value changes
-    const [prevLastName, setPrevLastName] = useState(clientLastName);
-    const [prevFirstName, setPrevFirstName] = useState(clientFirstName);
-    const [prevMiddleName, setPrevMiddleName] = useState(clientMiddleName);
-    const [prevSuffixID, setPrevSuffixID] = useState(clientSuffixID);
-    const [prevSsn, setPrevSSN] = useState(clientSSN);
-    const [prevFbiNcicNumber, setPrevFbiNcicNumber] = useState(clientFbiNcic);
-    const [prevBirthDate, setPrevBirthDate] = useState(utcBirthDate);
-    const [prevStateVcin, setPrevStateVcin] = useState(clientStateVcin);
-    const [prevAlias, setPrevAlias] = useState(clientAlias);
-    const [prevGenderID, setPrevGenderID] = useState(clientGenderID);
-    const [prevRaceID, setPrevRaceID] = useState(clientRaceID);
+    const [prevLastName] = useState(clientLastName);
+    const [prevFirstName] = useState(clientFirstName);
+    const [prevMiddleName] = useState(clientMiddleName);
+    const [prevSuffixID] = useState(clientSuffixID);
+    const [prevSsn] = useState(clientSSN);
+    const [prevFbiNcicNumber] = useState(clientFbiNcic);
+    const [prevBirthDate] = useState(utcBirthDate);
+    const [prevStateVcin] = useState(clientStateVcin);
+    const [prevAlias] = useState(clientAlias);
+    const [prevGenderID] = useState(clientGenderID);
+    const [prevRaceID] = useState(clientRaceID);
 
     //from the cache service, initialized in the parent case management component
     const genderValues = props.genderValues;
@@ -79,13 +79,11 @@ const Info = forwardRef((props, ref) => {
 
     let clientGenderDescription = (genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
     let clientRaceDescription = (raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
-    console.log('this is the client gender and race description in Info.js');
-    console.log(clientGenderDescription);
-    console.log(clientRaceDescription);
-    
+   
     const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
     const [raceDescription, setRaceDescription] = useState(clientRaceDescription);
-
+    const [prevGenderDescription] = useState(clientGenderDescription);
+    const [prevRaceDescription] = useState(clientRaceDescription);
 
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
@@ -199,7 +197,9 @@ const Info = forwardRef((props, ref) => {
         
         setGenderID(prevGenderID);
         setSuffixID(prevSuffixID);
-        setRaceID(setPrevRaceID);
+        setRaceID(prevRaceID);
+        setGenderDescription(prevGenderDescription);
+        setRaceDescription(prevRaceDescription);
     }
 
     return <div>
