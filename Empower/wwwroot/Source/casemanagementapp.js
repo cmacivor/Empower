@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CaseManagement from './CaseManagement';
+//import CaseManagement from './CaseManagement';
+import CaseManagementFunction from  './CaseManagementFunction';
+import {StoreProvider} from './StateStores/store';
 
 ReactDOM.render(
-    <CaseManagement/>,
+    <StoreProvider>
+        <CaseManagementFunction/>
+    </StoreProvider>,
     document.getElementById('root')
 );
