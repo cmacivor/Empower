@@ -82352,7 +82352,8 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
       register = _useForm.register,
       handleSubmit = _useForm.handleSubmit,
       watch = _useForm.watch,
-      errors = _useForm.errors; //set the state variables
+      errors = _useForm.errors,
+      triggerValidation = _useForm.triggerValidation; //set the state variables
 
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
@@ -82488,7 +82489,12 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
 
   var _useState53 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
       _useState54 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState53, 1),
-      prevRaceDescription = _useState54[0]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
+      prevRaceDescription = _useState54[0];
+
+  var _useState55 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('needs-validation'),
+      _useState56 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState55, 2),
+      formClass = _useState56[0],
+      setFormClass = _useState56[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
   //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
 
 
@@ -82609,23 +82615,32 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setRaceID(prevRaceID);
     setGenderDescription(prevGenderDescription);
     setRaceDescription(prevRaceDescription);
-  }
+  } //this will fire when submission of the form is successful
+
 
   var updateButtonClickHandler = function updateButtonClickHandler(event) {
     event.preventDefault();
   };
 
+  var TriggerValidationHandler = function TriggerValidationHandler() {
+    triggerValidation("txtLastName");
+    setFormClass('needs-validation was-validated'); //console.log(errors);
+    //use this to add bootstrap validaiton class
+  };
+
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
-    onSubmit: handleSubmit(updateButtonClickHandler)
+    onSubmit: handleSubmit(updateButtonClickHandler),
+    className: formClass,
+    noValidate: true
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-group"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtLastName"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Last Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "input-group mb-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Last Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
     ref: register({
       required: true
@@ -82636,8 +82651,11 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     },
     className: "form-control",
     id: "txtLastName",
-    name: "txtLastName"
-  }), errors.txtLastName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "This field is required"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    name: "txtLastName",
+    required: true
+  }), errors.txtLastName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "invalid-feedback"
+  }, "This field is required"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtFirstName"
@@ -82781,6 +82799,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "col-auto"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "submit",
+    onClick: TriggerValidationHandler,
     className: "btn btn-primary mb-2",
     value: "Update"
   })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {

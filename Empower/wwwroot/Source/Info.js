@@ -41,7 +41,7 @@ const Info = forwardRef((props, ref) => {
     let diffInYears = Math.round(duration.asYears());
 
     //for validation
-    const {register, handleSubmit, watch, errors } = useForm();
+    const {register, handleSubmit, watch, errors, triggerValidation } = useForm();
 
     //set the state variables
     const [lastName, setLastName] = useState(clientLastName);
@@ -89,6 +89,8 @@ const Info = forwardRef((props, ref) => {
     const [raceDescription, setRaceDescription] = useState(clientRaceDescription);
     const [prevGenderDescription] = useState(clientGenderDescription);
     const [prevRaceDescription] = useState(clientRaceDescription);
+
+    const [formClass, setFormClass] = useState('needs-validation');
 
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
@@ -214,20 +216,34 @@ const Info = forwardRef((props, ref) => {
         setRaceDescription(prevRaceDescription);
     }
 
+    //this will fire when submission of the form is successful
     const updateButtonClickHandler = (event) => {
         event.preventDefault();
     }
 
+    const TriggerValidationHandler = () => {
+        triggerValidation("txtLastName");
+        setFormClass('needs-validation was-validated');
+        //console.log(errors);
+        //use this to add bootstrap validaiton class
+    }
+
     return <div>
                 <br></br>
-                  <form onSubmit={handleSubmit(updateButtonClickHandler)} >
+                  <form onSubmit={handleSubmit(updateButtonClickHandler)} className={formClass} noValidate>
                     <div className="form-row">
                         <div className="col-3">
-                            <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
-                            <div className="input-group mb-3">
+                            <div className="form-group">
+                                <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
+                                <input type="text" ref={register({required: true})} value={lastName} onChange={e => infoTabOnChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName" name="txtLastName" required></input>
+                                {errors.txtLastName && <div className="invalid-feedback" >This field is required</div> }
+                            </div>
+
+                            
+                            {/* <div className="input-group mb-3">
                                 <input type="text" ref={register({required: true})} value={lastName} onChange={e => infoTabOnChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName" name="txtLastName"></input>
                                 {errors.txtLastName && <span>This field is required</span> }
-                            </div>
+                            </div> */}
                         </div>
                         <div className="col-3">
                             <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
@@ -313,7 +329,7 @@ const Info = forwardRef((props, ref) => {
                     </div>
                     <div className="form-row float-right">
                         <div className="col-auto">
-                            <input type="submit"  className="btn btn-primary mb-2" value="Update" />     
+                            <input type="submit" onClick={TriggerValidationHandler}  className="btn btn-primary mb-2" value="Update" />     
                         </div>
                         <div className="col-auto">
                             <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
