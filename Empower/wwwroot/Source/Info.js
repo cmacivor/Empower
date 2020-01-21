@@ -238,24 +238,22 @@ const Info = forwardRef((props, ref) => {
                                 <input type="text" ref={register({required: true})} value={lastName} onChange={e => infoTabOnChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName" name="txtLastName" required></input>
                                 {errors.txtLastName && <div className="invalid-feedback" >This field is required</div> }
                             </div>
+                        </div>
+                        <div className="col-3">
+                            <div className="form-group">
+                                <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
+                                <input type="text" ref={register({required: true})} value={firstName} onChange={e => infoTabOnChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName" name="txtFirstName" required></input>
+                                {errors.txtFirstName && <div className="invalid-feedback" >This field is required</div> }
+                            </div>
 
-                            
-                            {/* <div className="input-group mb-3">
-                                <input type="text" ref={register({required: true})} value={lastName} onChange={e => infoTabOnChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName" name="txtLastName"></input>
-                                {errors.txtLastName && <span>This field is required</span> }
-                            </div> */}
                         </div>
                         <div className="col-3">
-                            <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
-                            <div className="input-group mb-3">
-                                <input type="text" value={firstName} onChange={e => infoTabOnChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName"></input>
+                            <div className="form-group">
+                                <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
+                                <input type="text" ref={register({required: true})} value={middleName} onChange={e => infoTabOnChangeHandler(e, "txtMiddleName")} className="form-control" id="txtMiddleName" name="txtMiddleName" required></input>
+                                {errors.txtMiddleName && <div className="invalid-feedback" >This field is required</div> }
                             </div>
-                        </div>
-                        <div className="col-3">
-                            <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
-                            <div className="input-group mb-3">
-                                <input type="text" value={middleName} onChange={e => infoTabOnChangeHandler(e, "txtMiddleName")} className="form-control" id="txtMiddleName"></input>
-                            </div>
+
                         </div>
                         <div className="col-3">
                             <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>

@@ -82657,33 +82657,47 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "invalid-feedback"
   }, "This field is required"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-group"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtFirstName"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " First Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "input-group mb-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " First Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
+    ref: register({
+      required: true
+    }),
     value: firstName,
     onChange: function onChange(e) {
       return infoTabOnChangeHandler(e, "txtFirstName");
     },
     className: "form-control",
-    id: "txtFirstName"
-  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "txtFirstName",
+    name: "txtFirstName",
+    required: true
+  }), errors.txtFirstName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "invalid-feedback"
+  }, "This field is required"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-group"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtMiddleName"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Middle Name")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "input-group mb-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Middle Name")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
+    ref: register({
+      required: true
+    }),
     value: middleName,
     onChange: function onChange(e) {
       return infoTabOnChangeHandler(e, "txtMiddleName");
     },
     className: "form-control",
-    id: "txtMiddleName"
-  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "txtMiddleName",
+    name: "txtMiddleName",
+    required: true
+  }), errors.txtMiddleName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "invalid-feedback"
+  }, "This field is required"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "ddlSuffix"
