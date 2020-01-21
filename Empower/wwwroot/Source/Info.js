@@ -20,14 +20,12 @@ const Info = forwardRef((props, ref) => {
    //need to create variables for each- if it's null, set to empty string for React controlled components
     let clientLastName = (clientInfo.LastName !== null)  ? clientInfo.LastName : '';
     let clientFirstName = (clientInfo.FirstName !== null)  ? clientInfo.FirstName : '';
-
     let clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
     let clientSuffixID = (clientInfo.Suffix !== null) ? clientInfo.Suffix : 'Please Select';
     let clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
     let clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.SSN : '';
     let clientStateVcin = (clientInfo.StateORVCIN !== null) ? clientInfo.StateORVCIN : '';
     let clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : ''; 
-    //GenderID, RaceID
     let clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
     let clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
 
@@ -52,8 +50,20 @@ const Info = forwardRef((props, ref) => {
     const [stateVcin, setStateVcin] = useState(clientStateVcin);
     const [alias, setAlias] = useState(clientAlias);
     const [genderID, setGenderID] = useState(clientGenderID);
-    //const [genders, setGenders] = useState([]);
     const [raceID, setRaceID] = useState(clientRaceID);
+
+    //variables to hold previous state- for when a value changes
+    const [prevLastName, setPrevLastName] = useState(clientLastName);
+    const [prevFirstName, setPrevFirstName] = useState(clientFirstName);
+    const [prevMiddleName, setPrevMiddleName] = useState(clientMiddleName);
+    const [prevSuffixID, setPrevSuffixID] = useState(clientSuffixID);
+    const [prevSsn, setPrevSSN] = useState(clientSSN);
+    const [prevFbiNcicNumber, setPrevFbiNcicNumber] = useState(clientFbiNcic);
+    const [prevBirthDate, setPrevBirthDate] = useState(utcBirthDate);
+    const [prevStateVcin, setPrevStateVcin] = useState(clientStateVcin);
+    const [prevAlias, setPrevAlias] = useState(clientAlias);
+    const [prevGenderID, setPrevGenderID] = useState(clientGenderID);
+    const [prevRaceID, setPrevRaceID] = useState(clientRaceID);
 
     //from the cache service, initialized in the parent case management component
     const genderValues = props.genderValues;
@@ -101,9 +111,9 @@ const Info = forwardRef((props, ref) => {
         setSuffixID(clientSuffixID);
         setSSN(clientSSN);
 
-        //setRaceDescription(clientRaceDescription);
+        setRaceDescription(clientRaceDescription);
         setGenderDescription(clientGenderDescription);
-    }, [clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+    }, [clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
     function convertDateToUtcFormat(date)
     {
@@ -177,6 +187,21 @@ const Info = forwardRef((props, ref) => {
         setRaceDescription(raceDescription);
     }
 
+    function resetForm() {
+        setLastName(prevLastName);
+        setFirstName(prevFirstName);
+        setMiddleName(prevMiddleName);
+        setSSN(prevSsn);
+        setFbiNcicNumber(prevFbiNcicNumber);
+        setBirthDate(prevBirthDate);
+        setStateVcin(prevStateVcin);
+        setAlias(prevAlias);
+        
+        setGenderID(prevGenderID);
+        setSuffixID(prevSuffixID);
+        setRaceID(setPrevRaceID);
+    }
+
     return <div>
                 <br></br>
                 <div className="form-row">
@@ -248,12 +273,7 @@ const Info = forwardRef((props, ref) => {
                         </div>
                     </div>
                     <div className="col-2">
-                        <label htmlFor="ddlGender"><strong>Gender*</strong></label>
-                        {/* <GenderDropDown 
-                        onSelectGender={handleGenderChange} 
-                        onSelectGenderDescription={handleGenderDescriptionChange} 
-                        selected={genderID}
-                        genderDescription={genderDescription}/> */}
+                        <label htmlFor="ddlGender"><strong>Gender*</strong></label>         
                         <DropDown
                          onSelectValue={handleGenderChange}
                          onSelectValueDescription={handleGenderDescriptionChange}
@@ -271,6 +291,14 @@ const Info = forwardRef((props, ref) => {
                             valueDescription={raceDescription}
                             values={raceValues}>
                         </DropDown>
+                    </div>
+                </div>
+                <div className="form-row float-right">
+                    <div className="col-auto">
+                        <button type="button"  className="btn btn-primary mb-2">Update</button>     
+                    </div>
+                    <div className="col-auto">
+                        <button type="button" onClick={resetForm} className="btn btn-primary mb-2">Reset</button>
                     </div>
                 </div>
                 <br></br>
