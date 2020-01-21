@@ -81105,7 +81105,11 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setRaceDescription(prevRaceDescription);
   }
 
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  function updateButtonClickHandler() {}
+
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
+    onSubmit: updateButtonClickHandler
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
@@ -81263,17 +81267,18 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "form-row float-right"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-auto"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
-    type: "button",
-    className: "btn btn-primary mb-2"
-  }, "Update")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "submit",
+    className: "btn btn-primary mb-2",
+    value: "Update"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-auto"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
     type: "button",
     onClick: resetForm,
     disabled: isResetButtonDisabled,
     className: "btn btn-primary mb-2"
-  }, "Reset"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
+  }, "Reset")))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
 });
 /* harmony default export */ __webpack_exports__["default"] = (Info);
 

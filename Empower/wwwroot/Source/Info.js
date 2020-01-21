@@ -210,105 +210,111 @@ const Info = forwardRef((props, ref) => {
         setRaceDescription(prevRaceDescription);
     }
 
+    function updateButtonClickHandler() {
+
+    }
+
     return <div>
                 <br></br>
-                <div className="form-row">
-                    <div className="col-3">
-                        <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text"  value={lastName} onChange={e => infoTabOnChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName"></input>
+                  <form onSubmit={updateButtonClickHandler} >
+                    <div className="form-row">
+                        <div className="col-3">
+                            <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text"  value={lastName} onChange={e => infoTabOnChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName"></input>
+                            </div>
+                        </div>
+                        <div className="col-3">
+                            <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text" value={firstName} onChange={e => infoTabOnChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName"></input>
+                            </div>
+                        </div>
+                        <div className="col-3">
+                            <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text" value={middleName} onChange={e => infoTabOnChangeHandler(e, "txtMiddleName")} className="form-control" id="txtMiddleName"></input>
+                            </div>
+                        </div>
+                        <div className="col-3">
+                            <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
+                            <SuffixDropdown onSelectSuffix={handleSuffixChange} selected={props.infoTabSuffix} />          
                         </div>
                     </div>
-                    <div className="col-3">
-                        <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" value={firstName} onChange={e => infoTabOnChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName"></input>
+                    <div className="form-row">
+                        <div className="col-3">
+                            <label htmlFor="txtSSN"><strong> SSN</strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text" value={ssn} onChange={e => infoTabOnChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
+                            </div>
+                        </div>
+                        <div className="col-3">
+                            <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text" value={fbiNcicNumber} onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")} className="form-control" id="txtFbiNcicNumber"></input>
+                            </div>
+                        </div>
+                        <div className="col-3">
+                            <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
+                            <div className="inpu-group mb-3">
+                                <input type="text" readOnly value={diffInYears} className="form-control"></input>
+                            </div>
+                        </div>
+                        <div className="col-3">
+                            <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
+                            <div className="input-group mb-3">
+                            <DatePicker 
+                                selected={ birthDate }
+                                
+                                onChange={date => handleDatePickerChange({date})}
+                                className="form-control"                             
+                            />
+                            </div>
+                        </div> 
+                    </div>
+                    <div className="form-row">
+                        <div className="col-3">
+                            <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
+                            </div>                       
+                        </div>
+                        <div className="col-2">
+                            <label htmlFor="txtAlias"><strong>Alias</strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text" value={alias} onChange={e => infoTabOnChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
+                            </div>
+                        </div>
+                        <div className="col-2">
+                            <label htmlFor="ddlGender"><strong>Gender*</strong></label>         
+                            <DropDown
+                            onSelectValue={handleGenderChange}
+                            onSelectValueDescription={handleGenderDescriptionChange}
+                            selected={genderID}
+                            valueDescription={genderDescription}
+                            values={genderValues}>
+                            </DropDown>
+                        </div>
+                        <div className="col-4">
+                            <label><strong>Race/Ethnicity*</strong></label>
+                            <DropDown
+                                onSelectValue={handleRaceChange}
+                                onSelectValueDescription={handleRaceDescriptionChange}
+                                selected={raceID}
+                                valueDescription={raceDescription}
+                                values={raceValues}>
+                            </DropDown>
                         </div>
                     </div>
-                    <div className="col-3">
-                        <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" value={middleName} onChange={e => infoTabOnChangeHandler(e, "txtMiddleName")} className="form-control" id="txtMiddleName"></input>
+                    <div className="form-row float-right">
+                        <div className="col-auto">
+                            <input type="submit"  className="btn btn-primary mb-2" value="Update" />     
+                        </div>
+                        <div className="col-auto">
+                            <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
                         </div>
                     </div>
-                    <div className="col-3">
-                        <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
-                        <SuffixDropdown onSelectSuffix={handleSuffixChange} selected={props.infoTabSuffix} />          
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className="col-3">
-                        <label htmlFor="txtSSN"><strong> SSN</strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" value={ssn} onChange={e => infoTabOnChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
-                        </div>
-                    </div>
-                    <div className="col-3">
-                        <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" value={fbiNcicNumber} onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")} className="form-control" id="txtFbiNcicNumber"></input>
-                        </div>
-                    </div>
-                    <div className="col-3">
-                        <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
-                        <div className="inpu-group mb-3">
-                            <input type="text" readOnly value={diffInYears} className="form-control"></input>
-                        </div>
-                    </div>
-                    <div className="col-3">
-                        <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
-                        <div className="input-group mb-3">
-                        <DatePicker 
-                             selected={ birthDate }
-                             
-                             onChange={date => handleDatePickerChange({date})}
-                             className="form-control"                             
-                         />
-                        </div>
-                    </div> 
-                </div>
-                <div className="form-row">
-                    <div className="col-3">
-                        <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
-                        </div>                       
-                    </div>
-                    <div className="col-2">
-                        <label htmlFor="txtAlias"><strong>Alias</strong></label>
-                        <div className="input-group mb-3">
-                            <input type="text" value={alias} onChange={e => infoTabOnChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
-                        </div>
-                    </div>
-                    <div className="col-2">
-                        <label htmlFor="ddlGender"><strong>Gender*</strong></label>         
-                        <DropDown
-                         onSelectValue={handleGenderChange}
-                         onSelectValueDescription={handleGenderDescriptionChange}
-                         selected={genderID}
-                         valueDescription={genderDescription}
-                         values={genderValues}>
-                        </DropDown>
-                    </div>
-                    <div className="col-4">
-                        <label><strong>Race/Ethnicity*</strong></label>
-                        <DropDown
-                            onSelectValue={handleRaceChange}
-                            onSelectValueDescription={handleRaceDescriptionChange}
-                            selected={raceID}
-                            valueDescription={raceDescription}
-                            values={raceValues}>
-                        </DropDown>
-                    </div>
-                </div>
-                <div className="form-row float-right">
-                    <div className="col-auto">
-                        <button type="button"  className="btn btn-primary mb-2">Update</button>     
-                    </div>
-                    <div className="col-auto">
-                        <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
-                    </div>
-                </div>
+                </form>
                 <br></br>
                 {state.count}
                 {state.message}
