@@ -51,6 +51,7 @@ const Info = forwardRef((props, ref) => {
     const [alias, setAlias] = useState(clientAlias);
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
+    const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
 
     //variables to hold previous state- for when a value changes
     const [prevLastName] = useState(clientLastName);
@@ -122,6 +123,7 @@ const Info = forwardRef((props, ref) => {
     }
 
     function infoTabOnChangeHandler (e, field) {
+        setResetButtonDisabled(false);
        
         if (field === "txtLastName") {
             setLastName(e.target.value);
@@ -153,33 +155,39 @@ const Info = forwardRef((props, ref) => {
     }
 
     function handleSuffixChange (suffix)  {
+       setResetButtonDisabled(false);
        console.log('this is the handleSuffixChange in Info.js ');
        console.log(suffix);
     }
 
-    function handleDatePickerChange(birthDate) { 
+    function handleDatePickerChange(birthDate) {
+        setResetButtonDisabled(false); 
         setBirthDate(birthDate.date);
     }
 
     function handleGenderChange(gender){
+        setResetButtonDisabled(false);
         console.log('this is the handleGenderChange in Info.js ');
         console.log(gender);
         setGenderID(gender);
     }
 
     function handleGenderDescriptionChange(genderDescription) {
+        setResetButtonDisabled(false);
         console.log('this is the handlGenderDescription in Info.js');
         console.log(genderDescription);
         setGenderDescription(genderDescription);
     }
 
     function handleRaceChange(race) {
+        setResetButtonDisabled(false);
         console.log('this is handleRaceChange ');
         console.log(race);
         setRaceID(race);
     }
 
     function handleRaceDescriptionChange(raceDescription) {
+        setResetButtonDisabled(false);
         console.log('this is the handleRaceDescriptionChange ');
         console.log(raceDescription);
         setRaceDescription(raceDescription);
@@ -298,7 +306,7 @@ const Info = forwardRef((props, ref) => {
                         <button type="button"  className="btn btn-primary mb-2">Update</button>     
                     </div>
                     <div className="col-auto">
-                        <button type="button" onClick={resetForm} className="btn btn-primary mb-2">Reset</button>
+                        <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
                     </div>
                 </div>
                 <br></br>
