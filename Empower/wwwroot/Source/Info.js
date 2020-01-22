@@ -316,7 +316,14 @@ const Info = forwardRef((props, ref) => {
                         <div className="col-3">
                             <div className="form-group">
                                 <label htmlFor="txtSSN"><strong> SSN</strong></label>
-                                <input type="text" defaultValue={ssn} onChange={e => infoTabOnChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN" name="txtSSN" required={isSsnRequired}></input>
+                                <input type="text"
+                                    defaultValue={ssn} 
+                                    onChange={e => infoTabOnChangeHandler(e, "txtSSN")} 
+                                    className="form-control" 
+                                    id="txtSSN" 
+                                    name="txtSSN" 
+                                    required={isSsnRequired}>
+                                 </input>
                                <div className={errorDivCss}>Please enter the SSN in a valid format.</div>  
                             </div>
                         </div>
