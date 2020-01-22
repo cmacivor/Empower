@@ -82416,7 +82416,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
       isResetButtonDisabled = _useState24[0],
       setResetButtonDisabled = _useState24[1];
 
-  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
+  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
       _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
       isSsnRequired = _useState26[0],
       setSsnRequired = _useState26[1];
@@ -82656,11 +82656,10 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setFormClass('needs-validation was-validated');
     console.log('here are the errors:');
     console.log(errors); //use this to add bootstrap validaiton class
-
-    if (errors.txtSSN) {
-      setShowValidSsn(true);
-      setSsnRequired(true);
-    }
+    // if (errors.txtSSN) {
+    //     setShowValidSsn(true);
+    //     setSsnRequired(true); 
+    // }
   };
 
   console.log('this is another attempt to see errors');

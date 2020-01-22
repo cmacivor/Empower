@@ -56,7 +56,7 @@ const Info = forwardRef((props, ref) => {
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
-    const [isSsnRequired, setSsnRequired] = useState(true);
+    const [isSsnRequired, setSsnRequired] = useState(false);
     const [showValidSsn, setShowValidSsn] = useState(true);
     const [errorDivCss, setErroDivCss] = useState('invalid-feedback ');
 
@@ -245,10 +245,10 @@ const Info = forwardRef((props, ref) => {
         console.log(errors);
         //use this to add bootstrap validaiton class
 
-        if (errors.txtSSN) {
-            setShowValidSsn(true);
-            setSsnRequired(true); 
-        }
+        // if (errors.txtSSN) {
+        //     setShowValidSsn(true);
+        //     setSsnRequired(true); 
+        // }
     }
 
 
