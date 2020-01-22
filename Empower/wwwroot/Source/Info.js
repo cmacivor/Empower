@@ -58,6 +58,7 @@ const Info = forwardRef((props, ref) => {
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
     const [isSsnRequired, setSsnRequired] = useState(true);
     const [showValidSsn, setShowValidSsn] = useState(true);
+    const [errorDivCss, setErroDivCss] = useState('invalid-feedback ');
 
     //variables to hold previous state- for when a value changes
     const [prevLastName] = useState(clientLastName);
@@ -149,11 +150,15 @@ const Info = forwardRef((props, ref) => {
             const ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
             const isValidSsn = ssnRegex.test(e.target.value);
             if (!isValidSsn) {
+                console.log('not valid');
                 setShowValidSsn(true);
-                setSsnRequired(true); 
+                setSsnRequired(true);
+                setErroDivCss('invalid-feedback d-block'); 
             } else { 
+                console.log('valid');
                 setShowValidSsn(false);
-                setSsnRequired(false);
+                setSsnRequired(undefined);
+                setErroDivCss('invalid-feedback');
             }
 
            setSSN(e.target.value);
@@ -239,9 +244,19 @@ const Info = forwardRef((props, ref) => {
         console.log('here are the errors:');
         console.log(errors);
         //use this to add bootstrap validaiton class
+
+        if (errors.txtSSN) {
+            setShowValidSsn(true);
+            setSsnRequired(true); 
+        }
     }
+
+
     console.log('this is another attempt to see errors');
     console.log(errors);
+
+  
+
     return <div>
                 <br></br>
                   <form onSubmit={handleSubmit(updateButtonClickHandler)} className={formClass} noValidate>
@@ -301,8 +316,8 @@ const Info = forwardRef((props, ref) => {
                         <div className="col-3">
                             <div className="form-group">
                                 <label htmlFor="txtSSN"><strong> SSN</strong></label>
-                                <input type="text" ref={register({pattern: /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/})} value={ssn} onChange={e => infoTabOnChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN" name="txtSSN" required={isSsnRequired}></input>
-                               {showValidSsn && <div className="invalid-feedback" >Please enter the SSN in a valid format.</div> } 
+                                <input type="text" defaultValue={ssn} onChange={e => infoTabOnChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN" name="txtSSN" required={isSsnRequired}></input>
+                               <div className={errorDivCss}>Please enter the SSN in a valid format.</div>  
                             </div>
                         </div>
                         <div className="col-3">
