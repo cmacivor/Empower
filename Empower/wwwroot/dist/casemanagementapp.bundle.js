@@ -82546,6 +82546,16 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     }
 
     if (field === "txtSSN") {
+      console.log('the onChangeHanlder');
+      var ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
+      var isValidSsn = ssnRegex.test(e.target.value);
+
+      if (isValidSsn) {
+        console.log('its valid');
+      } else {
+        console.log('nope');
+      }
+
       setSSN(e.target.value);
     }
 
@@ -82618,16 +82628,18 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   } //this will fire when submission of the form is successful
 
 
-  var updateButtonClickHandler = function updateButtonClickHandler(event) {
-    event.preventDefault();
+  var updateButtonClickHandler = function updateButtonClickHandler(event) {//event.preventDefault();
   };
 
   var TriggerValidationHandler = function TriggerValidationHandler() {
     triggerValidation("txtLastName");
-    setFormClass('needs-validation was-validated'); //console.log(errors);
-    //use this to add bootstrap validaiton class
+    setFormClass('needs-validation was-validated');
+    console.log('here are the errors:');
+    console.log(errors); //use this to add bootstrap validaiton class
   };
 
+  console.log('this is another attempt to see errors');
+  console.log(errors);
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
     onSubmit: handleSubmit(updateButtonClickHandler),
     className: formClass,
@@ -82643,7 +82655,8 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Last Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
     ref: register({
-      required: true
+      required: true,
+      maxLength: 50
     }),
     value: lastName,
     onChange: function onChange(e) {
@@ -82664,7 +82677,8 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " First Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
     ref: register({
-      required: true
+      required: true,
+      maxLength: 50
     }),
     value: firstName,
     onChange: function onChange(e) {
@@ -82685,7 +82699,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Middle Name")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
     ref: register({
-      required: true
+      maxLength: 50
     }),
     value: middleName,
     onChange: function onChange(e) {
@@ -82693,11 +82707,10 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     },
     className: "form-control",
     id: "txtMiddleName",
-    name: "txtMiddleName",
-    required: true
+    name: "txtMiddleName"
   }), errors.txtMiddleName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "invalid-feedback"
-  }, "This field is required"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }, "This field may not exceed 50 characters."))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "ddlSuffix"
@@ -82714,12 +82727,19 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "input-group mb-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
+    ref: register({
+      pattern: /^\d{3}-?\d{2}-?\d{4}$/i
+    }),
     value: ssn,
     onChange: function onChange(e) {
       return infoTabOnChangeHandler(e, "txtSSN");
     },
     className: "form-control",
-    id: "txtSSN"
+    id: "txtSSN",
+    name: "txtSSN"
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_hook_form__WEBPACK_IMPORTED_MODULE_11__["ErrorMessage"], {
+    errors: errors,
+    name: "txtSSN"
   }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
