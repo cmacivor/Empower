@@ -82556,6 +82556,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     }
 
     if (field === "txtSSN") {
+<<<<<<< HEAD
       var ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
       var isValidSsn = ssnRegex.test(e.target.value);
 
@@ -82565,6 +82566,16 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
       } else {
         setShowValidSsn(false);
         setSsnRequired(false);
+=======
+      console.log('the onChangeHanlder');
+      var ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
+      var isValidSsn = ssnRegex.test(e.target.value);
+
+      if (isValidSsn) {
+        console.log('its valid');
+      } else {
+        console.log('nope');
+>>>>>>> a867ca89d40346c7b33e7563bd216706517645c9
       }
 
       setSSN(e.target.value);
@@ -82639,16 +82650,18 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   } //this will fire when submission of the form is successful
 
 
-  var updateButtonClickHandler = function updateButtonClickHandler(event) {
-    event.preventDefault();
+  var updateButtonClickHandler = function updateButtonClickHandler(event) {//event.preventDefault();
   };
 
   var TriggerValidationHandler = function TriggerValidationHandler() {
     triggerValidation("txtLastName");
-    setFormClass('needs-validation was-validated'); //console.log(errors);
-    //use this to add bootstrap validaiton class
+    setFormClass('needs-validation was-validated');
+    console.log('here are the errors:');
+    console.log(errors); //use this to add bootstrap validaiton class
   };
 
+  console.log('this is another attempt to see errors');
+  console.log(errors);
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
     onSubmit: handleSubmit(updateButtonClickHandler),
     className: formClass,
@@ -82664,7 +82677,8 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Last Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
     ref: register({
-      required: true
+      required: true,
+      maxLength: 50
     }),
     value: lastName,
     onChange: function onChange(e) {
@@ -82685,7 +82699,12 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " First Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
     ref: register({
+<<<<<<< HEAD
       required: true
+=======
+      required: true,
+      maxLength: 50
+>>>>>>> a867ca89d40346c7b33e7563bd216706517645c9
     }),
     value: firstName,
     onChange: function onChange(e) {
@@ -82706,7 +82725,11 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Middle Name")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
     ref: register({
+<<<<<<< HEAD
       required: true
+=======
+      maxLength: 50
+>>>>>>> a867ca89d40346c7b33e7563bd216706517645c9
     }),
     value: middleName,
     onChange: function onChange(e) {
@@ -82714,11 +82737,18 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     },
     className: "form-control",
     id: "txtMiddleName",
+<<<<<<< HEAD
     name: "txtMiddleName",
     required: true
   }), errors.txtMiddleName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "invalid-feedback"
   }, "This field is required"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+=======
+    name: "txtMiddleName"
+  }), errors.txtMiddleName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "invalid-feedback"
+  }, "This field may not exceed 50 characters."))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+>>>>>>> a867ca89d40346c7b33e7563bd216706517645c9
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "ddlSuffix"
@@ -82736,7 +82766,11 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " SSN")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
     ref: register({
+<<<<<<< HEAD
       pattern: /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/
+=======
+      pattern: /^\d{3}-?\d{2}-?\d{4}$/i
+>>>>>>> a867ca89d40346c7b33e7563bd216706517645c9
     }),
     value: ssn,
     onChange: function onChange(e) {
@@ -82744,11 +82778,19 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     },
     className: "form-control",
     id: "txtSSN",
+<<<<<<< HEAD
     name: "txtSSN",
     required: isSsnRequired
   }), showValidSsn && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "invalid-feedback"
   }, "Please enter the SSN in a valid format."))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+=======
+    name: "txtSSN"
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_hook_form__WEBPACK_IMPORTED_MODULE_11__["ErrorMessage"], {
+    errors: errors,
+    name: "txtSSN"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+>>>>>>> a867ca89d40346c7b33e7563bd216706517645c9
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtFbiNcicNumber"

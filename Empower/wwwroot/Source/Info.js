@@ -8,7 +8,7 @@ import GenderDropDown from './GenderDropdown';
 import moment from 'moment';
 import {useCacheService} from './useCacheService';
 import DropDown from './Dropdown';
-import {useForm} from 'react-hook-form';
+import {useForm, ErrorMessage} from 'react-hook-form';
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
 //this allows the updateBirthDate() function to be called from the CaseManagement parent component
@@ -230,16 +230,18 @@ const Info = forwardRef((props, ref) => {
 
     //this will fire when submission of the form is successful
     const updateButtonClickHandler = (event) => {
-        event.preventDefault();
+        //event.preventDefault();
     }
 
     const TriggerValidationHandler = () => {
         triggerValidation("txtLastName");
         setFormClass('needs-validation was-validated');
-        //console.log(errors);
+        console.log('here are the errors:');
+        console.log(errors);
         //use this to add bootstrap validaiton class
     }
-
+    console.log('this is another attempt to see errors');
+    console.log(errors);
     return <div>
                 <br></br>
                   <form onSubmit={handleSubmit(updateButtonClickHandler)} className={formClass} noValidate>
@@ -247,14 +249,30 @@ const Info = forwardRef((props, ref) => {
                         <div className="col-3">
                             <div className="form-group">
                                 <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
-                                <input type="text" ref={register({required: true})} value={lastName} onChange={e => infoTabOnChangeHandler(e, "txtLastName")} className="form-control" id="txtLastName" name="txtLastName" required></input>
+                                <input type="text" 
+                                    ref={register({required: true, maxLength: 50})} 
+                                    value={lastName} 
+                                    onChange={e => infoTabOnChangeHandler(e, "txtLastName")} 
+                                    className="form-control" 
+                                    id="txtLastName" 
+                                    name="txtLastName" 
+                                    required>
+                                </input>
                                 {errors.txtLastName && <div className="invalid-feedback" >This field is required</div> }
                             </div>
                         </div>
                         <div className="col-3">
                             <div className="form-group">
                                 <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
-                                <input type="text" ref={register({required: true})} value={firstName} onChange={e => infoTabOnChangeHandler(e, "txtFirstName")} className="form-control" id="txtFirstName" name="txtFirstName" required></input>
+                                <input type="text" 
+                                    ref={register({required: true, maxLength: 50})} 
+                                    value={firstName} 
+                                    onChange={e => infoTabOnChangeHandler(e, "txtFirstName")} 
+                                    className="form-control" 
+                                    id="txtFirstName" 
+                                    name="txtFirstName" 
+                                    required>
+                                </input>
                                 {errors.txtFirstName && <div className="invalid-feedback" >This field is required</div> }
                             </div>
 
@@ -262,8 +280,15 @@ const Info = forwardRef((props, ref) => {
                         <div className="col-3">
                             <div className="form-group">
                                 <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
-                                <input type="text" ref={register({required: true})} value={middleName} onChange={e => infoTabOnChangeHandler(e, "txtMiddleName")} className="form-control" id="txtMiddleName" name="txtMiddleName" required></input>
-                                {errors.txtMiddleName && <div className="invalid-feedback" >This field is required</div> }
+                                <input type="text"
+                                    ref={register({ maxLength: 50 })} 
+                                    value={middleName} 
+                                    onChange={e => infoTabOnChangeHandler(e, "txtMiddleName")} 
+                                    className="form-control" 
+                                    id="txtMiddleName" 
+                                    name="txtMiddleName">
+                                 </input>
+                                {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div> }
                             </div>
 
                         </div>
@@ -283,7 +308,12 @@ const Info = forwardRef((props, ref) => {
                         <div className="col-3">
                             <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
                             <div className="input-group mb-3">
-                                <input type="text" value={fbiNcicNumber} onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")} className="form-control" id="txtFbiNcicNumber"></input>
+                                <input type="text" 
+                                    value={fbiNcicNumber} 
+                                    onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")} 
+                                    className="form-control" 
+                                    id="txtFbiNcicNumber">
+                                </input>
                             </div>
                         </div>
                         <div className="col-3">
