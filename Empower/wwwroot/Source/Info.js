@@ -317,7 +317,7 @@ const Info = forwardRef((props, ref) => {
                             <div className="form-group">
                                 <label htmlFor="txtSSN"><strong> SSN</strong></label>
                                 <input type="text"
-                                    defaultValue={ssn} 
+                                    value={ssn} 
                                     onChange={e => infoTabOnChangeHandler(e, "txtSSN")} 
                                     className="form-control" 
                                     id="txtSSN" 

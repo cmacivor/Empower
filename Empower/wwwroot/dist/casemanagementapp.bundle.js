@@ -82752,7 +82752,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     htmlFor: "txtSSN"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " SSN")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
-    defaultValue: ssn,
+    value: ssn,
     onChange: function onChange(e) {
       return infoTabOnChangeHandler(e, "txtSSN");
     },
