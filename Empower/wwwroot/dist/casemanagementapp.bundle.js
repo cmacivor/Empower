@@ -82409,72 +82409,80 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
       _useState22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState21, 2),
       raceID = _useState22[0],
-      setRaceID = _useState22[1];
+      setRaceID = _useState22[1]; //for the reset button, it will enable if anything is changed
+
 
   var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
       _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
       isResetButtonDisabled = _useState24[0],
-      setResetButtonDisabled = _useState24[1];
+      setResetButtonDisabled = _useState24[1]; //SSN field 
+
 
   var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
       _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
       isSsnRequired = _useState26[0],
       setSsnRequired = _useState26[1];
 
-  var _useState27 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
+  var _useState27 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('invalid-feedback'),
       _useState28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState27, 2),
-      showValidSsn = _useState28[0],
-      setShowValidSsn = _useState28[1];
+      errorDivCss = _useState28[0],
+      setErroDivCss = _useState28[1]; //Date of Birth field
 
-  var _useState29 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('invalid-feedback '),
+
+  var _useState29 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
       _useState30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState29, 2),
-      errorDivCss = _useState30[0],
-      setErroDivCss = _useState30[1]; //variables to hold previous state- for when a value changes
+      isBirthDateRequired = _useState30[0],
+      setBirthDateRequired = _useState30[1];
+
+  var _useState31 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('invalid-feedback'),
+      _useState32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState31, 2),
+      dobErrorDivCss = _useState32[0],
+      setDobErrorDivCss = _useState32[1]; //variables to hold previous state- for when a value changes
 
 
-  var _useState31 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
-      _useState32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState31, 1),
-      prevLastName = _useState32[0];
-
-  var _useState33 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFirstName),
+  var _useState33 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
       _useState34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState33, 1),
-      prevFirstName = _useState34[0];
+      prevLastName = _useState34[0];
 
-  var _useState35 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientMiddleName),
+  var _useState35 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFirstName),
       _useState36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState35, 1),
-      prevMiddleName = _useState36[0];
+      prevFirstName = _useState36[0];
 
-  var _useState37 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSuffixID),
+  var _useState37 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientMiddleName),
       _useState38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState37, 1),
-      prevSuffixID = _useState38[0];
+      prevMiddleName = _useState38[0];
 
-  var _useState39 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSSN),
+  var _useState39 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSuffixID),
       _useState40 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState39, 1),
-      prevSsn = _useState40[0];
+      prevSuffixID = _useState40[0];
 
-  var _useState41 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFbiNcic),
+  var _useState41 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSSN),
       _useState42 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState41, 1),
-      prevFbiNcicNumber = _useState42[0];
+      prevSsn = _useState42[0];
 
-  var _useState43 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(utcBirthDate),
+  var _useState43 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFbiNcic),
       _useState44 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState43, 1),
-      prevBirthDate = _useState44[0];
+      prevFbiNcicNumber = _useState44[0];
 
-  var _useState45 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientStateVcin),
+  var _useState45 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(utcBirthDate),
       _useState46 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState45, 1),
-      prevStateVcin = _useState46[0];
+      prevBirthDate = _useState46[0];
 
-  var _useState47 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientAlias),
+  var _useState47 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientStateVcin),
       _useState48 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState47, 1),
-      prevAlias = _useState48[0];
+      prevStateVcin = _useState48[0];
 
-  var _useState49 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderID),
+  var _useState49 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientAlias),
       _useState50 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState49, 1),
-      prevGenderID = _useState50[0];
+      prevAlias = _useState50[0];
 
-  var _useState51 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
+  var _useState51 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderID),
       _useState52 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState51, 1),
-      prevRaceID = _useState52[0]; //from the cache service, initialized in the parent case management component
+      prevGenderID = _useState52[0];
+
+  var _useState53 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
+      _useState54 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState53, 1),
+      prevRaceID = _useState54[0]; //from the cache service, initialized in the parent case management component
 
 
   var genderValues = props.genderValues;
@@ -82488,28 +82496,28 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
   var clientRaceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
 
-  var _useState53 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
-      _useState54 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState53, 2),
-      genderDescription = _useState54[0],
-      setGenderDescription = _useState54[1];
-
-  var _useState55 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+  var _useState55 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
       _useState56 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState55, 2),
-      raceDescription = _useState56[0],
-      setRaceDescription = _useState56[1];
+      genderDescription = _useState56[0],
+      setGenderDescription = _useState56[1];
 
-  var _useState57 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
-      _useState58 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState57, 1),
-      prevGenderDescription = _useState58[0];
+  var _useState57 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+      _useState58 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState57, 2),
+      raceDescription = _useState58[0],
+      setRaceDescription = _useState58[1];
 
-  var _useState59 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+  var _useState59 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
       _useState60 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState59, 1),
-      prevRaceDescription = _useState60[0];
+      prevGenderDescription = _useState60[0];
 
-  var _useState61 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('needs-validation'),
-      _useState62 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState61, 2),
-      formClass = _useState62[0],
-      setFormClass = _useState62[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
+  var _useState61 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+      _useState62 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState61, 1),
+      prevRaceDescription = _useState62[0];
+
+  var _useState63 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('needs-validation'),
+      _useState64 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState63, 2),
+      formClass = _useState64[0],
+      setFormClass = _useState64[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
   //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
 
 
@@ -82565,13 +82573,13 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
       var isValidSsn = ssnRegex.test(e.target.value);
 
       if (!isValidSsn) {
-        console.log('not valid');
-        setShowValidSsn(true);
+        console.log('not valid'); //setShowValidSsn(true);
+
         setSsnRequired(true);
         setErroDivCss('invalid-feedback d-block');
       } else {
-        console.log('valid');
-        setShowValidSsn(false);
+        console.log('valid'); //setShowValidSsn(false);
+
         setSsnRequired(undefined);
         setErroDivCss('invalid-feedback');
       }
@@ -82592,6 +82600,11 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     }
   }
 
+  function isValidDate(d) {
+    //return d.date instanceof Date && !isNaN(d);
+    return Object.prototype.toString.call(d.date) === '[object Date]';
+  }
+
   function handleSuffixChange(suffix) {
     setResetButtonDisabled(false);
     console.log('this is the handleSuffixChange in Info.js ');
@@ -82599,6 +82612,19 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }
 
   function handleDatePickerChange(birthDate) {
+    console.log('this is the birth date');
+    console.log(birthDate);
+    var isValid = isValidDate(birthDate);
+    console.log(isValid);
+
+    if (!isValid) {
+      setBirthDateRequired(true);
+      setDobErrorDivCss('invalid-feedback d-block');
+    } else {
+      setBirthDateRequired(false);
+      setDobErrorDivCss('invalid-feedback');
+    }
+
     setResetButtonDisabled(false);
     setBirthDate(birthDate.date);
   }
@@ -82660,10 +82686,10 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     //     setShowValidSsn(true);
     //     setSsnRequired(true); 
     // }
-  };
+  }; //this correctly gets errors
+  //console.log(errors);
 
-  console.log('this is another attempt to see errors');
-  console.log(errors);
+
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
     onSubmit: handleSubmit(updateButtonClickHandler),
     className: formClass,
@@ -82794,13 +82820,16 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "input-group mb-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_2___default.a, {
     selected: birthDate,
+    required: isBirthDateRequired,
     onChange: function onChange(date) {
       return handleDatePickerChange({
         date: date
       });
     },
     className: "form-control"
-  })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: dobErrorDivCss
+  }, "Please enter a valid birth date.")))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"

@@ -55,10 +55,16 @@ const Info = forwardRef((props, ref) => {
     const [alias, setAlias] = useState(clientAlias);
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
+    
+    //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
+    //SSN field 
     const [isSsnRequired, setSsnRequired] = useState(false);
-    const [showValidSsn, setShowValidSsn] = useState(true);
-    const [errorDivCss, setErroDivCss] = useState('invalid-feedback ');
+    const [errorDivCss, setErroDivCss] = useState('invalid-feedback');
+    //Date of Birth field
+    const [isBirthDateRequired, setBirthDateRequired] = useState(false);
+    const [dobErrorDivCss, setDobErrorDivCss] = useState('invalid-feedback');
+
 
     //variables to hold previous state- for when a value changes
     const [prevLastName] = useState(clientLastName);
@@ -151,12 +157,12 @@ const Info = forwardRef((props, ref) => {
             const isValidSsn = ssnRegex.test(e.target.value);
             if (!isValidSsn) {
                 console.log('not valid');
-                setShowValidSsn(true);
+                //setShowValidSsn(true);
                 setSsnRequired(true);
                 setErroDivCss('invalid-feedback d-block'); 
             } else { 
                 console.log('valid');
-                setShowValidSsn(false);
+                //setShowValidSsn(false);
                 setSsnRequired(undefined);
                 setErroDivCss('invalid-feedback');
             }
@@ -177,6 +183,11 @@ const Info = forwardRef((props, ref) => {
         }
     }
 
+    function isValidDate(d) {
+        //return d.date instanceof Date && !isNaN(d);
+        return Object.prototype.toString.call(d.date) === '[object Date]';
+    }
+
     function handleSuffixChange (suffix)  {
        setResetButtonDisabled(false);
        console.log('this is the handleSuffixChange in Info.js ');
@@ -184,6 +195,19 @@ const Info = forwardRef((props, ref) => {
     }
 
     function handleDatePickerChange(birthDate) {
+        console.log('this is the birth date');
+        console.log(birthDate);
+        let isValid = isValidDate(birthDate);
+        console.log(isValid);
+
+        if (!isValid) {
+            setBirthDateRequired(true);
+            setDobErrorDivCss('invalid-feedback d-block')
+        } else {
+            setBirthDateRequired(false);
+            setDobErrorDivCss('invalid-feedback');
+        }
+
         setResetButtonDisabled(false); 
         setBirthDate(birthDate.date);
     }
@@ -252,8 +276,8 @@ const Info = forwardRef((props, ref) => {
     }
 
 
-    console.log('this is another attempt to see errors');
-    console.log(errors);
+    //this correctly gets errors
+    //console.log(errors);
 
   
 
@@ -349,10 +373,11 @@ const Info = forwardRef((props, ref) => {
                             <div className="input-group mb-3">
                             <DatePicker 
                                 selected={ birthDate }
-                                
+                                required={isBirthDateRequired}
                                 onChange={date => handleDatePickerChange({date})}
                                 className="form-control"                             
                             />
+                            <div className={dobErrorDivCss}>Please enter a valid birth date.</div>
                             </div>
                         </div> 
                     </div>
