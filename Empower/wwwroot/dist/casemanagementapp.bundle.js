@@ -82414,52 +82414,62 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
       _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
       isResetButtonDisabled = _useState24[0],
-      setResetButtonDisabled = _useState24[1]; //variables to hold previous state- for when a value changes
+      setResetButtonDisabled = _useState24[1];
+
+  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
+      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
+      isSsnRequired = _useState26[0],
+      setSsnRequired = _useState26[1];
+
+  var _useState27 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
+      _useState28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState27, 2),
+      showValidSsn = _useState28[0],
+      setShowValidSsn = _useState28[1]; //variables to hold previous state- for when a value changes
 
 
-  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
-      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 1),
-      prevLastName = _useState26[0];
-
-  var _useState27 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFirstName),
-      _useState28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState27, 1),
-      prevFirstName = _useState28[0];
-
-  var _useState29 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientMiddleName),
+  var _useState29 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
       _useState30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState29, 1),
-      prevMiddleName = _useState30[0];
+      prevLastName = _useState30[0];
 
-  var _useState31 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSuffixID),
+  var _useState31 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFirstName),
       _useState32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState31, 1),
-      prevSuffixID = _useState32[0];
+      prevFirstName = _useState32[0];
 
-  var _useState33 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSSN),
+  var _useState33 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientMiddleName),
       _useState34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState33, 1),
-      prevSsn = _useState34[0];
+      prevMiddleName = _useState34[0];
 
-  var _useState35 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFbiNcic),
+  var _useState35 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSuffixID),
       _useState36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState35, 1),
-      prevFbiNcicNumber = _useState36[0];
+      prevSuffixID = _useState36[0];
 
-  var _useState37 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(utcBirthDate),
+  var _useState37 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSSN),
       _useState38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState37, 1),
-      prevBirthDate = _useState38[0];
+      prevSsn = _useState38[0];
 
-  var _useState39 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientStateVcin),
+  var _useState39 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFbiNcic),
       _useState40 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState39, 1),
-      prevStateVcin = _useState40[0];
+      prevFbiNcicNumber = _useState40[0];
 
-  var _useState41 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientAlias),
+  var _useState41 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(utcBirthDate),
       _useState42 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState41, 1),
-      prevAlias = _useState42[0];
+      prevBirthDate = _useState42[0];
 
-  var _useState43 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderID),
+  var _useState43 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientStateVcin),
       _useState44 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState43, 1),
-      prevGenderID = _useState44[0];
+      prevStateVcin = _useState44[0];
 
-  var _useState45 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
+  var _useState45 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientAlias),
       _useState46 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState45, 1),
-      prevRaceID = _useState46[0]; //from the cache service, initialized in the parent case management component
+      prevAlias = _useState46[0];
+
+  var _useState47 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderID),
+      _useState48 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState47, 1),
+      prevGenderID = _useState48[0];
+
+  var _useState49 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
+      _useState50 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState49, 1),
+      prevRaceID = _useState50[0]; //from the cache service, initialized in the parent case management component
 
 
   var genderValues = props.genderValues;
@@ -82473,28 +82483,28 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
   var clientRaceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
 
-  var _useState47 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
-      _useState48 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState47, 2),
-      genderDescription = _useState48[0],
-      setGenderDescription = _useState48[1];
-
-  var _useState49 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
-      _useState50 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState49, 2),
-      raceDescription = _useState50[0],
-      setRaceDescription = _useState50[1];
-
   var _useState51 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
-      _useState52 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState51, 1),
-      prevGenderDescription = _useState52[0];
+      _useState52 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState51, 2),
+      genderDescription = _useState52[0],
+      setGenderDescription = _useState52[1];
 
   var _useState53 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
-      _useState54 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState53, 1),
-      prevRaceDescription = _useState54[0];
+      _useState54 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState53, 2),
+      raceDescription = _useState54[0],
+      setRaceDescription = _useState54[1];
 
-  var _useState55 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('needs-validation'),
-      _useState56 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState55, 2),
-      formClass = _useState56[0],
-      setFormClass = _useState56[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
+  var _useState55 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
+      _useState56 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState55, 1),
+      prevGenderDescription = _useState56[0];
+
+  var _useState57 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+      _useState58 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState57, 1),
+      prevRaceDescription = _useState58[0];
+
+  var _useState59 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('needs-validation'),
+      _useState60 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState59, 2),
+      formClass = _useState60[0],
+      setFormClass = _useState60[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
   //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
 
 
@@ -82546,6 +82556,17 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     }
 
     if (field === "txtSSN") {
+      var ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
+      var isValidSsn = ssnRegex.test(e.target.value);
+
+      if (!isValidSsn) {
+        setShowValidSsn(true);
+        setSsnRequired(true);
+      } else {
+        setShowValidSsn(false);
+        setSsnRequired(false);
+      }
+
       setSSN(e.target.value);
     }
 
@@ -82708,19 +82729,26 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-group"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtSSN"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " SSN")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "input-group mb-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " SSN")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
+    ref: register({
+      pattern: /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/
+    }),
     value: ssn,
     onChange: function onChange(e) {
       return infoTabOnChangeHandler(e, "txtSSN");
     },
     className: "form-control",
-    id: "txtSSN"
-  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "txtSSN",
+    name: "txtSSN",
+    required: isSsnRequired
+  }), showValidSsn && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "invalid-feedback"
+  }, "Please enter the SSN in a valid format."))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtFbiNcicNumber"

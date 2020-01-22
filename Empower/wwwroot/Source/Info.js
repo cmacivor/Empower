@@ -56,6 +56,8 @@ const Info = forwardRef((props, ref) => {
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
+    const [isSsnRequired, setSsnRequired] = useState(true);
+    const [showValidSsn, setShowValidSsn] = useState(true);
 
     //variables to hold previous state- for when a value changes
     const [prevLastName] = useState(clientLastName);
@@ -144,6 +146,16 @@ const Info = forwardRef((props, ref) => {
         }
 
         if (field === "txtSSN") {
+            const ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
+            const isValidSsn = ssnRegex.test(e.target.value);
+            if (!isValidSsn) {
+                setShowValidSsn(true);
+                setSsnRequired(true); 
+            } else { 
+                setShowValidSsn(false);
+                setSsnRequired(false);
+            }
+
            setSSN(e.target.value);
         }
 
@@ -262,9 +274,10 @@ const Info = forwardRef((props, ref) => {
                     </div>
                     <div className="form-row">
                         <div className="col-3">
-                            <label htmlFor="txtSSN"><strong> SSN</strong></label>
-                            <div className="input-group mb-3">
-                                <input type="text" value={ssn} onChange={e => infoTabOnChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN"></input>
+                            <div className="form-group">
+                                <label htmlFor="txtSSN"><strong> SSN</strong></label>
+                                <input type="text" ref={register({pattern: /^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/})} value={ssn} onChange={e => infoTabOnChangeHandler(e, "txtSSN")} className="form-control" id="txtSSN" name="txtSSN" required={isSsnRequired}></input>
+                               {showValidSsn && <div className="invalid-feedback" >Please enter the SSN in a valid format.</div> } 
                             </div>
                         </div>
                         <div className="col-3">
