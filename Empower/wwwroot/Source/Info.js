@@ -83,6 +83,55 @@ const Info = forwardRef((props, ref) => {
     const genderValues = props.genderValues;
     const raceValues = props.raceValues;
 
+    //add "Please Select" options to race and gender dropdowns if not there
+    let genderPleaseSelectOption = genderValues.filter(function(gender) {
+        return gender.ID === 0
+    });
+
+    console.log('does select exist');
+    console.log(genderPleaseSelectOption);
+
+    if (genderPleaseSelectOption.length === 0) {
+        let pleaseSelectItem = {
+            Name: "PleaseSelect",
+            Description: "Please Select",
+            Active: true,
+            ID: 0,
+            CreatedDate: new Date()
+        }
+
+        genderValues.splice(0, 0, pleaseSelectItem);       
+    }
+
+    let racePleaseSelectionOption = raceValues.filter(function(race) {
+        return race.ID === 0
+    }); 
+
+    if (racePleaseSelectionOption.length === 0) {
+
+        let pleaseSelectItem = {
+            Name: "PleaseSelect",
+            Description: "Please Select",
+            Active: true,
+            ID: 0,
+            CreatedDate: new Date()
+        }
+
+        raceValues.splice(0, 0, pleaseSelectItem);
+    }
+
+    //doesn't work
+    //let sortedGenderValues = genderValues.sort((a, b) => { return  a.ID > b.ID;  });
+    console.log('sorted genders: ');
+    console.log(genderValues);
+    console.log(raceValues);
+
+    //genderValues = genderValues.sort();
+    //raceValues = raceValues.sort();
+
+    //console.log(genderValues);
+    //console.log(raceValues);
+
     let genderObjectByClientGenderID = genderValues.filter(function(gender) {
        return gender.ID === clientGenderID
     });
@@ -263,16 +312,14 @@ const Info = forwardRef((props, ref) => {
     }
 
     const TriggerValidationHandler = () => {
-        triggerValidation("txtLastName");
+        //triggerValidation("txtLastName");
         setFormClass('needs-validation was-validated');
         console.log('here are the errors:');
         console.log(errors);
-        //use this to add bootstrap validaiton class
+       
+        //need to check last name, first name, date of birth, race/ethnicity, and gender
 
-        // if (errors.txtSSN) {
-        //     setShowValidSsn(true);
-        //     setSsnRequired(true); 
-        // }
+
     }
 
 

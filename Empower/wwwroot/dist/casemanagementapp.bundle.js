@@ -82486,7 +82486,49 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
 
 
   var genderValues = props.genderValues;
-  var raceValues = props.raceValues;
+  var raceValues = props.raceValues; //add "Please Select" options to race and gender dropdowns if not there
+
+  var genderPleaseSelectOption = genderValues.filter(function (gender) {
+    return gender.ID === 0;
+  });
+  console.log('does select exist');
+  console.log(genderPleaseSelectOption);
+
+  if (genderPleaseSelectOption.length === 0) {
+    var pleaseSelectItem = {
+      Name: "PleaseSelect",
+      Description: "Please Select",
+      Active: true,
+      ID: 0,
+      CreatedDate: new Date()
+    };
+    genderValues.splice(0, 0, pleaseSelectItem); //genderValues.push();
+  }
+
+  var racePleaseSelectionOption = raceValues.filter(function (race) {
+    return race.ID === 0;
+  });
+
+  if (racePleaseSelectionOption.length === 0) {
+    var _pleaseSelectItem = {
+      Name: "PleaseSelect",
+      Description: "Please Select",
+      Active: true,
+      ID: 0,
+      CreatedDate: new Date()
+    };
+    raceValues.splice(0, 0, _pleaseSelectItem); //raceValues.push();
+  } //doesn't work
+  //let sortedGenderValues = genderValues.sort((a, b) => { return  a.ID > b.ID;  });
+
+
+  console.log('sorted genders: ');
+  console.log(genderValues);
+  console.log(raceValues); //genderValues = genderValues.sort();
+  //raceValues = raceValues.sort();
+  //console.log(genderValues);
+  //console.log(raceValues);
+
   var genderObjectByClientGenderID = genderValues.filter(function (gender) {
     return gender.ID === clientGenderID;
   });
@@ -82678,14 +82720,10 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   };
 
   var TriggerValidationHandler = function TriggerValidationHandler() {
-    triggerValidation("txtLastName");
+    //triggerValidation("txtLastName");
     setFormClass('needs-validation was-validated');
     console.log('here are the errors:');
-    console.log(errors); //use this to add bootstrap validaiton class
-    // if (errors.txtSSN) {
-    //     setShowValidSsn(true);
-    //     setSsnRequired(true); 
-    // }
+    console.log(errors); //need to check last name, first name, date of birth, race/ethnicity, and gender
   }; //this correctly gets errors
   //console.log(errors);
 
