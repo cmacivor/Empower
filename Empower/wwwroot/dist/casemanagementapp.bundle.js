@@ -82490,9 +82490,8 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
 
   var genderPleaseSelectOption = genderValues.filter(function (gender) {
     return gender.ID === 0;
-  });
-  console.log('does select exist');
-  console.log(genderPleaseSelectOption);
+  }); //console.log('does select exist');
+  //console.log(genderPleaseSelectOption);
 
   if (genderPleaseSelectOption.length === 0) {
     var pleaseSelectItem = {
@@ -82502,7 +82501,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
       ID: 0,
       CreatedDate: new Date()
     };
-    genderValues.splice(0, 0, pleaseSelectItem); //genderValues.push();
+    genderValues.splice(0, 0, pleaseSelectItem);
   }
 
   var racePleaseSelectionOption = raceValues.filter(function (race) {
@@ -82517,17 +82516,17 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
       ID: 0,
       CreatedDate: new Date()
     };
-    raceValues.splice(0, 0, _pleaseSelectItem); //raceValues.push();
+    raceValues.splice(0, 0, _pleaseSelectItem);
   } //doesn't work
   //let sortedGenderValues = genderValues.sort((a, b) => { return  a.ID > b.ID;  });
-
-
-  console.log('sorted genders: ');
-  console.log(genderValues);
-  console.log(raceValues); //genderValues = genderValues.sort();
+  //console.log('sorted genders: ');
+  //console.log(genderValues);
+  //console.log(raceValues);
+  //genderValues = genderValues.sort();
   //raceValues = raceValues.sort();
   //console.log(genderValues);
   //console.log(raceValues);
+
 
   var genderObjectByClientGenderID = genderValues.filter(function (gender) {
     return gender.ID === clientGenderID;
@@ -82615,13 +82614,13 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
       var isValidSsn = ssnRegex.test(e.target.value);
 
       if (!isValidSsn) {
-        console.log('not valid'); //setShowValidSsn(true);
-
+        //console.log('not valid');
+        //setShowValidSsn(true);
         setSsnRequired(true);
         setErroDivCss('invalid-feedback d-block');
       } else {
-        console.log('valid'); //setShowValidSsn(false);
-
+        //console.log('valid');
+        //setShowValidSsn(false);
         setSsnRequired(undefined);
         setErroDivCss('invalid-feedback');
       }
@@ -82648,16 +82647,14 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }
 
   function handleSuffixChange(suffix) {
-    setResetButtonDisabled(false);
-    console.log('this is the handleSuffixChange in Info.js ');
-    console.log(suffix);
+    setResetButtonDisabled(false); //console.log('this is the handleSuffixChange in Info.js ');
+    //console.log(suffix);
   }
 
   function handleDatePickerChange(birthDate) {
-    console.log('this is the birth date');
-    console.log(birthDate);
-    var isValid = isValidDate(birthDate);
-    console.log(isValid);
+    // console.log('this is the birth date');
+    // console.log(birthDate);
+    var isValid = isValidDate(birthDate); // console.log(isValid);
 
     if (!isValid) {
       setBirthDateRequired(true);
@@ -82672,30 +82669,30 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }
 
   function handleGenderChange(gender) {
-    setResetButtonDisabled(false);
-    console.log('this is the handleGenderChange in Info.js ');
-    console.log(gender);
+    setResetButtonDisabled(false); //console.log('this is the handleGenderChange in Info.js ');
+    //console.log(gender);
+
     setGenderID(gender);
   }
 
   function handleGenderDescriptionChange(genderDescription) {
-    setResetButtonDisabled(false);
-    console.log('this is the handlGenderDescription in Info.js');
-    console.log(genderDescription);
+    setResetButtonDisabled(false); // console.log('this is the handlGenderDescription in Info.js');
+    // console.log(genderDescription);
+
     setGenderDescription(genderDescription);
   }
 
   function handleRaceChange(race) {
-    setResetButtonDisabled(false);
-    console.log('this is handleRaceChange ');
-    console.log(race);
+    setResetButtonDisabled(false); //console.log('this is handleRaceChange ');
+    //console.log(race);
+
     setRaceID(race);
   }
 
   function handleRaceDescriptionChange(raceDescription) {
-    setResetButtonDisabled(false);
-    console.log('this is the handleRaceDescriptionChange ');
-    console.log(raceDescription);
+    setResetButtonDisabled(false); //console.log('this is the handleRaceDescriptionChange ');
+    //console.log(raceDescription);
+
     setRaceDescription(raceDescription);
   }
 
@@ -82724,6 +82721,12 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setFormClass('needs-validation was-validated');
     console.log('here are the errors:');
     console.log(errors); //need to check last name, first name, date of birth, race/ethnicity, and gender
+
+    console.log(lastName);
+    console.log(firstName);
+    console.log(birthDate);
+    console.log(genderID);
+    console.log(raceID);
   }; //this correctly gets errors
   //console.log(errors);
 

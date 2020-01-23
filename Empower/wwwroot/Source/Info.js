@@ -88,8 +88,8 @@ const Info = forwardRef((props, ref) => {
         return gender.ID === 0
     });
 
-    console.log('does select exist');
-    console.log(genderPleaseSelectOption);
+    //console.log('does select exist');
+    //console.log(genderPleaseSelectOption);
 
     if (genderPleaseSelectOption.length === 0) {
         let pleaseSelectItem = {
@@ -122,9 +122,9 @@ const Info = forwardRef((props, ref) => {
 
     //doesn't work
     //let sortedGenderValues = genderValues.sort((a, b) => { return  a.ID > b.ID;  });
-    console.log('sorted genders: ');
-    console.log(genderValues);
-    console.log(raceValues);
+    //console.log('sorted genders: ');
+    //console.log(genderValues);
+    //console.log(raceValues);
 
     //genderValues = genderValues.sort();
     //raceValues = raceValues.sort();
@@ -205,12 +205,12 @@ const Info = forwardRef((props, ref) => {
             const ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
             const isValidSsn = ssnRegex.test(e.target.value);
             if (!isValidSsn) {
-                console.log('not valid');
+                //console.log('not valid');
                 //setShowValidSsn(true);
                 setSsnRequired(true);
                 setErroDivCss('invalid-feedback d-block'); 
             } else { 
-                console.log('valid');
+                //console.log('valid');
                 //setShowValidSsn(false);
                 setSsnRequired(undefined);
                 setErroDivCss('invalid-feedback');
@@ -239,15 +239,15 @@ const Info = forwardRef((props, ref) => {
 
     function handleSuffixChange (suffix)  {
        setResetButtonDisabled(false);
-       console.log('this is the handleSuffixChange in Info.js ');
-       console.log(suffix);
+       //console.log('this is the handleSuffixChange in Info.js ');
+       //console.log(suffix);
     }
 
     function handleDatePickerChange(birthDate) {
-        console.log('this is the birth date');
-        console.log(birthDate);
+       // console.log('this is the birth date');
+       // console.log(birthDate);
         let isValid = isValidDate(birthDate);
-        console.log(isValid);
+       // console.log(isValid);
 
         if (!isValid) {
             setBirthDateRequired(true);
@@ -263,29 +263,29 @@ const Info = forwardRef((props, ref) => {
 
     function handleGenderChange(gender){
         setResetButtonDisabled(false);
-        console.log('this is the handleGenderChange in Info.js ');
-        console.log(gender);
+        //console.log('this is the handleGenderChange in Info.js ');
+        //console.log(gender);
         setGenderID(gender);
     }
 
     function handleGenderDescriptionChange(genderDescription) {
         setResetButtonDisabled(false);
-        console.log('this is the handlGenderDescription in Info.js');
-        console.log(genderDescription);
+       // console.log('this is the handlGenderDescription in Info.js');
+       // console.log(genderDescription);
         setGenderDescription(genderDescription);
     }
 
     function handleRaceChange(race) {
         setResetButtonDisabled(false);
-        console.log('this is handleRaceChange ');
-        console.log(race);
+        //console.log('this is handleRaceChange ');
+        //console.log(race);
         setRaceID(race);
     }
 
     function handleRaceDescriptionChange(raceDescription) {
         setResetButtonDisabled(false);
-        console.log('this is the handleRaceDescriptionChange ');
-        console.log(raceDescription);
+        //console.log('this is the handleRaceDescriptionChange ');
+        //console.log(raceDescription);
         setRaceDescription(raceDescription);
     }
 
@@ -318,8 +318,11 @@ const Info = forwardRef((props, ref) => {
         console.log(errors);
        
         //need to check last name, first name, date of birth, race/ethnicity, and gender
-
-
+        console.log(lastName);
+        console.log(firstName);
+        console.log(birthDate);
+        console.log(genderID);
+        console.log(raceID);
     }
 
 
