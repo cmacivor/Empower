@@ -64,6 +64,10 @@ const Info = forwardRef((props, ref) => {
     //Date of Birth field
     const [isBirthDateRequired, setBirthDateRequired] = useState(false);
     const [dobErrorDivCss, setDobErrorDivCss] = useState('invalid-feedback');
+    //Race dropddown
+    const [isRaceDropdownRequired, setIsRaceDropdownRequired] = useState(false);
+    const [raceDdlErrorDivCss , setRaceDdlErrorDivCss] = useState('invalid-feedback');
+    
 
 
     //variables to hold previous state- for when a value changes
@@ -277,8 +281,14 @@ const Info = forwardRef((props, ref) => {
 
     function handleRaceChange(race) {
         setResetButtonDisabled(false);
-        //console.log('this is handleRaceChange ');
-        //console.log(race);
+        console.log('this is handleRaceChange ');
+        console.log(race);
+
+
+        if (race.ID === "0") {
+            console.log('race is showing Please Select');
+        }
+
         setRaceID(race);
     }
 
@@ -451,7 +461,8 @@ const Info = forwardRef((props, ref) => {
                             onSelectValueDescription={handleGenderDescriptionChange}
                             selected={genderID}
                             valueDescription={genderDescription}
-                            values={genderValues}>
+                            values={genderValues}
+                            isRequired={true} >
                             </DropDown>
                         </div>
                         <div className="col-4">
@@ -461,7 +472,8 @@ const Info = forwardRef((props, ref) => {
                                 onSelectValueDescription={handleRaceDescriptionChange}
                                 selected={raceID}
                                 valueDescription={raceDescription}
-                                values={raceValues}>
+                                values={raceValues}
+                                isRequired={true}>
                             </DropDown>
                         </div>
                     </div>

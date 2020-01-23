@@ -10,12 +10,27 @@ export default class DropDown extends Component {
         this.state = {
             values:  values,
             selectedValue: previouslySelectedValue,
-            selectedDescription: this.props.valueDescription     
+            selectedDescription: this.props.valueDescription,
+            hideError: true,
+            //isRequired: this.props.isRequired     
         }
 
     }
 
     onSelectHandler = (event) => {
+
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        if (this.props.isRequired &&  selectedValue === "0") {
+            this.setState({
+                hideError: false
+            });
+        } else {
+            this.setState({
+                hideError: true
+            });
+        }
+
         //pass the selected suffix value to the parent
         this.props.onSelectValue(event.currentTarget.getAttribute('value'));
         this.props.onSelectValueDescription(event.currentTarget.getAttribute('description'));
@@ -37,7 +52,9 @@ export default class DropDown extends Component {
                         {valueOptions}
                     </div>
                 </div>
+               {this.state.hideError || <div className='errorDiv'>Please select a value.</div> } 
             </div>
+            
         );
     }
 }
