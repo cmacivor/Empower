@@ -4,6 +4,7 @@ import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import { useCacheService } from './useCacheService';
+import Supplemental from './Supplemental';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -53,7 +54,12 @@ const CaseManagementFunction = (props) => {
                          raceValues={cacheService.raceValues} />                       
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
-                       supplemental content
+                    <Supplemental 
+                       clientProfile={clientProfile.Person} 
+                       educationLevelValues={cacheService.educationLevelValues}
+                       fundingSourceValues={cacheService.fundingSourceValues}
+                       jobStatusValues={cacheService.jobStatusValues} 
+                       maritalStatusValues={cacheService.maritalStatusValues} />
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
                        address content
