@@ -90,3 +90,10 @@ body {
     box-shadow: 3px 3px 15px #666;
     padding: 100px;
 }
+
+.errorDiv {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color:#dc3545;
+}

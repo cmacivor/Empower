@@ -73034,6 +73034,1503 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/react-hook-form/dist/react-hook-form.es.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/react-hook-form/dist/react-hook-form.es.js ***!
+  \*****************************************************************/
+/*! exports provided: Controller, ErrorMessage, FormContext, useFieldArray, useForm, useFormContext */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Controller", function() { return Controller; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorMessage", function() { return ErrorMessage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FormContext", function() { return FormContext; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useFieldArray", function() { return useFieldArray; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useForm", function() { return useForm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useFormContext", function() { return useFormContext; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+
+const VALIDATION_MODE = {
+    onBlur: 'onBlur',
+    onChange: 'onChange',
+    onSubmit: 'onSubmit',
+};
+const RADIO_INPUT = 'radio';
+const FILE_INPUT = 'file';
+const VALUE = 'value';
+const UNDEFINED = 'undefined';
+const EVENTS = {
+    BLUR: 'blur',
+    CHANGE: 'change',
+    INPUT: 'input',
+};
+const INPUT_VALIDATION_RULES = {
+    max: 'max',
+    min: 'min',
+    maxLength: 'maxLength',
+    minLength: 'minLength',
+    pattern: 'pattern',
+    required: 'required',
+    validate: 'validate',
+};
+const REGEX_IS_DEEP_PROP = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
+const REGEX_IS_PLAIN_PROP = /^\w*$/;
+const REGEX_PROP_NAME = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+const REGEX_ESCAPE_CHAR = /\\(\\)?/g;
+
+function attachEventListeners({ field, handleChange, isRadioOrCheckbox, }) {
+    const { ref } = field;
+    if (ref.addEventListener) {
+        ref.addEventListener(isRadioOrCheckbox ? EVENTS.CHANGE : EVENTS.INPUT, handleChange);
+        ref.addEventListener(EVENTS.BLUR, handleChange);
+    }
+}
+
+var isUndefined = (val) => val === undefined;
+
+var isNullOrUndefined = (value) => value === null || isUndefined(value);
+
+var isArray = (value) => Array.isArray(value);
+
+const isObjectType = (value) => typeof value === 'object';
+var isObject = (value) => !isNullOrUndefined(value) && !isArray(value) && isObjectType(value);
+
+const isKey = (value) => !isArray(value) &&
+    (REGEX_IS_PLAIN_PROP.test(value) || !REGEX_IS_DEEP_PROP.test(value));
+const stringToPath = (string) => {
+    const result = [];
+    string.replace(REGEX_PROP_NAME, (match, number, quote, string) => {
+        result.push(quote ? string.replace(REGEX_ESCAPE_CHAR, '$1') : number || match);
+    });
+    return result;
+};
+function set(object, path, value) {
+    let index = -1;
+    const tempPath = isKey(path) ? [path] : stringToPath(path);
+    const length = tempPath.length;
+    const lastIndex = length - 1;
+    while (++index < length) {
+        const key = tempPath[index];
+        let newValue = value;
+        if (index !== lastIndex) {
+            const objValue = object[key];
+            newValue =
+                isObject(objValue) || isArray(objValue)
+                    ? objValue
+                    : !isNaN(tempPath[index + 1])
+                        ? []
+                        : {};
+        }
+        object[key] = newValue;
+        object = object[key];
+    }
+    return object;
+}
+
+var transformToNestObject = (data) => Object.entries(data).reduce((previous, [key, value]) => {
+    if (REGEX_IS_DEEP_PROP.test(key)) {
+        set(previous, key, value);
+        return previous;
+    }
+    return Object.assign(Object.assign({}, previous), { [key]: value });
+}, {});
+
+var removeAllEventListeners = (ref, validateWithStateUpdate) => {
+    if (ref.removeEventListener) {
+        ref.removeEventListener(EVENTS.INPUT, validateWithStateUpdate);
+        ref.removeEventListener(EVENTS.CHANGE, validateWithStateUpdate);
+        ref.removeEventListener(EVENTS.BLUR, validateWithStateUpdate);
+    }
+};
+
+var isRadioInput = (type) => type === RADIO_INPUT;
+
+var isCheckBoxInput = (type) => type === 'checkbox';
+
+function isDetached(element) {
+    if (!element) {
+        return true;
+    }
+    if (!(element instanceof HTMLElement) ||
+        element.nodeType === Node.DOCUMENT_NODE) {
+        return false;
+    }
+    return isDetached(element.parentNode);
+}
+
+function findRemovedFieldAndRemoveListener(fields, handleChange, field, forceDelete) {
+    if (!field) {
+        return;
+    }
+    const { ref, ref: { name, type }, mutationWatcher, } = field;
+    if (!type) {
+        return;
+    }
+    const fieldValue = fields[name];
+    if ((isRadioInput(type) || isCheckBoxInput(type)) && fieldValue) {
+        const { options } = fieldValue;
+        if (isArray(options) && options.length) {
+            options.forEach(({ ref }, index) => {
+                if ((ref && isDetached(ref)) || forceDelete) {
+                    const mutationWatcher = ref.mutationWatcher;
+                    removeAllEventListeners(ref, handleChange);
+                    if (mutationWatcher) {
+                        mutationWatcher.disconnect();
+                    }
+                    options.splice(index, 1);
+                }
+            });
+            if (options && !options.length) {
+                delete fields[name];
+            }
+        }
+        else {
+            delete fields[name];
+        }
+    }
+    else if (isDetached(ref) || forceDelete) {
+        removeAllEventListeners(ref, handleChange);
+        if (mutationWatcher) {
+            mutationWatcher.disconnect();
+        }
+        delete fields[name];
+    }
+}
+
+const defaultReturn = {
+    isValid: false,
+    value: '',
+};
+var getRadioValue = (options) => isArray(options)
+    ? options.reduce((previous, { ref: { checked, value } }) => checked
+        ? {
+            isValid: true,
+            value,
+        }
+        : previous, defaultReturn)
+    : defaultReturn;
+
+var getMultipleSelectValue = (options) => [...options]
+    .filter(({ selected }) => selected)
+    .map(({ value }) => value);
+
+var isFileInput = (type) => type === FILE_INPUT;
+
+var isMultipleSelect = (type) => type === 'select-multiple';
+
+var isEmptyString = (value) => value === '';
+
+const defaultResult = {
+    value: false,
+    isValid: false,
+};
+const validResult = { value: true, isValid: true };
+var getCheckboxValue = (options) => {
+    if (isArray(options)) {
+        if (options.length > 1) {
+            const values = options
+                .filter(({ ref: { checked } }) => checked)
+                .map(({ ref: { value } }) => value);
+            return { value: values, isValid: !!values.length };
+        }
+        const { checked, value, attributes } = options[0].ref;
+        return checked
+            ? attributes && !isUndefined(attributes.value)
+                ? isUndefined(value) || isEmptyString(value)
+                    ? validResult
+                    : { value: value, isValid: true }
+                : validResult
+            : defaultResult;
+    }
+    return defaultResult;
+};
+
+function getFieldValue(fields, ref) {
+    const { type, name, options, value, files } = ref;
+    const field = fields[name];
+    if (isFileInput(type)) {
+        return files;
+    }
+    if (isRadioInput(type)) {
+        return field ? getRadioValue(field.options).value : '';
+    }
+    if (isMultipleSelect(type)) {
+        return getMultipleSelectValue(options);
+    }
+    if (isCheckBoxInput(type)) {
+        return field ? getCheckboxValue(field.options).value : false;
+    }
+    return value;
+}
+
+var getFieldsValues = (fields) => Object.values(fields).reduce((previous, { ref, ref: { name } }) => (Object.assign(Object.assign({}, previous), { [name]: getFieldValue(fields, ref) })), {});
+
+var isEmptyObject = (value) => isObject(value) && !Object.keys(value).length;
+
+var isSameError = (error, type, message) => isObject(error) && error.type === type && error.message === message;
+
+var get = (obj, path, defaultValue) => {
+    const result = path
+        .split(/[,[\].]+?/)
+        .filter(Boolean)
+        .reduce((result, key) => (isNullOrUndefined(result) ? result : result[key]), obj);
+    return isUndefined(result) || result === obj
+        ? obj[path] || defaultValue
+        : result;
+};
+
+function shouldUpdateWithError({ errors, name, error, validFields, fieldsWithValidation, }) {
+    const isFieldValid = isEmptyObject(error);
+    const isFormValid = isEmptyObject(errors);
+    const currentFieldError = get(error, name);
+    const existFieldError = get(errors, name);
+    if ((isFieldValid && validFields.has(name)) ||
+        (existFieldError && existFieldError.isManual)) {
+        return false;
+    }
+    if (isFormValid !== isFieldValid ||
+        (!isFormValid && !existFieldError) ||
+        (isFieldValid && fieldsWithValidation.has(name) && !validFields.has(name))) {
+        return true;
+    }
+    return (currentFieldError &&
+        !isSameError(existFieldError, currentFieldError.type, currentFieldError.message));
+}
+
+var isRegex = (value) => value instanceof RegExp;
+
+var getValueAndMessage = (validationData) => {
+    const isPureObject = isObject(validationData) && !isRegex(validationData);
+    return {
+        value: isPureObject
+            ? validationData.value
+            : validationData,
+        message: isPureObject
+            ? validationData.message
+            : '',
+    };
+};
+
+var isString = (value) => typeof value === 'string';
+
+var isFunction = (value) => typeof value === 'function';
+
+var isBoolean = (value) => typeof value === 'boolean';
+
+function getValidateError(result, ref, type = 'validate') {
+    const isStringValue = isString(result);
+    if (isStringValue || (isBoolean(result) && !result)) {
+        const message = isStringValue ? result : '';
+        return {
+            type,
+            message,
+            ref,
+        };
+    }
+}
+
+var appendErrors = (name, validateAllFieldCriteria, errors, type, message) => {
+    if (!validateAllFieldCriteria) {
+        return {};
+    }
+    const error = errors[name];
+    return Object.assign(Object.assign({}, error), { types: Object.assign(Object.assign({}, (error && error.types ? error.types : {})), { [type]: message || true }) });
+};
+
+var validateField = async (fieldsRef, validateAllFieldCriteria, { ref, ref: { type, value, name, valueAsNumber, valueAsDate }, options, required, maxLength, minLength, min, max, pattern, validate, }) => {
+    const fields = fieldsRef.current;
+    const error = {};
+    const isRadio = isRadioInput(type);
+    const isCheckBox = isCheckBoxInput(type);
+    const isRadioOrCheckbox = isRadio || isCheckBox;
+    const isEmpty = isEmptyString(value);
+    const appendErrorsCurry = appendErrors.bind(null, name, validateAllFieldCriteria, error);
+    const getMinMaxMessage = (exceedMax, maxLengthMessage, minLengthMessage, maxType = INPUT_VALIDATION_RULES.maxLength, minType = INPUT_VALIDATION_RULES.minLength) => {
+        const message = exceedMax ? maxLengthMessage : minLengthMessage;
+        error[name] = Object.assign({ type: exceedMax ? maxType : minType, message,
+            ref }, (exceedMax
+            ? appendErrorsCurry(maxType, message)
+            : appendErrorsCurry(minType, message)));
+        if (!validateAllFieldCriteria) {
+            return error;
+        }
+    };
+    if (required &&
+        ((!isRadio && !isCheckBox && (isEmpty || isNullOrUndefined(value))) ||
+            (isBoolean(value) && !value) ||
+            (isCheckBox && !getCheckboxValue(options).isValid) ||
+            (isRadio && !getRadioValue(options).isValid))) {
+        const message = isString(required)
+            ? required
+            : getValueAndMessage(required).message;
+        error[name] = Object.assign({ type: INPUT_VALIDATION_RULES.required, message, ref: isRadioOrCheckbox ? fields[name].options[0].ref : ref }, appendErrorsCurry(INPUT_VALIDATION_RULES.required, message));
+        if (!validateAllFieldCriteria) {
+            return error;
+        }
+    }
+    if (!isNullOrUndefined(min) || !isNullOrUndefined(max)) {
+        let exceedMax;
+        let exceedMin;
+        const { value: maxValue, message: maxMessage } = getValueAndMessage(max);
+        const { value: minValue, message: minMessage } = getValueAndMessage(min);
+        if (type === 'number' || (!type && !isNaN(value))) {
+            const valueNumber = valueAsNumber || parseFloat(value);
+            if (!isNullOrUndefined(maxValue)) {
+                exceedMax = valueNumber > maxValue;
+            }
+            if (!isNullOrUndefined(minValue)) {
+                exceedMin = valueNumber < minValue;
+            }
+        }
+        else {
+            const valueDate = valueAsDate || new Date(value);
+            if (isString(maxValue)) {
+                exceedMax = valueDate > new Date(maxValue);
+            }
+            if (isString(minValue)) {
+                exceedMin = valueDate < new Date(minValue);
+            }
+        }
+        if (exceedMax || exceedMin) {
+            getMinMaxMessage(!!exceedMax, maxMessage, minMessage, INPUT_VALIDATION_RULES.max, INPUT_VALIDATION_RULES.min);
+            if (!validateAllFieldCriteria) {
+                return error;
+            }
+        }
+    }
+    if (isString(value) && !isEmpty && (maxLength || minLength)) {
+        const { value: maxLengthValue, message: maxLengthMessage, } = getValueAndMessage(maxLength);
+        const { value: minLengthValue, message: minLengthMessage, } = getValueAndMessage(minLength);
+        const inputLength = value.toString().length;
+        const exceedMax = maxLength && inputLength > maxLengthValue;
+        const exceedMin = minLength && inputLength < minLengthValue;
+        if (exceedMax || exceedMin) {
+            getMinMaxMessage(!!exceedMax, maxLengthMessage, minLengthMessage);
+            if (!validateAllFieldCriteria) {
+                return error;
+            }
+        }
+    }
+    if (pattern && !isEmpty) {
+        const { value: patternValue, message: patternMessage } = getValueAndMessage(pattern);
+        if (isRegex(patternValue) && !patternValue.test(value)) {
+            error[name] = Object.assign({ type: INPUT_VALIDATION_RULES.pattern, message: patternMessage, ref }, appendErrorsCurry(INPUT_VALIDATION_RULES.pattern, patternMessage));
+            if (!validateAllFieldCriteria) {
+                return error;
+            }
+        }
+    }
+    if (validate) {
+        const fieldValue = getFieldValue(fields, ref);
+        const validateRef = isRadioOrCheckbox && options ? options[0].ref : ref;
+        if (isFunction(validate)) {
+            const result = await validate(fieldValue);
+            const validateError = getValidateError(result, validateRef);
+            if (validateError) {
+                error[name] = Object.assign(Object.assign({}, validateError), appendErrorsCurry(INPUT_VALIDATION_RULES.validate, validateError.message));
+                if (!validateAllFieldCriteria) {
+                    return error;
+                }
+            }
+        }
+        else if (isObject(validate)) {
+            const validateFunctions = Object.entries(validate);
+            const validationResult = await new Promise((resolve) => {
+                validateFunctions.reduce(async (previous, [key, validate], index) => {
+                    if ((!isEmptyObject(await previous) && !validateAllFieldCriteria) ||
+                        !isFunction(validate)) {
+                        return resolve(previous);
+                    }
+                    let result;
+                    const validateResult = await validate(fieldValue);
+                    const validateError = getValidateError(validateResult, validateRef, key);
+                    if (validateError) {
+                        result = Object.assign(Object.assign({}, validateError), appendErrorsCurry(key, validateError.message));
+                        if (validateAllFieldCriteria) {
+                            error[name] = result;
+                        }
+                    }
+                    else {
+                        result = previous;
+                    }
+                    return validateFunctions.length - 1 === index
+                        ? resolve(result)
+                        : result;
+                }, {});
+            });
+            if (!isEmptyObject(validationResult)) {
+                error[name] = Object.assign({ ref: validateRef }, validationResult);
+                if (!validateAllFieldCriteria) {
+                    return error;
+                }
+            }
+        }
+    }
+    return error;
+};
+
+const parseErrorSchema = (error, validateAllFieldCriteria) => isArray(error.inner)
+    ? error.inner.reduce((previous, { path, message, type }) => (Object.assign(Object.assign({}, previous), (previous[path] && validateAllFieldCriteria
+        ? {
+            [path]: appendErrors(path, validateAllFieldCriteria, previous, type, message),
+        }
+        : {
+            [path]: previous[path] || Object.assign({ message,
+                type }, (validateAllFieldCriteria
+                ? {
+                    types: { [type]: message || true },
+                }
+                : {})),
+        }))), {})
+    : {
+        [error.path]: { message: error.message, type: error.type },
+    };
+async function validateWithSchema(validationSchema, validateAllFieldCriteria, data) {
+    try {
+        return {
+            values: await validationSchema.validate(data, { abortEarly: false }),
+            errors: {},
+        };
+    }
+    catch (e) {
+        return {
+            values: {},
+            errors: transformToNestObject(parseErrorSchema(e, validateAllFieldCriteria)),
+        };
+    }
+}
+
+var getDefaultValue = (defaultValues, name, defaultValue) => isUndefined(defaultValues[name])
+    ? get(defaultValues, name, defaultValue)
+    : defaultValues[name];
+
+function flatArray(list) {
+    return list.reduce((a, b) => a.concat(isArray(b) ? flatArray(b) : b), []);
+}
+
+var isPrimitive = (value) => isNullOrUndefined(value) || !isObjectType(value);
+
+const getPath = (path, values) => {
+    const getInnerPath = (value, key, isObject) => {
+        const pathWithIndex = isObject ? `${path}.${key}` : `${path}[${key}]`;
+        return isPrimitive(value) ? pathWithIndex : getPath(pathWithIndex, value);
+    };
+    return isArray(values)
+        ? values.map((value, key) => getInnerPath(value, key))
+        : Object.entries(values).map(([key, value]) => getInnerPath(value, key, true));
+};
+var getPath$1 = (parentPath, value) => flatArray(getPath(parentPath, value));
+
+var assignWatchFields = (fieldValues, fieldName, watchFields, combinedDefaultValues) => {
+    let value;
+    if (isEmptyObject(fieldValues)) {
+        value = undefined;
+    }
+    else if (!isUndefined(fieldValues[fieldName])) {
+        watchFields.add(fieldName);
+        value = fieldValues[fieldName];
+    }
+    else {
+        value = get(transformToNestObject(fieldValues), fieldName);
+        if (!isUndefined(value)) {
+            getPath$1(fieldName, value).forEach(name => watchFields.add(name));
+        }
+    }
+    return isUndefined(value)
+        ? isObject(combinedDefaultValues)
+            ? getDefaultValue(combinedDefaultValues, fieldName)
+            : combinedDefaultValues
+        : value;
+};
+
+var skipValidation = ({ hasError, isBlurEvent, isOnSubmit, isReValidateOnSubmit, isOnBlur, isReValidateOnBlur, isSubmitted, }) => (isOnSubmit && isReValidateOnSubmit) ||
+    (isOnSubmit && !isSubmitted) ||
+    (isOnBlur && !isBlurEvent && !hasError) ||
+    (isReValidateOnBlur && !isBlurEvent && hasError) ||
+    (isReValidateOnSubmit && isSubmitted);
+
+function getIsFieldsDifferent(referenceArray, differenceArray) {
+    let isMatch = false;
+    if (!isArray(referenceArray) ||
+        !isArray(differenceArray) ||
+        referenceArray.length !== differenceArray.length) {
+        return true;
+    }
+    for (let i = 0; i < referenceArray.length; i++) {
+        if (isMatch) {
+            break;
+        }
+        const dataA = referenceArray[i];
+        const dataB = differenceArray[i];
+        if (!dataB || Object.keys(dataA).length !== Object.keys(dataB).length) {
+            isMatch = true;
+            break;
+        }
+        for (const key in dataA) {
+            if (!dataB[key] || dataA[key] !== dataB[key]) {
+                isMatch = true;
+                break;
+            }
+        }
+    }
+    return isMatch;
+}
+
+const isMatchFieldArrayName = (name, searchName) => name.startsWith(`${searchName}[`);
+var isNameInFieldArray = (names, name) => [...names].reduce((prev, current) => (isMatchFieldArrayName(name, current) ? true : prev), false);
+
+function onDomRemove(element, onDetachCallback) {
+    const observer = new MutationObserver(() => {
+        if (isDetached(element)) {
+            observer.disconnect();
+            onDetachCallback();
+        }
+    });
+    observer.observe(window.document, {
+        childList: true,
+        subtree: true,
+    });
+    return observer;
+}
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+const omitObject = (obj, key) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const _a = key, omitted = obj[_a], rest = __rest(obj, [typeof _a === "symbol" ? _a : _a + ""]);
+    return rest;
+};
+
+const unsetObject = (target) => {
+    for (const key in target) {
+        const data = target[key];
+        const isArrayObject = isArray(data);
+        if ((isObject(data) || isArrayObject) && !data.ref) {
+            unsetObject(data);
+        }
+        if (isUndefined(data) ||
+            isEmptyObject(data) ||
+            (isArrayObject && !target[key].filter(Boolean).length)) {
+            delete target[key];
+        }
+    }
+    return target;
+};
+const unset = (target, paths) => {
+    paths.forEach(path => {
+        set(target, path, undefined);
+    });
+    return unsetObject(target);
+};
+
+var modeChecker = (mode) => ({
+    isOnSubmit: !mode || mode === VALIDATION_MODE.onSubmit,
+    isOnBlur: mode === VALIDATION_MODE.onBlur,
+    isOnChange: mode === VALIDATION_MODE.onChange,
+});
+
+const { useRef, useState, useCallback, useEffect } = react__WEBPACK_IMPORTED_MODULE_0__;
+function useForm({ mode = VALIDATION_MODE.onSubmit, reValidateMode = VALIDATION_MODE.onChange, validationSchema, defaultValues = {}, submitFocusError = true, validateCriteriaMode, } = {}) {
+    const fieldsRef = useRef({});
+    const validateAllFieldCriteria = validateCriteriaMode === 'all';
+    const errorsRef = useRef({});
+    const touchedFieldsRef = useRef({});
+    const watchFieldsRef = useRef(new Set());
+    const dirtyFieldsRef = useRef(new Set());
+    const fieldsWithValidationRef = useRef(new Set());
+    const validFieldsRef = useRef(new Set());
+    const isValidRef = useRef(true);
+    const defaultRenderValuesRef = useRef({});
+    const defaultValuesRef = useRef(defaultValues);
+    const isUnMount = useRef(false);
+    const isWatchAllRef = useRef(false);
+    const isSubmittedRef = useRef(false);
+    const isDirtyRef = useRef(false);
+    const submitCountRef = useRef(0);
+    const isSubmittingRef = useRef(false);
+    const handleChangeRef = useRef();
+    const resetFieldArrayFunctionRef = useRef({});
+    const fieldArrayNamesRef = useRef(new Set());
+    const [, render] = useState();
+    const { isOnBlur, isOnSubmit } = useRef(modeChecker(mode)).current;
+    const isWindowUndefined = typeof window === UNDEFINED;
+    const isWeb = typeof document !== UNDEFINED &&
+        !isWindowUndefined &&
+        !isUndefined(window.HTMLElement);
+    const isProxyEnabled = isWeb && 'Proxy' in window;
+    const readFormStateRef = useRef({
+        dirty: !isProxyEnabled,
+        isSubmitted: isOnSubmit,
+        submitCount: !isProxyEnabled,
+        touched: !isProxyEnabled,
+        isSubmitting: !isProxyEnabled,
+        isValid: !isProxyEnabled,
+    });
+    const { isOnBlur: isReValidateOnBlur, isOnSubmit: isReValidateOnSubmit, } = useRef(modeChecker(reValidateMode)).current;
+    defaultValuesRef.current = defaultValuesRef.current
+        ? defaultValuesRef.current
+        : defaultValues;
+    const reRender = useCallback(() => {
+        if (!isUnMount.current) {
+            render({});
+        }
+    }, []);
+    const validateFieldCurry = useCallback(validateField.bind(null, fieldsRef, validateAllFieldCriteria), []);
+    const validateFieldsSchemaCurry = useCallback(validateWithSchema.bind(null, validationSchema, validateAllFieldCriteria), [validationSchema]);
+    const renderBaseOnError = useCallback((name, error, shouldRender, skipReRender) => {
+        let shouldReRender = shouldRender ||
+            shouldUpdateWithError({
+                errors: errorsRef.current,
+                error,
+                name,
+                validFields: validFieldsRef.current,
+                fieldsWithValidation: fieldsWithValidationRef.current,
+            });
+        if (isEmptyObject(error)) {
+            if (fieldsWithValidationRef.current.has(name) || validationSchema) {
+                validFieldsRef.current.add(name);
+                shouldReRender = shouldReRender || get(errorsRef.current, name);
+            }
+            errorsRef.current = unset(errorsRef.current, [name]);
+        }
+        else {
+            validFieldsRef.current.delete(name);
+            shouldReRender = shouldReRender || !get(errorsRef.current, name);
+            set(errorsRef.current, name, error[name]);
+        }
+        if (shouldReRender && !skipReRender) {
+            reRender();
+            return true;
+        }
+    }, [reRender, validationSchema]);
+    const setFieldValue = useCallback((name, rawValue) => {
+        const field = fieldsRef.current[name];
+        if (!field) {
+            return false;
+        }
+        const ref = field.ref;
+        const { type } = ref;
+        const options = field.options;
+        const value = isWeb &&
+            ref instanceof window.HTMLElement &&
+            isNullOrUndefined(rawValue)
+            ? ''
+            : rawValue;
+        if (isRadioInput(type) && options) {
+            options.forEach(({ ref: radioRef }) => (radioRef.checked = radioRef.value === value));
+        }
+        else if (isFileInput(type)) {
+            if (value instanceof FileList || value === '') {
+                ref.files = value;
+            }
+            else {
+                ref.value = value;
+            }
+        }
+        else if (isMultipleSelect(type)) {
+            [...ref.options].forEach(selectRef => (selectRef.selected = value.includes(selectRef.value)));
+        }
+        else if (isCheckBoxInput(type) && options) {
+            options.length > 1
+                ? options.forEach(({ ref: checkboxRef }) => (checkboxRef.checked = value.includes(checkboxRef.value)))
+                : (options[0].ref.checked = !!value);
+        }
+        else {
+            ref.value = value;
+        }
+        return type;
+    }, [isWeb]);
+    const setDirty = (name) => {
+        if (!fieldsRef.current[name] || !readFormStateRef.current.dirty) {
+            return false;
+        }
+        const isFieldArray = isNameInFieldArray(fieldArrayNamesRef.current, name);
+        let isDirty = defaultRenderValuesRef.current[name] !==
+            getFieldValue(fieldsRef.current, fieldsRef.current[name].ref);
+        if (isFieldArray) {
+            const fieldArrayName = name.substring(0, name.indexOf('['));
+            isDirty = getIsFieldsDifferent(transformToNestObject(getFieldsValues(fieldsRef.current))[fieldArrayName], get(defaultValuesRef.current, fieldArrayName));
+        }
+        const isDirtyChanged = isFieldArray
+            ? isDirtyRef.current !== isDirty
+            : dirtyFieldsRef.current.has(name) !== isDirty;
+        if (isDirty) {
+            dirtyFieldsRef.current.add(name);
+        }
+        else {
+            dirtyFieldsRef.current.delete(name);
+        }
+        isDirtyRef.current = isFieldArray ? isDirty : !!dirtyFieldsRef.current.size;
+        return isDirtyChanged;
+    };
+    const setInternalValue = useCallback((name, value) => {
+        setFieldValue(name, value);
+        if (setDirty(name) ||
+            (!get(touchedFieldsRef.current, name) &&
+                readFormStateRef.current.touched)) {
+            return !!set(touchedFieldsRef.current, name, true);
+        }
+    }, [setFieldValue]);
+    const executeValidation = useCallback(async (name, shouldRender, skipReRender) => {
+        const field = fieldsRef.current[name];
+        if (!field) {
+            return false;
+        }
+        if (shouldRender) {
+            reRender();
+        }
+        const error = await validateField(fieldsRef, validateAllFieldCriteria, field);
+        renderBaseOnError(name, error, false, skipReRender);
+        return isEmptyObject(error);
+    }, [reRender, renderBaseOnError, validateAllFieldCriteria]);
+    const executeSchemaValidation = useCallback(async (payload, shouldRender) => {
+        const { errors } = await validateWithSchema(validationSchema, validateAllFieldCriteria, transformToNestObject(getFieldsValues(fieldsRef.current)));
+        const previousFormIsValid = isValidRef.current;
+        isValidRef.current = isEmptyObject(errors);
+        if (isArray(payload)) {
+            payload.forEach(name => {
+                if (errors[name]) {
+                    set(errorsRef.current, name, errors[name]);
+                }
+                else {
+                    unset(errorsRef.current, [name]);
+                }
+            });
+            reRender();
+        }
+        else {
+            const fieldName = payload;
+            const error = (get(errors, fieldName)
+                ? { [fieldName]: get(errors, fieldName) }
+                : {});
+            renderBaseOnError(fieldName, error, shouldRender || previousFormIsValid !== isValidRef.current);
+        }
+        return isEmptyObject(errorsRef.current);
+    }, [reRender, renderBaseOnError, validateAllFieldCriteria, validationSchema]);
+    const triggerValidation = useCallback(async (payload, shouldRender) => {
+        const fields = payload || Object.keys(fieldsRef.current);
+        if (validationSchema) {
+            return executeSchemaValidation(fields, shouldRender);
+        }
+        if (isArray(fields)) {
+            const result = await Promise.all(fields.map(async (data) => await executeValidation(data, false, true)));
+            reRender();
+            return result.every(Boolean);
+        }
+        return await executeValidation(fields, shouldRender);
+    }, [executeSchemaValidation, executeValidation, reRender, validationSchema]);
+    const setValue = useCallback((name, value, shouldValidate) => {
+        const shouldRender = setInternalValue(name, value) ||
+            isWatchAllRef.current ||
+            watchFieldsRef.current.has(name);
+        if (shouldValidate) {
+            return triggerValidation(name, shouldRender);
+        }
+        if (shouldRender) {
+            reRender();
+        }
+        return;
+    }, [reRender, setInternalValue, triggerValidation]);
+    handleChangeRef.current = handleChangeRef.current
+        ? handleChangeRef.current
+        : async ({ type, target }) => {
+            const name = target ? target.name : '';
+            const fields = fieldsRef.current;
+            const errors = errorsRef.current;
+            const field = fields[name];
+            const currentError = get(errors, name);
+            let error;
+            if (!field) {
+                return;
+            }
+            const isBlurEvent = type === EVENTS.BLUR;
+            const shouldSkipValidation = skipValidation({
+                hasError: !!currentError,
+                isBlurEvent,
+                isOnSubmit,
+                isReValidateOnSubmit,
+                isOnBlur,
+                isReValidateOnBlur,
+                isSubmitted: isSubmittedRef.current,
+            });
+            const shouldUpdateDirty = setDirty(name);
+            let shouldUpdateState = isWatchAllRef.current ||
+                watchFieldsRef.current.has(name) ||
+                shouldUpdateDirty;
+            if (isBlurEvent &&
+                !get(touchedFieldsRef.current, name) &&
+                readFormStateRef.current.touched) {
+                set(touchedFieldsRef.current, name, true);
+                shouldUpdateState = true;
+            }
+            if (shouldSkipValidation) {
+                return shouldUpdateState && reRender();
+            }
+            if (validationSchema) {
+                const { errors } = await validateWithSchema(validationSchema, validateAllFieldCriteria, transformToNestObject(getFieldsValues(fields)));
+                const validForm = isEmptyObject(errors);
+                error = (get(errors, name)
+                    ? { [name]: get(errors, name) }
+                    : {});
+                if (isValidRef.current !== validForm) {
+                    shouldUpdateState = true;
+                }
+                isValidRef.current = validForm;
+            }
+            else {
+                error = await validateField(fieldsRef, validateAllFieldCriteria, field);
+            }
+            if (!renderBaseOnError(name, error) && shouldUpdateState) {
+                reRender();
+            }
+        };
+    const validateSchemaIsValid = useCallback(() => {
+        const fieldValues = isEmptyObject(defaultValuesRef.current)
+            ? getFieldsValues(fieldsRef.current)
+            : defaultValuesRef.current;
+        validateFieldsSchemaCurry(transformToNestObject(fieldValues)).then(({ errors }) => {
+            const previousFormIsValid = isValidRef.current;
+            isValidRef.current = isEmptyObject(errors);
+            if (previousFormIsValid && previousFormIsValid !== isValidRef.current) {
+                reRender();
+            }
+        });
+    }, [reRender, validateFieldsSchemaCurry]);
+    const resetFieldRef = useCallback((name) => {
+        errorsRef.current = unset(errorsRef.current, [name]);
+        touchedFieldsRef.current = unset(touchedFieldsRef.current, [name]);
+        fieldsRef.current = omitObject(fieldsRef.current, name);
+        defaultRenderValuesRef.current = omitObject(defaultRenderValuesRef.current, name);
+        [
+            dirtyFieldsRef,
+            fieldsWithValidationRef,
+            validFieldsRef,
+            watchFieldsRef,
+        ].forEach(data => data.current.delete(name));
+        if (readFormStateRef.current.isValid ||
+            readFormStateRef.current.touched) {
+            reRender();
+        }
+        if (validationSchema) {
+            validateSchemaIsValid();
+        }
+    }, [reRender]);
+    const removeEventListenerAndRef = useCallback((field, forceDelete) => {
+        if (!field) {
+            return;
+        }
+        if (!isUndefined(handleChangeRef.current)) {
+            findRemovedFieldAndRemoveListener(fieldsRef.current, handleChangeRef.current, field, forceDelete);
+        }
+        resetFieldRef(field.ref.name);
+    }, [resetFieldRef]);
+    function clearError(name) {
+        if (isUndefined(name)) {
+            errorsRef.current = {};
+        }
+        else {
+            unset(errorsRef.current, isArray(name) ? name : [name]);
+        }
+        reRender();
+    }
+    const setInternalError = ({ name, type, types, message, preventRender, }) => {
+        const field = fieldsRef.current[name];
+        if (!isSameError(errorsRef.current[name], type, message)) {
+            set(errorsRef.current, name, {
+                type,
+                types,
+                message,
+                ref: field ? field.ref : {},
+                isManual: true,
+            });
+            if (!preventRender) {
+                reRender();
+            }
+        }
+    };
+    function setError(name, type = '', message) {
+        if (isString(name)) {
+            setInternalError(Object.assign({ name }, (isObject(type)
+                ? {
+                    types: type,
+                    type: '',
+                }
+                : {
+                    type,
+                    message,
+                })));
+        }
+        else if (isArray(name)) {
+            name.forEach(error => setInternalError(Object.assign(Object.assign({}, error), { preventRender: true })));
+            reRender();
+        }
+    }
+    function watch(fieldNames, defaultValue) {
+        const combinedDefaultValues = isUndefined(defaultValue)
+            ? isUndefined(defaultValuesRef.current)
+                ? {}
+                : defaultValuesRef.current
+            : defaultValue;
+        const fieldValues = getFieldsValues(fieldsRef.current);
+        const watchFields = watchFieldsRef.current;
+        if (isProxyEnabled) {
+            readFormStateRef.current.dirty = true;
+        }
+        if (isString(fieldNames)) {
+            return assignWatchFields(fieldValues, fieldNames, watchFields, combinedDefaultValues);
+        }
+        if (isArray(fieldNames)) {
+            return fieldNames.reduce((previous, name) => {
+                let value;
+                if (isEmptyObject(fieldsRef.current) &&
+                    isObject(combinedDefaultValues)) {
+                    value = getDefaultValue(combinedDefaultValues, name);
+                }
+                else {
+                    value = assignWatchFields(fieldValues, name, watchFields, combinedDefaultValues);
+                }
+                return Object.assign(Object.assign({}, previous), { [name]: value });
+            }, {});
+        }
+        isWatchAllRef.current = true;
+        const result = (!isEmptyObject(fieldValues) && fieldValues) ||
+            defaultValue ||
+            defaultValuesRef.current;
+        return fieldNames && fieldNames.nest
+            ? transformToNestObject(result)
+            : result;
+    }
+    function unregister(names) {
+        if (!isEmptyObject(fieldsRef.current)) {
+            (isArray(names) ? names : [names]).forEach(fieldName => removeEventListenerAndRef(fieldsRef.current[fieldName], true));
+        }
+    }
+    function registerFieldsRef(ref, validateOptions = {}) {
+        if (!ref.name) {
+            return console.warn('Missing name @', ref);
+        }
+        const { name, type, value } = ref;
+        const fieldAttributes = Object.assign({ ref }, validateOptions);
+        const fields = fieldsRef.current;
+        const isRadioOrCheckbox = isRadioInput(type) || isCheckBoxInput(type);
+        let currentField = fields[name];
+        let isEmptyDefaultValue = true;
+        let isFieldArray = false;
+        let defaultValue;
+        if (isRadioOrCheckbox
+            ? currentField &&
+                isArray(currentField.options) &&
+                currentField.options.find(({ ref }) => value === ref.value)
+            : currentField) {
+            fields[name] = Object.assign(Object.assign({}, currentField), validateOptions);
+            return;
+        }
+        if (type) {
+            const mutationWatcher = onDomRemove(ref, () => removeEventListenerAndRef(fieldAttributes));
+            if (isRadioOrCheckbox) {
+                currentField = Object.assign({ options: [
+                        ...((currentField && currentField.options) || []),
+                        {
+                            ref,
+                            mutationWatcher,
+                        },
+                    ], ref: { type, name } }, validateOptions);
+            }
+            else {
+                currentField = Object.assign(Object.assign({}, fieldAttributes), { mutationWatcher });
+            }
+        }
+        else {
+            currentField = fieldAttributes;
+        }
+        fields[name] = currentField;
+        if (!isEmptyObject(defaultValuesRef.current)) {
+            defaultValue = getDefaultValue(defaultValuesRef.current, name);
+            isEmptyDefaultValue = isUndefined(defaultValue);
+            isFieldArray = isNameInFieldArray(fieldArrayNamesRef.current, name);
+            if (!isEmptyDefaultValue && !isFieldArray) {
+                setFieldValue(name, defaultValue);
+            }
+        }
+        if (validationSchema && readFormStateRef.current.isValid) {
+            validateSchemaIsValid();
+        }
+        else if (!isEmptyObject(validateOptions)) {
+            fieldsWithValidationRef.current.add(name);
+            if (!isOnSubmit && readFormStateRef.current.isValid) {
+                validateFieldCurry(currentField).then(error => {
+                    const previousFormIsValid = isValidRef.current;
+                    if (isEmptyObject(error)) {
+                        validFieldsRef.current.add(name);
+                    }
+                    else {
+                        isValidRef.current = false;
+                    }
+                    if (previousFormIsValid !== isValidRef.current) {
+                        reRender();
+                    }
+                });
+            }
+        }
+        if (!defaultRenderValuesRef.current[name] &&
+            !(isFieldArray && isEmptyDefaultValue)) {
+            defaultRenderValuesRef.current[name] = isEmptyDefaultValue
+                ? getFieldValue(fields, currentField.ref)
+                : defaultValue;
+        }
+        if (!type) {
+            return;
+        }
+        const fieldToAttachListener = isRadioOrCheckbox && currentField.options
+            ? currentField.options[currentField.options.length - 1]
+            : currentField;
+        attachEventListeners({
+            field: fieldToAttachListener,
+            isRadioOrCheckbox,
+            handleChange: handleChangeRef.current,
+        });
+    }
+    function register(refOrValidationOptions, validationOptions) {
+        if (isWindowUndefined || !refOrValidationOptions) {
+            return;
+        }
+        if (isString(refOrValidationOptions)) {
+            registerFieldsRef({ name: refOrValidationOptions }, validationOptions);
+            return;
+        }
+        if (isObject(refOrValidationOptions) && 'name' in refOrValidationOptions) {
+            registerFieldsRef(refOrValidationOptions, validationOptions);
+            return;
+        }
+        return (ref) => ref && registerFieldsRef(ref, refOrValidationOptions);
+    }
+    const handleSubmit = useCallback((callback) => async (e) => {
+        if (e) {
+            e.preventDefault();
+            e.persist();
+        }
+        let fieldErrors;
+        let fieldValues;
+        const fields = fieldsRef.current;
+        if (readFormStateRef.current.isSubmitting) {
+            isSubmittingRef.current = true;
+            reRender();
+        }
+        try {
+            if (validationSchema) {
+                fieldValues = getFieldsValues(fields);
+                const { errors, values } = await validateFieldsSchemaCurry(transformToNestObject(fieldValues));
+                errorsRef.current = errors;
+                fieldErrors = errors;
+                fieldValues = values;
+            }
+            else {
+                const { errors, values, } = await Object.values(fields).reduce(async (previous, field) => {
+                    if (!field) {
+                        return previous;
+                    }
+                    const resolvedPrevious = await previous;
+                    const { ref, ref: { name }, } = field;
+                    if (!fields[name]) {
+                        return Promise.resolve(resolvedPrevious);
+                    }
+                    const fieldError = await validateFieldCurry(field);
+                    if (fieldError[name]) {
+                        set(resolvedPrevious.errors, name, fieldError[name]);
+                        validFieldsRef.current.delete(name);
+                        return Promise.resolve(resolvedPrevious);
+                    }
+                    if (fieldsWithValidationRef.current.has(name)) {
+                        validFieldsRef.current.add(name);
+                    }
+                    resolvedPrevious.values[name] = getFieldValue(fields, ref);
+                    return Promise.resolve(resolvedPrevious);
+                }, Promise.resolve({
+                    errors: {},
+                    values: {},
+                }));
+                fieldErrors = errors;
+                fieldValues = values;
+            }
+            if (isEmptyObject(fieldErrors)) {
+                errorsRef.current = {};
+                await callback(transformToNestObject(fieldValues), e);
+            }
+            else {
+                if (submitFocusError) {
+                    for (const key in fieldsRef.current) {
+                        if (get(fieldErrors, key)) {
+                            const field = fieldsRef.current[key];
+                            if (field) {
+                                if (field.ref.focus) {
+                                    field.ref.focus();
+                                    break;
+                                }
+                                else if (field.options) {
+                                    field.options[0].ref.focus();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                errorsRef.current = fieldErrors;
+            }
+        }
+        finally {
+            isSubmittedRef.current = true;
+            isSubmittingRef.current = false;
+            submitCountRef.current = submitCountRef.current + 1;
+            reRender();
+        }
+    }, [
+        reRender,
+        submitFocusError,
+        validateFieldCurry,
+        validateFieldsSchemaCurry,
+        validationSchema,
+    ]);
+    const resetRefs = () => {
+        errorsRef.current = {};
+        fieldsRef.current = {};
+        touchedFieldsRef.current = {};
+        validFieldsRef.current = new Set();
+        fieldsWithValidationRef.current = new Set();
+        defaultRenderValuesRef.current = {};
+        watchFieldsRef.current = new Set();
+        dirtyFieldsRef.current = new Set();
+        isWatchAllRef.current = false;
+        isSubmittedRef.current = false;
+        isDirtyRef.current = false;
+        isValidRef.current = true;
+        submitCountRef.current = 0;
+    };
+    const reset = (values) => {
+        for (const value of Object.values(fieldsRef.current)) {
+            if (value && value.ref && value.ref.closest) {
+                try {
+                    value.ref.closest('form').reset();
+                    break;
+                }
+                catch (_a) { }
+            }
+        }
+        Object.values(resetFieldArrayFunctionRef.current).forEach(resetFieldArray => isFunction(resetFieldArray) && resetFieldArray(values));
+        resetRefs();
+        if (values) {
+            defaultValuesRef.current = values;
+        }
+        reRender();
+    };
+    const getValues = (payload) => {
+        const fieldValues = getFieldsValues(fieldsRef.current);
+        const outputValues = isEmptyObject(fieldValues)
+            ? defaultValuesRef.current
+            : fieldValues;
+        return payload && payload.nest
+            ? transformToNestObject(outputValues)
+            : outputValues;
+    };
+    useEffect(() => () => {
+        isUnMount.current = true;
+        fieldsRef.current &&
+            Object.values(fieldsRef.current).forEach((field) => removeEventListenerAndRef(field, true));
+    }, [removeEventListenerAndRef]);
+    if (!validationSchema) {
+        isValidRef.current =
+            validFieldsRef.current.size >= fieldsWithValidationRef.current.size &&
+                isEmptyObject(errorsRef.current);
+    }
+    const formState = {
+        dirty: isDirtyRef.current,
+        isSubmitted: isSubmittedRef.current,
+        submitCount: submitCountRef.current,
+        touched: touchedFieldsRef.current,
+        isSubmitting: isSubmittingRef.current,
+        isValid: isOnSubmit
+            ? isSubmittedRef.current && isEmptyObject(errorsRef.current)
+            : isEmptyObject(fieldsRef.current) || isValidRef.current,
+    };
+    const control = {
+        register,
+        unregister,
+        setValue,
+        triggerValidation,
+        formState,
+        mode: {
+            isOnBlur,
+            isOnSubmit,
+        },
+        reValidateMode: {
+            isReValidateOnBlur,
+            isReValidateOnSubmit,
+        },
+        errors: errorsRef.current,
+        fieldsRef,
+        resetFieldArrayFunctionRef,
+        fieldArrayNamesRef,
+        isDirtyRef,
+        readFormStateRef,
+        defaultValuesRef,
+    };
+    return {
+        watch,
+        control,
+        handleSubmit,
+        setValue,
+        triggerValidation,
+        getValues: useCallback(getValues, []),
+        reset: useCallback(reset, [reRender]),
+        register: useCallback(register, [defaultValuesRef.current]),
+        unregister: useCallback(unregister, [removeEventListenerAndRef]),
+        clearError: useCallback(clearError, []),
+        setError: useCallback(setError, []),
+        errors: errorsRef.current,
+        formState: isProxyEnabled
+            ? new Proxy(formState, {
+                get: (obj, prop) => {
+                    if (prop in obj) {
+                        readFormStateRef.current[prop] = true;
+                        return obj[prop];
+                    }
+                    return {};
+                },
+            })
+            : formState,
+    };
+}
+
+const FormGlobalContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])(null);
+function useFormContext() {
+    return Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(FormGlobalContext);
+}
+function FormContext(_a) {
+    var { children, formState, errors } = _a, restMethods = __rest(_a, ["children", "formState", "errors"]);
+    return (Object(react__WEBPACK_IMPORTED_MODULE_0__["createElement"])(FormGlobalContext.Provider, { value: Object.assign(Object.assign({}, restMethods), { formState, errors }) }, children));
+}
+
+var generateId = () => {
+    const d = typeof performance === UNDEFINED ? Date.now() : performance.now() * 1000;
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16 + d) % 16 | 0;
+        return (c == 'x' ? r : (r & 0x3) | 0x8).toString(16);
+    });
+};
+
+const appendId = (value) => (Object.assign(Object.assign({}, value), { id: generateId() }));
+const mapIds = (data) => (isArray(data) ? data : []).map(value => appendId(value));
+
+var removeArrayAt = (data, index) => !isUndefined(index) && isArray(data)
+    ? [...data.slice(0, index), ...data.slice(index + 1)]
+    : [];
+
+var moveArrayAt = (data, from, to) => isArray(data) && data.splice(to, 0, data.splice(from, 1)[0]);
+
+var swapArrayAt = (fields, indexA, indexB) => isArray(fields) &&
+    ([fields[indexA], fields[indexB]] = [fields[indexB], fields[indexA]]);
+
+function useFieldArray({ control, name }) {
+    const methods = useFormContext();
+    const { resetFieldArrayFunctionRef, fieldArrayNamesRef, fieldsRef, defaultValuesRef, unregister, isDirtyRef, readFormStateRef, } = control || methods.control;
+    const memoizedDefaultValues = Object(react__WEBPACK_IMPORTED_MODULE_0__["useMemo"])(() => get(defaultValuesRef.current, name, []), 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [name]);
+    const [fields, setField] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(mapIds(memoizedDefaultValues));
+    const getFieldValuesByName = (fields, name) => transformToNestObject(getFieldsValues(fields))[name];
+    const resetFields = (flagOrFields) => {
+        if (readFormStateRef.current.dirty) {
+            isDirtyRef.current = isUndefined(flagOrFields)
+                ? true
+                : getIsFieldsDifferent(flagOrFields, memoizedDefaultValues);
+        }
+        for (const key in fieldsRef.current) {
+            if (isMatchFieldArrayName(key, name)) {
+                unregister(key);
+            }
+        }
+    };
+    const append = (value) => {
+        if (readFormStateRef.current.dirty) {
+            isDirtyRef.current = true;
+        }
+        setField([...fields, appendId(value)]);
+    };
+    const prepend = (value) => {
+        resetFields();
+        setField(mapIds([appendId(value), ...fields]));
+    };
+    const remove = (index) => {
+        const updatedFields = removeArrayAt(getFieldValuesByName(fieldsRef.current, name), index);
+        resetFields(updatedFields);
+        setField(mapIds(updatedFields));
+    };
+    const insert = (index, value) => {
+        const fieldValues = getFieldValuesByName(fieldsRef.current, name);
+        resetFields();
+        setField(mapIds([
+            ...fieldValues.slice(0, index),
+            appendId(value),
+            ...fieldValues.slice(index),
+        ]));
+    };
+    const swap = (indexA, indexB) => {
+        const fieldValues = getFieldValuesByName(fieldsRef.current, name);
+        swapArrayAt(fieldValues, indexA, indexB);
+        resetFields(fieldValues);
+        setField(mapIds(fieldValues));
+    };
+    const move = (from, to) => {
+        const fieldValues = getFieldValuesByName(fieldsRef.current, name);
+        moveArrayAt(fieldValues, from, to);
+        resetFields(fieldValues);
+        setField(mapIds(fieldValues));
+    };
+    const reset = (values) => {
+        resetFields();
+        setField(mapIds(get(values, name)));
+    };
+    Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+        const resetFunctions = resetFieldArrayFunctionRef.current;
+        const fieldArrayNames = fieldArrayNamesRef.current;
+        fieldArrayNames.add(name);
+        resetFunctions[name] = reset;
+        return () => {
+            resetFields();
+            delete resetFunctions[name];
+            fieldArrayNames.delete(name);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [name]);
+    return {
+        swap,
+        move,
+        prepend,
+        append,
+        remove,
+        insert,
+        fields,
+    };
+}
+
+var getInputValue = (target, isCheckbox) => {
+    if (isNullOrUndefined(target)) {
+        return target;
+    }
+    return isCheckbox
+        ? isUndefined(target.checked)
+            ? target
+            : target.checked
+        : isUndefined(target.value)
+            ? target
+            : target.value;
+};
+
+const Controller = (_a) => {
+    var { name, rules, as: InnerComponent, onChange, onChangeName = VALIDATION_MODE.onChange, onBlurName = VALIDATION_MODE.onBlur, valueName, defaultValue, control } = _a, rest = __rest(_a, ["name", "rules", "as", "onChange", "onChangeName", "onBlurName", "valueName", "defaultValue", "control"]);
+    const methods = useFormContext();
+    const { defaultValuesRef, setValue, register, unregister, errors, triggerValidation, mode: { isOnSubmit, isOnBlur }, reValidateMode: { isReValidateOnBlur, isReValidateOnSubmit }, formState: { isSubmitted }, fieldsRef, fieldArrayNamesRef, } = control || methods.control;
+    const [value, setInputStateValue] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(isUndefined(defaultValue)
+        ? get(defaultValuesRef.current, name)
+        : defaultValue);
+    const valueRef = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])(value);
+    const isCheckboxInput = isBoolean(value);
+    const shouldValidate = () => !skipValidation({
+        hasError: !!get(errors, name),
+        isOnBlur,
+        isOnSubmit,
+        isReValidateOnBlur,
+        isReValidateOnSubmit,
+        isSubmitted,
+    });
+    const commonTask = (target) => {
+        const data = getInputValue(target, isCheckboxInput);
+        setInputStateValue(data);
+        valueRef.current = data;
+        return data;
+    };
+    const eventWrapper = (event) => (...arg) => setValue(name, commonTask(event(arg)), shouldValidate());
+    const handleChange = (e) => {
+        const data = commonTask(e && e.target ? e.target : e);
+        setValue(name, data, shouldValidate());
+    };
+    const registerField = () => register(Object.defineProperty({
+        name,
+    }, VALUE, {
+        set(data) {
+            setInputStateValue(data);
+            valueRef.current = data;
+        },
+        get() {
+            return valueRef.current;
+        },
+    }), Object.assign({}, rules));
+    if (!fieldsRef.current[name]) {
+        registerField();
+    }
+    Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+        const fieldArrayNames = fieldArrayNamesRef.current;
+        registerField();
+        return () => {
+            if (!isNameInFieldArray(fieldArrayNames, name)) {
+                unregister(name);
+            }
+        };
+    }, // eslint-disable-next-line react-hooks/exhaustive-deps
+    [name]);
+    const props = Object.assign(Object.assign(Object.assign(Object.assign({ name }, rest), (onChange
+        ? { [onChangeName]: eventWrapper(onChange) }
+        : { [onChangeName]: handleChange })), (isOnBlur || isReValidateOnBlur
+        ? { [onBlurName]: () => triggerValidation(name) }
+        : {})), { [valueName || (isCheckboxInput ? 'checked' : VALUE)]: value });
+    return Object(react__WEBPACK_IMPORTED_MODULE_0__["isValidElement"])(InnerComponent) ? (Object(react__WEBPACK_IMPORTED_MODULE_0__["cloneElement"])(InnerComponent, props)) : (Object(react__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InnerComponent, Object.assign({}, props)));
+};
+
+const ErrorMessage = ({ as: InnerComponent, errors, name, children, }) => {
+    const methods = useFormContext();
+    const { message, types } = get(errors || methods.errors, name, {});
+    if (!message) {
+        return null;
+    }
+    const props = {
+        children: children ? children({ message, messages: types }) : message,
+    };
+    return InnerComponent ? (Object(react__WEBPACK_IMPORTED_MODULE_0__["isValidElement"])(InnerComponent) ? (Object(react__WEBPACK_IMPORTED_MODULE_0__["cloneElement"])(InnerComponent, props)) : (Object(react__WEBPACK_IMPORTED_MODULE_0__["createElement"])(InnerComponent, Object.assign({}, props)))) : (Object(react__WEBPACK_IMPORTED_MODULE_0__["createElement"])(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], Object.assign({}, props)));
+};
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/react-is/cjs/react-is.development.js":
 /*!***********************************************************!*\
   !*** ./node_modules/react-is/cjs/react-is.development.js ***!
@@ -80501,8 +81998,8 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
       setClientProfile = _useState10[1];
 
   var infoRef = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
-  var cacheService = Object(_useCacheService__WEBPACK_IMPORTED_MODULE_6__["useCacheService"])();
-  console.log('this is the cacheService in case management');
+  var cacheService = Object(_useCacheService__WEBPACK_IMPORTED_MODULE_6__["useCacheService"])(); //console.log('this is the cacheService in case management');
+
   console.log(cacheService);
 
   function EnableTabs() {
@@ -80517,13 +82014,13 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
 
 
   function SetClientProfile(clientProfile) {
-    console.log('this is SetClientProfile in  CaseManagementFunction ');
+    //console.log('this is SetClientProfile in  CaseManagementFunction ');
     console.log(clientProfile);
     setClientProfile(clientProfile); //updates the local state
     //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
+    //console.log('this is the birth date!!!!');
+    //console.log(clientProfile.ClientProfile.Person.DOB);
 
-    console.log('this is the birth date!!!!');
-    console.log(clientProfile.ClientProfile.Person.DOB);
     infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
   }
 
@@ -80630,7 +82127,19 @@ function (_Component) {
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_2___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_3___default()(DropDown).call(this, props));
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_4___default()(_this), "onSelectHandler", function (event) {
-      //pass the selected suffix value to the parent
+      var selectedValue = event.currentTarget.getAttribute('value');
+
+      if (_this.props.isRequired && selectedValue === "0") {
+        _this.setState({
+          hideError: false
+        });
+      } else {
+        _this.setState({
+          hideError: true
+        });
+      } //pass the selected suffix value to the parent
+
+
       _this.props.onSelectValue(event.currentTarget.getAttribute('value'));
 
       _this.props.onSelectValueDescription(event.currentTarget.getAttribute('description'));
@@ -80641,7 +82150,9 @@ function (_Component) {
     _this.state = {
       values: values,
       selectedValue: previouslySelectedValue,
-      selectedDescription: _this.props.valueDescription
+      selectedDescription: _this.props.valueDescription,
+      hideError: true //isRequired: this.props.isRequired     
+
     };
     return _this;
   }
@@ -80668,7 +82179,9 @@ function (_Component) {
         "data-toggle": "dropdown"
       }, this.props.valueDescription), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "dropdown-menu"
-      }, valueOptions)));
+      }, valueOptions)), this.state.hideError || react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "errorDiv"
+      }, "Please select a value."));
     }
   }]);
 
@@ -80814,6 +82327,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _useCacheService__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./useCacheService */ "./wwwroot/source/useCacheService.js");
 /* harmony import */ var _Dropdown__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Dropdown */ "./wwwroot/source/Dropdown.js");
+/* harmony import */ var react_hook_form__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/react-hook-form.es.js");
+
 
 
 
@@ -80838,8 +82353,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var clientSSN = clientInfo.SSN !== null ? clientInfo.SSN : '';
   var clientFbiNcic = clientInfo.FBINCIC !== null ? clientInfo.SSN : '';
   var clientStateVcin = clientInfo.StateORVCIN !== null ? clientInfo.StateORVCIN : '';
-  var clientAlias = clientInfo.Alias !== null ? clientInfo.Alias : ''; //GenderID, RaceID
-
+  var clientAlias = clientInfo.Alias !== null ? clientInfo.Alias : '';
   var clientGenderID = clientInfo.GenderID !== null ? clientInfo.GenderID : '';
   var clientRaceID = clientInfo.RaceID !== null ? clientInfo.RaceID : ''; //get the birthdate in UTC format- the datepicker plugin needs it that way
 
@@ -80848,7 +82362,15 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
 
   var difference = moment__WEBPACK_IMPORTED_MODULE_8___default()(new Date()).diff(birthDateJavascriptDateObject);
   var duration = moment__WEBPACK_IMPORTED_MODULE_8___default.a.duration(difference, 'milliseconds');
-  var diffInYears = Math.round(duration.asYears()); //set the state variables
+  var diffInYears = Math.round(duration.asYears()); //for validation
+
+  var _useForm = Object(react_hook_form__WEBPACK_IMPORTED_MODULE_11__["useForm"])(),
+      register = _useForm.register,
+      handleSubmit = _useForm.handleSubmit,
+      watch = _useForm.watch,
+      errors = _useForm.errors,
+      triggerValidation = _useForm.triggerValidation; //set the state variables
+
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
       _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
@@ -80898,17 +82420,141 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   var _useState19 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderID),
       _useState20 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState19, 2),
       genderID = _useState20[0],
-      setGenderID = _useState20[1]; //const [genders, setGenders] = useState([]);
-
+      setGenderID = _useState20[1];
 
   var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
       _useState22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState21, 2),
       raceID = _useState22[0],
-      setRaceID = _useState22[1]; //from the cache service, initialized in the parent case management component
+      setRaceID = _useState22[1]; //for the reset button, it will enable if anything is changed
+
+
+  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
+      _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
+      isResetButtonDisabled = _useState24[0],
+      setResetButtonDisabled = _useState24[1]; //SSN field 
+
+
+  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
+      isSsnRequired = _useState26[0],
+      setSsnRequired = _useState26[1];
+
+  var _useState27 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('invalid-feedback'),
+      _useState28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState27, 2),
+      errorDivCss = _useState28[0],
+      setErroDivCss = _useState28[1]; //Date of Birth field
+
+
+  var _useState29 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState29, 2),
+      isBirthDateRequired = _useState30[0],
+      setBirthDateRequired = _useState30[1];
+
+  var _useState31 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('invalid-feedback'),
+      _useState32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState31, 2),
+      dobErrorDivCss = _useState32[0],
+      setDobErrorDivCss = _useState32[1]; //Race dropddown
+
+
+  var _useState33 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState33, 2),
+      isRaceDropdownRequired = _useState34[0],
+      setIsRaceDropdownRequired = _useState34[1];
+
+  var _useState35 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('invalid-feedback'),
+      _useState36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState35, 2),
+      raceDdlErrorDivCss = _useState36[0],
+      setRaceDdlErrorDivCss = _useState36[1]; //variables to hold previous state- for when a value changes
+
+
+  var _useState37 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
+      _useState38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState37, 1),
+      prevLastName = _useState38[0];
+
+  var _useState39 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFirstName),
+      _useState40 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState39, 1),
+      prevFirstName = _useState40[0];
+
+  var _useState41 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientMiddleName),
+      _useState42 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState41, 1),
+      prevMiddleName = _useState42[0];
+
+  var _useState43 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSuffixID),
+      _useState44 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState43, 1),
+      prevSuffixID = _useState44[0];
+
+  var _useState45 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSSN),
+      _useState46 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState45, 1),
+      prevSsn = _useState46[0];
+
+  var _useState47 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFbiNcic),
+      _useState48 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState47, 1),
+      prevFbiNcicNumber = _useState48[0];
+
+  var _useState49 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(utcBirthDate),
+      _useState50 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState49, 1),
+      prevBirthDate = _useState50[0];
+
+  var _useState51 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientStateVcin),
+      _useState52 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState51, 1),
+      prevStateVcin = _useState52[0];
+
+  var _useState53 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientAlias),
+      _useState54 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState53, 1),
+      prevAlias = _useState54[0];
+
+  var _useState55 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderID),
+      _useState56 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState55, 1),
+      prevGenderID = _useState56[0];
+
+  var _useState57 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceID),
+      _useState58 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState57, 1),
+      prevRaceID = _useState58[0]; //from the cache service, initialized in the parent case management component
 
 
   var genderValues = props.genderValues;
-  var raceValues = props.raceValues;
+  var raceValues = props.raceValues; //add "Please Select" options to race and gender dropdowns if not there
+
+  var genderPleaseSelectOption = genderValues.filter(function (gender) {
+    return gender.ID === 0;
+  }); //console.log('does select exist');
+  //console.log(genderPleaseSelectOption);
+
+  if (genderPleaseSelectOption.length === 0) {
+    var pleaseSelectItem = {
+      Name: "PleaseSelect",
+      Description: "Please Select",
+      Active: true,
+      ID: 0,
+      CreatedDate: new Date()
+    };
+    genderValues.splice(0, 0, pleaseSelectItem);
+  }
+
+  var racePleaseSelectionOption = raceValues.filter(function (race) {
+    return race.ID === 0;
+  });
+
+  if (racePleaseSelectionOption.length === 0) {
+    var _pleaseSelectItem = {
+      Name: "PleaseSelect",
+      Description: "Please Select",
+      Active: true,
+      ID: 0,
+      CreatedDate: new Date()
+    };
+    raceValues.splice(0, 0, _pleaseSelectItem);
+  } //doesn't work
+  //let sortedGenderValues = genderValues.sort((a, b) => { return  a.ID > b.ID;  });
+  //console.log('sorted genders: ');
+  //console.log(genderValues);
+  //console.log(raceValues);
+  //genderValues = genderValues.sort();
+  //raceValues = raceValues.sort();
+  //console.log(genderValues);
+  //console.log(raceValues);
+
+
   var genderObjectByClientGenderID = genderValues.filter(function (gender) {
     return gender.ID === clientGenderID;
   });
@@ -80917,19 +82563,29 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   });
   var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
   var clientRaceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
-  console.log('this is the client gender and race description in Info.js');
-  console.log(clientGenderDescription);
-  console.log(clientRaceDescription);
 
-  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
-      _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
-      genderDescription = _useState24[0],
-      setGenderDescription = _useState24[1];
+  var _useState59 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
+      _useState60 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState59, 2),
+      genderDescription = _useState60[0],
+      setGenderDescription = _useState60[1];
 
-  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
-      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
-      raceDescription = _useState26[0],
-      setRaceDescription = _useState26[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
+  var _useState61 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+      _useState62 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState61, 2),
+      raceDescription = _useState62[0],
+      setRaceDescription = _useState62[1];
+
+  var _useState63 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
+      _useState64 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState63, 1),
+      prevGenderDescription = _useState64[0];
+
+  var _useState65 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+      _useState66 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState65, 1),
+      prevRaceDescription = _useState66[0];
+
+  var _useState67 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('needs-validation'),
+      _useState68 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState67, 2),
+      formClass = _useState68[0],
+      setFormClass = _useState68[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
   //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
 
 
@@ -80944,17 +82600,19 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
 
   var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_4__["useStore"])(),
       state = _useStore.state,
-      dispatch = _useStore.dispatch;
+      dispatch = _useStore.dispatch; //this will re-render the first name, last name, middle name, etc each time something changes, but NOT the dropdown values- those are handled in the select event handlers.
+  //otherwise, when a selection in the dropdown is made, the useEffect overwrites what was just selected
+
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     setFirstName(clientFirstName);
     setLastName(clientLastName);
     setMiddleName(clientMiddleName);
     setSuffixID(clientSuffixID);
-    setSSN(clientSSN); //setRaceDescription(clientRaceDescription);
-
+    setSSN(clientSSN);
+    setRaceDescription(clientRaceDescription);
     setGenderDescription(clientGenderDescription);
-  }, [clientGenderDescription]);
+  }, [clientFirstName, clientLastName, clientMiddleName, clientSuffixID, clientSSN, clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
   function convertDateToUtcFormat(date) {
     var birthDateJavascriptDateObject = new Date(date);
@@ -80964,6 +82622,8 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   }
 
   function infoTabOnChangeHandler(e, field) {
+    setResetButtonDisabled(false);
+
     if (field === "txtLastName") {
       setLastName(e.target.value);
     }
@@ -80977,6 +82637,21 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     }
 
     if (field === "txtSSN") {
+      var ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
+      var isValidSsn = ssnRegex.test(e.target.value);
+
+      if (!isValidSsn) {
+        //console.log('not valid');
+        //setShowValidSsn(true);
+        setSsnRequired(true);
+        setErroDivCss('invalid-feedback d-block');
+      } else {
+        //console.log('valid');
+        //setShowValidSsn(false);
+        setSsnRequired(undefined);
+        setErroDivCss('invalid-feedback');
+      }
+
       setSSN(e.target.value);
     }
 
@@ -80993,84 +82668,172 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     }
   }
 
+  function isValidDate(d) {
+    //return d.date instanceof Date && !isNaN(d);
+    return Object.prototype.toString.call(d.date) === '[object Date]';
+  }
+
   function handleSuffixChange(suffix) {
-    console.log('this is the handleSuffixChange in Info.js ');
-    console.log(suffix);
+    setResetButtonDisabled(false); //console.log('this is the handleSuffixChange in Info.js ');
+    //console.log(suffix);
   }
 
   function handleDatePickerChange(birthDate) {
+    // console.log('this is the birth date');
+    // console.log(birthDate);
+    var isValid = isValidDate(birthDate); // console.log(isValid);
+
+    if (!isValid) {
+      setBirthDateRequired(true);
+      setDobErrorDivCss('invalid-feedback d-block');
+    } else {
+      setBirthDateRequired(false);
+      setDobErrorDivCss('invalid-feedback');
+    }
+
+    setResetButtonDisabled(false);
     setBirthDate(birthDate.date);
   }
 
   function handleGenderChange(gender) {
-    console.log('this is the handleGenderChange in Info.js ');
-    console.log(gender);
+    setResetButtonDisabled(false); //console.log('this is the handleGenderChange in Info.js ');
+    //console.log(gender);
+
     setGenderID(gender);
   }
 
   function handleGenderDescriptionChange(genderDescription) {
-    console.log('this is the handlGenderDescription in Info.js');
-    console.log(genderDescription);
+    setResetButtonDisabled(false); // console.log('this is the handlGenderDescription in Info.js');
+    // console.log(genderDescription);
+
     setGenderDescription(genderDescription);
   }
 
   function handleRaceChange(race) {
+    setResetButtonDisabled(false);
     console.log('this is handleRaceChange ');
     console.log(race);
+
+    if (race.ID === "0") {
+      console.log('race is showing Please Select');
+    }
+
     setRaceID(race);
   }
 
   function handleRaceDescriptionChange(raceDescription) {
-    console.log('this is the handleRaceDescriptionChange ');
-    console.log(raceDescription);
+    setResetButtonDisabled(false); //console.log('this is the handleRaceDescriptionChange ');
+    //console.log(raceDescription);
+
     setRaceDescription(raceDescription);
   }
 
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  function resetForm() {
+    setLastName(prevLastName);
+    setFirstName(prevFirstName);
+    setMiddleName(prevMiddleName);
+    setSSN(prevSsn);
+    setFbiNcicNumber(prevFbiNcicNumber);
+    setBirthDate(prevBirthDate);
+    setStateVcin(prevStateVcin);
+    setAlias(prevAlias);
+    setGenderID(prevGenderID);
+    setSuffixID(prevSuffixID);
+    setRaceID(prevRaceID);
+    setGenderDescription(prevGenderDescription);
+    setRaceDescription(prevRaceDescription);
+  } //this will fire when submission of the form is successful
+
+
+  var updateButtonClickHandler = function updateButtonClickHandler(event) {//event.preventDefault();
+  };
+
+  var TriggerValidationHandler = function TriggerValidationHandler() {
+    //triggerValidation("txtLastName");
+    setFormClass('needs-validation was-validated');
+    console.log('here are the errors:');
+    console.log(errors); //need to check last name, first name, date of birth, race/ethnicity, and gender
+
+    console.log(lastName);
+    console.log(firstName);
+    console.log(birthDate);
+    console.log(genderID);
+    console.log(raceID);
+  }; //this correctly gets errors
+  //console.log(errors);
+
+
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
+    onSubmit: handleSubmit(updateButtonClickHandler),
+    className: formClass,
+    noValidate: true
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-group"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtLastName"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Last Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "input-group mb-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Last Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
+    ref: register({
+      required: true,
+      maxLength: 50
+    }),
     value: lastName,
     onChange: function onChange(e) {
       return infoTabOnChangeHandler(e, "txtLastName");
     },
     className: "form-control",
-    id: "txtLastName"
-  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "txtLastName",
+    name: "txtLastName",
+    required: true
+  }), errors.txtLastName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "invalid-feedback"
+  }, "This field is required"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-group"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtFirstName"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " First Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "input-group mb-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " First Name *")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
+    ref: register({
+      required: true,
+      maxLength: 50
+    }),
     value: firstName,
     onChange: function onChange(e) {
       return infoTabOnChangeHandler(e, "txtFirstName");
     },
     className: "form-control",
-    id: "txtFirstName"
-  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "txtFirstName",
+    name: "txtFirstName",
+    required: true
+  }), errors.txtFirstName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "invalid-feedback"
+  }, "This field is required"))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-group"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtMiddleName"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Middle Name")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "input-group mb-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Middle Name")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
+    ref: register({
+      maxLength: 50
+    }),
     value: middleName,
     onChange: function onChange(e) {
       return infoTabOnChangeHandler(e, "txtMiddleName");
     },
     className: "form-control",
-    id: "txtMiddleName"
-  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "txtMiddleName",
+    name: "txtMiddleName"
+  }), errors.txtMiddleName && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "invalid-feedback"
+  }, "This field may not exceed 50 characters."))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "ddlSuffix"
@@ -81081,19 +82844,23 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-group"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtSSN"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " SSN")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "input-group mb-3"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " SSN")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     type: "text",
     value: ssn,
     onChange: function onChange(e) {
       return infoTabOnChangeHandler(e, "txtSSN");
     },
     className: "form-control",
-    id: "txtSSN"
-  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "txtSSN",
+    name: "txtSSN",
+    required: isSsnRequired
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: errorDivCss
+  }, "Please enter the SSN in a valid format."))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "txtFbiNcicNumber"
@@ -81126,13 +82893,16 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "input-group mb-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_2___default.a, {
     selected: birthDate,
+    required: isBirthDateRequired,
     onChange: function onChange(date) {
       return handleDatePickerChange({
         date: date
       });
     },
     className: "form-control"
-  })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: dobErrorDivCss
+  }, "Please enter a valid birth date.")))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-3"
@@ -81171,7 +82941,8 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     onSelectValueDescription: handleGenderDescriptionChange,
     selected: genderID,
     valueDescription: genderDescription,
-    values: genderValues
+    values: genderValues,
+    isRequired: true
   })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-4"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Race/Ethnicity*")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dropdown__WEBPACK_IMPORTED_MODULE_10__["default"], {
@@ -81179,8 +82950,25 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     onSelectValueDescription: handleRaceDescriptionChange,
     selected: raceID,
     valueDescription: raceDescription,
-    values: raceValues
-  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
+    values: raceValues,
+    isRequired: true
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row float-right"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-auto"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "submit",
+    onClick: TriggerValidationHandler,
+    className: "btn btn-primary mb-2",
+    value: "Update"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-auto"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    onClick: resetForm,
+    disabled: isResetButtonDisabled,
+    className: "btn btn-primary mb-2"
+  }, "Reset")))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), state.count, state.message);
 });
 /* harmony default export */ __webpack_exports__["default"] = (Info);
 
