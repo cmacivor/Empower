@@ -14,7 +14,7 @@ const CaseManagementFunction = (props) => {
     const infoRef = useRef();
     const cacheService = useCacheService();
 
-    console.log('this is the cacheService in case management');
+    //console.log('this is the cacheService in case management');
     console.log(cacheService);
 
     function EnableTabs() {
@@ -29,14 +29,14 @@ const CaseManagementFunction = (props) => {
 
     //to handle clicking on a row in the search grid, so this data is accessible elsewhere
     function SetClientProfile(clientProfile) {
-        console.log('this is SetClientProfile in  CaseManagementFunction ');
+        //console.log('this is SetClientProfile in  CaseManagementFunction ');
         console.log(clientProfile);
 
         setClientProfile(clientProfile); //updates the local state
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
-        console.log('this is the birth date!!!!');
-        console.log(clientProfile.ClientProfile.Person.DOB);
+        //console.log('this is the birth date!!!!');
+        //console.log(clientProfile.ClientProfile.Person.DOB);
         infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
 
     }

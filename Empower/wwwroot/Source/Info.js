@@ -180,7 +180,7 @@ const Info = forwardRef((props, ref) => {
 
         setRaceDescription(clientRaceDescription);
         setGenderDescription(clientGenderDescription);
-    }, [clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+    }, [clientFirstName, clientLastName, clientMiddleName, clientSuffixID, clientSSN, clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
     function convertDateToUtcFormat(date)
     {

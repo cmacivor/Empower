@@ -81998,8 +81998,8 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
       setClientProfile = _useState10[1];
 
   var infoRef = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
-  var cacheService = Object(_useCacheService__WEBPACK_IMPORTED_MODULE_6__["useCacheService"])();
-  console.log('this is the cacheService in case management');
+  var cacheService = Object(_useCacheService__WEBPACK_IMPORTED_MODULE_6__["useCacheService"])(); //console.log('this is the cacheService in case management');
+
   console.log(cacheService);
 
   function EnableTabs() {
@@ -82014,13 +82014,13 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
 
 
   function SetClientProfile(clientProfile) {
-    console.log('this is SetClientProfile in  CaseManagementFunction ');
+    //console.log('this is SetClientProfile in  CaseManagementFunction ');
     console.log(clientProfile);
     setClientProfile(clientProfile); //updates the local state
     //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
+    //console.log('this is the birth date!!!!');
+    //console.log(clientProfile.ClientProfile.Person.DOB);
 
-    console.log('this is the birth date!!!!');
-    console.log(clientProfile.ClientProfile.Person.DOB);
     infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
   }
 
@@ -82612,7 +82612,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setSSN(clientSSN);
     setRaceDescription(clientRaceDescription);
     setGenderDescription(clientGenderDescription);
-  }, [clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+  }, [clientFirstName, clientLastName, clientMiddleName, clientSuffixID, clientSSN, clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
   function convertDateToUtcFormat(date) {
     var birthDateJavascriptDateObject = new Date(date);
