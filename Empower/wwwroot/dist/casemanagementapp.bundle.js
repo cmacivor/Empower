@@ -81963,6 +81963,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bootstrap_Tabs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap/Tabs */ "./node_modules/react-bootstrap/esm/Tabs.js");
 /* harmony import */ var react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Tab */ "./node_modules/react-bootstrap/esm/Tab.js");
 /* harmony import */ var _useCacheService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./useCacheService */ "./wwwroot/source/useCacheService.js");
+/* harmony import */ var _Supplemental__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Supplemental */ "./wwwroot/source/Supplemental.js");
+
 
 
 
@@ -82052,7 +82054,13 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
     eventKey: "supplemental",
     title: "Supplemental",
     disabled: isTabDisabled
-  }, "supplemental content"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Supplemental__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    clientProfile: clientProfile.Person,
+    educationLevelValues: cacheService.educationLevelValues,
+    fundingSourceValues: cacheService.fundingSourceValues,
+    jobStatusValues: cacheService.jobStatusValues,
+    maritalStatusValues: cacheService.maritalStatusValues
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__["default"], {
     eventKey: "address",
     title: "Address",
     disabled: isTabDisabled
@@ -83084,6 +83092,55 @@ function (_Component) {
 
 /***/ }),
 
+/***/ "./wwwroot/source/RadioButton.js":
+/*!***************************************!*\
+  !*** ./wwwroot/source/RadioButton.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var RadioButton = function RadioButton(props) {
+  function yesButtonOnChangeHandler(event) {
+    props.setCheckedValue(true);
+  }
+
+  function noButtonOnChangeHandler(event) {
+    props.setCheckedValue(false);
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-check form-check-inline"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-check-input",
+    type: "radio",
+    onChange: yesButtonOnChangeHandler,
+    name: props.name,
+    defaultChecked: props.isChecked
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "form-check-label"
+  }, "Yes")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-check form-check-inline"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    className: "form-check-input",
+    type: "radio",
+    onChange: noButtonOnChangeHandler,
+    name: props.name,
+    defaultChecked: !props.isChecked
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    className: "form-check-label"
+  }, "No")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (RadioButton);
+
+/***/ }),
+
 /***/ "./wwwroot/source/Search.js":
 /*!**********************************!*\
   !*** ./wwwroot/source/Search.js ***!
@@ -83525,6 +83582,1446 @@ function (_Component) {
 
 /***/ }),
 
+/***/ "./wwwroot/source/Supplemental.js":
+/*!****************************************!*\
+  !*** ./wwwroot/source/Supplemental.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Dropdown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dropdown */ "./wwwroot/source/Dropdown.js");
+/* harmony import */ var _RadioButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./RadioButton */ "./wwwroot/source/RadioButton.js");
+/* harmony import */ var react_datepicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-datepicker */ "./node_modules/react-datepicker/dist/react-datepicker.min.js");
+/* harmony import */ var react_datepicker__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_datepicker__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+
+var Supplemental = function Supplemental(props) {
+  //this is really important
+  if (props.clientProfile === undefined) return null; //values for the dropdowns from the database
+
+  var educationLevels = props.educationLevelValues;
+  var fundingSources = props.fundingSourceValues;
+  var jobStatuses = props.jobStatusValues;
+  var maritalStatuses = props.maritalStatusValues; //the dropdowns
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(3),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+      educationLevelID = _useState2[0],
+      setEducationLevelID = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('12th Grade'),
+      _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState3, 2),
+      educationLevelDescription = _useState4[0],
+      setEducationLevelDescription = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(3),
+      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState5, 2),
+      fundingSourceID = _useState6[0],
+      setFundingSourceID = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])("RRHA"),
+      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState7, 2),
+      fundingSourceDescription = _useState8[0],
+      setFundingSourceDescription = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(3),
+      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState9, 2),
+      jobStatusID = _useState10[0],
+      setJobStatusID = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])("Retired"),
+      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState11, 2),
+      jobStatusDescription = _useState12[0],
+      setJobStatusDescription = _useState12[1];
+
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(3),
+      _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState13, 2),
+      maritalStatusID = _useState14[0],
+      setMaritalStatusID = _useState14[1];
+
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])("MARRIED"),
+      _useState16 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState15, 2),
+      maritalStatusDescription = _useState16[0],
+      setMaritalStatusDescription = _useState16[1]; //the radio buttons
+
+
+  var _useState17 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState18 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState17, 2),
+      isIepChecked = _useState18[0],
+      setIsIepChecked = _useState18[1];
+
+  var _useState19 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState20 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState19, 2),
+      isInterpreterNeededChecked = _useState20[0],
+      setIsInterpreterNeededChecked = _useState20[1];
+
+  var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState21, 2),
+      isMedicaid = _useState22[0],
+      setIsMedicaid = _useState22[1];
+
+  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState23, 2),
+      isInsurance = _useState24[0],
+      setIsInsurance = _useState24[1];
+
+  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState25, 2),
+      isDriversLicense = _useState26[0],
+      setIsDriversLicense = _useState26[1];
+
+  var _useState27 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState27, 2),
+      isConvictedOffense = _useState28[0],
+      setIsConvictedOffense = _useState28[1];
+
+  var _useState29 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState29, 2),
+      isConvictedMisdemeanor = _useState30[0],
+      setIsConvictedMisdemeanor = _useState30[1];
+
+  var _useState31 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState31, 2),
+      isConvictedFelony = _useState32[0],
+      setIsConvictedFelony = _useState32[1];
+
+  var _useState33 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState33, 2),
+      isWorkingVehicle = _useState34[0],
+      setIsWorkingVehicle = _useState34[1];
+
+  var _useState35 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState35, 2),
+      isConvictedFelonyCrime = _useState36[0],
+      setIsConvictedFelonyCrime = _useState36[1];
+
+  var _useState37 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState37, 2),
+      isDisabled = _useState38[0],
+      setIsDisabled = _useState38[1]; //textboxes
+
+
+  var _useState39 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState40 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState39, 2),
+      heightInFeet = _useState40[0],
+      setHeightInFeet = _useState40[1];
+
+  var _useState41 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState42 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState41, 2),
+      heightInInches = _useState42[0],
+      setHeightInInches = _useState42[1];
+
+  var _useState43 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState44 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState43, 2),
+      weight = _useState44[0],
+      setWeight = _useState44[1];
+
+  var _useState45 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState46 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState45, 2),
+      shoeSize = _useState46[0],
+      setShoeSize = _useState46[1];
+
+  var _useState47 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState48 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState47, 2),
+      houseHoldSize = _useState48[0],
+      setHouseHoldSize = _useState48[1];
+
+  var _useState49 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState50 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState49, 2),
+      homePhone = _useState50[0],
+      setHomePhone = _useState50[1];
+
+  var _useState51 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState52 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState51, 2),
+      houseHoldIncome = _useState52[0],
+      setHouseHoldIncome = _useState52[1];
+
+  var _useState53 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState54 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState53, 2),
+      primaryLanguage = _useState54[0],
+      setPrimaryLanguage = _useState54[1];
+
+  var _useState55 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState56 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState55, 2),
+      notes = _useState56[0],
+      setNotes = _useState56[1];
+
+  var _useState57 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState58 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState57, 2),
+      idNumber = _useState58[0],
+      setIDNumber = _useState58[1];
+
+  var _useState59 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState60 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState59, 2),
+      scarsMarksTattos = _useState60[0],
+      setScarsMarksTattoos = _useState60[1]; //for the reset button, it will enable if anything is changed
+
+
+  var _useState61 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
+      _useState62 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState61, 2),
+      isResetButtonDisabled = _useState62[0],
+      setResetButtonDisabled = _useState62[1]; //Reset variables to hold original state
+  //the reset dropdown values
+
+
+  var _useState63 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(3),
+      _useState64 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState63, 2),
+      prevEducationLevelID = _useState64[0],
+      setPrevEducationLevelID = _useState64[1];
+
+  var _useState65 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('12th Grade'),
+      _useState66 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState65, 2),
+      prevEducationLevelDescription = _useState66[0],
+      setPrevEducationLevelDescription = _useState66[1];
+
+  var _useState67 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(3),
+      _useState68 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState67, 2),
+      prevFundingSourceID = _useState68[0],
+      setPrevFundingSourceID = _useState68[1];
+
+  var _useState69 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])("RRHA"),
+      _useState70 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState69, 2),
+      prevFundingSourceDescription = _useState70[0],
+      setPrevFundingSourceDescription = _useState70[1];
+
+  var _useState71 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(3),
+      _useState72 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState71, 2),
+      prevJobStatusID = _useState72[0],
+      setPrevJobStatusID = _useState72[1];
+
+  var _useState73 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])("Retired"),
+      _useState74 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState73, 2),
+      prevJobStatusDescription = _useState74[0],
+      setPrevJobStatusDescription = _useState74[1];
+
+  var _useState75 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(3),
+      _useState76 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState75, 2),
+      prevMaritalStatusID = _useState76[0],
+      setPrevMaritalStatusID = _useState76[1];
+
+  var _useState77 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])("MARRIED"),
+      _useState78 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState77, 2),
+      prevMaritalStatusDescription = _useState78[0],
+      setPrevMaritalStatusDescription = _useState78[1]; //the reset radio button values
+
+
+  var _useState79 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState80 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState79, 2),
+      prevIsIepChecked = _useState80[0],
+      setPrevIsIepChecked = _useState80[1];
+
+  var _useState81 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState82 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState81, 2),
+      prevIsInterpreterNeededChecked = _useState82[0],
+      setPrevIsInterpreterNeededChecked = _useState82[1];
+
+  var _useState83 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState84 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState83, 2),
+      prevIsMedicaid = _useState84[0],
+      setPrevIsMedicaid = _useState84[1];
+
+  var _useState85 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState86 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState85, 2),
+      prevIsInsurance = _useState86[0],
+      setPrevIsInsurance = _useState86[1];
+
+  var _useState87 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState88 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState87, 2),
+      prevIsDriversLicense = _useState88[0],
+      setPrevIsDriversLicense = _useState88[1];
+
+  var _useState89 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState90 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState89, 2),
+      prevIsConvictedOffense = _useState90[0],
+      setPrevIsConvictedOffense = _useState90[1];
+
+  var _useState91 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState92 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState91, 2),
+      prevIsConvictedMisdemeanor = _useState92[0],
+      setPrevIsConvictedMisdemeanor = _useState92[1];
+
+  var _useState93 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState94 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState93, 2),
+      prevIsConvictedFelony = _useState94[0],
+      setPrevIsConvictedFelony = _useState94[1];
+
+  var _useState95 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState96 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState95, 2),
+      prevIsWorkingVehicle = _useState96[0],
+      setPrevIsWorkingVehicle = _useState96[1];
+
+  var _useState97 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState98 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState97, 2),
+      prevIsConvictedFelonyCrime = _useState98[0],
+      setPrevIsConvictedFelonyCrime = _useState98[1];
+
+  var _useState99 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState100 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState99, 2),
+      prevIsDisabled = _useState100[0],
+      setPrevIsDisabled = _useState100[1]; //the reset textbox values
+
+
+  var _useState101 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState102 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState101, 2),
+      prevHeightInFeet = _useState102[0],
+      setPrevHeightInFeet = _useState102[1];
+
+  var _useState103 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState104 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState103, 2),
+      prevHeightInInches = _useState104[0],
+      setPrevHeightInInches = _useState104[1];
+
+  var _useState105 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState106 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState105, 2),
+      prevWeight = _useState106[0],
+      setPrevWeight = _useState106[1];
+
+  var _useState107 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState108 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState107, 2),
+      prevShoeSize = _useState108[0],
+      setPrevShoeSize = _useState108[1];
+
+  var _useState109 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState110 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState109, 2),
+      prevHouseHoldSize = _useState110[0],
+      setPrevHouseHoldSize = _useState110[1];
+
+  var _useState111 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState112 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState111, 2),
+      prevHomePhone = _useState112[0],
+      setPrevHomePhone = _useState112[1];
+
+  var _useState113 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState114 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState113, 2),
+      prevHouseHoldIncome = _useState114[0],
+      setPrevHouseHoldIncome = _useState114[1];
+
+  var _useState115 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState116 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState115, 2),
+      prevPrimaryLanguage = _useState116[0],
+      setPrevPrimaryLanguage = _useState116[1];
+
+  var _useState117 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState118 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState117, 2),
+      prevNotes = _useState118[0],
+      setPrevNotes = _useState118[1];
+
+  var _useState119 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState120 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState119, 2),
+      prevIdNumber = _useState120[0],
+      setPrevIDNumber = _useState120[1];
+
+  var _useState121 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState122 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState121, 2),
+      prevScarsMarksTattos = _useState122[0],
+      setPrevScarsMarksTattoos = _useState122[1]; //TODO: need to have common function for this conversion- see Info.js
+
+
+  var idIssueDateUTC = new Date().toUTCString();
+  var formattedDate = new Date(idIssueDateUTC);
+
+  var _useState123 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(formattedDate),
+      _useState124 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState123, 2),
+      idIssueDate = _useState124[0],
+      setIDIssueDate = _useState124[1];
+
+  var _useState125 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(formattedDate),
+      _useState126 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState125, 2),
+      idExpirationDate = _useState126[0],
+      setIDExpirationDate = _useState126[1];
+
+  function handleMaritalStatusChange(maritalStatus) {
+    setResetButtonDisabled(false);
+    setMaritalStatusID(maritalStatus);
+  }
+
+  function handleMaritalStatusDescriptionChange(maritalStatusDescription) {
+    setMaritalStatusDescription(maritalStatusDescription);
+  }
+
+  function handleJobStatusChange(jobStatus) {
+    setResetButtonDisabled(false);
+    setJobStatusID(jobStatus);
+  }
+
+  function handleJobStatusDescriptionChange(jobStatusDescription) {
+    setJobStatusDescription(jobStatusDescription);
+  }
+
+  function handleEducationLevelChange(educationLevel) {
+    setResetButtonDisabled(false);
+    setEducationLevelID(educationLevel);
+  }
+
+  function handleEducationLevelDescriptionChange(educationLevel) {
+    setEducationLevelDescription(educationLevel);
+  }
+
+  function handleFundingSourceChange(fundingSource) {
+    setResetButtonDisabled(false);
+    setFundingSourceID(fundingSource);
+  }
+
+  function handleFundingSourceDescriptionChange(fundingSourceDesc) {
+    setFundingSourceDescription(fundingSourceDesc);
+  }
+
+  function setCheckedValueHandler(iep) {
+    setResetButtonDisabled(false);
+    console.log('the iep value is:');
+    console.log(iep);
+    setIsIepChecked(iep);
+  }
+
+  function setIsInterpreterNeededHandler(isInterpreter) {
+    setResetButtonDisabled(false);
+    setIsInterpreterNeededChecked(isInterpreter);
+  }
+
+  function setIsMedicaidHandler(medicaid) {
+    setResetButtonDisabled(false);
+    setIsMedicaid(medicaid);
+  }
+
+  function setIsInsuranceHandler(insurance) {
+    setResetButtonDisabled(false);
+    setIsInsurance(insurance);
+  }
+
+  function setIsDriversLicenseHandler(license) {
+    setResetButtonDisabled(false);
+    setIsDriversLicense(license);
+  }
+
+  function setIsConvictedOffenseHandler(offense) {
+    setResetButtonDisabled(false);
+    setIsConvictedOffense(offense);
+  }
+
+  function setIsConvictedMisdemeanorHandler(misdemeanor) {
+    setResetButtonDisabled(false);
+    setIsConvictedMisdemeanor(misdemeanor);
+  }
+
+  function setIsConvictedFelonyHandler(felony) {
+    setResetButtonDisabled(false);
+    setIsConvictedFelony(felony);
+  }
+
+  function setIsWorkingVehicleHandler(vehicle) {
+    setResetButtonDisabled(false);
+    setIsWorkingVehicle(vehicle);
+  }
+
+  function setIsConvictedFelonyCrimeHandler(crime) {
+    setResetButtonDisabled(false);
+    setIsConvictedFelonyCrime(crime);
+  }
+
+  function setIsDisalbedHandler(disabled) {
+    setResetButtonDisabled(false);
+    setIsDisabled(disabled);
+  }
+
+  function careerStationSelectHandler(event) {
+    //console.log(career);
+    setResetButtonDisabled(false);
+    var selectedValue = event.currentTarget.getAttribute('value');
+    console.log(selectedValue);
+  }
+
+  function notesChangeHandler(event) {
+    //console.log(event.target.value);
+    setResetButtonDisabled(false);
+    setNotes(event.target.value);
+  }
+
+  function idTypeSelectHandler(event) {
+    setResetButtonDisabled(false);
+    var selectedValue = event.currentTarget.getAttribute('value');
+    console.log(selectedValue);
+  }
+
+  function livingSituationSelectHandler(event) {
+    setResetButtonDisabled(false);
+    var selectedValue = event.currentTarget.getAttribute('value');
+    console.log(selectedValue);
+  }
+
+  function highestEdLevelSelectHandler(event) {
+    setResetButtonDisabled(false);
+    var selectedValue = event.currentTarget.getAttribute('value');
+    console.log(selectedValue);
+  }
+
+  function stateSelectHandler(event) {
+    setResetButtonDisabled(false);
+    var selectedValue = event.currentTarget.getAttribute('value');
+    console.log(selectedValue);
+  }
+
+  function studentStatusSelectHandler(event) {
+    setResetButtonDisabled(false);
+    var selectedValue = event.currentTarget.getAttribute('value');
+    console.log(selectedValue);
+  }
+
+  function setIDNumberHandler(event) {
+    setResetButtonDisabled(false);
+    setIDNumber(event.target.value);
+  }
+
+  function setScarsHandler(event) {
+    setResetButtonDisabled(false);
+    setScarsMarksTattoos(event.target.value);
+  } //TODO: put this into common file- see Info.js
+
+
+  function isValidDate(d) {
+    //return d.date instanceof Date && !isNaN(d);
+    return Object.prototype.toString.call(d.date) === '[object Date]';
+  }
+
+  function handleIDIssueDateChange(idIssueDate) {
+    setResetButtonDisabled(false); // console.log('this is the birth date');
+    // console.log(birthDate);
+
+    var isValid = isValidDate(idIssueDate); // console.log(isValid);
+
+    if (!isValid) {//setBirthDateRequired(true);
+      //setDobErrorDivCss('invalid-feedback d-block')
+    } else {} //setBirthDateRequired(false);
+      //setDobErrorDivCss('invalid-feedback');
+      //setResetButtonDisabled(false); 
+      //setBirthDate(birthDate.date);
+
+
+    console.log(idIssueDate.date);
+    setIDIssueDate(idIssueDate.date);
+  }
+
+  function handleIdExpirationDateChange(idExpirationDate) {
+    var isValid = isValidDate(idExpirationDate);
+
+    if (!isValid) {} else {}
+
+    setIDExpirationDate(idExpirationDate.date);
+  }
+
+  function heightInFeetChangeHandler(event) {
+    setResetButtonDisabled(false);
+    setHeightInFeet(event.target.value);
+  }
+
+  function heightInInchesChangeHandler(event) {
+    setResetButtonDisabled(false);
+    setHeightInInches(event.target.value);
+  }
+
+  function weightChangeHandler(event) {
+    setResetButtonDisabled(false);
+    setWeight(event.target.value);
+  }
+
+  function shoeSizeChangeHandler(event) {
+    setResetButtonDisabled(false);
+    setShoeSize(event.target.value);
+  }
+
+  function houseHoldSizeHandler(event) {
+    setResetButtonDisabled(false);
+    setHouseHoldSize(event.target.value);
+  }
+
+  function homePhoneChangeChandler(event) {
+    setResetButtonDisabled(false);
+    setHomePhone(event.target.value);
+  }
+
+  function houseHoldIncomeChangeHandler(event) {
+    setResetButtonDisabled(false);
+    setHouseHoldIncome(event.target.value);
+  }
+
+  function primaryLanguangeChangeHandler(event) {
+    setResetButtonDisabled(false);
+    setPrimaryLanguage(event.target.value);
+  }
+
+  function updateClickHandler() {}
+
+  function resetClickHandler() {}
+
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "accordion"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "card"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "card-header"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    className: "card-link",
+    "data-toggle": "collapse",
+    href: "#collapsibleSupplementalSection"
+  }, "Supplemental")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "collapsibleSupplementalSection",
+    className: "collapse show",
+    "data-parent": "#accordion"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "card-body"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-group"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtHeightFeet"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Height (Feet)")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    value: heightInFeet,
+    onChange: heightInFeetChangeHandler,
+    id: "txtHeightFeet"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtHeightInches"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Height (Inches)")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    value: heightInInches,
+    onChange: heightInInchesChangeHandler,
+    id: "txtHeightInches"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtWeight"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Weight (lbs.)")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    value: weight,
+    onChange: weightChangeHandler,
+    id: "txtWeight"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtShoeSize"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Shoe size (inches)")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    value: shoeSize,
+    onChange: shoeSizeChangeHandler,
+    id: "txtShoeSize"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-2"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtHouseSize"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Household Size")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    value: houseHoldSize,
+    onChange: houseHoldSizeHandler,
+    id: "txtHouseSize"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-2"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtHomePhone"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Home Phone")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    value: homePhone,
+    onChange: homePhoneChangeChandler,
+    id: "txtHomePhone"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-2"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtHouseIncome"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Household Income")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    value: houseHoldIncome,
+    onChange: houseHoldIncomeChangeHandler,
+    id: "txtHouseIncome"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-2"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtLanguage"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Primary Language")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    value: primaryLanguage,
+    onChange: primaryLanguangeChangeHandler,
+    id: "txtLanguage"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlEducationLevels"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Highest Grade Completed")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dropdown__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onSelectValue: handleEducationLevelChange,
+    onSelectValueDescription: handleEducationLevelDescriptionChange,
+    selected: educationLevelID,
+    valueDescription: educationLevelDescription,
+    values: educationLevels,
+    isRequired: true
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, " IEP")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "IEP",
+    isChecked: isIepChecked,
+    setCheckedValue: setCheckedValueHandler
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Is Interpreter Needed")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdIsInterpreterNeeded",
+    isChecked: isInterpreterNeededChecked,
+    setCheckedValue: setIsInterpreterNeededHandler
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Medicaid*")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdMedicaid",
+    isChecked: isMedicaid,
+    setCheckedValue: setIsMedicaidHandler
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Insurance")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdInsurance",
+    isChecked: isInsurance,
+    setCheckedValue: setIsInsuranceHandler
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Driver's License")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdDriversLicense",
+    isChecked: isDriversLicense,
+    setCheckedValue: setIsDriversLicenseHandler
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Convicted Offense")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdConvictedOffense",
+    isChecked: isConvictedOffense,
+    setCheckedValue: setIsConvictedOffenseHandler
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Convicted Misdemeanor")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdConvictedMisdemeanor",
+    isChecked: isConvictedMisdemeanor,
+    setCheckedValue: setIsConvictedMisdemeanorHandler
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Convicted Felony")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdConvictedFelony",
+    isChecked: isConvictedFelony,
+    setCheckedValue: setIsConvictedFelonyHandler
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Working Vehicle"), " "), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdWorkingVehicle",
+    isChecked: isWorkingVehicle,
+    setCheckedValue: setIsWorkingVehicleHandler
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Convicted Felony Crime (Integrity) ")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdConvictedFelonyCrime",
+    isChecked: isConvictedFelonyCrime,
+    setCheckedValue: setIsConvictedFelonyCrimeHandler
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlFundingSources"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Potential Funding Source")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dropdown__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onSelectValue: handleFundingSourceChange,
+    onSelectValueDescription: handleFundingSourceDescriptionChange,
+    selected: fundingSourceID,
+    valueDescription: fundingSourceDescription,
+    values: fundingSources,
+    isRequired: false
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlCareerStation"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Career Station")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-primary dropdown-toggle",
+    "data-toggle": "dropdown"
+  }, "Please Select"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown-menu"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Marshall",
+    value: "Marshall",
+    onClick: careerStationSelectHandler,
+    className: "dropdown-item"
+  }, "Marshall"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "East End",
+    value: "East End",
+    onClick: careerStationSelectHandler,
+    className: "dropdown-item"
+  }, "East End"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "South Side",
+    value: "South Side",
+    onClick: careerStationSelectHandler,
+    className: "dropdown-item"
+  }, "South Side"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Other",
+    value: "Other",
+    onClick: careerStationSelectHandler,
+    className: "dropdown-item"
+  }, "Other")))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtNotes"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Notes")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("textarea", {
+    value: notes,
+    onChange: notesChangeHandler,
+    className: "form-control"
+  })))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "card"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "card-header"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    className: "collapsed card-link",
+    "data-toggle": "collapse",
+    href: "#collapsibleIdentityDetailsSection"
+  }, "Identity and Employment Details")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    id: "collapsibleIdentityDetailsSection",
+    className: "collapse",
+    "data-parent": "#accordion"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "card-body"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlIDType"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "ID Type")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-primary dropdown-toggle",
+    "data-toggle": "dropdown"
+  }, "Please Select"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown-menu"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Birth Certificate",
+    value: "Birth Certificate",
+    onClick: idTypeSelectHandler,
+    className: "dropdown-item"
+  }, "Birth Certificate"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Driver's License",
+    value: "Driver's License",
+    onClick: idTypeSelectHandler,
+    className: "dropdown-item"
+  }, "Driver's License"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Green Card",
+    value: "Green Card",
+    onClick: idTypeSelectHandler,
+    className: "dropdown-item"
+  }, "Green Card"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Military",
+    value: "Military",
+    onClick: idTypeSelectHandler,
+    className: "dropdown-item"
+  }, "Military"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Other",
+    value: "Other",
+    onClick: idTypeSelectHandler,
+    className: "dropdown-item"
+  }, "Other"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Passport",
+    value: "Passport",
+    onClick: idTypeSelectHandler,
+    className: "dropdown-item"
+  }, "Passport")))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtIDNumber"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "ID Number")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    value: idNumber,
+    onChange: setIDNumberHandler,
+    className: "form-control",
+    id: "txtIDNumber"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtIssueDate"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "ID Issue Date")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_4___default.a, {
+    selected: idIssueDate,
+    required: false,
+    onChange: function onChange(date) {
+      return handleIDIssueDateChange({
+        date: date
+      });
+    },
+    className: "form-control"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtIdExpirationDate"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "ID Expiration Date")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_datepicker__WEBPACK_IMPORTED_MODULE_4___default.a, {
+    selected: idExpirationDate,
+    required: false,
+    onChange: function onChange(date) {
+      return handleIdExpirationDateChange({
+        date: date
+      });
+    },
+    className: "form-control"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlJobStatus"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Job Status")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dropdown__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onSelectValue: handleJobStatusChange,
+    onSelectValueDescription: handleJobStatusDescriptionChange,
+    selected: jobStatusID,
+    valueDescription: jobStatusDescription,
+    values: jobStatuses,
+    isRequired: false
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlMaritalStatus"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Marital Status")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dropdown__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onSelectValue: handleMaritalStatusChange,
+    onSelectValueDescription: handleMaritalStatusDescriptionChange,
+    selected: maritalStatusID,
+    valueDescription: maritalStatusDescription,
+    values: maritalStatuses,
+    isRequired: false
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtScarsMarks"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Scars/Marks/Tattoos")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    id: "txtScarsMarks",
+    value: scarsMarksTattos,
+    onChange: setScarsHandler,
+    type: "text",
+    className: "form-control"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Is Disabled")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_RadioButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: "rdIsDisabled",
+    isChecked: isDisabled,
+    setCheckedValue: setIsDisalbedHandler
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlIDType"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Living Situation")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-primary dropdown-toggle",
+    "data-toggle": "dropdown"
+  }, "Please Select"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown-menu"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Foster Care",
+    value: "Foster Care",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Foster Care"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Hospital Treatment Center",
+    value: "Hospital Treatment Center",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Hospital Treatment Center"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Hotel/Motel",
+    value: "Hotel/Motel",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Hotel/Motel"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Living with parent/legal guardian (youth)",
+    value: "Living with parent/legal guardian (youth)",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Living with parent/legal guardian (youth)"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Other",
+    value: "Other",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Other"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Parole Housing",
+    value: "Parole Housing",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Parole Housing"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Prison/Jail",
+    value: "Prison/Jail",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Prison/Jail"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Renting",
+    value: "Renting",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Renting"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Shelter",
+    value: "Shelter",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Shelter"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Staying with friend or relative",
+    value: "Staying with friend or relative",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Staying with friend or relative"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Youth group home",
+    value: "Youth group home",
+    onClick: livingSituationSelectHandler,
+    className: "dropdown-item"
+  }, "Youth group home")))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlStudentStatus"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Student Status")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-primary dropdown-toggle",
+    "data-toggle": "dropdown"
+  }, "Please Select"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown-menu"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Enrolled but not attending",
+    value: "Enrolled but not attending",
+    onClick: studentStatusSelectHandler,
+    className: "dropdown-item"
+  }, "Enrolled but not attending"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Expelled",
+    value: "Expelled",
+    onClick: studentStatusSelectHandler,
+    className: "dropdown-item"
+  }, "Expelled"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Full-time student",
+    value: "Full-time student",
+    onClick: studentStatusSelectHandler,
+    className: "dropdown-item"
+  }, "Full-time student"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Part-time student",
+    value: "Part-time student",
+    onClick: studentStatusSelectHandler,
+    className: "dropdown-item"
+  }, "Part-time student"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Suspended Long-term",
+    value: "Suspended Long-term",
+    onClick: studentStatusSelectHandler,
+    className: "dropdown-item"
+  }, "Suspended Long-term"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Suspended Short-term",
+    value: "Suspended Short-term",
+    onClick: studentStatusSelectHandler,
+    className: "dropdown-item"
+  }, "Suspended Short-term")))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlHighestEdLevel"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Highest Education Level")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-primary dropdown-toggle",
+    "data-toggle": "dropdown"
+  }, "Please Select"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown-menu"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Associate's Degree",
+    value: "Associate's Degree",
+    onClick: highestEdLevelSelectHandler,
+    className: "dropdown-item"
+  }, "Associate's Degree"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Current student",
+    value: "Current student",
+    onClick: highestEdLevelSelectHandler,
+    className: "dropdown-item"
+  }, "Current student"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Doctorate",
+    value: "Doctorate",
+    onClick: highestEdLevelSelectHandler,
+    className: "dropdown-item"
+  }, "Doctorate"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "GED",
+    value: "GED",
+    onClick: highestEdLevelSelectHandler,
+    className: "dropdown-item"
+  }, "GED"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "High School Graduate",
+    value: "High School Graduate",
+    onClick: highestEdLevelSelectHandler,
+    className: "dropdown-item"
+  }, "High School Graduate"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "No high school diploma or GED and not a current student",
+    value: "No high school diploma or GED and not a current student",
+    onClick: highestEdLevelSelectHandler,
+    className: "dropdown-item"
+  }, "No high school diploma or GED and not a current student"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Some college but no degree",
+    value: "Some college but no degree",
+    onClick: highestEdLevelSelectHandler,
+    className: "dropdown-item"
+  }, "Some college but no degree"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "Undergraduate Degree",
+    value: "Undergraduate Degree",
+    onClick: highestEdLevelSelectHandler,
+    className: "dropdown-item"
+  }, "Undergraduate Degree"))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h4", null, "Employer Details"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtEmployer"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Employer")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtSupervisor"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Supervisor")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtJobTitle"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Job Title")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-3"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtJobTitle"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Average Hours Per Week")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-8"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "txtEmployerAddress"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Address")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "text",
+    className: "form-control"
+  }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-4"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+    htmlFor: "ddlState"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Select State")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-primary dropdown-toggle",
+    "data-toggle": "dropdown"
+  }, "Please Select"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "dropdown-menu"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "AL",
+    value: "AL",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "AL"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "AK",
+    value: "AK",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "AK"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "AR",
+    value: "AR",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "AR"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "AZ",
+    value: "AZ",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "AZ"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "CA",
+    value: "CA",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "CA"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "CO",
+    value: "CO",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "CO"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "CT",
+    value: "CT",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "CT"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "DC",
+    value: "DC",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "DC"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "DE",
+    value: "DE",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "DE"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "FL",
+    value: "FL",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "FL"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "GA",
+    value: "GA",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "GA"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "HI",
+    value: "HI",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "HI"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "IA",
+    value: "IA",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "IA"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "ID",
+    value: "ID",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "ID"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "IL",
+    value: "IL",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "IL"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "IN",
+    value: "IN",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "IN"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "KS",
+    value: "KS",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "KS"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "KY",
+    value: "KY",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "KY"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "LA",
+    value: "LA",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "LA"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "MA",
+    value: "MA",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "MA"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "MD",
+    value: "MD",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "MD"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "ME",
+    value: "ME",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "ME"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "MI",
+    value: "MI",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "MI"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "MN",
+    value: "MN",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "MN"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "MO",
+    value: "MO",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "MO"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "MS",
+    value: "MS",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "MS"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "MT",
+    value: "MT",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "MT"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "NC",
+    value: "NC",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "NC"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "NE",
+    value: "NE",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "NE"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "NH",
+    value: "NH",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "NH"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "NJ",
+    value: "NJ",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "NJ"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "NM",
+    value: "NM",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "NM"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "NV",
+    value: "NV",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "NV"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "NY",
+    value: "NY",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "NY"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "ND",
+    value: "ND",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "ND"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "OH",
+    value: "OH",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "OH"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "OK",
+    value: "OK",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "OK"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "OR",
+    value: "OR",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "OR"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "PA",
+    value: "PA",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "PA"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "RI",
+    value: "RI",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "RI"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "SC",
+    value: "SC",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "SC"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "SD",
+    value: "SD",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "SD"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "TN",
+    value: "TN",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "TN"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "TX",
+    value: "TX",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "TX"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "UT",
+    value: "UT",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "UT"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "VT",
+    value: "VT",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "VT"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "VA",
+    value: "VA",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "VA"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "WA",
+    value: "WA",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "WA"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "WI",
+    value: "WI",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "WI"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "WV",
+    value: "WV",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "WV"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("a", {
+    key: "WY",
+    value: "WY",
+    onClick: stateSelectHandler,
+    className: "dropdown-item"
+  }, "WY"))))))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "form-row float-right"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-auto"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    type: "submit",
+    onClick: updateClickHandler,
+    className: "btn btn-primary mb-2",
+    value: "Update"
+  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "col-auto"
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    type: "button",
+    onClick: resetClickHandler,
+    disabled: isResetButtonDisabled,
+    className: "btn btn-primary mb-2"
+  }, "Reset"))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Supplemental);
+
+/***/ }),
+
 /***/ "./wwwroot/source/casemanagementapp.js":
 /*!*********************************************!*\
   !*** ./wwwroot/source/casemanagementapp.js ***!
@@ -83749,6 +85246,36 @@ function useCacheService() {
       races = _useState4[0],
       setRaces = _useState4[1];
 
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState5, 2),
+      suffixes = _useState6[0],
+      setSuffixes = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState7, 2),
+      educationLevels = _useState8[0],
+      setEducationLevels = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState9, 2),
+      fundingSources = _useState10[0],
+      setFundingSources = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState11, 2),
+      jobStatuses = _useState12[0],
+      setJobStatuses = _useState12[1];
+
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState13, 2),
+      maritalStatuses = _useState14[0],
+      setMaritalStatuses = _useState14[1];
+
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState16 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState15, 2),
+      propertyTypes = _useState16[0],
+      setPropertyTypes = _useState16[1];
+
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("Gender").then(function (genders) {
       return setGenders(genders);
@@ -83756,10 +85283,34 @@ function useCacheService() {
     _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("Race").then(function (races) {
       return setRaces(races);
     });
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("EducationLevel").then(function (educationLevels) {
+      return setEducationLevels(educationLevels);
+    });
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("FundingSource").then(function (fundingSources) {
+      return setFundingSources(fundingSources);
+    });
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("Suffix").then(function (suffixes) {
+      return setSuffixes(suffixes);
+    });
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("JobStatus").then(function (jobStatuses) {
+      return setJobStatuses(jobStatuses);
+    });
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("MaritalStatus").then(function (maritalStatuses) {
+      return setMaritalStatuses(maritalStatuses);
+    });
+    _commonAdmin__WEBPACK_IMPORTED_MODULE_2__["Api"].getConfigDataByType("PropertyType").then(function (propertyTypes) {
+      return setPropertyTypes(propertyTypes);
+    });
   }, []);
   return {
     genderValues: genders,
-    raceValues: races
+    raceValues: races,
+    suffixValues: suffixes,
+    educationLevelValues: educationLevels,
+    fundingSourceValues: fundingSources,
+    jobStatusValues: jobStatuses,
+    maritalStatusValues: maritalStatuses,
+    propertyTypeValues: propertyTypes
   };
 }
 
