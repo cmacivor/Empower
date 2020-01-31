@@ -20,7 +20,6 @@ namespace Empower.Controllers
             _logger = logger;
         }
 
-        //main React app will go here
         public IActionResult Index()
         {            
             var authResponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
@@ -29,9 +28,6 @@ namespace Empower.Controllers
             {
                 return RedirectToAction("Authenticate", "Login");
             }
-
-            //int systemID = (int)TempData["SystemID"];
-
             
             var viewModel = new HomeViewModel
             {

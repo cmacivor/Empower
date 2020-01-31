@@ -15,20 +15,12 @@ namespace Empower.Authentication
     {
         private IJSRuntime _runtime;
 
-        //public IOptions<AppSettings> _appsettings { get; set; }
-
-        //public Models.Div ErrorMessage { get; set; }
-
         public ILoginService _loginService { get; set; }
 
         public AuthenticationState(IJSRuntime runTime,  ILoginService loginService)
         {
             _runtime = runTime;
-            //_appsettings = options;
             _loginService = loginService;
-
-            //ErrorMessage = new Models.Div(_runtime);
-            //ErrorMessage.IsVisible = false;
         }       
 
         // public async Task<bool> IsLoggedIn()
