@@ -5,26 +5,15 @@ using System.Threading.Tasks;
 
 namespace Empower.Authentication
 {
-    public class Constants
+    public enum AppVersion
     {
-        enum System
-        {
-            CWB = 1,
-            Juvenile = 2,
-            Adult = 3
-        }
+        Juvenile = 1,
+        Adult = 2,
+        CWB = 3,
+    }
 
-        
-        //public enum Tabs
-        //{
-        //    Search,
-        //    ParticipantInfo,
-        //    Supplemental,
-        //    Address,
-        //    Family,
-        //    Program,
-        //    Assessment
-        //}
+    public  class Constants
+    {
 
         public static List<string> GetTabs()
         {
