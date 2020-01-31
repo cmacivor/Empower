@@ -38,6 +38,8 @@ namespace Empower.Controllers
                 //AuthenticationResponse
             };
 
+            viewModel.GetAppTitle();
+
             return View(viewModel);
         }
 
