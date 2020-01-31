@@ -29,13 +29,17 @@ namespace Empower.Controllers
             {
                 return RedirectToAction("Authenticate", "Login");
             }
+
+            //int systemID = (int)TempData["SystemID"];
+
             
             var viewModel = new HomeViewModel
             {
                 Token = authResponse.access_token,              
                 UserName = authResponse.userName, 
                 BaseApiAddress = authResponse.baseApiAddress, 
-                SystemID = authResponse.systemID  
+                SystemID = authResponse.systemID,
+                //AuthenticationResponse
             };
 
             return View(viewModel);

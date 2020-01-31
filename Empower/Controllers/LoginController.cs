@@ -41,6 +41,8 @@ namespace Empower.Controllers
 
                 if (loginResult.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    TempData["SystemID"] = loginResult.systemID;
+                    TempData["UserName"] = loginResult.userName;
                     //authenticate
                     return RedirectToAction("Index", "Home");
                 }

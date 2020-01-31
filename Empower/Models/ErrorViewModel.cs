@@ -2,7 +2,7 @@ using System;
 
 namespace Empower.Models
 {
-    public class ErrorViewModel
+    public class ErrorViewModel : ViewModelBase
     {
         public string RequestId { get; set; }
 

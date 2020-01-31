@@ -1,11 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Empower.Authentication
+@model ViewModelBase;
 
 
 @{ 
-    var authResponse = Context.Session.Get<AuthenticationResponse>("AuthenticationResponse");
-    
-    int systemID = Convert.ToInt32(authResponse.systemID);
+    //var authResponse = Context.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+    //var authResponse = @Model.AuthenticationResponse;
+    //var test = @Model.SystemID;
+
+    int systemID = Convert.ToInt32(@Model.SystemID);
 }
 
 <!DOCTYPE html>
@@ -153,7 +156,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle header-navlink hover-navlink" style="color:#EFEFEF" id="loginDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @authResponse.userName
+                               @Model.UserName
                             </a>
                             <div class="dropdown-menu" aria-labelledby="loginDropdownMenuLink">         
                                 <a class="dropdown-item" href="@Url.Action("LogOut", "Home")">
