@@ -63,7 +63,8 @@
                                 Admin
                             </a>
                             <!--Adult Admin-->
-                            @if (systemID == (int) Empower.Authentication.AppVersion.Adult)  {
+                            @if (systemID == (int)Empower.Authentication.AppVersion.Adult)
+                            {
                                 <div class="dropdown-menu" aria-labelledby="adminDropdownMenuLink">
                                     <a class="dropdown-item" href="~/admin/assessmenttype">
                                         <span class="oi oi-plus" aria-hidden="true"></span> AssessmentType
@@ -79,7 +80,7 @@
                                     </a>
                                     <a class="dropdown-item" href="~/admin/offense">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Offense
-                                    </a>   
+                                    </a>
                                     <a class="dropdown-item" href="~/admin/race">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Race
                                     </a>
@@ -97,16 +98,18 @@
                                     </a>
                                     <a class="dropdown-item" href="~/admin/servicerelease">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Case Status
-                                    </a>        
+                                    </a>
                                     <a class="dropdown-item" href="~/admin/suffix">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Suffix
                                     </a>
                                     <a class="dropdown-item" href="~/admin/careerpathway">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
-                                    </a>                             
+                                    </a>
                                 </div>
-                            } else if (systemID == (int) Empower.Authentication.AppVersion.CWB) {
-                                 <div class="dropdown-menu" aria-labelledby="adminDropdownMenuLink">
+                            }
+                            else if (systemID == (int)Empower.Authentication.AppVersion.CWB)
+                            {
+                                <div class="dropdown-menu" aria-labelledby="adminDropdownMenuLink">
                                     <a class="dropdown-item" href="~/admin/assessmenttype">
                                         <span class="oi oi-plus" aria-hidden="true"></span> AssessmentType
                                     </a>
@@ -144,12 +147,62 @@
                                         <span class="oi oi-plus" aria-hidden="true"></span> Suffix
                                     </a>
                                     <a class="dropdown-item" href="~/admin/careerpathway">
-                                    <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
-                                    </a> 
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
+                                    </a>
                                 </div>
-                                } 
-                            <!--Adult Admin-->
-                        </li>
+                            }
+                            else if (systemID == (int)Empower.Authentication.AppVersion.Juvenile)
+                            {
+                                <div class="dropdown-menu" aria-labelledby="adminDropdownMenuLink">
+                                    <a class="dropdown-item" href="~/admin/addresstype">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Address Type
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/assessmenttype">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Assessment Type
+                                    </a>                      
+                                    <a class="dropdown-item" href="~/admin/assessmentsubtype">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Assessment SubType
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/educationlevel">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Education Level
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/jobstatus">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Job Status
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/judge">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Judge
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/offense">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Offense
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/race">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Race
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/relationship">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Relationship
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/servicecategory">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Service Category
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/serviceoutcome">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Reason
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/serviceprogramcategory">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Service Program Category
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/servicerelease">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Case Status
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/suffix">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Suffix
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/careerpathway">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
+                                    </a>
+                                </div>
+                                
+                            }
+                            </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle header-navlink hover-navlink" style="color:#EFEFEF" id="loginDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                @Model.UserName
