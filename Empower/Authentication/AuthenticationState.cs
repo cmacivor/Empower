@@ -5,7 +5,7 @@ using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
+using System.Net;
 using System.Threading.Tasks;
 
 
@@ -15,20 +15,12 @@ namespace Empower.Authentication
     {
         private IJSRuntime _runtime;
 
-        //public IOptions<AppSettings> _appsettings { get; set; }
-
-        //public Models.Div ErrorMessage { get; set; }
-
         public ILoginService _loginService { get; set; }
 
         public AuthenticationState(IJSRuntime runTime,  ILoginService loginService)
         {
             _runtime = runTime;
-            //_appsettings = options;
             _loginService = loginService;
-
-            //ErrorMessage = new Models.Div(_runtime);
-            //ErrorMessage.IsVisible = false;
         }       
 
         // public async Task<bool> IsLoggedIn()
@@ -98,6 +90,7 @@ namespace Empower.Authentication
         public string systemID { get; set; }
 
         public System.Net.HttpStatusCode StatusCode { get; set; }
+       
 
         public string ResponseMessage { get; set; }
     }

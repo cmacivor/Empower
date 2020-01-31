@@ -41,7 +41,7 @@ namespace Empower
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10); //For easy testing TODO: will want to increase this
+                options.IdleTimeout = TimeSpan.FromSeconds(300); //For easy testing TODO: will want to increase this
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

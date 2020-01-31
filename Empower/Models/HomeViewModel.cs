@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace Empower.Models
 {
-    public class HomeViewModel
+    public class HomeViewModel : ViewModelBase
     {
-        public AuthenticationResponse AuthenticationResponse { get; set; }
-
-        public string UserName { get; set; }
-
         public string Token { get; set; }
 
         public string BaseApiAddress { get; set; }
-
-        public string  SystemID { get; set; }
     }
 }

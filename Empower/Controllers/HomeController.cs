@@ -20,7 +20,6 @@ namespace Empower.Controllers
             _logger = logger;
         }
 
-        //main React app will go here
         public IActionResult Index()
         {            
             var authResponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
@@ -35,8 +34,11 @@ namespace Empower.Controllers
                 Token = authResponse.access_token,              
                 UserName = authResponse.userName, 
                 BaseApiAddress = authResponse.baseApiAddress, 
-                SystemID = authResponse.systemID  
+                SystemID = authResponse.systemID,
+                //AuthenticationResponse
             };
+
+            viewModel.GetAppTitle();
 
             return View(viewModel);
         }
