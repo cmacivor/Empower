@@ -1,6 +1,38 @@
+@model Empower.Models.DeletePendingProfileViewModel
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Delete Pending Client Profiles</h1>
+<h3>Delete Pending Client Profiles</h1>
+<br>
+<p>List for inactive existing Client Profiles</p>
+<br>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Last Name</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Middle Name</th>
+            <th scope="col">JTS #</th>
+            <th scope="col">SSN</th>
+            <th scope="col">Birth Date</th>
+            <th scope="col">Gender</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var row in Model.PendingClientProfiles)
+        {
+            <tr>
+                <th>@row.LastName</th>
+                <th>@row.FirstName</th>
+                <th>@row.MiddleName</th>
+                <th>@row.JTSNumber</th>
+                <th>@row.SocialSecurityNumber</th>
+                <th>@row.BirthDate</th>
+                <th>@row.Gender</th>
+            </tr>
+        }
+    </tbody>
+</table>

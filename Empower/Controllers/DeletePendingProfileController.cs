@@ -13,6 +13,14 @@ namespace Empower.Controllers
         public IActionResult Index() 
         {
             var viewModel = new DeletePendingProfileViewModel();
+            viewModel.PendingClientProfiles.Add(new PendingClientProfile {
+                LastName = "TestName",
+                FirstName= "FirstName",
+                MiddleName = "",
+                JTSNumber = "22344",
+                BirthDate = "02/3/1987",
+                Gender = "M"
+            });
 
             return View(viewModel);     
         }

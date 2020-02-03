@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Empower.Models 
 {
-    public class DeletePendingProfileViewModel
+    public class DeletePendingProfileViewModel : ViewModelBase
     {
         public DeletePendingProfileViewModel()
         {
