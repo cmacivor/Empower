@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Empower.Services
 {
-    public class ApiClient<T> //: IApiClient<T>
+    public class ApiClient<T> : IApiClient<T>
     {
 
         public string BaseAddress { get; set; }
