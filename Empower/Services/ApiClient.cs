@@ -16,7 +16,13 @@ namespace Empower.Services
 
         public string BaseAddress { get; set; }
 
-        private readonly HttpClient _httpClient;
+        //private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _clientFactory;
+
+        public ApiClient(IHttpClientFactory clientFactory)
+        {
+            _clientFactory = clientFactory;
+        }
 
         public IOptions<AppSettings> _appsettings { get; set; }
 
@@ -40,13 +46,15 @@ namespace Empower.Services
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             HttpResponseMessage responseMessage;
-            using (responseMessage = await _httpClient.SendAsync(request))
+            var client = _clientFactory.CreateClient();
+
+            using (responseMessage = await client.SendAsync(request))
             {
                 //responseMessage.EnsureSuccessStatusCode(); //TODO: look at this:https://stackoverflow.com/questions/31261849/microsoft-net-http-vs-microsoft-aspnet-webapi-client
                 //TODO: need to gracefully handle different HTTP status codes in here
                 if (responseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-
+                        
                 }
 
                 responseContent = await responseMessage.Content.ReadAsStringAsync();
