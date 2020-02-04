@@ -34,35 +34,33 @@ namespace Empower.Controllers
 
             var results = await client.GetAllItems(authResponse.access_token, url);
 
+            var viewModels = new List<PendingClientProfileViewModel>();
+
+            foreach (var result in results)
+            {
+                viewModels.Add(new PendingClientProfileViewModel {
+                    LastName = result.LastName,
+                    FirstName = result.FirstName,
+                    MiddleName = result.MiddleName,
+                    JTS = result.JTS,
+                    FormattedBirthDate = result.FormattedBirthDate,
+                    Gender = result.Gender
+                });
+            }
+
             var viewModel = new DeletePendingProfileViewModel 
             {
-                PendingClientProfiles = results  
+                PendingClientProfiles = viewModels  
             };
 
-            //var viewModels = new List
-            
-            // var viewModel = new HomeViewModel
-            // {
-            //     Token = authResponse.access_token,              
-            //     UserName = authResponse.userName, 
-            //     BaseApiAddress = authResponse.baseApiAddress, 
-            //     SystemID = authResponse.systemID,
-            //     //AuthenticationResponse
-            // };
-
-
-            // var viewModel = new DeletePendingProfileViewModel();
-
-            // viewModel.PendingClientProfiles.Add(new PendingClientProfile {
-            //     LastName = "TestName",
-            //     FirstName= "FirstName",
-            //     MiddleName = "",
-            //     JTSNumber = "22344",
-            //     BirthDate = "02/3/1987",
-            //     Gender = "M"
-            // });
-
             return View(viewModel);     
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAll(DeletePendingProfileViewModel viewModel)
+        {
+
+            return null;
         }
     }
 }

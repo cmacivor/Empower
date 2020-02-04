@@ -9,12 +9,14 @@ namespace Empower.Models
     {
         public DeletePendingProfileViewModel()
         {
-            PendingClientProfiles = new List<PendingClientProfile>();
+            PendingClientProfiles = new List<PendingClientProfileViewModel>();
         }
-        public List<PendingClientProfile> PendingClientProfiles { get; set; }
+        public List<PendingClientProfileViewModel> PendingClientProfiles { get; set; }
+
+        public List<string> AreChecked { get; set; }
     }
 
-    //this class represents the columns in the grid
+    //this class represents the columns in the grid- returned from the API client
     public class PendingClientProfile
     {
         public string LastName { get; set; }
@@ -30,5 +32,25 @@ namespace Empower.Models
         public string FormattedBirthDate { get; set; }
 
         public string Gender { get; set; }
+    }
+
+    //used to actually display on the view
+    public class PendingClientProfileViewModel
+    {
+        public string LastName { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string MiddleName { get; set; }
+
+        public string JTS { get; set; }
+
+        public string SSN { get; set; }
+
+        public string FormattedBirthDate { get; set; }
+
+        public string Gender { get; set; }
+
+        public bool Selected { get; set; }
     }
 }

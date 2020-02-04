@@ -9,30 +9,37 @@
 <br>
 <p>List for inactive existing Client Profiles</p>
 <br>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Last Name</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Middle Name</th>
-            <th scope="col">JTS #</th>
-            <th scope="col">SSN</th>
-            <th scope="col">Birth Date</th>
-            <th scope="col">Gender</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var row in Model.PendingClientProfiles)
-        {
+<form asp-action="DeleteAll" asp-controller="DeletePendingProfile" method="post">
+    <button type="submit" name="action">Delete All</button>
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <th>@row.LastName</th>
-                <th>@row.FirstName</th>
-                <th>@row.MiddleName</th>
-                <th>@row.JTS</th>
-                <th>@row.SSN</th>
-                <th>@row.FormattedBirthDate</th>
-                <th>@row.Gender</th>
+                <th scop="col"></th>
+                <th scope="col">Last Name</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Middle Name</th>
+                <th scope="col">JTS #</th>
+                <th scope="col">SSN</th>
+                <th scope="col">Birth Date</th>
+                <th scope="col">Gender</th>
+
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var row in Model.PendingClientProfiles)
+            {
+                <tr>
+                    <th><input name="AreChecked" type="checkbox" checked="@row.Selected" value="@row.JTS" ></th>
+                    <th asp-for="LastName" >@row.LastName</th>
+                    <th asp-for="FirstName" >@row.FirstName</th>
+                    <th asp-for="MiddleName" >@row.MiddleName</th>
+                    <th asp-for="JTS" >@row.JTS</th>
+                    <th asp-for="SSN" >@row.SSN</th>
+                    <th asp-for="FormattedBirthDate">@row.FormattedBirthDate</th>
+                    <th asp-for="Gender" >@row.Gender</th>
+                    <th> </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
