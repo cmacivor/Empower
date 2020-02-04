@@ -36,7 +36,7 @@ namespace Empower.Controllers
 
             var viewModel = new DeletePendingProfileViewModel 
             {
-              PendingClientProfiles = results  
+                PendingClientProfiles = results  
             };
 
             //var viewModels = new List

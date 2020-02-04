@@ -23,11 +23,11 @@ namespace Empower.Models
 
         public string MiddleName { get; set; }
 
-        public string JTSNumber { get; set; }
+        public string JTS { get; set; }
 
-        public string SocialSecurityNumber { get; set; }
+        public string SSN { get; set; }
 
-        public string BirthDate { get; set; }
+        public string FormattedBirthDate { get; set; }
 
         public string Gender { get; set; }
     }
