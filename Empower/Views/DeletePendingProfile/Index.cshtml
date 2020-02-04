@@ -9,8 +9,8 @@
 <br>
 <p>List for inactive existing Client Profiles</p>
 <br>
-<form asp-action="DeleteAll" asp-controller="DeletePendingProfile" method="post">
-    <button type="submit" name="action">Delete All</button>
+<form asp-action="DeleteAll" asp-controller="DeletePendingProfile" method="post" id="formDeletePendingProfiles" >
+    <button type="submit" name="action" onclick="return confirm('Are you sure you want to delete the client(s)?')" >Delete All</button>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -43,3 +43,9 @@
         </tbody>
     </table>
 </form>
+@* <script type="text/javascript">
+
+    $("body").on("submit", "#formDeletePendingProfiles", function() {
+        return confirm("Are you sure you want to delete the client(s)?");
+    });
+</script> *@
