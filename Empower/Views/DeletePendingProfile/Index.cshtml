@@ -10,11 +10,13 @@
 <p>List for inactive existing Client Profiles</p>
 <br>
 <form asp-action="DeleteAll" asp-controller="DeletePendingProfile" method="post" id="formDeletePendingProfiles" >
-    <button type="submit" name="action" onclick="return confirm('Are you sure you want to delete the client(s)?')" >Delete All</button>
+    <button type="submit" name="action" class="btn btn-primary" onclick="return confirm('Are you sure you want to delete the client(s)?')" >Delete All</button>
+    <br />
+    <br />
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scop="col"></th>
+                <th scope="col"><input id="chkSelectAll" type="checkbox" value="Select All" /> </th>
                 <th scope="col">Last Name</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Middle Name</th>
@@ -43,9 +45,15 @@
         </tbody>
     </table>
 </form>
-@* <script type="text/javascript">
+ <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+ <script type="text/javascript">
+    $("#chkSelectAll").click(function () {
+            if($(this).prop("checked") == true){
+                $('input:checkbox').not(this).prop('checked', this.checked);
+            }
 
-    $("body").on("submit", "#formDeletePendingProfiles", function() {
-        return confirm("Are you sure you want to delete the client(s)?");
-    });
-</script> *@
+            else if($(this).prop("checked") == false){
+                $("input:checkbox").prop('checked', $(this).prop("checked"));
+            }
+        });   
+</script> 
