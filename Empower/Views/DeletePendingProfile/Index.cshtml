@@ -39,7 +39,7 @@
                     <th asp-for="SSN" >@row.SSN</th>
                     <th asp-for="FormattedBirthDate">@row.FormattedBirthDate</th>
                     <th asp-for="Gender" >@row.Gender</th>
-                    <th> </th>
+                    <th><button id="btnRevert" type="button" data-id="@row.ID" class="btn btn-info">Revert</button> </th>
                 </tr>
             }
         </tbody>
@@ -55,5 +55,18 @@
             else if($(this).prop("checked") == false){
                 $("input:checkbox").prop('checked', $(this).prop("checked"));
             }
-        });   
+    });
+
+     $(".btn-info").on("click", function (event) {
+         //event.preventDefault();
+         event.stopImmediatePropagation();
+         let profileID = $(this).data("id");
+         console.log(profileID);
+
+         let token = sessionStorage.getItem("token");
+         let address = sessionStorage.getItem("baseApiAddress");
+         console.log(token);
+         console.log(address);
+         return false;
+     });
 </script> 
