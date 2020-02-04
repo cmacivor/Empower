@@ -13,7 +13,7 @@ namespace Empower.Models
         }
         public List<PendingClientProfileViewModel> PendingClientProfiles { get; set; }
 
-        public List<string> AreChecked { get; set; }
+        public List<int> AreChecked { get; set; }
     }
 
     //this class represents the columns in the grid- returned from the API client
@@ -32,6 +32,8 @@ namespace Empower.Models
         public string FormattedBirthDate { get; set; }
 
         public string Gender { get; set; }
+
+        public int ID { get; set; } //Client Profile ID
     }
 
     //used to actually display on the view
@@ -52,5 +54,7 @@ namespace Empower.Models
         public string Gender { get; set; }
 
         public bool Selected { get; set; }
+
+        public int ID { get; set; }
     }
 }

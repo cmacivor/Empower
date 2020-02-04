@@ -29,7 +29,7 @@
             @foreach (var row in Model.PendingClientProfiles)
             {
                 <tr>
-                    <th><input name="AreChecked" type="checkbox" checked="@row.Selected" value="@row.JTS" ></th>
+                    <th><input name="AreChecked" type="checkbox" checked="@row.Selected" value="@row.ID" ></th>
                     <th asp-for="LastName" >@row.LastName</th>
                     <th asp-for="FirstName" >@row.FirstName</th>
                     <th asp-for="MiddleName" >@row.MiddleName</th>
