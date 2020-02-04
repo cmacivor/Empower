@@ -76,60 +76,18 @@ namespace Empower.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<string> RemoveItems(int[] ids, string token, string url)
+        public async Task RemoveItems(int[] ids, string token, string url)
         {
-            //string responseContent;
-
-            //string urlParams = "?";
-            //foreach (int id in ids)
-            //{
-            //    urlParams += "ids=" + id + "&";
-            //}
-
-            //string completeUrl = url + urlParams;
-
-            //var request = new HttpRequestMessage(HttpMethod.Post, url);
-
-            //request.Headers.Accept.Clear();
-            //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            
-
-            //HttpResponseMessage responseMessage;
             var client = _clientFactory.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
          
-
             var serialized = JsonConvert.SerializeObject(ids);
             var stringContent = new StringContent(serialized, System.Text.Encoding.UTF8, "application/json");
 
-            //client.PostAsync()
             var response = await client.PostAsync(url, stringContent);
+            response.EnsureSuccessStatusCode();
 
-
-            return null;
-            //var content = new StringContent(serialized);
-            //content.Headers.ContentType = new MediaTypeWithQualityHeaderValue("application/json");
-            //content.Headers.Authro
-
-            //client.PostAsync(url, new StringContent(serialized))
-
-            //using (responseMessage = await client.SendAsync(request))
-            //{
-            //    //responseMessage.EnsureSuccessStatusCode(); //TODO: look at this:https://stackoverflow.com/questions/31261849/microsoft-net-http-vs-microsoft-aspnet-webapi-client
-            //    //TODO: need to gracefully handle different HTTP status codes in here
-            //    if (responseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
-            //    {
-
-            //    }
-
-            //    responseContent = await responseMessage.Content.ReadAsStringAsync();
-            //    return responseContent;
-            //    //objectsToReturn = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(responseContent);
-            //}
-
-            //return objectsToReturn;
         }
     }
 }
