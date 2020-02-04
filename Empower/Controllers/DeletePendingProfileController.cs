@@ -33,6 +33,13 @@ namespace Empower.Controllers
             string url = authResponse.baseApiAddress + "/api/ClientProfile/InActiveClients";
 
             var results = await client.GetAllItems(authResponse.access_token, url);
+
+            var viewModel = new DeletePendingProfileViewModel 
+            {
+              PendingClientProfiles = results  
+            };
+
+            //var viewModels = new List
             
             // var viewModel = new HomeViewModel
             // {
@@ -44,16 +51,16 @@ namespace Empower.Controllers
             // };
 
 
-            var viewModel = new DeletePendingProfileViewModel();
+            // var viewModel = new DeletePendingProfileViewModel();
 
-            viewModel.PendingClientProfiles.Add(new PendingClientProfile {
-                LastName = "TestName",
-                FirstName= "FirstName",
-                MiddleName = "",
-                JTSNumber = "22344",
-                BirthDate = "02/3/1987",
-                Gender = "M"
-            });
+            // viewModel.PendingClientProfiles.Add(new PendingClientProfile {
+            //     LastName = "TestName",
+            //     FirstName= "FirstName",
+            //     MiddleName = "",
+            //     JTSNumber = "22344",
+            //     BirthDate = "02/3/1987",
+            //     Gender = "M"
+            // });
 
             return View(viewModel);     
         }
