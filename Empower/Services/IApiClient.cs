@@ -10,6 +10,6 @@ namespace Empower.Services
         IOptions<AppSettings> _appsettings { get; set; }
         string BaseAddress { get; set; }
 
-        Task<List<T>> GetAllItems(string token);
+        Task<List<T>> GetAllItems(string token, string url);
     }
 }

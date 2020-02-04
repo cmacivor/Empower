@@ -26,7 +26,7 @@ namespace Empower.Services
 
         public IOptions<AppSettings> _appsettings { get; set; }
 
-        public async Task<List<T>> GetAllItems(string token)
+        public async Task<List<T>> GetAllItems(string token, string url)
         {
             string responseContent;
 
@@ -37,7 +37,7 @@ namespace Empower.Services
             string typeUrlPart = type.Name;
 
             //TODO: refactor the applications/empowerapi to an app setting. Apparently we have to set it here instead of injecting it
-            string url = $"applications/empowerapi/api/{typeUrlPart}/GetAll";
+            //string url = $"applications/empowerapi/api/{typeUrlPart}/GetAll";
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -54,7 +54,7 @@ namespace Empower.Services
                 //TODO: need to gracefully handle different HTTP status codes in here
                 if (responseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                        
+
                 }
 
                 responseContent = await responseMessage.Content.ReadAsStringAsync();

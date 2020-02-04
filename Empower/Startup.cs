@@ -39,7 +39,7 @@ namespace Empower
             services.AddHttpClient();
 
             services.AddHttpClient<ILoginService, LoginService>();
-
+            
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
