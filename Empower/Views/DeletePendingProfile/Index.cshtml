@@ -58,20 +58,16 @@
     });
 
      $(".btn-info").on("click", function (event) {
-         //event.preventDefault();
          event.stopImmediatePropagation();
-         let profileID = $(this).data("id");
-         console.log(profileID);
 
+         confirm('Are you sure you want to make the client active again?')
+
+         let profileID = $(this).data("id");
+         
          let token = sessionStorage.getItem("token");
          let address = sessionStorage.getItem("baseApiAddress");
-         //console.log(token);
-         //console.log(address);
 
-         //do a fetch call here, and then refresh the page
          let completeURL = address + "/api/ClientProfile/Activateclient/" + profileID;
-
-         //console.log(completeURL);
 
          fetch(completeURL, {
              headers: {
