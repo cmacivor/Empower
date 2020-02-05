@@ -65,8 +65,26 @@
 
          let token = sessionStorage.getItem("token");
          let address = sessionStorage.getItem("baseApiAddress");
-         console.log(token);
-         console.log(address);
+         //console.log(token);
+         //console.log(address);
+
+         //do a fetch call here, and then refresh the page
+         let completeURL = address + "/api/ClientProfile/Activateclient/" + profileID;
+
+         //console.log(completeURL);
+
+         fetch(completeURL, {
+             headers: {
+                 'Authorization': 'Bearer ' + token
+             }
+         }).then((response) => {
+                 console.log(response);
+             })
+             .then((result) => {
+                 console.log(result);
+                 window.location.reload();
+             });
+
          return false;
      });
 </script> 
