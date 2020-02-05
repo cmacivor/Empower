@@ -1,0 +1,86 @@
+@model Empower.Models.DeletePendingProfileViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Delete Pending Client Profiles</h1>
+<br>
+<p>List for inactive existing Client Profiles</p>
+<br>
+<form asp-action="DeleteAll" asp-controller="DeletePendingProfile" method="post" id="formDeletePendingProfiles" >
+    <button type="submit" name="action" class="btn btn-primary" onclick="return confirm('Are you sure you want to delete the client(s)?')" >Delete All</button>
+    <br />
+    <br />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"><input id="chkSelectAll" type="checkbox" value="Select All" /> </th>
+                <th scope="col">Last Name</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Middle Name</th>
+                <th scope="col">JTS #</th>
+                <th scope="col">SSN</th>
+                <th scope="col">Birth Date</th>
+                <th scope="col">Gender</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Model.PendingClientProfiles)
+            {
+                <tr>
+                    <th><input name="AreChecked" type="checkbox" checked="@row.Selected" value="@row.ID" ></th>
+                    <th asp-for="LastName" >@row.LastName</th>
+                    <th asp-for="FirstName" >@row.FirstName</th>
+                    <th asp-for="MiddleName" >@row.MiddleName</th>
+                    <th asp-for="JTS" >@row.JTS</th>
+                    <th asp-for="SSN" >@row.SSN</th>
+                    <th asp-for="FormattedBirthDate">@row.FormattedBirthDate</th>
+                    <th asp-for="Gender" >@row.Gender</th>
+                    <th><button id="btnRevert" type="button" data-id="@row.ID" class="btn btn-info">Revert</button> </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+ <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+ <script type="text/javascript">
+    $("#chkSelectAll").click(function () {
+            if($(this).prop("checked") == true){
+                $('input:checkbox').not(this).prop('checked', this.checked);
+            }
+
+            else if($(this).prop("checked") == false){
+                $("input:checkbox").prop('checked', $(this).prop("checked"));
+            }
+    });
+
+     $(".btn-info").on("click", function (event) {
+         event.stopImmediatePropagation();
+
+         confirm('Are you sure you want to make the client active again?')
+
+         let profileID = $(this).data("id");
+         
+         let token = sessionStorage.getItem("token");
+         let address = sessionStorage.getItem("baseApiAddress");
+
+         let completeURL = address + "/api/ClientProfile/Activateclient/" + profileID;
+
+         fetch(completeURL, {
+             headers: {
+                 'Authorization': 'Bearer ' + token
+             }
+         }).then((response) => {
+                 console.log(response);
+             })
+             .then((result) => {
+                 console.log(result);
+                 window.location.reload();
+             });
+
+         return false;
+     });
+</script> 

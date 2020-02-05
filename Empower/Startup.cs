@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Empower.Services;
+using Empower.Models;
 
 namespace Empower
 {
@@ -37,6 +39,7 @@ namespace Empower
             services.AddHttpClient();
 
             services.AddHttpClient<ILoginService, LoginService>();
+            
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
