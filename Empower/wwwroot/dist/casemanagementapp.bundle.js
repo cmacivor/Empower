@@ -81964,6 +81964,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap/Tab */ "./node_modules/react-bootstrap/esm/Tab.js");
 /* harmony import */ var _useCacheService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./useCacheService */ "./wwwroot/source/useCacheService.js");
 /* harmony import */ var _Supplemental__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Supplemental */ "./wwwroot/source/Supplemental.js");
+/* harmony import */ var _StateStores_store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./StateStores/store */ "./wwwroot/source/StateStores/store.js");
+
 
 
 
@@ -82000,9 +82002,16 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
       setClientProfile = _useState10[1];
 
   var infoRef = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])();
-  var cacheService = Object(_useCacheService__WEBPACK_IMPORTED_MODULE_6__["useCacheService"])(); //console.log('this is the cacheService in case management');
+  var cacheService = Object(_useCacheService__WEBPACK_IMPORTED_MODULE_6__["useCacheService"])();
 
-  console.log(cacheService);
+  var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_8__["useStore"])(),
+      state = _useStore.state,
+      dispatch = _useStore.dispatch; //console.log('the case management function');
+  //console.log(cacheService.fundingSourceValues);
+
+
+  console.log('this is the state store in CaseManagementFunction');
+  console.log(state);
 
   function EnableTabs() {
     setEnabled(false);
@@ -82011,17 +82020,16 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
   }
 
   function SetActiveTab(key) {
-    setActiveTab(key);
+    setActiveTab(key); //   if (state.isNewClient) {
+    //       setClientProfile(Object);
+    //   }
   } //to handle clicking on a row in the search grid, so this data is accessible elsewhere
 
 
   function SetClientProfile(clientProfile) {
-    //console.log('this is SetClientProfile in  CaseManagementFunction ');
-    console.log(clientProfile);
+    //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was
     setClientProfile(clientProfile); //updates the local state
     //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
-    //console.log('this is the birth date!!!!');
-    //console.log(clientProfile.ClientProfile.Person.DOB);
 
     infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
   }
@@ -82038,6 +82046,7 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
     title: "Search"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Search__WEBPACK_IMPORTED_MODULE_2__["default"], {
     enableTabsHandler: EnableTabs,
+    setParticipantInfoAsActiveTab: SetActiveTab,
     onSearchGridRowClick: function onSearchGridRowClick(e) {
       return SetClientProfile(e);
     }
@@ -82046,7 +82055,7 @@ var CaseManagementFunction = function CaseManagementFunction(props) {
     title: "Participant Info",
     disabled: isTabDisabled
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Info__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    clientProfile: clientProfile.Person,
+    clientProfile: !state.isNewClient ? clientProfile.Person : undefined,
     ref: infoRef,
     genderValues: cacheService.genderValues,
     raceValues: cacheService.raceValues
@@ -82113,6 +82122,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _commonAdmin__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./commonAdmin */ "./wwwroot/source/commonAdmin.js");
+
 
 
 
@@ -82153,10 +82164,10 @@ function (_Component) {
       _this.props.onSelectValueDescription(event.currentTarget.getAttribute('description'));
     });
 
-    var previouslySelectedValue = _this.props.selected;
-    var values = _this.props.values;
+    var previouslySelectedValue = _this.props.selected; //let values = this.props.values;
+
     _this.state = {
-      values: values,
+      values: [],
       selectedValue: previouslySelectedValue,
       selectedDescription: _this.props.valueDescription,
       hideError: true //isRequired: this.props.isRequired     
@@ -82166,19 +82177,55 @@ function (_Component) {
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(DropDown, [{
-    key: "render",
-    value: function render() {
+    key: "componentDidMount",
+    value: function componentDidMount() {
       var _this2 = this;
 
-      var valueOptions = this.state.values.map(function (value) {
-        return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
-          key: value.ID,
-          value: value.ID,
-          description: value.Description,
-          onClick: _this2.onSelectHandler,
-          className: "dropdown-item"
-        }, value.Description);
-      });
+      var dropdownType = this.props.type;
+
+      if (dropdownType === "suffix") {
+        _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Suffix").then(function (options) {
+          return _this2.setState({
+            values: options
+          });
+        }); //Api.getConfigDataByType("Suffix").then(options => console.log(options) );
+      }
+
+      if (dropdownType === "race") {
+        _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Race").then(function (options) {
+          return _this2.setState({
+            values: options
+          });
+        }); //Api.getConfigDataByType("Suffix").then(options => console.log(options));
+      }
+
+      if (dropdownType === "gender") {
+        _commonAdmin__WEBPACK_IMPORTED_MODULE_8__["Api"].getConfigDataByType("Gender").then(function (options) {
+          return _this2.setState({
+            values: options
+          });
+        }); //Api.getConfigDataByType("Gender").then(options => console.log(options) );
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var valueOptions = [];
+
+      if (this.state.values.length > 0) {
+        valueOptions = this.state.values.map(function (value) {
+          return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
+            key: value.ID,
+            value: value.ID,
+            description: value.Description,
+            onClick: _this3.onSelectHandler,
+            className: "dropdown-item"
+          }, value.Description);
+        });
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "dropdown"
       }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("button", {
@@ -82351,26 +82398,60 @@ __webpack_require__.r(__webpack_exports__);
 //this allows the updateBirthDate() function to be called from the CaseManagement parent component
 
 var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (props, ref) {
-  if (props.clientProfile === undefined) return null;
-  var clientInfo = props.clientProfile.Person; //need to create variables for each- if it's null, set to empty string for React controlled components
+  //to test the global state
+  var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_4__["useStore"])(),
+      state = _useStore.state,
+      dispatch = _useStore.dispatch;
 
-  var clientLastName = clientInfo.LastName !== null ? clientInfo.LastName : '';
-  var clientFirstName = clientInfo.FirstName !== null ? clientInfo.FirstName : '';
-  var clientMiddleName = clientInfo.MiddleName !== null ? clientInfo.MiddleName : '';
-  var clientSuffixID = clientInfo.Suffix !== null ? clientInfo.Suffix : 'Please Select';
-  var clientSSN = clientInfo.SSN !== null ? clientInfo.SSN : '';
-  var clientFbiNcic = clientInfo.FBINCIC !== null ? clientInfo.SSN : '';
-  var clientStateVcin = clientInfo.StateORVCIN !== null ? clientInfo.StateORVCIN : '';
-  var clientAlias = clientInfo.Alias !== null ? clientInfo.Alias : '';
-  var clientGenderID = clientInfo.GenderID !== null ? clientInfo.GenderID : '';
-  var clientRaceID = clientInfo.RaceID !== null ? clientInfo.RaceID : ''; //get the birthdate in UTC format- the datepicker plugin needs it that way
+  var clientLastName = '';
+  var clientFirstName = '';
+  var clientMiddleName = '';
+  var clientSuffixID = '';
+  var clientSSN = '';
+  var clientFbiNcic = '';
+  var clientStateVcin = '';
+  var clientAlias = '';
+  var clientGenderID = '';
+  var clientRaceID = '';
+  var utcBirthDate = new Date();
+  var diffInYears = '';
+  var saveButtonShow = false; // if (state.isNewClient && props.clientProfile !== undefined) {
+  // }
+  //if (props.clientProfile === undefined) return null;
+  //the user clicked on a row in the search grid
 
-  var birthDateJavascriptDateObject = new Date(clientInfo.DOB);
-  var utcBirthDate = convertDateToUtcFormat(clientInfo.DOB); //calculate age
+  if (props.clientProfile !== undefined) {
+    var clientInfo = props.clientProfile.Person; //need to create variables for each- if it's null, set to empty string for React controlled components
 
-  var difference = moment__WEBPACK_IMPORTED_MODULE_8___default()(new Date()).diff(birthDateJavascriptDateObject);
-  var duration = moment__WEBPACK_IMPORTED_MODULE_8___default.a.duration(difference, 'milliseconds');
-  var diffInYears = Math.round(duration.asYears()); //for validation
+    clientLastName = clientInfo.LastName !== null ? clientInfo.LastName : '';
+    clientFirstName = clientInfo.FirstName !== null ? clientInfo.FirstName : '';
+    clientMiddleName = clientInfo.MiddleName !== null ? clientInfo.MiddleName : '';
+    clientSuffixID = clientInfo.Suffix !== null ? clientInfo.Suffix : 'Please Select';
+    clientSSN = clientInfo.SSN !== null ? clientInfo.SSN : '';
+    clientFbiNcic = clientInfo.FBINCIC !== null ? clientInfo.SSN : '';
+    clientStateVcin = clientInfo.StateORVCIN !== null ? clientInfo.StateORVCIN : '';
+    clientAlias = clientInfo.Alias !== null ? clientInfo.Alias : '';
+    clientGenderID = clientInfo.GenderID !== null ? clientInfo.GenderID : '';
+    clientRaceID = clientInfo.RaceID !== null ? clientInfo.RaceID : ''; //get the birthdate in UTC format- the datepicker plugin needs it that way
+
+    var birthDateJavascriptDateObject = new Date(clientInfo.DOB);
+    utcBirthDate = convertDateToUtcFormat(clientInfo.DOB); //calculate age
+
+    var difference = moment__WEBPACK_IMPORTED_MODULE_8___default()(new Date()).diff(birthDateJavascriptDateObject);
+    var duration = moment__WEBPACK_IMPORTED_MODULE_8___default.a.duration(difference, 'milliseconds');
+    diffInYears = Math.round(duration.asYears());
+    saveButtonShow = false;
+  } else {
+    saveButtonShow = true;
+    utcBirthDate = convertDateToUtcFormat(new Date());
+    clientLastName = '';
+    clientFirstName = '';
+  } // if (state.isNewClient) {
+  //     setLastName('');
+  //     setFirstName('');
+  // }
+  //for validation
+
 
   var _useForm = Object(react_hook_form__WEBPACK_IMPORTED_MODULE_11__["useForm"])(),
       register = _useForm.register,
@@ -82476,12 +82557,14 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
 
 
   var _useState37 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientLastName),
-      _useState38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState37, 1),
-      prevLastName = _useState38[0];
+      _useState38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState37, 2),
+      prevLastName = _useState38[0],
+      setPrevLastName = _useState38[1];
 
   var _useState39 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientFirstName),
-      _useState40 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState39, 1),
-      prevFirstName = _useState40[0];
+      _useState40 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState39, 2),
+      prevFirstName = _useState40[0],
+      setPrevFirstName = _useState40[1];
 
   var _useState41 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientMiddleName),
       _useState42 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState41, 1),
@@ -82522,37 +82605,35 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
 
   var genderValues = props.genderValues;
   var raceValues = props.raceValues; //add "Please Select" options to race and gender dropdowns if not there
-
-  var genderPleaseSelectOption = genderValues.filter(function (gender) {
-    return gender.ID === 0;
-  }); //console.log('does select exist');
+  // let genderPleaseSelectOption = genderValues.filter(function(gender) {
+  //     return gender.ID === 0
+  // });
+  //console.log('does select exist');
   //console.log(genderPleaseSelectOption);
-
-  if (genderPleaseSelectOption.length === 0) {
-    var pleaseSelectItem = {
-      Name: "PleaseSelect",
-      Description: "Please Select",
-      Active: true,
-      ID: 0,
-      CreatedDate: new Date()
-    };
-    genderValues.splice(0, 0, pleaseSelectItem);
-  }
-
-  var racePleaseSelectionOption = raceValues.filter(function (race) {
-    return race.ID === 0;
-  });
-
-  if (racePleaseSelectionOption.length === 0) {
-    var _pleaseSelectItem = {
-      Name: "PleaseSelect",
-      Description: "Please Select",
-      Active: true,
-      ID: 0,
-      CreatedDate: new Date()
-    };
-    raceValues.splice(0, 0, _pleaseSelectItem);
-  } //doesn't work
+  // if (genderPleaseSelectOption.length === 0) {
+  //     let pleaseSelectItem = {
+  //         Name: "PleaseSelect",
+  //         Description: "Please Select",
+  //         Active: true,
+  //         ID: 0,
+  //         CreatedDate: new Date()
+  //     }
+  //     genderValues.splice(0, 0, pleaseSelectItem);       
+  // }
+  // let racePleaseSelectionOption = raceValues.filter(function(race) {
+  //     return race.ID === 0
+  // }); 
+  // if (racePleaseSelectionOption.length === 0) {
+  //     let pleaseSelectItem = {
+  //         Name: "PleaseSelect",
+  //         Description: "Please Select",
+  //         Active: true,
+  //         ID: 0,
+  //         CreatedDate: new Date()
+  //     }
+  //     raceValues.splice(0, 0, pleaseSelectItem);
+  // }
+  //doesn't work
   //let sortedGenderValues = genderValues.sort((a, b) => { return  a.ID > b.ID;  });
   //console.log('sorted genders: ');
   //console.log(genderValues);
@@ -82561,16 +82642,17 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
   //raceValues = raceValues.sort();
   //console.log(genderValues);
   //console.log(raceValues);
+  //     let genderObjectByClientGenderID = genderValues.filter(function(gender) {
+  //        return gender.ID === clientGenderID
+  //     });
+  //    let raceObjectByClientRaceID = raceValues.filter(function(race) {
+  //        return race.ID === clientRaceID
+  //    });
 
+  var clientSuffixDescription = 'II';
+  var clientGenderDescription = "M"; //(genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
 
-  var genderObjectByClientGenderID = genderValues.filter(function (gender) {
-    return gender.ID === clientGenderID;
-  });
-  var raceObjectByClientRaceID = raceValues.filter(function (race) {
-    return race.ID === clientRaceID;
-  });
-  var clientGenderDescription = genderObjectByClientGenderID.length > 0 ? genderObjectByClientGenderID[0].Description : '';
-  var clientRaceDescription = raceObjectByClientRaceID !== null ? raceObjectByClientRaceID[0].Description : '';
+  var clientRaceDescription = "White"; //(raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
 
   var _useState59 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
       _useState60 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState59, 2),
@@ -82582,18 +82664,23 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
       raceDescription = _useState62[0],
       setRaceDescription = _useState62[1];
 
-  var _useState63 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
-      _useState64 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState63, 1),
-      prevGenderDescription = _useState64[0];
+  var _useState63 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientSuffixDescription),
+      _useState64 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState63, 2),
+      suffixDescription = _useState64[0],
+      setSuffixDescription = _useState64[1];
 
-  var _useState65 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+  var _useState65 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientGenderDescription),
       _useState66 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState65, 1),
-      prevRaceDescription = _useState66[0];
+      prevGenderDescription = _useState66[0];
 
-  var _useState67 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('needs-validation'),
-      _useState68 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState67, 2),
-      formClass = _useState68[0],
-      setFormClass = _useState68[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
+  var _useState67 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(clientRaceDescription),
+      _useState68 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState67, 1),
+      prevRaceDescription = _useState68[0];
+
+  var _useState69 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('needs-validation'),
+      _useState70 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState69, 2),
+      formClass = _useState70[0],
+      setFormClass = _useState70[1]; //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
   //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
 
 
@@ -82604,23 +82691,21 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
         setBirthDate(utcBirthDate);
       }
     };
-  }); //to test the global state
-
-  var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_4__["useStore"])(),
-      state = _useStore.state,
-      dispatch = _useStore.dispatch; //this will re-render the first name, last name, middle name, etc each time something changes, but NOT the dropdown values- those are handled in the select event handlers.
+  }); //this will re-render the first name, last name, middle name, etc each time something changes, but NOT the dropdown values- those are handled in the select event handlers.
   //otherwise, when a selection in the dropdown is made, the useEffect overwrites what was just selected
-
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     setFirstName(clientFirstName);
     setLastName(clientLastName);
     setMiddleName(clientMiddleName);
     setSuffixID(clientSuffixID);
-    setSSN(clientSSN);
+    setSSN(clientSSN); //TODO:need to update the prev variables as well for the reset button
+
+    setPrevFirstName(clientFirstName);
+    setPrevLastName(clientLastName);
     setRaceDescription(clientRaceDescription);
     setGenderDescription(clientGenderDescription);
-  }, [clientFirstName, clientLastName, clientMiddleName, clientSuffixID, clientSSN, clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+  }, [clientFirstName, clientLastName, clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
   function convertDateToUtcFormat(date) {
     var birthDateJavascriptDateObject = new Date(date);
@@ -82686,6 +82771,11 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     //console.log(suffix);
   }
 
+  function handleSuffixDescriptionChange(suffixDescription) {
+    //console.log(suffixDescription);
+    setSuffixDescription(suffixDescription);
+  }
+
   function handleDatePickerChange(birthDate) {
     // console.log('this is the birth date');
     // console.log(birthDate);
@@ -82744,12 +82834,11 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     setFbiNcicNumber(prevFbiNcicNumber);
     setBirthDate(prevBirthDate);
     setStateVcin(prevStateVcin);
-    setAlias(prevAlias);
-    setGenderID(prevGenderID);
-    setSuffixID(prevSuffixID);
-    setRaceID(prevRaceID);
-    setGenderDescription(prevGenderDescription);
-    setRaceDescription(prevRaceDescription);
+    setAlias(prevAlias); // setGenderID(prevGenderID);
+    // setSuffixID(prevSuffixID);
+    // setRaceID(prevRaceID);
+    // setGenderDescription(prevGenderDescription);
+    // setRaceDescription(prevRaceDescription);
   } //this will fire when submission of the form is successful
 
 
@@ -82767,9 +82856,32 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     console.log(birthDate);
     console.log(genderID);
     console.log(raceID);
-  }; //this correctly gets errors
+  };
+
+  function saveNewProfile() {} //this correctly gets errors
   //console.log(errors);
 
+
+  var buttonType;
+
+  if (saveButtonShow) {
+    buttonType = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      className: "col-auto"
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+      type: "button",
+      onClick: saveNewProfile,
+      className: "btn btn-primary mb-2"
+    }, "Save"));
+  } else {
+    buttonType = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      className: "col-auto"
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+      type: "submit",
+      onClick: TriggerValidationHandler,
+      className: "btn btn-primary mb-2",
+      value: "Update"
+    }));
+  }
 
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
     onSubmit: handleSubmit(updateButtonClickHandler),
@@ -82845,9 +82957,13 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     className: "col-3"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
     htmlFor: "ddlSuffix"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_SuffixDropdown__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    onSelectSuffix: handleSuffixChange,
-    selected: props.infoTabSuffix
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "Suffix")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dropdown__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    onSelectValue: handleSuffixChange,
+    onSelectValueDescription: handleSuffixDescriptionChange,
+    selected: suffixID,
+    valueDescription: suffixDescription,
+    type: "suffix",
+    isRequired: true
   }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
@@ -82949,7 +83065,7 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     onSelectValueDescription: handleGenderDescriptionChange,
     selected: genderID,
     valueDescription: genderDescription,
-    values: genderValues,
+    type: "gender",
     isRequired: true
   })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-4"
@@ -82958,18 +83074,11 @@ var Info = Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function (pr
     onSelectValueDescription: handleRaceDescriptionChange,
     selected: raceID,
     valueDescription: raceDescription,
-    values: raceValues,
+    type: "race",
     isRequired: true
   }))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "form-row float-right"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    className: "col-auto"
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
-    type: "submit",
-    onClick: TriggerValidationHandler,
-    className: "btn btn-primary mb-2",
-    value: "Update"
-  })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }, buttonType, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "col-auto"
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
     type: "button",
@@ -83184,10 +83293,15 @@ var Search = function Search(props) {
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
       _useState4 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState3, 2),
       firstName = _useState4[0],
-      setFirstName = _useState4[1]; //grid state
+      setFirstName = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
+      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState5, 2),
+      isAddNewProfileButtonVisible = _useState6[0],
+      setAddNewProfileButtonVisible = _useState6[1]; //grid state
 
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([{
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([{
     name: 'FirstName',
     title: 'First Name'
   }, {
@@ -83209,18 +83323,18 @@ var Search = function Search(props) {
     name: 'Gender',
     title: 'Gender'
   }]),
-      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState5, 1),
-      columns = _useState6[0];
+      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState7, 1),
+      columns = _useState8[0];
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
-      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState7, 2),
-      rows = _useState8[0],
-      setRows = _useState8[1];
-
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])([]),
       _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState9, 2),
-      isGridVisible = _useState10[0],
-      setGridVisible = _useState10[1]; //to test the global state
+      rows = _useState10[0],
+      setRows = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(false),
+      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2___default()(_useState11, 2),
+      isGridVisible = _useState12[0],
+      setGridVisible = _useState12[1]; //to test the global state
 
 
   var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_7__["useStore"])(),
@@ -83240,8 +83354,9 @@ var Search = function Search(props) {
   }
 
   function SearchButtonClickHandler() {
-    var apiAddress = sessionStorage.getItem("baseApiAddress");
-    var token = sessionStorage.getItem("token");
+    var apiAddress = sessionStorage.getItem("baseApiAddress"); //let token = sessionStorage.getItem("token");
+
+    var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_6__["getSessionData"])();
     var fullSearchAddress = "".concat(apiAddress, "/api/ClientProfile/Search");
     var postData = {
       lastName: lastName,
@@ -83254,7 +83369,7 @@ var Search = function Search(props) {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
+          'Authorization': 'Bearer ' + sessionStorageData.Token
         },
         body: JSON.stringify(postData)
       });
@@ -83267,6 +83382,7 @@ var Search = function Search(props) {
       }).then(function (finalResult) {
         setRows(finalResult);
         setGridVisible(true);
+        setAddNewProfileButtonVisible(true);
       });
     } catch (error) {
       console.log(error);
@@ -83304,8 +83420,10 @@ var Search = function Search(props) {
 
   function GetSelectedRow(row) {
     props.enableTabsHandler();
-    var apiAddress = sessionStorage.getItem("baseApiAddress");
-    var token = sessionStorage.getItem("token");
+    var apiAddress = sessionStorage.getItem("baseApiAddress"); //let token = sessionStorage.getItem("token");
+
+    var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_6__["getSessionData"])();
+    var token = sessionStorageData.Token;
     var clientProfileAddress = "".concat(apiAddress, "/api/ClientProfile/").concat(row.ID);
 
     try {
@@ -83326,11 +83444,21 @@ var Search = function Search(props) {
       }).then(function (finalResult) {
         console.log(finalResult);
         SetClientProfile(finalResult);
+        dispatch({
+          type: "existingClient"
+        });
       });
     } catch (error) {
       console.log(error);
       alert('an error occurred while retrieving the Client Profile;');
     }
+  }
+
+  function addNewProfileClickHandler() {
+    dispatch({
+      type: "newClient"
+    });
+    props.setParticipantInfoAsActiveTab("participantinfo");
   }
 
   return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
@@ -83363,10 +83491,13 @@ var Search = function Search(props) {
     type: "button",
     onClick: ClearSearchFields,
     className: "btn btn-primary mb-2"
-  }, "Clear Search"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+  }, "Clear Search")), isAddNewProfileButtonVisible ? react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+    className: "col-auto"
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
     type: "button",
-    onClick: testMethod
-  }, "Test state"))), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), state.count, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+    onClick: addNewProfileClickHandler,
+    className: "btn btn-primary mb-2"
+  }, "Add New Profile")) : react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", null)), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("br", null), state.count, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
     onClick: function onClick() {
       return dispatch({
         type: "increment",
@@ -83422,7 +83553,8 @@ __webpack_require__.r(__webpack_exports__);
 var StoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])();
 var initialState = {
   count: 0,
-  message: ""
+  message: "",
+  isNewClient: false
 };
 var clientProfileInitialState = {
   lastName: '',
@@ -83449,6 +83581,16 @@ var reducer = function reducer(state, action) {
       return {
         count: 0,
         message: action.message
+      };
+
+    case "newClient":
+      return {
+        isNewClient: true
+      };
+
+    case "existingClient":
+      return {
+        isNewClient: false
       };
 
     default:
