@@ -9,6 +9,8 @@ import moment from 'moment';
 import { useCacheService } from './useCacheService';
 import DropDown from './Dropdown';
 import { useForm, ErrorMessage } from 'react-hook-form';
+import { Api } from './commonAdmin';
+//const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
 //this allows the updateBirthDate() function to be called from the CaseManagement parent component
@@ -31,12 +33,6 @@ const Info = forwardRef((props, ref) => {
     let saveButtonShow = false;
 
 
-
-    // if (state.isNewClient && props.clientProfile !== undefined) {
-
-    // }
-
-    //if (props.clientProfile === undefined) return null;
     //the user clicked on a row in the search grid
     if (props.clientProfile !== undefined) {
         let clientInfo = props.clientProfile.Person;
@@ -45,7 +41,7 @@ const Info = forwardRef((props, ref) => {
         clientLastName = (clientInfo.LastName !== null) ? clientInfo.LastName : '';
         clientFirstName = (clientInfo.FirstName !== null) ? clientInfo.FirstName : '';
         clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
-        clientSuffixID = (clientInfo.Suffix !== null) ? clientInfo.Suffix : 'Please Select';
+        clientSuffixID = (clientInfo.Suffix !== null) ? clientInfo.Suffix : '';
         clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
         clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.SSN : '';
         clientStateVcin = (clientInfo.StateORVCIN !== null) ? clientInfo.StateORVCIN : '';
@@ -58,25 +54,15 @@ const Info = forwardRef((props, ref) => {
 
         utcBirthDate = convertDateToUtcFormat(clientInfo.DOB);
 
+
         //calculate age
-        let difference = moment(new Date()).diff(birthDateJavascriptDateObject);
-        let duration = moment.duration(difference, 'milliseconds');
-        diffInYears = Math.round(duration.asYears());
+        diffInYears = calculateAge(birthDateJavascriptDateObject);
+
         saveButtonShow = false;
     } else {
         saveButtonShow = true;
-        utcBirthDate = convertDateToUtcFormat(new Date());
 
-        clientLastName = '';
-        clientFirstName = '';
     }
-
-
-    // if (state.isNewClient) {
-    //     setLastName('');
-    //     setFirstName('');
-    // }
-
 
     //for validation
     const { register, handleSubmit, watch, errors, triggerValidation } = useForm();
@@ -93,6 +79,7 @@ const Info = forwardRef((props, ref) => {
     const [alias, setAlias] = useState(clientAlias);
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
+    const [currentAge, setCurrentAge] = useState(diffInYears);
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
@@ -107,12 +94,28 @@ const Info = forwardRef((props, ref) => {
     const [raceDdlErrorDivCss, setRaceDdlErrorDivCss] = useState('invalid-feedback');
 
 
+    const [genderValues, setGenderValues] = useState([]);
+    const [suffixValues, setSuffixValues] = useState([]);
+    const [raceValues, setRaceValues] = useState([]);
+
+    const [hideGenderError, setHideGenderError] = useState(true);
+    const [hideRaceError, setHideRaceError] = useState(true);
+
+
+    let clientSuffixDescription = 'Please Select';
+    let clientGenderDescription = 'Please Select';
+    let clientRaceDescription = 'Please Select';
+
+
+    const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
+    const [raceDescription, setRaceDescription] = useState(clientRaceDescription);
+    const [suffixDescription, setSuffixDescription] = useState(clientSuffixDescription);
+
 
     //variables to hold previous state- for when a value changes
     const [prevLastName, setPrevLastName] = useState(clientLastName);
     const [prevFirstName, setPrevFirstName] = useState(clientFirstName);
     const [prevMiddleName] = useState(clientMiddleName);
-    const [prevSuffixID] = useState(clientSuffixID);
     const [prevSsn] = useState(clientSSN);
     const [prevFbiNcicNumber] = useState(clientFbiNcic);
     const [prevBirthDate] = useState(utcBirthDate);
@@ -120,83 +123,12 @@ const Info = forwardRef((props, ref) => {
     const [prevAlias] = useState(clientAlias);
     const [prevGenderID] = useState(clientGenderID);
     const [prevRaceID] = useState(clientRaceID);
-
-    //from the cache service, initialized in the parent case management component
-    const genderValues = props.genderValues;
-    const raceValues = props.raceValues;
-
-    //add "Please Select" options to race and gender dropdowns if not there
-    // let genderPleaseSelectOption = genderValues.filter(function(gender) {
-    //     return gender.ID === 0
-    // });
-
-    //console.log('does select exist');
-    //console.log(genderPleaseSelectOption);
-
-    // if (genderPleaseSelectOption.length === 0) {
-    //     let pleaseSelectItem = {
-    //         Name: "PleaseSelect",
-    //         Description: "Please Select",
-    //         Active: true,
-    //         ID: 0,
-    //         CreatedDate: new Date()
-    //     }
-
-    //     genderValues.splice(0, 0, pleaseSelectItem);       
-    // }
-
-    // let racePleaseSelectionOption = raceValues.filter(function(race) {
-    //     return race.ID === 0
-    // }); 
-
-    // if (racePleaseSelectionOption.length === 0) {
-
-    //     let pleaseSelectItem = {
-    //         Name: "PleaseSelect",
-    //         Description: "Please Select",
-    //         Active: true,
-    //         ID: 0,
-    //         CreatedDate: new Date()
-    //     }
-
-    //     raceValues.splice(0, 0, pleaseSelectItem);
-    // }
-
-    //doesn't work
-    //let sortedGenderValues = genderValues.sort((a, b) => { return  a.ID > b.ID;  });
-    //console.log('sorted genders: ');
-    //console.log(genderValues);
-    //console.log(raceValues);
-
-    //genderValues = genderValues.sort();
-    //raceValues = raceValues.sort();
-
-    //console.log(genderValues);
-    //console.log(raceValues);
-
-    //     let genderObjectByClientGenderID = genderValues.filter(function(gender) {
-    //        return gender.ID === clientGenderID
-    //     });
-
-    //    let raceObjectByClientRaceID = raceValues.filter(function(race) {
-    //        return race.ID === clientRaceID
-    //    });
-
-    let clientSuffixDescription = 'II';
-    let clientGenderDescription = "M"; //(genderObjectByClientGenderID.length > 0) ? genderObjectByClientGenderID[0].Description : '';
-    let clientRaceDescription = "White" //(raceObjectByClientRaceID !== null) ? raceObjectByClientRaceID[0].Description : '';
-
-
-    const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
-    const [raceDescription, setRaceDescription] = useState(clientRaceDescription);
-    const [suffixDescription, setSuffixDescription] = useState(clientSuffixDescription);
-
-    const [prevGenderDescription] = useState(clientGenderDescription);
-    const [prevRaceDescription] = useState(clientRaceDescription);
+    const [prevSuffixID] = useState(clientSuffixID);
+    const [prevGenderDescription, setPrevGenderDescription] = useState(clientGenderDescription);
+    const [prevRaceDescription, setPrevRaceDescription] = useState(clientRaceDescription);
+    const [prevSuffixDescription, setPrevSuffixDescription] = useState(clientSuffixDescription);
 
     const [formClass, setFormClass] = useState('needs-validation');
-
-
 
 
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
@@ -221,16 +153,101 @@ const Info = forwardRef((props, ref) => {
         setMiddleName(clientMiddleName);
         setSuffixID(clientSuffixID);
         setSSN(clientSSN);
+        setGenderID(clientGenderID);
+        setRaceID(clientRaceID);
+        setCurrentAge(diffInYears);
 
         //TODO:need to update the prev variables as well for the reset button
         setPrevFirstName(clientFirstName);
         setPrevLastName(clientLastName);
 
+        if (state.isNewClient) {
+
+            let birthDateReset = new Date();
+            let birthDateUTC = convertDateToUtcFormat(birthDateReset);
+            setBirthDate(birthDateUTC);
+        }
+
+
+        Api.getConfigDataByType("Gender").then(options => {
+            //populate the options
+            let completeOptions = addPleaseSelect(options);
+            setGenderValues(completeOptions);
+
+            if (clientGenderID === '') {
+                return;
+            }
+
+            let selectedGenderOption = genderValues.filter(function (gender) {
+                return gender.ID === parseInt(clientGenderID);
+            });
+            setGenderDescription(selectedGenderOption[0].Description);
+            setPrevGenderDescription(selectedGenderOption[0].Description)
+
+        });
+
+        Api.getConfigDataByType("Suffix").then(options => {
+            let completeOptions = addPleaseSelect(options);
+            setSuffixValues(completeOptions);
+
+            if (clientSuffixID === '') {
+                return;
+            }
+
+            let selectedSuffixOption = suffixValues.filter(function (suffix) {
+                return suffix.ID === parseInt(clientSuffixID);
+            });
+
+            setSuffixDescription(selectedSuffixOption[0].Description);
+            setPrevSuffixDescription(selectedSuffixOption[0].Description)
+        });
+
+
+        Api.getConfigDataByType("Race").then(options => {
+            let completeOptions = addPleaseSelect(options);
+
+            setRaceValues(completeOptions);
+
+            if (clientRaceID === '') {
+                return;
+            }
+
+            let selectedRaceOption = raceValues.filter(function (race) {
+                return race.ID === parseInt(clientRaceID);
+            });
+
+            setRaceDescription(selectedRaceOption[0].Description);
+            setPrevRaceDescription(selectedRaceOption[0].Description);
+        });
+
+
         setRaceDescription(clientRaceDescription);
         setGenderDescription(clientGenderDescription);
+        setRaceDescription(clientRaceDescription);
 
 
     }, [clientFirstName, clientLastName, clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+
+    function calculateAge(birthDate) {
+        let difference = moment(new Date()).diff(birthDate);
+        let duration = moment.duration(difference, 'milliseconds');
+        diffInYears = Math.round(duration.asYears());
+        return diffInYears;
+    }
+
+    function addPleaseSelect(options) {
+        let pleaseSelectItem = {
+            Name: "PleaseSelect",
+            Description: "Please Select",
+            Active: true,
+            ID: 0,
+            CreatedDate: new Date()
+        }
+
+        options.splice(0, 0, pleaseSelectItem);
+
+        return options;
+    }
 
     function convertDateToUtcFormat(date) {
         let birthDateJavascriptDateObject = new Date(date);
@@ -258,13 +275,9 @@ const Info = forwardRef((props, ref) => {
             const ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
             const isValidSsn = ssnRegex.test(e.target.value);
             if (!isValidSsn) {
-                //console.log('not valid');
-                //setShowValidSsn(true);
                 setSsnRequired(true);
                 setErroDivCss('invalid-feedback d-block');
             } else {
-                //console.log('valid');
-                //setShowValidSsn(false);
                 setSsnRequired(undefined);
                 setErroDivCss('invalid-feedback');
             }
@@ -286,26 +299,15 @@ const Info = forwardRef((props, ref) => {
     }
 
     function isValidDate(d) {
-        //return d.date instanceof Date && !isNaN(d);
-        return Object.prototype.toString.call(d.date) === '[object Date]';
+        let dateObject = new Date(d.date);
+        return Object.prototype.toString.call(dateObject) === '[object Date]';
     }
 
-    function handleSuffixChange(suffix) {
-        setResetButtonDisabled(false);
-        //console.log('this is the handleSuffixChange in Info.js ');
-        //console.log(suffix);
-    }
 
-    function handleSuffixDescriptionChange(suffixDescription) {
-        //console.log(suffixDescription);
-        setSuffixDescription(suffixDescription);
-    }
 
     function handleDatePickerChange(birthDate) {
-        // console.log('this is the birth date');
-        // console.log(birthDate);
-        let isValid = isValidDate(birthDate);
-        // console.log(isValid);
+
+        let isValid = isDateofBirthValid(birthDate);
 
         if (!isValid) {
             setBirthDateRequired(true);
@@ -317,41 +319,25 @@ const Info = forwardRef((props, ref) => {
 
         setResetButtonDisabled(false);
         setBirthDate(birthDate.date);
+
+        let diffInYears = calculateAge(birthDate.date);
+        setCurrentAge(diffInYears);
     }
 
-    function handleGenderChange(gender) {
-        setResetButtonDisabled(false);
-        //console.log('this is the handleGenderChange in Info.js ');
-        //console.log(gender);
-        setGenderID(gender);
-    }
+    function isDateofBirthValid(birthDate) {
 
-    function handleGenderDescriptionChange(genderDescription) {
-        setResetButtonDisabled(false);
-        // console.log('this is the handlGenderDescription in Info.js');
-        // console.log(genderDescription);
-        setGenderDescription(genderDescription);
-    }
+        let isValid = isValidDate(birthDate);
 
-    function handleRaceChange(race) {
-        setResetButtonDisabled(false);
-        console.log('this is handleRaceChange ');
-        console.log(race);
+        //let today = new Date();
+        //let isLessThanCurrent = (birthDate < today);
 
-
-        if (race.ID === "0") {
-            console.log('race is showing Please Select');
+        if (!isValid) {
+            return false;
         }
 
-        setRaceID(race);
+        return true;
     }
 
-    function handleRaceDescriptionChange(raceDescription) {
-        setResetButtonDisabled(false);
-        //console.log('this is the handleRaceDescriptionChange ');
-        //console.log(raceDescription);
-        setRaceDescription(raceDescription);
-    }
 
     function resetForm() {
         setLastName(prevLastName);
@@ -359,15 +345,16 @@ const Info = forwardRef((props, ref) => {
         setMiddleName(prevMiddleName);
         setSSN(prevSsn);
         setFbiNcicNumber(prevFbiNcicNumber);
-        setBirthDate(prevBirthDate);
+        setBirthDate(utcBirthDate);
         setStateVcin(prevStateVcin);
         setAlias(prevAlias);
 
-        // setGenderID(prevGenderID);
-        // setSuffixID(prevSuffixID);
-        // setRaceID(prevRaceID);
-        // setGenderDescription(prevGenderDescription);
-        // setRaceDescription(prevRaceDescription);
+        setGenderID(prevGenderID);
+        setSuffixID(prevSuffixID);
+        setRaceID(prevRaceID);
+        setGenderDescription(prevGenderDescription);
+        setRaceDescription(prevRaceDescription);
+        setSuffixDescription(prevSuffixDescription);
     }
 
     //this will fire when submission of the form is successful
@@ -376,32 +363,104 @@ const Info = forwardRef((props, ref) => {
     }
 
     const TriggerValidationHandler = () => {
-        //triggerValidation("txtLastName");
+
         setFormClass('needs-validation was-validated');
-        console.log('here are the errors:');
-        console.log(errors);
+
+        //validate the dropdowns
+        if (raceID === '') {
+            setHideRaceError(false);
+        }
+
+        if (genderID === '') {
+            setHideGenderError(false);
+        }
+
+        //need to convert the birthDate a date object first
+        let birthDateObj = new Date(birthDate);
+
+        let isBirthDateValid = isDateofBirthValid(birthDateObj);
+        if (!isBirthDateValid) {
+            setBirthDateRequired(true);
+            setDobErrorDivCss('invalid-feedback d-block')
+        } else {
+            setBirthDateRequired(false);
+            setDobErrorDivCss('invalid-feedback');
+        }
 
         //need to check last name, first name, date of birth, race/ethnicity, and gender
-        console.log(lastName);
-        console.log(firstName);
-        console.log(birthDate);
-        console.log(genderID);
-        console.log(raceID);
+        let currentDate = new Date();
+        //all data is valid
+        if (lastName !== '' && firstName !== '' && birthDate < currentDate && raceID !== '' && genderID !== '') {
+            //they can save or update    
+            console.log(lastName);
+
+            console.log(firstName);
+            console.log(birthDate);
+            console.log(genderID);
+            console.log(raceID);
+
+
+
+            setHideRaceError(true);
+            setHideGenderError(true);
+        }
+
     }
 
-    function saveNewProfile() {
+
+    function onSelectGenderHandler(event) {
+
+        let selectedValue = event.currentTarget.getAttribute('value');
+        setGenderID(selectedValue);
+
+        let selectedGenderOption = genderValues.filter(function (gender) {
+            return gender.ID === parseInt(selectedValue)
+        });
+
+        setGenderDescription(selectedGenderOption[0].Description);
+
+        if (selectedValue !== '' && parseInt(selectedValue) !== 0) {
+            setHideGenderError(true);
+        } else {
+            setHideGenderError(false);
+        }
 
     }
 
+    function onSelectSuffixHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+        setSuffixID(selectedValue);
 
-    //this correctly gets errors
-    //console.log(errors);
+        let selectedSuffixOption = suffixValues.filter(function (suffix) {
+            return suffix.ID === parseInt(selectedValue)
+        });
+
+        setSuffixDescription(selectedSuffixOption[0].Description);
+    }
+
+    function onSelectRaceHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+        setRaceID(selectedValue);
+
+        let selectedRaceOption = raceValues.filter(function (race) {
+            return race.ID === parseInt(selectedValue);
+        });
+
+        setRaceDescription(selectedRaceOption[0].Description);
+
+        if (selectedValue !== '' && parseInt(selectedValue) !== 0) {
+            setHideRaceError(true);
+        } else {
+            setHideRaceError(false);
+        }
+
+    }
 
     let buttonType;
     if (saveButtonShow) {
 
         buttonType = <div className="col-auto">
-            <button type="button" onClick={saveNewProfile} className="btn btn-primary mb-2">Save</button>
+            <button type="button" onClick={TriggerValidationHandler} className="btn btn-primary mb-2">Save</button>
         </div>;
 
     } else {
@@ -411,6 +470,30 @@ const Info = forwardRef((props, ref) => {
         </div>;
     }
 
+
+    //set up the options for the Gender dropdown
+    let genderValueOptions = [];
+    if (genderValues.length > 0) {
+
+        genderValueOptions = genderValues.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={onSelectGenderHandler} className="dropdown-item">{value.Description}</a>
+        );
+
+    }
+
+    let suffixValueOptions = [];
+    if (suffixValues.length > 0) {
+        suffixValueOptions = suffixValues.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={onSelectSuffixHandler} className="dropdown-item">{value.Description}</a>
+        );
+    }
+
+    let raceValueOptions = [];
+    if (raceValues.length > 0) {
+        raceValueOptions = raceValues.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={onSelectRaceHandler} className="dropdown-item">{value.Description}</a>
+        );
+    }
 
 
     return <div>
@@ -465,15 +548,23 @@ const Info = forwardRef((props, ref) => {
                 </div>
                 <div className="col-3">
                     <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
+                    <div className="dropdown">
+                        <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            {suffixDescription}
+                        </button>
+                        <div className="dropdown-menu">
+                            {suffixValueOptions}
+                        </div>
+                    </div>
                     {/* <SuffixDropdown onSelectSuffix={handleSuffixChange} selected={props.infoTabSuffix} />           */}
-                    <DropDown
-                        onSelectValue={handleSuffixChange}
-                        onSelectValueDescription={handleSuffixDescriptionChange}
-                        selected={suffixID}
-                        valueDescription={suffixDescription}
-                        type={"suffix"}
-                        isRequired={true}>
-                    </DropDown>
+                    {/* <DropDown
+                                onSelectValue={handleSuffixChange}
+                                onSelectValueDescription={handleSuffixDescriptionChange}
+                                selected={suffixID}
+                                valueDescription={suffixDescription}
+                                type={"suffix"}
+                                isRequired={true}>
+                            </DropDown> */}
                 </div>
             </div>
             <div className="form-row">
@@ -505,7 +596,7 @@ const Info = forwardRef((props, ref) => {
                 <div className="col-3">
                     <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
                     <div className="inpu-group mb-3">
-                        <input type="text" readOnly value={diffInYears} className="form-control"></input>
+                        <input type="text" readOnly value={currentAge} className="form-control"></input>
                     </div>
                 </div>
                 <div className="col-3">
@@ -536,25 +627,44 @@ const Info = forwardRef((props, ref) => {
                 </div>
                 <div className="col-2">
                     <label htmlFor="ddlGender"><strong>Gender*</strong></label>
-                    <DropDown
-                        onSelectValue={handleGenderChange}
-                        onSelectValueDescription={handleGenderDescriptionChange}
-                        selected={genderID}
-                        valueDescription={genderDescription}
-                        type={"gender"}
-                        isRequired={true}>
-                    </DropDown>
+                    <div className="dropdown">
+                        <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            {genderDescription}
+                        </button>
+                        <div className="dropdown-menu">
+                            {genderValueOptions}
+                        </div>
+                    </div>
+                    {hideGenderError || <div className='errorDiv'>Please select a value.</div>}
+                    {/* <DropDown
+                                onSelectValue={handleGenderChange}
+                                onSelectValueDescription={handleGenderDescriptionChange}
+                                selected={genderID}
+                                valueDescription={genderDescription}
+                                values={genderValues}
+                                isRequired={true}>
+                            </DropDown> */}
+
                 </div>
                 <div className="col-4">
                     <label><strong>Race/Ethnicity*</strong></label>
-                    <DropDown
-                        onSelectValue={handleRaceChange}
-                        onSelectValueDescription={handleRaceDescriptionChange}
-                        selected={raceID}
-                        valueDescription={raceDescription}
-                        type={"race"}
-                        isRequired={true}>
-                    </DropDown>
+                    <div className="dropdown">
+                        <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            {raceDescription}
+                        </button>
+                        <div className="dropdown-menu">
+                            {raceValueOptions}
+                        </div>
+                    </div>
+                    {hideRaceError || <div className='errorDiv'>Please select a value.</div>}
+                    {/* <DropDown
+                                onSelectValue={handleRaceChange}
+                                onSelectValueDescription={handleRaceDescriptionChange}
+                                selected={raceID}
+                                valueDescription={raceDescription}
+                                type={"race"}
+                                isRequired={true}>
+                            </DropDown> */}
                 </div>
             </div>
             <div className="form-row float-right">
