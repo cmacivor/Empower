@@ -20,8 +20,8 @@ const CaseManagementFunction = (props) => {
     //console.log('the case management function');
     //console.log(cacheService.fundingSourceValues);
 
-    console.log('this is the state store in CaseManagementFunction');
-    console.log(state);
+    //console.log('this is the state store in CaseManagementFunction');
+    //console.log(state);
 
     function EnableTabs() {
         setEnabled(false);
