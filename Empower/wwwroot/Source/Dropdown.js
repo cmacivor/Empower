@@ -17,21 +17,48 @@ export default class DropDown extends Component {
         }
     }
 
+
+
     componentDidMount() {
         let dropdownType = this.props.type;
 
         if (dropdownType === "suffix") {
-            Api.getConfigDataByType("Suffix").then(options => this.setState({ values: options }));
-            //Api.getConfigDataByType("Suffix").then(options => console.log(options) );
+            Api.getConfigDataByType("Suffix").then(options => {
+                let completeOptions = this.addPleaseSelect(options);
+
+                this.setState({ values: completeOptions });
+            });
+
         }
         if (dropdownType === "race") {
-            Api.getConfigDataByType("Race").then(options => this.setState({ values: options }));
-            //Api.getConfigDataByType("Suffix").then(options => console.log(options));
+            Api.getConfigDataByType("Race").then(options => {
+
+                let completeOptions = this.addPleaseSelect(options);
+
+                this.setState({ values: completeOptions });
+            });
+
         }
         if (dropdownType === "gender") {
-            Api.getConfigDataByType("Gender").then(options => this.setState({ values: options }));
-            //Api.getConfigDataByType("Gender").then(options => console.log(options) );
+            Api.getConfigDataByType("Gender").then(options => {
+                let completeOptions = this.addPleaseSelect(options);
+                this.setState({ values: completeOptions });
+            });
         }
+    }
+
+    addPleaseSelect = (options) => {
+        let pleaseSelectItem = {
+            Name: "PleaseSelect",
+            Description: "Please Select",
+            Active: true,
+            ID: 0,
+            CreatedDate: new Date()
+        }
+
+        options.splice(0, 0, pleaseSelectItem);
+
+        return options;
     }
 
     onSelectHandler = (event) => {
