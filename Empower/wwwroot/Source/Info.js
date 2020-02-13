@@ -10,6 +10,8 @@ import { useCacheService } from './useCacheService';
 import DropDown from './Dropdown';
 import { useForm, ErrorMessage } from 'react-hook-form';
 import { Api } from './commonAdmin';
+import { GenerateUniqueID } from './NewClient';
+import { getSessionData } from './commonAdmin';
 //const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
@@ -31,6 +33,7 @@ const Info = forwardRef((props, ref) => {
     let utcBirthDate = new Date();
     let diffInYears = '';
     let saveButtonShow = false;
+    let personID = '';
 
 
     //the user clicked on a row in the search grid
@@ -41,13 +44,14 @@ const Info = forwardRef((props, ref) => {
         clientLastName = (clientInfo.LastName !== null) ? clientInfo.LastName : '';
         clientFirstName = (clientInfo.FirstName !== null) ? clientInfo.FirstName : '';
         clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
-        clientSuffixID = (clientInfo.Suffix !== null) ? clientInfo.Suffix : '';
+        clientSuffixID = (clientInfo.SuffixID !== null) ? clientInfo.SuffixID : '';
         clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
         clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.SSN : '';
         clientStateVcin = (clientInfo.StateORVCIN !== null) ? clientInfo.StateORVCIN : '';
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
+        personID = (clientInfo.PersonID !== null) ? clientInfo.PersonID : '';
 
         //get the birthdate in UTC format- the datepicker plugin needs it that way
         let birthDateJavascriptDateObject = new Date(clientInfo.DOB);
@@ -392,13 +396,37 @@ const Info = forwardRef((props, ref) => {
         //all data is valid
         if (lastName !== '' && firstName !== '' && birthDate < currentDate && raceID !== '' && genderID !== '') {
             //they can save or update    
-            console.log(lastName);
+            //console.log(lastName);
 
-            console.log(firstName);
-            console.log(birthDate);
-            console.log(genderID);
-            console.log(raceID);
+            //console.log(firstName);
+            //console.log(birthDate);
+            //console.log(genderID);
+            //console.log(raceID);
 
+            let id = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+
+            let apiAddress = sessionStorage.getItem("baseApiAddress");
+            //let fullPersonAddress = `${apiAddress}/api/${api}/Person`;
+            let sessionStorageData = getSessionData();
+
+            alert(id);
+            //they already exist, and this is an update
+            if (personID !== '') {
+                //make a PUT call with all of the parameters
+                // fetch(fullPersonAddress, {
+                //     //mode: 'cors',
+                //     method: 'PUT',
+                //     headers: {
+                //         'Authorization': 'Bearer ' + sessionStorageData.Token
+                //     }
+                // }).then(result => result.json());
+
+
+            }
+            else //this is a new client,
+            {
+
+            }
 
 
             setHideRaceError(true);
