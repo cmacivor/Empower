@@ -5,7 +5,9 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import { useCacheService } from './useCacheService';
 import Supplemental from './Supplemental';
-import { useStore } from './StateStores/store';
+import {useStore} from './StateStores/store';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -15,7 +17,23 @@ const CaseManagementFunction = (props) => {
     const [clientProfile, setClientProfile] = useState(Object);
     const infoRef = useRef();
     const cacheService = useCacheService();
-    const { state, dispatch } = useStore();
+    const {state, dispatch} = useStore();
+
+    toast.configure();
+
+
+    function triggerToastMessage(message) {
+        //toast("this is a test");
+        //toast.info
+        toast.success(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+            });
+    }
 
     //console.log('the case management function');
     //console.log(cacheService.fundingSourceValues);
@@ -26,15 +44,15 @@ const CaseManagementFunction = (props) => {
     function EnableTabs() {
         setEnabled(false);
         setDefaultTab("participantinfo");
-        setActiveTab("participantinfo");
+        setActiveTab("participantinfo");     
     }
 
     function SetActiveTab(key) {
-        setActiveTab(key);
-
-        //   if (state.isNewClient) {
-        //       setClientProfile(Object);
-        //   }
+      setActiveTab(key);
+    
+    //   if (state.isNewClient) {
+    //       setClientProfile(Object);
+    //   }
 
     }
 
@@ -42,7 +60,7 @@ const CaseManagementFunction = (props) => {
     function SetClientProfile(clientProfile) {
 
         //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was
-
+        
         setClientProfile(clientProfile); //updates the local state
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
@@ -51,42 +69,47 @@ const CaseManagementFunction = (props) => {
     }
 
     return <div>
-        <Tabs defaultActiveKey={defaultTab} activeKey={activeTab} onSelect={k => SetActiveTab(k)} id="caseManagementTabs">
-            <Tab eventKey="search" title="Search">
-                <Search enableTabsHandler={EnableTabs} setParticipantInfoAsActiveTab={SetActiveTab} onSearchGridRowClick={e => SetClientProfile(e)} ></Search>
-            </Tab>
-            <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>
-                <Info clientProfile={!state.isNewClient ? clientProfile.Person : undefined}
-                    ref={infoRef}
-                    genderValues={cacheService.genderValues}
-                    raceValues={cacheService.raceValues} />
-            </Tab>
-            <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
-
-                <Supplemental
-                    clientProfile={clientProfile.Person}
-                    educationLevelValues={cacheService.educationLevelValues}
-                    fundingSourceValues={cacheService.fundingSourceValues}
-                    jobStatusValues={cacheService.jobStatusValues}
-                    maritalStatusValues={cacheService.maritalStatusValues} />
-            </Tab>
-            <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
-                address content
+            <Tabs defaultActiveKey={defaultTab} activeKey={activeTab} onSelect={k => SetActiveTab(k) } id="caseManagementTabs">
+                    <Tab eventKey="search" title="Search">
+                        <Search enableTabsHandler={EnableTabs}
+                         setParticipantInfoAsActiveTab={SetActiveTab} 
+                         onSearchGridRowClick={e => SetClientProfile(e)}
+                         createNotification={triggerToastMessage}
+                        >
+                        </Search>
                     </Tab>
-            <Tab eventKey="familyinfo" title="Family Info" disabled={isTabDisabled}>
-                Family info content
+                    <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>
+                        <Info clientProfile={!state.isNewClient ? clientProfile.Person :  undefined } 
+                         ref={infoRef}
+                         genderValues={cacheService.genderValues}
+                         raceValues={cacheService.raceValues}/>                       
                     </Tab>
-            <Tab eventKey="program" title="Program" disabled={isTabDisabled}>
-                program content
+                    <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
+                        
+                       <Supplemental 
+                       clientProfile={clientProfile.Person} 
+                       educationLevelValues={cacheService.educationLevelValues}
+                       fundingSourceValues={cacheService.fundingSourceValues}
+                       jobStatusValues={cacheService.jobStatusValues} 
+                       maritalStatusValues={cacheService.maritalStatusValues} />
                     </Tab>
-            <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
-                assessment content
+                    <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
+                       address content
                     </Tab>
-            <Tab eventKey="contact" title="Contact" disabled={isTabDisabled}>
-                contact content
+                    <Tab eventKey="familyinfo" title="Family Info" disabled={isTabDisabled}>
+                       Family info content
                     </Tab>
-        </Tabs>
-    </div>
+                    <Tab eventKey="program" title="Program" disabled={isTabDisabled}>
+                       program content
+                    </Tab>
+                    <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
+                       assessment content
+                    </Tab>
+                    <Tab eventKey="contact" title="Contact" disabled={isTabDisabled}>
+                        contact content
+                    </Tab>
+                </Tabs>
+            </div>
 
 }
 
