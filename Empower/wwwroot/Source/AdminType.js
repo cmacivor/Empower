@@ -74,7 +74,22 @@ export default class AdminType extends Component {
 
         this.hideForm = this.hideForm.bind(this);
        
-    }    
+    }
+    
+    addSystemID = (postData) => {
+        
+        let sessionStorageData = getSessionData();
+
+        if (sessionStorageData.AdminType === "assessmenttype" ||
+            sessionStorageData.AdminType === "document" ||
+            sessionStorageData.AdminType === "assessmentsubtype" ) {
+
+              postData.SystemID = sessionStorageData.SystemID
+
+            }
+
+        return postData;
+    }
 
     SaveNew = () => {
 
@@ -90,10 +105,8 @@ export default class AdminType extends Component {
             UpdatedBy: sessionStorageData.CurrentUser 
         };
 
-        if (sessionStorageData.AdminType === "assessmenttype" ||
-            sessionStorageData.AdminType === "document"  ) {
-            postData.SystemID = sessionStorageData.SystemID
-        }
+    
+       postData = this.addSystemID(postData);
         
        let promise = Api.SaveNew(postData).then(response => {return response });
 
@@ -178,9 +191,8 @@ export default class AdminType extends Component {
             UpdatedBy: sessionStorageData.CurrentUser 
         };
 
-        if (sessionStorageData.AdminType  === "assessmenttype") {
-            postData.SystemID = sessionStorageData.SystemID  
-        }
+        
+        postData = this.addSystemID(postData);
 
         let promise = Api.UpdateRow(postData).then(response => {return response });
 
