@@ -94784,11 +94784,26 @@ var Search = function Search(props) {
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(false),
       _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState5, 2),
       isAddNewProfileButtonVisible = _useState6[0],
-      setAddNewProfileButtonVisible = _useState6[1]; //const [showDeleteToast, setShowDeleteToast] = useState(false);
+      setAddNewProfileButtonVisible = _useState6[1];
+
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(true),
+      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState7, 2),
+      canSearch21Plus = _useState8[0],
+      setCanSearch21Plus = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(0),
+      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState9, 2),
+      searchCount = _useState10[0],
+      setSearchCount = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(false),
+      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState11, 2),
+      isSearchCountVisible = _useState12[0],
+      setIsSearchCountVisible = _useState12[1]; //const [showDeleteToast, setShowDeleteToast] = useState(false);
   //grid state
 
 
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([{
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([{
     name: 'FirstName',
     title: 'First Name'
   }, {
@@ -94810,27 +94825,97 @@ var Search = function Search(props) {
     name: 'Gender',
     title: 'Gender'
   }]),
-      _useState8 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState7, 1),
-      columns = _useState8[0];
+      _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState13, 1),
+      columns = _useState14[0];
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([]),
-      _useState10 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState9, 2),
-      rows = _useState10[0],
-      setRows = _useState10[1];
-
-  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(false),
-      _useState12 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState11, 2),
-      isGridVisible = _useState12[0],
-      setGridVisible = _useState12[1];
-
-  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(true),
-      _useState14 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState13, 2),
-      canDeleteRow = _useState14[0],
-      setCanDeleteRow = _useState14[1];
-
-  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableEditColumn"].COLUMN_TYPE]),
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([{
+    name: 'FirstName',
+    title: 'First Name'
+  }, {
+    name: 'LastName',
+    title: 'Last Name'
+  }, {
+    name: 'MiddleName',
+    title: 'Middle Name'
+  }, {
+    name: 'JTS',
+    title: 'JTS'
+  }, {
+    name: 'SSN',
+    title: 'SSN'
+  }, {
+    name: 'FormattedBirthDate',
+    title: 'Birth Date'
+  }, {
+    name: 'Gender',
+    title: 'Gender'
+  }]),
       _useState16 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState15, 1),
-      leftFixedColumns = _useState16[0]; //to test the global state
+      search21PluGridColumns = _useState16[0];
+
+  var _useState17 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([]),
+      _useState18 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState17, 2),
+      rows = _useState18[0],
+      setRows = _useState18[1];
+
+  var _useState19 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(false),
+      _useState20 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState19, 2),
+      isGridVisible = _useState20[0],
+      setGridVisible = _useState20[1];
+
+  var _useState21 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(false),
+      _useState22 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState21, 2),
+      canDeleteRow = _useState22[0],
+      setCanDeleteRow = _useState22[1];
+
+  var _useState23 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableEditColumn"].COLUMN_TYPE]),
+      _useState24 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState23, 1),
+      leftFixedColumns = _useState24[0]; //main search grid paging params
+
+
+  var _useState25 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(0),
+      _useState26 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState25, 2),
+      currentPage = _useState26[0],
+      setCurrentPage = _useState26[1];
+
+  var _useState27 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(5),
+      _useState28 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState27, 2),
+      pageSize = _useState28[0],
+      setPageSize = _useState28[1];
+
+  var _useState29 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([5, 10, 15]),
+      _useState30 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState29, 1),
+      pageSizes = _useState30[0]; //Search21Plus grid items
+
+
+  var _useState31 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([]),
+      _useState32 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState31, 2),
+      search21PlusGridRows = _useState32[0],
+      setSearch21PlusGridRows = _useState32[1];
+
+  var _useState33 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(false),
+      _useState34 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState33, 2),
+      isSearch21PlusGridVisible = _useState34[0],
+      setIsSearch21PlusGridVisible = _useState34[1];
+
+  var _useState35 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableEditColumn"].COLUMN_TYPE]),
+      _useState36 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState35, 1),
+      search21GridLeftFixedColumns = _useState36[0]; //paging
+
+
+  var _useState37 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(0),
+      _useState38 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState37, 2),
+      search21CurrentPage = _useState38[0],
+      setSearch21CurrentPage = _useState38[1];
+
+  var _useState39 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])(5),
+      _useState40 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState39, 2),
+      search21PageSize = _useState40[0],
+      setSearch21PageSize = _useState40[1];
+
+  var _useState41 = Object(react__WEBPACK_IMPORTED_MODULE_5__["useState"])([5, 10, 15]),
+      _useState42 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_4___default()(_useState41, 1),
+      search21PageSizes = _useState42[0]; //to test the global state
 
 
   var _useStore = Object(_StateStores_store__WEBPACK_IMPORTED_MODULE_10__["useStore"])(),
@@ -94858,8 +94943,28 @@ var Search = function Search(props) {
     }, "Delete");
   };
 
-  var DeleteButton = function DeleteButton(_ref2) {
-    var _onExecute = _ref2.onExecute;
+  var Search21GridCommandButton = function Search21GridCommandButton(_ref2) {
+    var onExecute = _ref2.onExecute,
+        icon = _ref2.icon,
+        text = _ref2.text,
+        hint = _ref2.hint,
+        color = _ref2.color;
+    return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("button", {
+      type: "button",
+      className: "btn btn-danger btn-sm",
+      style: {
+        padding: 3
+      },
+      onClick: function onClick(e) {
+        onExecute();
+        e.stopPropagation();
+      },
+      title: hint
+    }, "Delete");
+  };
+
+  var DeleteButton = function DeleteButton(_ref3) {
+    var _onExecute = _ref3.onExecute;
     return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(CommandButton, {
       icon: "trash",
       hint: "Delete row",
@@ -94873,6 +94978,21 @@ var Search = function Search(props) {
     });
   };
 
+  var Search21GridDeleteButton = function Search21GridDeleteButton(_ref4) {
+    var _onExecute2 = _ref4.onExecute;
+    return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(Search21GridCommandButton, {
+      icon: "trash",
+      hint: "Delete row",
+      color: "text-danger",
+      onExecute: function onExecute() {
+        // eslint-disable-next-line
+        if (window.confirm('Are you sure you want to delete this row?')) {
+          _onExecute2();
+        }
+      }
+    });
+  };
+
   var commandComponents = {
     //add: AddButton,
     //edit: EditButton,
@@ -94880,20 +95000,43 @@ var Search = function Search(props) {
     //cancel: CancelButton,
 
   };
+  var search21PlusCommandComponents = {
+    //add: AddButton,
+    //edit: EditButton,
+    "delete": Search21GridDeleteButton //commit: CommitButton,
+    //cancel: CancelButton,
 
-  var Command = function Command(_ref3) {
-    var id = _ref3.id,
-        onExecute = _ref3.onExecute;
+  };
+
+  var Command = function Command(_ref5) {
+    var id = _ref5.id,
+        onExecute = _ref5.onExecute;
     var ButtonComponent = commandComponents[id];
     return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(ButtonComponent, {
       onExecute: onExecute
     });
   };
 
-  var deleteRows = function deleteRows(deletedIds) {
+  var Search21PlusCommand = function Search21PlusCommand(_ref6) {
+    var id = _ref6.id,
+        onExecute = _ref6.onExecute;
+    var ButtonComponent = search21PlusCommandComponents[id];
+    return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(ButtonComponent, {
+      onExecute: onExecute
+    });
+  };
+
+  var deleteRows = function deleteRows(deletedIds, isSearch21Grid) {
     //console.log(deletedIds);
     //console.log(rows);
-    var rowsForDelete = rows.slice();
+    var rowsForDelete;
+
+    if (!isSearch21Grid) {
+      rowsForDelete = rows.slice();
+    } else {
+      rowsForDelete = search21PlusGridRows.slice();
+    }
+
     deletedIds.forEach(function (rowId) {
       var index = rowsForDelete.findIndex(function (row) {
         return row.id === rowId;
@@ -94906,10 +95049,49 @@ var Search = function Search(props) {
     return rowsForDelete;
   };
 
-  var commitChanges = function commitChanges(_ref4) {
-    var added = _ref4.added,
-        changed = _ref4.changed,
-        deleted = _ref4.deleted;
+  var commit21SearchGridChanges = function commit21SearchGridChanges(_ref7) {
+    var added = _ref7.added,
+        changed = _ref7.changed,
+        deleted = _ref7.deleted;
+    var changedRows;
+
+    if (added) {
+      var startingAddedId = search21PlusGridRows.length > 0 ? search21PlusGridRows[rows.length - 1].id + 1 : 0;
+      changedRows = [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3___default()(search21PlusGridRows), _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_3___default()(added.map(function (row, index) {
+        return _objectSpread({
+          id: startingAddedId + index
+        }, row);
+      })));
+    }
+
+    if (changed) {
+      changedRows = search21PlusGridRows.map(function (row) {
+        return changed[row.id] ? _objectSpread({}, row, {}, changed[row.id]) : row;
+      });
+    }
+
+    if (deleted) {
+      //console.log('this is the deleted in commitChanges');
+      console.log(deleted);
+      var index = deleted[0]; //let deletedRow = rows[index];
+
+      var deletedRow = search21PlusGridRows[index];
+      console.log(deletedRow); //deletedRow(deletedRow.ID);
+
+      deleteClient(deletedRow.ID, true);
+      changedRows = deleteRows(deleted, true); //console.log(changedRows);
+    } //setRows(changedRows);
+
+
+    setRows([]);
+    setGridVisible(false);
+    setSearch21PlusGridRows(changedRows);
+  };
+
+  var commitChanges = function commitChanges(_ref8) {
+    var added = _ref8.added,
+        changed = _ref8.changed,
+        deleted = _ref8.deleted;
     var changedRows;
 
     if (added) {
@@ -94934,10 +95116,12 @@ var Search = function Search(props) {
       var deletedRow = rows[index];
       console.log(deletedRow); //deletedRow(deletedRow.ID);
 
-      deleteClient(deletedRow.ID);
-      changedRows = deleteRows(deleted);
+      deleteClient(deletedRow.ID, false);
+      changedRows = deleteRows(deleted, false);
     }
 
+    setSearch21PlusGridRows([]);
+    setIsSearch21PlusGridVisible(false);
     setRows(changedRows);
   };
 
@@ -94953,9 +95137,52 @@ var Search = function Search(props) {
     setFirstName(event.target.value);
   }
 
+  function Search21PlusClickHandler() {
+    var apiAddress = sessionStorage.getItem("baseApiAddress"); //let apiAddress = "http://localhost:57612";
+    //let token = sessionStorage.getItem("token");
+
+    var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_9__["getSessionData"])();
+    var fullSearchAddress = "".concat(apiAddress, "/api/ClientProfile/SearchPlus"); //  let postData = {
+    //      lastName: lastName,
+    //      firstName: firstName
+    //  }
+
+    try {
+      var promise = fetch(fullSearchAddress, {
+        method: 'get',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + sessionStorageData.Token
+        } //body: JSON.stringify(postData)
+
+      });
+      promise.then(function (result) {
+        if (result.status === 200) {
+          return result.json();
+        } else {
+          return result.json();
+        }
+      }).then(function (finalResult) {
+        //console.log(finalResult);
+        setRows([]);
+        setGridVisible(false);
+        setSearch21PlusGridRows(finalResult);
+        setIsSearch21PlusGridVisible(true);
+        setSearchCount(finalResult.length); //setRows(finalResult);
+
+        setAddNewProfileButtonVisible(true);
+        setIsSearchCountVisible(true);
+      });
+    } catch (error) {
+      console.log(error);
+      alert('an error occurred while searching;');
+    }
+  }
+
   function SearchButtonClickHandler() {
-    //let apiAddress = sessionStorage.getItem("baseApiAddress");
-    var apiAddress = "http://localhost:57612"; //let token = sessionStorage.getItem("token");
+    var apiAddress = sessionStorage.getItem("baseApiAddress"); //let apiAddress = "http://localhost:57612";
+    //let token = sessionStorage.getItem("token");
 
     var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_9__["getSessionData"])();
     var fullSearchAddress = "".concat(apiAddress, "/api/ClientProfile/Search");
@@ -94981,9 +95208,13 @@ var Search = function Search(props) {
           return result.json();
         }
       }).then(function (finalResult) {
+        setSearch21PlusGridRows([]);
+        setIsSearch21PlusGridVisible(false);
         setRows(finalResult);
         setGridVisible(true);
         setAddNewProfileButtonVisible(true);
+        setSearchCount(finalResult.length);
+        setIsSearchCountVisible(true);
       });
     } catch (error) {
       console.log(error);
@@ -94991,17 +95222,17 @@ var Search = function Search(props) {
     }
   }
 
-  var TableComponent = function TableComponent(_ref5) {
-    var restProps = _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, _ref5);
+  var TableComponent = function TableComponent(_ref9) {
+    var restProps = _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, _ref9);
 
     return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["Table"].Table, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, restProps, {
       className: "table-hover"
     }));
   };
 
-  var TableRow = function TableRow(_ref6) {
-    var row = _ref6.row,
-        restProps = _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default()(_ref6, ["row"]);
+  var TableRow = function TableRow(_ref10) {
+    var row = _ref10.row,
+        restProps = _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0___default()(_ref10, ["row"]);
 
     return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["Table"].Row, _babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_1___default()({}, restProps, {
       onClick: function onClick() {
@@ -95013,14 +95244,11 @@ var Search = function Search(props) {
   function ClearSearchFields() {
     setLastName('');
     setFirstName('');
-  } // function testMethod() {
-  //     console.log(clienProfile);
-  // }
+  }
 
-
-  function deleteClient(personID) {
-    //let apiAddress = sessionStorage.getItem("baseApiAddress");
-    var apiAddress = "http://localhost:57612"; //let token = sessionStorage.getItem("token");
+  function deleteClient(personID, isSearch21Grid) {
+    var apiAddress = sessionStorage.getItem("baseApiAddress"); //let apiAddress = "http://localhost:57612";
+    //let token = sessionStorage.getItem("token");
 
     var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_9__["getSessionData"])();
     var token = sessionStorageData.Token;
@@ -95044,8 +95272,13 @@ var Search = function Search(props) {
       }).then(function (finalResult) {
         //console.log(finalResult);
         //SetClientProfile(finalResult);
-        //dispatch( { type: "existingClient"} ); 
-        SearchButtonClickHandler(); //setShowDeleteToast(true);
+        //dispatch( { type: "existingClient"} );
+        if (!isSearch21Grid) {
+          SearchButtonClickHandler();
+        } else {
+          Search21PlusClickHandler();
+        } //setShowDeleteToast(true);
+
 
         props.createNotification('The client profile was successfully deleted.');
       });
@@ -95056,9 +95289,9 @@ var Search = function Search(props) {
   }
 
   function GetSelectedRow(row) {
-    props.enableTabsHandler(); //let apiAddress = sessionStorage.getItem("baseApiAddress");
-
-    var apiAddress = "http://localhost:57612"; //let token = sessionStorage.getItem("token");
+    props.enableTabsHandler();
+    var apiAddress = sessionStorage.getItem("baseApiAddress"); //let apiAddress = "http://localhost:57612";
+    //let token = sessionStorage.getItem("token");
 
     var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_9__["getSessionData"])();
     var token = sessionStorageData.Token;
@@ -95099,7 +95332,13 @@ var Search = function Search(props) {
     props.setParticipantInfoAsActiveTab("participantinfo");
   }
 
-  return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one."), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("h4", null, "Search Client Profiles"), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+    className: "form-row"
+  }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+    className: "col-6"
+  }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("p", null, "Please search for an existing Client Profile, before creating a new one.")), isSearchCountVisible ? react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+    className: "col-6"
+  }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("strong", null, "Found ", searchCount, " matching Profiles")) : react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null)), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
     className: "form-row"
   }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
     className: "col-3"
@@ -95129,7 +95368,13 @@ var Search = function Search(props) {
     type: "button",
     onClick: ClearSearchFields,
     className: "btn btn-primary mb-2"
-  }, "Clear Search")), isAddNewProfileButtonVisible ? react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+  }, "Clear Search")), canSearch21Plus ? react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
+    className: "col-auto"
+  }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("button", {
+    type: "button",
+    onClick: Search21PlusClickHandler,
+    className: "btn btn-primary mb-2"
+  }, "Search21plus")) : react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null), isAddNewProfileButtonVisible ? react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", {
     className: "col-auto"
   }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("button", {
     type: "button",
@@ -95139,24 +95384,60 @@ var Search = function Search(props) {
     className: "card",
     rows: rows,
     columns: columns
-  }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["Table"], {
+  }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid__WEBPACK_IMPORTED_MODULE_6__["PagingState"], {
+    currentPage: currentPage,
+    onCurrentPageChange: setCurrentPage,
+    pageSize: pageSize,
+    onPageSizeChange: setPageSize
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid__WEBPACK_IMPORTED_MODULE_6__["IntegratedPaging"], null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["Table"], {
     tableComponent: TableComponent,
     rowComponent: TableRow
-  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableHeaderRow"], null)) : react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null), isGridVisible === true && canDeleteRow === true ? react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["Grid"], {
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableHeaderRow"], null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["PagingPanel"], {
+    pageSizes: pageSizes
+  })) : react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null), isGridVisible === true && canDeleteRow === true ? react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["Grid"], {
     className: "card",
     rows: rows,
     columns: columns
-  }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid__WEBPACK_IMPORTED_MODULE_6__["EditingState"], {
+  }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid__WEBPACK_IMPORTED_MODULE_6__["PagingState"], {
+    currentPage: currentPage,
+    onCurrentPageChange: setCurrentPage,
+    pageSize: pageSize,
+    onPageSizeChange: setPageSize
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid__WEBPACK_IMPORTED_MODULE_6__["IntegratedPaging"], null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid__WEBPACK_IMPORTED_MODULE_6__["EditingState"], {
     onCommitChanges: commitChanges
   }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["Table"], {
     tableComponent: TableComponent,
     rowComponent: TableRow
-  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableHeaderRow"], null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableEditColumn"], {
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableHeaderRow"], null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["PagingPanel"], {
+    pageSizes: pageSizes
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableEditColumn"], {
     width: "20",
     showDeleteCommand: true,
     commandComponent: Command
   }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableFixedColumns"], {
     rightColumns: leftFixedColumns
+  })) : react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null), isSearch21PlusGridVisible === true ? react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["Grid"], {
+    className: "card",
+    rows: search21PlusGridRows,
+    columns: search21PluGridColumns
+  }, react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid__WEBPACK_IMPORTED_MODULE_6__["PagingState"], {
+    currentPage: search21CurrentPage,
+    onCurrentPageChange: setSearch21CurrentPage,
+    pageSize: search21PageSize,
+    onPageSizeChange: setSearch21PageSize
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid__WEBPACK_IMPORTED_MODULE_6__["IntegratedPaging"], null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid__WEBPACK_IMPORTED_MODULE_6__["EditingState"], {
+    onCommitChanges: commit21SearchGridChanges
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["Table"], {
+    tableComponent: TableComponent,
+    rowComponent: TableRow
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableHeaderRow"], null), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["PagingPanel"], {
+    pageSizes: search21PageSizes
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableEditColumn"], {
+    width: "20",
+    showDeleteCommand: true,
+    commandComponent: Search21PlusCommand
+  }), react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement(_devexpress_dx_react_grid_bootstrap4__WEBPACK_IMPORTED_MODULE_7__["TableFixedColumns"], {
+    rightColumns: search21GridLeftFixedColumns
   })) : react__WEBPACK_IMPORTED_MODULE_5___default.a.createElement("div", null));
 };
 
