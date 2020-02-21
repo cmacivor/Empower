@@ -79538,7 +79538,7 @@ function (_Component) {
         UpdatedBy: sessionStorageData.CurrentUser
       };
 
-      if (sessionStorageData.AdminType === "assessmenttype") {
+      if (sessionStorageData.AdminType === "assessmenttype" || sessionStorageData.AdminType === "document") {
         postData.SystemID = sessionStorageData.SystemID;
       }
 
