@@ -373,6 +373,7 @@ export default class AdminType extends Component {
                             rowData={this.state.rowData}
                             context={this.state.context}
                             frameworkComponents={this.state.frameworkComponents}
+                            pagination={true}
                             onGridReady={this.onGridReady}>
                         </AgGridReact>
                     </div>

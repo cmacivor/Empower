@@ -79902,6 +79902,7 @@ function (_Component) {
         rowData: this.state.rowData,
         context: this.state.context,
         frameworkComponents: this.state.frameworkComponents,
+        pagination: true,
         onGridReady: this.onGridReady
       })), this.state.isVisible === true ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-6"
