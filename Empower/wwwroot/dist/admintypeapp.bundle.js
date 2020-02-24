@@ -79529,7 +79529,7 @@ function (_Component) {
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "addSystemID", function (postData) {
       var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
 
-      if (sessionStorageData.AdminType === "assessmenttype" || sessionStorageData.AdminType === "document" || sessionStorageData.AdminType === "assessmentsubtype" || sessionStorageData.AdminType === "judge") {
+      if (sessionStorageData.AdminType === "assessmenttype" || sessionStorageData.AdminType === "document" || sessionStorageData.AdminType === "assessmentsubtype" || sessionStorageData.AdminType === "judge" || sessionStorageData.AdminType === "servicecategory") {
         postData.SystemID = sessionStorageData.SystemID;
       }
 

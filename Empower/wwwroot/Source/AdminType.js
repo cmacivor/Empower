@@ -83,7 +83,8 @@ export default class AdminType extends Component {
         if (sessionStorageData.AdminType === "assessmenttype" ||
             sessionStorageData.AdminType === "document" ||
             sessionStorageData.AdminType === "assessmentsubtype" ||
-            sessionStorageData.AdminType === "judge" ) {
+            sessionStorageData.AdminType === "judge" ||
+            sessionStorageData.AdminType === "servicecategory" ) {
 
               postData.SystemID = sessionStorageData.SystemID
 
