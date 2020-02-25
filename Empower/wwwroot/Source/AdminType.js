@@ -29,9 +29,13 @@ export default class AdminType extends Component {
             ShowErrorMessage: false,
             isUploadServiceProfile: false,
             selectedFile: null,
+            fileName: '',
             columnDefs: [
             {
                 headerName: "ID", field: "ID", hide: true
+            },
+            {
+                headerName: "FileName", field: "FileName", hide: true
             },
             {
                 headerName: "CreatedBy", field: "CreatedBy", hide: true
@@ -142,7 +146,7 @@ export default class AdminType extends Component {
         }).then(finalResult => {
             this.handleError(finalResult);
                     
-        });//.catch(this.showAlert());
+        });
     }
 
     handleError = (finalResult) => {
@@ -173,7 +177,8 @@ export default class AdminType extends Component {
             CreatedBy: '',
             CreatedDate: '',
             isDeleteConfirmButtonVisible: false,
-            active: true
+            active: true,
+            fileName: ''
          });
     }
 
@@ -327,7 +332,8 @@ export default class AdminType extends Component {
             ID: selected.ID,
             CreatedBy: selected.CreatedBy,
             CreatedDate: selected.CreatedDate,
-            addButtonDisabled: true
+            addButtonDisabled: true,
+            fileName: selected.FileName
         });
 
         this.showForm();
@@ -335,7 +341,12 @@ export default class AdminType extends Component {
 
     loadGrid = () => {
 
+        // Api.getAll().then(result => {
+        //     console.log(result);
+        // });
+
          Api.getAll().then(rowData => this.setState({ rowData }));
+
     }
 
     setActive = event => {
@@ -358,7 +369,6 @@ export default class AdminType extends Component {
     }
 
     onFileChangeHandler = event => {
-        //console.log(event.target.files[0]);
         this.setState({
             selectedFile: event.target.files[0]
         });
@@ -375,23 +385,6 @@ export default class AdminType extends Component {
       const data = new FormData();
       data.append('file', this.state.selectedFile);
 
-        //post the file to the upload controller
-        // try 
-        // {
-        //     return  fetch(fullUploadUrl, {
-        //         method: 'post',
-        //         mode: 'cors',
-        //         headers: {
-        //             'Authorization': 'Bearer ' + sessionStorageData.Token
-        //         },
-
-        //         body: data
-        //     }).then(result => result.json());
-        // }
-        // catch (error) {
-        //     console.log('the file failed to upload');
-        //     console.log(error);
-        // }
         
         //for the document controller
         var postData = {
@@ -405,12 +398,7 @@ export default class AdminType extends Component {
             FileName: this.state.selectedFile.name
         };
 
-       postData = this.addSystemID(postData);
-        //console.log(this.state.selectedFile);
-       //var promise;
-       //if (this.state && !this.state.ID) {
-         //promise = Api.SaveNew(postData).then(response => {return response });
-         //let sessionStorageData = getSessionData();
+        postData = this.addSystemID(postData);
 
          var methodType;
          if (this.state && !this.state.ID) {
@@ -465,7 +453,6 @@ export default class AdminType extends Component {
             this.handleError(finalResult);
                     
         }); 
-
 
     }
 
@@ -545,7 +532,8 @@ export default class AdminType extends Component {
                                     {
                                         this.state.isUploadServiceProfile ?
                                         <div className="form-group">
-                                            <input type="file" name="file" onChange={this.onFileChangeHandler} />
+                                            <input type="file" name="file"  onChange={this.onFileChangeHandler} /><br></br>
+                                            <label>Current file: {this.state.fileName}</label>
                                             
                                         </div> : <div></div>
                                     }        

@@ -79563,7 +79563,7 @@ function (_Component) {
         }
       }).then(function (finalResult) {
         _this.handleError(finalResult);
-      }); //.catch(this.showAlert());
+      });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleError", function (finalResult) {
@@ -79592,7 +79592,8 @@ function (_Component) {
         CreatedBy: '',
         CreatedDate: '',
         isDeleteConfirmButtonVisible: false,
-        active: true
+        active: true,
+        fileName: ''
       });
     });
 
@@ -79750,13 +79751,17 @@ function (_Component) {
         ID: selected.ID,
         CreatedBy: selected.CreatedBy,
         CreatedDate: selected.CreatedDate,
-        addButtonDisabled: true
+        addButtonDisabled: true,
+        fileName: selected.FileName
       });
 
       _this.showForm();
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "loadGrid", function () {
+      // Api.getAll().then(result => {
+      //     console.log(result);
+      // });
       _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].getAll().then(function (rowData) {
         return _this.setState({
           rowData: rowData
@@ -79783,7 +79788,6 @@ function (_Component) {
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "onFileChangeHandler", function (event) {
-      //console.log(event.target.files[0]);
       _this.setState({
         selectedFile: event.target.files[0]
       });
@@ -79796,23 +79800,7 @@ function (_Component) {
       var baseApiAddress = sessionStorage.getItem("baseApiAddress");
       var fullUploadUrl = "".concat(baseApiAddress, "/api/Upload");
       var data = new FormData();
-      data.append('file', _this.state.selectedFile); //post the file to the upload controller
-      // try 
-      // {
-      //     return  fetch(fullUploadUrl, {
-      //         method: 'post',
-      //         mode: 'cors',
-      //         headers: {
-      //             'Authorization': 'Bearer ' + sessionStorageData.Token
-      //         },
-      //         body: data
-      //     }).then(result => result.json());
-      // }
-      // catch (error) {
-      //     console.log('the file failed to upload');
-      //     console.log(error);
-      // }
-      //for the document controller
+      data.append('file', _this.state.selectedFile); //for the document controller
 
       var postData = {
         Name: _this.state.name,
@@ -79824,12 +79812,7 @@ function (_Component) {
         UpdatedBy: sessionStorageData.CurrentUser,
         FileName: _this.state.selectedFile.name
       };
-      postData = _this.addSystemID(postData); //console.log(this.state.selectedFile);
-      //var promise;
-      //if (this.state && !this.state.ID) {
-      //promise = Api.SaveNew(postData).then(response => {return response });
-      //let sessionStorageData = getSessionData();
-
+      postData = _this.addSystemID(postData);
       var methodType;
 
       if (_this.state && !_this.state.ID) {
@@ -79898,9 +79881,14 @@ function (_Component) {
       ShowErrorMessage: false,
       isUploadServiceProfile: false,
       selectedFile: null,
+      fileName: '',
       columnDefs: [{
         headerName: "ID",
         field: "ID",
+        hide: true
+      }, {
+        headerName: "FileName",
+        field: "FileName",
         hide: true
       }, {
         headerName: "CreatedBy",
@@ -80096,7 +80084,7 @@ function (_Component) {
         type: "file",
         name: "file",
         onChange: this.onFileChangeHandler
-      })) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null)), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("label", null, "Current file: ", this.state.fileName)) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null)), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         onClick: this.DeleteSelectedRow,
         className: "btn btn-danger mr-2"
       }, "Confirm") : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
