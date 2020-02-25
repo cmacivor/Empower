@@ -79648,14 +79648,18 @@ function (_Component) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              if (_this.state && !_this.state.ID) {
-                _this.SaveNew();
+              if (_this.state.isUploadServiceProfile === true) {
+                _this.saveFile();
               } else {
-                _this.UpdateSelectedRow();
+                if (_this.state && !_this.state.ID) {
+                  _this.SaveNew();
+                } else {
+                  _this.UpdateSelectedRow();
 
-                _this.state.ID = '';
-                _this.state.CreatedBy = '';
-                _this.state.CreatedDate = '';
+                  _this.state.ID = '';
+                  _this.state.CreatedBy = '';
+                  _this.state.CreatedDate = '';
+                }
               }
 
             case 1:
@@ -79778,6 +79782,105 @@ function (_Component) {
       }
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "onFileChangeHandler", function (event) {
+      //console.log(event.target.files[0]);
+      _this.setState({
+        selectedFile: event.target.files[0]
+      });
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "saveFile", function () {
+      //save a new one
+      //first call the Upload controller
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+      var baseApiAddress = sessionStorage.getItem("baseApiAddress");
+      var fullUploadUrl = "".concat(baseApiAddress, "/api/Upload");
+      var data = new FormData();
+      data.append('file', _this.state.selectedFile); //post the file to the upload controller
+      // try 
+      // {
+      //     return  fetch(fullUploadUrl, {
+      //         method: 'post',
+      //         mode: 'cors',
+      //         headers: {
+      //             'Authorization': 'Bearer ' + sessionStorageData.Token
+      //         },
+      //         body: data
+      //     }).then(result => result.json());
+      // }
+      // catch (error) {
+      //     console.log('the file failed to upload');
+      //     console.log(error);
+      // }
+      //for the document controller
+
+      var postData = {
+        Name: _this.state.name,
+        Description: _this.state.description,
+        Active: _this.state.active,
+        CreatedDate: new Date().toLocaleString(),
+        CreatedBy: sessionStorageData.CurrentUser,
+        UpdatedDate: new Date().toLocaleString(),
+        UpdatedBy: sessionStorageData.CurrentUser,
+        FileName: _this.state.selectedFile.name
+      };
+      postData = _this.addSystemID(postData); //console.log(this.state.selectedFile);
+      //var promise;
+      //if (this.state && !this.state.ID) {
+      //promise = Api.SaveNew(postData).then(response => {return response });
+      //let sessionStorageData = getSessionData();
+
+      var methodType;
+
+      if (_this.state && !_this.state.ID) {
+        methodType = 'post';
+      } else {
+        methodType = 'put';
+      }
+
+      try {
+        //create the new record
+        return fetch(sessionStorageData.CreateApiUrl, {
+          method: methodType,
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+          },
+          body: JSON.stringify(postData)
+        }).then(function (result) {
+          if (result.status === 200) {
+            _this.loadGrid();
+
+            if (_this.state.ErrorMessage === '') {
+              _this.resetState();
+            }
+          } else {
+            return result.json();
+          }
+        }).then(function (finalResult) {
+          _this.handleError(finalResult);
+        });
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while saving the data.');
+      }
+
+      promise.then(function (result) {
+        if (result.status === 200) {
+          _this.loadGrid();
+
+          if (_this.state.ErrorMessage === '') {
+            _this.resetState();
+          }
+        } else {
+          return result.json();
+        }
+      }).then(function (finalResult) {
+        _this.handleError(finalResult);
+      });
+    });
+
     _this.state = {
       saveButtonDisabled: true,
       addButtonDisabled: false,
@@ -79793,6 +79896,8 @@ function (_Component) {
       CreatedDate: '',
       ErrorMessage: '',
       ShowErrorMessage: false,
+      isUploadServiceProfile: false,
+      selectedFile: null,
       columnDefs: [{
         headerName: "ID",
         field: "ID",
@@ -79841,6 +79946,17 @@ function (_Component) {
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(AdminType, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+
+      if (sessionStorageData.AdminType === "document") {
+        this.setState({
+          isUploadServiceProfile: true
+        });
+      }
+    }
+  }, {
     key: "hideForm",
     value: function hideForm() {
       this.setState({
@@ -79974,7 +80090,13 @@ function (_Component) {
         },
         value: "no",
         name: "active"
-      }), ' ', "No")))), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
+      }), ' ', "No"))), this.state.isUploadServiceProfile ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
+        type: "file",
+        name: "file",
+        onChange: this.onFileChangeHandler
+      })) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null)), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         onClick: this.DeleteSelectedRow,
         className: "btn btn-danger mr-2"
       }, "Confirm") : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
