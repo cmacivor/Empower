@@ -30,6 +30,7 @@ export default class AdminType extends Component {
             isUploadServiceProfile: false,
             selectedFile: null,
             fileName: '',
+            isSelectFileErrorVisible: false,
             columnDefs: [
             {
                 headerName: "ID", field: "ID", hide: true
@@ -382,27 +383,35 @@ export default class AdminType extends Component {
       let baseApiAddress = sessionStorage.getItem("baseApiAddress");
       let fullUploadUrl = `${baseApiAddress}/api/Upload`;
       
+     if (this.state.selectedFile === null) {
+         this.setState({
+            isSelectFileErrorVisible: true
+         });
+
+         return;
+      }
+
       const data = new FormData();
       data.append('file', this.state.selectedFile);
 
         //post the file to the upload controller
-        // try 
-        // {
-        //     fetch(fullUploadUrl, {
-        //         method: 'post',
-        //         mode: 'cors',
-        //         headers: {
-        //             'Authorization': 'Bearer ' + sessionStorageData.Token
-        //         },
-        //         body: data
-        //     }).then(result => { 
-        //         console.log(result);
-        //     });
-        // }
-        // catch (error) {
-        //     console.log('the file failed to upload');
-        //     console.log(error);
-        // }
+        try 
+        {
+            fetch(fullUploadUrl, {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                },
+                body: data
+            }).then(result => { 
+                console.log(result);
+            });
+        }
+        catch (error) {
+            console.log('the file failed to upload');
+            console.log(error);
+        }
         
         //for the document controller
         var postData = {
@@ -553,7 +562,14 @@ export default class AdminType extends Component {
                                         this.state.isUploadServiceProfile ?
                                         <div className="form-group">
                                             <input type="file" name="file"  onChange={this.onFileChangeHandler} /><br></br>
-                                            <label>Current file: {this.state.fileName}</label>
+                                            <label>Current file: {this.state.fileName}</label><br></br>
+                                            {
+                                              this.state.isSelectFileErrorVisible ?
+                                                <div className="alert alert-danger" role="alert" >
+                                                    Please select a file.
+                                                </div> : <div></div>
+                                            }
+                                            
                                             
                                         </div> : <div></div>
                                     }        

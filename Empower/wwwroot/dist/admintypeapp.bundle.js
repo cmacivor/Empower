@@ -79799,6 +79799,15 @@ function (_Component) {
       var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
       var baseApiAddress = sessionStorage.getItem("baseApiAddress");
       var fullUploadUrl = "".concat(baseApiAddress, "/api/Upload");
+
+      if (_this.state.selectedFile === null) {
+        _this.setState({
+          isSelectFileErrorVisible: true
+        });
+
+        return;
+      }
+
       var data = new FormData();
       data.append('file', _this.state.selectedFile); //post the file to the upload controller
       // try 
@@ -79901,6 +79910,7 @@ function (_Component) {
       isUploadServiceProfile: false,
       selectedFile: null,
       fileName: '',
+      isSelectFileErrorVisible: false,
       columnDefs: [{
         headerName: "ID",
         field: "ID",
@@ -80103,7 +80113,10 @@ function (_Component) {
         type: "file",
         name: "file",
         onChange: this.onFileChangeHandler
-      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("label", null, "Current file: ", this.state.fileName)) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null)), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
+      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("label", null, "Current file: ", this.state.fileName), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("br", null), this.state.isSelectFileErrorVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+        className: "alert alert-danger",
+        role: "alert"
+      }, "Please select a file.") : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null)) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null)), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         onClick: this.DeleteSelectedRow,
         className: "btn btn-danger mr-2"
       }, "Confirm") : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
