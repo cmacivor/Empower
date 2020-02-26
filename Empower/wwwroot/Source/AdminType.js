@@ -385,6 +385,24 @@ export default class AdminType extends Component {
       const data = new FormData();
       data.append('file', this.state.selectedFile);
 
+        //post the file to the upload controller
+        try 
+        {
+            return  fetch(fullUploadUrl, {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                },
+                body: data
+            }).then(result => { 
+                console.log(result);
+            });
+        }
+        catch (error) {
+            console.log('the file failed to upload');
+            console.log(error);
+        }
         
         //for the document controller
         var postData = {
