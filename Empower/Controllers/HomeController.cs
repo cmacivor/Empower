@@ -43,7 +43,9 @@ namespace Empower.Controllers
 
             var results = await client.GetAllItems(authResponse.access_token, url);
 
-            var appsettings = _appsettings;
+            foreach (var documentMenuItem in results) {
+                documentMenuItem.Link = _appsettings.Value.LocationUrl + documentMenuItem.Name;
+            }
 
             var viewModel = new HomeViewModel
             {
@@ -51,7 +53,8 @@ namespace Empower.Controllers
                 UserName = authResponse.userName, 
                 BaseApiAddress = authResponse.baseApiAddress, 
                 SystemID = authResponse.systemID,
-                DocumentMenuItems = results           
+                DocumentMenuItems = results,
+                DocumentBaseUrl =  _appsettings.Value.LocationUrl          
             };
 
             viewModel.GetAppTitle();

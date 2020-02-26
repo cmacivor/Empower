@@ -13,6 +13,8 @@ namespace Empower.Models
         public string Name { get; set; }
 
         public string FileName { get; set; }
+
+        public string Link { get; set; }
     }
 }
 
