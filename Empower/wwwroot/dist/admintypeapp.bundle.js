@@ -79801,23 +79801,24 @@ function (_Component) {
       var fullUploadUrl = "".concat(baseApiAddress, "/api/Upload");
       var data = new FormData();
       data.append('file', _this.state.selectedFile); //post the file to the upload controller
-
-      try {
-        fetch(fullUploadUrl, {
-          method: 'post',
-          mode: 'cors',
-          headers: {
-            'Authorization': 'Bearer ' + sessionStorageData.Token
-          },
-          body: data
-        }).then(function (result) {
-          console.log(result);
-        });
-      } catch (error) {
-        console.log('the file failed to upload');
-        console.log(error);
-      } //for the document controller
-
+      // try 
+      // {
+      //     fetch(fullUploadUrl, {
+      //         method: 'post',
+      //         mode: 'cors',
+      //         headers: {
+      //             'Authorization': 'Bearer ' + sessionStorageData.Token
+      //         },
+      //         body: data
+      //     }).then(result => { 
+      //         console.log(result);
+      //     });
+      // }
+      // catch (error) {
+      //     console.log('the file failed to upload');
+      //     console.log(error);
+      // }
+      //for the document controller
 
       var postData = {
         Name: _this.state.name,
@@ -79836,6 +79837,7 @@ function (_Component) {
         methodType = 'post';
       } else {
         methodType = 'put';
+        postData.ID = _this.state.ID;
       }
 
       try {
@@ -79859,7 +79861,7 @@ function (_Component) {
             return result.json();
           }
         }).then(function (finalResult) {
-          _this.handleError(finalResult);
+          console.log(finalResult); //this.handleError(finalResult);
         });
       } catch (error) {
         console.log(error);
