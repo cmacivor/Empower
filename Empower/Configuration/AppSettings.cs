@@ -8,5 +8,7 @@ namespace Empower.Configuration
     public class AppSettings
     {
         public string ApiUrl { get; set; }
+
+        public string LocationUrl { get; set; }
     }
 }

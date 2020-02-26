@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Empower.Models;
 
 namespace Empower.Models
 {
@@ -11,5 +12,7 @@ namespace Empower.Models
         public string Token { get; set; }
 
         public string BaseApiAddress { get; set; }
+
+        public List<DocumentMenuItem> DocumentMenuItems { get; set; }
     }
 }
