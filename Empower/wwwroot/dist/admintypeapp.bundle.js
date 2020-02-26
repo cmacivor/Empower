@@ -79803,7 +79803,7 @@ function (_Component) {
       data.append('file', _this.state.selectedFile); //post the file to the upload controller
 
       try {
-        return fetch(fullUploadUrl, {
+        fetch(fullUploadUrl, {
           method: 'post',
           mode: 'cors',
           headers: {

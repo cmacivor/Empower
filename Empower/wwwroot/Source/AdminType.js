@@ -388,7 +388,7 @@ export default class AdminType extends Component {
         //post the file to the upload controller
         try 
         {
-            return  fetch(fullUploadUrl, {
+            fetch(fullUploadUrl, {
                 method: 'post',
                 mode: 'cors',
                 headers: {
