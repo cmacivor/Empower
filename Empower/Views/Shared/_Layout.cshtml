@@ -54,8 +54,14 @@
                                 Documents
                             </a>
                             <div class="dropdown-menu" aria-labelledby="documentsDropdownMenuLink">
-                                <a class="dropdown-item" href="#">NewVDIR testing</a>
-                                <a class="dropdown-item" href="#">New Matrix</a>
+                                @* <a class="dropdown-item" href="#">NewVDIR testing</a>
+                                <a class="dropdown-item" href="#">New Matrix</a> *@
+                                @if (Model.DocumentMenuItems != null && Model.DocumentMenuItems.Count > 0) {
+                                    @foreach(var item in Model.DocumentMenuItems) {
+                                        <a class="dropdown-item" href="@item.Link">@item.Name</a>
+                                    }
+                                }
+                               
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -70,7 +76,7 @@
                                         <span class="oi oi-plus" aria-hidden="true"></span> Upload a Service Profile
                                     </a>
                                     <a class="dropdown-item" href="~/admin/assessmenttype">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> AssessmentType
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Assessment Type
                                     </a>
                                     <a class="dropdown-item" href="~/admin/assessmentsubtype">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Assessment SubType
@@ -105,7 +111,7 @@
                                     <a class="dropdown-item" href="~/admin/suffix">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Suffix
                                     </a>
-                                    <a class="dropdown-item" href="~/admin/careerpathway">
+                                    <a class="dropdown-item" href="~/admin/contacttype">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
                                     </a>
                                     <a class="dropdown-item" href="~/admin/subcontacttype">
@@ -155,7 +161,7 @@
                                     <a class="dropdown-item" href="~/admin/suffix">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Suffix
                                     </a>
-                                    <a class="dropdown-item" href="~/admin/careerpathway">
+                                    <a class="dropdown-item" href="~/admin/contacttype">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
                                     </a>
                                 </div>
@@ -211,7 +217,7 @@
                                     <a class="dropdown-item" href="~/admin/suffix">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Suffix
                                     </a>
-                                    <a class="dropdown-item" href="~/admin/careerpathway">
+                                    <a class="dropdown-item" href="~/admin/contacttype">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
                                     </a>
                                 </div>

@@ -27,9 +27,16 @@ export default class AdminType extends Component {
             CreatedDate: '',
             ErrorMessage: '',
             ShowErrorMessage: false,
-          columnDefs: [
+            isUploadServiceProfile: false,
+            selectedFile: null,
+            fileName: '',
+            isSelectFileErrorVisible: false,
+            columnDefs: [
             {
                 headerName: "ID", field: "ID", hide: true
+            },
+            {
+                headerName: "FileName", field: "FileName", hide: true
             },
             {
                 headerName: "CreatedBy", field: "CreatedBy", hide: true
@@ -72,9 +79,39 @@ export default class AdminType extends Component {
         this.loadGrid(); 
     
 
-        this.hideForm = this.hideForm.bind(this);
-       
-    }    
+        this.hideForm = this.hideForm.bind(this);    
+    }
+
+    componentDidMount() {
+        let sessionStorageData = getSessionData();
+        if (sessionStorageData.AdminType === "document") {
+            this.setState({
+                isUploadServiceProfile: true
+            });
+        }
+    }
+    
+    addSystemID = (postData) => {
+        
+        let sessionStorageData = getSessionData();
+
+        if (sessionStorageData.AdminType === "assessmenttype" ||
+            sessionStorageData.AdminType === "document" ||
+            sessionStorageData.AdminType === "assessmentsubtype" ||
+            sessionStorageData.AdminType === "judge" ||
+            sessionStorageData.AdminType === "servicecategory" ||
+            sessionStorageData.AdminType === "servicerelease" || 
+            sessionStorageData.AdminType === "serviceoutcome" ||
+            sessionStorageData.AdminType === "contacttype" ) {
+
+              postData.SystemID = sessionStorageData.SystemID
+
+            }
+
+        return postData;
+    }
+
+   
 
     SaveNew = () => {
 
@@ -90,9 +127,9 @@ export default class AdminType extends Component {
             UpdatedBy: sessionStorageData.CurrentUser 
         };
 
-        if (sessionStorageData.AdminType === "assessmenttype") {
-            postData.SystemID = sessionStorageData.SystemID
-        }
+    
+    
+       postData = this.addSystemID(postData);
         
        let promise = Api.SaveNew(postData).then(response => {return response });
 
@@ -110,7 +147,7 @@ export default class AdminType extends Component {
         }).then(finalResult => {
             this.handleError(finalResult);
                     
-        });//.catch(this.showAlert());
+        });
     }
 
     handleError = (finalResult) => {
@@ -141,7 +178,8 @@ export default class AdminType extends Component {
             CreatedBy: '',
             CreatedDate: '',
             isDeleteConfirmButtonVisible: false,
-            active: true
+            active: true,
+            fileName: ''
          });
     }
 
@@ -177,9 +215,8 @@ export default class AdminType extends Component {
             UpdatedBy: sessionStorageData.CurrentUser 
         };
 
-        if (sessionStorageData.AdminType  === "assessmenttype") {
-            postData.SystemID = sessionStorageData.SystemID  
-        }
+        
+        postData = this.addSystemID(postData);
 
         let promise = Api.UpdateRow(postData).then(response => {return response });
 
@@ -202,15 +239,21 @@ export default class AdminType extends Component {
 
 
     SaveClickEventHandler = async () => {
-        if (this.state && !this.state.ID) {
-            this.SaveNew();
-                         
-        } else {
-            this.UpdateSelectedRow();
-            this.state.ID = '';
-            this.state.CreatedBy = '';
-            this.state.CreatedDate = '';
-        }      
+
+        if (this.state.isUploadServiceProfile === true ) {
+            this.saveFile();
+        }
+        else {
+            if (this.state && !this.state.ID) {
+                this.SaveNew();
+                             
+            } else {
+                this.UpdateSelectedRow();
+                this.state.ID = '';
+                this.state.CreatedBy = '';
+                this.state.CreatedDate = '';
+            }  
+        }
     }
 
     ResetClickEventHandler = async() => {
@@ -290,7 +333,8 @@ export default class AdminType extends Component {
             ID: selected.ID,
             CreatedBy: selected.CreatedBy,
             CreatedDate: selected.CreatedDate,
-            addButtonDisabled: true
+            addButtonDisabled: true,
+            fileName: selected.FileName
         });
 
         this.showForm();
@@ -298,7 +342,12 @@ export default class AdminType extends Component {
 
     loadGrid = () => {
 
+        // Api.getAll().then(result => {
+        //     console.log(result);
+        // });
+
          Api.getAll().then(rowData => this.setState({ rowData }));
+
     }
 
     setActive = event => {
@@ -320,6 +369,122 @@ export default class AdminType extends Component {
         }       
     }
 
+    onFileChangeHandler = event => {
+        this.setState({
+            selectedFile: event.target.files[0]
+        });
+    }
+
+    saveFile = () => {
+    
+      //save a new one
+      //first call the Upload controller
+      let sessionStorageData = getSessionData();
+      let baseApiAddress = sessionStorage.getItem("baseApiAddress");
+      let fullUploadUrl = `${baseApiAddress}/api/Upload`;
+      
+     if (this.state.selectedFile === null) {
+         this.setState({
+            isSelectFileErrorVisible: true
+         });
+
+         return;
+      }
+
+      const data = new FormData();
+      data.append('file', this.state.selectedFile);
+
+        //post the file to the upload controller
+        try 
+        {
+            fetch(fullUploadUrl, {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                },
+                body: data
+            }).then(result => { 
+                console.log(result);
+            });
+        }
+        catch (error) {
+            console.log('the file failed to upload');
+            console.log(error);
+        }
+        
+        //for the document controller
+        var postData = {
+            Name: this.state.name,
+            Description: this.state.description,
+            Active: this.state.active,
+            CreatedDate: new Date().toLocaleString(), 
+            CreatedBy:  sessionStorageData.CurrentUser, 
+            UpdatedDate: new Date().toLocaleString(),
+            UpdatedBy: sessionStorageData.CurrentUser,
+            FileName: this.state.selectedFile.name
+        };
+
+        postData = this.addSystemID(postData);
+
+         var methodType;
+         if (this.state && !this.state.ID) {
+            methodType = 'post';
+         } else {
+            methodType = 'put';
+            postData.ID = this.state.ID;
+         }
+
+        try {
+
+            //create the new record
+            return fetch(sessionStorageData.CreateApiUrl, {
+                method: methodType,
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                },
+                body: JSON.stringify(postData)
+            }).then(result => {
+                if (result.status === 200) {
+                    this.loadGrid();
+    
+                    if (this.state.ErrorMessage === '') {
+                        this.resetState();
+                    }
+                } else {
+                    return result.json();
+                } 
+            }).then(finalResult => {
+                console.log(finalResult);
+                //this.handleError(finalResult);
+            });
+
+        } catch (error) {
+            console.log(error);
+            alert('an error occurred while saving the data.');
+        }
+       
+
+        promise.then(result => {
+            if (result.status === 200) {
+                this.loadGrid();
+
+                if (this.state.ErrorMessage === '') {
+                    this.resetState();
+                }
+            } else {
+                return result.json();
+            } 
+
+        }).then(finalResult => {
+            this.handleError(finalResult);
+                    
+        }); 
+
+    }
+
     methodFromParent(cell) {
 
         let selected = this.refs.agGrid.api.getSelectedRows()[0];
@@ -337,6 +502,8 @@ export default class AdminType extends Component {
         this.showForm();
 
       }
+
+     
 
 
     render() {
@@ -359,6 +526,7 @@ export default class AdminType extends Component {
                             rowData={this.state.rowData}
                             context={this.state.context}
                             frameworkComponents={this.state.frameworkComponents}
+                            pagination={true}
                             onGridReady={this.onGridReady}>
                         </AgGridReact>
                     </div>
@@ -389,7 +557,22 @@ export default class AdminType extends Component {
                                                 No
                                             </div>                          
                                         </div>
-                                    </div>        
+                                    </div>
+                                    {
+                                        this.state.isUploadServiceProfile ?
+                                        <div className="form-group">
+                                            <input type="file" name="file"  onChange={this.onFileChangeHandler} /><br></br>
+                                            <label>Current file: {this.state.fileName}</label><br></br>
+                                            {
+                                              this.state.isSelectFileErrorVisible ?
+                                                <div className="alert alert-danger" role="alert" >
+                                                    Please select a file.
+                                                </div> : <div></div>
+                                            }
+                                            
+                                            
+                                        </div> : <div></div>
+                                    }        
                                 </form>
                                 {this.state.isDeleteConfirmButtonVisible ? <button onClick={this.DeleteSelectedRow} className="btn btn-danger mr-2">Confirm</button> : 
                                 <button type="button" onClick={this.SaveClickEventHandler } disabled={this.state.saveButtonDisabled} className="btn btn-primary mr-2">Save</button>}

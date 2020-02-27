@@ -1,5 +1,7 @@
 using Empower.Authentication;
 using System;
+using System.Collections.Generic;
+using Empower.Models;
 
 public abstract class ViewModelBase 
 {
@@ -8,6 +10,10 @@ public abstract class ViewModelBase
     public string  SystemID { get; set; }
 
     public string AppTitle { get; set; }
+
+    public string DocumentBaseUrl { get; set; }
+
+    public List<DocumentMenuItem> DocumentMenuItems { get; set; }
 
     public void GetAppTitle()
     {

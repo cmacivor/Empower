@@ -79526,6 +79526,16 @@ function (_Component) {
 
     _this = _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_4___default()(this, _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_5___default()(AdminType).call(this, props));
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "addSystemID", function (postData) {
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+
+      if (sessionStorageData.AdminType === "assessmenttype" || sessionStorageData.AdminType === "document" || sessionStorageData.AdminType === "assessmentsubtype" || sessionStorageData.AdminType === "judge" || sessionStorageData.AdminType === "servicecategory" || sessionStorageData.AdminType === "servicerelease" || sessionStorageData.AdminType === "serviceoutcome" || sessionStorageData.AdminType === "contacttype") {
+        postData.SystemID = sessionStorageData.SystemID;
+      }
+
+      return postData;
+    });
+
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "SaveNew", function () {
       var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
       var postData = {
@@ -79537,11 +79547,7 @@ function (_Component) {
         UpdatedDate: new Date().toLocaleString(),
         UpdatedBy: sessionStorageData.CurrentUser
       };
-
-      if (sessionStorageData.AdminType === "assessmenttype") {
-        postData.SystemID = sessionStorageData.SystemID;
-      }
-
+      postData = _this.addSystemID(postData);
       var promise = _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].SaveNew(postData).then(function (response) {
         return response;
       });
@@ -79557,7 +79563,7 @@ function (_Component) {
         }
       }).then(function (finalResult) {
         _this.handleError(finalResult);
-      }); //.catch(this.showAlert());
+      });
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "handleError", function (finalResult) {
@@ -79586,7 +79592,8 @@ function (_Component) {
         CreatedBy: '',
         CreatedDate: '',
         isDeleteConfirmButtonVisible: false,
-        active: true
+        active: true,
+        fileName: ''
       });
     });
 
@@ -79614,11 +79621,7 @@ function (_Component) {
         UpdatedDate: new Date().toLocaleString(),
         UpdatedBy: sessionStorageData.CurrentUser
       };
-
-      if (sessionStorageData.AdminType === "assessmenttype") {
-        postData.SystemID = sessionStorageData.SystemID;
-      }
-
+      postData = _this.addSystemID(postData);
       var promise = _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].UpdateRow(postData).then(function (response) {
         return response;
       });
@@ -79646,14 +79649,18 @@ function (_Component) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              if (_this.state && !_this.state.ID) {
-                _this.SaveNew();
+              if (_this.state.isUploadServiceProfile === true) {
+                _this.saveFile();
               } else {
-                _this.UpdateSelectedRow();
+                if (_this.state && !_this.state.ID) {
+                  _this.SaveNew();
+                } else {
+                  _this.UpdateSelectedRow();
 
-                _this.state.ID = '';
-                _this.state.CreatedBy = '';
-                _this.state.CreatedDate = '';
+                  _this.state.ID = '';
+                  _this.state.CreatedBy = '';
+                  _this.state.CreatedDate = '';
+                }
               }
 
             case 1:
@@ -79744,13 +79751,17 @@ function (_Component) {
         ID: selected.ID,
         CreatedBy: selected.CreatedBy,
         CreatedDate: selected.CreatedDate,
-        addButtonDisabled: true
+        addButtonDisabled: true,
+        fileName: selected.FileName
       });
 
       _this.showForm();
     });
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "loadGrid", function () {
+      // Api.getAll().then(result => {
+      //     console.log(result);
+      // });
       _commonAdmin__WEBPACK_IMPORTED_MODULE_14__["Api"].getAll().then(function (rowData) {
         return _this.setState({
           rowData: rowData
@@ -79776,6 +79787,111 @@ function (_Component) {
       }
     });
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "onFileChangeHandler", function (event) {
+      _this.setState({
+        selectedFile: event.target.files[0]
+      });
+    });
+
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_8___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_6___default()(_this), "saveFile", function () {
+      //save a new one
+      //first call the Upload controller
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+      var baseApiAddress = sessionStorage.getItem("baseApiAddress");
+      var fullUploadUrl = "".concat(baseApiAddress, "/api/Upload");
+
+      if (_this.state.selectedFile === null) {
+        _this.setState({
+          isSelectFileErrorVisible: true
+        });
+
+        return;
+      }
+
+      var data = new FormData();
+      data.append('file', _this.state.selectedFile); //post the file to the upload controller
+      // try 
+      // {
+      //     fetch(fullUploadUrl, {
+      //         method: 'post',
+      //         mode: 'cors',
+      //         headers: {
+      //             'Authorization': 'Bearer ' + sessionStorageData.Token
+      //         },
+      //         body: data
+      //     }).then(result => { 
+      //         console.log(result);
+      //     });
+      // }
+      // catch (error) {
+      //     console.log('the file failed to upload');
+      //     console.log(error);
+      // }
+      //for the document controller
+
+      var postData = {
+        Name: _this.state.name,
+        Description: _this.state.description,
+        Active: _this.state.active,
+        CreatedDate: new Date().toLocaleString(),
+        CreatedBy: sessionStorageData.CurrentUser,
+        UpdatedDate: new Date().toLocaleString(),
+        UpdatedBy: sessionStorageData.CurrentUser,
+        FileName: _this.state.selectedFile.name
+      };
+      postData = _this.addSystemID(postData);
+      var methodType;
+
+      if (_this.state && !_this.state.ID) {
+        methodType = 'post';
+      } else {
+        methodType = 'put';
+        postData.ID = _this.state.ID;
+      }
+
+      try {
+        //create the new record
+        return fetch(sessionStorageData.CreateApiUrl, {
+          method: methodType,
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+          },
+          body: JSON.stringify(postData)
+        }).then(function (result) {
+          if (result.status === 200) {
+            _this.loadGrid();
+
+            if (_this.state.ErrorMessage === '') {
+              _this.resetState();
+            }
+          } else {
+            return result.json();
+          }
+        }).then(function (finalResult) {
+          console.log(finalResult); //this.handleError(finalResult);
+        });
+      } catch (error) {
+        console.log(error);
+        alert('an error occurred while saving the data.');
+      }
+
+      promise.then(function (result) {
+        if (result.status === 200) {
+          _this.loadGrid();
+
+          if (_this.state.ErrorMessage === '') {
+            _this.resetState();
+          }
+        } else {
+          return result.json();
+        }
+      }).then(function (finalResult) {
+        _this.handleError(finalResult);
+      });
+    });
+
     _this.state = {
       saveButtonDisabled: true,
       addButtonDisabled: false,
@@ -79791,9 +79907,17 @@ function (_Component) {
       CreatedDate: '',
       ErrorMessage: '',
       ShowErrorMessage: false,
+      isUploadServiceProfile: false,
+      selectedFile: null,
+      fileName: '',
+      isSelectFileErrorVisible: false,
       columnDefs: [{
         headerName: "ID",
         field: "ID",
+        hide: true
+      }, {
+        headerName: "FileName",
+        field: "FileName",
         hide: true
       }, {
         headerName: "CreatedBy",
@@ -79839,6 +79963,17 @@ function (_Component) {
   }
 
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3___default()(AdminType, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var sessionStorageData = Object(_commonAdmin__WEBPACK_IMPORTED_MODULE_14__["getSessionData"])();
+
+      if (sessionStorageData.AdminType === "document") {
+        this.setState({
+          isUploadServiceProfile: true
+        });
+      }
+    }
+  }, {
     key: "hideForm",
     value: function hideForm() {
       this.setState({
@@ -79900,6 +80035,7 @@ function (_Component) {
         rowData: this.state.rowData,
         context: this.state.context,
         frameworkComponents: this.state.frameworkComponents,
+        pagination: true,
         onGridReady: this.onGridReady
       })), this.state.isVisible === true ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
         className: "col-6"
@@ -79971,7 +80107,16 @@ function (_Component) {
         },
         value: "no",
         name: "active"
-      }), ' ', "No")))), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
+      }), ' ', "No"))), this.state.isUploadServiceProfile ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("input", {
+        type: "file",
+        name: "file",
+        onChange: this.onFileChangeHandler
+      }), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("label", null, "Current file: ", this.state.fileName), react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("br", null), this.state.isSelectFileErrorVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", {
+        className: "alert alert-danger",
+        role: "alert"
+      }, "Please select a file.") : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null)) : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("div", null)), this.state.isDeleteConfirmButtonVisible ? react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
         onClick: this.DeleteSelectedRow,
         className: "btn btn-danger mr-2"
       }, "Confirm") : react__WEBPACK_IMPORTED_MODULE_9___default.a.createElement("button", {
