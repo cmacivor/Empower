@@ -13,14 +13,14 @@ using Empower.Configuration;
 
 namespace Empower.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         public IOptions<AppSettings> _appsettings { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, IOptions<AppSettings> options)
+        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, IOptions<AppSettings> options) : base(logger, clientFactory, options)
         {
             _logger = logger;
             _clientFactory = clientFactory;
