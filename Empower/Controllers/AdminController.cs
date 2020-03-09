@@ -5,12 +5,28 @@ using System.Threading.Tasks;
 using Empower.Models;
 using Microsoft.AspNetCore.Mvc;
 using Empower.Authentication;
+using Microsoft.Extensions.Logging;
+using System.Net.Http;
+using Microsoft.Extensions.Options;
+using Empower.Configuration;
 
 namespace Empower.Controllers
 {
     [Route("[controller]")]
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
+        private readonly ILogger<HomeController> _logger;
+        private readonly IHttpClientFactory _clientFactory;
+        public IOptions<AppSettings> _appsettings { get; set; }
+
+        public AdminController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, IOptions<AppSettings> options) : base(logger, clientFactory, options)
+        {
+            _logger = logger;
+            _clientFactory = clientFactory;
+            _appsettings = options;
+        }
+
+
         [Route("Index")] 
         [Route("{admintype}")]
         public IActionResult Index(string admintype)
