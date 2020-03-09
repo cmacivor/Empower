@@ -44,7 +44,7 @@ namespace Empower.Controllers
             var results = await client.GetAllItems(authResponse.access_token, url);
 
             foreach (var documentMenuItem in results) {
-                documentMenuItem.Link = _appsettings.Value.LocationUrl + documentMenuItem.Name;
+                documentMenuItem.Link = _appsettings.Value.LocationUrl + documentMenuItem.FileName;
             }
 
             var viewModel = new HomeViewModel
