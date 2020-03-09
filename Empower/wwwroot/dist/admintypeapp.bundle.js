@@ -79810,24 +79810,23 @@ function (_Component) {
 
       var data = new FormData();
       data.append('file', _this.state.selectedFile); //post the file to the upload controller
-      // try 
-      // {
-      //     fetch(fullUploadUrl, {
-      //         method: 'post',
-      //         mode: 'cors',
-      //         headers: {
-      //             'Authorization': 'Bearer ' + sessionStorageData.Token
-      //         },
-      //         body: data
-      //     }).then(result => { 
-      //         console.log(result);
-      //     });
-      // }
-      // catch (error) {
-      //     console.log('the file failed to upload');
-      //     console.log(error);
-      // }
-      //for the document controller
+
+      try {
+        fetch(fullUploadUrl, {
+          method: 'post',
+          mode: 'cors',
+          headers: {
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+          },
+          body: data
+        }).then(function (result) {
+          console.log(result);
+        });
+      } catch (error) {
+        console.log('the file failed to upload');
+        console.log(error);
+      } //for the document controller
+
 
       var postData = {
         Name: _this.state.name,
