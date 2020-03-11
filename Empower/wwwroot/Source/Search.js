@@ -10,13 +10,14 @@ import { findDOMNode } from 'react-dom';
 import $ from 'jquery';
 import { GenerateUniqueID } from './NewClient';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { getRoles } from './Constants';
 
 
 const Search = (props) => {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [ isAddNewProfileButtonVisible, setAddNewProfileButtonVisible ] = useState(false);
-    const [ canSearch21Plus, setCanSearch21Plus] = useState(true);
+    const [ canSearch21Plus, setCanSearch21Plus] = useState(false);
     const [searchCount, setSearchCount] = useState(0);
     const [isSearchCountVisible, setIsSearchCountVisible] = useState(false);
     const [isSearchButtonEnabled, setIsSearchButtonDisabled] = useState(true);
@@ -82,9 +83,8 @@ const Search = (props) => {
      const {state, dispatch} = useStore();
 
 
-      //const apiAddress = "http://localhost:57612";
       let sessionStorageData = getSessionData();
-      let apiAddress = sessionStorage.getItem("baseApiAddress");     
+      let apiAddress = sessionStorage.getItem("baseApiAddress");
 
       let mergeButtonIndex = 0;
 
@@ -120,6 +120,14 @@ const Search = (props) => {
 
 
       useEffect(() => {
+        let roles = getRoles();
+      
+        //set permissions
+        if (parseInt(sessionStorageData.RoleID) === roles.JuvenileSuperUser)  {
+          setCanSearch21Plus(true);
+        }
+
+
         if (mergeOptions.length > 0 ) {
           let tableRows = generateMergeCandidateRows();
           setMergeModalTableRows(tableRows);
