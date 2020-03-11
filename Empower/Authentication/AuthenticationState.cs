@@ -89,6 +89,8 @@ namespace Empower.Authentication
 
         public string systemID { get; set; }
 
+        public string roleID { get; set; }
+
         public System.Net.HttpStatusCode StatusCode { get; set; }
        
 
