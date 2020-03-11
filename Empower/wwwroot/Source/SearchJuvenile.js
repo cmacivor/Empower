@@ -53,6 +53,9 @@ const SearchJuvenile = (props) => {
         { name: 'Gender', title: 'Gender' },        
       ]);
 
+     const [isSuperUser, setIsSuperUser] = useState(false);
+     const [isAdmin, setIsAdmin]  = useState(false);
+
      const [rows, setRows] = useState([]);
      const [isGridVisible, setGridVisible] = useState(false);
      const [canDeleteRow, setCanDeleteRow ] = useState(false);
@@ -122,14 +125,22 @@ const SearchJuvenile = (props) => {
       useEffect(() => {
         let roles = getRoles();
       
+        if (parseInt(sessionStorageData.RoleID) === roles.JuvenileSuperUser)  { 
+          setIsSuperUser(true);
+        }
+
+        if (parseInt(sessionStorageData.RoleID) === roles.JuvenileAdmin) {
+          setIsAdmin(true);
+        }
+
         //set permissions
         if (parseInt(sessionStorageData.RoleID) === roles.JuvenileSuperUser)  {
           setCanSearch21Plus(true);
         }
 
-        if (parseInt(sessionStorageData.RoleID) === roles.JuvenileSuperUser || parseInt(sessionStorageData.RoleID) === roles.JuvenileAdmin) {
-          setCanDeleteRow(true);
-        }
+        // if (parseInt(sessionStorageData.RoleID) === roles.JuvenileSuperUser || parseInt(sessionStorageData.RoleID) === roles.JuvenileAdmin) {
+        //   setCanDeleteRow(true);
+        // }
 
 
         if (mergeOptions.length > 0 ) {
@@ -270,7 +281,11 @@ const SearchJuvenile = (props) => {
         />
       );
 
-      const commandComponents = {
+      const adminUserCommandComponents = {
+        delete: DeleteButton
+      }
+
+      const superUserCommandComponents = {
         //add: AddButton,
         //edit: EditButton,
         edit: MergeButton,
@@ -282,19 +297,31 @@ const SearchJuvenile = (props) => {
       const search21PlusCommandComponents = {
         //add: AddButton,
         //edit: EditButton,
+        edit: MergeButton,
         delete: Search21GridDeleteButton,
         //commit: CommitButton,
         //cancel: CancelButton,
       };
 
-      const Command = ({ id, onExecute }) => {
-        const ButtonComponent = commandComponents[id];
+      const AdminUserCommand = ({ id, onExecute }) => {
+        const ButtonComponent = adminUserCommandComponents[id];
         return (
           <ButtonComponent 
             onExecute={onExecute}
           />
         );
       };
+
+      const SuperUserCommand = ({ id, onExecute }) => {
+        const ButtonComponent = superUserCommandComponents[id];
+        return (
+          <ButtonComponent 
+            onExecute={onExecute}
+          />
+        );
+      };
+
+
 
       const Search21PlusCommand = ({ id, onExecute }) => {
         const ButtonComponent = search21PlusCommandComponents[id];
@@ -711,7 +738,8 @@ const SearchJuvenile = (props) => {
                 <br/>
                 <br/>
                 {
-                    isGridVisible === true && canDeleteRow === false ?
+                  //this grid is for CSU and DJS users. They can't delete rows or merge
+                    isGridVisible === true && !isAdmin && !isSuperUser ?
                     
                     <Grid className="card"
                         rows={rows }
@@ -735,7 +763,8 @@ const SearchJuvenile = (props) => {
                        
                 }
                 {
-                    isGridVisible === true && canDeleteRow === true ?
+                  //this grid is for Admin users. Admins can delete a row, but cannot merge.
+                    isGridVisible === true && isAdmin ?
                     
                     <Grid className="card"
                         rows={rows }
@@ -766,15 +795,58 @@ const SearchJuvenile = (props) => {
                         <TableHeaderRow showSortingControls />
 
                         <PagingPanel pageSizes={pageSizes} />
-                        <TableEditColumn width="60"
-                        showDeleteCommand showEditCommand commandComponent={Command} />
+                       
+                         <TableEditColumn width="60"
+                        showDeleteCommand showEditCommand commandComponent={SuperUserCommand} />
                         <TableFixedColumns 
-                            rightColumns={leftFixedColumns} 
-                        />
+                            rightColumns={leftFixedColumns} /> 
+                      
+                    </Grid> : <div></div> 
+                }
+                {
+                  //this grid is forSuper users. Super users can delete and merge
+                    isGridVisible === true && isSuperUser ?
+                    
+                    <Grid className="card"
+                        rows={rows }
+                        columns={columns}
+                      >
+                      <SortingState
+                        sorting={sorting}
+                        onSortingChange={setSorting}
+                       />
+                       <IntegratedSorting />
+                      <RowDetailState/>
+                      <PagingState
+                        currentPage={currentPage}
+                        onCurrentPageChange={setCurrentPage}
+                        pageSize={pageSize}
+                        onPageSizeChange={setPageSize}
+                       />
+                       <IntegratedPaging/>
+                        <EditingState
+                            onCommitChanges={commitChanges}
+                            
+                            editingRowIds={editingRowIds}
+                            onEditingRowIdsChange={getEditingRowIds}
+                            rowChanges={rowChanges}
+                            onRowChangesChange={setRowChanges}
+                         />
+                        <Table tableComponent={TableComponent} rowComponent={TableRow}></Table>
+                        <TableHeaderRow showSortingControls />
+
+                        <PagingPanel pageSizes={pageSizes} />
+                       
+                        <TableEditColumn width="60"
+                        showDeleteCommand showEditCommand commandComponent={SuperUserCommand} />
+                        <TableFixedColumns 
+                            rightColumns={leftFixedColumns} />
+                      
                     </Grid> : <div></div> 
                 }
                 {
                   isSearch21PlusGridVisible === true ?
+
                   <Grid className="card"
                       rows={search21PlusGridRows }
                       columns={search21PluGridColumns}>
