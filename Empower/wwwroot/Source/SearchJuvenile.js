@@ -13,7 +13,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { getRoles } from './Constants';
 
 
-const Search = (props) => {
+const SearchJuvenile = (props) => {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [ isAddNewProfileButtonVisible, setAddNewProfileButtonVisible ] = useState(false);
@@ -835,4 +835,4 @@ const Search = (props) => {
             </div>;
 }
 
-export default Search;
+export default SearchJuvenile;

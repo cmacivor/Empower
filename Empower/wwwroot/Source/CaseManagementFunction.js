@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import Search from './Search'
+import SearchJuvenile from './SearchJuvenile'
 import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
@@ -22,9 +22,7 @@ const CaseManagementFunction = (props) => {
     toast.configure();
 
 
-    function triggerToastMessage(message) {
-        //toast("this is a test");
-        //toast.info
+    function triggerToastMessage(message) {       
         toast.success(message, {
             position: "top-right",
             autoClose: 5000,
@@ -35,12 +33,6 @@ const CaseManagementFunction = (props) => {
             });
     }
 
-    //console.log('the case management function');
-    //console.log(cacheService.fundingSourceValues);
-
-    //console.log('this is the state store in CaseManagementFunction');
-    //console.log(state);
-
     function EnableTabs() {
         setEnabled(false);
         setDefaultTab("participantinfo");
@@ -50,17 +42,12 @@ const CaseManagementFunction = (props) => {
     function SetActiveTab(key) {
       setActiveTab(key);
     
-    //   if (state.isNewClient) {
-    //       setClientProfile(Object);
-    //   }
-
     }
 
     //to handle clicking on a row in the search grid, so this data is accessible elsewhere
     function SetClientProfile(clientProfile) {
 
-        //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was
-        
+        //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was   
         setClientProfile(clientProfile); //updates the local state
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
@@ -71,12 +58,12 @@ const CaseManagementFunction = (props) => {
     return <div>
             <Tabs defaultActiveKey={defaultTab} activeKey={activeTab} onSelect={k => SetActiveTab(k) } id="caseManagementTabs">
                     <Tab eventKey="search" title="Search">
-                        <Search enableTabsHandler={EnableTabs}
+                        <SearchJuvenile enableTabsHandler={EnableTabs}
                          setParticipantInfoAsActiveTab={SetActiveTab} 
                          onSearchGridRowClick={e => SetClientProfile(e)}
                          createNotification={triggerToastMessage}
                         >
-                        </Search>
+                        </SearchJuvenile>
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>
                         <Info clientProfile={!state.isNewClient ? clientProfile.Person :  undefined } 
