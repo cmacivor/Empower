@@ -55,7 +55,7 @@ const Search = (props) => {
 
      const [rows, setRows] = useState([]);
      const [isGridVisible, setGridVisible] = useState(false);
-     const [canDeleteRow, setCanDeleteRow ] = useState(true);
+     const [canDeleteRow, setCanDeleteRow ] = useState(false);
      const [canMergeProfiles, setCanMergeProfiles] = useState(true);
      const [leftFixedColumns] = useState([TableEditColumn.COLUMN_TYPE]);
      const [sorting, setSorting] = useState([]);
@@ -125,6 +125,10 @@ const Search = (props) => {
         //set permissions
         if (parseInt(sessionStorageData.RoleID) === roles.JuvenileSuperUser)  {
           setCanSearch21Plus(true);
+        }
+
+        if (parseInt(sessionStorageData.RoleID) === roles.JuvenileSuperUser || parseInt(sessionStorageData.RoleID) === roles.JuvenileAdmin) {
+          setCanDeleteRow(true);
         }
 
 
