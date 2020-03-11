@@ -9,6 +9,8 @@ public abstract class ViewModelBase
     public string UserName { get; set; }
     public string  SystemID { get; set; }
 
+    public string RoleID { get; set; }
+
     public string AppTitle { get; set; }
 
     public string DocumentBaseUrl { get; set; }

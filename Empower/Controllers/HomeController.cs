@@ -53,6 +53,7 @@ namespace Empower.Controllers
                 UserName = authResponse.userName, 
                 BaseApiAddress = authResponse.baseApiAddress, 
                 SystemID = authResponse.systemID,
+                RoleID = authResponse.roleID,
                 DocumentMenuItems = results,
                 DocumentBaseUrl =  _appsettings.Value.LocationUrl          
             };
