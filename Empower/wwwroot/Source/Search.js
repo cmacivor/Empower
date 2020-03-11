@@ -81,12 +81,12 @@ const Search = (props) => {
      //to test the global state
      const {state, dispatch} = useStore();
 
-      //let apiAddress = sessionStorage.getItem("baseApiAddress");
-      const apiAddress = "http://localhost:57612";
-      let sessionStorage = getSessionData();
+
+      //const apiAddress = "http://localhost:57612";
+      let sessionStorageData = getSessionData();
+      let apiAddress = sessionStorage.getItem("baseApiAddress");     
 
       let mergeButtonIndex = 0;
-
 
       let mergeButtonRef = React.createRef();
 
@@ -182,11 +182,16 @@ const Search = (props) => {
                         mode: 'cors',
                         headers: {
                           'Content-Type': 'application/json',
-                          'Authorization': 'Bearer ' + sessionStorage.Token
+                          'Authorization': 'Bearer ' + sessionStorageData.Token
                         }
                     }).then(result => {
                       return result.json();
                     }).then(result => {
+
+                        if (result.length === 0) {
+                            alert("No merge candidates found");
+                            return;
+                        }
 
                       //We only want to display records that don't match the person ID of the row clicked
                       let mergeCandidates = result.filter(function(item) {
@@ -385,7 +390,7 @@ const Search = (props) => {
                  mode: 'cors',
                  headers: {
                      'Content-Type': 'application/json',
-                     'Authorization': 'Bearer ' + sessionStorage.Token
+                     'Authorization': 'Bearer ' + sessionStorageData.Token
                  }
                  //body: JSON.stringify(postData)
              }); 
@@ -435,7 +440,7 @@ const Search = (props) => {
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + sessionStorage.Token
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
                 },
                 body: JSON.stringify(postData)
             }); 
@@ -496,7 +501,7 @@ const Search = (props) => {
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + sessionStorage.Token
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
                 }               
             }); 
 
@@ -538,7 +543,7 @@ const Search = (props) => {
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + sessionStorage.Token 
+                    'Authorization': 'Bearer ' + sessionStorageData.Token 
                 }               
             }); 
 
@@ -617,7 +622,7 @@ const Search = (props) => {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + sessionStorage.Token 
+          'Authorization': 'Bearer ' + sessionStorageData.Token 
         },
         body: JSON.stringify(postData)
       }).then(result => {
@@ -633,7 +638,7 @@ const Search = (props) => {
             mode: 'cors',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + sessionStorage.Token //sessionStorageData.Token
+              'Authorization': 'Bearer ' + sessionStorageData.Token //sessionStorageData.Token
             },
             body: JSON.stringify(mergeCandidateSelections)
           }).then(result => {
