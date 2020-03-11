@@ -797,7 +797,7 @@ const SearchJuvenile = (props) => {
                         <PagingPanel pageSizes={pageSizes} />
                        
                          <TableEditColumn width="60"
-                        showDeleteCommand showEditCommand commandComponent={SuperUserCommand} />
+                        showDeleteCommand  commandComponent={AdminUserCommand} />
                         <TableFixedColumns 
                             rightColumns={leftFixedColumns} /> 
                       
