@@ -13,7 +13,6 @@ const SearchAdult = (props) => {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [ isAddNewProfileButtonVisible, setAddNewProfileButtonVisible ] = useState(false);
-    const [ canSearch21Plus, setCanSearch21Plus] = useState(false);
     const [searchCount, setSearchCount] = useState(0);
     const [isSearchCountVisible, setIsSearchCountVisible] = useState(false);
     const [isSearchButtonEnabled, setIsSearchButtonDisabled] = useState(true);
@@ -324,12 +323,6 @@ const SearchAdult = (props) => {
                     <div className="col-auto">
                         <button type="button" onClick={ClearSearchFields} className="btn btn-primary mb-2">Clear Search</button>
                     </div>
-                    {
-                       canSearch21Plus ?
-                       <div className="col-auto">
-                          <button type="button" onClick={Search21PlusClickHandler} className="btn btn-primary mb-2">Search21plus</button>
-                       </div> : <div></div>
-                    }
                     {
                         isAddNewProfileButtonVisible ? <div className="col-auto">
                             <button type="button" onClick={addNewProfileClickHandler} className="btn btn-primary mb-2">Add New Profile</button>
