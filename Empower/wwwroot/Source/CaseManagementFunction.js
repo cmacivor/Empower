@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import SearchJuvenile from './SearchJuvenile';
-import SearchAdult from './SearchAdult';
+import Search from './Search';
 import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
@@ -76,13 +76,13 @@ const CaseManagementFunction = (props) => {
                         }
 
                         {
-                           parseInt(sessionData.SystemID) === systems.Adult ?
+                           parseInt(sessionData.SystemID) === systems.Adult || parseInt(sessionData.SystemID) === systems.OCWB ?
 
-                            <SearchAdult enableTabsHandler={EnableTabs}
+                            <Search enableTabsHandler={EnableTabs}
                                 setParticipantInfoAsActiveTab={SetActiveTab} 
                                 onSearchGridRowClick={e => SetClientProfile(e)}
                                 createNotification={triggerToastMessage}>
-                           </SearchAdult> : <div></div>
+                           </Search> : <div></div>
                         }                    
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>

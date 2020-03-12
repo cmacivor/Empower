@@ -9,7 +9,7 @@ import {FaTrash, FaExchangeAlt} from 'react-icons/fa';
 import { getRoles } from './Constants';
 
 
-const SearchAdult = (props) => {
+const Search = (props) => {
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [ isAddNewProfileButtonVisible, setAddNewProfileButtonVisible ] = useState(false);
@@ -44,9 +44,6 @@ const SearchAdult = (props) => {
      const [currentPage, setCurrentPage] = useState(0);
      const [pageSize, setPageSize] = useState(5);
      const [pageSizes] = useState([5, 10, 15]);
-     
-     //Search21Plus grid items
-     const [search21PlusGridRows, setSearch21PlusGridRows] = useState([]);
     
      //to test the global state
      const {state, dispatch} = useStore();
@@ -130,8 +127,6 @@ const SearchAdult = (props) => {
           changedRows = deleteRows(deleted);
         }
 
-        //setSearch21PlusGridRows([]);
-        //setIsSearch21PlusGridVisible(false);
         setRows(changedRows);
       };
 
@@ -377,4 +372,4 @@ const SearchAdult = (props) => {
             </div>;
 }
 
-export default SearchAdult;
+export default Search;
