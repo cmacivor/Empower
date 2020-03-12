@@ -12,3 +12,13 @@ export function getRoles() {
 
     return roles;
 }
+
+export function getSystems() {
+    let systems = {
+        Juvenile: 1,
+        Adult: 2,
+        OCWB: 3
+    }
+
+    return systems;
+}

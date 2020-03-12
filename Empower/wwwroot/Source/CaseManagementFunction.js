@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import SearchJuvenile from './SearchJuvenile'
+import SearchJuvenile from './SearchJuvenile';
+import SearchAdult from './SearchAdult';
 import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
@@ -8,6 +9,8 @@ import Supplemental from './Supplemental';
 import {useStore} from './StateStores/store';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {getSessionData } from './commonAdmin';
+import { getRoles, getSystems } from './Constants';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -20,6 +23,10 @@ const CaseManagementFunction = (props) => {
     const {state, dispatch} = useStore();
 
     toast.configure();
+
+    let sessionData = getSessionData();
+
+    let systems = getSystems();
 
 
     function triggerToastMessage(message) {       
@@ -58,12 +65,25 @@ const CaseManagementFunction = (props) => {
     return <div>
             <Tabs defaultActiveKey={defaultTab} activeKey={activeTab} onSelect={k => SetActiveTab(k) } id="caseManagementTabs">
                     <Tab eventKey="search" title="Search">
-                        <SearchJuvenile enableTabsHandler={EnableTabs}
-                         setParticipantInfoAsActiveTab={SetActiveTab} 
-                         onSearchGridRowClick={e => SetClientProfile(e)}
-                         createNotification={triggerToastMessage}
-                        >
-                        </SearchJuvenile>
+                        {
+                           parseInt(sessionData.SystemID) === systems.Juvenile ?
+
+                            <SearchJuvenile enableTabsHandler={EnableTabs}
+                                setParticipantInfoAsActiveTab={SetActiveTab} 
+                                onSearchGridRowClick={e => SetClientProfile(e)}
+                                createNotification={triggerToastMessage}>
+                           </SearchJuvenile> : <div></div>
+                        }
+
+                        {
+                           parseInt(sessionData.SystemID) === systems.Adult ?
+
+                            <SearchAdult enableTabsHandler={EnableTabs}
+                                setParticipantInfoAsActiveTab={SetActiveTab} 
+                                onSearchGridRowClick={e => SetClientProfile(e)}
+                                createNotification={triggerToastMessage}>
+                           </SearchAdult> : <div></div>
+                        }                    
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>
                         <Info clientProfile={!state.isNewClient ? clientProfile.Person :  undefined } 
