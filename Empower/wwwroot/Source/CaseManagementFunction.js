@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import Search from './Search'
+import SearchJuvenile from './SearchJuvenile';
+import Search from './Search';
 import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
@@ -8,6 +9,8 @@ import Supplemental from './Supplemental';
 import {useStore} from './StateStores/store';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {getSessionData } from './commonAdmin';
+import { getRoles, getSystems } from './Constants';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -15,16 +18,20 @@ const CaseManagementFunction = (props) => {
     const [defaultTab, setDefaultTab] = useState("search");
     const [activeTab, setActiveTab] = useState("search");
     const [clientProfile, setClientProfile] = useState(Object);
+    const [ isSpinnerVisible, setIsSpinnerVisible ] = useState(false);
     const infoRef = useRef();
     const cacheService = useCacheService();
     const {state, dispatch} = useStore();
 
+
     toast.configure();
 
+    let sessionData = getSessionData();
 
-    function triggerToastMessage(message) {
-        //toast("this is a test");
-        //toast.info
+    let systems = getSystems();
+
+
+    function triggerToastMessage(message) {       
         toast.success(message, {
             position: "top-right",
             autoClose: 5000,
@@ -35,12 +42,6 @@ const CaseManagementFunction = (props) => {
             });
     }
 
-    //console.log('the case management function');
-    //console.log(cacheService.fundingSourceValues);
-
-    //console.log('this is the state store in CaseManagementFunction');
-    //console.log(state);
-
     function EnableTabs() {
         setEnabled(false);
         setDefaultTab("participantinfo");
@@ -50,17 +51,20 @@ const CaseManagementFunction = (props) => {
     function SetActiveTab(key) {
       setActiveTab(key);
     
-    //   if (state.isNewClient) {
-    //       setClientProfile(Object);
-    //   }
+    }
 
+    function showSpinner() {
+        setIsSpinnerVisible(true);
+    }
+
+    function hideSpinner() {
+        setIsSpinnerVisible(false);
     }
 
     //to handle clicking on a row in the search grid, so this data is accessible elsewhere
     function SetClientProfile(clientProfile) {
 
-        //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was
-        
+        //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was   
         setClientProfile(clientProfile); //updates the local state
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
@@ -69,14 +73,35 @@ const CaseManagementFunction = (props) => {
     }
 
     return <div>
+            {
+                isSpinnerVisible ? 
+                <div className="spinner"></div> : <div></div>
+            }
             <Tabs defaultActiveKey={defaultTab} activeKey={activeTab} onSelect={k => SetActiveTab(k) } id="caseManagementTabs">
                     <Tab eventKey="search" title="Search">
-                        <Search enableTabsHandler={EnableTabs}
-                         setParticipantInfoAsActiveTab={SetActiveTab} 
-                         onSearchGridRowClick={e => SetClientProfile(e)}
-                         createNotification={triggerToastMessage}
-                        >
-                        </Search>
+                        {
+                           parseInt(sessionData.SystemID) === systems.Juvenile ?
+
+                            <SearchJuvenile enableTabsHandler={EnableTabs}
+                                setParticipantInfoAsActiveTab={SetActiveTab} 
+                                onSearchGridRowClick={e => SetClientProfile(e)}
+                                showSpinner={showSpinner}
+                                hideSpinner={hideSpinner}
+                                createNotification={triggerToastMessage}>
+                           </SearchJuvenile> : <div></div>
+                        }
+
+                        {
+                           parseInt(sessionData.SystemID) === systems.Adult || parseInt(sessionData.SystemID) === systems.OCWB ?
+
+                            <Search enableTabsHandler={EnableTabs}
+                                setParticipantInfoAsActiveTab={SetActiveTab} 
+                                onSearchGridRowClick={e => SetClientProfile(e)}
+                                showSpinner={showSpinner}
+                                hideSpinner={hideSpinner}
+                                createNotification={triggerToastMessage}>
+                           </Search> : <div></div>
+                        }                    
                     </Tab>
                     <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>
                         <Info clientProfile={!state.isNewClient ? clientProfile.Person :  undefined } 

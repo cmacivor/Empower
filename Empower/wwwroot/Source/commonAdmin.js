@@ -15,6 +15,8 @@ export function getSessionData() {
 
     let systemID = sessionStorage.getItem("systemID");
 
+    let roleID = sessionStorage.getItem("roleID");
+
     let adminType = getCurrentUrl();
 
     let fullCreateAddress = `${apiAddress}/api/${adminType}/Create`;
@@ -25,14 +27,13 @@ export function getSessionData() {
 
     let fullGetAllAdress = `${apiAddress}/api/${adminType}/GetAll`;
 
-    //ServiceProgramCategory urls
-    
 
     let sessionData = {
         Token: token,
         CurrentUser: currentUser,
         AdminType : getCurrentUrl(),
         SystemID: systemID,
+        RoleID: roleID,
         CreateApiUrl: fullCreateAddress,
         UpdateApiUrl: fullUpdateAddress,
         DeleteApiUrl: fullDeleteAddress,

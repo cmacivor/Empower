@@ -80274,17 +80274,18 @@ function getSessionData() {
   var token = sessionStorage.getItem("token");
   var currentUser = sessionStorage.getItem("userName");
   var systemID = sessionStorage.getItem("systemID");
+  var roleID = sessionStorage.getItem("roleID");
   var adminType = getCurrentUrl();
   var fullCreateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Create");
   var fullUpdateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
   var fullDeleteAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Delete");
-  var fullGetAllAdress = "".concat(apiAddress, "/api/").concat(adminType, "/GetAll"); //ServiceProgramCategory urls
-
+  var fullGetAllAdress = "".concat(apiAddress, "/api/").concat(adminType, "/GetAll");
   var sessionData = {
     Token: token,
     CurrentUser: currentUser,
     AdminType: getCurrentUrl(),
     SystemID: systemID,
+    RoleID: roleID,
     CreateApiUrl: fullCreateAddress,
     UpdateApiUrl: fullUpdateAddress,
     DeleteApiUrl: fullDeleteAddress,
