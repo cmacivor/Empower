@@ -36,7 +36,7 @@ const SearchJuvenile = (props) => {
         { name: 'FirstName', title: 'First Name' },
         { name: 'LastName', title: 'Last Name' },
         { name: 'MiddleName', title: 'Middle Name' },
-        { name: 'StateORVCIN', title: 'State/VCIN #' },
+        { name: 'JTS', title: 'JTS #' },
         { name: 'SSN', title: 'SSN' },
         { name: 'FormattedBirthDate', title: 'Birth Date' }, 
         { name: 'Gender', title: 'Gender' },
@@ -47,7 +47,7 @@ const SearchJuvenile = (props) => {
         { name: 'FirstName', title: 'First Name' },
         { name: 'LastName', title: 'Last Name' },
         { name: 'MiddleName', title: 'Middle Name' },
-        { name: 'JTS', title: 'JTS' },
+        { name: 'JTS', title: 'JTS #' },
         { name: 'SSN', title: 'SSN' },
         { name: 'FormattedBirthDate', title: 'Birth Date' }, 
         { name: 'Gender', title: 'Gender' },        
@@ -405,6 +405,7 @@ const SearchJuvenile = (props) => {
 
 
     function SetClientProfile(clientProfile) {
+         props.hideSpinner();
          props.onSearchGridRowClick(clientProfile);
      }
 
@@ -572,6 +573,8 @@ const SearchJuvenile = (props) => {
     function GetSelectedRow(row) {
       
         props.enableTabsHandler();
+
+        props.showSpinner();
         
         let clientProfileAddress = `${apiAddress}/api/ClientProfile/${row.ID}`;
 
@@ -595,6 +598,7 @@ const SearchJuvenile = (props) => {
                 } 
     
             }).then(finalResult => {
+                console.log(finalResult);
                 SetClientProfile(finalResult);
                 dispatch( { type: "existingClient"} ); 
             });

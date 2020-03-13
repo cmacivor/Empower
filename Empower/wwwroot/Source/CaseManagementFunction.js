@@ -85,6 +85,8 @@ const CaseManagementFunction = (props) => {
                             <SearchJuvenile enableTabsHandler={EnableTabs}
                                 setParticipantInfoAsActiveTab={SetActiveTab} 
                                 onSearchGridRowClick={e => SetClientProfile(e)}
+                                showSpinner={showSpinner}
+                                hideSpinner={hideSpinner}
                                 createNotification={triggerToastMessage}>
                            </SearchJuvenile> : <div></div>
                         }
