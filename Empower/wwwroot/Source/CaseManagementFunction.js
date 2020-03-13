@@ -18,9 +18,11 @@ const CaseManagementFunction = (props) => {
     const [defaultTab, setDefaultTab] = useState("search");
     const [activeTab, setActiveTab] = useState("search");
     const [clientProfile, setClientProfile] = useState(Object);
+    const [ isSpinnerVisible, setIsSpinnerVisible ] = useState(false);
     const infoRef = useRef();
     const cacheService = useCacheService();
     const {state, dispatch} = useStore();
+
 
     toast.configure();
 
@@ -51,6 +53,14 @@ const CaseManagementFunction = (props) => {
     
     }
 
+    function showSpinner() {
+        setIsSpinnerVisible(true);
+    }
+
+    function hideSpinner() {
+        setIsSpinnerVisible(false);
+    }
+
     //to handle clicking on a row in the search grid, so this data is accessible elsewhere
     function SetClientProfile(clientProfile) {
 
@@ -63,6 +73,10 @@ const CaseManagementFunction = (props) => {
     }
 
     return <div>
+            {
+                isSpinnerVisible ? 
+                <div className="spinner"></div> : <div></div>
+            }
             <Tabs defaultActiveKey={defaultTab} activeKey={activeTab} onSelect={k => SetActiveTab(k) } id="caseManagementTabs">
                     <Tab eventKey="search" title="Search">
                         {
@@ -81,6 +95,8 @@ const CaseManagementFunction = (props) => {
                             <Search enableTabsHandler={EnableTabs}
                                 setParticipantInfoAsActiveTab={SetActiveTab} 
                                 onSearchGridRowClick={e => SetClientProfile(e)}
+                                showSpinner={showSpinner}
+                                hideSpinner={hideSpinner}
                                 createNotification={triggerToastMessage}>
                            </Search> : <div></div>
                         }                    

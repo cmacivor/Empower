@@ -132,6 +132,7 @@ const Search = (props) => {
 
 
     function SetClientProfile(clientProfile) {
+         props.hideSpinner();
          props.onSearchGridRowClick(clientProfile);
      }
 
@@ -154,7 +155,7 @@ const Search = (props) => {
             lastName: lastName,
             firstName: firstName
         }
-
+        
         try
         {
            var promise = fetch(fullSearchAddress, {
@@ -249,6 +250,8 @@ const Search = (props) => {
     function GetSelectedRow(row) {
       
         props.enableTabsHandler();
+
+        props.showSpinner();
         
         let clientProfileAddress = `${apiAddress}/api/ClientProfile/${row.ID}`;
 
