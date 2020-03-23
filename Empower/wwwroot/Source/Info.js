@@ -425,7 +425,7 @@ const Info = forwardRef((props, ref) => {
                 UniqueID: id,
             }
 
-            alert(id);
+            //alert(id);
             //they already exist, and this is an update
             if (personID !== '') {
                 //make a PUT call with all of the parameters
@@ -445,9 +445,15 @@ const Info = forwardRef((props, ref) => {
 
 
             }
-            else //this is a new client,
+            else //this is a new client
             {
+                postData.CreatedDate =  new Date();
+                postData.CreatedBy = sessionStorageData.CurrentUser;
+                postData.UpdatedDate = new Date();
+                postData.UpdatedBy = sessionStorageData.CurrentUser;
+
                 let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+
                 alert('The Unique License Number is: ' + uniqueID);
 
                 let duplicatePersonsAddress = `${apiAddress}/api/Person/GetduplicatePersons/${uniqueID}`;
@@ -462,9 +468,29 @@ const Info = forwardRef((props, ref) => {
                 })
                 .then(result => result.json())
                 .then(result => {
-                    console.log(result); //if there are returned rows, open the modal
+                    console.log(result); 
 
-                    
+                    //if there are duplicates returned, display them on the modal
+                    if (result.length > 0 ) {
+                        
+                    }
+                    else { //no duplicates
+                        let createPersonAddress = `${apiAddress}/api/Person`;
+
+                        fetch(createPersonAddress, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + sessionStorageData.Token
+                            },
+                            body: JSON.stringify(postData)
+                        })
+                        .then(result => result.json())
+                        .then(result => {
+                            console.log(result);
+                        });
+                    }
+
                 });
             }
 
