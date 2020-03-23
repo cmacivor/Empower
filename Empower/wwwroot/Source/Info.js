@@ -474,21 +474,30 @@ const Info = forwardRef((props, ref) => {
                     if (result.length > 0 ) {
                         
                     }
-                    else { //no duplicates
-                        let createPersonAddress = `${apiAddress}/api/Person`;
+                   
+                    //no duplicates: should be good to go to update the UniqueIds for the addded person
+                    else { 
+                        // let createPersonAddress = `${apiAddress}/api/Person`;
+                        
+                        
+                        //this block doesn't appear to be necessary- if they have the samee SSN, that will be caught by the call above
+                        // fetch(createPersonAddress, {
+                        //     method: 'POST',
+                        //     headers: {
+                        //         'Content-Type': 'application/json',
+                        //         'Authorization': 'Bearer ' + sessionStorageData.Token
+                        //     },
+                        //     body: JSON.stringify(postData)
+                        // })
+                        // .then(result => result.json())
+                        // .then(result => {
+                        //     console.log(result);
 
-                        fetch(createPersonAddress, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Bearer ' + sessionStorageData.Token
-                            },
-                            body: JSON.stringify(postData)
-                        })
-                        .then(result => result.json())
-                        .then(result => {
-                            console.log(result);
-                        });
+                        //     if (result === "SSN") {
+                        //         console.log('this SSN already exists');
+                        //     }
+                            
+                        // });
                     }
 
                 });
