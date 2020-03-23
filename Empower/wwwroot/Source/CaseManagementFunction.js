@@ -13,7 +13,7 @@ import {getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
 
 const CaseManagementFunction = (props) => {
-    const [isTabDisabled, setEnabled] = useState(true);
+    const [isTabDisabled, setEnabled] = useState(false);
     const [isParticipantTabDisabled, setParticipantTabEnabled] = useState(true);
     const [defaultTab, setDefaultTab] = useState("search");
     const [activeTab, setActiveTab] = useState("search");

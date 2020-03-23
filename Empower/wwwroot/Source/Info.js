@@ -406,26 +406,66 @@ const Info = forwardRef((props, ref) => {
             let id = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
 
             let apiAddress = sessionStorage.getItem("baseApiAddress");
-            //let fullPersonAddress = `${apiAddress}/api/${api}/Person`;
+            let fullPersonAddress = `${apiAddress}/api/Person`;
             let sessionStorageData = getSessionData();
+
+            let postData = {
+                LastName: lastName,
+                FirstName: firstName,
+                MiddleName: middleName,
+                SuffixID: suffixID,
+                StateORVCIN: stateVcin,
+                FBINCIC: fbiNcicNumber,
+                Alias: alias,
+                DOB: birthDate,
+                RaceID: raceID,
+                GenderID: genderID,
+                SSN: ssn,
+                Active: true,
+                UniqueID: id,
+            }
 
             alert(id);
             //they already exist, and this is an update
             if (personID !== '') {
                 //make a PUT call with all of the parameters
-                // fetch(fullPersonAddress, {
-                //     //mode: 'cors',
-                //     method: 'PUT',
-                //     headers: {
-                //         'Authorization': 'Bearer ' + sessionStorageData.Token
-                //     }
-                // }).then(result => result.json());
+                fetch(fullPersonAddress, {
+                    //mode: 'cors',
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorageData.Token
+                    },
+                    body: JSON.stringify(postData)
+                })
+                .then(result => result.json())
+                .then(result => {
+                    console.log(result);
+                });
 
 
             }
             else //this is a new client,
             {
+                let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+                alert('The Unique License Number is: ' + uniqueID);
 
+                let duplicatePersonsAddress = `${apiAddress}/api/Person/GetduplicatePersons/${uniqueID}`;
+
+                fetch(duplicatePersonsAddress, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorageData.Token
+                    }
+                    //body: JSON.stringify(postData)
+                })
+                .then(result => result.json())
+                .then(result => {
+                    console.log(result); //if there are returned rows, open the modal
+
+                    
+                });
             }
 
 
