@@ -904,7 +904,7 @@ const SearchJuvenile = (props) => {
                     </table>
                   </ModalBody>
                   <ModalFooter>
-                    {/* <Button color="primary" onClick={mergeProfiles}>Merge Services</Button>{' '} */}
+                    <Button color="primary" onClick={mergeProfiles}>Merge Services</Button>{' '}
                     <Button color="secondary" onClick={toggle}>Cancel</Button>
                   </ModalFooter>
                 </Modal>

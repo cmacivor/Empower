@@ -402,13 +402,6 @@ const Info = forwardRef((props, ref) => {
         let currentDate = new Date();
         //all data is valid
         if (lastName !== '' && firstName !== '' && birthDate < currentDate && raceID !== '' && genderID !== '') {
-            //they can save or update    
-            //console.log(lastName);
-
-            //console.log(firstName);
-            //console.log(birthDate);
-            //console.log(genderID);
-            //console.log(raceID);
 
             let id = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
 
@@ -432,24 +425,10 @@ const Info = forwardRef((props, ref) => {
                 UniqueID: id,
             }
 
-            //alert(id);
             //they already exist, and this is an update
             if (personID !== '') {
-                //make a PUT call with all of the parameters
-                fetch(fullPersonAddress, {
-                    //mode: 'cors',
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + sessionStorageData.Token
-                    },
-                    body: JSON.stringify(postData)
-                })
-                .then(result => result.json())
-                .then(result => {
-                    console.log(result);
-                });
-
+       
+                UpdateClient(fullPersonAddress, postData);
 
             }
             else //this is a new client
@@ -485,57 +464,101 @@ const Info = forwardRef((props, ref) => {
                     //no duplicates: should be good to go to update the UniqueIds for the addded person
                     else { 
 
-                            let createPersonAddress = `${apiAddress}/api/Person`;
-
-                            fetch(createPersonAddress, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': 'Bearer ' + sessionStorageData.Token
-                            },
-                                body: JSON.stringify(postData)
-                            })
-                            .then(result => result.json())
-                            .then(result => {
-                                console.log(result);
-                            
-                                //update unique ID for the newly added person
-                                let uniqueIdPostData = [];
-
-                                uniqueIdPostData[0] = {
-                                    PersonId: result.PersonID,
-                                    UniqueId: uniqueID
-                                }
-
-                                let listToUpdate = {
-                                    "list": uniqueIdPostData
-                                }
-
-                                let updateUniquIdUrl = `${apiAddress}/api/Person/UpdateAlluniqueIds`;
-
-                                fetch(updateUniquIdUrl, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'Authorization': 'Bearer ' + sessionStorageData.Token
-                                    },
-                                    body: JSON.stringify(listToUpdate)
-                                }).then(result => {
-                                    props.createNotification('The client profile was successfully created.');
-                                });
-                                
-                            });
-                        
+                        CreateNewClient(postData, uniqueID);
                     }
 
                 });
             }
 
-
             setHideRaceError(true);
             setHideGenderError(true);
         }
+    }
 
+    function UpdateClient(fullPersonAddress, postData) {
+        let sessionStorageData = getSessionData();
+
+         //make a PUT call with all of the parameters
+         fetch(fullPersonAddress, {
+            //mode: 'cors',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(postData)
+        })
+        .then(result => result.json())
+        .then(result => {
+            props.createNotification('The client profile was successfully updated.');
+        });
+    }
+
+
+    function CreateNewClient(postData, uniqueID){
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let createPersonAddress = `${apiAddress}/api/Person`;
+        let sessionStorageData = getSessionData();
+
+        fetch(createPersonAddress, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+        },
+            body: JSON.stringify(postData)
+        })
+        .then(result => result.json())
+        .then(savedPersonResult => {
+            //console.log(savedPersonResult);
+        
+            //update unique ID for the newly added person
+            let uniqueIdPostData = [];
+
+            uniqueIdPostData[0] = {
+                PersonId: savedPersonResult.PersonID,
+                UniqueId: uniqueID
+            }
+
+            let listToUpdate = {
+                "list": uniqueIdPostData
+            }
+
+            let updateUniquIdUrl = `${apiAddress}/api/Person/UpdateAlluniqueIds`;
+
+            fetch(updateUniquIdUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                },
+                body: JSON.stringify(listToUpdate)
+            }).then(result => {
+                //console.log(result);
+                //need to update the state with the return result
+
+                let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
+                let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
+                let diffInYears = calculateAge(birthDateJavascriptDateObject);
+
+                setLastName(savedPersonResult.Person.LastName);
+                setFirstName(savedPersonResult.Person.FirstName);
+                setMiddleName(savedPersonResult.Person.MiddleName);
+                setSuffixID(savedPersonResult.Person.SuffixID);
+                setSSN(savedPersonResult.Person.SSN);
+                setFbiNcicNumber(savedPersonResult.Person.FBINCIC);
+                setBirthDate(utcBirthDate);
+                setStateVcin(savedPersonResult.Person.StateORVCIN);
+                setAlias(savedPersonResult.Person.Alias);
+                setGenderID(savedPersonResult.Person.GenderID);
+                setRaceID(savedPersonResult.Person.RaceID);
+                setCurrentAge(diffInYears);
+                
+                props.createNotification('The client profile was successfully created.');
+            });
+            
+        });
     }
 
 
