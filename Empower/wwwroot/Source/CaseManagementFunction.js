@@ -107,7 +107,8 @@ const CaseManagementFunction = (props) => {
                         <Info clientProfile={!state.isNewClient ? clientProfile.Person :  undefined } 
                          ref={infoRef}
                          genderValues={cacheService.genderValues}
-                         raceValues={cacheService.raceValues}/>                       
+                         raceValues={cacheService.raceValues}
+                         createNotification={triggerToastMessage}/>                       
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
                         

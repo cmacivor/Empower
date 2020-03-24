@@ -12,6 +12,7 @@ import { useForm, ErrorMessage } from 'react-hook-form';
 import { Api } from './commonAdmin';
 import { GenerateUniqueID } from './NewClient';
 import { getSessionData } from './commonAdmin';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 //const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
@@ -133,6 +134,12 @@ const Info = forwardRef((props, ref) => {
     const [prevSuffixDescription, setPrevSuffixDescription] = useState(clientSuffixDescription);
 
     const [formClass, setFormClass] = useState('needs-validation');
+
+    //Modal window
+    const [modal, setModal] = useState(false);
+    const [mergeOptions, setMergeOptions ] = useState([]);
+    const toggle = () => setModal(!modal);
+    const [mergeModalTableRows, setMergeModalTableRows] = useState('');
 
 
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
@@ -477,27 +484,48 @@ const Info = forwardRef((props, ref) => {
                    
                     //no duplicates: should be good to go to update the UniqueIds for the addded person
                     else { 
-                        // let createPersonAddress = `${apiAddress}/api/Person`;
-                        
-                        
-                        //this block doesn't appear to be necessary- if they have the samee SSN, that will be caught by the call above
-                        // fetch(createPersonAddress, {
-                        //     method: 'POST',
-                        //     headers: {
-                        //         'Content-Type': 'application/json',
-                        //         'Authorization': 'Bearer ' + sessionStorageData.Token
-                        //     },
-                        //     body: JSON.stringify(postData)
-                        // })
-                        // .then(result => result.json())
-                        // .then(result => {
-                        //     console.log(result);
 
-                        //     if (result === "SSN") {
-                        //         console.log('this SSN already exists');
-                        //     }
+                            let createPersonAddress = `${apiAddress}/api/Person`;
+
+                            fetch(createPersonAddress, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                            },
+                                body: JSON.stringify(postData)
+                            })
+                            .then(result => result.json())
+                            .then(result => {
+                                console.log(result);
                             
-                        // });
+                                //update unique ID for the newly added person
+                                let uniqueIdPostData = [];
+
+                                uniqueIdPostData[0] = {
+                                    PersonId: result.PersonID,
+                                    UniqueId: uniqueID
+                                }
+
+                                let listToUpdate = {
+                                    "list": uniqueIdPostData
+                                }
+
+                                let updateUniquIdUrl = `${apiAddress}/api/Person/UpdateAlluniqueIds`;
+
+                                fetch(updateUniquIdUrl, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'Bearer ' + sessionStorageData.Token
+                                    },
+                                    body: JSON.stringify(listToUpdate)
+                                }).then(result => {
+                                    props.createNotification('The client profile was successfully created.');
+                                });
+                                
+                            });
+                        
                     }
 
                 });
@@ -777,9 +805,30 @@ const Info = forwardRef((props, ref) => {
                 </div>
             </div>
         </form>
-        <br></br>
-        {state.count}
-        {state.message}
+        <Modal size="lg" isOpen={modal} toggle={toggle}>
+                  <ModalHeader toggle={toggle}>Duplicates</ModalHeader>
+                  <ModalBody>
+                    <table id="mergeTable" className="table">
+                      <thead>
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">First Name</th>
+                          <th scope="col">Last Name</th>
+                          <th scope="col">Middle Name</th>
+                          <th scope="col">Date of Birth</th>
+                          <th scope="col">Gender</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {mergeModalTableRows}
+                      </tbody>
+                    </table>
+                  </ModalBody>
+                  <ModalFooter>
+                    {/* <Button color="primary" onClick={mergeProfiles}>Merge Services</Button>{' '} */}
+                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                  </ModalFooter>
+                </Modal>
     </div>;
 
 });
