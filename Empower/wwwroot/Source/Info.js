@@ -86,6 +86,10 @@ const Info = forwardRef((props, ref) => {
     const [raceID, setRaceID] = useState(clientRaceID);
     const [currentAge, setCurrentAge] = useState(diffInYears);
     const [ID, setPersonID] = useState(personID);
+    const [createdDate, setCreatedDate] = useState('');
+    const [createdBy, setCreatedBy] = useState('');
+    const [updatedDate, setUpdatedDate] = useState('');
+    const [updatedBy, setUpdatedBy] = useState('');
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
@@ -479,6 +483,11 @@ const Info = forwardRef((props, ref) => {
     function UpdateClient(fullPersonAddress, postData) {
         let sessionStorageData = getSessionData();
 
+        postData.CreatedDate = createdDate;
+        postData.CreatedBy = createdBy;
+        postData.UpdatedDate = updatedDate;
+        postData.UpdatedBy = updatedBy;
+
          //make a PUT call with all of the parameters
          fetch(fullPersonAddress, {
             //mode: 'cors',
@@ -538,7 +547,6 @@ const Info = forwardRef((props, ref) => {
                 body: JSON.stringify(listToUpdate)
             }).then(result => {
                 
-                //console.log(result);
                 //need to update the state with the return result
 
                 let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
@@ -558,6 +566,11 @@ const Info = forwardRef((props, ref) => {
                 setRaceID(savedPersonResult.Person.RaceID);
                 setCurrentAge(diffInYears);
                 setPersonID(savedPersonResult.PersonID);
+                setCreatedDate(savedPersonResult.Person.CreatedDate);
+                setCreatedBy(savedPersonResult.Person.CreatedBy);
+                setUpdatedDate(savedPersonResult.Person.UpdatedDate);
+                setUpdatedBy(savedPersonResult.Person.UpdatedBy);
+
                 
                 props.createNotification('The client profile was successfully created.');
             });
