@@ -85,6 +85,7 @@ const Info = forwardRef((props, ref) => {
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
     const [currentAge, setCurrentAge] = useState(diffInYears);
+    const [ID, setPersonID] = useState(personID);
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
@@ -426,7 +427,7 @@ const Info = forwardRef((props, ref) => {
             }
 
             //they already exist, and this is an update
-            if (personID !== '') {
+            if (ID !== '') {
        
                 UpdateClient(fullPersonAddress, postData);
 
@@ -511,7 +512,8 @@ const Info = forwardRef((props, ref) => {
         })
         .then(result => result.json())
         .then(savedPersonResult => {
-            //console.log(savedPersonResult);
+            console.log('the newly created');
+            console.log(savedPersonResult);
         
             //update unique ID for the newly added person
             let uniqueIdPostData = [];
@@ -535,6 +537,7 @@ const Info = forwardRef((props, ref) => {
                 },
                 body: JSON.stringify(listToUpdate)
             }).then(result => {
+                
                 //console.log(result);
                 //need to update the state with the return result
 
@@ -554,6 +557,7 @@ const Info = forwardRef((props, ref) => {
                 setGenderID(savedPersonResult.Person.GenderID);
                 setRaceID(savedPersonResult.Person.RaceID);
                 setCurrentAge(diffInYears);
+                setPersonID(savedPersonResult.PersonID);
                 
                 props.createNotification('The client profile was successfully created.');
             });
