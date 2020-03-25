@@ -524,6 +524,7 @@ const Info = forwardRef((props, ref) => {
         postData.CreatedBy = createdBy;
         postData.UpdatedDate = updatedDate;
         postData.UpdatedBy = updatedBy;
+        postData.ID = ID;
 
          //make a PUT call with all of the parameters
          fetch(fullPersonAddress, {
