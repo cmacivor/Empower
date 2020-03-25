@@ -353,6 +353,10 @@ const Info = forwardRef((props, ref) => {
 
     function handleDatePickerChange(birthDate) {
 
+        if (birthDate.date === null) {
+            return;
+        }
+
         let isValid = isDateofBirthValid(birthDate);
 
         if (!isValid) {
@@ -818,6 +822,7 @@ const Info = forwardRef((props, ref) => {
                             required={isBirthDateRequired}
                             onChange={date => handleDatePickerChange({ date })}
                             className="form-control"
+                            strictParsing
                         />
                         <div className={dobErrorDivCss}>Please enter a valid birth date.</div>
                     </div>
