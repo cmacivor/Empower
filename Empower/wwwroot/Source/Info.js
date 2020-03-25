@@ -35,6 +35,11 @@ const Info = forwardRef((props, ref) => {
     let diffInYears = '';
     let saveButtonShow = false;
     let personID = '';
+    let clientCreatedDate = '';
+    let clientCreatedBy = '';
+    let clientUpdatedDate = '';
+    let clientUpdatedBy = '';
+
 
 
     //the user clicked on a row in the search grid
@@ -53,6 +58,10 @@ const Info = forwardRef((props, ref) => {
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
         personID = (clientInfo.PersonID !== null) ? clientInfo.PersonID : '';
+        clientCreatedDate = (clientInfo.CreatedDate !== null) ? clientInfo.CreatedDate : '';
+        clientCreatedBy = (clientInfo.CreatedBy !== null) ? clientInfo.CreatedBy : '';
+        clientUpdatedDate = (clientInfo.UpdatedDate !== null) ? clientInfo.UpdatedDate : '';
+        clientUpdatedBy = (clientInfo.UpdatedBy !== null) ? clientInfo.UpdatedBy : '';
 
         //get the birthdate in UTC format- the datepicker plugin needs it that way
         let birthDateJavascriptDateObject = new Date(clientInfo.DOB);
@@ -86,10 +95,12 @@ const Info = forwardRef((props, ref) => {
     const [raceID, setRaceID] = useState(clientRaceID);
     const [currentAge, setCurrentAge] = useState(diffInYears);
     const [ID, setPersonID] = useState(personID);
-    const [createdDate, setCreatedDate] = useState('');
-    const [createdBy, setCreatedBy] = useState('');
-    const [updatedDate, setUpdatedDate] = useState('');
-    const [updatedBy, setUpdatedBy] = useState('');
+    const [createdDate, setCreatedDate] = useState(createdDate);
+    const [createdBy, setCreatedBy] = useState(createdBy);
+    const [updatedDate, setUpdatedDate] = useState(updatedDate);
+    const [updatedBy, setUpdatedBy] = useState(updatedBy);
+
+    const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(saveButtonShow);
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
@@ -102,7 +113,6 @@ const Info = forwardRef((props, ref) => {
     //Race dropddown
     const [isRaceDropdownRequired, setIsRaceDropdownRequired] = useState(false);
     const [raceDdlErrorDivCss, setRaceDdlErrorDivCss] = useState('invalid-feedback');
-
 
     const [genderValues, setGenderValues] = useState([]);
     const [suffixValues, setSuffixValues] = useState([]);
@@ -125,18 +135,25 @@ const Info = forwardRef((props, ref) => {
     //variables to hold previous state- for when a value changes
     const [prevLastName, setPrevLastName] = useState(clientLastName);
     const [prevFirstName, setPrevFirstName] = useState(clientFirstName);
-    const [prevMiddleName] = useState(clientMiddleName);
-    const [prevSsn] = useState(clientSSN);
-    const [prevFbiNcicNumber] = useState(clientFbiNcic);
-    const [prevBirthDate] = useState(utcBirthDate);
-    const [prevStateVcin] = useState(clientStateVcin);
-    const [prevAlias] = useState(clientAlias);
-    const [prevGenderID] = useState(clientGenderID);
-    const [prevRaceID] = useState(clientRaceID);
-    const [prevSuffixID] = useState(clientSuffixID);
+    const [prevMiddleName, setPrevMiddleName] = useState(clientMiddleName);
+    const [prevSsn, setPrevSsn] = useState(clientSSN);
+    const [prevFbiNcicNumber, setPrevFbiNcicNumber] = useState(clientFbiNcic);
+    const [prevBirthDate, setPrevBirthDate ] = useState(utcBirthDate);
+    const [prevStateVcin, setPrevStateVcin] = useState(clientStateVcin);
+    const [prevAlias, setPrevAlias] = useState(clientAlias);
+    const [prevGenderID, setPrevGenderId] = useState(clientGenderID);
+    const [prevRaceID, setPrevRaceId] = useState(clientRaceID);
+    const [prevSuffixID, setPrevSuffixID] = useState(clientSuffixID);
     const [prevGenderDescription, setPrevGenderDescription] = useState(clientGenderDescription);
     const [prevRaceDescription, setPrevRaceDescription] = useState(clientRaceDescription);
     const [prevSuffixDescription, setPrevSuffixDescription] = useState(clientSuffixDescription);
+
+    //Audit details
+    const [prevID, setPrevId] = useState(personID);
+    const [prevCreatedDate, setPrevCreatedDate] = useState(clientCreatedDate);
+    const [prevCreatedBy, setPrevCreatedBy] = useState(clientCreatedBy);
+    const [prevUpdatedDate, setPrevUpdatedDate] = useState(clientUpdatedDate);
+    const [prevUpdatedBy, setPrevUpdatedBy ] = useState(clientUpdatedBy);
 
     const [formClass, setFormClass] = useState('needs-validation');
 
@@ -174,8 +191,21 @@ const Info = forwardRef((props, ref) => {
         setCurrentAge(diffInYears);
 
         //TODO:need to update the prev variables as well for the reset button
-        setPrevFirstName(clientFirstName);
-        setPrevLastName(clientLastName);
+        // setPrevFirstName(clientFirstName);
+        // setPrevLastName(clientLastName);
+        // setPrevSsn(clientSSN);
+        // setPrevFbiNcicNumber(clientFbiNcic);
+        // setPrevBirthDate(utcBirthDate);
+        // setPrevStateVcin(clientStateVcin);
+        // setPrevAlias(clientAlias);
+        // setPrevGenderId(clientGenderID);
+        // setPrevRaceId(clientRaceID);
+        // setPrevSuffixID(clientSuffixID);
+        
+        // setPrevCreatedDate(clientCreatedDate);
+        // setPrevCreatedDate(clientCreatedBy);
+        // setPrevUpdatedDate(clientUpdatedDate);
+        // setPrevUpdatedBy(clientUpdatedBy);
 
         if (state.isNewClient) {
 
@@ -371,6 +401,10 @@ const Info = forwardRef((props, ref) => {
         setGenderDescription(prevGenderDescription);
         setRaceDescription(prevRaceDescription);
         setSuffixDescription(prevSuffixDescription);
+
+        //setCurrentAge('');
+        //setPersonID('');
+
     }
 
     //this will fire when submission of the form is successful
@@ -433,6 +467,9 @@ const Info = forwardRef((props, ref) => {
             //they already exist, and this is an update
             if (ID !== '') {
        
+                let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+                alert('The Unique License Number is: ' + uniqueID);
+
                 UpdateClient(fullPersonAddress, postData);
 
             }
@@ -571,6 +608,8 @@ const Info = forwardRef((props, ref) => {
                 setUpdatedDate(savedPersonResult.Person.UpdatedDate);
                 setUpdatedBy(savedPersonResult.Person.UpdatedBy);
 
+                //saveButtonShow = false;
+                setIsSaveButtonVisible(false);
                 
                 props.createNotification('The client profile was successfully created.');
             });
@@ -628,7 +667,7 @@ const Info = forwardRef((props, ref) => {
     }
 
     let buttonType;
-    if (saveButtonShow) {
+    if (isSaveButtonVisible) {
 
         buttonType = <div className="col-auto">
             <button type="button" onClick={TriggerValidationHandler} className="btn btn-primary mb-2">Save</button>
