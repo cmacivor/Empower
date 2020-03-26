@@ -401,7 +401,11 @@ const Info = forwardRef((props, ref) => {
         setMiddleName(prevMiddleName);
         setSSN(prevSsn);
         setFbiNcicNumber(prevFbiNcicNumber);
+        
+        utcBirthDate = new Date();   
         setBirthDate(utcBirthDate);
+        setCurrentAge('');
+        
         setStateVcin(prevStateVcin);
         setAlias(prevAlias);
 
