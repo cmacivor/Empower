@@ -62,6 +62,10 @@ const CaseManagementFunction = (props) => {
     function SetActiveTab(key) {
       setActiveTab(key);
     
+      if (state.isNewClient) {
+          infoRef.current.clearForm();
+      }
+
     }
 
     function showSpinner() {

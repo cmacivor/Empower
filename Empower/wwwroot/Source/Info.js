@@ -75,7 +75,7 @@ const Info = forwardRef((props, ref) => {
         saveButtonShow = false;
     } else {
         saveButtonShow = true;
-
+        
     }
 
     //for validation
@@ -164,6 +164,7 @@ const Info = forwardRef((props, ref) => {
     const [mergeModalTableRows, setMergeModalTableRows] = useState('');
 
 
+  
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
     useImperativeHandle(ref, () => ({
@@ -172,6 +173,11 @@ const Info = forwardRef((props, ref) => {
             let utcBirthDate = convertDateToUtcFormat(birthDate);
 
             setBirthDate(utcBirthDate);
+        },
+
+        //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
+        clearForm() {
+            resetForm();
         }
     }));
 
@@ -719,6 +725,7 @@ const Info = forwardRef((props, ref) => {
         );
     }
 
+  
 
     return <div>
         <br></br>
