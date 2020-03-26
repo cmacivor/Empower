@@ -42,6 +42,17 @@ const CaseManagementFunction = (props) => {
             });
     }
 
+    function triggerErrorMessage(message){
+        toast.error(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+        });
+    }
+
     function EnableTabs() {
         setEnabled(false);
         setDefaultTab("participantinfo");
@@ -108,7 +119,8 @@ const CaseManagementFunction = (props) => {
                          ref={infoRef}
                          genderValues={cacheService.genderValues}
                          raceValues={cacheService.raceValues}
-                         createNotification={triggerToastMessage}/>                       
+                         createNotification={triggerToastMessage}
+                         createErrorNotification={triggerErrorMessage} />                       
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
                         

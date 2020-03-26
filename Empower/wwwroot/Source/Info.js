@@ -563,8 +563,15 @@ const Info = forwardRef((props, ref) => {
         })
         .then(result => result.json())
         .then(savedPersonResult => {
-            console.log('the newly created');
-            console.log(savedPersonResult);
+
+            //if the return result is "SSN", then a record with this SSN already exists in the database
+            if (savedPersonResult === "SSN") {
+                props.createErrorNotification("A record with this social security number already exists in the database.");
+                return;
+            }
+
+            //console.log('the newly created');
+            //console.log(savedPersonResult);
         
             //update unique ID for the newly added person
             let uniqueIdPostData = [];
@@ -589,6 +596,8 @@ const Info = forwardRef((props, ref) => {
                 body: JSON.stringify(listToUpdate)
             }).then(result => {
                 
+           
+
                 //need to update the state with the return result
 
                 let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
