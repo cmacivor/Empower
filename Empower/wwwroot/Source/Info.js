@@ -57,7 +57,7 @@ const Info = forwardRef((props, ref) => {
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
-        personID = (clientInfo.PersonID !== null) ? clientInfo.PersonID : '';
+        personID = (clientInfo.ID !== null) ? clientInfo.PersonID : '';
         clientCreatedDate = (clientInfo.CreatedDate !== null) ? clientInfo.CreatedDate : '';
         clientCreatedBy = (clientInfo.CreatedBy !== null) ? clientInfo.CreatedBy : '';
         clientUpdatedDate = (clientInfo.UpdatedDate !== null) ? clientInfo.UpdatedDate : '';
@@ -195,7 +195,8 @@ const Info = forwardRef((props, ref) => {
         setGenderID(clientGenderID);
         setRaceID(clientRaceID);
         setCurrentAge(diffInYears);
-
+        
+        setIsSaveButtonVisible(false);
         //TODO:need to update the prev variables as well for the reset button
         // setPrevFirstName(clientFirstName);
         // setPrevLastName(clientLastName);
