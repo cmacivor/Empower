@@ -417,6 +417,8 @@ const Info = forwardRef((props, ref) => {
         setRaceDescription(prevRaceDescription);
         setSuffixDescription(prevSuffixDescription);
 
+        setPersonID(prevID);
+
         //setCurrentAge('');
         //setPersonID('');
 
