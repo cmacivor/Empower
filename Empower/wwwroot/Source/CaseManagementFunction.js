@@ -42,6 +42,17 @@ const CaseManagementFunction = (props) => {
             });
     }
 
+    function triggerErrorMessage(message){
+        toast.error(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+        });
+    }
+
     function EnableTabs() {
         setEnabled(false);
         setDefaultTab("participantinfo");
@@ -51,6 +62,10 @@ const CaseManagementFunction = (props) => {
     function SetActiveTab(key) {
       setActiveTab(key);
     
+      if (state.isNewClient) {
+          infoRef.current.clearForm();
+      }
+
     }
 
     function showSpinner() {
@@ -107,7 +122,9 @@ const CaseManagementFunction = (props) => {
                         <Info clientProfile={!state.isNewClient ? clientProfile.Person :  undefined } 
                          ref={infoRef}
                          genderValues={cacheService.genderValues}
-                         raceValues={cacheService.raceValues}/>                       
+                         raceValues={cacheService.raceValues}
+                         createNotification={triggerToastMessage}
+                         createErrorNotification={triggerErrorMessage} />                       
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
                         

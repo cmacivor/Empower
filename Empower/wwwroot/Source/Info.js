@@ -12,6 +12,7 @@ import { useForm, ErrorMessage } from 'react-hook-form';
 import { Api } from './commonAdmin';
 import { GenerateUniqueID } from './NewClient';
 import { getSessionData } from './commonAdmin';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 //const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
@@ -34,6 +35,11 @@ const Info = forwardRef((props, ref) => {
     let diffInYears = '';
     let saveButtonShow = false;
     let personID = '';
+    let clientCreatedDate = '';
+    let clientCreatedBy = '';
+    let clientUpdatedDate = '';
+    let clientUpdatedBy = '';
+
 
 
     //the user clicked on a row in the search grid
@@ -51,7 +57,11 @@ const Info = forwardRef((props, ref) => {
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
-        personID = (clientInfo.PersonID !== null) ? clientInfo.PersonID : '';
+        personID = (clientInfo.ID !== null) ? clientInfo.PersonID : '';
+        clientCreatedDate = (clientInfo.CreatedDate !== null) ? clientInfo.CreatedDate : '';
+        clientCreatedBy = (clientInfo.CreatedBy !== null) ? clientInfo.CreatedBy : '';
+        clientUpdatedDate = (clientInfo.UpdatedDate !== null) ? clientInfo.UpdatedDate : '';
+        clientUpdatedBy = (clientInfo.UpdatedBy !== null) ? clientInfo.UpdatedBy : '';
 
         //get the birthdate in UTC format- the datepicker plugin needs it that way
         let birthDateJavascriptDateObject = new Date(clientInfo.DOB);
@@ -65,7 +75,7 @@ const Info = forwardRef((props, ref) => {
         saveButtonShow = false;
     } else {
         saveButtonShow = true;
-
+        
     }
 
     //for validation
@@ -84,6 +94,13 @@ const Info = forwardRef((props, ref) => {
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
     const [currentAge, setCurrentAge] = useState(diffInYears);
+    const [ID, setPersonID] = useState(personID);
+    const [createdDate, setCreatedDate] = useState(createdDate);
+    const [createdBy, setCreatedBy] = useState(createdBy);
+    const [updatedDate, setUpdatedDate] = useState(updatedDate);
+    const [updatedBy, setUpdatedBy] = useState(updatedBy);
+
+    const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(saveButtonShow);
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
@@ -96,7 +113,6 @@ const Info = forwardRef((props, ref) => {
     //Race dropddown
     const [isRaceDropdownRequired, setIsRaceDropdownRequired] = useState(false);
     const [raceDdlErrorDivCss, setRaceDdlErrorDivCss] = useState('invalid-feedback');
-
 
     const [genderValues, setGenderValues] = useState([]);
     const [suffixValues, setSuffixValues] = useState([]);
@@ -119,22 +135,36 @@ const Info = forwardRef((props, ref) => {
     //variables to hold previous state- for when a value changes
     const [prevLastName, setPrevLastName] = useState(clientLastName);
     const [prevFirstName, setPrevFirstName] = useState(clientFirstName);
-    const [prevMiddleName] = useState(clientMiddleName);
-    const [prevSsn] = useState(clientSSN);
-    const [prevFbiNcicNumber] = useState(clientFbiNcic);
-    const [prevBirthDate] = useState(utcBirthDate);
-    const [prevStateVcin] = useState(clientStateVcin);
-    const [prevAlias] = useState(clientAlias);
-    const [prevGenderID] = useState(clientGenderID);
-    const [prevRaceID] = useState(clientRaceID);
-    const [prevSuffixID] = useState(clientSuffixID);
+    const [prevMiddleName, setPrevMiddleName] = useState(clientMiddleName);
+    const [prevSsn, setPrevSsn] = useState(clientSSN);
+    const [prevFbiNcicNumber, setPrevFbiNcicNumber] = useState(clientFbiNcic);
+    const [prevBirthDate, setPrevBirthDate ] = useState(utcBirthDate);
+    const [prevStateVcin, setPrevStateVcin] = useState(clientStateVcin);
+    const [prevAlias, setPrevAlias] = useState(clientAlias);
+    const [prevGenderID, setPrevGenderId] = useState(clientGenderID);
+    const [prevRaceID, setPrevRaceId] = useState(clientRaceID);
+    const [prevSuffixID, setPrevSuffixID] = useState(clientSuffixID);
     const [prevGenderDescription, setPrevGenderDescription] = useState(clientGenderDescription);
     const [prevRaceDescription, setPrevRaceDescription] = useState(clientRaceDescription);
     const [prevSuffixDescription, setPrevSuffixDescription] = useState(clientSuffixDescription);
 
+    //Audit details
+    const [prevID, setPrevId] = useState(personID);
+    const [prevCreatedDate, setPrevCreatedDate] = useState(clientCreatedDate);
+    const [prevCreatedBy, setPrevCreatedBy] = useState(clientCreatedBy);
+    const [prevUpdatedDate, setPrevUpdatedDate] = useState(clientUpdatedDate);
+    const [prevUpdatedBy, setPrevUpdatedBy ] = useState(clientUpdatedBy);
+
     const [formClass, setFormClass] = useState('needs-validation');
 
+    //Modal window
+    const [modal, setModal] = useState(false);
+    const [mergeOptions, setMergeOptions ] = useState([]);
+    const toggle = () => setModal(!modal);
+    const [mergeModalTableRows, setMergeModalTableRows] = useState('');
 
+
+  
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
     useImperativeHandle(ref, () => ({
@@ -143,6 +173,11 @@ const Info = forwardRef((props, ref) => {
             let utcBirthDate = convertDateToUtcFormat(birthDate);
 
             setBirthDate(utcBirthDate);
+        },
+
+        //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
+        clearForm() {
+            resetForm();
         }
     }));
 
@@ -160,10 +195,24 @@ const Info = forwardRef((props, ref) => {
         setGenderID(clientGenderID);
         setRaceID(clientRaceID);
         setCurrentAge(diffInYears);
-
+        
+        setIsSaveButtonVisible(false);
         //TODO:need to update the prev variables as well for the reset button
-        setPrevFirstName(clientFirstName);
-        setPrevLastName(clientLastName);
+        // setPrevFirstName(clientFirstName);
+        // setPrevLastName(clientLastName);
+        // setPrevSsn(clientSSN);
+        // setPrevFbiNcicNumber(clientFbiNcic);
+        // setPrevBirthDate(utcBirthDate);
+        // setPrevStateVcin(clientStateVcin);
+        // setPrevAlias(clientAlias);
+        // setPrevGenderId(clientGenderID);
+        // setPrevRaceId(clientRaceID);
+        // setPrevSuffixID(clientSuffixID);
+        
+        // setPrevCreatedDate(clientCreatedDate);
+        // setPrevCreatedDate(clientCreatedBy);
+        // setPrevUpdatedDate(clientUpdatedDate);
+        // setPrevUpdatedBy(clientUpdatedBy);
 
         if (state.isNewClient) {
 
@@ -311,6 +360,10 @@ const Info = forwardRef((props, ref) => {
 
     function handleDatePickerChange(birthDate) {
 
+        if (birthDate.date === null) {
+            return;
+        }
+
         let isValid = isDateofBirthValid(birthDate);
 
         if (!isValid) {
@@ -349,7 +402,11 @@ const Info = forwardRef((props, ref) => {
         setMiddleName(prevMiddleName);
         setSSN(prevSsn);
         setFbiNcicNumber(prevFbiNcicNumber);
+        
+        utcBirthDate = new Date();   
         setBirthDate(utcBirthDate);
+        setCurrentAge('');
+        
         setStateVcin(prevStateVcin);
         setAlias(prevAlias);
 
@@ -359,6 +416,10 @@ const Info = forwardRef((props, ref) => {
         setGenderDescription(prevGenderDescription);
         setRaceDescription(prevRaceDescription);
         setSuffixDescription(prevSuffixDescription);
+
+        //setCurrentAge('');
+        //setPersonID('');
+
     }
 
     //this will fire when submission of the form is successful
@@ -395,44 +456,190 @@ const Info = forwardRef((props, ref) => {
         let currentDate = new Date();
         //all data is valid
         if (lastName !== '' && firstName !== '' && birthDate < currentDate && raceID !== '' && genderID !== '') {
-            //they can save or update    
-            //console.log(lastName);
-
-            //console.log(firstName);
-            //console.log(birthDate);
-            //console.log(genderID);
-            //console.log(raceID);
 
             let id = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
 
             let apiAddress = sessionStorage.getItem("baseApiAddress");
-            //let fullPersonAddress = `${apiAddress}/api/${api}/Person`;
+            let fullPersonAddress = `${apiAddress}/api/Person`;
             let sessionStorageData = getSessionData();
 
-            alert(id);
+            let postData = {
+                LastName: lastName,
+                FirstName: firstName,
+                MiddleName: middleName,
+                SuffixID: suffixID,
+                StateORVCIN: stateVcin,
+                FBINCIC: fbiNcicNumber,
+                Alias: alias,
+                DOB: birthDate,
+                RaceID: raceID,
+                GenderID: genderID,
+                SSN: ssn,
+                Active: true,
+                UniqueID: id,
+            }
+
             //they already exist, and this is an update
-            if (personID !== '') {
-                //make a PUT call with all of the parameters
-                // fetch(fullPersonAddress, {
-                //     //mode: 'cors',
-                //     method: 'PUT',
-                //     headers: {
-                //         'Authorization': 'Bearer ' + sessionStorageData.Token
-                //     }
-                // }).then(result => result.json());
+            if (ID !== '') {
+       
+                let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+                alert('The Unique License Number is: ' + uniqueID);
 
+                UpdateClient(fullPersonAddress, postData);
 
             }
-            else //this is a new client,
+            else //this is a new client
             {
+                postData.CreatedDate =  new Date();
+                postData.CreatedBy = sessionStorageData.CurrentUser;
+                postData.UpdatedDate = new Date();
+                postData.UpdatedBy = sessionStorageData.CurrentUser;
 
+                let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+
+                alert('The Unique License Number is: ' + uniqueID);
+
+                let duplicatePersonsAddress = `${apiAddress}/api/Person/GetduplicatePersons/${uniqueID}`;
+
+                fetch(duplicatePersonsAddress, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorageData.Token
+                    }
+                    //body: JSON.stringify(postData)
+                })
+                .then(result => result.json())
+                .then(result => {
+                    console.log(result); 
+
+                    //if there are duplicates returned, display them on the modal
+                    if (result.length > 0 ) {
+                        
+                    }
+                   
+                    //no duplicates: should be good to go to update the UniqueIds for the addded person
+                    else { 
+
+                        CreateNewClient(postData, uniqueID);
+                    }
+
+                });
             }
-
 
             setHideRaceError(true);
             setHideGenderError(true);
         }
+    }
 
+    function UpdateClient(fullPersonAddress, postData) {
+        let sessionStorageData = getSessionData();
+
+        postData.CreatedDate = createdDate;
+        postData.CreatedBy = createdBy;
+        postData.UpdatedDate = updatedDate;
+        postData.UpdatedBy = updatedBy;
+        postData.ID = ID;
+
+         //make a PUT call with all of the parameters
+         fetch(fullPersonAddress, {
+            //mode: 'cors',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(postData)
+        })
+        .then(result => result.json())
+        .then(result => {
+            props.createNotification('The client profile was successfully updated.');
+        });
+    }
+
+
+    function CreateNewClient(postData, uniqueID){
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let createPersonAddress = `${apiAddress}/api/Person`;
+        let sessionStorageData = getSessionData();
+
+        fetch(createPersonAddress, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+        },
+            body: JSON.stringify(postData)
+        })
+        .then(result => result.json())
+        .then(savedPersonResult => {
+
+            //if the return result is "SSN", then a record with this SSN already exists in the database
+            if (savedPersonResult === "SSN") {
+                props.createErrorNotification("A record with this social security number already exists in the database.");
+                return;
+            }
+
+            //console.log('the newly created');
+            //console.log(savedPersonResult);
+        
+            //update unique ID for the newly added person
+            let uniqueIdPostData = [];
+
+            uniqueIdPostData[0] = {
+                PersonId: savedPersonResult.PersonID,
+                UniqueId: uniqueID
+            }
+
+            let listToUpdate = {
+                "list": uniqueIdPostData
+            }
+
+            let updateUniquIdUrl = `${apiAddress}/api/Person/UpdateAlluniqueIds`;
+
+            fetch(updateUniquIdUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorageData.Token
+                },
+                body: JSON.stringify(listToUpdate)
+            }).then(result => {
+                
+           
+
+                //need to update the state with the return result
+
+                let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
+                let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
+                let diffInYears = calculateAge(birthDateJavascriptDateObject);
+
+                setLastName(savedPersonResult.Person.LastName);
+                setFirstName(savedPersonResult.Person.FirstName);
+                setMiddleName(savedPersonResult.Person.MiddleName);
+                setSuffixID(savedPersonResult.Person.SuffixID);
+                setSSN(savedPersonResult.Person.SSN);
+                setFbiNcicNumber(savedPersonResult.Person.FBINCIC);
+                setBirthDate(utcBirthDate);
+                setStateVcin(savedPersonResult.Person.StateORVCIN);
+                setAlias(savedPersonResult.Person.Alias);
+                setGenderID(savedPersonResult.Person.GenderID);
+                setRaceID(savedPersonResult.Person.RaceID);
+                setCurrentAge(diffInYears);
+                setPersonID(savedPersonResult.PersonID);
+                setCreatedDate(savedPersonResult.Person.CreatedDate);
+                setCreatedBy(savedPersonResult.Person.CreatedBy);
+                setUpdatedDate(savedPersonResult.Person.UpdatedDate);
+                setUpdatedBy(savedPersonResult.Person.UpdatedBy);
+
+                //saveButtonShow = false;
+                setIsSaveButtonVisible(false);
+                
+                props.createNotification('The client profile was successfully created.');
+            });
+            
+        });
     }
 
 
@@ -485,7 +692,7 @@ const Info = forwardRef((props, ref) => {
     }
 
     let buttonType;
-    if (saveButtonShow) {
+    if (isSaveButtonVisible) {
 
         buttonType = <div className="col-auto">
             <button type="button" onClick={TriggerValidationHandler} className="btn btn-primary mb-2">Save</button>
@@ -523,6 +730,7 @@ const Info = forwardRef((props, ref) => {
         );
     }
 
+  
 
     return <div>
         <br></br>
@@ -635,6 +843,7 @@ const Info = forwardRef((props, ref) => {
                             required={isBirthDateRequired}
                             onChange={date => handleDatePickerChange({ date })}
                             className="form-control"
+                            strictParsing
                         />
                         <div className={dobErrorDivCss}>Please enter a valid birth date.</div>
                     </div>
@@ -702,9 +911,30 @@ const Info = forwardRef((props, ref) => {
                 </div>
             </div>
         </form>
-        <br></br>
-        {state.count}
-        {state.message}
+        <Modal size="lg" isOpen={modal} toggle={toggle}>
+                  <ModalHeader toggle={toggle}>Duplicates</ModalHeader>
+                  <ModalBody>
+                    <table id="mergeTable" className="table">
+                      <thead>
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">First Name</th>
+                          <th scope="col">Last Name</th>
+                          <th scope="col">Middle Name</th>
+                          <th scope="col">Date of Birth</th>
+                          <th scope="col">Gender</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {mergeModalTableRows}
+                      </tbody>
+                    </table>
+                  </ModalBody>
+                  <ModalFooter>
+                    {/* <Button color="primary" onClick={mergeProfiles}>Merge Services</Button>{' '} */}
+                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                  </ModalFooter>
+                </Modal>
     </div>;
 
 });
