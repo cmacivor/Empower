@@ -159,9 +159,9 @@ const Info = forwardRef((props, ref) => {
 
     //Modal window
     const [modal, setModal] = useState(false);
+    const [mergeModalTableRows, setMergeModalTableRows] = useState('');
     const [mergeOptions, setMergeOptions ] = useState([]);
     const toggle = () => setModal(!modal);
-    const [mergeModalTableRows, setMergeModalTableRows] = useState('');
 
 
   
@@ -181,7 +181,43 @@ const Info = forwardRef((props, ref) => {
         }
     }));
 
+    function generateMergeCandidateRows() {
+        let mergeCandidateRows = [];
+        if (mergeOptions.length > 0) {
+  
+          mergeOptions.forEach(function(item) {
+          
+        //    let rowsFromSearchResult = mergeCandidateRows.filter(function(rowFromSearchResultItem) {
+        //       return rowFromSearchResultItem.PersonID === item.ID
+        //    });  
+           //console.log(item);
+           //console.log(rowsFromSearchResult);
+        
+            let clientProfileId = item.ID;
 
+                mergeCandidateRows.push(
+                  <tr key={item.ID}>
+                    <td><input type="checkbox" onChange={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} /></td>
+                    <td>{item.FirstName}</td>
+                    <td>{item.LastName}</td>
+                    <td>{item.MiddleName}</td>
+                    <td>{item.DOB}</td>
+                    <td>{item.Gender.Name}</td>
+                  </tr>
+                );
+
+          });
+  
+          return mergeCandidateRows;
+        }
+      }
+
+      function mergeCandidateCheckBoxClickHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('data-id');
+        //mergeCandidateSelections.push(selectedValue);
+        //setMergeCandidateSelections(mergeCandidateSelections);
+        console.log(selectedValue);
+      }
 
 
     //this will re-render the first name, last name, middle name, etc each time something changes, but NOT the dropdown values- those are handled in the select event handlers.
@@ -220,6 +256,12 @@ const Info = forwardRef((props, ref) => {
             let birthDateUTC = convertDateToUtcFormat(birthDateReset);
             setBirthDate(birthDateUTC);
         }
+
+        if (mergeOptions.length > 0 ) {
+            let tableRows = generateMergeCandidateRows();
+            setMergeModalTableRows(tableRows);
+            toggle();
+          }
 
 
         Api.getConfigDataByType("Gender").then(options => {
@@ -279,7 +321,7 @@ const Info = forwardRef((props, ref) => {
         setRaceDescription(clientRaceDescription);
 
 
-    }, [clientFirstName, clientLastName, clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+    }, [clientFirstName, clientLastName, clientRaceDescription, clientGenderDescription, mergeOptions]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
     function calculateAge(birthDate) {
         let difference = moment(new Date()).diff(birthDate);
@@ -517,7 +559,9 @@ const Info = forwardRef((props, ref) => {
 
                     //if there are duplicates returned, display them on the modal
                     if (result.length > 0 ) {
-                        
+                        setMergeOptions(result);
+                        //setMergeModalTableRows(result);
+                        //toggle();
                     }
                    
                     //no duplicates: should be good to go to update the UniqueIds for the addded person
