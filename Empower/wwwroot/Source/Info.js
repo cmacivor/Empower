@@ -217,7 +217,46 @@ const Info = forwardRef((props, ref) => {
         let selectedValue = event.currentTarget.getAttribute('data-id');
         //mergeCandidateSelections.push(selectedValue);
         //setMergeCandidateSelections(mergeCandidateSelections);
-        console.log(selectedValue);
+
+       // console.log(selectedValue);
+
+        let sessionStorageData = getSessionData();
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        
+        let clientProfileAddress = `${apiAddress}/api/ClientProfile/${selectedValue}`;
+
+        try
+        {
+           var promise = fetch(clientProfileAddress, {
+                method: 'get',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorageData.Token 
+                }               
+            }); 
+
+            promise.then(result =>  {
+                if (result.status === 200) {
+                    return result.json();
+                
+                } else {
+                    //return result.json();
+                    props.createErrorNotification("an error occurred while retrieving the data.");
+                } 
+    
+            }).then(finalResult => {
+                console.log('the return result is: ');
+                console.log(finalResult);
+                //SetClientProfile(finalResult);
+                //dispatch( { type: "existingClient"} ); 
+            });
+        }
+        catch(error)
+        {
+            console.log(error);
+            alert('an error occurred while retrieving the Client Profile;');
+        }
       }
 
 
