@@ -197,7 +197,8 @@ const Info = forwardRef((props, ref) => {
 
                 mergeCandidateRows.push(
                   <tr key={item.ID}>
-                    <td><input type="checkbox" onChange={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} /></td>
+                    {/* <td><input type="checkbox" onChange={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} /></td> */}
+                    <td><input type="button" className="btn btn-info btn-sm" onClick={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} value="Select" /></td>
                     <td>{item.FirstName}</td>
                     <td>{item.LastName}</td>
                     <td>{item.MiddleName}</td>
