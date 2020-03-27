@@ -57,7 +57,7 @@ const Info = forwardRef((props, ref) => {
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
-        personID = (clientInfo.ID !== null) ? clientInfo.PersonID : '';
+        personID = (clientInfo.ID !== null) ? clientInfo.ID : '';
         clientCreatedDate = (clientInfo.CreatedDate !== null) ? clientInfo.CreatedDate : '';
         clientCreatedBy = (clientInfo.CreatedBy !== null) ? clientInfo.CreatedBy : '';
         clientUpdatedDate = (clientInfo.UpdatedDate !== null) ? clientInfo.UpdatedDate : '';
@@ -246,8 +246,39 @@ const Info = forwardRef((props, ref) => {
                 } 
     
             }).then(finalResult => {
-                console.log('the return result is: ');
+                console.log('this is the final update');
                 console.log(finalResult);
+
+                let person = finalResult.ClientProfile.Person;
+                
+                let birthDateJavascriptDateObject = new Date(person.DOB);
+                let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
+                let diffInYears = calculateAge(birthDateJavascriptDateObject);
+
+                setPersonID(person.ID);
+                setLastName(person.LastName);
+                setFirstName(person.FirstName);
+                setMiddleName(person.MiddleName);
+                setSuffixID(person.SuffixID);
+                setRaceID(person.RaceID);
+                setRaceDescription(person.Race.Description);
+                setStateVcin(person.StateORVCIN);
+                setFbiNcicNumber(person.FBINCIC);
+                setBirthDate(utcBirthDate); 
+                setGenderID(person.GenderID);
+                setGenderDescription(person.Gender.Description);
+                setCurrentAge(diffInYears);
+
+                setSSN(person.SSN);
+                setCreatedDate(person.CreatedDate);
+                setCreatedBy(person.CreatedBy);
+                setUpdatedDate(new Date()); 
+                setUpdatedBy(sessionStorageData.CurrentUser);
+
+                toggle();
+
+                //console.log('the return result is: ');
+                //console.log(finalResult);
                 //SetClientProfile(finalResult);
                 //dispatch( { type: "existingClient"} ); 
             });
@@ -271,7 +302,8 @@ const Info = forwardRef((props, ref) => {
         setGenderID(clientGenderID);
         setRaceID(clientRaceID);
         setCurrentAge(diffInYears);
-        
+        setPersonID(personID);
+
         setIsSaveButtonVisible(false);
         //TODO:need to update the prev variables as well for the reset button
         // setPrevFirstName(clientFirstName);
