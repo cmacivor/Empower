@@ -95,10 +95,10 @@ const Info = forwardRef((props, ref) => {
     const [raceID, setRaceID] = useState(clientRaceID);
     const [currentAge, setCurrentAge] = useState(diffInYears);
     const [ID, setPersonID] = useState(personID);
-    const [createdDate, setCreatedDate] = useState(createdDate);
-    const [createdBy, setCreatedBy] = useState(createdBy);
-    const [updatedDate, setUpdatedDate] = useState(updatedDate);
-    const [updatedBy, setUpdatedBy] = useState(updatedBy);
+    const [createdDate, setCreatedDate] = useState(clientCreatedDate);
+    const [createdBy, setCreatedBy] = useState(clientCreatedBy);
+    const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
+    const [updatedBy, setUpdatedBy] = useState(clientUpdatedBy);
 
     const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(saveButtonShow);
 
@@ -302,6 +302,9 @@ const Info = forwardRef((props, ref) => {
         setGenderID(clientGenderID);
         setRaceID(clientRaceID);
         setCurrentAge(diffInYears);
+        setCreatedDate(clientCreatedDate);
+        setCreatedBy(clientCreatedBy);
+        
         setPersonID(personID);
 
         setIsSaveButtonVisible(false);
@@ -655,8 +658,8 @@ const Info = forwardRef((props, ref) => {
 
         postData.CreatedDate = createdDate;
         postData.CreatedBy = createdBy;
-        postData.UpdatedDate = updatedDate;
-        postData.UpdatedBy = updatedBy;
+        postData.UpdatedDate = new Date();
+        postData.UpdatedBy = sessionStorageData.CurrentUser
         postData.ID = ID;
 
          //make a PUT call with all of the parameters
