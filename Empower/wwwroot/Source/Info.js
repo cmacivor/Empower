@@ -163,7 +163,7 @@ const Info = forwardRef((props, ref) => {
     const [modal, setModal] = useState(false);
     //const [mergeModalTableRows, setMergeModalTableRows] = useState('');
     const [mergeOptions, setMergeOptions ] = useState([]);
-    const toggle = () => setModal(!modal);
+    //const toggle = () => setModal(!modal);
     const modalBodyRef = React.createRef();
 
   
@@ -183,6 +183,14 @@ const Info = forwardRef((props, ref) => {
         }
     }));
 
+    function toggle() {
+        if (!modal) {
+            setModal(true);
+        } else {
+            setModal(false);
+        }
+    }
+
     function generateMergeCandidateRows(mergeOptions) {
         console.log(mergeOptions);
 
@@ -196,7 +204,7 @@ const Info = forwardRef((props, ref) => {
             checkBox.setAttribute("type", "checkbox");
             checkBox.setAttribute("data-id", element.ID);
             //checkBox.setAttribute("onchange", mergeCandidateCheckBoxClickHandler(event));
-            checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event); }, false);
+            checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event); toggle(); }, false);
             checkboxCell.appendChild(checkBox);
 
             //Last Name
@@ -287,7 +295,7 @@ const Info = forwardRef((props, ref) => {
                 setUpdatedDate(new Date()); 
                 setUpdatedBy(sessionStorageData.CurrentUser);
 
-                toggle();
+
 
             });
         }
@@ -296,6 +304,8 @@ const Info = forwardRef((props, ref) => {
             console.log(error);
             alert('an error occurred while retrieving the Client Profile;');
         }
+
+        //toggle();
       }
 
 
@@ -614,37 +624,57 @@ const Info = forwardRef((props, ref) => {
 
                 alert('The Unique License Number is: ' + uniqueID);
 
-                let duplicatePersonsAddress = `${apiAddress}/api/Person/GetduplicatePersons/${uniqueID}`;
-
-                fetch(duplicatePersonsAddress, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + sessionStorageData.Token
-                    }
-                })
-                .then(result => result.json())
-                .then(result => {
-                    console.log(result); 
-
-                    //if there are duplicates returned, display them on the modal
+                let duplicatesPromise = getDuplicateClients(apiAddress, uniqueID, sessionStorageData);
+                duplicatesPromise.then(result => {
                     if (result.length > 0 ) {
                         toggle();
                         generateMergeCandidateRows(result);
-                    }
-                    //no duplicates: should be good to go to update the UniqueIds for the addded person
-                    else { 
-
+                    } else {
                         CreateNewClient(postData, uniqueID);
                     }
-
-                });
+                })
+                // if (duplicates.length > 0) {
+                //     toggle();
+                //     generateMergeCandidateRows(duplicates);
+                // } else {
+                //     CreateNewClient(postData, uniqueID);
+                // }
             }
 
             setHideRaceError(true);
             setHideGenderError(true);
         }
     }
+
+    function getDuplicateClients(apiAddress, uniqueID, sessionStorageData) {
+
+        let duplicatePersonsAddress = `${apiAddress}/api/Person/GetduplicatePersons/${uniqueID}`;
+
+       return  fetch(duplicatePersonsAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        })
+        .then(result => result.json());
+        // .then(result => {
+        //     console.log(result); 
+
+        //     //if there are duplicates returned, display them on the modal
+        //     if (result.length > 0 ) {
+        //         toggle();
+        //         generateMergeCandidateRows(result);
+        //     }
+        //     //no duplicates: should be good to go to update the UniqueIds for the addded person
+        //     else { 
+
+        //         CreateNewClient(postData, uniqueID);
+        //     }
+
+        // });
+    }
+
 
     function UpdateClient(fullPersonAddress, postData) {
         let sessionStorageData = getSessionData();
