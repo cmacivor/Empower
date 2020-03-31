@@ -226,55 +226,12 @@ const Info = forwardRef((props, ref) => {
 
         });
 
-       
-
-        // let rowString = '';
-        // mergeOptions.array.forEach(element => {
-        //     rowString += '<tr>' + element.FirstName + '</tr>'
-        // });
-
-
-        //console.log(rowString);
-
-        //let mergeCandidateRows = [];
-        // if (mergeOptions.length > 0) {
-  
-        //   mergeOptions.forEach(function(item) {
-        
-        //     let clientProfileId = item.ID;
-
-        //         mergeCandidateRows.push(
-        //           <tr key={item.ID}>
-        //             {/* <td><input type="checkbox" onChange={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} /></td> */}
-        //             <td><input type="button" className="btn btn-info btn-sm" onClick={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} value="Select" /></td>
-        //             <td>{item.FirstName}</td>
-        //             <td>{item.LastName}</td>
-        //             <td>{item.MiddleName}</td>
-        //             <td>{item.DOB}</td>
-        //             <td>{item.Gender.Name}</td>
-        //           </tr>
-        //         );
-        //   });
-
-        //   //return mergeCandidateRows;
-        // }
-
       }
 
       function mergeCandidateCheckBoxClickHandler(event) {
-        //let selectedValue = event.currentTarget.getAttribute('data-id');
-
-        //console.log(event.currentTarget);
-
-        //console.log(event.currentTarget.childNodes[0]);
         
         let checkbox =  event.currentTarget.childNodes[0];
         let selectedValue = checkbox.getAttribute('data-id'); 
-
-        //mergeCandidateSelections.push(selectedValue);
-        //setMergeCandidateSelections(mergeCandidateSelections);
-
-       // console.log(selectedValue);
 
         let sessionStorageData = getSessionData();
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -297,13 +254,12 @@ const Info = forwardRef((props, ref) => {
                     return result.json();
                 
                 } else {
-                    //return result.json();
                     props.createErrorNotification("an error occurred while retrieving the data.");
                 } 
     
             }).then(finalResult => {
-                console.log('this is the final update');
-                console.log(finalResult);
+                //console.log('this is the final update');
+                //console.log(finalResult);
 
                 let person = finalResult.ClientProfile.Person;
                 
@@ -340,8 +296,6 @@ const Info = forwardRef((props, ref) => {
             console.log(error);
             alert('an error occurred while retrieving the Client Profile;');
         }
-
-
       }
 
 
@@ -386,12 +340,7 @@ const Info = forwardRef((props, ref) => {
             setBirthDate(birthDateUTC);
         }
 
-        // if (mergeOptions.length > 0 ) {
-        //     let tableRows = generateMergeCandidateRows();
-        //     setMergeModalTableRows(tableRows);
-        //     toggle();
-        //   }
-
+    
 
         Api.getConfigDataByType("Gender").then(options => {
             //populate the options
@@ -556,9 +505,6 @@ const Info = forwardRef((props, ref) => {
 
         let isValid = isValidDate(birthDate);
 
-        //let today = new Date();
-        //let isLessThanCurrent = (birthDate < today);
-
         if (!isValid) {
             return false;
         }
@@ -589,10 +535,6 @@ const Info = forwardRef((props, ref) => {
         setSuffixDescription(prevSuffixDescription);
 
         setPersonID(prevID);
-
-        //setCurrentAge('');
-        //setPersonID('');
-
     }
 
     //this will fire when submission of the form is successful
@@ -680,7 +622,6 @@ const Info = forwardRef((props, ref) => {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + sessionStorageData.Token
                     }
-                    //body: JSON.stringify(postData)
                 })
                 .then(result => result.json())
                 .then(result => {
@@ -690,18 +631,7 @@ const Info = forwardRef((props, ref) => {
                     if (result.length > 0 ) {
                         toggle();
                         generateMergeCandidateRows(result);
-                        
-                        //modalBodyRef.current
-                        //setMergeOptions(result);
-                        //setMergeModalTableRows(result);
-                        //toggle();
-
-                        //let tbody = findDOMNode(modalBodyRef.current);
-                        //let $tbody = $(tbody);
-                        
-                    
                     }
-                   
                     //no duplicates: should be good to go to update the UniqueIds for the addded person
                     else { 
 
@@ -764,9 +694,6 @@ const Info = forwardRef((props, ref) => {
                 props.createErrorNotification("A record with this social security number already exists in the database.");
                 return;
             }
-
-            //console.log('the newly created');
-            //console.log(savedPersonResult);
         
             //update unique ID for the newly added person
             let uniqueIdPostData = [];
@@ -791,10 +718,7 @@ const Info = forwardRef((props, ref) => {
                 body: JSON.stringify(listToUpdate)
             }).then(result => {
                 
-           
-
                 //need to update the state with the return result
-
                 let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
                 let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
                 let diffInYears = calculateAge(birthDateJavascriptDateObject);
@@ -976,15 +900,6 @@ const Info = forwardRef((props, ref) => {
                             {suffixValueOptions}
                         </div>
                     </div>
-                    {/* <SuffixDropdown onSelectSuffix={handleSuffixChange} selected={props.infoTabSuffix} />           */}
-                    {/* <DropDown
-                                onSelectValue={handleSuffixChange}
-                                onSelectValueDescription={handleSuffixDescriptionChange}
-                                selected={suffixID}
-                                valueDescription={suffixDescription}
-                                type={"suffix"}
-                                isRequired={true}>
-                            </DropDown> */}
                 </div>
             </div>
             <div className="form-row">
@@ -1057,15 +972,6 @@ const Info = forwardRef((props, ref) => {
                         </div>
                     </div>
                     {hideGenderError || <div className='errorDiv'>Please select a value.</div>}
-                    {/* <DropDown
-                                onSelectValue={handleGenderChange}
-                                onSelectValueDescription={handleGenderDescriptionChange}
-                                selected={genderID}
-                                valueDescription={genderDescription}
-                                values={genderValues}
-                                isRequired={true}>
-                            </DropDown> */}
-
                 </div>
                 <div className="col-4">
                     <label><strong>Race/Ethnicity*</strong></label>
@@ -1078,14 +984,6 @@ const Info = forwardRef((props, ref) => {
                         </div>
                     </div>
                     {hideRaceError || <div className='errorDiv'>Please select a value.</div>}
-                    {/* <DropDown
-                                onSelectValue={handleRaceChange}
-                                onSelectValueDescription={handleRaceDescriptionChange}
-                                selected={raceID}
-                                valueDescription={raceDescription}
-                                type={"race"}
-                                isRequired={true}>
-                            </DropDown> */}
                 </div>
             </div>
             <div className="form-row float-right">
