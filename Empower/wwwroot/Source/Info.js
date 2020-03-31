@@ -13,6 +13,8 @@ import { Api } from './commonAdmin';
 import { GenerateUniqueID } from './NewClient';
 import { getSessionData } from './commonAdmin';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { findDOMNode } from 'react-dom';
+import $ from 'jquery';
 //const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
@@ -159,10 +161,10 @@ const Info = forwardRef((props, ref) => {
 
     //Modal window
     const [modal, setModal] = useState(false);
-    const [mergeModalTableRows, setMergeModalTableRows] = useState('');
+    //const [mergeModalTableRows, setMergeModalTableRows] = useState('');
     const [mergeOptions, setMergeOptions ] = useState([]);
     const toggle = () => setModal(!modal);
-
+    const modalBodyRef = React.createRef();
 
   
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
@@ -181,40 +183,85 @@ const Info = forwardRef((props, ref) => {
         }
     }));
 
-    function generateMergeCandidateRows() {
-        let mergeCandidateRows = [];
-        if (mergeOptions.length > 0) {
+    function generateMergeCandidateRows(mergeOptions) {
+        console.log(mergeOptions);
+
+        let tableRef = document.getElementById("mergeTable").getElementsByTagName('tbody')[0];
+        mergeOptions.forEach(element => {
+            let newRow = tableRef.insertRow();
+
+            //do a row for the select button
+            let checkboxCell = newRow.insertCell(0);
+            let checkBox = document.createElement("input");
+            checkBox.setAttribute("type", "checkbox");
+            checkBox.setAttribute("data-id", element.ID);
+            //checkBox.setAttribute("onchange", mergeCandidateCheckBoxClickHandler(event));
+            checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event); }, false);
+            checkboxCell.appendChild(checkBox);
+
+            //First Name
+            let firstNameCell = newRow.insertCell(1);
+            let firstNameCellText = document.createTextNode(element.LastName);
+            firstNameCell.appendChild(firstNameCellText);
+
+            //Last Name
+            let lastNameCell = newRow.insertCell(2);
+            let lastNameCellText = document.createTextNode(element.LastName);
+            lastNameCell.appendChild(lastNameCellText);
+
+            //Middle Name
+            let middleNameCell = newRow.insertCell(3);
+            let middleNameeCellText = document.createTextNode(element.MiddleName);
+            middleNameCell.appendChild(middleNameeCellText);
+
+
+        });
+
+       
+
+        // let rowString = '';
+        // mergeOptions.array.forEach(element => {
+        //     rowString += '<tr>' + element.FirstName + '</tr>'
+        // });
+
+
+        //console.log(rowString);
+
+        //let mergeCandidateRows = [];
+        // if (mergeOptions.length > 0) {
   
-          mergeOptions.forEach(function(item) {
-          
-        //    let rowsFromSearchResult = mergeCandidateRows.filter(function(rowFromSearchResultItem) {
-        //       return rowFromSearchResultItem.PersonID === item.ID
-        //    });  
-           //console.log(item);
-           //console.log(rowsFromSearchResult);
+        //   mergeOptions.forEach(function(item) {
         
-            let clientProfileId = item.ID;
+        //     let clientProfileId = item.ID;
 
-                mergeCandidateRows.push(
-                  <tr key={item.ID}>
-                    {/* <td><input type="checkbox" onChange={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} /></td> */}
-                    <td><input type="button" className="btn btn-info btn-sm" onClick={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} value="Select" /></td>
-                    <td>{item.FirstName}</td>
-                    <td>{item.LastName}</td>
-                    <td>{item.MiddleName}</td>
-                    <td>{item.DOB}</td>
-                    <td>{item.Gender.Name}</td>
-                  </tr>
-                );
+        //         mergeCandidateRows.push(
+        //           <tr key={item.ID}>
+        //             {/* <td><input type="checkbox" onChange={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} /></td> */}
+        //             <td><input type="button" className="btn btn-info btn-sm" onClick={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} value="Select" /></td>
+        //             <td>{item.FirstName}</td>
+        //             <td>{item.LastName}</td>
+        //             <td>{item.MiddleName}</td>
+        //             <td>{item.DOB}</td>
+        //             <td>{item.Gender.Name}</td>
+        //           </tr>
+        //         );
+        //   });
 
-          });
-  
-          return mergeCandidateRows;
-        }
+        //   //return mergeCandidateRows;
+        // }
+
       }
 
       function mergeCandidateCheckBoxClickHandler(event) {
-        let selectedValue = event.currentTarget.getAttribute('data-id');
+        //let selectedValue = event.currentTarget.getAttribute('data-id');
+
+        //console.log(event.currentTarget);
+
+        //console.log(event.currentTarget.childNodes[0]);
+        
+        let checkbox =  event.currentTarget.childNodes[0];
+        let selectedValue = checkbox.getAttribute('data-id'); 
+
         //mergeCandidateSelections.push(selectedValue);
         //setMergeCandidateSelections(mergeCandidateSelections);
 
@@ -277,10 +324,6 @@ const Info = forwardRef((props, ref) => {
 
                 toggle();
 
-                //console.log('the return result is: ');
-                //console.log(finalResult);
-                //SetClientProfile(finalResult);
-                //dispatch( { type: "existingClient"} ); 
             });
         }
         catch(error)
@@ -288,6 +331,8 @@ const Info = forwardRef((props, ref) => {
             console.log(error);
             alert('an error occurred while retrieving the Client Profile;');
         }
+
+
       }
 
 
@@ -332,11 +377,11 @@ const Info = forwardRef((props, ref) => {
             setBirthDate(birthDateUTC);
         }
 
-        if (mergeOptions.length > 0 ) {
-            let tableRows = generateMergeCandidateRows();
-            setMergeModalTableRows(tableRows);
-            toggle();
-          }
+        // if (mergeOptions.length > 0 ) {
+        //     let tableRows = generateMergeCandidateRows();
+        //     setMergeModalTableRows(tableRows);
+        //     toggle();
+        //   }
 
 
         Api.getConfigDataByType("Gender").then(options => {
@@ -396,7 +441,7 @@ const Info = forwardRef((props, ref) => {
         setRaceDescription(clientRaceDescription);
 
 
-    }, [clientFirstName, clientLastName, clientRaceDescription, clientGenderDescription, mergeOptions]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+    }, [clientFirstName, clientLastName, clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
     function calculateAge(birthDate) {
         let difference = moment(new Date()).diff(birthDate);
@@ -634,9 +679,18 @@ const Info = forwardRef((props, ref) => {
 
                     //if there are duplicates returned, display them on the modal
                     if (result.length > 0 ) {
-                        setMergeOptions(result);
+                        toggle();
+                        generateMergeCandidateRows(result);
+                        
+                        //modalBodyRef.current
+                        //setMergeOptions(result);
                         //setMergeModalTableRows(result);
                         //toggle();
+
+                        //let tbody = findDOMNode(modalBodyRef.current);
+                        //let $tbody = $(tbody);
+                        
+                    
                     }
                    
                     //no duplicates: should be good to go to update the UniqueIds for the addded person
@@ -1046,8 +1100,9 @@ const Info = forwardRef((props, ref) => {
                           <th scope="col">Gender</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        {mergeModalTableRows}
+                      <tbody ref={modalBodyRef} >
+                       
+                        {/* {mergeModalTableRows} */}
                       </tbody>
                     </table>
                   </ModalBody>
