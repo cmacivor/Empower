@@ -199,21 +199,30 @@ const Info = forwardRef((props, ref) => {
             checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event); }, false);
             checkboxCell.appendChild(checkBox);
 
-            //First Name
-            let firstNameCell = newRow.insertCell(1);
-            let firstNameCellText = document.createTextNode(element.LastName);
-            firstNameCell.appendChild(firstNameCellText);
-
             //Last Name
-            let lastNameCell = newRow.insertCell(2);
+            let lastNameCell = newRow.insertCell(1);
             let lastNameCellText = document.createTextNode(element.LastName);
             lastNameCell.appendChild(lastNameCellText);
+
+            //First Name
+            let firstNameCell = newRow.insertCell(1);
+            let firstNameCellText = document.createTextNode(element.FirstName);
+            firstNameCell.appendChild(firstNameCellText);
 
             //Middle Name
             let middleNameCell = newRow.insertCell(3);
             let middleNameeCellText = document.createTextNode(element.MiddleName);
             middleNameCell.appendChild(middleNameeCellText);
 
+            //DOB
+            let dobCell = newRow.insertCell(4);
+            let dobCellText = document.createTextNode(element.DOB);
+            dobCell.appendChild(dobCellText);
+
+            //Gender
+            let genderCell = newRow.insertCell(5);
+            let genderCellText = document.createTextNode(element.Gender.Description);
+            genderCell.appendChild(genderCellText);
 
         });
 
