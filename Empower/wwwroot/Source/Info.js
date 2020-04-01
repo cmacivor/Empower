@@ -16,6 +16,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { findDOMNode } from 'react-dom';
 import $ from 'jquery';
 import {modal} from 'bootstrap/js/dist/modal';
+import {getSystems} from './Constants';
 //const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
@@ -182,19 +183,26 @@ const Info = forwardRef((props, ref) => {
     }
 
     function generateMergeCandidateRows(mergeOptions) {
-        console.log(mergeOptions);
+    
+        let sessionStorageData = getSessionData();
+        let constants = getSystems();
 
         let tableRef = document.getElementById("mergeTable").getElementsByTagName('tbody')[0];
+        tableRef.innerHTML = "";
         mergeOptions.forEach(element => {
             let newRow = tableRef.insertRow();
 
             //do a row for the select button
             let checkboxCell = newRow.insertCell(0);
             let checkBox = document.createElement("input");
-            checkBox.setAttribute("type", "checkbox");
+            //hide the input if it's not the Juvenile app
+            if ( parseInt(sessionStorageData.SystemID) !== constants.Juvenile) {
+                checkBox.setAttribute("type", "hidden");
+            } else {
+                checkBox.setAttribute("type", "checkbox");
+                checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event);  }, false);
+            }
             checkBox.setAttribute("data-id", element.ID);
-            //checkBox.setAttribute("onchange", mergeCandidateCheckBoxClickHandler(event));
-            checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event);  }, false);
             checkboxCell.appendChild(checkBox);
 
             //Last Name
