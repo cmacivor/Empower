@@ -159,15 +159,7 @@ const Info = forwardRef((props, ref) => {
     const [prevUpdatedBy, setPrevUpdatedBy ] = useState(clientUpdatedBy);
 
     const [formClass, setFormClass] = useState('needs-validation');
-
-    //Modal window
-    //const [modal, setModal] = useState(false);
-    //const [mergeModalTableRows, setMergeModalTableRows] = useState('');
-    const [mergeOptions, setMergeOptions ] = useState([]);
-    //const toggle = () => setModal(!modal);
-    const modalBodyRef = React.createRef();
-    const cancelButtonRef = React.createRef();
-
+    
   
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
@@ -187,12 +179,6 @@ const Info = forwardRef((props, ref) => {
 
     function toggle() {
         $('#mergeCandidatesModal').modal('toggle');
-
-        // if (!modal) {
-        //     setModal(true);
-        // } else {
-        //     setModal(false);
-        // }
     }
 
     function generateMergeCandidateRows(mergeOptions) {
@@ -637,12 +623,6 @@ const Info = forwardRef((props, ref) => {
                         CreateNewClient(postData, uniqueID);
                     }
                 })
-                // if (duplicates.length > 0) {
-                //     toggle();
-                //     generateMergeCandidateRows(duplicates);
-                // } else {
-                //     CreateNewClient(postData, uniqueID);
-                // }
             }
 
             setHideRaceError(true);
@@ -662,21 +642,6 @@ const Info = forwardRef((props, ref) => {
             }
         })
         .then(result => result.json());
-        // .then(result => {
-        //     console.log(result); 
-
-        //     //if there are duplicates returned, display them on the modal
-        //     if (result.length > 0 ) {
-        //         toggle();
-        //         generateMergeCandidateRows(result);
-        //     }
-        //     //no duplicates: should be good to go to update the UniqueIds for the addded person
-        //     else { 
-
-        //         CreateNewClient(postData, uniqueID);
-        //     }
-
-        // });
     }
 
 
@@ -1028,7 +993,7 @@ const Info = forwardRef((props, ref) => {
             </div>
         </form>
         <div className="modal fade" id="mergeCandidatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog" role="document">
+                <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="exampleModalLabel">Duplicates</h5>
@@ -1048,41 +1013,16 @@ const Info = forwardRef((props, ref) => {
                           <th scope="col">Gender</th>
                         </tr>
                       </thead>
-                      <tbody ref={modalBodyRef} >
+                      <tbody>
                       </tbody>
                     </table>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" className="btn btn-primary">Save changes</button>
                     </div>
                     </div>
                 </div>
             </div>
-        {/* <Modal size="lg" isOpen={modal} toggle={toggle}>
-                  <ModalHeader toggle={toggle}>Duplicates</ModalHeader>
-                  <ModalBody>
-                    <table id="mergeTable" className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">First Name</th>
-                          <th scope="col">Last Name</th>
-                          <th scope="col">Middle Name</th>
-                          <th scope="col">Date of Birth</th>
-                          <th scope="col">Gender</th>
-                        </tr>
-                      </thead>
-                      <tbody ref={modalBodyRef} >
-                       
-
-                      </tbody>
-                    </table>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button ref={button => cancelButtonRef} color="secondary" onClick={toggle}>Cancel</Button>
-                  </ModalFooter>
-                </Modal> */}
     </div>;
 
 });
