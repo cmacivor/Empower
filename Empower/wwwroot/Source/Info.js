@@ -15,6 +15,7 @@ import { getSessionData } from './commonAdmin';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { findDOMNode } from 'react-dom';
 import $ from 'jquery';
+import {modal} from 'bootstrap/js/dist/modal';
 //const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
@@ -160,11 +161,12 @@ const Info = forwardRef((props, ref) => {
     const [formClass, setFormClass] = useState('needs-validation');
 
     //Modal window
-    const [modal, setModal] = useState(false);
+    //const [modal, setModal] = useState(false);
     //const [mergeModalTableRows, setMergeModalTableRows] = useState('');
     const [mergeOptions, setMergeOptions ] = useState([]);
     //const toggle = () => setModal(!modal);
     const modalBodyRef = React.createRef();
+    const cancelButtonRef = React.createRef();
 
   
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
@@ -184,11 +186,13 @@ const Info = forwardRef((props, ref) => {
     }));
 
     function toggle() {
-        if (!modal) {
-            setModal(true);
-        } else {
-            setModal(false);
-        }
+        $('#mergeCandidatesModal').modal('toggle');
+
+        // if (!modal) {
+        //     setModal(true);
+        // } else {
+        //     setModal(false);
+        // }
     }
 
     function generateMergeCandidateRows(mergeOptions) {
@@ -204,7 +208,7 @@ const Info = forwardRef((props, ref) => {
             checkBox.setAttribute("type", "checkbox");
             checkBox.setAttribute("data-id", element.ID);
             //checkBox.setAttribute("onchange", mergeCandidateCheckBoxClickHandler(event));
-            checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event); toggle(); }, false);
+            checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event);  }, false);
             checkboxCell.appendChild(checkBox);
 
             //Last Name
@@ -295,7 +299,7 @@ const Info = forwardRef((props, ref) => {
                 setUpdatedDate(new Date()); 
                 setUpdatedBy(sessionStorageData.CurrentUser);
 
-
+                toggle();
 
             });
         }
@@ -1023,7 +1027,39 @@ const Info = forwardRef((props, ref) => {
                 </div>
             </div>
         </form>
-        <Modal size="lg" isOpen={modal} toggle={toggle}>
+        <div className="modal fade" id="mergeCandidatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">Duplicates</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                    <table id="mergeTable" className="table">
+                      <thead>
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">First Name</th>
+                          <th scope="col">Last Name</th>
+                          <th scope="col">Middle Name</th>
+                          <th scope="col">Date of Birth</th>
+                          <th scope="col">Gender</th>
+                        </tr>
+                      </thead>
+                      <tbody ref={modalBodyRef} >
+                      </tbody>
+                    </table>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-primary">Save changes</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        {/* <Modal size="lg" isOpen={modal} toggle={toggle}>
                   <ModalHeader toggle={toggle}>Duplicates</ModalHeader>
                   <ModalBody>
                     <table id="mergeTable" className="table">
@@ -1039,15 +1075,14 @@ const Info = forwardRef((props, ref) => {
                       </thead>
                       <tbody ref={modalBodyRef} >
                        
-                        {/* {mergeModalTableRows} */}
+
                       </tbody>
                     </table>
                   </ModalBody>
                   <ModalFooter>
-                    {/* <Button color="primary" onClick={mergeProfiles}>Merge Services</Button>{' '} */}
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button ref={button => cancelButtonRef} color="secondary" onClick={toggle}>Cancel</Button>
                   </ModalFooter>
-                </Modal>
+                </Modal> */}
     </div>;
 
 });
