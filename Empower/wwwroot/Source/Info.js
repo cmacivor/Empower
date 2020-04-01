@@ -213,8 +213,9 @@ const Info = forwardRef((props, ref) => {
             middleNameCell.appendChild(middleNameeCellText);
 
             //DOB
+            let formattedBirthDate = new Date(element.DOB).toLocaleDateString();
             let dobCell = newRow.insertCell(4);
-            let dobCellText = document.createTextNode(element.DOB);
+            let dobCellText = document.createTextNode(formattedBirthDate);
             dobCell.appendChild(dobCellText);
 
             //Gender
