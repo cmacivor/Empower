@@ -127,6 +127,8 @@ const Info = forwardRef((props, ref) => {
     const [suffixValues, setSuffixValues] = useState([]);
     const [raceValues, setRaceValues] = useState([]);
 
+    const [hideLastNameError, setHideLastNameError] = useState(true);
+    const [hideFirstNameError, setHideFirstNameError] = useState(true);
     const [hideGenderError, setHideGenderError] = useState(true);
     const [hideRaceError, setHideRaceError] = useState(true);
 
@@ -449,10 +451,12 @@ const Info = forwardRef((props, ref) => {
 
         if (field === "txtLastName") {
             setLastName(e.target.value);
+            setHideLastNameError(true);
         }
 
         if (field === "txtFirstName") {
             setFirstName(e.target.value);
+            setHideFirstNameError(true);
         }
 
         if (field === "txtMiddleName") {
@@ -557,13 +561,22 @@ const Info = forwardRef((props, ref) => {
     }
 
     //this will fire when submission of the form is successful
-    const updateButtonClickHandler = (event) => {
-        event.preventDefault();
-    }
+    // const updateButtonClickHandler = (event) => {
+    //     event.preventDefault();
+    // }
 
     const TriggerValidationHandler = () => {
 
         setFormClass('needs-validation was-validated');
+
+        //validate first and last name
+        if (lastName === '') {
+            setHideLastNameError(false);
+        }
+
+        if (lastName === '') {
+            setHideFirstNameError(false);
+        }
 
         //validate the dropdowns
         if (raceID === '') {
@@ -647,6 +660,8 @@ const Info = forwardRef((props, ref) => {
 
             setHideRaceError(true);
             setHideGenderError(true);
+            setHideLastNameError(true);
+            setHideFirstNameError(true);
         }
     }
 
@@ -890,7 +905,7 @@ const Info = forwardRef((props, ref) => {
                     <div className="form-group">
                         <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
                         <input type="text"
-                            ref={register({ required: true, maxLength: 50 })}
+                           
                             value={lastName}
                             onChange={e => infoTabOnChangeHandler(e, "txtLastName")}
                             className="form-control"
@@ -898,7 +913,19 @@ const Info = forwardRef((props, ref) => {
                             name="txtLastName"
                             required>
                         </input>
+                        {hideLastNameError || <div className='errorDiv'>Please enter the last name.</div>}
                         {/* {errors.txtLastName && <div className="invalid-feedback" >This field is required</div>} */}
+
+                        {/* <input type="text"
+                            ref={register({ required: true, maxLength: 50 })}
+                            value={lastName}
+                            onChange={e => infoTabOnChangeHandler(e, "txtLastName")}
+                            className="form-control"
+                            id="txtLastName"
+                            name="txtLastName"
+                            required>
+                        </input> */}
+
                     </div>
                 </div>
                 <div className="col-3">
@@ -913,6 +940,7 @@ const Info = forwardRef((props, ref) => {
                             name="txtFirstName"
                             required>
                         </input>
+                        { hideFirstNameError || <div className='errorDiv'>Please enter the first name.</div> }
                         {/* {errors.txtFirstName && <div className="invalid-feedback" >This field is required</div>} */}
                     </div>
 
@@ -928,7 +956,7 @@ const Info = forwardRef((props, ref) => {
                             id="txtMiddleName"
                             name="txtMiddleName">
                         </input>
-                        {/* {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div>} */}
+                        {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div>}
                     </div>
 
                 </div>
