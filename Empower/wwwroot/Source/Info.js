@@ -602,6 +602,7 @@ const Info = forwardRef((props, ref) => {
                 MiddleName: middleName,
                 SuffixID: suffixID,
                 StateORVCIN: stateVcin,
+                JTS: jts,
                 FBINCIC: fbiNcicNumber,
                 Alias: alias,
                 DOB: birthDate,
@@ -746,6 +747,7 @@ const Info = forwardRef((props, ref) => {
                 setSuffixID(savedPersonResult.Person.SuffixID);
                 setSSN(savedPersonResult.Person.SSN);
                 setFbiNcicNumber(savedPersonResult.Person.FBINCIC);
+                setJts(savedPersonResult.Person.JTC);
                 setBirthDate(utcBirthDate);
                 setStateVcin(savedPersonResult.Person.StateORVCIN);
                 setAlias(savedPersonResult.Person.Alias);
