@@ -64,6 +64,7 @@ const Info = forwardRef((props, ref) => {
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
+        clienttJTS = (clientInfo.JTS !== null) ? clientInfo.JTS : '';
         personID = (clientInfo.ID !== null) ? clientInfo.ID : '';
         clientCreatedDate = (clientInfo.CreatedDate !== null) ? clientInfo.CreatedDate : '';
         clientCreatedBy = (clientInfo.CreatedBy !== null) ? clientInfo.CreatedBy : '';
@@ -97,7 +98,7 @@ const Info = forwardRef((props, ref) => {
     const [fbiNcicNumber, setFbiNcicNumber] = useState(clientFbiNcic);
     const [birthDate, setBirthDate] = useState(utcBirthDate);
     const [stateVcin, setStateVcin] = useState(clientStateVcin);
-    
+    const [jts, setJts] = useState(clienttJTS);
     const [alias, setAlias] = useState(clientAlias);
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
@@ -479,6 +480,10 @@ const Info = forwardRef((props, ref) => {
             setStateVcin(e.target.value);
         }
 
+        if (field === "txtJTS") {
+            setJts(e.target.value);
+        }
+
         if (field === "txtAlias") {
             setAlias(e.target.value);
         }
@@ -828,8 +833,6 @@ const Info = forwardRef((props, ref) => {
 
     //handle whether to show the JTS field (if Juvenile) or State/VCIN (if the others)
     let jtsOrVcin;
-    //let systems = getSystems();
-    //let systemID = getSessionData().SystemID
     if (parseInt(systemID) !== parseInt(systems.Juvenile)) {
 
         jtsOrVcin =  <div className="col-3">
@@ -842,7 +845,7 @@ const Info = forwardRef((props, ref) => {
         jtsOrVcin =  <div className="col-3">
                 <label htmlFor="txtJTS"><strong>JTS Number</strong> </label>
                 <div className="input-group mb-3">
-                    <input type="text" className="form-control" id="txtJTS"></input>
+                    <input type="text" value={jts} onChange={e => infoTabOnChangeHandler(e, "txtJTS")} className="form-control" id="txtJTS"></input>
                 </div>
             </div>;
     }
