@@ -323,6 +323,7 @@ const Info = forwardRef((props, ref) => {
         setSSN(clientSSN);
         setGenderID(clientGenderID);
         setRaceID(clientRaceID);
+        setJts(clienttJTS);
         setCurrentAge(diffInYears);
         setCreatedDate(clientCreatedDate);
         setCreatedBy(clientCreatedBy);
@@ -848,6 +849,7 @@ const Info = forwardRef((props, ref) => {
                 <label htmlFor="txtJTS"><strong>JTS Number</strong> </label>
                 <div className="input-group mb-3">
                     <input type="text" ref={register({ required: true, maxLength: 50 })} value={jts} onChange={e => infoTabOnChangeHandler(e, "txtJTS")} className="form-control" id="txtJTS" name="txtJTS" required></input>
+                    {errors.txtJTS && <div className="invalid-feedback" >This field is required</div>}
                 </div>
             </div>;
     }
