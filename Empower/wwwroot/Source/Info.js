@@ -558,7 +558,7 @@ const Info = forwardRef((props, ref) => {
 
     //this will fire when submission of the form is successful
     const updateButtonClickHandler = (event) => {
-        //event.preventDefault();
+        event.preventDefault();
     }
 
     const TriggerValidationHandler = () => {
@@ -849,7 +849,7 @@ const Info = forwardRef((props, ref) => {
                 <label htmlFor="txtJTS"><strong>JTS Number</strong> </label>
                 <div className="input-group mb-3">
                     <input type="text" ref={register({ required: true, maxLength: 50 })} value={jts} onChange={e => infoTabOnChangeHandler(e, "txtJTS")} className="form-control" id="txtJTS" name="txtJTS" required></input>
-                    {errors.txtJTS && <div className="invalid-feedback" >This field is required</div>}
+                    {/* {errors.txtJTS && <div className="invalid-feedback" >This field is required</div>} */}
                 </div>
             </div>;
     }
@@ -884,7 +884,7 @@ const Info = forwardRef((props, ref) => {
 
     return <div>
         <br></br>
-        <form onSubmit={handleSubmit(updateButtonClickHandler)} className={formClass} noValidate>
+        {/* <form onSubmit={handleSubmit(updateButtonClickHandler)} className={formClass} noValidate> */}
             <div className="form-row">
                 <div className="col-3">
                     <div className="form-group">
@@ -898,7 +898,7 @@ const Info = forwardRef((props, ref) => {
                             name="txtLastName"
                             required>
                         </input>
-                        {errors.txtLastName && <div className="invalid-feedback" >This field is required</div>}
+                        {/* {errors.txtLastName && <div className="invalid-feedback" >This field is required</div>} */}
                     </div>
                 </div>
                 <div className="col-3">
@@ -913,7 +913,7 @@ const Info = forwardRef((props, ref) => {
                             name="txtFirstName"
                             required>
                         </input>
-                        {errors.txtFirstName && <div className="invalid-feedback" >This field is required</div>}
+                        {/* {errors.txtFirstName && <div className="invalid-feedback" >This field is required</div>} */}
                     </div>
 
                 </div>
@@ -928,7 +928,7 @@ const Info = forwardRef((props, ref) => {
                             id="txtMiddleName"
                             name="txtMiddleName">
                         </input>
-                        {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div>}
+                        {/* {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div>} */}
                     </div>
 
                 </div>
@@ -1037,7 +1037,7 @@ const Info = forwardRef((props, ref) => {
                     <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
                 </div>
             </div>
-        </form>
+        {/* </form> */}
         <div className="modal fade" id="mergeCandidatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
