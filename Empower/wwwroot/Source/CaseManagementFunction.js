@@ -87,6 +87,15 @@ const CaseManagementFunction = (props) => {
 
     }
 
+    let infoTabTitle = '';
+    if (parseInt(sessionData.SystemID) === parseInt(systems.Juvenile)) {
+        infoTabTitle = "Juvenile Info";
+    } else if (parseInt(sessionData.SystemID) === parseInt(systems.Adult)) {
+        infoTabTitle = "Adult Info";
+    } else if (parseInt(sessionData.SystemID) === parseInt(systems.OCWB)) {
+        infoTabTitle = "Participant Info";
+    }
+
     return <div>
             {
                 isSpinnerVisible ? 
@@ -118,7 +127,7 @@ const CaseManagementFunction = (props) => {
                            </Search> : <div></div>
                         }                    
                     </Tab>
-                    <Tab eventKey="participantinfo" title="Participant Info" disabled={isTabDisabled}>
+                    <Tab eventKey="participantinfo" title={infoTabTitle} disabled={isTabDisabled}>
                         <Info clientProfile={!state.isNewClient ? clientProfile.Person :  undefined } 
                          ref={infoRef}
                          genderValues={cacheService.genderValues}
