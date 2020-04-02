@@ -355,9 +355,13 @@ const Info = forwardRef((props, ref) => {
             let birthDateReset = new Date();
             let birthDateUTC = convertDateToUtcFormat(birthDateReset);
             setBirthDate(birthDateUTC);
+        } else{
+            setHideLastNameError(true);
+            setHideFirstNameError(true);
+            setHideGenderError(true);
+            setHideRaceError(true);
         }
 
-    
 
         Api.getConfigDataByType("Gender").then(options => {
             //populate the options
