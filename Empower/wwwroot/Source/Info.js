@@ -957,17 +957,21 @@ const Info = forwardRef((props, ref) => {
                         <div className={errorDivCss}>Please enter the SSN in a valid format.</div>
                     </div>
                 </div>
-                <div className="col-3">
-                    <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
-                    <div className="input-group mb-3">
-                        <input type="text"
-                            value={fbiNcicNumber}
-                            onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")}
-                            className="form-control"
-                            id="txtFbiNcicNumber">
-                        </input>
-                    </div>
-                </div>
+                {
+                    parseInt(systemID) !== parseInt(systems.Juvenile) ?
+                    <div className="col-3">
+                        <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text"
+                                value={fbiNcicNumber}
+                                onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")}
+                                className="form-control"
+                                id="txtFbiNcicNumber">
+                            </input>
+                        </div>
+                    </div> : <div></div>
+                }
+         
                 <div className="col-3">
                     <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
                     <div className="inpu-group mb-3">
@@ -1012,13 +1016,16 @@ const Info = forwardRef((props, ref) => {
                         <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
                     </div>
                 </div>*/}
-
-                <div className="col-2">
-                    <label htmlFor="txtAlias"><strong>Alias</strong></label>
-                    <div className="input-group mb-3">
-                        <input type="text" value={alias} onChange={e => infoTabOnChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
-                    </div>
-                </div>
+                {
+                    parseInt(systemID) !== parseInt(systems.Juvenile) ?
+                    <div className="col-2">
+                        <label htmlFor="txtAlias"><strong>Alias</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" value={alias} onChange={e => infoTabOnChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
+                        </div>
+                    </div> : <div></div>
+                }
+              
                 <div className="col-2">
                     <label htmlFor="ddlGender"><strong>Gender*</strong></label>
                     <div className="dropdown">
