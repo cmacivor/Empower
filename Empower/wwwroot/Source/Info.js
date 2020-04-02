@@ -847,7 +847,7 @@ const Info = forwardRef((props, ref) => {
         jtsOrVcin =  <div className="col-3">
                 <label htmlFor="txtJTS"><strong>JTS Number</strong> </label>
                 <div className="input-group mb-3">
-                    <input type="text" value={jts} onChange={e => infoTabOnChangeHandler(e, "txtJTS")} className="form-control" id="txtJTS"></input>
+                    <input type="text" ref={register({ required: true, maxLength: 50 })} value={jts} onChange={e => infoTabOnChangeHandler(e, "txtJTS")} className="form-control" id="txtJTS" name="txtJTS" required></input>
                 </div>
             </div>;
     }
@@ -994,28 +994,6 @@ const Info = forwardRef((props, ref) => {
             </div>
             <div className="form-row">
                 {jtsOrVcin}
-                {/* {
-                    parseInt(getSessionData().SystemID) !== parseInt(getSystems().Juvenile) ? 
-
-                        <div className="col-3">
-                            <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
-                            <div className="input-group mb-3">
-                                <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
-                            </div>
-                        </div> : 
-                        <div className="col-3">
-                            <label htmlFor="txtJTS"><strong>JTS Number</strong> </label>
-                            <div className="input-group mb-3">
-                                <input type="text" className="form-control" id="txtJTS"></input>
-                            </div>
-                        </div>
-                } 
-                <div className="col-3">
-                    <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
-                    <div className="input-group mb-3">
-                        <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
-                    </div>
-                </div>*/}
                 {
                     parseInt(systemID) !== parseInt(systems.Juvenile) ?
                     <div className="col-2">
