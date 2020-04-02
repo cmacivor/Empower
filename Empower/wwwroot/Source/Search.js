@@ -275,6 +275,7 @@ const Search = (props) => {
                 } 
     
             }).then(finalResult => {
+                console.log(finalResult);
                 SetClientProfile(finalResult);
                 dispatch( { type: "existingClient"} ); 
             });

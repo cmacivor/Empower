@@ -31,6 +31,7 @@ const Info = forwardRef((props, ref) => {
     let clientSuffixID = '';
     let clientSSN = '';
     let clientFbiNcic = '';
+    let clienttJTS = '';
     let clientStateVcin = '';
     let clientAlias = '';
     let clientGenderID = '';
@@ -43,7 +44,9 @@ const Info = forwardRef((props, ref) => {
     let clientCreatedBy = '';
     let clientUpdatedDate = '';
     let clientUpdatedBy = '';
-
+    let systemID = getSessionData().SystemID;
+    let systems = getSystems();
+    
 
 
     //the user clicked on a row in the search grid
@@ -94,6 +97,7 @@ const Info = forwardRef((props, ref) => {
     const [fbiNcicNumber, setFbiNcicNumber] = useState(clientFbiNcic);
     const [birthDate, setBirthDate] = useState(utcBirthDate);
     const [stateVcin, setStateVcin] = useState(clientStateVcin);
+    
     const [alias, setAlias] = useState(clientAlias);
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
@@ -807,6 +811,7 @@ const Info = forwardRef((props, ref) => {
 
     }
 
+    //handle whether to show a Save or Update button
     let buttonType;
     if (isSaveButtonVisible) {
 
@@ -820,6 +825,28 @@ const Info = forwardRef((props, ref) => {
             <input type="submit" onClick={TriggerValidationHandler} className="btn btn-primary mb-2" value="Update" />
         </div>;
     }
+
+    //handle whether to show the JTS field (if Juvenile) or State/VCIN (if the others)
+    let jtsOrVcin;
+    //let systems = getSystems();
+    //let systemID = getSessionData().SystemID
+    if (parseInt(systemID) !== parseInt(systems.Juvenile)) {
+
+        jtsOrVcin =  <div className="col-3">
+            <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
+            <div className="input-group mb-3">
+                <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
+            </div>
+        </div>;
+    } else {
+        jtsOrVcin =  <div className="col-3">
+                <label htmlFor="txtJTS"><strong>JTS Number</strong> </label>
+                <div className="input-group mb-3">
+                    <input type="text" className="form-control" id="txtJTS"></input>
+                </div>
+            </div>;
+    }
+
 
 
     //set up the options for the Gender dropdown
@@ -957,12 +984,30 @@ const Info = forwardRef((props, ref) => {
                 </div>
             </div>
             <div className="form-row">
+                {jtsOrVcin}
+                {/* {
+                    parseInt(getSessionData().SystemID) !== parseInt(getSystems().Juvenile) ? 
+
+                        <div className="col-3">
+                            <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
+                            </div>
+                        </div> : 
+                        <div className="col-3">
+                            <label htmlFor="txtJTS"><strong>JTS Number</strong> </label>
+                            <div className="input-group mb-3">
+                                <input type="text" className="form-control" id="txtJTS"></input>
+                            </div>
+                        </div>
+                } 
                 <div className="col-3">
                     <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
                     <div className="input-group mb-3">
                         <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
                     </div>
-                </div>
+                </div>*/}
+
                 <div className="col-2">
                     <label htmlFor="txtAlias"><strong>Alias</strong></label>
                     <div className="input-group mb-3">
