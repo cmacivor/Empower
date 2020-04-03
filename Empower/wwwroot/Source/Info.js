@@ -550,7 +550,7 @@ const Info = forwardRef((props, ref) => {
         setGenderID('');
         setRaceID('');
         setRaceDescription('Please Select');
-        setGenderDescription('Please Select'());
+        setGenderDescription('Please Select');
         setFbiNcicNumber('');
         setStateVcin('');
         setAlias('');
@@ -729,8 +729,26 @@ const Info = forwardRef((props, ref) => {
         })
         .then(result => result.json())
         .then(result => {
+            if (result === "SSN" || result === "JTS") {
+                handleJTSOrSSNError(result);
+                return;
+            }
+
             props.createNotification('The client profile was successfully updated.');
         });
+    }
+
+    function handleJTSOrSSNError(result) {
+        //if the return result is "SSN", then a record with this SSN already exists in the database
+        if (result === "SSN") {
+            props.createErrorNotification("A record with this social security number already exists.");
+            return;
+        }
+
+        if (result === "JTS") {
+            props.createErrorNotification("A record with this JTS number already exists.");
+            return;
+        }
     }
 
 
@@ -751,9 +769,8 @@ const Info = forwardRef((props, ref) => {
         .then(result => result.json())
         .then(savedPersonResult => {
 
-            //if the return result is "SSN", then a record with this SSN already exists in the database
-            if (savedPersonResult === "SSN") {
-                props.createErrorNotification("A record with this social security number already exists in the database.");
+            if (savedPersonResult === "SSN" || savedPersonResult === "JTS") {
+                handleJTSOrSSNError(savedPersonResult);
                 return;
             }
         
@@ -779,7 +796,7 @@ const Info = forwardRef((props, ref) => {
                 },
                 body: JSON.stringify(listToUpdate)
             }).then(result => {
-                
+      
                 //need to update the state with the return result
                 let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
                 let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
