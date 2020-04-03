@@ -492,6 +492,7 @@ const Info = forwardRef((props, ref) => {
 
         if (field === "txtJTS") {
             setJts(e.target.value);
+            setHideJTSError(true);
         }
 
         if (field === "txtAlias") {
