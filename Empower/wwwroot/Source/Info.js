@@ -546,11 +546,11 @@ const Info = forwardRef((props, ref) => {
         setMiddleName('');
         setSSN('');
         setSuffixID('');
-        setSuffixDescription(clientSuffixDescription);
+        setSuffixDescription('Please Select');
         setGenderID('');
         setRaceID('');
-        setRaceDescription(clientRaceDescription);
-        setGenderDescription(clientGenderDescription());
+        setRaceDescription('Please Select');
+        setGenderDescription('Please Select'());
         setFbiNcicNumber('');
         setStateVcin('');
         setAlias('');
@@ -811,6 +811,37 @@ const Info = forwardRef((props, ref) => {
             });
             
         });
+    }
+
+    function createNewClientFromDuplicateModal() {
+        let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+
+        let sessionStorageData = getSessionData();
+
+        let postData = {
+            LastName: lastName,
+            FirstName: firstName,
+            MiddleName: middleName,
+            SuffixID: suffixID,
+            StateORVCIN: stateVcin,
+            JTS: jts,
+            FBINCIC: fbiNcicNumber,
+            Alias: alias,
+            DOB: birthDate,
+            RaceID: raceID,
+            GenderID: genderID,
+            SSN: ssn,
+            Active: true,
+            UniqueID: uniqueID,
+            CreatedDate: new Date(),
+            CreatedBy: sessionStorageData.CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
+        }
+
+        toggle();
+
+        CreateNewClient(postData, uniqueID);
     }
 
 
@@ -1120,6 +1151,7 @@ const Info = forwardRef((props, ref) => {
                     </table>
                     </div>
                     <div className="modal-footer">
+                        <button type="button" className="btn btn-primary" onClick={createNewClientFromDuplicateModal} >Save New</button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                     </div>
