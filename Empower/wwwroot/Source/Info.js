@@ -182,7 +182,7 @@ const Info = forwardRef((props, ref) => {
 
         //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
         clearForm() {
-            resetForm();
+            clearFormForNewProfile();
         }
     }));
 
@@ -538,6 +538,29 @@ const Info = forwardRef((props, ref) => {
         }
 
         return true;
+    }
+
+    function clearFormForNewProfile() {
+        setLastName('');
+        setFirstName('');
+        setMiddleName('');
+        setSSN('');
+        setSuffixID('');
+        setSuffixDescription(clientSuffixDescription);
+        setGenderID('');
+        setRaceID('');
+        setRaceDescription(clientRaceDescription);
+        setGenderDescription(clientGenderDescription());
+        setFbiNcicNumber('');
+        setStateVcin('');
+        setAlias('');
+        setPersonID('');
+        setJts('');
+        setBirthDate(new Date());
+        setCreatedDate('');
+        setCreatedBy('');
+        setUpdatedDate('');
+        setUpdatedBy('');
     }
 
 
