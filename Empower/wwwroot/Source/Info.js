@@ -131,6 +131,7 @@ const Info = forwardRef((props, ref) => {
     const [hideFirstNameError, setHideFirstNameError] = useState(true);
     const [hideGenderError, setHideGenderError] = useState(true);
     const [hideRaceError, setHideRaceError] = useState(true);
+    const [hideJTSError, setHideJTSError] = useState(true);
 
 
     let clientSuffixDescription = 'Please Select';
@@ -564,10 +565,6 @@ const Info = forwardRef((props, ref) => {
         setPersonID(prevID);
     }
 
-    //this will fire when submission of the form is successful
-    // const updateButtonClickHandler = (event) => {
-    //     event.preventDefault();
-    // }
 
     const TriggerValidationHandler = () => {
 
@@ -589,6 +586,10 @@ const Info = forwardRef((props, ref) => {
 
         if (genderID === '') {
             setHideGenderError(false);
+        }
+
+        if (jts === '') {
+            setHideJTSError(false);
         }
 
         //need to convert the birthDate a date object first
@@ -865,10 +866,10 @@ const Info = forwardRef((props, ref) => {
         </div>;
     } else {
         jtsOrVcin =  <div className="col-3">
-                <label htmlFor="txtJTS"><strong>JTS Number</strong> </label>
+                <label htmlFor="txtJTS"><strong>JTS Number *</strong> </label>
                 <div className="input-group mb-3">
                     <input type="text" ref={register({ required: true, maxLength: 50 })} value={jts} onChange={e => infoTabOnChangeHandler(e, "txtJTS")} className="form-control" id="txtJTS" name="txtJTS" required></input>
-                    {/* {errors.txtJTS && <div className="invalid-feedback" >This field is required</div>} */}
+                    {hideJTSError || <div className='errorDiv'>Please enter the JTS number.</div>}
                 </div>
             </div>;
     }
