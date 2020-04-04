@@ -623,20 +623,25 @@ const SearchJuvenile = (props) => {
         
          let rowsFromSearchResult = rows.filter(function(rowFromSearchResultItem) {
             return rowFromSearchResultItem.PersonID === item.ID
-         });  
+         }); 
+         
+         if (rowsFromSearchResult.length > 0 ) {
+            let clientProfileId = rowsFromSearchResult[0].ID;
 
-          let clientProfileId = rowsFromSearchResult[0].ID;
+            mergeCandidateRows.push(
+              <tr key={item.ID}>
+                <td><input type="checkbox" onChange={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} /></td>
+                <td>{item.FirstName}</td>
+                <td>{item.LastName}</td>
+                <td>{item.MiddleName}</td>
+                <td>{item.DOB}</td>
+                <td>{item.Gender.Name}</td>
+              </tr>
+            );
+         }
 
-          mergeCandidateRows.push(
-            <tr key={item.ID}>
-              <td><input type="checkbox" onChange={mergeCandidateCheckBoxClickHandler} data-id={clientProfileId} /></td>
-              <td>{item.FirstName}</td>
-              <td>{item.LastName}</td>
-              <td>{item.MiddleName}</td>
-              <td>{item.DOB}</td>
-              <td>{item.Gender.Name}</td>
-            </tr>
-          );
+
+
         });
 
         return mergeCandidateRows;
