@@ -327,6 +327,9 @@ const Info = forwardRef((props, ref) => {
         setGenderID(clientGenderID);
         setRaceID(clientRaceID);
         setJts(clienttJTS);
+        setFbiNcicNumber(clientFbiNcic);
+        setStateVcin(clientStateVcin);
+        setAlias(clientAlias);
         setCurrentAge(diffInYears);
         setCreatedDate(clientCreatedDate);
         setCreatedBy(clientCreatedBy);
