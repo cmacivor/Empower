@@ -160,6 +160,12 @@ const Info = forwardRef((props, ref) => {
     const [prevRaceDescription, setPrevRaceDescription] = useState(clientRaceDescription);
     const [prevSuffixDescription, setPrevSuffixDescription] = useState(clientSuffixDescription);
 
+    //for the Merge function
+    const [selectedRowClientProfileId, setSelectedRowClientProfileId ] = useState(0);
+    const [mergeCandidateClientProfileIds, setMergeCandidateClientProfileIds] = useState([]);
+    const [mergeCandidateSelections, setMergeCandidateSelections] = useState([]);
+    const [mergeOptions, setMergeOptions ] = useState([]);
+
     //Audit details
     const [prevID, setPrevId] = useState(personID);
     const [prevCreatedDate, setPrevCreatedDate] = useState(clientCreatedDate);
@@ -187,15 +193,19 @@ const Info = forwardRef((props, ref) => {
     }));
 
     function toggle() {
+        $('#possibleDuplicatesModal').modal('toggle');
+    }
+
+    function toggleMergeCandidatesModal() {
         $('#mergeCandidatesModal').modal('toggle');
     }
 
-    function generateMergeCandidateRows(mergeOptions) {
+    function generateMergeCandidateRows(mergeOptions, tableName) {
     
         let sessionStorageData = getSessionData();
         let constants = getSystems();
 
-        let tableRef = document.getElementById("mergeTable").getElementsByTagName('tbody')[0];
+        let tableRef = document.getElementById(tableName).getElementsByTagName('tbody')[0];
         tableRef.innerHTML = "";
         mergeOptions.forEach(element => {
             let newRow = tableRef.insertRow();
@@ -204,7 +214,7 @@ const Info = forwardRef((props, ref) => {
             let checkboxCell = newRow.insertCell(0);
             let checkBox = document.createElement("input");
             //hide the input if it's not the Juvenile app
-            if ( parseInt(sessionStorageData.SystemID) !== constants.Juvenile) {
+            if ( parseInt(sessionStorageData.SystemID) !== constants.Juvenile && tableName === "duplicatesTable") {
                 checkBox.setAttribute("type", "hidden");
             } else {
                 checkBox.setAttribute("type", "checkbox");
@@ -366,6 +376,11 @@ const Info = forwardRef((props, ref) => {
             setHideRaceError(true);
         }
 
+        if (mergeOptions.length > 0 ) {
+            generateMergeCandidateRows(mergeOptions, "mergeTable");
+            toggleMergeCandidatesModal();
+          }
+
 
         Api.getConfigDataByType("Gender").then(options => {
             //populate the options
@@ -424,7 +439,7 @@ const Info = forwardRef((props, ref) => {
         setRaceDescription(clientRaceDescription);
 
 
-    }, [clientFirstName, clientLastName, clientRaceDescription, clientGenderDescription]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+    }, [clientFirstName, clientLastName, clientRaceDescription, clientGenderDescription, mergeOptions]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
     function calculateAge(birthDate) {
         let difference = moment(new Date()).diff(birthDate);
@@ -683,7 +698,7 @@ const Info = forwardRef((props, ref) => {
                 duplicatesPromise.then(result => {
                     if (result.length > 0 ) {
                         toggle();
-                        generateMergeCandidateRows(result);
+                        generateMergeCandidateRows(result, "duplicatesTable");
                     } else {
                         CreateNewClient(postData, uniqueID);
                     }
@@ -914,6 +929,56 @@ const Info = forwardRef((props, ref) => {
 
     }
 
+    function getMergeCandidates() {
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+        let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+
+        let sessionStorageData = getSessionData();
+
+        let fullMergeClientAddress = `${apiAddress}/api/Person/GetduplicatePersons/${ uniqueID }`;
+
+            //retrieve a merge candidate by the unique ID
+            fetch(fullMergeClientAddress, {
+                method: 'get',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + sessionStorageData.Token
+                }
+            }).then(result => {
+              return result.json();
+            }).then(result => {
+
+                if (result.length === 0) {
+                    alert("No merge candidates found");
+                    return;
+                }
+
+              //We only want to display records that don't match the person ID of the row clicked
+              let mergeCandidates = result.filter(function(item) {
+                return item.ID !== parseInt(personID);
+              });
+
+              //set the selected row ID, and the ids of the merge candidates to be passed to the second (PersonIdList) parameter of the MeargePerson() in the PersonController
+              //these IDs needs to be the ClientProfileID, not the PersonID
+            //   let searchResultSelectedRowByPersonId = rows.filter(function(item) {
+            //     return item.PersonID === parseInt(personID);
+            //   });
+
+            //   let selectedRowClientProfileId = searchResultSelectedRowByPersonId[0].ID;
+            //   setSelectedRowClientProfileId(selectedRowClientProfileId);
+              
+              //this will trigger the useEffect defined elsewhere. This is necessary to only show the modal window once the mergeOptions is set- 
+              //because setMergeOptions is asynchronous
+              setMergeOptions(mergeCandidates);
+
+            }).catch((error) => {
+              console.log(error);
+              alert(error);
+            });
+    }
+
     //handle whether to show a Save or Update button
     let buttonType;
     if (isSaveButtonVisible) {
@@ -1142,15 +1207,49 @@ const Info = forwardRef((props, ref) => {
             <div className="form-row float-right">
                 {buttonType}
                 <div className="col-auto">
+                    <button type="button" onClick={getMergeCandidates} className="btn btn-primary mb-2">Get Merge Candidates</button>
+                </div>
+                <div className="col-auto">
                     <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
                 </div>
             </div>
-        {/* </form> */}
-        <div className="modal fade" id="mergeCandidatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="possibleDuplicatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="exampleModalLabel">Duplicates</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                    <table id="duplicatesTable" className="table">
+                      <thead>
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">First Name</th>
+                          <th scope="col">Last Name</th>
+                          <th scope="col">Middle Name</th>
+                          <th scope="col">Date of Birth</th>
+                          <th scope="col">Gender</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-primary" onClick={createNewClientFromDuplicateModal} >Save New</button>
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div className="modal fade" id="mergeCandidatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg" role="document">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">Merge Candidates</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -1172,7 +1271,7 @@ const Info = forwardRef((props, ref) => {
                     </table>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary" onClick={createNewClientFromDuplicateModal} >Save New</button>
+                        <button type="button" className="btn btn-primary">Merge</button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                     </div>
