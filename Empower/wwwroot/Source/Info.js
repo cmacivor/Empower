@@ -13,6 +13,10 @@ import { Api } from './commonAdmin';
 import { GenerateUniqueID } from './NewClient';
 import { getSessionData } from './commonAdmin';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { findDOMNode } from 'react-dom';
+import $ from 'jquery';
+import {modal} from 'bootstrap/js/dist/modal';
+import {getSystems} from './Constants';
 //const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
@@ -27,6 +31,7 @@ const Info = forwardRef((props, ref) => {
     let clientSuffixID = '';
     let clientSSN = '';
     let clientFbiNcic = '';
+    let clienttJTS = '';
     let clientStateVcin = '';
     let clientAlias = '';
     let clientGenderID = '';
@@ -39,7 +44,9 @@ const Info = forwardRef((props, ref) => {
     let clientCreatedBy = '';
     let clientUpdatedDate = '';
     let clientUpdatedBy = '';
-
+    let systemID = getSessionData().SystemID;
+    let systems = getSystems();
+    
 
 
     //the user clicked on a row in the search grid
@@ -57,7 +64,8 @@ const Info = forwardRef((props, ref) => {
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
-        personID = (clientInfo.ID !== null) ? clientInfo.PersonID : '';
+        clienttJTS = (clientInfo.JTS !== null) ? clientInfo.JTS : '';
+        personID = (clientInfo.ID !== null) ? clientInfo.ID : '';
         clientCreatedDate = (clientInfo.CreatedDate !== null) ? clientInfo.CreatedDate : '';
         clientCreatedBy = (clientInfo.CreatedBy !== null) ? clientInfo.CreatedBy : '';
         clientUpdatedDate = (clientInfo.UpdatedDate !== null) ? clientInfo.UpdatedDate : '';
@@ -90,15 +98,16 @@ const Info = forwardRef((props, ref) => {
     const [fbiNcicNumber, setFbiNcicNumber] = useState(clientFbiNcic);
     const [birthDate, setBirthDate] = useState(utcBirthDate);
     const [stateVcin, setStateVcin] = useState(clientStateVcin);
+    const [jts, setJts] = useState(clienttJTS);
     const [alias, setAlias] = useState(clientAlias);
     const [genderID, setGenderID] = useState(clientGenderID);
     const [raceID, setRaceID] = useState(clientRaceID);
     const [currentAge, setCurrentAge] = useState(diffInYears);
     const [ID, setPersonID] = useState(personID);
-    const [createdDate, setCreatedDate] = useState(createdDate);
-    const [createdBy, setCreatedBy] = useState(createdBy);
-    const [updatedDate, setUpdatedDate] = useState(updatedDate);
-    const [updatedBy, setUpdatedBy] = useState(updatedBy);
+    const [createdDate, setCreatedDate] = useState(clientCreatedDate);
+    const [createdBy, setCreatedBy] = useState(clientCreatedBy);
+    const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
+    const [updatedBy, setUpdatedBy] = useState(clientUpdatedBy);
 
     const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(saveButtonShow);
 
@@ -118,8 +127,11 @@ const Info = forwardRef((props, ref) => {
     const [suffixValues, setSuffixValues] = useState([]);
     const [raceValues, setRaceValues] = useState([]);
 
+    const [hideLastNameError, setHideLastNameError] = useState(true);
+    const [hideFirstNameError, setHideFirstNameError] = useState(true);
     const [hideGenderError, setHideGenderError] = useState(true);
     const [hideRaceError, setHideRaceError] = useState(true);
+    const [hideJTSError, setHideJTSError] = useState(true);
 
 
     let clientSuffixDescription = 'Please Select';
@@ -156,14 +168,7 @@ const Info = forwardRef((props, ref) => {
     const [prevUpdatedBy, setPrevUpdatedBy ] = useState(clientUpdatedBy);
 
     const [formClass, setFormClass] = useState('needs-validation');
-
-    //Modal window
-    const [modal, setModal] = useState(false);
-    const [mergeOptions, setMergeOptions ] = useState([]);
-    const toggle = () => setModal(!modal);
-    const [mergeModalTableRows, setMergeModalTableRows] = useState('');
-
-
+    
   
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
@@ -177,11 +182,138 @@ const Info = forwardRef((props, ref) => {
 
         //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
         clearForm() {
-            resetForm();
+            clearFormForNewProfile();
         }
     }));
 
+    function toggle() {
+        $('#mergeCandidatesModal').modal('toggle');
+    }
 
+    function generateMergeCandidateRows(mergeOptions) {
+    
+        let sessionStorageData = getSessionData();
+        let constants = getSystems();
+
+        let tableRef = document.getElementById("mergeTable").getElementsByTagName('tbody')[0];
+        tableRef.innerHTML = "";
+        mergeOptions.forEach(element => {
+            let newRow = tableRef.insertRow();
+
+            //do a row for the select button
+            let checkboxCell = newRow.insertCell(0);
+            let checkBox = document.createElement("input");
+            //hide the input if it's not the Juvenile app
+            if ( parseInt(sessionStorageData.SystemID) !== constants.Juvenile) {
+                checkBox.setAttribute("type", "hidden");
+            } else {
+                checkBox.setAttribute("type", "checkbox");
+                checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event);  }, false);
+            }
+            checkBox.setAttribute("data-id", element.ID);
+            checkboxCell.appendChild(checkBox);
+
+            //Last Name
+            let lastNameCell = newRow.insertCell(1);
+            let lastNameCellText = document.createTextNode(element.LastName);
+            lastNameCell.appendChild(lastNameCellText);
+
+            //First Name
+            let firstNameCell = newRow.insertCell(1);
+            let firstNameCellText = document.createTextNode(element.FirstName);
+            firstNameCell.appendChild(firstNameCellText);
+
+            //Middle Name
+            let middleNameCell = newRow.insertCell(3);
+            let middleNameeCellText = document.createTextNode(element.MiddleName);
+            middleNameCell.appendChild(middleNameeCellText);
+
+            //DOB
+            let formattedBirthDate = new Date(element.DOB).toLocaleDateString();
+            let dobCell = newRow.insertCell(4);
+            let dobCellText = document.createTextNode(formattedBirthDate);
+            dobCell.appendChild(dobCellText);
+
+            //Gender
+            let genderCell = newRow.insertCell(5);
+            let genderCellText = document.createTextNode(element.Gender.Description);
+            genderCell.appendChild(genderCellText);
+
+        });
+
+      }
+
+      function mergeCandidateCheckBoxClickHandler(event) {
+        
+        let checkbox =  event.currentTarget.childNodes[0];
+        let selectedValue = checkbox.getAttribute('data-id'); 
+
+        let sessionStorageData = getSessionData();
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        
+        let clientProfileAddress = `${apiAddress}/api/ClientProfile/${selectedValue}`;
+
+        try
+        {
+           var promise = fetch(clientProfileAddress, {
+                method: 'get',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + sessionStorageData.Token 
+                }               
+            }); 
+
+            promise.then(result =>  {
+                if (result.status === 200) {
+                    return result.json();
+                
+                } else {
+                    props.createErrorNotification("an error occurred while retrieving the data.");
+                } 
+    
+            }).then(finalResult => {
+                //console.log('this is the final update');
+                //console.log(finalResult);
+
+                let person = finalResult.ClientProfile.Person;
+                
+                let birthDateJavascriptDateObject = new Date(person.DOB);
+                let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
+                let diffInYears = calculateAge(birthDateJavascriptDateObject);
+
+                setPersonID(person.ID);
+                setLastName(person.LastName);
+                setFirstName(person.FirstName);
+                setMiddleName(person.MiddleName);
+                setSuffixID(person.SuffixID);
+                setRaceID(person.RaceID);
+                setRaceDescription(person.Race.Description);
+                setStateVcin(person.StateORVCIN);
+                setFbiNcicNumber(person.FBINCIC);
+                setBirthDate(utcBirthDate); 
+                setGenderID(person.GenderID);
+                setGenderDescription(person.Gender.Description);
+                setCurrentAge(diffInYears);
+
+                setSSN(person.SSN);
+                setCreatedDate(person.CreatedDate);
+                setCreatedBy(person.CreatedBy);
+                setUpdatedDate(new Date()); 
+                setUpdatedBy(sessionStorageData.CurrentUser);
+
+                toggle();
+
+            });
+        }
+        catch(error)
+        {
+            console.log(error);
+            alert('an error occurred while retrieving the Client Profile;');
+        }
+
+        //toggle();
+      }
 
 
     //this will re-render the first name, last name, middle name, etc each time something changes, but NOT the dropdown values- those are handled in the select event handlers.
@@ -194,8 +326,16 @@ const Info = forwardRef((props, ref) => {
         setSSN(clientSSN);
         setGenderID(clientGenderID);
         setRaceID(clientRaceID);
+        setJts(clienttJTS);
+        setFbiNcicNumber(clientFbiNcic);
+        setStateVcin(clientStateVcin);
+        setAlias(clientAlias);
         setCurrentAge(diffInYears);
+        setCreatedDate(clientCreatedDate);
+        setCreatedBy(clientCreatedBy);
         
+        setPersonID(personID);
+
         setIsSaveButtonVisible(false);
         //TODO:need to update the prev variables as well for the reset button
         // setPrevFirstName(clientFirstName);
@@ -219,6 +359,11 @@ const Info = forwardRef((props, ref) => {
             let birthDateReset = new Date();
             let birthDateUTC = convertDateToUtcFormat(birthDateReset);
             setBirthDate(birthDateUTC);
+        } else{
+            setHideLastNameError(true);
+            setHideFirstNameError(true);
+            setHideGenderError(true);
+            setHideRaceError(true);
         }
 
 
@@ -314,10 +459,12 @@ const Info = forwardRef((props, ref) => {
 
         if (field === "txtLastName") {
             setLastName(e.target.value);
+            setHideLastNameError(true);
         }
 
         if (field === "txtFirstName") {
             setFirstName(e.target.value);
+            setHideFirstNameError(true);
         }
 
         if (field === "txtMiddleName") {
@@ -344,6 +491,11 @@ const Info = forwardRef((props, ref) => {
 
         if (field === "txtStateVCIN") {
             setStateVcin(e.target.value);
+        }
+
+        if (field === "txtJTS") {
+            setJts(e.target.value);
+            setHideJTSError(true);
         }
 
         if (field === "txtAlias") {
@@ -385,14 +537,34 @@ const Info = forwardRef((props, ref) => {
 
         let isValid = isValidDate(birthDate);
 
-        //let today = new Date();
-        //let isLessThanCurrent = (birthDate < today);
-
         if (!isValid) {
             return false;
         }
 
         return true;
+    }
+
+    function clearFormForNewProfile() {
+        setLastName('');
+        setFirstName('');
+        setMiddleName('');
+        setSSN('');
+        setSuffixID('');
+        setSuffixDescription('Please Select');
+        setGenderID('');
+        setRaceID('');
+        setRaceDescription('Please Select');
+        setGenderDescription('Please Select');
+        setFbiNcicNumber('');
+        setStateVcin('');
+        setAlias('');
+        setPersonID('');
+        setJts('');
+        setBirthDate(new Date());
+        setCreatedDate('');
+        setCreatedBy('');
+        setUpdatedDate('');
+        setUpdatedBy('');
     }
 
 
@@ -417,19 +589,22 @@ const Info = forwardRef((props, ref) => {
         setRaceDescription(prevRaceDescription);
         setSuffixDescription(prevSuffixDescription);
 
-        //setCurrentAge('');
-        //setPersonID('');
-
+        setPersonID(prevID);
     }
 
-    //this will fire when submission of the form is successful
-    const updateButtonClickHandler = (event) => {
-        //event.preventDefault();
-    }
 
     const TriggerValidationHandler = () => {
 
         setFormClass('needs-validation was-validated');
+
+        //validate first and last name
+        if (lastName === '') {
+            setHideLastNameError(false);
+        }
+
+        if (lastName === '') {
+            setHideFirstNameError(false);
+        }
 
         //validate the dropdowns
         if (raceID === '') {
@@ -438,6 +613,10 @@ const Info = forwardRef((props, ref) => {
 
         if (genderID === '') {
             setHideGenderError(false);
+        }
+
+        if (jts === '') {
+            setHideJTSError(false);
         }
 
         //need to convert the birthDate a date object first
@@ -469,6 +648,7 @@ const Info = forwardRef((props, ref) => {
                 MiddleName: middleName,
                 SuffixID: suffixID,
                 StateORVCIN: stateVcin,
+                JTS: jts,
                 FBINCIC: fbiNcicNumber,
                 Alias: alias,
                 DOB: birthDate,
@@ -499,46 +679,46 @@ const Info = forwardRef((props, ref) => {
 
                 alert('The Unique License Number is: ' + uniqueID);
 
-                let duplicatePersonsAddress = `${apiAddress}/api/Person/GetduplicatePersons/${uniqueID}`;
-
-                fetch(duplicatePersonsAddress, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + sessionStorageData.Token
-                    }
-                    //body: JSON.stringify(postData)
-                })
-                .then(result => result.json())
-                .then(result => {
-                    console.log(result); 
-
-                    //if there are duplicates returned, display them on the modal
+                let duplicatesPromise = getDuplicateClients(apiAddress, uniqueID, sessionStorageData);
+                duplicatesPromise.then(result => {
                     if (result.length > 0 ) {
-                        
-                    }
-                   
-                    //no duplicates: should be good to go to update the UniqueIds for the addded person
-                    else { 
-
+                        toggle();
+                        generateMergeCandidateRows(result);
+                    } else {
                         CreateNewClient(postData, uniqueID);
                     }
-
-                });
+                })
             }
 
             setHideRaceError(true);
             setHideGenderError(true);
+            setHideLastNameError(true);
+            setHideFirstNameError(true);
         }
     }
+
+    function getDuplicateClients(apiAddress, uniqueID, sessionStorageData) {
+
+        let duplicatePersonsAddress = `${apiAddress}/api/Person/GetduplicatePersons/${uniqueID}`;
+
+       return  fetch(duplicatePersonsAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        })
+        .then(result => result.json());
+    }
+
 
     function UpdateClient(fullPersonAddress, postData) {
         let sessionStorageData = getSessionData();
 
         postData.CreatedDate = createdDate;
         postData.CreatedBy = createdBy;
-        postData.UpdatedDate = updatedDate;
-        postData.UpdatedBy = updatedBy;
+        postData.UpdatedDate = new Date();
+        postData.UpdatedBy = sessionStorageData.CurrentUser
         postData.ID = ID;
 
          //make a PUT call with all of the parameters
@@ -553,8 +733,26 @@ const Info = forwardRef((props, ref) => {
         })
         .then(result => result.json())
         .then(result => {
+            if (result === "SSN" || result === "JTS") {
+                handleJTSOrSSNError(result);
+                return;
+            }
+
             props.createNotification('The client profile was successfully updated.');
         });
+    }
+
+    function handleJTSOrSSNError(result) {
+        //if the return result is "SSN", then a record with this SSN already exists in the database
+        if (result === "SSN") {
+            props.createErrorNotification("A record with this social security number already exists.");
+            return;
+        }
+
+        if (result === "JTS") {
+            props.createErrorNotification("A record with this JTS number already exists.");
+            return;
+        }
     }
 
 
@@ -575,14 +773,10 @@ const Info = forwardRef((props, ref) => {
         .then(result => result.json())
         .then(savedPersonResult => {
 
-            //if the return result is "SSN", then a record with this SSN already exists in the database
-            if (savedPersonResult === "SSN") {
-                props.createErrorNotification("A record with this social security number already exists in the database.");
+            if (savedPersonResult === "SSN" || savedPersonResult === "JTS") {
+                handleJTSOrSSNError(savedPersonResult);
                 return;
             }
-
-            //console.log('the newly created');
-            //console.log(savedPersonResult);
         
             //update unique ID for the newly added person
             let uniqueIdPostData = [];
@@ -606,11 +800,8 @@ const Info = forwardRef((props, ref) => {
                 },
                 body: JSON.stringify(listToUpdate)
             }).then(result => {
-                
-           
-
+      
                 //need to update the state with the return result
-
                 let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
                 let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
                 let diffInYears = calculateAge(birthDateJavascriptDateObject);
@@ -621,6 +812,7 @@ const Info = forwardRef((props, ref) => {
                 setSuffixID(savedPersonResult.Person.SuffixID);
                 setSSN(savedPersonResult.Person.SSN);
                 setFbiNcicNumber(savedPersonResult.Person.FBINCIC);
+                setJts(savedPersonResult.Person.JTC);
                 setBirthDate(utcBirthDate);
                 setStateVcin(savedPersonResult.Person.StateORVCIN);
                 setAlias(savedPersonResult.Person.Alias);
@@ -640,6 +832,37 @@ const Info = forwardRef((props, ref) => {
             });
             
         });
+    }
+
+    function createNewClientFromDuplicateModal() {
+        let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+
+        let sessionStorageData = getSessionData();
+
+        let postData = {
+            LastName: lastName,
+            FirstName: firstName,
+            MiddleName: middleName,
+            SuffixID: suffixID,
+            StateORVCIN: stateVcin,
+            JTS: jts,
+            FBINCIC: fbiNcicNumber,
+            Alias: alias,
+            DOB: birthDate,
+            RaceID: raceID,
+            GenderID: genderID,
+            SSN: ssn,
+            Active: true,
+            UniqueID: uniqueID,
+            CreatedDate: new Date(),
+            CreatedBy: sessionStorageData.CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
+        }
+
+        toggle();
+
+        CreateNewClient(postData, uniqueID);
     }
 
 
@@ -691,6 +914,7 @@ const Info = forwardRef((props, ref) => {
 
     }
 
+    //handle whether to show a Save or Update button
     let buttonType;
     if (isSaveButtonVisible) {
 
@@ -704,6 +928,27 @@ const Info = forwardRef((props, ref) => {
             <input type="submit" onClick={TriggerValidationHandler} className="btn btn-primary mb-2" value="Update" />
         </div>;
     }
+
+    //handle whether to show the JTS field (if Juvenile) or State/VCIN (if the others)
+    let jtsOrVcin;
+    if (parseInt(systemID) !== parseInt(systems.Juvenile)) {
+
+        jtsOrVcin =  <div className="col-3">
+            <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
+            <div className="input-group mb-3">
+                <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
+            </div>
+        </div>;
+    } else {
+        jtsOrVcin =  <div className="col-3">
+                <label htmlFor="txtJTS"><strong>JTS Number *</strong> </label>
+                <div className="input-group mb-3">
+                    <input type="text" ref={register({ required: true, maxLength: 50 })} value={jts} onChange={e => infoTabOnChangeHandler(e, "txtJTS")} className="form-control" id="txtJTS" name="txtJTS" required></input>
+                    {hideJTSError || <div className='errorDiv'>Please enter the JTS number.</div>}
+                </div>
+            </div>;
+    }
+
 
 
     //set up the options for the Gender dropdown
@@ -734,13 +979,13 @@ const Info = forwardRef((props, ref) => {
 
     return <div>
         <br></br>
-        <form onSubmit={handleSubmit(updateButtonClickHandler)} className={formClass} noValidate>
+        {/* <form onSubmit={handleSubmit(updateButtonClickHandler)} className={formClass} noValidate> */}
             <div className="form-row">
                 <div className="col-3">
                     <div className="form-group">
                         <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
                         <input type="text"
-                            ref={register({ required: true, maxLength: 50 })}
+                           
                             value={lastName}
                             onChange={e => infoTabOnChangeHandler(e, "txtLastName")}
                             className="form-control"
@@ -748,7 +993,19 @@ const Info = forwardRef((props, ref) => {
                             name="txtLastName"
                             required>
                         </input>
-                        {errors.txtLastName && <div className="invalid-feedback" >This field is required</div>}
+                        {hideLastNameError || <div className='errorDiv'>Please enter the last name.</div>}
+                        {/* {errors.txtLastName && <div className="invalid-feedback" >This field is required</div>} */}
+
+                        {/* <input type="text"
+                            ref={register({ required: true, maxLength: 50 })}
+                            value={lastName}
+                            onChange={e => infoTabOnChangeHandler(e, "txtLastName")}
+                            className="form-control"
+                            id="txtLastName"
+                            name="txtLastName"
+                            required>
+                        </input> */}
+
                     </div>
                 </div>
                 <div className="col-3">
@@ -763,7 +1020,8 @@ const Info = forwardRef((props, ref) => {
                             name="txtFirstName"
                             required>
                         </input>
-                        {errors.txtFirstName && <div className="invalid-feedback" >This field is required</div>}
+                        { hideFirstNameError || <div className='errorDiv'>Please enter the first name.</div> }
+                        {/* {errors.txtFirstName && <div className="invalid-feedback" >This field is required</div>} */}
                     </div>
 
                 </div>
@@ -792,15 +1050,6 @@ const Info = forwardRef((props, ref) => {
                             {suffixValueOptions}
                         </div>
                     </div>
-                    {/* <SuffixDropdown onSelectSuffix={handleSuffixChange} selected={props.infoTabSuffix} />           */}
-                    {/* <DropDown
-                                onSelectValue={handleSuffixChange}
-                                onSelectValueDescription={handleSuffixDescriptionChange}
-                                selected={suffixID}
-                                valueDescription={suffixDescription}
-                                type={"suffix"}
-                                isRequired={true}>
-                            </DropDown> */}
                 </div>
             </div>
             <div className="form-row">
@@ -818,17 +1067,21 @@ const Info = forwardRef((props, ref) => {
                         <div className={errorDivCss}>Please enter the SSN in a valid format.</div>
                     </div>
                 </div>
-                <div className="col-3">
-                    <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
-                    <div className="input-group mb-3">
-                        <input type="text"
-                            value={fbiNcicNumber}
-                            onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")}
-                            className="form-control"
-                            id="txtFbiNcicNumber">
-                        </input>
-                    </div>
-                </div>
+                {
+                    parseInt(systemID) !== parseInt(systems.Juvenile) ?
+                    <div className="col-3">
+                        <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text"
+                                value={fbiNcicNumber}
+                                onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")}
+                                className="form-control"
+                                id="txtFbiNcicNumber">
+                            </input>
+                        </div>
+                    </div> : <div></div>
+                }
+         
                 <div className="col-3">
                     <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
                     <div className="inpu-group mb-3">
@@ -850,18 +1103,17 @@ const Info = forwardRef((props, ref) => {
                 </div>
             </div>
             <div className="form-row">
-                <div className="col-3">
-                    <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
-                    <div className="input-group mb-3">
-                        <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
-                    </div>
-                </div>
-                <div className="col-2">
-                    <label htmlFor="txtAlias"><strong>Alias</strong></label>
-                    <div className="input-group mb-3">
-                        <input type="text" value={alias} onChange={e => infoTabOnChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
-                    </div>
-                </div>
+                {jtsOrVcin}
+                {
+                    parseInt(systemID) !== parseInt(systems.Juvenile) ?
+                    <div className="col-2">
+                        <label htmlFor="txtAlias"><strong>Alias</strong></label>
+                        <div className="input-group mb-3">
+                            <input type="text" value={alias} onChange={e => infoTabOnChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
+                        </div>
+                    </div> : <div></div>
+                }
+              
                 <div className="col-2">
                     <label htmlFor="ddlGender"><strong>Gender*</strong></label>
                     <div className="dropdown">
@@ -873,15 +1125,6 @@ const Info = forwardRef((props, ref) => {
                         </div>
                     </div>
                     {hideGenderError || <div className='errorDiv'>Please select a value.</div>}
-                    {/* <DropDown
-                                onSelectValue={handleGenderChange}
-                                onSelectValueDescription={handleGenderDescriptionChange}
-                                selected={genderID}
-                                valueDescription={genderDescription}
-                                values={genderValues}
-                                isRequired={true}>
-                            </DropDown> */}
-
                 </div>
                 <div className="col-4">
                     <label><strong>Race/Ethnicity*</strong></label>
@@ -894,14 +1137,6 @@ const Info = forwardRef((props, ref) => {
                         </div>
                     </div>
                     {hideRaceError || <div className='errorDiv'>Please select a value.</div>}
-                    {/* <DropDown
-                                onSelectValue={handleRaceChange}
-                                onSelectValueDescription={handleRaceDescriptionChange}
-                                selected={raceID}
-                                valueDescription={raceDescription}
-                                type={"race"}
-                                isRequired={true}>
-                            </DropDown> */}
                 </div>
             </div>
             <div className="form-row float-right">
@@ -910,10 +1145,17 @@ const Info = forwardRef((props, ref) => {
                     <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
                 </div>
             </div>
-        </form>
-        <Modal size="lg" isOpen={modal} toggle={toggle}>
-                  <ModalHeader toggle={toggle}>Duplicates</ModalHeader>
-                  <ModalBody>
+        {/* </form> */}
+        <div className="modal fade" id="mergeCandidatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg" role="document">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLabel">Duplicates</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
                     <table id="mergeTable" className="table">
                       <thead>
                         <tr>
@@ -926,15 +1168,16 @@ const Info = forwardRef((props, ref) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {mergeModalTableRows}
                       </tbody>
                     </table>
-                  </ModalBody>
-                  <ModalFooter>
-                    {/* <Button color="primary" onClick={mergeProfiles}>Merge Services</Button>{' '} */}
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
-                  </ModalFooter>
-                </Modal>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-primary" onClick={createNewClientFromDuplicateModal} >Save New</button>
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
     </div>;
 
 });
