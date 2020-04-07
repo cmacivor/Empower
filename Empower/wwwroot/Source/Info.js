@@ -40,6 +40,7 @@ const Info = forwardRef((props, ref) => {
     let diffInYears = '';
     let saveButtonShow = false;
     let personID = '';
+    let cProfileId = '';
     let clientCreatedDate = '';
     let clientCreatedBy = '';
     let clientUpdatedDate = '';
@@ -51,7 +52,12 @@ const Info = forwardRef((props, ref) => {
 
     //the user clicked on a row in the search grid
     if (props.clientProfile !== undefined) {
+        //this is the Person data
         let clientInfo = props.clientProfile.Person;
+        // console.log('the ClientProfile ID');
+        // console.log(props.clientProfile.ID);
+        //let clientProfileID = props.clientProfile.ID;
+       // console.log(clientProfileId);
 
         //need to create variables for each- if it's null, set to empty string for React controlled components
         clientLastName = (clientInfo.LastName !== null) ? clientInfo.LastName : '';
@@ -66,6 +72,7 @@ const Info = forwardRef((props, ref) => {
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
         clienttJTS = (clientInfo.JTS !== null) ? clientInfo.JTS : '';
         personID = (clientInfo.ID !== null) ? clientInfo.ID : '';
+        cProfileId = (props.clientProfile.ID !== null) ? props.clientProfile.ID : '';
         clientCreatedDate = (clientInfo.CreatedDate !== null) ? clientInfo.CreatedDate : '';
         clientCreatedBy = (clientInfo.CreatedBy !== null) ? clientInfo.CreatedBy : '';
         clientUpdatedDate = (clientInfo.UpdatedDate !== null) ? clientInfo.UpdatedDate : '';
@@ -104,6 +111,7 @@ const Info = forwardRef((props, ref) => {
     const [raceID, setRaceID] = useState(clientRaceID);
     const [currentAge, setCurrentAge] = useState(diffInYears);
     const [ID, setPersonID] = useState(personID);
+    const [clientProfileId, setClientProfileId] = useState(cProfileId);
     const [createdDate, setCreatedDate] = useState(clientCreatedDate);
     const [createdBy, setCreatedBy] = useState(clientCreatedBy);
     const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
@@ -218,7 +226,14 @@ const Info = forwardRef((props, ref) => {
                 checkBox.setAttribute("type", "hidden");
             } else {
                 checkBox.setAttribute("type", "checkbox");
-                checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event);  }, false);
+
+                if (tableName === "duplicatesTable") {
+                    //if it's the duplicates modal, shown when creating a new person record
+                    checkboxCell.addEventListener('change', function(event) {duplicateCheckBoxClickHandler(event);  }, false);
+                } else {
+                    //this will be the checkbox if it's the merge Modal
+                    checkboxCell.addEventListener('change', function(event) {mergeCandidateCheckBoxClickHandler(event);  }, false);
+                }
             }
             checkBox.setAttribute("data-id", element.ID);
             checkboxCell.appendChild(checkBox);
@@ -253,7 +268,15 @@ const Info = forwardRef((props, ref) => {
 
       }
 
+      //this is for the Merge modal
       function mergeCandidateCheckBoxClickHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('data-id');
+        mergeCandidateSelections.push(selectedValue);
+        setMergeCandidateSelections(mergeCandidateSelections);
+      }
+
+      //this one is for when creating a new client
+      function duplicateCheckBoxClickHandler(event) {
         
         let checkbox =  event.currentTarget.childNodes[0];
         let selectedValue = checkbox.getAttribute('data-id'); 
@@ -345,6 +368,7 @@ const Info = forwardRef((props, ref) => {
         setCreatedBy(clientCreatedBy);
         
         setPersonID(personID);
+        setClientProfileId(cProfileId);
 
         setIsSaveButtonVisible(false);
         //TODO:need to update the prev variables as well for the reset button
@@ -968,6 +992,8 @@ const Info = forwardRef((props, ref) => {
 
             //   let selectedRowClientProfileId = searchResultSelectedRowByPersonId[0].ID;
             //   setSelectedRowClientProfileId(selectedRowClientProfileId);
+
+
               
               //this will trigger the useEffect defined elsewhere. This is necessary to only show the modal window once the mergeOptions is set- 
               //because setMergeOptions is asynchronous
@@ -978,6 +1004,60 @@ const Info = forwardRef((props, ref) => {
               alert(error);
             });
     }
+
+    function mergeProfiles() {
+    
+        let sessionStorageData = getSessionData();
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+        let mergeClientProfileAddress = `${apiAddress}/api/Person/MeargePerson`;
+
+        let deleteMergedClientProfilesAddress = `${apiAddress}/api/ClientProfile/DeleteMultipleClients`
+
+        //the id parameter here is the ClientProfileID of the currently selected person. The PersonIdList are the people being merged into the current record.
+        let postData = {
+            id: clientProfileId,
+            PersonIdList: mergeCandidateSelections
+        }
+
+        fetch(mergeClientProfileAddress, {
+            method: 'post',
+            mode: 'cors',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token 
+            },
+            body: JSON.stringify(postData)
+        }).then(result => {
+            if (result.status === 200) {
+                return result.json();
+            }
+        }).then(result => {
+            if (result === "Success") {
+
+            //next delete the client profiles that were merged in
+            fetch(deleteMergedClientProfilesAddress, {
+                method: 'post',
+                mode: 'cors',
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token //sessionStorageData.Token
+                },
+                body: JSON.stringify(mergeCandidateSelections)
+            }).then(result => {
+                return result.json();
+            }).then(result => {
+                if (result === "success") {
+                //toggle(); //close the modal
+                alert('the client profiles were successfully merged');  
+                }
+            });
+            }
+        });
+  
+        //toggle();
+        toggleMergeCandidatesModal();
+      }
 
     //handle whether to show a Save or Update button
     let buttonType;
@@ -1271,7 +1351,7 @@ const Info = forwardRef((props, ref) => {
                     </table>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary">Merge</button>
+                        <button type="button" onClick={mergeProfiles} className="btn btn-primary">Merge</button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                     </div>
