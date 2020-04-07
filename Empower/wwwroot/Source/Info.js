@@ -224,7 +224,7 @@ const Info = forwardRef((props, ref) => {
             //hide the input if it's not the Juvenile app
             if ( parseInt(sessionStorageData.SystemID) !== constants.Juvenile && tableName === "duplicatesTable") {
                 checkBox.setAttribute("type", "hidden");
-            } else {
+            } else { //it's the Merge Modal
                 checkBox.setAttribute("type", "checkbox");
 
                 if (tableName === "duplicatesTable") {
@@ -270,8 +270,14 @@ const Info = forwardRef((props, ref) => {
 
       //this is for the Merge modal
       function mergeCandidateCheckBoxClickHandler(event) {
-        let selectedValue = event.currentTarget.getAttribute('data-id');
-        mergeCandidateSelections.push(selectedValue);
+        let $input = $(event.currentTarget.innerHTML);
+        //console.log($input.data("id"));
+
+        let clientProfileId = $input.data("id");
+
+        //let selectedValue = event.currentTarget.getAttribute('data-id');
+        //ergeCandidateSelections.push(selectedValue);
+        mergeCandidateSelections.push(clientProfileId);
         setMergeCandidateSelections(mergeCandidateSelections);
       }
 
