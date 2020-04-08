@@ -51,9 +51,9 @@ const Info = forwardRef((props, ref) => {
 
 
     //the user clicked on a row in the search grid
-    if (props.clientProfile !== undefined) {
+    if (props.clientProfilePerson !== undefined) {
         //this is the Person data
-        let clientInfo = props.clientProfile.Person;
+        let clientInfo = props.clientProfilePerson.Person;
         // console.log('the ClientProfile ID');
         // console.log(props.clientProfile.ID);
         //let clientProfileID = props.clientProfile.ID;
