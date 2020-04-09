@@ -65,7 +65,7 @@ const Info = forwardRef((props, ref) => {
         clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
         clientSuffixID = (clientInfo.SuffixID !== null) ? clientInfo.SuffixID : '';
         clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
-        clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.SSN : '';
+        clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.FBINCIC : '';
         clientStateVcin = (clientInfo.StateORVCIN !== null) ? clientInfo.StateORVCIN : '';
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
@@ -387,6 +387,8 @@ const Info = forwardRef((props, ref) => {
          setPrevSsn(clientSSN);
          setPrevBirthDate(utcBirthDate);
          setPrevJts(clienttJTS);
+         setPrevFbiNcicNumber(clientFbiNcic);
+         setPrevStateVcin(clientStateVcin);
          setPrevGenderId(clientGenderID);
          setPrevRaceId(clientRaceID);
          setPrevAlias(clientAlias);
@@ -394,18 +396,7 @@ const Info = forwardRef((props, ref) => {
          setPrevCreatedBy(clientCreatedBy);
          setPrevUpdatedDate(clientUpdatedDate);
          setPrevUpdatedBy(clientUpdatedBy);
-        // setPrevFbiNcicNumber(clientFbiNcic);
-        
-        // setPrevStateVcin(clientStateVcin);
-        // setPrevAlias(clientAlias);
-        // setPrevGenderId(clientGenderID);
-        // setPrevRaceId(clientRaceID);
-        // setPrevSuffixID(clientSuffixID);
-        
-        // setPrevCreatedDate(clientCreatedDate);
-        // setPrevCreatedDate(clientCreatedBy);
-        // setPrevUpdatedDate(clientUpdatedDate);
-        // setPrevUpdatedBy(clientUpdatedBy);
+    
 
         if (state.isNewClient) {
 
