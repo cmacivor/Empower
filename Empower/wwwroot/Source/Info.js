@@ -160,6 +160,7 @@ const Info = forwardRef((props, ref) => {
     const [prevFbiNcicNumber, setPrevFbiNcicNumber] = useState(clientFbiNcic);
     const [prevBirthDate, setPrevBirthDate ] = useState(utcBirthDate);
     const [prevStateVcin, setPrevStateVcin] = useState(clientStateVcin);
+    const [prevJts, setPrevJts] = useState(clienttJTS);
     const [prevAlias, setPrevAlias] = useState(clientAlias);
     const [prevGenderID, setPrevGenderId] = useState(clientGenderID);
     const [prevRaceID, setPrevRaceId] = useState(clientRaceID);
@@ -377,12 +378,24 @@ const Info = forwardRef((props, ref) => {
         setClientProfileId(cProfileId);
 
         setIsSaveButtonVisible(false);
+        
         //TODO:need to update the prev variables as well for the reset button
-        // setPrevFirstName(clientFirstName);
-        // setPrevLastName(clientLastName);
-        // setPrevSsn(clientSSN);
+         setPrevFirstName(clientFirstName);
+         setPrevLastName(clientLastName);
+         setPrevMiddleName(clientMiddleName);
+         setPrevSuffixID(clientSuffixID);
+         setPrevSsn(clientSSN);
+         setPrevBirthDate(utcBirthDate);
+         setPrevJts(clienttJTS);
+         setPrevGenderId(clientGenderID);
+         setPrevRaceId(clientRaceID);
+         setPrevAlias(clientAlias);
+         setPrevCreatedDate(clientCreatedDate);
+         setPrevCreatedBy(clientCreatedBy);
+         setPrevUpdatedDate(clientUpdatedDate);
+         setPrevUpdatedBy(clientUpdatedBy);
         // setPrevFbiNcicNumber(clientFbiNcic);
-        // setPrevBirthDate(utcBirthDate);
+        
         // setPrevStateVcin(clientStateVcin);
         // setPrevAlias(clientAlias);
         // setPrevGenderId(clientGenderID);
@@ -617,13 +630,13 @@ const Info = forwardRef((props, ref) => {
         setLastName(prevLastName);
         setFirstName(prevFirstName);
         setMiddleName(prevMiddleName);
+        setSuffixID(prevSuffixID);
+        setSuffixDescription(prevSuffixDescription);
         setSSN(prevSsn);
+
+        setBirthDate(prevBirthDate);
+        setJts(prevJts);
         setFbiNcicNumber(prevFbiNcicNumber);
-        
-        utcBirthDate = new Date();   
-        setBirthDate(utcBirthDate);
-        setCurrentAge('');
-        
         setStateVcin(prevStateVcin);
         setAlias(prevAlias);
 
@@ -632,8 +645,12 @@ const Info = forwardRef((props, ref) => {
         setRaceID(prevRaceID);
         setGenderDescription(prevGenderDescription);
         setRaceDescription(prevRaceDescription);
-        setSuffixDescription(prevSuffixDescription);
 
+        setCreatedDate(prevCreatedDate);
+        setCreatedBy(prevCreatedBy);
+        setUpdatedDate(prevUpdatedDate);
+        setUpdatedBy(prevUpdatedBy);
+        
         setPersonID(prevID);
     }
 
