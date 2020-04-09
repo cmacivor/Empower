@@ -239,6 +239,8 @@ const SearchJuvenile = (props) => {
                       console.log(error);
                       alert(error);
                     });
+
+                    
                   }
                 }
               e.stopPropagation();

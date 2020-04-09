@@ -78,7 +78,6 @@ const CaseManagementFunction = (props) => {
 
     //to handle clicking on a row in the search grid, so this data is accessible elsewhere
     function SetClientProfile(clientProfile) {
-
         //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was   
         setClientProfile(clientProfile); //updates the local state
 
@@ -128,7 +127,8 @@ const CaseManagementFunction = (props) => {
                         }                    
                     </Tab>
                     <Tab eventKey="participantinfo" title={infoTabTitle} disabled={isTabDisabled}>
-                        <Info clientProfile={!state.isNewClient ? clientProfile.Person :  undefined } 
+                        <Info clientProfilePerson={!state.isNewClient ? clientProfile.Person :  undefined }
+                         clientProfile={clientProfile.ClientProfile }  
                          ref={infoRef}
                          genderValues={cacheService.genderValues}
                          raceValues={cacheService.raceValues}
