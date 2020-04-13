@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DropDown from './Dropdown';
 import RadioButton from './RadioButton';
 import DatePicker from 'react-datepicker';
+import { getSessionData } from './commonAdmin';
 
 const Supplemental = (props) => {
 
     //this is really important
     if (props.clientProfile === undefined) return null;
+
+    const [personSupplementalID, setPersonSupplementalID ] = useState(0);
 
     //values for the dropdowns from the database
     const educationLevels = props.educationLevelValues;
@@ -100,6 +103,34 @@ const Supplemental = (props) => {
     const [idExpirationDate, setIDExpirationDate] = useState(formattedDate);
 
     
+    useEffect(() => {
+
+        // if (personSupplementalID !== 0) {
+        //     let personID = sessionStorage.getItem("PersonID");
+        //     let sessionData = getSessionData();
+        //     let apiAddress = sessionStorage.getItem("baseApiAddress");
+    
+        //     let getSupplementalByPersonIDAddress = `${apiAddress}/api/PersonSupplemental/GetByPersonID/${personID}`;
+        //     fetch(getSupplementalByPersonIDAddress, {
+        //         method: 'GET',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': 'Bearer ' + sessionData.Token
+        //         },
+        //     }).then(result => result.json())
+        //     .then(result => {
+    
+        //         setPersonSupplementalID(result.ID);
+    
+        //         console.log('the person supplemtal data');
+        //         console.log(result);
+        //     });
+        // }
+
+        
+        console.log('this is the useEffect running.');
+    });
+
     function handleMaritalStatusChange(maritalStatus) {
         setResetButtonDisabled(false);
         setMaritalStatusID(maritalStatus);
