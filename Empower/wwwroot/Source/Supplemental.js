@@ -9,6 +9,7 @@ const Supplemental = (props) => {
 
     let clientEducationLevelID = '';
     let clientFundingSourceID = '';
+    let clientJobStatusID = '';
 
     //this is really important
     if (props.clientProfile === undefined) return null;
@@ -29,7 +30,8 @@ const Supplemental = (props) => {
     const [fundingSourceDescription, setFundingSourceDescription] = useState("Please Select");
     const [fundingSourceValues, setFundingSourceValues] = useState([]);
     const [jobStatusID, setJobStatusID] = useState(3);
-    const [jobStatusDescription, setJobStatusDescription] = useState("Retired");
+    const [jobStatusDescription, setJobStatusDescription] = useState("Please Select");
+    const [jobStatusValues, setJobStatusValues] = useState([]);
     const [maritalStatusID, setMaritalStatusID] = useState(3);
     const [maritalStatusDescription, setMaritalStatusDescription] = useState("MARRIED");
     
@@ -170,11 +172,28 @@ const Supplemental = (props) => {
 
         });
 
-
         
-        //console.log('this is the useEffect running.');
+        Api.getConfigDataByType("JobStatus").then(options => {
 
-    }, [educationLevelDescription, fundingSourceDescription]);
+            let completeOptions = addPleaseSelect(options);
+           
+            setJobStatusValues(completeOptions);
+            
+            if (clientJobStatusID === '') {
+                return;
+            }
+
+            let selectedJobStatusOption =  jobStatusValues.filter(function (jobStatus) {
+                return jobStatus.ID === parseInt(clientJobStatusID);
+            });
+
+            setJobStatusDescription(selectedJobStatusOption[0].Description);
+            setPrevJobStatusDescription(selectedJobStatusOption[0].Description)
+
+        });
+
+
+    }, [educationLevelDescription, fundingSourceDescription, jobStatusDescription]);
 
     function addPleaseSelect(options) {
         let pleaseSelectItem = {
@@ -232,6 +251,18 @@ const Supplemental = (props) => {
         });
 
         setFundingSourceDescription(selectedFundingSource[0].Description);
+    }
+
+    function handleJobStatusChange(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        setJobStatusID(selectedValue);
+
+        let selectedJobStatus = jobStatusValues.filter(function(jobStatus) {
+            return jobStatus.ID === parseInt(selectedValue);
+        });
+
+        setJobStatusDescription(selectedJobStatus[0].Description);
     }
 
     function handleEducationLevelDescriptionChange(educationLevel) {
@@ -463,6 +494,14 @@ const Supplemental = (props) => {
           );
      }
 
+     //job statuses
+     let jobStatusValueOptions = [];
+     if (jobStatusValues.length > 0) {
+         jobStatusValueOptions = jobStatusValues.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleJobStatusChange } className="dropdown-item">{value.Description}</a>
+        );
+     }
+
     return  <div>
                 <br></br>
                 <div id="accordion">
@@ -679,14 +718,22 @@ const Supplemental = (props) => {
                                 <div className="form-row">
                                     <div className="col-3">
                                         <label htmlFor="ddlJobStatus"><strong>Job Status</strong></label>
-                                        <DropDown
+                                        <div className="dropdown">
+                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                { jobStatusDescription }
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                { jobStatusValueOptions }
+                                            </div>
+                                        </div>
+                                        {/* <DropDown
                                                 onSelectValue={handleJobStatusChange }
                                                 onSelectValueDescription={handleJobStatusDescriptionChange}
                                                 selected={jobStatusID}
                                                 valueDescription={jobStatusDescription }
                                                 values={jobStatuses}
                                                 isRequired={false} >
-                                        </DropDown>
+                                        </DropDown> */}
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="ddlMaritalStatus"><strong>Marital Status</strong></label>
