@@ -3,8 +3,11 @@ import DropDown from './Dropdown';
 import RadioButton from './RadioButton';
 import DatePicker from 'react-datepicker';
 import { getSessionData } from './commonAdmin';
+import { Api } from './commonAdmin';
 
 const Supplemental = (props) => {
+
+    let clientEducationLevelID = '';
 
     //this is really important
     if (props.clientProfile === undefined) return null;
@@ -12,16 +15,18 @@ const Supplemental = (props) => {
     const [personSupplementalID, setPersonSupplementalID ] = useState(0);
 
     //values for the dropdowns from the database
-    const educationLevels = props.educationLevelValues;
+    //const educationLevels = props.educationLevelValues;
     const fundingSources = props.fundingSourceValues;
     const jobStatuses = props.jobStatusValues;
     const maritalStatuses = props.maritalStatusValues;
 
     //the dropdowns
     const [educationLevelID, setEducationLevelID] = useState(3);
-    const [educationLevelDescription, setEducationLevelDescription] = useState('12th Grade');
+    const [educationLevelDescription, setEducationLevelDescription] = useState('Please Select');
+    const [educationLevelValues, setEducationLevelValues] = useState([]);
     const [fundingSourceID, setFundingSourceID] = useState(3);
     const [fundingSourceDescription, setFundingSourceDescription] = useState("RRHA");
+    const [fundingSourceValues, setFundingSourceValues] = useState([]);
     const [jobStatusID, setJobStatusID] = useState(3);
     const [jobStatusDescription, setJobStatusDescription] = useState("Retired");
     const [maritalStatusID, setMaritalStatusID] = useState(3);
@@ -60,7 +65,7 @@ const Supplemental = (props) => {
     //Reset variables to hold original state
     //the reset dropdown values
     const [prevEducationLevelID, setPrevEducationLevelID] = useState(3);
-    const [prevEducationLevelDescription, setPrevEducationLevelDescription] = useState('12th Grade');
+    const [prevEducationLevelDescription, setPrevEducationLevelDescription] = useState('Please Select');
     const [prevFundingSourceID, setPrevFundingSourceID] = useState(3);
     const [prevFundingSourceDescription, setPrevFundingSourceDescription] = useState("RRHA");
     const [prevJobStatusID, setPrevJobStatusID] = useState(3);
@@ -127,9 +132,42 @@ const Supplemental = (props) => {
         //     });
         // }
 
+        Api.getConfigDataByType("EducationLevel").then(options => {
+
+            let completeOptions = addPleaseSelect(options);
+            setEducationLevelValues(completeOptions);
+            
+            if (clientEducationLevelID === '') {
+                return;
+            }
+
+            let selectedEducationLevelOption =  educationLevelValues.filter(function (educationLevel) {
+                return educationLevel.ID === parseInt(clientEducationLevelID);
+            });
+
+            setEducationLevelDescription(selectedEducationLevelOption[0].Description);
+            setPrevEducationLevelDescription(selectedEducationLevelOption[0].Description)
+
+        });
+
         
         console.log('this is the useEffect running.');
-    });
+
+    }, [educationLevelDescription]);
+
+    function addPleaseSelect(options) {
+        let pleaseSelectItem = {
+            Name: "PleaseSelect",
+            Description: "Please Select",
+            Active: true,
+            ID: 0,
+            CreatedDate: new Date()
+        }
+
+        options.splice(0, 0, pleaseSelectItem);
+
+        return options;
+    }
 
     function handleMaritalStatusChange(maritalStatus) {
         setResetButtonDisabled(false);
@@ -150,9 +188,17 @@ const Supplemental = (props) => {
     }
 
 
-    function handleEducationLevelChange(educationLevel){        
-        setResetButtonDisabled(false);
-        setEducationLevelID(educationLevel);
+    function handleEducationLevelChange(event){        
+        let selectedValue = event.currentTarget.getAttribute('value');
+        
+        setEducationLevelID(selectedValue);
+
+        let selectedEducationLevel = educationLevelValues.filter(function (educationLevel) {
+            return educationLevel.ID === parseInt(selectedValue)
+        });
+
+        setEducationLevelDescription(selectedEducationLevel[0].Description);
+  
     }
 
     function handleEducationLevelDescriptionChange(educationLevel) {
@@ -365,6 +411,17 @@ const Supplemental = (props) => {
 
      }
 
+   
+
+     //set up the education level dropdown
+     let educationLevelValueOptions = [];
+     if (educationLevelValues.length > 0) {
+ 
+        educationLevelValueOptions = educationLevelValues.map((value) =>
+             <a key={value.ID} value={value.ID} description={value.Description} onClick={handleEducationLevelChange} className="dropdown-item">{value.Description}</a>
+         );
+     }
+
     return  <div>
                 <br></br>
                 <div id="accordion">
@@ -417,14 +474,22 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-4">
                                         <label htmlFor="ddlEducationLevels"><strong>Highest Grade Completed</strong></label>
-                                        <DropDown
+                                        <div className="dropdown">
+                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                {educationLevelDescription }
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                {educationLevelValueOptions}
+                                            </div>
+                                        </div>
+                                        {/* <DropDown
                                                 onSelectValue={handleEducationLevelChange}
                                                 onSelectValueDescription={handleEducationLevelDescriptionChange}
                                                 selected={educationLevelID}
                                                 valueDescription={educationLevelDescription}
                                                 values={educationLevels}
                                                 isRequired={true} >
-                                        </DropDown>
+                                        </DropDown> */}
                                     </div> 
                                 </div>
                                 <br></br>

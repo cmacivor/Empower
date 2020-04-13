@@ -131,6 +131,7 @@ const Info = forwardRef((props, ref) => {
     const [isRaceDropdownRequired, setIsRaceDropdownRequired] = useState(false);
     const [raceDdlErrorDivCss, setRaceDdlErrorDivCss] = useState('invalid-feedback');
 
+    //for the dropdowns
     const [genderValues, setGenderValues] = useState([]);
     const [suffixValues, setSuffixValues] = useState([]);
     const [raceValues, setRaceValues] = useState([]);
