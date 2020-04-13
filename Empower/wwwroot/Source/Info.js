@@ -830,6 +830,8 @@ const Info = forwardRef((props, ref) => {
                 handleJTSOrSSNError(savedPersonResult);
                 return;
             }
+
+            sessionStorage.setItem("PersonID", savedPersonResult.PersonID);
         
             //update unique ID for the newly added person
             let uniqueIdPostData = [];

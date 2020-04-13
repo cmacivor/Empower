@@ -80,6 +80,8 @@ const CaseManagementFunction = (props) => {
     function SetClientProfile(clientProfile) {
         //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was   
         setClientProfile(clientProfile); //updates the local state
+        sessionStorage.setItem("PersonID", clientProfile.ClientProfile.Person.ID);
+        sessionStorage.setItem("ClientProfileID", clientProfile.ClientProfile.ID);
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
         infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
