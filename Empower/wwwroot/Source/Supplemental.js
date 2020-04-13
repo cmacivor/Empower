@@ -8,6 +8,7 @@ import { Api } from './commonAdmin';
 const Supplemental = (props) => {
 
     let clientEducationLevelID = '';
+    let clientFundingSourceID = '';
 
     //this is really important
     if (props.clientProfile === undefined) return null;
@@ -25,7 +26,7 @@ const Supplemental = (props) => {
     const [educationLevelDescription, setEducationLevelDescription] = useState('Please Select');
     const [educationLevelValues, setEducationLevelValues] = useState([]);
     const [fundingSourceID, setFundingSourceID] = useState(3);
-    const [fundingSourceDescription, setFundingSourceDescription] = useState("RRHA");
+    const [fundingSourceDescription, setFundingSourceDescription] = useState("Please Select");
     const [fundingSourceValues, setFundingSourceValues] = useState([]);
     const [jobStatusID, setJobStatusID] = useState(3);
     const [jobStatusDescription, setJobStatusDescription] = useState("Retired");
@@ -150,10 +151,30 @@ const Supplemental = (props) => {
 
         });
 
-        
-        console.log('this is the useEffect running.');
+        Api.getConfigDataByType("FundingSource").then(options => {
 
-    }, [educationLevelDescription]);
+            let completeOptions = addPleaseSelect(options);
+           
+            setFundingSourceValues(completeOptions);
+            
+            if (clientFundingSourceID === '') {
+                return;
+            }
+
+            let selectedFundingSourceOption =  fundingSourceValues.filter(function (fundingSource) {
+                return fundingSource.ID === parseInt(clientFundingSourceID);
+            });
+
+            setFundingSourceDescription(selectedFundingSourceOption[0].Description);
+            setPrevFundingSourceDescription(selectedEducationLevelOption[0].Description)
+
+        });
+
+
+        
+        //console.log('this is the useEffect running.');
+
+    }, [educationLevelDescription, fundingSourceDescription]);
 
     function addPleaseSelect(options) {
         let pleaseSelectItem = {
@@ -201,14 +222,26 @@ const Supplemental = (props) => {
   
     }
 
+    function handleFundingSourceChange(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        setFundingSourceID(selectedValue);
+
+        let selectedFundingSource = fundingSourceValues.filter(function(fundingSource) {
+            return fundingSource.ID === parseInt(selectedValue);
+        });
+
+        setFundingSourceDescription(selectedFundingSource[0].Description);
+    }
+
     function handleEducationLevelDescriptionChange(educationLevel) {
         setEducationLevelDescription(educationLevel);
     }
 
-    function handleFundingSourceChange(fundingSource) {
-        setResetButtonDisabled(false);
-        setFundingSourceID(fundingSource);
-    }
+    // function handleFundingSourceChange(fundingSource) {
+    //     setResetButtonDisabled(false);
+    //     setFundingSourceID(fundingSource);
+    // }
 
     function handleFundingSourceDescriptionChange(fundingSourceDesc) {
         setFundingSourceDescription(fundingSourceDesc);
@@ -422,6 +455,14 @@ const Supplemental = (props) => {
          );
      }
 
+     //funding sources
+     let fundingSourceValueOptions = [];
+     if (fundingSourceValues.length > 0) {
+        fundingSourceValueOptions = fundingSourceValues.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleFundingSourceChange} className="dropdown-item">{value.Description}</a>
+          );
+     }
+
     return  <div>
                 <br></br>
                 <div id="accordion">
@@ -545,14 +586,22 @@ const Supplemental = (props) => {
                                 <div className="form-row">
                                     <div className="col-4">
                                         <label htmlFor="ddlFundingSources"><strong>Potential Funding Source</strong></label>
-                                        <DropDown
+                                        <div className="dropdown">
+                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                {fundingSourceDescription }
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                { fundingSourceValueOptions }
+                                            </div>
+                                        </div>
+                                        {/* <DropDown
                                             onSelectValue={handleFundingSourceChange }
                                             onSelectValueDescription={handleFundingSourceDescriptionChange }
                                             selected={fundingSourceID }
                                             valueDescription={fundingSourceDescription}
                                             values={fundingSources }
                                             isRequired={false} >
-                                        </DropDown>
+                                        </DropDown> */}
                                     </div>
                                     <div className="col-4">
                                         <label htmlFor="ddlCareerStation"><strong>Career Station</strong></label>
