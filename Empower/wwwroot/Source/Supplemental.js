@@ -12,6 +12,8 @@ const Supplemental = (props) => {
     let clientJobStatusID = '';
     let clientMaritalStatusID = '';
 
+    let clientSupplementalID = 0;
+
     let clientCreatedDate = '';
     let clientCreatedBy = '';
     let clientUpdatedDate = '';
@@ -20,17 +22,17 @@ const Supplemental = (props) => {
     //this is really important
     if (props.clientProfile === undefined) return null;
 
-    console.log('this is the supplemental');
-    console.log(props.clientProfile.PersonSupplemental);
+    let personSupplemental = props.clientProfile.PersonSupplemental
 
-    const [personSupplementalID, setPersonSupplementalID ] = useState(0);
+    clientSupplementalID = (personSupplemental.ID !== null ) ? personSupplemental.ID : 0;
+    clientCreatedDate = (personSupplemental.CreatedDate !== null) ? personSupplemental.CreatedDate : '';
+    clientCreatedBy = (personSupplemental.CreatedBy !== null) ? personSupplemental.CreatedBy : '';
+    clientUpdatedDate = (personSupplemental.UpdatedDate !== null) ? personSupplemental.UpdatedDate : '';
+    clientUpdatedBy = (personSupplemental.UpdatedBy !== null) ? personSupplemental.UpdatedBy : '';
 
-    //values for the dropdowns from the database
-    //const educationLevels = props.educationLevelValues;
-    const fundingSources = props.fundingSourceValues;
-    const jobStatuses = props.jobStatusValues;
-    const maritalStatuses = props.maritalStatusValues;
+    const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
 
+    
     //the dropdowns pulling values from the database
     const [educationLevelID, setEducationLevelID] = useState(3);
     const [educationLevelDescription, setEducationLevelDescription] = useState('Please Select');
@@ -86,6 +88,12 @@ const Supplemental = (props) => {
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
+
+    //audit
+    const [createdBy, setCreatedBy] = useState(clientCreatedBy);
+    const [createdDate, setCreatedDate] = useState(clientCreatedDate);
+    const [updatedBy, setUpdatedBy] = useState(clientUpdatedBy);
+    const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
 
 
     //Reset variables to hold original state
@@ -555,11 +563,12 @@ const Supplemental = (props) => {
      function updateClickHandler() {
         let personID = sessionStorage.getItem('PersonID');
         let apiAddress = sessionStorage.getItem("baseApiAddress");
-        let fullPersonAddress = `${apiAddress}/api/PersonSupplemental`;
+        let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental`;
         let sessionStorageData = getSessionData();
 
         //the CWB fields
         let personSupplemental = {
+            ID: personSupplementalID,
             PersonID: personID,
             HeightFt: heightInFeet,
             HeightIn: heightInInches,
@@ -598,8 +607,26 @@ const Supplemental = (props) => {
             JobTitle: jobTitle,
             HoursPerWeek: avgHoursPerWeek,
             EmployerAddress: employerAddress,
-            EmployerAddressState: state
+            EmployerAddressState: state,
+            Active: true,
+            CreatedDate: createdDate,
+            CreatedBy: createdBy,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
         }
+
+        fetch(fullPersonSupplementalAddress, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(personSupplemental)
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+            props.createNotification('The client profile was successfully updated.');
+        });
      }
 
      function resetClickHandler() {

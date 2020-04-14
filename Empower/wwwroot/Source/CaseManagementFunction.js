@@ -144,7 +144,8 @@ const CaseManagementFunction = (props) => {
                        educationLevelValues={cacheService.educationLevelValues}
                        fundingSourceValues={cacheService.fundingSourceValues}
                        jobStatusValues={cacheService.jobStatusValues} 
-                       maritalStatusValues={cacheService.maritalStatusValues} />
+                       maritalStatusValues={cacheService.maritalStatusValues}
+                       createNotification={triggerToastMessage} />
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
                        address content
