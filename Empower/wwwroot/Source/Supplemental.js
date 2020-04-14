@@ -12,8 +12,16 @@ const Supplemental = (props) => {
     let clientJobStatusID = '';
     let clientMaritalStatusID = '';
 
+    let clientCreatedDate = '';
+    let clientCreatedBy = '';
+    let clientUpdatedDate = '';
+    let clientUpdatedBy = '';
+
     //this is really important
     if (props.clientProfile === undefined) return null;
+
+    console.log('this is the supplemental');
+    console.log(props.clientProfile.PersonSupplemental);
 
     const [personSupplementalID, setPersonSupplementalID ] = useState(0);
 
@@ -70,6 +78,11 @@ const Supplemental = (props) => {
     const [notes, setNotes] = useState('');
     const [idNumber, setIDNumber] = useState('');
     const [scarsMarksTattos, setScarsMarksTattoos] = useState('');
+    const [employer, setEmployer] = useState('');
+    const [supervisor, setSupervisor] = useState('');
+    const [jobTitle, setJobTitle] = useState('');
+    const [avgHoursPerWeek, setAvgHoursPerWeek] = useState('');
+    const [employerAddress, setEmployerAddress] = useState('');
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
@@ -514,8 +527,79 @@ const Supplemental = (props) => {
          setPrimaryLanguage(event.target.value);
      }
 
-     function updateClickHandler() {
+     function employerChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setEmployer(event.targe.value);
+     }
 
+     function supervisorChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setSupervisor(event.target.value);
+     }
+
+     function jobTitleChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setJobTitle(event.target.value);
+     }
+
+     function hoursPerWeekChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setAvgHoursPerWeek(event.target.value);
+     }
+
+     function employerAddressChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setEmployerAddress(false);
+     }
+
+     function updateClickHandler() {
+        let personID = sessionStorage.getItem('PersonID');
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullPersonAddress = `${apiAddress}/api/PersonSupplemental`;
+        let sessionStorageData = getSessionData();
+
+        //the CWB fields
+        let personSupplemental = {
+            PersonID: personID,
+            HeightFt: heightInFeet,
+            HeightIn: heightInInches,
+            Weight: weight,
+            HouseholdSize: houseHoldSize,
+            HomePhone: homePhone,
+            HouseholdIncome: houseHoldIncome,
+            Language: primaryLanguage,
+            EducationLevelID: educationLevelID,
+            HasExceptionEduc: isIepChecked,
+            HasInterpreter: isInterpreterNeededChecked,
+            HasMedicaid: isMedicaid,
+            HasInsurance: isInsurance,
+            HasDriversLicense: isDriversLicense,
+            HasConvictedOffence: isConvictedOffense,
+            HasConvictedMisdemeanor: isConvictedMisdemeanor,
+            HasConvictedFelony: isConvictedFelony,
+            HasVehicle: isWorkingVehicle,
+            HasConvictedCrimeIntegrity: isConvictedFelonyCrime,
+            FundingSourceID: fundingSourceID,
+            CareerSt: careerStation,
+            Comments: notes,
+            IDType: idType,
+            IDNumber: idNumber,
+            IssueDate: idIssueDate,
+            ExpirationDate: idExpirationDate,
+            JobStatusID: jobStatusID,
+            MaritalStatusID: maritalStatusID,
+            ScarMarks: scarsMarksTattos,
+            IsDisable: isDisabled,
+            LivingSituation: livingSituation,
+            StudentStatus: studentStatus,
+            HighestEducation: educationLevel,
+            Employer: employer,
+            Supervisor: supervisor,
+            JobTitle: jobTitle,
+            HoursPerWeek: avgHoursPerWeek,
+            EmployerAddress: employerAddress,
+            EmployerAddressState: state
+        }
      }
 
      function resetClickHandler() {
@@ -888,26 +972,26 @@ const Supplemental = (props) => {
                                 <div className="form-row">
                                     <div className="col-3">
                                         <label htmlFor="txtEmployer"><strong>Employer</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={employer} onChange={employerAddressChangeHandler} className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtSupervisor"><strong>Supervisor</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={supervisor} onChange={supervisorChangeHandler} className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtJobTitle"><strong>Job Title</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={jobTitle} onChange={jobTitleChangeHandler} className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtJobTitle"><strong>Average Hours Per Week</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={avgHoursPerWeek} onChange={hoursPerWeekChangeHandler} className="form-control"></input>
                                     </div>
                                 </div>
                                 <br></br>
                                 <div className="form-row">
                                     <div className="col-8">
                                         <label htmlFor="txtEmployerAddress"><strong>Address</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={employerAddress} onChange={employerAddressChangeHandler} className="form-control"></input>
                                     </div>
                                 </div>
                                 <br></br>
