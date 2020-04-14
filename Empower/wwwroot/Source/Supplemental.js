@@ -39,7 +39,11 @@ const Supplemental = (props) => {
     
     //the dropdowns with hardcoded values
     const [careerStation, setCareerStation] = useState("Please Select");
-
+    const [idType, setIDType] = useState('Please Select');
+    const [livingSituation, setLivingSituation] = useState('Please Select');
+    const [studentStatus, setStudentStatus] = useState('Please Select');
+    const [educationLevel, setEducationLevel] = useState('Please Select');
+    const [state, setState] = useState('Please Select');
 
     //the radio buttons
     const [isIepChecked, setIsIepChecked] = useState(false);
@@ -76,11 +80,11 @@ const Supplemental = (props) => {
     const [prevEducationLevelID, setPrevEducationLevelID] = useState(3);
     const [prevEducationLevelDescription, setPrevEducationLevelDescription] = useState('Please Select');
     const [prevFundingSourceID, setPrevFundingSourceID] = useState(3);
-    const [prevFundingSourceDescription, setPrevFundingSourceDescription] = useState("RRHA");
+    const [prevFundingSourceDescription, setPrevFundingSourceDescription] = useState("Please Select");
     const [prevJobStatusID, setPrevJobStatusID] = useState(3);
-    const [prevJobStatusDescription, setPrevJobStatusDescription] = useState("Retired");
+    const [prevJobStatusDescription, setPrevJobStatusDescription] = useState("Please Select");
     const [prevMaritalStatusID, setPrevMaritalStatusID] = useState(3);
-    const [prevMaritalStatusDescription, setPrevMaritalStatusDescription] = useState("MARRIED");
+    const [prevMaritalStatusDescription, setPrevMaritalStatusDescription] = useState("Please Select");
     
     //the reset radio button values
     const [prevIsIepChecked, setPrevIsIepChecked] = useState(false);
@@ -390,30 +394,35 @@ const Supplemental = (props) => {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setIDType(selectedValue);
     }
 
     function livingSituationSelectHandler(event) {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setLivingSituation(selectedValue);
     }
 
     function highestEdLevelSelectHandler(event) {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setEducationLevel(selectedValue);
     }
 
     function stateSelectHandler(event) {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setState(selectedValue);
     }
 
     function studentStatusSelectHandler(event) {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setStudentStatus(selectedValue);
     }
 
     function setIDNumberHandler(event) {
@@ -695,7 +704,7 @@ const Supplemental = (props) => {
                                                 {careerStation}
                                             </button>
                                             <div  className="dropdown-menu">
-                                                <a key={"PleaseSelect"} value={"PleaseSelect"} onClick={careerStationSelectHandler} className="dropdown-item">Please Select</a>
+                                                <a key={"Please Select"} value={"Please Select"} onClick={careerStationSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key={"Marshall"} value={"Marshall"} onClick={careerStationSelectHandler} className="dropdown-item">Marshall</a>
                                                 <a key={"East End"} value={"East End"} onClick={careerStationSelectHandler} className="dropdown-item">East End</a>
                                                 <a key={"South Side"} value={"South Side"} onClick={careerStationSelectHandler} className="dropdown-item">South Side</a>
@@ -725,9 +734,10 @@ const Supplemental = (props) => {
                                        <label htmlFor="ddlIDType"><strong>ID Type</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                { idType }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={idTypeSelectHandler} className="dropdown-item">Please Select</a>                                                
                                                 <a key="Birth Certificate" value="Birth Certificate" onClick={idTypeSelectHandler} className="dropdown-item">Birth Certificate</a>
                                                 <a key="Driver's License" value="Driver's License" onClick={idTypeSelectHandler} className="dropdown-item">Driver's License</a>
                                                 <a key="Green Card" value="Green Card" onClick={idTypeSelectHandler} className="dropdown-item">Green Card</a>
@@ -816,9 +826,10 @@ const Supplemental = (props) => {
                                         <label htmlFor="ddlIDType"><strong>Living Situation</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                 { livingSituation }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={livingSituationSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key="Foster Care" value="Foster Care" onClick={livingSituationSelectHandler} className="dropdown-item">Foster Care</a>
                                                 <a key="Hospital Treatment Center" value="Hospital Treatment Center" onClick={livingSituationSelectHandler} className="dropdown-item">Hospital Treatment Center</a>
                                                 <a key="Hotel/Motel" value="Hotel/Motel" onClick={livingSituationSelectHandler} className="dropdown-item">Hotel/Motel</a>
@@ -837,9 +848,10 @@ const Supplemental = (props) => {
                                         <label htmlFor="ddlStudentStatus"><strong>Student Status</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                { studentStatus }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={studentStatusSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key="Enrolled but not attending" value="Enrolled but not attending" onClick={studentStatusSelectHandler} className="dropdown-item">Enrolled but not attending</a>
                                                 <a key="Expelled" value="Expelled" onClick={studentStatusSelectHandler} className="dropdown-item">Expelled</a>
                                                 <a key="Full-time student" value="Full-time student" onClick={studentStatusSelectHandler} className="dropdown-item">Full-time student</a>
@@ -853,9 +865,10 @@ const Supplemental = (props) => {
                                         <label htmlFor="ddlHighestEdLevel"><strong>Highest Education Level</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                { educationLevel }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={highestEdLevelSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key="Associate's Degree" value="Associate's Degree" onClick={highestEdLevelSelectHandler} className="dropdown-item">Associate's Degree</a>
                                                 <a key="Current student" value="Current student" onClick={highestEdLevelSelectHandler} className="dropdown-item">Current student</a>
                                                 <a key="Doctorate" value="Doctorate" onClick={highestEdLevelSelectHandler} className="dropdown-item">Doctorate</a>
@@ -903,9 +916,10 @@ const Supplemental = (props) => {
                                         <label htmlFor="ddlState"><strong>Select State</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                { state }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={stateSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key="AL" value="AL" onClick={stateSelectHandler} className="dropdown-item">AL</a>
                                                 <a key="AK" value="AK" onClick={stateSelectHandler} className="dropdown-item">AK</a>
                                                 <a key="AR" value="AR" onClick={stateSelectHandler} className="dropdown-item">AR</a>
