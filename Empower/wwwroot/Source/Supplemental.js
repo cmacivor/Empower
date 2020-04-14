@@ -10,6 +10,7 @@ const Supplemental = (props) => {
     let clientEducationLevelID = '';
     let clientFundingSourceID = '';
     let clientJobStatusID = '';
+    let clientMaritalStatusID = '';
 
     //this is really important
     if (props.clientProfile === undefined) return null;
@@ -22,7 +23,7 @@ const Supplemental = (props) => {
     const jobStatuses = props.jobStatusValues;
     const maritalStatuses = props.maritalStatusValues;
 
-    //the dropdowns
+    //the dropdowns pulling values from the database
     const [educationLevelID, setEducationLevelID] = useState(3);
     const [educationLevelDescription, setEducationLevelDescription] = useState('Please Select');
     const [educationLevelValues, setEducationLevelValues] = useState([]);
@@ -33,8 +34,13 @@ const Supplemental = (props) => {
     const [jobStatusDescription, setJobStatusDescription] = useState("Please Select");
     const [jobStatusValues, setJobStatusValues] = useState([]);
     const [maritalStatusID, setMaritalStatusID] = useState(3);
-    const [maritalStatusDescription, setMaritalStatusDescription] = useState("MARRIED");
+    const [maritalStatusDescription, setMaritalStatusDescription] = useState("Please Select");
+    const [maritalStatusValues, setMaritalStatusValues] = useState([]);
     
+    //the dropdowns with hardcoded values
+    const [careerStation, setCareerStation] = useState("Please Select");
+
+
     //the radio buttons
     const [isIepChecked, setIsIepChecked] = useState(false);
     const [isInterpreterNeededChecked, setIsInterpreterNeededChecked] = useState(false);
@@ -192,8 +198,26 @@ const Supplemental = (props) => {
 
         });
 
+        Api.getConfigDataByType("MaritalStatus").then(options => {
+            let completeOptions = addPleaseSelect(options);
 
-    }, [educationLevelDescription, fundingSourceDescription, jobStatusDescription]);
+            setMaritalStatusValues(completeOptions);
+
+            if (clientMaritalStatusID === '') {
+                return;
+            }
+
+            let selectedMaritalStatusOption = maritalStatusValues.filter(function (maritalStatus) {
+                return maritalStatus.ID === parseInt(clientMaritalStatusID);
+            });
+
+            setMaritalStatusDescription(selectedMaritalStatusOption[0].Description);
+            setPrevMaritalStatusDescription(selectedMaritalStatusOption[0].Description);
+
+        });
+
+
+    }, [educationLevelDescription, fundingSourceDescription, jobStatusDescription, maritalStatusDescription]);
 
     function addPleaseSelect(options) {
         let pleaseSelectItem = {
@@ -218,10 +242,10 @@ const Supplemental = (props) => {
         setMaritalStatusDescription(maritalStatusDescription);
     }
 
-    function handleJobStatusChange(jobStatus) {
-        setResetButtonDisabled(false);
-        setJobStatusID(jobStatus);
-    }
+    // function handleJobStatusChange(jobStatus) {
+    //     setResetButtonDisabled(false);
+    //     setJobStatusID(jobStatus);
+    // }
 
     function handleJobStatusDescriptionChange(jobStatusDescription) {
         setJobStatusDescription(jobStatusDescription);
@@ -265,9 +289,21 @@ const Supplemental = (props) => {
         setJobStatusDescription(selectedJobStatus[0].Description);
     }
 
-    function handleEducationLevelDescriptionChange(educationLevel) {
-        setEducationLevelDescription(educationLevel);
+    function handleMaritalStatusChange(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        setMaritalStatusID(selectedValue);
+
+        let selectedMaritalStatus  = maritalStatusValues.filter(function(maritalStatus) {
+            return maritalStatus.ID === parseInt(selectedValue);
+        });
+
+        setMaritalStatusDescription(selectedMaritalStatus[0].Description);
     }
+
+    // function handleEducationLevelDescriptionChange(educationLevel) {
+    //     setEducationLevelDescription(educationLevel);
+    // }
 
     // function handleFundingSourceChange(fundingSource) {
     //     setResetButtonDisabled(false);
@@ -340,6 +376,8 @@ const Supplemental = (props) => {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+
+        setCareerStation(selectedValue);
     }
 
     function notesChangeHandler(event) {
@@ -502,6 +540,14 @@ const Supplemental = (props) => {
         );
      }
 
+     //marital status values
+     let maritalStatusValueOptions = [];
+     if (maritalStatusValues.length > 0) {
+         maritalStatusValueOptions  = maritalStatusValues.map((value) => 
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleMaritalStatusChange } className="dropdown-item">{value.Description}</a>
+         );
+     }
+
     return  <div>
                 <br></br>
                 <div id="accordion">
@@ -646,9 +692,10 @@ const Supplemental = (props) => {
                                         <label htmlFor="ddlCareerStation"><strong>Career Station</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                {careerStation}
                                             </button>
                                             <div  className="dropdown-menu">
+                                                <a key={"PleaseSelect"} value={"PleaseSelect"} onClick={careerStationSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key={"Marshall"} value={"Marshall"} onClick={careerStationSelectHandler} className="dropdown-item">Marshall</a>
                                                 <a key={"East End"} value={"East End"} onClick={careerStationSelectHandler} className="dropdown-item">East End</a>
                                                 <a key={"South Side"} value={"South Side"} onClick={careerStationSelectHandler} className="dropdown-item">South Side</a>
@@ -737,14 +784,22 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="ddlMaritalStatus"><strong>Marital Status</strong></label>
-                                        <DropDown
+                                        <div className="dropdown">
+                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                { maritalStatusDescription }
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                { maritalStatusValueOptions }
+                                            </div>
+                                        </div>
+                                        {/* <DropDown
                                              onSelectValue={handleMaritalStatusChange}
                                              onSelectValueDescription={handleMaritalStatusDescriptionChange}
                                              selected={maritalStatusID}
                                              valueDescription={maritalStatusDescription}
                                              values={maritalStatuses}
                                              isRequired={false}> 
-                                        </DropDown>
+                                        </DropDown> */}
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtScarsMarks"><strong>Scars/Marks/Tattoos</strong></label>
