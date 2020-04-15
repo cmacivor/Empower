@@ -14,8 +14,18 @@ const Supplemental = (props) => {
     let clientHomePhone = '';
     let clientIncome = '';
     let clientLanguage = '';
+    let clientIEP = '';
+    let clientInterpreterNeeded = '';
+    let clientMedicaid = '';
+    let clientInsurance = '';
+    let clientDriversLicense = '';
+    let clientConvictedOffense = '';
+    let clientConvictedMisdemeanor = '';
+    let clientConvictedFelony = '';
+    let clientWorkingVehicle = '';
+    let clientConvictedFelonyCrime = '';
     
-
+    //dropdowns from database
     let clientEducationLevelID = '';
     let clientEducationLevelDescription = '';
     let clientFundingSourceID = '';
@@ -27,6 +37,7 @@ const Supplemental = (props) => {
 
     let clientSupplementalID = 0;
 
+    //Audit
     let clientCreatedDate = '';
     let clientCreatedBy = '';
     let clientUpdatedDate = '';
@@ -52,6 +63,18 @@ const Supplemental = (props) => {
     clientHomePhone = (personSupplemental.HomePhone !== null) ? personSupplemental.HomePhone : '';
     clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
     clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
+    clientIEP = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : '';
+    clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : '';
+    clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : '';
+    clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : '';
+    clientDriversLicense = (personSupplemental.HasDriversLicense !== null) ? personSupplemental.HasDriversLicense : '';
+    clientConvictedOffense = (personSupplemental.HasConvictedOffence !== null ) ? personSupplemental.HasConvictedOffence : '';
+    clientConvictedMisdemeanor = (personSupplemental.HasConvictedMisdemeanor !== null ) ? personSupplemental.HasConvictedMisdemeanor : '';
+    clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : ''; 
+    clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : '';
+    clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : '';
+
+    //the dropdowns from database
     clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
     clientEducationLevelDescription = (personSupplemental.EducationLevel !== null ) ? personSupplemental.EducationLevel.Name : '';
     clientFundingSourceID = (personSupplemental.FundingSource !== null ) ? personSupplemental.FundingSource.ID : '';
@@ -93,16 +116,16 @@ const Supplemental = (props) => {
     const [state, setState] = useState('Please Select');
 
     //the radio buttons
-    const [isIepChecked, setIsIepChecked] = useState(false);
-    const [isInterpreterNeededChecked, setIsInterpreterNeededChecked] = useState(false);
-    const [isMedicaid, setIsMedicaid] = useState(false);
-    const [isInsurance, setIsInsurance] = useState(false);
-    const [isDriversLicense, setIsDriversLicense] = useState(false);
-    const [isConvictedOffense, setIsConvictedOffense] = useState(false);
-    const [isConvictedMisdemeanor, setIsConvictedMisdemeanor] = useState(false);
-    const [isConvictedFelony, setIsConvictedFelony] = useState(false);
-    const [isWorkingVehicle, setIsWorkingVehicle] = useState(false);
-    const [isConvictedFelonyCrime, setIsConvictedFelonyCrime] = useState(false);
+    const [isIepChecked, setIsIepChecked] = useState(clientIEP);
+    const [isInterpreterNeededChecked, setIsInterpreterNeededChecked] = useState(clientInterpreterNeeded);
+    const [isMedicaid, setIsMedicaid] = useState(clientMedicaid);
+    const [isInsurance, setIsInsurance] = useState(clientInsurance);
+    const [isDriversLicense, setIsDriversLicense] = useState(clientDriversLicense);
+    const [isConvictedOffense, setIsConvictedOffense] = useState(clientConvictedOffense);
+    const [isConvictedMisdemeanor, setIsConvictedMisdemeanor] = useState(clientConvictedMisdemeanor);
+    const [isConvictedFelony, setIsConvictedFelony] = useState(clientConvictedFelony);
+    const [isWorkingVehicle, setIsWorkingVehicle] = useState(clientWorkingVehicle);
+    const [isConvictedFelonyCrime, setIsConvictedFelonyCrime] = useState(clientConvictedFelonyCrime);
     const [isDisabled, setIsDisabled] = useState(false);
     
     //textboxes
