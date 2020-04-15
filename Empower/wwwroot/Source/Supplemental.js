@@ -32,6 +32,9 @@ const Supplemental = (props) => {
     let clientIDExpirationDate = new Date();
     let clientScars = '';
     let clientDisabled = '';
+    let clientLivingSituation = '';
+    let clientStudentStatus = '';
+    let clientHighestEducation = '';
     
     //dropdowns from database
     let clientEducationLevelID = '';
@@ -89,6 +92,9 @@ const Supplemental = (props) => {
     clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
     clientScars = (personSupplemental.ScarMarks !== null ) ? personSupplemental.ScarMarks : '';
     clientDisabled = (personSupplemental.IsDisable !== null) ? personSupplemental.IsDisable : '';
+    clientLivingSituation = (personSupplemental.LivingSituation !== null) ? personSupplemental.LivingSituation : '';
+    clientStudentStatus = (personSupplemental.StudentStatus !== null) ? personSupplemental.StudentStatus : '';
+    clientHighestEducation = (personSupplemental.HighestEducation !== null) ? personSupplemental.HighestEducation : '';
 
 
     //the dropdowns from database
@@ -127,9 +133,9 @@ const Supplemental = (props) => {
     //the dropdowns with hardcoded values
     const [careerStation, setCareerStation] = useState(clientCareerStation);
     const [idType, setIDType] = useState(clientIDType);
-    const [livingSituation, setLivingSituation] = useState('Please Select');
-    const [studentStatus, setStudentStatus] = useState('Please Select');
-    const [educationLevel, setEducationLevel] = useState('Please Select');
+    const [livingSituation, setLivingSituation] = useState(clientLivingSituation);
+    const [studentStatus, setStudentStatus] = useState(clientStudentStatus);
+    const [educationLevel, setEducationLevel] = useState(clientHighestEducation);
     const [state, setState] = useState('Please Select');
 
     //the radio buttons
