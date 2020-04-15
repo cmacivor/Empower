@@ -14,9 +14,10 @@ const Supplemental = (props) => {
     let clientHomePhone = '';
     let clientIncome = '';
     let clientLanguage = '';
-    let clientHi
+    
 
     let clientEducationLevelID = '';
+    let clientEducationLevelDescription = '';
     let clientFundingSourceID = '';
     let clientJobStatusID = '';
     let clientMaritalStatusID = '';
@@ -42,7 +43,8 @@ const Supplemental = (props) => {
     clientHomePhone = (personSupplemental.HomePhone !== null) ? personSupplemental.HomePhone : '';
     clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
     clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
-
+    clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
+    clientEducationLevelDescription = (personSupplemental.EducationLevel !== null ) ? personSupplemental.EducationLevel.Name : '';
 
     clientSupplementalID = (personSupplemental.ID !== null ) ? personSupplemental.ID : 0;
     clientCreatedDate = (personSupplemental.CreatedDate !== null) ? personSupplemental.CreatedDate : '';
@@ -55,7 +57,7 @@ const Supplemental = (props) => {
     const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
     //the dropdowns pulling values from the database
     const [educationLevelID, setEducationLevelID] = useState(clientEducationLevelID);
-    const [educationLevelDescription, setEducationLevelDescription] = useState('Please Select');
+    const [educationLevelDescription, setEducationLevelDescription] = useState(clientEducationLevelDescription);
     const [educationLevelValues, setEducationLevelValues] = useState([]);
     const [fundingSourceID, setFundingSourceID] = useState(3);
     const [fundingSourceDescription, setFundingSourceDescription] = useState("Please Select");
@@ -170,6 +172,8 @@ const Supplemental = (props) => {
         setHomePhone(clientHomePhone);
         setHouseHoldIncome(clientIncome);
         setPrimaryLanguage(clientLanguage);
+        setEducationLevelID(clientEducationLevelID);
+        setEducationLevelDescription(clientEducationLevelDescription);
 
         Api.getConfigDataByType("EducationLevel").then(options => {
 
