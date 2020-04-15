@@ -29,6 +29,9 @@ const Supplemental = (props) => {
     let clientIDType = '';
     let clientIDNumber = '';
     let clientIDIssueDate = new Date();
+    let clientIDExpirationDate = new Date();
+    let clientScars = '';
+    let clientDisabled = '';
     
     //dropdowns from database
     let clientEducationLevelID = '';
@@ -83,6 +86,10 @@ const Supplemental = (props) => {
     clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
     clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
     clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
+    clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
+    clientScars = (personSupplemental.ScarMarks !== null ) ? personSupplemental.ScarMarks : '';
+    clientDisabled = (personSupplemental.IsDisable !== null) ? personSupplemental.IsDisable : '';
+
 
     //the dropdowns from database
     clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
@@ -136,8 +143,12 @@ const Supplemental = (props) => {
     const [isConvictedFelony, setIsConvictedFelony] = useState(clientConvictedFelony);
     const [isWorkingVehicle, setIsWorkingVehicle] = useState(clientWorkingVehicle);
     const [isConvictedFelonyCrime, setIsConvictedFelonyCrime] = useState(clientConvictedFelonyCrime);
-    const [isDisabled, setIsDisabled] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(clientDisabled);
     
+    //the date pickers
+    const [idIssueDate, setIDIssueDate] = useState(clientIDIssueDate);
+    const [idExpirationDate, setIDExpirationDate] = useState(clientIDExpirationDate);
+
     //textboxes
     const [heightInFeet, setHeightInFeet] = useState(clientHeightInFeet);
     const [heightInInches, setHeightInInches] = useState(clientHeighInInches);
@@ -149,7 +160,7 @@ const Supplemental = (props) => {
     const [primaryLanguage, setPrimaryLanguage] = useState(clientLanguage);
     const [notes, setNotes] = useState(clientNotes);
     const [idNumber, setIDNumber] = useState(clientIDNumber);
-    const [scarsMarksTattos, setScarsMarksTattoos] = useState('');
+    const [scarsMarksTattos, setScarsMarksTattoos] = useState(clientScars);
     const [employer, setEmployer] = useState('');
     const [supervisor, setSupervisor] = useState('');
     const [jobTitle, setJobTitle] = useState('');
@@ -203,13 +214,6 @@ const Supplemental = (props) => {
     const [prevIdNumber, setPrevIDNumber] = useState('');
     const [prevScarsMarksTattos, setPrevScarsMarksTattoos] = useState('');
 
-
-
-    //TODO: need to have common function for this conversion- see Info.js
-    let idIssueDateUTC = new Date().toUTCString();
-    let formattedDate = new Date(idIssueDateUTC);
-    const [idIssueDate, setIDIssueDate] = useState(clientIDIssueDate);
-    const [idExpirationDate, setIDExpirationDate] = useState(formattedDate);
 
     
     useEffect(() => {
