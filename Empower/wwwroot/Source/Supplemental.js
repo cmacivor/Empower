@@ -33,8 +33,10 @@ const Supplemental = (props) => {
     if (props.clientProfile === undefined) return null;
 
     let personSupplemental = props.clientProfile.PersonSupplemental
+    let educationLevels = props.educationLevelValues;
     console.log('this is tthe supplemental');
     console.log(personSupplemental);
+    console.log(educationLevels);
 
     clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
     clientHeighInInches = (personSupplemental.HeightIn !== null) ? personSupplemental.HeightIn : '';

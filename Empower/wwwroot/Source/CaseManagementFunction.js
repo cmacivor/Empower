@@ -78,6 +78,8 @@ const CaseManagementFunction = (props) => {
 
     //to handle clicking on a row in the search grid, so this data is accessible elsewhere
     function SetClientProfile(clientProfile) {
+        console.log('this is case magemdm');
+        console.log(clientProfile);
         //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was   
         setClientProfile(clientProfile); //updates the local state
         sessionStorage.setItem("PersonID", clientProfile.ClientProfile.Person.ID);
@@ -141,7 +143,7 @@ const CaseManagementFunction = (props) => {
                         
                        <Supplemental 
                        clientProfile={clientProfile.Person} 
-                       educationLevelValues={cacheService.educationLevelValues}
+                       educationLevelValues={clientProfile.EducationLevels}
                        fundingSourceValues={cacheService.fundingSourceValues}
                        jobStatusValues={cacheService.jobStatusValues} 
                        maritalStatusValues={cacheService.maritalStatusValues}
