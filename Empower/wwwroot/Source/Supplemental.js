@@ -24,6 +24,11 @@ const Supplemental = (props) => {
     let clientConvictedFelony = '';
     let clientWorkingVehicle = '';
     let clientConvictedFelonyCrime = '';
+    let clientCareerStation = '';
+    let clientNotes = '';
+    let clientIDType = '';
+    let clientIDNumber = '';
+    let clientIDIssueDate = new Date();
     
     //dropdowns from database
     let clientEducationLevelID = '';
@@ -73,6 +78,11 @@ const Supplemental = (props) => {
     clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : ''; 
     clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : '';
     clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : '';
+    clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : '';
+    clientNotes = (personSupplemental.Comments !== null) ? personSupplemental.Comments : '';
+    clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
+    clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
+    clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
 
     //the dropdowns from database
     clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
@@ -108,8 +118,8 @@ const Supplemental = (props) => {
     const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
     
     //the dropdowns with hardcoded values
-    const [careerStation, setCareerStation] = useState("Please Select");
-    const [idType, setIDType] = useState('Please Select');
+    const [careerStation, setCareerStation] = useState(clientCareerStation);
+    const [idType, setIDType] = useState(clientIDType);
     const [livingSituation, setLivingSituation] = useState('Please Select');
     const [studentStatus, setStudentStatus] = useState('Please Select');
     const [educationLevel, setEducationLevel] = useState('Please Select');
@@ -137,8 +147,8 @@ const Supplemental = (props) => {
     const [homePhone, setHomePhone] = useState(clientHomePhone);
     const [houseHoldIncome, setHouseHoldIncome] = useState(clientIncome);
     const [primaryLanguage, setPrimaryLanguage] = useState(clientLanguage);
-    const [notes, setNotes] = useState('');
-    const [idNumber, setIDNumber] = useState('');
+    const [notes, setNotes] = useState(clientNotes);
+    const [idNumber, setIDNumber] = useState(clientIDNumber);
     const [scarsMarksTattos, setScarsMarksTattoos] = useState('');
     const [employer, setEmployer] = useState('');
     const [supervisor, setSupervisor] = useState('');
@@ -198,7 +208,7 @@ const Supplemental = (props) => {
     //TODO: need to have common function for this conversion- see Info.js
     let idIssueDateUTC = new Date().toUTCString();
     let formattedDate = new Date(idIssueDateUTC);
-    const [idIssueDate, setIDIssueDate] = useState(formattedDate);
+    const [idIssueDate, setIDIssueDate] = useState(clientIDIssueDate);
     const [idExpirationDate, setIDExpirationDate] = useState(formattedDate);
 
     
@@ -246,6 +256,13 @@ const Supplemental = (props) => {
         options.splice(0, 0, pleaseSelectItem);
 
         return options;
+    }
+
+    function convertDateToUtcFormat(date) {
+        let javascriptDateObject = new Date(date);
+        let formattedDate = javascriptDateObject.toUTCString();
+        let utcDate = new Date(formattedDate);
+        return utcDate;
     }
 
     function handleMaritalStatusChange(maritalStatus) {
