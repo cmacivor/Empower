@@ -60,7 +60,7 @@ const Supplemental = (props) => {
     //the dropdowns pulling values from the database
     const [educationLevelID, setEducationLevelID] = useState(clientEducationLevelID);
     const [educationLevelDescription, setEducationLevelDescription] = useState(clientEducationLevelDescription);
-    const [educationLevelValues, setEducationLevelValues] = useState([]);
+    const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
     const [fundingSourceID, setFundingSourceID] = useState(3);
     const [fundingSourceDescription, setFundingSourceDescription] = useState("Please Select");
     const [fundingSourceValues, setFundingSourceValues] = useState([]);
@@ -176,6 +176,7 @@ const Supplemental = (props) => {
         setPrimaryLanguage(clientLanguage);
         setEducationLevelID(clientEducationLevelID);
         setEducationLevelDescription(clientEducationLevelDescription);
+        setEducationLevelValues(educationLevels);
 
         // Api.getConfigDataByType("EducationLevel").then(options => {
 
@@ -253,7 +254,7 @@ const Supplemental = (props) => {
         });
 
 
-    }, [educationLevelDescription, fundingSourceDescription, jobStatusDescription, maritalStatusDescription]);
+    }, [ fundingSourceDescription, jobStatusDescription, maritalStatusDescription]);
 
     function addPleaseSelect(options) {
         let pleaseSelectItem = {
@@ -648,9 +649,9 @@ const Supplemental = (props) => {
 
      //set up the education level dropdown
      let educationLevelValueOptions = [];
-     if (educationLevels.length > 0) {
+     if (educationLevelValues.length > 0) {
  
-        educationLevelValueOptions = educationLevels.map((value) =>
+        educationLevelValueOptions = educationLevelValues.map((value) =>
              <a key={value.ID} value={value.ID} description={value.Description} onClick={handleEducationLevelChange} className="dropdown-item">{value.Description}</a>
          );
      }
