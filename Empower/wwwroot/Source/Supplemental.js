@@ -177,23 +177,23 @@ const Supplemental = (props) => {
         setEducationLevelID(clientEducationLevelID);
         setEducationLevelDescription(clientEducationLevelDescription);
 
-        Api.getConfigDataByType("EducationLevel").then(options => {
+        // Api.getConfigDataByType("EducationLevel").then(options => {
 
-            let completeOptions = addPleaseSelect(options);
-            setEducationLevelValues(completeOptions);
+        //     let completeOptions = addPleaseSelect(options);
+        //     setEducationLevelValues(completeOptions);
             
-            if (clientEducationLevelID === '') {
-                return;
-            }
+        //     if (clientEducationLevelID === '') {
+        //         return;
+        //     }
 
-            let selectedEducationLevelOption =  educationLevelValues.filter(function (educationLevel) {
-                return educationLevel.ID === parseInt(clientEducationLevelID);
-            });
+        //     let selectedEducationLevelOption =  educationLevelValues.filter(function (educationLevel) {
+        //         return educationLevel.ID === parseInt(clientEducationLevelID);
+        //     });
 
-            setEducationLevelDescription(selectedEducationLevelOption[0].Description);
-            setPrevEducationLevelDescription(selectedEducationLevelOption[0].Description)
+        //     setEducationLevelDescription(selectedEducationLevelOption[0].Description);
+        //     setPrevEducationLevelDescription(selectedEducationLevelOption[0].Description)
 
-        });
+        // });
 
         Api.getConfigDataByType("FundingSource").then(options => {
 
@@ -292,8 +292,8 @@ const Supplemental = (props) => {
         let selectedValue = event.currentTarget.getAttribute('value');
         
         setEducationLevelID(selectedValue);
-
-        let selectedEducationLevel = educationLevelValues.filter(function (educationLevel) {
+        
+        let selectedEducationLevel = educationLevels.filter(function (educationLevel) {
             return educationLevel.ID === parseInt(selectedValue)
         });
 
@@ -648,9 +648,9 @@ const Supplemental = (props) => {
 
      //set up the education level dropdown
      let educationLevelValueOptions = [];
-     if (educationLevelValues.length > 0) {
+     if (educationLevels.length > 0) {
  
-        educationLevelValueOptions = educationLevelValues.map((value) =>
+        educationLevelValueOptions = educationLevels.map((value) =>
              <a key={value.ID} value={value.ID} description={value.Description} onClick={handleEducationLevelChange} className="dropdown-item">{value.Description}</a>
          );
      }
