@@ -144,9 +144,9 @@ const CaseManagementFunction = (props) => {
                        <Supplemental 
                        clientProfile={clientProfile.Person} 
                        educationLevelValues={clientProfile.EducationLevels}
-                       fundingSourceValues={cacheService.fundingSourceValues}
-                       jobStatusValues={cacheService.jobStatusValues} 
-                       maritalStatusValues={cacheService.maritalStatusValues}
+                       fundingSourceValues={clientProfile.FundingSources}
+                       jobStatusValues={clientProfile.JobStatuses} 
+                       maritalStatusValues={clientProfile.MaritalStatuses}
                        createNotification={triggerToastMessage} />
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>

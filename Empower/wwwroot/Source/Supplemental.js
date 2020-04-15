@@ -19,8 +19,11 @@ const Supplemental = (props) => {
     let clientEducationLevelID = '';
     let clientEducationLevelDescription = '';
     let clientFundingSourceID = '';
+    let clientFundingSourceDescription = '';
     let clientJobStatusID = '';
+    let clientJobStatusDescription = '';
     let clientMaritalStatusID = '';
+    let clientMaritalStatusDescription = '';
 
     let clientSupplementalID = 0;
 
@@ -34,9 +37,13 @@ const Supplemental = (props) => {
 
     let personSupplemental = props.clientProfile.PersonSupplemental
     let educationLevels = props.educationLevelValues;
-    console.log('this is tthe supplemental');
-    console.log(personSupplemental);
-    console.log(educationLevels);
+    let fundingSources = props.fundingSourceValues;
+    let jobStatuses = props.jobStatusValues;
+    let maritalStatuses = props.maritalStatusValues;
+    
+    // console.log('this is tthe supplemental');
+    // console.log(personSupplemental);
+    // console.log(educationLevels);
 
     clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
     clientHeighInInches = (personSupplemental.HeightIn !== null) ? personSupplemental.HeightIn : '';
@@ -47,6 +54,12 @@ const Supplemental = (props) => {
     clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
     clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
     clientEducationLevelDescription = (personSupplemental.EducationLevel !== null ) ? personSupplemental.EducationLevel.Name : '';
+    clientFundingSourceID = (personSupplemental.FundingSource !== null ) ? personSupplemental.FundingSource.ID : '';
+    clientFundingSourceDescription = (personSupplemental.FundingSource !== null) ? personSupplemental.FundingSource.Name : '';
+    clientJobStatusID = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.ID : '';
+    clientJobStatusDescription = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.Name : '';
+    clientMaritalStatusID = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.ID : '';
+    clientMaritalStatusDescription = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.Name: '';
 
     clientSupplementalID = (personSupplemental.ID !== null ) ? personSupplemental.ID : 0;
     clientCreatedDate = (personSupplemental.CreatedDate !== null) ? personSupplemental.CreatedDate : '';
@@ -61,15 +74,15 @@ const Supplemental = (props) => {
     const [educationLevelID, setEducationLevelID] = useState(clientEducationLevelID);
     const [educationLevelDescription, setEducationLevelDescription] = useState(clientEducationLevelDescription);
     const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
-    const [fundingSourceID, setFundingSourceID] = useState(3);
-    const [fundingSourceDescription, setFundingSourceDescription] = useState("Please Select");
-    const [fundingSourceValues, setFundingSourceValues] = useState([]);
-    const [jobStatusID, setJobStatusID] = useState(3);
-    const [jobStatusDescription, setJobStatusDescription] = useState("Please Select");
-    const [jobStatusValues, setJobStatusValues] = useState([]);
-    const [maritalStatusID, setMaritalStatusID] = useState(3);
-    const [maritalStatusDescription, setMaritalStatusDescription] = useState("Please Select");
-    const [maritalStatusValues, setMaritalStatusValues] = useState([]);
+    const [fundingSourceID, setFundingSourceID] = useState(clientFundingSourceID);
+    const [fundingSourceDescription, setFundingSourceDescription] = useState(clientFundingSourceDescription);
+    const [fundingSourceValues, setFundingSourceValues] = useState(fundingSources);
+    const [jobStatusID, setJobStatusID] = useState(jobStatusID);
+    const [jobStatusDescription, setJobStatusDescription] = useState(clientJobStatusDescription);
+    const [jobStatusValues, setJobStatusValues] = useState(jobStatuses);
+    const [maritalStatusID, setMaritalStatusID] = useState(clientMaritalStatusID);
+    const [maritalStatusDescription, setMaritalStatusDescription] = useState(clientMaritalStatusDescription);
+    const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
     
     //the dropdowns with hardcoded values
     const [careerStation, setCareerStation] = useState("Please Select");
@@ -174,87 +187,29 @@ const Supplemental = (props) => {
         setHomePhone(clientHomePhone);
         setHouseHoldIncome(clientIncome);
         setPrimaryLanguage(clientLanguage);
+
+        //Education Level
         setEducationLevelID(clientEducationLevelID);
         setEducationLevelDescription(clientEducationLevelDescription);
         setEducationLevelValues(educationLevels);
 
-        // Api.getConfigDataByType("EducationLevel").then(options => {
+        //Funding Source
+        setFundingSourceID(clientFundingSourceID);
+        setFundingSourceDescription(clientFundingSourceDescription);
+        setFundingSourceValues(fundingSources);
 
-        //     let completeOptions = addPleaseSelect(options);
-        //     setEducationLevelValues(completeOptions);
-            
-        //     if (clientEducationLevelID === '') {
-        //         return;
-        //     }
+        //Job Status
+        setJobStatusID(clientJobStatusID);
+        setJobStatusDescription(clientJobStatusDescription);
+        setJobStatusValues(jobStatuses);
 
-        //     let selectedEducationLevelOption =  educationLevelValues.filter(function (educationLevel) {
-        //         return educationLevel.ID === parseInt(clientEducationLevelID);
-        //     });
-
-        //     setEducationLevelDescription(selectedEducationLevelOption[0].Description);
-        //     setPrevEducationLevelDescription(selectedEducationLevelOption[0].Description)
-
-        // });
-
-        Api.getConfigDataByType("FundingSource").then(options => {
-
-            let completeOptions = addPleaseSelect(options);
-           
-            setFundingSourceValues(completeOptions);
-            
-            if (clientFundingSourceID === '') {
-                return;
-            }
-
-            let selectedFundingSourceOption =  fundingSourceValues.filter(function (fundingSource) {
-                return fundingSource.ID === parseInt(clientFundingSourceID);
-            });
-
-            setFundingSourceDescription(selectedFundingSourceOption[0].Description);
-            setPrevFundingSourceDescription(selectedEducationLevelOption[0].Description)
-
-        });
-
-        
-        Api.getConfigDataByType("JobStatus").then(options => {
-
-            let completeOptions = addPleaseSelect(options);
-           
-            setJobStatusValues(completeOptions);
-            
-            if (clientJobStatusID === '') {
-                return;
-            }
-
-            let selectedJobStatusOption =  jobStatusValues.filter(function (jobStatus) {
-                return jobStatus.ID === parseInt(clientJobStatusID);
-            });
-
-            setJobStatusDescription(selectedJobStatusOption[0].Description);
-            setPrevJobStatusDescription(selectedJobStatusOption[0].Description)
-
-        });
-
-        Api.getConfigDataByType("MaritalStatus").then(options => {
-            let completeOptions = addPleaseSelect(options);
-
-            setMaritalStatusValues(completeOptions);
-
-            if (clientMaritalStatusID === '') {
-                return;
-            }
-
-            let selectedMaritalStatusOption = maritalStatusValues.filter(function (maritalStatus) {
-                return maritalStatus.ID === parseInt(clientMaritalStatusID);
-            });
-
-            setMaritalStatusDescription(selectedMaritalStatusOption[0].Description);
-            setPrevMaritalStatusDescription(selectedMaritalStatusOption[0].Description);
-
-        });
+        //Marital Status
+        setMaritalStatusID(clientMaritalStatusID);
+        setMaritalStatusDescription(clientMaritalStatusDescription);
+        setMaritalStatusValues(maritalStatuses);
 
 
-    }, [ fundingSourceDescription, jobStatusDescription, maritalStatusDescription]);
+    }, []);
 
     function addPleaseSelect(options) {
         let pleaseSelectItem = {
@@ -307,7 +262,7 @@ const Supplemental = (props) => {
 
         setFundingSourceID(selectedValue);
 
-        let selectedFundingSource = fundingSourceValues.filter(function(fundingSource) {
+        let selectedFundingSource =  fundingSources.filter(function(fundingSource) {
             return fundingSource.ID === parseInt(selectedValue);
         });
 
@@ -319,7 +274,7 @@ const Supplemental = (props) => {
 
         setJobStatusID(selectedValue);
 
-        let selectedJobStatus = jobStatusValues.filter(function(jobStatus) {
+        let selectedJobStatus =  jobStatuses.filter(function(jobStatus) {
             return jobStatus.ID === parseInt(selectedValue);
         });
 
@@ -331,7 +286,7 @@ const Supplemental = (props) => {
 
         setMaritalStatusID(selectedValue);
 
-        let selectedMaritalStatus  = maritalStatusValues.filter(function(maritalStatus) {
+        let selectedMaritalStatus  = maritalStatuses.filter(function(maritalStatus) {
             return maritalStatus.ID === parseInt(selectedValue);
         });
 
