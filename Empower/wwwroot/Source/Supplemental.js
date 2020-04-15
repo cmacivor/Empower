@@ -7,6 +7,15 @@ import { Api } from './commonAdmin';
 
 const Supplemental = (props) => {
 
+    let clientHeightInFeet = '';
+    let clientHeighInInches = '';
+    let clientWeight = '';
+    let clientHouseHoldSize = '';
+    let clientHomePhone = '';
+    let clientIncome = '';
+    let clientLanguage = '';
+    let clientHi
+
     let clientEducationLevelID = '';
     let clientFundingSourceID = '';
     let clientJobStatusID = '';
@@ -23,6 +32,17 @@ const Supplemental = (props) => {
     if (props.clientProfile === undefined) return null;
 
     let personSupplemental = props.clientProfile.PersonSupplemental
+    console.log('this is tthe supplemental');
+    console.log(personSupplemental);
+
+    clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
+    clientHeighInInches = (personSupplemental.HeightIn !== null) ? personSupplemental.HeightIn : '';
+    clientWeight = (personSupplemental.Weight !== null) ? personSupplemental.Weight : '';
+    clientHouseHoldSize = (personSupplemental.HouseholdSize !== null) ? personSupplemental.HouseholdSize : '';
+    clientHomePhone = (personSupplemental.HomePhone !== null) ? personSupplemental.HomePhone : '';
+    clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
+    clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
+
 
     clientSupplementalID = (personSupplemental.ID !== null ) ? personSupplemental.ID : 0;
     clientCreatedDate = (personSupplemental.CreatedDate !== null) ? personSupplemental.CreatedDate : '';
@@ -30,11 +50,11 @@ const Supplemental = (props) => {
     clientUpdatedDate = (personSupplemental.UpdatedDate !== null) ? personSupplemental.UpdatedDate : '';
     clientUpdatedBy = (personSupplemental.UpdatedBy !== null) ? personSupplemental.UpdatedBy : '';
 
-    const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
 
-    
+
+    const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
     //the dropdowns pulling values from the database
-    const [educationLevelID, setEducationLevelID] = useState(3);
+    const [educationLevelID, setEducationLevelID] = useState(clientEducationLevelID);
     const [educationLevelDescription, setEducationLevelDescription] = useState('Please Select');
     const [educationLevelValues, setEducationLevelValues] = useState([]);
     const [fundingSourceID, setFundingSourceID] = useState(3);
@@ -69,14 +89,14 @@ const Supplemental = (props) => {
     const [isDisabled, setIsDisabled] = useState(false);
     
     //textboxes
-    const [heightInFeet, setHeightInFeet] = useState('');
-    const [heightInInches, setHeightInInches] = useState('');
-    const [weight, setWeight] = useState('');
+    const [heightInFeet, setHeightInFeet] = useState(clientHeightInFeet);
+    const [heightInInches, setHeightInInches] = useState(clientHeighInInches);
+    const [weight, setWeight] = useState(clientWeight);
     const [shoeSize, setShoeSize] = useState('');
-    const [houseHoldSize, setHouseHoldSize] = useState('');
-    const [homePhone, setHomePhone] = useState('');
-    const [houseHoldIncome, setHouseHoldIncome] = useState('');
-    const [primaryLanguage, setPrimaryLanguage] = useState('');
+    const [houseHoldSize, setHouseHoldSize] = useState(clientHouseHoldSize);
+    const [homePhone, setHomePhone] = useState(clientHomePhone);
+    const [houseHoldIncome, setHouseHoldIncome] = useState(clientIncome);
+    const [primaryLanguage, setPrimaryLanguage] = useState(clientLanguage);
     const [notes, setNotes] = useState('');
     const [idNumber, setIDNumber] = useState('');
     const [scarsMarksTattos, setScarsMarksTattoos] = useState('');
@@ -143,28 +163,13 @@ const Supplemental = (props) => {
 
     
     useEffect(() => {
-
-        // if (personSupplementalID !== 0) {
-        //     let personID = sessionStorage.getItem("PersonID");
-        //     let sessionData = getSessionData();
-        //     let apiAddress = sessionStorage.getItem("baseApiAddress");
-    
-        //     let getSupplementalByPersonIDAddress = `${apiAddress}/api/PersonSupplemental/GetByPersonID/${personID}`;
-        //     fetch(getSupplementalByPersonIDAddress, {
-        //         method: 'GET',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + sessionData.Token
-        //         },
-        //     }).then(result => result.json())
-        //     .then(result => {
-    
-        //         setPersonSupplementalID(result.ID);
-    
-        //         console.log('the person supplemtal data');
-        //         console.log(result);
-        //     });
-        // }
+        setHeightInFeet(clientHeightInFeet);
+        setHeightInInches(clientHeighInInches);
+        setWeight(clientWeight);
+        setHouseHoldSize(clientHouseHoldSize);
+        setHomePhone(clientHomePhone);
+        setHouseHoldIncome(clientIncome);
+        setPrimaryLanguage(clientLanguage);
 
         Api.getConfigDataByType("EducationLevel").then(options => {
 
