@@ -14,16 +14,16 @@ const Supplemental = (props) => {
     let clientHomePhone = '';
     let clientIncome = '';
     let clientLanguage = '';
-    let clientIEP = '';
-    let clientInterpreterNeeded = '';
-    let clientMedicaid = '';
-    let clientInsurance = '';
-    let clientDriversLicense = '';
-    let clientConvictedOffense = '';
-    let clientConvictedMisdemeanor = '';
-    let clientConvictedFelony = '';
-    let clientWorkingVehicle = '';
-    let clientConvictedFelonyCrime = '';
+    let clientIEP = false;
+    let clientInterpreterNeeded = false;
+    let clientMedicaid = false;
+    let clientInsurance = false;
+    let clientDriversLicense = false;
+    let clientConvictedOffense = false;
+    let clientConvictedMisdemeanor = false;
+    let clientConvictedFelony = false;
+    let clientWorkingVehicle = false;
+    let clientConvictedFelonyCrime = false;
     let clientCareerStation = '';
     let clientNotes = '';
     let clientIDType = '';
@@ -81,17 +81,17 @@ const Supplemental = (props) => {
     clientHomePhone = (personSupplemental.HomePhone !== null) ? personSupplemental.HomePhone : '';
     clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
     clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
-    clientIEP = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : '';
-    clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : '';
-    clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : '';
-    clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : '';
-    clientDriversLicense = (personSupplemental.HasDriversLicense !== null) ? personSupplemental.HasDriversLicense : '';
-    clientConvictedOffense = (personSupplemental.HasConvictedOffence !== null ) ? personSupplemental.HasConvictedOffence : '';
-    clientConvictedMisdemeanor = (personSupplemental.HasConvictedMisdemeanor !== null ) ? personSupplemental.HasConvictedMisdemeanor : '';
-    clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : ''; 
-    clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : '';
-    clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : '';
-    clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : '';
+    clientIEP = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : false;
+    clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : false;
+    clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : false;
+    clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : false;
+    clientDriversLicense = (personSupplemental.HasDriversLicense !== null) ? personSupplemental.HasDriversLicense : false;
+    clientConvictedOffense = (personSupplemental.HasConvictedOffence !== null ) ? personSupplemental.HasConvictedOffence : false;
+    clientConvictedMisdemeanor = (personSupplemental.HasConvictedMisdemeanor !== null ) ? personSupplemental.HasConvictedMisdemeanor : false;
+    clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : false; 
+    clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : false;
+    clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : false;
+    clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : 'Please Select';
     clientNotes = (personSupplemental.Comments !== null) ? personSupplemental.Comments : '';
     clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
     clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
@@ -111,9 +111,9 @@ const Supplemental = (props) => {
 
     //the dropdowns from database
     clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
-    clientEducationLevelDescription = (personSupplemental.EducationLevel !== null ) ? personSupplemental.EducationLevel.Name : '';
+    clientEducationLevelDescription = (personSupplemental.EducationLevel !== null ) ? personSupplemental.EducationLevel.Name : 'Please Select';
     clientFundingSourceID = (personSupplemental.FundingSource !== null ) ? personSupplemental.FundingSource.ID : '';
-    clientFundingSourceDescription = (personSupplemental.FundingSource !== null) ? personSupplemental.FundingSource.Name : '';
+    clientFundingSourceDescription = (personSupplemental.FundingSource !== null) ? personSupplemental.FundingSource.Name : 'Please Select';
     clientJobStatusID = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.ID : '';
     clientJobStatusDescription = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.Name : '';
     clientMaritalStatusID = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.ID : '';
@@ -242,6 +242,19 @@ const Supplemental = (props) => {
         setHomePhone(clientHomePhone);
         setHouseHoldIncome(clientIncome);
         setPrimaryLanguage(clientLanguage);
+        setIsIepChecked(clientIEP);
+        setIsInterpreterNeededChecked(clientInterpreterNeeded);
+        setIsMedicaid(clientMedicaid);
+        setIsInsurance(clientInsurance);
+        setIsDriversLicense(clientDriversLicense);
+        setIsConvictedOffense(clientConvictedOffense);
+        setIsConvictedMisdemeanor(clientConvictedMisdemeanor);
+        setIsConvictedFelony(clientConvictedFelony);
+        setIsWorkingVehicle(clientWorkingVehicle);
+        setIsConvictedFelonyCrime(clientConvictedFelonyCrime);
+        setCareerStation(clientCareerStation);
+        setNotes(clientNotes);
+
 
         //Education Level
         setEducationLevelID(clientEducationLevelID);
