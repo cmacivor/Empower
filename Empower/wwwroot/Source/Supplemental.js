@@ -554,7 +554,7 @@ const Supplemental = (props) => {
 
      function employerChangeHandler(event) {
          setResetButtonDisabled(false);
-         setEmployer(event.targe.value);
+         setEmployer(event.target.value);
      }
 
      function supervisorChangeHandler(event) {
@@ -574,7 +574,7 @@ const Supplemental = (props) => {
 
      function employerAddressChangeHandler(event) {
          setResetButtonDisabled(false);
-         setEmployerAddress(false);
+         setEmployerAddress(event.target.value);
      }
 
      function updateClickHandler() {
@@ -1016,7 +1016,7 @@ const Supplemental = (props) => {
                                 <div className="form-row">
                                     <div className="col-3">
                                         <label htmlFor="txtEmployer"><strong>Employer</strong></label>
-                                        <input type="text" value={employer} onChange={employerAddressChangeHandler} className="form-control"></input>
+                                        <input type="text" value={employer} onChange={employerChangeHandler} className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtSupervisor"><strong>Supervisor</strong></label>
