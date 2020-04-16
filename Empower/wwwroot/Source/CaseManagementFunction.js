@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import SearchJuvenile from './SearchJuvenile';
 import Search from './Search';
 import Info from './Info';
@@ -11,6 +11,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
+import {  Api } from './commonAdmin';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -23,12 +24,31 @@ const CaseManagementFunction = (props) => {
     const cacheService = useCacheService();
     const {state, dispatch} = useStore();
 
+    const [educationLevelsOptions, setEducationLevelOptions] = useState([]);
+    const [fundingSourceOptions, setFundingSourceOptions] = useState([]);
+    const [jobStatusOptions, setJobStatusOptions] = useState([]);
+    const [maritalStatusOptions, setMaritalStatusOptions] = useState([]);
+
+    useEffect(() => {
+        //Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
+        //Api.getConfigDataByType("Race").then(races => setRaces(races));
+        Api.getConfigDataByType("EducationLevel").then(educationLevels => setEducationLevelOptions(educationLevels));
+        Api.getConfigDataByType("FundingSource").then(fundingSources => setFundingSourceOptions(fundingSources));
+        //Api.getConfigDataByType("Suffix").then(suffixes => setSuffixes(suffixes));
+        Api.getConfigDataByType("JobStatus").then(jobStatuses => setJobStatusOptions(jobStatuses)); 
+        Api.getConfigDataByType("MaritalStatus").then(maritalStatuses => setMaritalStatusOptions(maritalStatuses));
+        //Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
+     }, []);
+
 
     toast.configure();
 
     let sessionData = getSessionData();
 
     let systems = getSystems();
+
+    //let genderValueDropDownOptions = [];
+    //let raceValueDropDownOptions = [];
 
 
     function triggerToastMessage(message) {       
@@ -143,10 +163,10 @@ const CaseManagementFunction = (props) => {
                         
                        <Supplemental 
                        clientProfile={clientProfile.Person} 
-                       educationLevelValues={clientProfile.EducationLevels}
-                       fundingSourceValues={clientProfile.FundingSources}
-                       jobStatusValues={clientProfile.JobStatuses} 
-                       maritalStatusValues={clientProfile.MaritalStatuses}
+                       educationLevelValues={educationLevelsOptions}
+                       fundingSourceValues={fundingSourceOptions  }
+                       jobStatusValues={ jobStatusOptions } 
+                       maritalStatusValues={ maritalStatusOptions }
                        createNotification={triggerToastMessage} />
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>

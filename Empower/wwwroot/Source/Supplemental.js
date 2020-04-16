@@ -263,8 +263,7 @@ const Supplemental = (props) => {
         setMaritalStatusDescription(clientMaritalStatusDescription);
         setMaritalStatusValues(maritalStatuses);
 
-
-    }, []);
+    });
 
     function addPleaseSelect(options) {
         let pleaseSelectItem = {
