@@ -35,6 +35,13 @@ const Supplemental = (props) => {
     let clientLivingSituation = '';
     let clientStudentStatus = '';
     let clientHighestEducation = '';
+    let clientEmployer = '';
+    let clientSupervisor = '';
+    let clientJobTitle = '';
+    let clientHoursPerWeek = '';
+    let clientEmployerAddress = '';
+    let clientEmployerState = '';
+
     
     //dropdowns from database
     let clientEducationLevelID = '';
@@ -95,7 +102,12 @@ const Supplemental = (props) => {
     clientLivingSituation = (personSupplemental.LivingSituation !== null) ? personSupplemental.LivingSituation : '';
     clientStudentStatus = (personSupplemental.StudentStatus !== null) ? personSupplemental.StudentStatus : '';
     clientHighestEducation = (personSupplemental.HighestEducation !== null) ? personSupplemental.HighestEducation : '';
-
+    clientEmployer = (personSupplemental.Employer !== null) ? personSupplemental.Employer : '';
+    clientSupervisor = (personSupplemental.Supervisor !== null ) ? personSupplemental.Supervisor : '';
+    clientJobTitle = (personSupplemental.JobTitle !== null ) ? personSupplemental.JobTitle : '';
+    clientHoursPerWeek = (personSupplemental.HoursPerWeek !== null ) ? personSupplemental.HoursPerWeek : '';
+    clientEmployerAddress = (personSupplemental.EmployerAddress !== null ) ? personSupplemental.EmployerAddress : '';
+    clientEmployerState = (personSupplemental.EmployerAddressState !== null) ? personSupplemental.EmployerAddressState : '';
 
     //the dropdowns from database
     clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
@@ -136,7 +148,7 @@ const Supplemental = (props) => {
     const [livingSituation, setLivingSituation] = useState(clientLivingSituation);
     const [studentStatus, setStudentStatus] = useState(clientStudentStatus);
     const [educationLevel, setEducationLevel] = useState(clientHighestEducation);
-    const [state, setState] = useState('Please Select');
+    const [state, setState] = useState(clientEmployerState);
 
     //the radio buttons
     const [isIepChecked, setIsIepChecked] = useState(clientIEP);
@@ -167,11 +179,11 @@ const Supplemental = (props) => {
     const [notes, setNotes] = useState(clientNotes);
     const [idNumber, setIDNumber] = useState(clientIDNumber);
     const [scarsMarksTattos, setScarsMarksTattoos] = useState(clientScars);
-    const [employer, setEmployer] = useState('');
-    const [supervisor, setSupervisor] = useState('');
-    const [jobTitle, setJobTitle] = useState('');
-    const [avgHoursPerWeek, setAvgHoursPerWeek] = useState('');
-    const [employerAddress, setEmployerAddress] = useState('');
+    const [employer, setEmployer] = useState(clientEmployer);
+    const [supervisor, setSupervisor] = useState(clientSupervisor);
+    const [jobTitle, setJobTitle] = useState(clientJobTitle);
+    const [avgHoursPerWeek, setAvgHoursPerWeek] = useState(clientHoursPerWeek);
+    const [employerAddress, setEmployerAddress] = useState(clientEmployerAddress);
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
