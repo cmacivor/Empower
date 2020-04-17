@@ -28,7 +28,7 @@ const Supplemental = (props) => {
     let clientNotes = '';
     let clientIDType = '';
     let clientIDNumber = '';
-    let clientIDIssueDate = new Date();
+    let clientIDIssueDate = '';
     let clientIDExpirationDate = new Date();
     let clientScars = '';
     let clientDisabled = '';
@@ -551,25 +551,28 @@ const Supplemental = (props) => {
         return Object.prototype.toString.call(d.date) === '[object Date]';
     }
 
-    function handleIDIssueDateChange(idIssueDate) {
-        setResetButtonDisabled(false);
+    function handleIDIssueDateChange(event) {
+        console.log('this is the id issue date');
+        console.log(event.target.value);
+
+        //setResetButtonDisabled(false);
         // console.log('this is the birth date');
         // console.log(birthDate);
-         let isValid = isValidDate(idIssueDate);
-        // console.log(isValid);
+        //  let isValid = isValidDate(idIssueDate);
+        // // console.log(isValid);
  
-         if (!isValid) {
-             //setBirthDateRequired(true);
-             //setDobErrorDivCss('invalid-feedback d-block')
-         } else {
-             //setBirthDateRequired(false);
-             //setDobErrorDivCss('invalid-feedback');
-         }
+        //  if (!isValid) {
+        //      //setBirthDateRequired(true);
+        //      //setDobErrorDivCss('invalid-feedback d-block')
+        //  } else {
+        //      //setBirthDateRequired(false);
+        //      //setDobErrorDivCss('invalid-feedback');
+        //  }
  
-         //setResetButtonDisabled(false); 
-         //setBirthDate(birthDate.date);
-         console.log(idIssueDate.date);
-         setIDIssueDate(idIssueDate.date);
+        //  //setResetButtonDisabled(false); 
+        //  //setBirthDate(birthDate.date);
+        //  console.log(idIssueDate.date);
+        //  setIDIssueDate(idIssueDate.date);
      }
 
      function handleIdExpirationDateChange(idExpirationDate) {
@@ -951,25 +954,26 @@ const Supplemental = (props) => {
                                         <label htmlFor="txtIDNumber"><strong>ID Number</strong></label>
                                         <input type="text" value={idNumber} onChange={setIDNumberHandler} className="form-control" id="txtIDNumber"></input>
                                     </div>
-                                    {/* <div className="col-3">
+                                    <div className="col-3">
                                         <label htmlFor="txtIssueDate"><strong>ID Issue Date</strong></label>
-                                        <DatePicker 
+                                        <input type="date" value={idIssueDate} onChange={handleIDIssueDateChange} id="txtIDIssueDate" className="form-control"></input>
+                                        {/* <DatePicker 
                                             selected={ idIssueDate }
                                             required={false}
                                             onChange={date => handleIDIssueDateChange({date})}
                                             className="form-control"                             
-                                        />
+                                        /> */}
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtIdExpirationDate"><strong>ID Expiration Date</strong></label>
-                                        <DatePicker
+                                        {/* <DatePicker
                                            selected={idExpirationDate}
                                            required={false}
                                            onChange={date => handleIdExpirationDateChange({date})}
                                            className="form-control"
                                            >
-                                        </DatePicker>
-                                    </div> */}
+                                        </DatePicker> */}
+                                    </div>
                                 </div>
                                 <br></br>
                                 <div className="form-row">
