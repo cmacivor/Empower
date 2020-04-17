@@ -234,77 +234,121 @@ const Supplemental = (props) => {
     const [prevIdNumber, setPrevIDNumber] = useState('');
     const [prevScarsMarksTattos, setPrevScarsMarksTattoos] = useState('');
 
+    const [loadTab, setLoadTab] = useState(false);
+
 
     
     useEffect(() => {
-        setHeightInFeet(clientHeightInFeet);
-        setHeightInInches(clientHeighInInches);
-        setWeight(clientWeight);
-        setHouseHoldSize(clientHouseHoldSize);
-        setHomePhone(clientHomePhone);
-        setHouseHoldIncome(clientIncome);
-        setPrimaryLanguage(clientLanguage);
-        setIsIepChecked(clientIEP);
-        setIsInterpreterNeededChecked(clientInterpreterNeeded);
-        setIsMedicaid(clientMedicaid);
-        setIsInsurance(clientInsurance);
-        setIsDriversLicense(clientDriversLicense);
-        setIsConvictedOffense(clientConvictedOffense);
-        setIsConvictedMisdemeanor(clientConvictedMisdemeanor);
-        setIsConvictedFelony(clientConvictedFelony);
-        setIsWorkingVehicle(clientWorkingVehicle);
-        setIsConvictedFelonyCrime(clientConvictedFelonyCrime);
-        setCareerStation(clientCareerStation);
-        setNotes(clientNotes);
-        setIDType(clientIDType);
-        setIDNumber(clientIDNumber);
-        //setIDIssueDate(new Date());
-        //setIDExpirationDate(new Date());
-        //setIDIssueDate(clientIDIssueDate);
-        //setIDExpirationDate(clientIDExpirationDate);
-        setScarsMarksTattoos(clientScars);
-        setIsDisabled(clientDisabled);
-        setLivingSituation(clientLivingSituation);
-        setStudentStatus(clientStudentStatus);
-        setEducationLevel(clientHighestEducation);
-        setEmployer(clientEmployer);
-        setSupervisor(clientSupervisor);
-        setJobTitle(clientJobTitle);
-        setAvgHoursPerWeek(clientHoursPerWeek);
-        setEmployerAddress(clientEmployerAddress);
-        setEmployerState(clientEmployerState);
 
-        //for the date pickers
-        if (state.isNewClient) {
+        //let personID = sessionStorage.getItem('PersonID');
+        
+        if (props.clientProfile !== undefined && props.clientProfile.PersonSupplemental !== null) {
+            let personID = props.clientProfile.Person.ID;
+            
+            //clearForm();
 
-            let datePickerReset = new Date();
-            let datePickerResetUTC = convertDateToUtcFormat(datePickerReset);
-            setIDIssueDate(datePickerResetUTC);
-            setIDExpirationDate(datePickerResetUTC);
+                let apiAddress = sessionStorage.getItem("baseApiAddress");
+                let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental/GetByPersonID/${personID}`;
+                let sessionStorageData = getSessionData();
+        
+                let clientHeightInFeet = '';
+        
+                fetch(fullPersonSupplementalAddress, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + sessionStorageData.Token
+                    }
+                    //body: JSON.stringify(personSupplemental)
+                }).then(result => result.json())
+                .then(personSupplemental => {
+                    //let personSupplemental = result.Person.PersonSupplemental;
+        
+                    if (personSupplemental === null) return; 
+        
+                    clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
+        
+                    setHeightInFeet(clientHeightInFeet)
+                });
+            }
+
+                    // setHeightInFeet(clientHeightInFeet);
+                // setHeightInInches(clientHeighInInches);
+                // setWeight(clientWeight);
+                // setHouseHoldSize(clientHouseHoldSize);
+                // setHomePhone(clientHomePhone);
+                // setHouseHoldIncome(clientIncome);
+                // setPrimaryLanguage(clientLanguage);
+                // setIsIepChecked(clientIEP);
+                // setIsInterpreterNeededChecked(clientInterpreterNeeded);
+                // setIsMedicaid(clientMedicaid);
+                // setIsInsurance(clientInsurance);
+                // setIsDriversLicense(clientDriversLicense);
+                // setIsConvictedOffense(clientConvictedOffense);
+                // setIsConvictedMisdemeanor(clientConvictedMisdemeanor);
+                // setIsConvictedFelony(clientConvictedFelony);
+                // setIsWorkingVehicle(clientWorkingVehicle);
+                // setIsConvictedFelonyCrime(clientConvictedFelonyCrime);
+                // setCareerStation(clientCareerStation);
+                // setNotes(clientNotes);
+                // setIDType(clientIDType);
+                // setIDNumber(clientIDNumber);
+                // //setIDIssueDate(new Date());
+                // //setIDExpirationDate(new Date());
+                // //setIDIssueDate(clientIDIssueDate);
+                // //setIDExpirationDate(clientIDExpirationDate);
+                // setScarsMarksTattoos(clientScars);
+                // setIsDisabled(clientDisabled);
+                // setLivingSituation(clientLivingSituation);
+                // setStudentStatus(clientStudentStatus);
+                // setEducationLevel(clientHighestEducation);
+                // setEmployer(clientEmployer);
+                // setSupervisor(clientSupervisor);
+                // setJobTitle(clientJobTitle);
+                // setAvgHoursPerWeek(clientHoursPerWeek);
+                // setEmployerAddress(clientEmployerAddress);
+                // setEmployerState(clientEmployerState);
+
+                //for the date pickers
+                // if (state.isNewClient) {
+
+                //     let datePickerReset = new Date();
+                //     let datePickerResetUTC = convertDateToUtcFormat(datePickerReset);
+                //     setIDIssueDate(datePickerResetUTC);
+                //     setIDExpirationDate(datePickerResetUTC);
+                // }
+
+
+                //Education Level
+                setEducationLevelID(clientEducationLevelID);
+                setEducationLevelDescription(clientEducationLevelDescription);
+                setEducationLevelValues(educationLevels);
+
+                //Funding Source
+                setFundingSourceID(clientFundingSourceID);
+                setFundingSourceDescription(clientFundingSourceDescription);
+                setFundingSourceValues(fundingSources);
+
+                //Job Status
+                setJobStatusID(clientJobStatusID);
+                setJobStatusDescription(clientJobStatusDescription);
+                setJobStatusValues(jobStatuses);
+
+                //Marital Status
+                setMaritalStatusID(clientMaritalStatusID);
+                setMaritalStatusDescription(clientMaritalStatusDescription);
+                setMaritalStatusValues(maritalStatuses);
+
+        });
+        
+        function clearForm() {
+            setHeightInFeet('');
         }
 
 
-        //Education Level
-        setEducationLevelID(clientEducationLevelID);
-        setEducationLevelDescription(clientEducationLevelDescription);
-        setEducationLevelValues(educationLevels);
+      
 
-        //Funding Source
-        setFundingSourceID(clientFundingSourceID);
-        setFundingSourceDescription(clientFundingSourceDescription);
-        setFundingSourceValues(fundingSources);
-
-        //Job Status
-        setJobStatusID(clientJobStatusID);
-        setJobStatusDescription(clientJobStatusDescription);
-        setJobStatusValues(jobStatuses);
-
-        //Marital Status
-        setMaritalStatusID(clientMaritalStatusID);
-        setMaritalStatusDescription(clientMaritalStatusDescription);
-        setMaritalStatusValues(maritalStatuses);
-
-    });
+    
 
     // useImperativeHandle(ref, () => ({
     //     // updateDatePickers(idIssueDate, idExpirationDate) {
