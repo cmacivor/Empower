@@ -554,7 +554,7 @@ const Supplemental = (props) => {
     function handleIDIssueDateChange(event) {
         console.log('this is the id issue date');
         console.log(event.target.value);
-
+        setIDIssueDate(event.target.value);
         //setResetButtonDisabled(false);
         // console.log('this is the birth date');
         // console.log(birthDate);
