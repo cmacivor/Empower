@@ -61,71 +61,73 @@ const Supplemental = (props) => {
     let clientUpdatedDate = '';
     let clientUpdatedBy = '';
 
-    //this is really important
-    if (props.clientProfile === undefined) return null;
-
-    let personSupplemental = props.clientProfile.PersonSupplemental
+    let maritalStatuses = props.maritalStatusValues;
     let educationLevels = props.educationLevelValues;
     let fundingSources = props.fundingSourceValues;
     let jobStatuses = props.jobStatusValues;
-    let maritalStatuses = props.maritalStatusValues;
-    
-    // console.log('this is tthe supplemental');
-    // console.log(personSupplemental);
-    // console.log(educationLevels);
 
-    clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
-    clientHeighInInches = (personSupplemental.HeightIn !== null) ? personSupplemental.HeightIn : '';
-    clientWeight = (personSupplemental.Weight !== null) ? personSupplemental.Weight : '';
-    clientHouseHoldSize = (personSupplemental.HouseholdSize !== null) ? personSupplemental.HouseholdSize : '';
-    clientHomePhone = (personSupplemental.HomePhone !== null) ? personSupplemental.HomePhone : '';
-    clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
-    clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
-    clientIEP = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : false;
-    clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : false;
-    clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : false;
-    clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : false;
-    clientDriversLicense = (personSupplemental.HasDriversLicense !== null) ? personSupplemental.HasDriversLicense : false;
-    clientConvictedOffense = (personSupplemental.HasConvictedOffence !== null ) ? personSupplemental.HasConvictedOffence : false;
-    clientConvictedMisdemeanor = (personSupplemental.HasConvictedMisdemeanor !== null ) ? personSupplemental.HasConvictedMisdemeanor : false;
-    clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : false; 
-    clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : false;
-    clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : false;
-    clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : 'Please Select';
-    clientNotes = (personSupplemental.Comments !== null) ? personSupplemental.Comments : '';
-    clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
-    clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
-    clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
-    clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
-    clientScars = (personSupplemental.ScarMarks !== null ) ? personSupplemental.ScarMarks : '';
-    clientDisabled = (personSupplemental.IsDisable !== null) ? personSupplemental.IsDisable : '';
-    clientLivingSituation = (personSupplemental.LivingSituation !== null) ? personSupplemental.LivingSituation : '';
-    clientStudentStatus = (personSupplemental.StudentStatus !== null) ? personSupplemental.StudentStatus : '';
-    clientHighestEducation = (personSupplemental.HighestEducation !== null) ? personSupplemental.HighestEducation : '';
-    clientEmployer = (personSupplemental.Employer !== null) ? personSupplemental.Employer : '';
-    clientSupervisor = (personSupplemental.Supervisor !== null ) ? personSupplemental.Supervisor : '';
-    clientJobTitle = (personSupplemental.JobTitle !== null ) ? personSupplemental.JobTitle : '';
-    clientHoursPerWeek = (personSupplemental.HoursPerWeek !== null ) ? personSupplemental.HoursPerWeek : '';
-    clientEmployerAddress = (personSupplemental.EmployerAddress !== null ) ? personSupplemental.EmployerAddress : '';
-    clientEmployerState = (personSupplemental.EmployerAddressState !== null) ? personSupplemental.EmployerAddressState : '';
+    //this is really important
+    //if (props.clientProfile === undefined) return null;
+    if (props.clientProfile !== undefined && props.clientProfile.PersonSupplemental !== null) {
 
-    //the dropdowns from database
-    clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
-    clientEducationLevelDescription = (personSupplemental.EducationLevel !== null ) ? personSupplemental.EducationLevel.Name : 'Please Select';
-    clientFundingSourceID = (personSupplemental.FundingSource !== null ) ? personSupplemental.FundingSource.ID : '';
-    clientFundingSourceDescription = (personSupplemental.FundingSource !== null) ? personSupplemental.FundingSource.Name : 'Please Select';
-    clientJobStatusID = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.ID : '';
-    clientJobStatusDescription = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.Name : 'Please Select';
-    clientMaritalStatusID = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.ID : '';
-    clientMaritalStatusDescription = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.Name: 'Please Select';
+        let personSupplemental = props.clientProfile.PersonSupplemental
+            
+        // console.log('this is tthe supplemental');
+        // console.log(personSupplemental);
+        // console.log(educationLevels);
 
-    clientSupplementalID = (personSupplemental.ID !== null ) ? personSupplemental.ID : 0;
-    clientCreatedDate = (personSupplemental.CreatedDate !== null) ? personSupplemental.CreatedDate : '';
-    clientCreatedBy = (personSupplemental.CreatedBy !== null) ? personSupplemental.CreatedBy : '';
-    clientUpdatedDate = (personSupplemental.UpdatedDate !== null) ? personSupplemental.UpdatedDate : '';
-    clientUpdatedBy = (personSupplemental.UpdatedBy !== null) ? personSupplemental.UpdatedBy : '';
+        clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
+        clientHeighInInches = (personSupplemental.HeightIn !== null) ? personSupplemental.HeightIn : '';
+        clientWeight = (personSupplemental.Weight !== null) ? personSupplemental.Weight : '';
+        clientHouseHoldSize = (personSupplemental.HouseholdSize !== null) ? personSupplemental.HouseholdSize : '';
+        clientHomePhone = (personSupplemental.HomePhone !== null) ? personSupplemental.HomePhone : '';
+        clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
+        clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
+        clientIEP = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : false;
+        clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : false;
+        clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : false;
+        clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : false;
+        clientDriversLicense = (personSupplemental.HasDriversLicense !== null) ? personSupplemental.HasDriversLicense : false;
+        clientConvictedOffense = (personSupplemental.HasConvictedOffence !== null ) ? personSupplemental.HasConvictedOffence : false;
+        clientConvictedMisdemeanor = (personSupplemental.HasConvictedMisdemeanor !== null ) ? personSupplemental.HasConvictedMisdemeanor : false;
+        clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : false; 
+        clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : false;
+        clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : false;
+        clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : 'Please Select';
+        clientNotes = (personSupplemental.Comments !== null) ? personSupplemental.Comments : '';
+        clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
+        clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
+        clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
+        clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
+        clientScars = (personSupplemental.ScarMarks !== null ) ? personSupplemental.ScarMarks : '';
+        clientDisabled = (personSupplemental.IsDisable !== null) ? personSupplemental.IsDisable : '';
+        clientLivingSituation = (personSupplemental.LivingSituation !== null) ? personSupplemental.LivingSituation : '';
+        clientStudentStatus = (personSupplemental.StudentStatus !== null) ? personSupplemental.StudentStatus : '';
+        clientHighestEducation = (personSupplemental.HighestEducation !== null) ? personSupplemental.HighestEducation : '';
+        clientEmployer = (personSupplemental.Employer !== null) ? personSupplemental.Employer : '';
+        clientSupervisor = (personSupplemental.Supervisor !== null ) ? personSupplemental.Supervisor : '';
+        clientJobTitle = (personSupplemental.JobTitle !== null ) ? personSupplemental.JobTitle : '';
+        clientHoursPerWeek = (personSupplemental.HoursPerWeek !== null ) ? personSupplemental.HoursPerWeek : '';
+        clientEmployerAddress = (personSupplemental.EmployerAddress !== null ) ? personSupplemental.EmployerAddress : '';
+        clientEmployerState = (personSupplemental.EmployerAddressState !== null) ? personSupplemental.EmployerAddressState : '';
 
+        //the dropdowns from database
+        clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
+        clientEducationLevelDescription = (personSupplemental.EducationLevel !== null ) ? personSupplemental.EducationLevel.Name : 'Please Select';
+        clientFundingSourceID = (personSupplemental.FundingSource !== null ) ? personSupplemental.FundingSource.ID : '';
+        clientFundingSourceDescription = (personSupplemental.FundingSource !== null) ? personSupplemental.FundingSource.Name : 'Please Select';
+        clientJobStatusID = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.ID : '';
+        clientJobStatusDescription = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.Name : 'Please Select';
+        clientMaritalStatusID = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.ID : '';
+        clientMaritalStatusDescription = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.Name: 'Please Select';
 
+        clientSupplementalID = (personSupplemental.ID !== null ) ? personSupplemental.ID : 0;
+        clientCreatedDate = (personSupplemental.CreatedDate !== null) ? personSupplemental.CreatedDate : '';
+        clientCreatedBy = (personSupplemental.CreatedBy !== null) ? personSupplemental.CreatedBy : '';
+        clientUpdatedDate = (personSupplemental.UpdatedDate !== null) ? personSupplemental.UpdatedDate : '';
+        clientUpdatedBy = (personSupplemental.UpdatedBy !== null) ? personSupplemental.UpdatedBy : '';
+
+    }
 
     const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
     //the dropdowns pulling values from the database
