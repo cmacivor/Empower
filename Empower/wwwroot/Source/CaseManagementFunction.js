@@ -109,18 +109,18 @@ const CaseManagementFunction = (props) => {
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
         infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
 
-        let idIssueDate = new Date();
-        let idExpirationDate = new Date();
+        // let idIssueDate = new Date();
+        // let idExpirationDate = new Date();
 
-        if (clientProfile.Person.PersonSupplemental.IssueDate !== null) {
-            idIssueDate = clientProfile.Person.PersonSupplemental.IssueDate;
-        }
+        // if (clientProfile.Person.PersonSupplemental.IssueDate !== null) {
+        //     idIssueDate = clientProfile.Person.PersonSupplemental.IssueDate;
+        // }
 
-        if (clientProfile.Person.PersonSupplemental.ExpirationDate !== null) {
-            idExpirationDate = clientProfile.Person.PersonSupplemental.ExpirationDate;
-        }
+        // if (clientProfile.Person.PersonSupplemental.ExpirationDate !== null) {
+        //     idExpirationDate = clientProfile.Person.PersonSupplemental.ExpirationDate;
+        // }
 
-        supplementalRef.current.updateDatePickers(idIssueDate, idExpirationDate);
+        // supplementalRef.current.updateDatePickers(idIssueDate, idExpirationDate);
 
     }
 
@@ -177,7 +177,7 @@ const CaseManagementFunction = (props) => {
                         
                        <Supplemental 
                        clientProfile={clientProfile.Person}
-                       ref={supplementalRef} 
+                       
                        educationLevelValues={educationLevelsOptions}
                        fundingSourceValues={fundingSourceOptions  }
                        jobStatusValues={ jobStatusOptions } 

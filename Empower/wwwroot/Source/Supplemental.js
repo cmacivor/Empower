@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import { getSessionData } from './commonAdmin';
 import { Api } from './commonAdmin';
 
-const Supplemental = forwardRef((props, ref) => {
+const Supplemental = (props) => {
 
     let clientHeightInFeet = '';
     let clientHeighInInches = '';
@@ -304,27 +304,27 @@ const Supplemental = forwardRef((props, ref) => {
 
     });
 
-    useImperativeHandle(ref, () => ({
-        updateDatePickers(idIssueDate, idExpirationDate) {
+    // useImperativeHandle(ref, () => ({
+    //     // updateDatePickers(idIssueDate, idExpirationDate) {
 
-            //let utcBirthDate = convertDateToUtcFormat(birthDate);
+    //     //     //let utcBirthDate = convertDateToUtcFormat(birthDate);
 
-            //setBirthDate(utcBirthDate);
-            //clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
-            //clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
-            let utcIDIssueDate = convertDateToUtcFormat(idIssueDate);
-            let utcIDExpirationDate = convertDateToUtcFormat(idExpirationDate);
+    //     //     //setBirthDate(utcBirthDate);
+    //     //     //clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
+    //     //     //clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
+    //     //     let utcIDIssueDate = convertDateToUtcFormat(idIssueDate);
+    //     //     let utcIDExpirationDate = convertDateToUtcFormat(idExpirationDate);
 
-            setIDIssueDate(utcIDIssueDate);
-            setIDExpirationDate(utcIDExpirationDate);
+    //     //     setIDIssueDate(utcIDIssueDate);
+    //     //     setIDExpirationDate(utcIDExpirationDate);
 
-        },
+    //     // },
 
-        //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
-        clearForm() {
-            //clearFormForNewProfile();
-        }
-    }));
+    //     //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
+    //     clearForm() {
+    //         //clearFormForNewProfile();
+    //     }
+    // }));
 
     function addPleaseSelect(options) {
         let pleaseSelectItem = {
@@ -951,7 +951,7 @@ const Supplemental = forwardRef((props, ref) => {
                                         <label htmlFor="txtIDNumber"><strong>ID Number</strong></label>
                                         <input type="text" value={idNumber} onChange={setIDNumberHandler} className="form-control" id="txtIDNumber"></input>
                                     </div>
-                                    <div className="col-3">
+                                    {/* <div className="col-3">
                                         <label htmlFor="txtIssueDate"><strong>ID Issue Date</strong></label>
                                         <DatePicker 
                                             selected={ idIssueDate }
@@ -969,7 +969,7 @@ const Supplemental = forwardRef((props, ref) => {
                                            className="form-control"
                                            >
                                         </DatePicker>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <br></br>
                                 <div className="form-row">
@@ -1191,6 +1191,6 @@ const Supplemental = forwardRef((props, ref) => {
                 </div>
 
             </div>;
-});
+};
 
 export default Supplemental;
