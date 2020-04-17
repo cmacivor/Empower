@@ -21,6 +21,7 @@ const CaseManagementFunction = (props) => {
     const [clientProfile, setClientProfile] = useState(Object);
     const [ isSpinnerVisible, setIsSpinnerVisible ] = useState(false);
     const infoRef = useRef();
+    const supplementalRef = useRef();
     const cacheService = useCacheService();
     const {state, dispatch} = useStore();
 
@@ -108,6 +109,19 @@ const CaseManagementFunction = (props) => {
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
         infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
 
+        let idIssueDate = new Date();
+        let idExpirationDate = new Date();
+
+        if (clientProfile.Person.PersonSupplemental.IssueDate !== null) {
+            idIssueDate = clientProfile.Person.PersonSupplemental.IssueDate;
+        }
+
+        if (clientProfile.Person.PersonSupplemental.ExpirationDate !== null) {
+            idExpirationDate = clientProfile.Person.PersonSupplemental.ExpirationDate;
+        }
+
+        supplementalRef.current.updateDatePickers(idIssueDate, idExpirationDate);
+
     }
 
     let infoTabTitle = '';
@@ -162,7 +176,8 @@ const CaseManagementFunction = (props) => {
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
                         
                        <Supplemental 
-                       clientProfile={clientProfile.Person} 
+                       clientProfile={clientProfile.Person}
+                       ref={supplementalRef} 
                        educationLevelValues={educationLevelsOptions}
                        fundingSourceValues={fundingSourceOptions  }
                        jobStatusValues={ jobStatusOptions } 

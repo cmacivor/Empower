@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import DropDown from './Dropdown';
 import RadioButton from './RadioButton';
 import DatePicker from 'react-datepicker';
 import { getSessionData } from './commonAdmin';
 import { Api } from './commonAdmin';
 
-const Supplemental = (props) => {
+const Supplemental = forwardRef((props, ref) => {
 
     let clientHeightInFeet = '';
     let clientHeighInInches = '';
@@ -115,9 +115,9 @@ const Supplemental = (props) => {
     clientFundingSourceID = (personSupplemental.FundingSource !== null ) ? personSupplemental.FundingSource.ID : '';
     clientFundingSourceDescription = (personSupplemental.FundingSource !== null) ? personSupplemental.FundingSource.Name : 'Please Select';
     clientJobStatusID = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.ID : '';
-    clientJobStatusDescription = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.Name : '';
+    clientJobStatusDescription = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.Name : 'Please Select';
     clientMaritalStatusID = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.ID : '';
-    clientMaritalStatusDescription = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.Name: '';
+    clientMaritalStatusDescription = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.Name: 'Please Select';
 
     clientSupplementalID = (personSupplemental.ID !== null ) ? personSupplemental.ID : 0;
     clientCreatedDate = (personSupplemental.CreatedDate !== null) ? personSupplemental.CreatedDate : '';
@@ -148,7 +148,7 @@ const Supplemental = (props) => {
     const [livingSituation, setLivingSituation] = useState(clientLivingSituation);
     const [studentStatus, setStudentStatus] = useState(clientStudentStatus);
     const [educationLevel, setEducationLevel] = useState(clientHighestEducation);
-    const [state, setState] = useState(clientEmployerState);
+    const [state, setEmployerState] = useState(clientEmployerState);
 
     //the radio buttons
     const [isIepChecked, setIsIepChecked] = useState(clientIEP);
@@ -254,6 +254,32 @@ const Supplemental = (props) => {
         setIsConvictedFelonyCrime(clientConvictedFelonyCrime);
         setCareerStation(clientCareerStation);
         setNotes(clientNotes);
+        setIDType(clientIDType);
+        setIDNumber(clientIDNumber);
+        //setIDIssueDate(new Date());
+        //setIDExpirationDate(new Date());
+        //setIDIssueDate(clientIDIssueDate);
+        //setIDExpirationDate(clientIDExpirationDate);
+        setScarsMarksTattoos(clientScars);
+        setIsDisabled(clientDisabled);
+        setLivingSituation(clientLivingSituation);
+        setStudentStatus(clientStudentStatus);
+        setEducationLevel(clientHighestEducation);
+        setEmployer(clientEmployer);
+        setSupervisor(clientSupervisor);
+        setJobTitle(clientJobTitle);
+        setAvgHoursPerWeek(clientHoursPerWeek);
+        setEmployerAddress(clientEmployerAddress);
+        setEmployerState(clientEmployerState);
+
+        //for the date pickers
+        if (state.isNewClient) {
+
+            let datePickerReset = new Date();
+            let datePickerResetUTC = convertDateToUtcFormat(datePickerReset);
+            setIDIssueDate(datePickerResetUTC);
+            setIDExpirationDate(datePickerResetUTC);
+        }
 
 
         //Education Level
@@ -277,6 +303,28 @@ const Supplemental = (props) => {
         setMaritalStatusValues(maritalStatuses);
 
     });
+
+    useImperativeHandle(ref, () => ({
+        updateDatePickers(idIssueDate, idExpirationDate) {
+
+            //let utcBirthDate = convertDateToUtcFormat(birthDate);
+
+            //setBirthDate(utcBirthDate);
+            //clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
+            //clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
+            let utcIDIssueDate = convertDateToUtcFormat(idIssueDate);
+            let utcIDExpirationDate = convertDateToUtcFormat(idExpirationDate);
+
+            setIDIssueDate(utcIDIssueDate);
+            setIDExpirationDate(utcIDExpirationDate);
+
+        },
+
+        //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
+        clearForm() {
+            //clearFormForNewProfile();
+        }
+    }));
 
     function addPleaseSelect(options) {
         let pleaseSelectItem = {
@@ -1143,6 +1191,6 @@ const Supplemental = (props) => {
                 </div>
 
             </div>;
-}
+});
 
 export default Supplemental;
