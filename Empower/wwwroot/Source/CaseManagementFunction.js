@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import SearchJuvenile from './SearchJuvenile';
 import Search from './Search';
 import Info from './Info';
@@ -11,6 +11,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
+import {  Api } from './commonAdmin';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -20,8 +21,25 @@ const CaseManagementFunction = (props) => {
     const [clientProfile, setClientProfile] = useState(Object);
     const [ isSpinnerVisible, setIsSpinnerVisible ] = useState(false);
     const infoRef = useRef();
+    const supplementalRef = useRef();
     const cacheService = useCacheService();
     const {state, dispatch} = useStore();
+
+    const [educationLevelsOptions, setEducationLevelOptions] = useState([]);
+    const [fundingSourceOptions, setFundingSourceOptions] = useState([]);
+    const [jobStatusOptions, setJobStatusOptions] = useState([]);
+    const [maritalStatusOptions, setMaritalStatusOptions] = useState([]);
+
+    useEffect(() => {
+        //Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
+        //Api.getConfigDataByType("Race").then(races => setRaces(races));
+        Api.getConfigDataByType("EducationLevel").then(educationLevels => setEducationLevelOptions(educationLevels));
+        Api.getConfigDataByType("FundingSource").then(fundingSources => setFundingSourceOptions(fundingSources));
+        //Api.getConfigDataByType("Suffix").then(suffixes => setSuffixes(suffixes));
+        Api.getConfigDataByType("JobStatus").then(jobStatuses => setJobStatusOptions(jobStatuses)); 
+        Api.getConfigDataByType("MaritalStatus").then(maritalStatuses => setMaritalStatusOptions(maritalStatuses));
+        //Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
+     }, []);
 
 
     toast.configure();
@@ -29,6 +47,9 @@ const CaseManagementFunction = (props) => {
     let sessionData = getSessionData();
 
     let systems = getSystems();
+
+    //let genderValueDropDownOptions = [];
+    //let raceValueDropDownOptions = [];
 
 
     function triggerToastMessage(message) {       
@@ -78,11 +99,28 @@ const CaseManagementFunction = (props) => {
 
     //to handle clicking on a row in the search grid, so this data is accessible elsewhere
     function SetClientProfile(clientProfile) {
+        console.log('this is case magemdm');
+        console.log(clientProfile);
         //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was   
         setClientProfile(clientProfile); //updates the local state
+        sessionStorage.setItem("PersonID", clientProfile.ClientProfile.Person.ID);
+        sessionStorage.setItem("ClientProfileID", clientProfile.ClientProfile.ID);
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
         infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
+
+        // let idIssueDate = new Date();
+        // let idExpirationDate = new Date();
+
+        // if (clientProfile.Person.PersonSupplemental.IssueDate !== null) {
+        //     idIssueDate = clientProfile.Person.PersonSupplemental.IssueDate;
+        // }
+
+        // if (clientProfile.Person.PersonSupplemental.ExpirationDate !== null) {
+        //     idExpirationDate = clientProfile.Person.PersonSupplemental.ExpirationDate;
+        // }
+
+        // supplementalRef.current.updateDatePickers(idIssueDate, idExpirationDate);
 
     }
 
@@ -138,11 +176,13 @@ const CaseManagementFunction = (props) => {
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
                         
                        <Supplemental 
-                       clientProfile={clientProfile.Person} 
-                       educationLevelValues={cacheService.educationLevelValues}
-                       fundingSourceValues={cacheService.fundingSourceValues}
-                       jobStatusValues={cacheService.jobStatusValues} 
-                       maritalStatusValues={cacheService.maritalStatusValues} />
+                       clientProfile={clientProfile.Person}
+                       
+                       educationLevelValues={educationLevelsOptions}
+                       fundingSourceValues={fundingSourceOptions  }
+                       jobStatusValues={ jobStatusOptions } 
+                       maritalStatusValues={ maritalStatusOptions }
+                       createNotification={triggerToastMessage} />
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
                        address content

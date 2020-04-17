@@ -1,69 +1,210 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import DropDown from './Dropdown';
 import RadioButton from './RadioButton';
 import DatePicker from 'react-datepicker';
+import { getSessionData } from './commonAdmin';
+import { Api } from './commonAdmin';
 
 const Supplemental = (props) => {
+
+    let clientHeightInFeet = '';
+    let clientHeighInInches = '';
+    let clientWeight = '';
+    let clientHouseHoldSize = '';
+    let clientHomePhone = '';
+    let clientIncome = '';
+    let clientLanguage = '';
+    let clientIEP = false;
+    let clientInterpreterNeeded = false;
+    let clientMedicaid = false;
+    let clientInsurance = false;
+    let clientDriversLicense = false;
+    let clientConvictedOffense = false;
+    let clientConvictedMisdemeanor = false;
+    let clientConvictedFelony = false;
+    let clientWorkingVehicle = false;
+    let clientConvictedFelonyCrime = false;
+    let clientCareerStation = '';
+    let clientNotes = '';
+    let clientIDType = '';
+    let clientIDNumber = '';
+    let clientIDIssueDate = new Date();
+    let clientIDExpirationDate = new Date();
+    let clientScars = '';
+    let clientDisabled = '';
+    let clientLivingSituation = '';
+    let clientStudentStatus = '';
+    let clientHighestEducation = '';
+    let clientEmployer = '';
+    let clientSupervisor = '';
+    let clientJobTitle = '';
+    let clientHoursPerWeek = '';
+    let clientEmployerAddress = '';
+    let clientEmployerState = '';
+
+    
+    //dropdowns from database
+    let clientEducationLevelID = '';
+    let clientEducationLevelDescription = '';
+    let clientFundingSourceID = '';
+    let clientFundingSourceDescription = '';
+    let clientJobStatusID = '';
+    let clientJobStatusDescription = '';
+    let clientMaritalStatusID = '';
+    let clientMaritalStatusDescription = '';
+
+    let clientSupplementalID = 0;
+
+    //Audit
+    let clientCreatedDate = '';
+    let clientCreatedBy = '';
+    let clientUpdatedDate = '';
+    let clientUpdatedBy = '';
 
     //this is really important
     if (props.clientProfile === undefined) return null;
 
-    //values for the dropdowns from the database
-    const educationLevels = props.educationLevelValues;
-    const fundingSources = props.fundingSourceValues;
-    const jobStatuses = props.jobStatusValues;
-    const maritalStatuses = props.maritalStatusValues;
+    let personSupplemental = props.clientProfile.PersonSupplemental
+    let educationLevels = props.educationLevelValues;
+    let fundingSources = props.fundingSourceValues;
+    let jobStatuses = props.jobStatusValues;
+    let maritalStatuses = props.maritalStatusValues;
+    
+    // console.log('this is tthe supplemental');
+    // console.log(personSupplemental);
+    // console.log(educationLevels);
 
-    //the dropdowns
-    const [educationLevelID, setEducationLevelID] = useState(3);
-    const [educationLevelDescription, setEducationLevelDescription] = useState('12th Grade');
-    const [fundingSourceID, setFundingSourceID] = useState(3);
-    const [fundingSourceDescription, setFundingSourceDescription] = useState("RRHA");
-    const [jobStatusID, setJobStatusID] = useState(3);
-    const [jobStatusDescription, setJobStatusDescription] = useState("Retired");
-    const [maritalStatusID, setMaritalStatusID] = useState(3);
-    const [maritalStatusDescription, setMaritalStatusDescription] = useState("MARRIED");
+    clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
+    clientHeighInInches = (personSupplemental.HeightIn !== null) ? personSupplemental.HeightIn : '';
+    clientWeight = (personSupplemental.Weight !== null) ? personSupplemental.Weight : '';
+    clientHouseHoldSize = (personSupplemental.HouseholdSize !== null) ? personSupplemental.HouseholdSize : '';
+    clientHomePhone = (personSupplemental.HomePhone !== null) ? personSupplemental.HomePhone : '';
+    clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
+    clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
+    clientIEP = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : false;
+    clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : false;
+    clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : false;
+    clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : false;
+    clientDriversLicense = (personSupplemental.HasDriversLicense !== null) ? personSupplemental.HasDriversLicense : false;
+    clientConvictedOffense = (personSupplemental.HasConvictedOffence !== null ) ? personSupplemental.HasConvictedOffence : false;
+    clientConvictedMisdemeanor = (personSupplemental.HasConvictedMisdemeanor !== null ) ? personSupplemental.HasConvictedMisdemeanor : false;
+    clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : false; 
+    clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : false;
+    clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : false;
+    clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : 'Please Select';
+    clientNotes = (personSupplemental.Comments !== null) ? personSupplemental.Comments : '';
+    clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
+    clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
+    clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
+    clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
+    clientScars = (personSupplemental.ScarMarks !== null ) ? personSupplemental.ScarMarks : '';
+    clientDisabled = (personSupplemental.IsDisable !== null) ? personSupplemental.IsDisable : '';
+    clientLivingSituation = (personSupplemental.LivingSituation !== null) ? personSupplemental.LivingSituation : '';
+    clientStudentStatus = (personSupplemental.StudentStatus !== null) ? personSupplemental.StudentStatus : '';
+    clientHighestEducation = (personSupplemental.HighestEducation !== null) ? personSupplemental.HighestEducation : '';
+    clientEmployer = (personSupplemental.Employer !== null) ? personSupplemental.Employer : '';
+    clientSupervisor = (personSupplemental.Supervisor !== null ) ? personSupplemental.Supervisor : '';
+    clientJobTitle = (personSupplemental.JobTitle !== null ) ? personSupplemental.JobTitle : '';
+    clientHoursPerWeek = (personSupplemental.HoursPerWeek !== null ) ? personSupplemental.HoursPerWeek : '';
+    clientEmployerAddress = (personSupplemental.EmployerAddress !== null ) ? personSupplemental.EmployerAddress : '';
+    clientEmployerState = (personSupplemental.EmployerAddressState !== null) ? personSupplemental.EmployerAddressState : '';
+
+    //the dropdowns from database
+    clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
+    clientEducationLevelDescription = (personSupplemental.EducationLevel !== null ) ? personSupplemental.EducationLevel.Name : 'Please Select';
+    clientFundingSourceID = (personSupplemental.FundingSource !== null ) ? personSupplemental.FundingSource.ID : '';
+    clientFundingSourceDescription = (personSupplemental.FundingSource !== null) ? personSupplemental.FundingSource.Name : 'Please Select';
+    clientJobStatusID = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.ID : '';
+    clientJobStatusDescription = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.Name : 'Please Select';
+    clientMaritalStatusID = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.ID : '';
+    clientMaritalStatusDescription = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.Name: 'Please Select';
+
+    clientSupplementalID = (personSupplemental.ID !== null ) ? personSupplemental.ID : 0;
+    clientCreatedDate = (personSupplemental.CreatedDate !== null) ? personSupplemental.CreatedDate : '';
+    clientCreatedBy = (personSupplemental.CreatedBy !== null) ? personSupplemental.CreatedBy : '';
+    clientUpdatedDate = (personSupplemental.UpdatedDate !== null) ? personSupplemental.UpdatedDate : '';
+    clientUpdatedBy = (personSupplemental.UpdatedBy !== null) ? personSupplemental.UpdatedBy : '';
+
+
+
+    const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
+    //the dropdowns pulling values from the database
+    const [educationLevelID, setEducationLevelID] = useState(clientEducationLevelID);
+    const [educationLevelDescription, setEducationLevelDescription] = useState(clientEducationLevelDescription);
+    const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
+    const [fundingSourceID, setFundingSourceID] = useState(clientFundingSourceID);
+    const [fundingSourceDescription, setFundingSourceDescription] = useState(clientFundingSourceDescription);
+    const [fundingSourceValues, setFundingSourceValues] = useState(fundingSources);
+    const [jobStatusID, setJobStatusID] = useState(jobStatusID);
+    const [jobStatusDescription, setJobStatusDescription] = useState(clientJobStatusDescription);
+    const [jobStatusValues, setJobStatusValues] = useState(jobStatuses);
+    const [maritalStatusID, setMaritalStatusID] = useState(clientMaritalStatusID);
+    const [maritalStatusDescription, setMaritalStatusDescription] = useState(clientMaritalStatusDescription);
+    const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
     
+    //the dropdowns with hardcoded values
+    const [careerStation, setCareerStation] = useState(clientCareerStation);
+    const [idType, setIDType] = useState(clientIDType);
+    const [livingSituation, setLivingSituation] = useState(clientLivingSituation);
+    const [studentStatus, setStudentStatus] = useState(clientStudentStatus);
+    const [educationLevel, setEducationLevel] = useState(clientHighestEducation);
+    const [state, setEmployerState] = useState(clientEmployerState);
+
     //the radio buttons
-    const [isIepChecked, setIsIepChecked] = useState(false);
-    const [isInterpreterNeededChecked, setIsInterpreterNeededChecked] = useState(false);
-    const [isMedicaid, setIsMedicaid] = useState(false);
-    const [isInsurance, setIsInsurance] = useState(false);
-    const [isDriversLicense, setIsDriversLicense] = useState(false);
-    const [isConvictedOffense, setIsConvictedOffense] = useState(false);
-    const [isConvictedMisdemeanor, setIsConvictedMisdemeanor] = useState(false);
-    const [isConvictedFelony, setIsConvictedFelony] = useState(false);
-    const [isWorkingVehicle, setIsWorkingVehicle] = useState(false);
-    const [isConvictedFelonyCrime, setIsConvictedFelonyCrime] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(false);
+    const [isIepChecked, setIsIepChecked] = useState(clientIEP);
+    const [isInterpreterNeededChecked, setIsInterpreterNeededChecked] = useState(clientInterpreterNeeded);
+    const [isMedicaid, setIsMedicaid] = useState(clientMedicaid);
+    const [isInsurance, setIsInsurance] = useState(clientInsurance);
+    const [isDriversLicense, setIsDriversLicense] = useState(clientDriversLicense);
+    const [isConvictedOffense, setIsConvictedOffense] = useState(clientConvictedOffense);
+    const [isConvictedMisdemeanor, setIsConvictedMisdemeanor] = useState(clientConvictedMisdemeanor);
+    const [isConvictedFelony, setIsConvictedFelony] = useState(clientConvictedFelony);
+    const [isWorkingVehicle, setIsWorkingVehicle] = useState(clientWorkingVehicle);
+    const [isConvictedFelonyCrime, setIsConvictedFelonyCrime] = useState(clientConvictedFelonyCrime);
+    const [isDisabled, setIsDisabled] = useState(clientDisabled);
     
+    //the date pickers
+    const [idIssueDate, setIDIssueDate] = useState(clientIDIssueDate);
+    const [idExpirationDate, setIDExpirationDate] = useState(clientIDExpirationDate);
+
     //textboxes
-    const [heightInFeet, setHeightInFeet] = useState('');
-    const [heightInInches, setHeightInInches] = useState('');
-    const [weight, setWeight] = useState('');
+    const [heightInFeet, setHeightInFeet] = useState(clientHeightInFeet);
+    const [heightInInches, setHeightInInches] = useState(clientHeighInInches);
+    const [weight, setWeight] = useState(clientWeight);
     const [shoeSize, setShoeSize] = useState('');
-    const [houseHoldSize, setHouseHoldSize] = useState('');
-    const [homePhone, setHomePhone] = useState('');
-    const [houseHoldIncome, setHouseHoldIncome] = useState('');
-    const [primaryLanguage, setPrimaryLanguage] = useState('');
-    const [notes, setNotes] = useState('');
-    const [idNumber, setIDNumber] = useState('');
-    const [scarsMarksTattos, setScarsMarksTattoos] = useState('');
+    const [houseHoldSize, setHouseHoldSize] = useState(clientHouseHoldSize);
+    const [homePhone, setHomePhone] = useState(clientHomePhone);
+    const [houseHoldIncome, setHouseHoldIncome] = useState(clientIncome);
+    const [primaryLanguage, setPrimaryLanguage] = useState(clientLanguage);
+    const [notes, setNotes] = useState(clientNotes);
+    const [idNumber, setIDNumber] = useState(clientIDNumber);
+    const [scarsMarksTattos, setScarsMarksTattoos] = useState(clientScars);
+    const [employer, setEmployer] = useState(clientEmployer);
+    const [supervisor, setSupervisor] = useState(clientSupervisor);
+    const [jobTitle, setJobTitle] = useState(clientJobTitle);
+    const [avgHoursPerWeek, setAvgHoursPerWeek] = useState(clientHoursPerWeek);
+    const [employerAddress, setEmployerAddress] = useState(clientEmployerAddress);
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
+
+    //audit
+    const [createdBy, setCreatedBy] = useState(clientCreatedBy);
+    const [createdDate, setCreatedDate] = useState(clientCreatedDate);
+    const [updatedBy, setUpdatedBy] = useState(clientUpdatedBy);
+    const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
 
 
     //Reset variables to hold original state
     //the reset dropdown values
     const [prevEducationLevelID, setPrevEducationLevelID] = useState(3);
-    const [prevEducationLevelDescription, setPrevEducationLevelDescription] = useState('12th Grade');
+    const [prevEducationLevelDescription, setPrevEducationLevelDescription] = useState('Please Select');
     const [prevFundingSourceID, setPrevFundingSourceID] = useState(3);
-    const [prevFundingSourceDescription, setPrevFundingSourceDescription] = useState("RRHA");
+    const [prevFundingSourceDescription, setPrevFundingSourceDescription] = useState("Please Select");
     const [prevJobStatusID, setPrevJobStatusID] = useState(3);
-    const [prevJobStatusDescription, setPrevJobStatusDescription] = useState("Retired");
+    const [prevJobStatusDescription, setPrevJobStatusDescription] = useState("Please Select");
     const [prevMaritalStatusID, setPrevMaritalStatusID] = useState(3);
-    const [prevMaritalStatusDescription, setPrevMaritalStatusDescription] = useState("MARRIED");
+    const [prevMaritalStatusDescription, setPrevMaritalStatusDescription] = useState("Please Select");
     
     //the reset radio button values
     const [prevIsIepChecked, setPrevIsIepChecked] = useState(false);
@@ -92,14 +233,120 @@ const Supplemental = (props) => {
     const [prevScarsMarksTattos, setPrevScarsMarksTattoos] = useState('');
 
 
-
-    //TODO: need to have common function for this conversion- see Info.js
-    let idIssueDateUTC = new Date().toUTCString();
-    let formattedDate = new Date(idIssueDateUTC);
-    const [idIssueDate, setIDIssueDate] = useState(formattedDate);
-    const [idExpirationDate, setIDExpirationDate] = useState(formattedDate);
-
     
+    useEffect(() => {
+        setHeightInFeet(clientHeightInFeet);
+        setHeightInInches(clientHeighInInches);
+        setWeight(clientWeight);
+        setHouseHoldSize(clientHouseHoldSize);
+        setHomePhone(clientHomePhone);
+        setHouseHoldIncome(clientIncome);
+        setPrimaryLanguage(clientLanguage);
+        setIsIepChecked(clientIEP);
+        setIsInterpreterNeededChecked(clientInterpreterNeeded);
+        setIsMedicaid(clientMedicaid);
+        setIsInsurance(clientInsurance);
+        setIsDriversLicense(clientDriversLicense);
+        setIsConvictedOffense(clientConvictedOffense);
+        setIsConvictedMisdemeanor(clientConvictedMisdemeanor);
+        setIsConvictedFelony(clientConvictedFelony);
+        setIsWorkingVehicle(clientWorkingVehicle);
+        setIsConvictedFelonyCrime(clientConvictedFelonyCrime);
+        setCareerStation(clientCareerStation);
+        setNotes(clientNotes);
+        setIDType(clientIDType);
+        setIDNumber(clientIDNumber);
+        //setIDIssueDate(new Date());
+        //setIDExpirationDate(new Date());
+        //setIDIssueDate(clientIDIssueDate);
+        //setIDExpirationDate(clientIDExpirationDate);
+        setScarsMarksTattoos(clientScars);
+        setIsDisabled(clientDisabled);
+        setLivingSituation(clientLivingSituation);
+        setStudentStatus(clientStudentStatus);
+        setEducationLevel(clientHighestEducation);
+        setEmployer(clientEmployer);
+        setSupervisor(clientSupervisor);
+        setJobTitle(clientJobTitle);
+        setAvgHoursPerWeek(clientHoursPerWeek);
+        setEmployerAddress(clientEmployerAddress);
+        setEmployerState(clientEmployerState);
+
+        //for the date pickers
+        if (state.isNewClient) {
+
+            let datePickerReset = new Date();
+            let datePickerResetUTC = convertDateToUtcFormat(datePickerReset);
+            setIDIssueDate(datePickerResetUTC);
+            setIDExpirationDate(datePickerResetUTC);
+        }
+
+
+        //Education Level
+        setEducationLevelID(clientEducationLevelID);
+        setEducationLevelDescription(clientEducationLevelDescription);
+        setEducationLevelValues(educationLevels);
+
+        //Funding Source
+        setFundingSourceID(clientFundingSourceID);
+        setFundingSourceDescription(clientFundingSourceDescription);
+        setFundingSourceValues(fundingSources);
+
+        //Job Status
+        setJobStatusID(clientJobStatusID);
+        setJobStatusDescription(clientJobStatusDescription);
+        setJobStatusValues(jobStatuses);
+
+        //Marital Status
+        setMaritalStatusID(clientMaritalStatusID);
+        setMaritalStatusDescription(clientMaritalStatusDescription);
+        setMaritalStatusValues(maritalStatuses);
+
+    });
+
+    // useImperativeHandle(ref, () => ({
+    //     // updateDatePickers(idIssueDate, idExpirationDate) {
+
+    //     //     //let utcBirthDate = convertDateToUtcFormat(birthDate);
+
+    //     //     //setBirthDate(utcBirthDate);
+    //     //     //clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
+    //     //     //clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
+    //     //     let utcIDIssueDate = convertDateToUtcFormat(idIssueDate);
+    //     //     let utcIDExpirationDate = convertDateToUtcFormat(idExpirationDate);
+
+    //     //     setIDIssueDate(utcIDIssueDate);
+    //     //     setIDExpirationDate(utcIDExpirationDate);
+
+    //     // },
+
+    //     //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
+    //     clearForm() {
+    //         //clearFormForNewProfile();
+    //     }
+    // }));
+
+    function addPleaseSelect(options) {
+        let pleaseSelectItem = {
+            Name: "PleaseSelect",
+            Description: "Please Select",
+            Active: true,
+            ID: 0,
+            CreatedDate: new Date()
+        }
+
+        options.splice(0, 0, pleaseSelectItem);
+
+        return options;
+    }
+
+    function convertDateToUtcFormat(date) {
+        let javascriptDateObject = new Date(date);
+        let formattedDate = javascriptDateObject.toUTCString();
+        let utcDate = new Date(formattedDate);
+        return utcDate;
+    }
+
     function handleMaritalStatusChange(maritalStatus) {
         setResetButtonDisabled(false);
         setMaritalStatusID(maritalStatus);
@@ -109,29 +356,73 @@ const Supplemental = (props) => {
         setMaritalStatusDescription(maritalStatusDescription);
     }
 
-    function handleJobStatusChange(jobStatus) {
-        setResetButtonDisabled(false);
-        setJobStatusID(jobStatus);
-    }
+    // function handleJobStatusChange(jobStatus) {
+    //     setResetButtonDisabled(false);
+    //     setJobStatusID(jobStatus);
+    // }
 
     function handleJobStatusDescriptionChange(jobStatusDescription) {
         setJobStatusDescription(jobStatusDescription);
     }
 
 
-    function handleEducationLevelChange(educationLevel){        
-        setResetButtonDisabled(false);
-        setEducationLevelID(educationLevel);
+    function handleEducationLevelChange(event){        
+        let selectedValue = event.currentTarget.getAttribute('value');
+        
+        setEducationLevelID(selectedValue);
+        
+        let selectedEducationLevel = educationLevels.filter(function (educationLevel) {
+            return educationLevel.ID === parseInt(selectedValue)
+        });
+
+        setEducationLevelDescription(selectedEducationLevel[0].Description);
+  
     }
 
-    function handleEducationLevelDescriptionChange(educationLevel) {
-        setEducationLevelDescription(educationLevel);
+    function handleFundingSourceChange(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        setFundingSourceID(selectedValue);
+
+        let selectedFundingSource =  fundingSources.filter(function(fundingSource) {
+            return fundingSource.ID === parseInt(selectedValue);
+        });
+
+        setFundingSourceDescription(selectedFundingSource[0].Description);
     }
 
-    function handleFundingSourceChange(fundingSource) {
-        setResetButtonDisabled(false);
-        setFundingSourceID(fundingSource);
+    function handleJobStatusChange(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        setJobStatusID(selectedValue);
+
+        let selectedJobStatus =  jobStatuses.filter(function(jobStatus) {
+            return jobStatus.ID === parseInt(selectedValue);
+        });
+
+        setJobStatusDescription(selectedJobStatus[0].Description);
     }
+
+    function handleMaritalStatusChange(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        setMaritalStatusID(selectedValue);
+
+        let selectedMaritalStatus  = maritalStatuses.filter(function(maritalStatus) {
+            return maritalStatus.ID === parseInt(selectedValue);
+        });
+
+        setMaritalStatusDescription(selectedMaritalStatus[0].Description);
+    }
+
+    // function handleEducationLevelDescriptionChange(educationLevel) {
+    //     setEducationLevelDescription(educationLevel);
+    // }
+
+    // function handleFundingSourceChange(fundingSource) {
+    //     setResetButtonDisabled(false);
+    //     setFundingSourceID(fundingSource);
+    // }
 
     function handleFundingSourceDescriptionChange(fundingSourceDesc) {
         setFundingSourceDescription(fundingSourceDesc);
@@ -199,6 +490,8 @@ const Supplemental = (props) => {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+
+        setCareerStation(selectedValue);
     }
 
     function notesChangeHandler(event) {
@@ -211,30 +504,35 @@ const Supplemental = (props) => {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setIDType(selectedValue);
     }
 
     function livingSituationSelectHandler(event) {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setLivingSituation(selectedValue);
     }
 
     function highestEdLevelSelectHandler(event) {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setEducationLevel(selectedValue);
     }
 
     function stateSelectHandler(event) {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setState(selectedValue);
     }
 
     function studentStatusSelectHandler(event) {
         setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
         console.log(selectedValue);
+        setStudentStatus(selectedValue);
     }
 
     function setIDNumberHandler(event) {
@@ -326,12 +624,137 @@ const Supplemental = (props) => {
          setPrimaryLanguage(event.target.value);
      }
 
-     function updateClickHandler() {
+     function employerChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setEmployer(event.target.value);
+     }
 
+     function supervisorChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setSupervisor(event.target.value);
+     }
+
+     function jobTitleChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setJobTitle(event.target.value);
+     }
+
+     function hoursPerWeekChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setAvgHoursPerWeek(event.target.value);
+     }
+
+     function employerAddressChangeHandler(event) {
+         setResetButtonDisabled(false);
+         setEmployerAddress(event.target.value);
+     }
+
+     function updateClickHandler() {
+        let personID = sessionStorage.getItem('PersonID');
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental`;
+        let sessionStorageData = getSessionData();
+
+        //the CWB fields
+        let personSupplemental = {
+            ID: personSupplementalID,
+            PersonID: personID,
+            HeightFt: heightInFeet,
+            HeightIn: heightInInches,
+            Weight: weight,
+            HouseholdSize: houseHoldSize,
+            HomePhone: homePhone,
+            HouseholdIncome: houseHoldIncome,
+            Language: primaryLanguage,
+            EducationLevelID: educationLevelID,
+            HasExceptionEduc: isIepChecked,
+            HasInterpreter: isInterpreterNeededChecked,
+            HasMedicaid: isMedicaid,
+            HasInsurance: isInsurance,
+            HasDriversLicense: isDriversLicense,
+            HasConvictedOffence: isConvictedOffense,
+            HasConvictedMisdemeanor: isConvictedMisdemeanor,
+            HasConvictedFelony: isConvictedFelony,
+            HasVehicle: isWorkingVehicle,
+            HasConvictedCrimeIntegrity: isConvictedFelonyCrime,
+            FundingSourceID: fundingSourceID,
+            CareerSt: careerStation,
+            Comments: notes,
+            IDType: idType,
+            IDNumber: idNumber,
+            IssueDate: idIssueDate,
+            ExpirationDate: idExpirationDate,
+            JobStatusID: jobStatusID,
+            MaritalStatusID: maritalStatusID,
+            ScarMarks: scarsMarksTattos,
+            IsDisable: isDisabled,
+            LivingSituation: livingSituation,
+            StudentStatus: studentStatus,
+            HighestEducation: educationLevel,
+            Employer: employer,
+            Supervisor: supervisor,
+            JobTitle: jobTitle,
+            HoursPerWeek: avgHoursPerWeek,
+            EmployerAddress: employerAddress,
+            EmployerAddressState: state,
+            Active: true,
+            CreatedDate: createdDate,
+            CreatedBy: createdBy,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
+        }
+
+        fetch(fullPersonSupplementalAddress, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(personSupplemental)
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+            props.createNotification('The client profile was successfully updated.');
+        });
      }
 
      function resetClickHandler() {
 
+     }
+
+   
+
+     //set up the education level dropdown
+     let educationLevelValueOptions = [];
+     if (educationLevelValues.length > 0) {
+ 
+        educationLevelValueOptions = educationLevelValues.map((value) =>
+             <a key={value.ID} value={value.ID} description={value.Description} onClick={handleEducationLevelChange} className="dropdown-item">{value.Description}</a>
+         );
+     }
+
+     //funding sources
+     let fundingSourceValueOptions = [];
+     if (fundingSourceValues.length > 0) {
+        fundingSourceValueOptions = fundingSourceValues.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleFundingSourceChange} className="dropdown-item">{value.Description}</a>
+          );
+     }
+
+     //job statuses
+     let jobStatusValueOptions = [];
+     if (jobStatusValues.length > 0) {
+         jobStatusValueOptions = jobStatusValues.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleJobStatusChange } className="dropdown-item">{value.Description}</a>
+        );
+     }
+
+     //marital status values
+     let maritalStatusValueOptions = [];
+     if (maritalStatusValues.length > 0) {
+         maritalStatusValueOptions  = maritalStatusValues.map((value) => 
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleMaritalStatusChange } className="dropdown-item">{value.Description}</a>
+         );
      }
 
     return  <div>
@@ -386,14 +809,22 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-4">
                                         <label htmlFor="ddlEducationLevels"><strong>Highest Grade Completed</strong></label>
-                                        <DropDown
+                                        <div className="dropdown">
+                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                {educationLevelDescription }
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                {educationLevelValueOptions}
+                                            </div>
+                                        </div>
+                                        {/* <DropDown
                                                 onSelectValue={handleEducationLevelChange}
                                                 onSelectValueDescription={handleEducationLevelDescriptionChange}
                                                 selected={educationLevelID}
                                                 valueDescription={educationLevelDescription}
                                                 values={educationLevels}
                                                 isRequired={true} >
-                                        </DropDown>
+                                        </DropDown> */}
                                     </div> 
                                 </div>
                                 <br></br>
@@ -449,22 +880,31 @@ const Supplemental = (props) => {
                                 <div className="form-row">
                                     <div className="col-4">
                                         <label htmlFor="ddlFundingSources"><strong>Potential Funding Source</strong></label>
-                                        <DropDown
+                                        <div className="dropdown">
+                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                {fundingSourceDescription }
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                { fundingSourceValueOptions }
+                                            </div>
+                                        </div>
+                                        {/* <DropDown
                                             onSelectValue={handleFundingSourceChange }
                                             onSelectValueDescription={handleFundingSourceDescriptionChange }
                                             selected={fundingSourceID }
                                             valueDescription={fundingSourceDescription}
                                             values={fundingSources }
                                             isRequired={false} >
-                                        </DropDown>
+                                        </DropDown> */}
                                     </div>
                                     <div className="col-4">
                                         <label htmlFor="ddlCareerStation"><strong>Career Station</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                {careerStation}
                                             </button>
                                             <div  className="dropdown-menu">
+                                                <a key={"Please Select"} value={"Please Select"} onClick={careerStationSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key={"Marshall"} value={"Marshall"} onClick={careerStationSelectHandler} className="dropdown-item">Marshall</a>
                                                 <a key={"East End"} value={"East End"} onClick={careerStationSelectHandler} className="dropdown-item">East End</a>
                                                 <a key={"South Side"} value={"South Side"} onClick={careerStationSelectHandler} className="dropdown-item">South Side</a>
@@ -494,9 +934,10 @@ const Supplemental = (props) => {
                                        <label htmlFor="ddlIDType"><strong>ID Type</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                { idType }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={idTypeSelectHandler} className="dropdown-item">Please Select</a>                                                
                                                 <a key="Birth Certificate" value="Birth Certificate" onClick={idTypeSelectHandler} className="dropdown-item">Birth Certificate</a>
                                                 <a key="Driver's License" value="Driver's License" onClick={idTypeSelectHandler} className="dropdown-item">Driver's License</a>
                                                 <a key="Green Card" value="Green Card" onClick={idTypeSelectHandler} className="dropdown-item">Green Card</a>
@@ -510,7 +951,7 @@ const Supplemental = (props) => {
                                         <label htmlFor="txtIDNumber"><strong>ID Number</strong></label>
                                         <input type="text" value={idNumber} onChange={setIDNumberHandler} className="form-control" id="txtIDNumber"></input>
                                     </div>
-                                    <div className="col-3">
+                                    {/* <div className="col-3">
                                         <label htmlFor="txtIssueDate"><strong>ID Issue Date</strong></label>
                                         <DatePicker 
                                             selected={ idIssueDate }
@@ -528,31 +969,47 @@ const Supplemental = (props) => {
                                            className="form-control"
                                            >
                                         </DatePicker>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <br></br>
                                 <div className="form-row">
                                     <div className="col-3">
                                         <label htmlFor="ddlJobStatus"><strong>Job Status</strong></label>
-                                        <DropDown
+                                        <div className="dropdown">
+                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                { jobStatusDescription }
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                { jobStatusValueOptions }
+                                            </div>
+                                        </div>
+                                        {/* <DropDown
                                                 onSelectValue={handleJobStatusChange }
                                                 onSelectValueDescription={handleJobStatusDescriptionChange}
                                                 selected={jobStatusID}
                                                 valueDescription={jobStatusDescription }
                                                 values={jobStatuses}
                                                 isRequired={false} >
-                                        </DropDown>
+                                        </DropDown> */}
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="ddlMaritalStatus"><strong>Marital Status</strong></label>
-                                        <DropDown
+                                        <div className="dropdown">
+                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                { maritalStatusDescription }
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                { maritalStatusValueOptions }
+                                            </div>
+                                        </div>
+                                        {/* <DropDown
                                              onSelectValue={handleMaritalStatusChange}
                                              onSelectValueDescription={handleMaritalStatusDescriptionChange}
                                              selected={maritalStatusID}
                                              valueDescription={maritalStatusDescription}
                                              values={maritalStatuses}
                                              isRequired={false}> 
-                                        </DropDown>
+                                        </DropDown> */}
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtScarsMarks"><strong>Scars/Marks/Tattoos</strong></label>
@@ -569,9 +1026,10 @@ const Supplemental = (props) => {
                                         <label htmlFor="ddlIDType"><strong>Living Situation</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                 { livingSituation }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={livingSituationSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key="Foster Care" value="Foster Care" onClick={livingSituationSelectHandler} className="dropdown-item">Foster Care</a>
                                                 <a key="Hospital Treatment Center" value="Hospital Treatment Center" onClick={livingSituationSelectHandler} className="dropdown-item">Hospital Treatment Center</a>
                                                 <a key="Hotel/Motel" value="Hotel/Motel" onClick={livingSituationSelectHandler} className="dropdown-item">Hotel/Motel</a>
@@ -590,9 +1048,10 @@ const Supplemental = (props) => {
                                         <label htmlFor="ddlStudentStatus"><strong>Student Status</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                { studentStatus }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={studentStatusSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key="Enrolled but not attending" value="Enrolled but not attending" onClick={studentStatusSelectHandler} className="dropdown-item">Enrolled but not attending</a>
                                                 <a key="Expelled" value="Expelled" onClick={studentStatusSelectHandler} className="dropdown-item">Expelled</a>
                                                 <a key="Full-time student" value="Full-time student" onClick={studentStatusSelectHandler} className="dropdown-item">Full-time student</a>
@@ -606,9 +1065,10 @@ const Supplemental = (props) => {
                                         <label htmlFor="ddlHighestEdLevel"><strong>Highest Education Level</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                { educationLevel }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={highestEdLevelSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key="Associate's Degree" value="Associate's Degree" onClick={highestEdLevelSelectHandler} className="dropdown-item">Associate's Degree</a>
                                                 <a key="Current student" value="Current student" onClick={highestEdLevelSelectHandler} className="dropdown-item">Current student</a>
                                                 <a key="Doctorate" value="Doctorate" onClick={highestEdLevelSelectHandler} className="dropdown-item">Doctorate</a>
@@ -628,26 +1088,26 @@ const Supplemental = (props) => {
                                 <div className="form-row">
                                     <div className="col-3">
                                         <label htmlFor="txtEmployer"><strong>Employer</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={employer} onChange={employerChangeHandler} className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtSupervisor"><strong>Supervisor</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={supervisor} onChange={supervisorChangeHandler} className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtJobTitle"><strong>Job Title</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={jobTitle} onChange={jobTitleChangeHandler} className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtJobTitle"><strong>Average Hours Per Week</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={avgHoursPerWeek} onChange={hoursPerWeekChangeHandler} className="form-control"></input>
                                     </div>
                                 </div>
                                 <br></br>
                                 <div className="form-row">
                                     <div className="col-8">
                                         <label htmlFor="txtEmployerAddress"><strong>Address</strong></label>
-                                        <input type="text" className="form-control"></input>
+                                        <input type="text" value={employerAddress} onChange={employerAddressChangeHandler} className="form-control"></input>
                                     </div>
                                 </div>
                                 <br></br>
@@ -656,9 +1116,10 @@ const Supplemental = (props) => {
                                         <label htmlFor="ddlState"><strong>Select State</strong></label>
                                         <div className="dropdown">
                                             <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                Please Select
+                                                { state }
                                             </button>
                                             <div className="dropdown-menu">
+                                                <a key="Please Select" value="Please Select" onClick={stateSelectHandler} className="dropdown-item">Please Select</a>
                                                 <a key="AL" value="AL" onClick={stateSelectHandler} className="dropdown-item">AL</a>
                                                 <a key="AK" value="AK" onClick={stateSelectHandler} className="dropdown-item">AK</a>
                                                 <a key="AR" value="AR" onClick={stateSelectHandler} className="dropdown-item">AR</a>
@@ -730,6 +1191,6 @@ const Supplemental = (props) => {
                 </div>
 
             </div>;
-}
+};
 
 export default Supplemental;
