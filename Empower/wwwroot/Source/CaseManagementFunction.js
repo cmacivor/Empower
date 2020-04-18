@@ -25,6 +25,8 @@ const CaseManagementFunction = (props) => {
     const cacheService = useCacheService();
     const {state, dispatch} = useStore();
 
+    const [personID, setPersonID] = useState(0);
+
     const [educationLevelsOptions, setEducationLevelOptions] = useState([]);
     const [fundingSourceOptions, setFundingSourceOptions] = useState([]);
     const [jobStatusOptions, setJobStatusOptions] = useState([]);
@@ -103,8 +105,9 @@ const CaseManagementFunction = (props) => {
         console.log(clientProfile);
         //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was   
         setClientProfile(clientProfile); //updates the local state
-        sessionStorage.setItem("PersonID", clientProfile.ClientProfile.Person.ID);
-        sessionStorage.setItem("ClientProfileID", clientProfile.ClientProfile.ID);
+        //sessionStorage.setItem("PersonID", clientProfile.ClientProfile.Person.ID);
+        //sessionStorage.setItem("ClientProfileID", clientProfile.ClientProfile.ID);
+        setPersonID(clientProfile.ClientProfile.Person.ID);
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
         infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
@@ -177,7 +180,7 @@ const CaseManagementFunction = (props) => {
                         
                        <Supplemental 
                        clientProfile={clientProfile.Person}
-                       
+                       clientProfilePersonID={personID}
                        educationLevelValues={educationLevelsOptions}
                        fundingSourceValues={fundingSourceOptions  }
                        jobStatusValues={ jobStatusOptions } 

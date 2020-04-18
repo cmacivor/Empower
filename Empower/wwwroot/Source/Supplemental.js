@@ -129,6 +129,8 @@ const Supplemental = (props) => {
 
     }
 
+    const [personID, setPersonID] = useState(props.clientProfilePersonID);
+
     const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
     //the dropdowns pulling values from the database
     const [educationLevelID, setEducationLevelID] = useState(clientEducationLevelID);
@@ -241,36 +243,59 @@ const Supplemental = (props) => {
     useEffect(() => {
 
         //let personID = sessionStorage.getItem('PersonID');
-        
-        if (props.clientProfile !== undefined && props.clientProfile.PersonSupplemental !== null) {
-            let personID = props.clientProfile.Person.ID;
-            
-            //clearForm();
+        console.log('this is the rereredng, hopefully');
+        console.log(props.clientProfilePersonID);
 
-                let apiAddress = sessionStorage.getItem("baseApiAddress");
-                let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental/GetByPersonID/${personID}`;
-                let sessionStorageData = getSessionData();
-        
-                let clientHeightInFeet = '';
-        
-                fetch(fullPersonSupplementalAddress, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + sessionStorageData.Token
-                    }
-                    //body: JSON.stringify(personSupplemental)
-                }).then(result => result.json())
-                .then(personSupplemental => {
-                    //let personSupplemental = result.Person.PersonSupplemental;
-        
-                    if (personSupplemental === null) return; 
-        
-                    clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
-        
-                    setHeightInFeet(clientHeightInFeet)
-                });
-            }
+        setHeightInFeet(clientHeightInFeet);
+        setHeightInInches(clientHeighInInches);
+        setWeight(clientWeight);
+        setHouseHoldSize(clientHouseHoldSize);
+        setHomePhone(clientHomePhone);
+        setHouseHoldIncome(clientIncome);
+        setPrimaryLanguage(clientLanguage);
+        setIsIepChecked(clientIEP);
+        setIsInterpreterNeededChecked(clientInterpreterNeeded);
+        setIsMedicaid(clientMedicaid);
+        setIsInsurance(clientInsurance);
+        setIsDriversLicense(clientDriversLicense);
+        setIsConvictedOffense(clientConvictedOffense);
+        setIsConvictedMisdemeanor(clientConvictedMisdemeanor);
+        setIsConvictedFelony(clientConvictedFelony);
+        setIsWorkingVehicle(clientWorkingVehicle);
+        setIsConvictedFelonyCrime(clientConvictedFelonyCrime);
+        setCareerStation(clientCareerStation);
+        setNotes(clientNotes);
+
+        //if (props.clientProfile !== undefined && props.clientProfile.PersonSupplemental !== null) {
+            // if (props.clientProfilePersonID !== 0 && (props.clientProfilePersonID !== personID) ) {
+            //     let personID = props.clientProfilePersonID;
+                
+            //     //clearForm();
+
+            //         let apiAddress = sessionStorage.getItem("baseApiAddress");
+            //         let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental/GetByPersonID/${personID}`;
+            //         let sessionStorageData = getSessionData();
+            
+            //         let clientHeightInFeet = '';
+            
+            //         fetch(fullPersonSupplementalAddress, {
+            //             method: 'GET',
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //                 'Authorization': 'Bearer ' + sessionStorageData.Token
+            //             }
+            //             //body: JSON.stringify(personSupplemental)
+            //         }).then(result => result.json())
+            //          .then(personSupplemental => {
+            //             //let personSupplemental = result.Person.PersonSupplemental;
+            
+            //             //if (personSupplemental === null) return; 
+            
+            //             clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
+            
+            //             setHeightInFeet(clientHeightInFeet)
+            //         });
+            //     }
 
                     // setHeightInFeet(clientHeightInFeet);
                 // setHeightInInches(clientHeighInInches);
