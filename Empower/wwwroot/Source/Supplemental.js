@@ -4,6 +4,8 @@ import RadioButton from './RadioButton';
 import DatePicker from 'react-datepicker';
 import { getSessionData } from './commonAdmin';
 import { Api } from './commonAdmin';
+import $ from 'jquery';
+import moment from 'moment';
 
 const Supplemental = (props) => {
 
@@ -28,7 +30,7 @@ const Supplemental = (props) => {
     let clientNotes = '';
     let clientIDType = '';
     let clientIDNumber = '';
-    let clientIDIssueDate = '';
+    let clientIDIssueDate = new Date();
     let clientIDExpirationDate = new Date();
     let clientScars = '';
     let clientDisabled = '';
@@ -97,7 +99,8 @@ const Supplemental = (props) => {
         clientNotes = (personSupplemental.Comments !== null) ? personSupplemental.Comments : '';
         clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
         clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
-        clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
+        clientIDIssueDate = (personSupplemental.IssueDate !== null) ? personSupplemental.IssueDate : '';        
+        //clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
         clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
         clientScars = (personSupplemental.ScarMarks !== null ) ? personSupplemental.ScarMarks : '';
         clientDisabled = (personSupplemental.IsDisable !== null) ? personSupplemental.IsDisable : '';
@@ -243,8 +246,13 @@ const Supplemental = (props) => {
     useEffect(() => {
 
         //let personID = sessionStorage.getItem('PersonID');
-        console.log('this is the rereredng, hopefully');
-        console.log(props.clientProfilePersonID);
+        //console.log('this is the rereredng, hopefully');
+        //console.log(props.clientProfilePersonID);
+        console.log('the id issue date');
+        console.log(clientIDIssueDate);
+        console.log('the expirtion date');
+        console.log(clientIDExpirationDate);
+
 
         setHeightInFeet(clientHeightInFeet);
         setHeightInInches(clientHeighInInches);
@@ -265,6 +273,13 @@ const Supplemental = (props) => {
         setIsConvictedFelonyCrime(clientConvictedFelonyCrime);
         setCareerStation(clientCareerStation);
         setNotes(clientNotes);
+        //setIDIssueDate(clientIDIssueDate); //can'tt do this, it causes an endless loop.
+        let idIssueDateObj = new Date(clientIDIssueDate);
+        let convertedIssueDate = moment(idIssueDateObj).format('YYYY-MM-DD');
+        console.log('the converted date is');
+        console.log(convertedIssueDate);
+        document.getElementById("txtIDIssueDate").value = convertedIssueDate;
+        //$("#txtIDIssueDate").val(convertedIssueDate);
 
         //if (props.clientProfile !== undefined && props.clientProfile.PersonSupplemental !== null) {
             // if (props.clientProfilePersonID !== 0 && (props.clientProfilePersonID !== personID) ) {
@@ -1027,7 +1042,7 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtIssueDate"><strong>ID Issue Date</strong></label>
-                                        <input type="date" value={idIssueDate} onChange={handleIDIssueDateChange} id="txtIDIssueDate" className="form-control"></input>
+                                        <input type="date" value="" onChange={handleIDIssueDateChange} id="txtIDIssueDate" className="form-control"></input>
                                         {/* <DatePicker 
                                             selected={ idIssueDate }
                                             required={false}
