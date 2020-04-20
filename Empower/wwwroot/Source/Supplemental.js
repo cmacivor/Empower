@@ -257,15 +257,6 @@ const Supplemental = (props) => {
     
     useEffect(() => {
 
-        //let personID = sessionStorage.getItem('PersonID');
-        //console.log('this is the rereredng, hopefully');
-        //console.log(props.clientProfilePersonID);
-        //console.log('the id issue date');
-        //console.log(clientIDIssueDate);
-        //console.log('the expirtion date');
-        //console.log(clientIDExpirationDate);
-
-        //setHeightInFeet(clientHeightInFeet);
         $("#txtHeightFeet").val(clientHeightInFeet);
         $("#txtHeightInches").val(clientHeighInInches);
         $("#txtWeight").val(clientWeight);
@@ -275,6 +266,17 @@ const Supplemental = (props) => {
         $("#txtLanguage").val(clientLanguage);
 
         setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
+        setRadioButtonState("rdpInterpreterNeededYes", "rdpInterpreterNeededNo", clientInterpreterNeeded);
+        setRadioButtonState("rdpMedicaidNeededYes", "rdpMedicaidNeededNo", clientMedicaid);
+        setRadioButtonState("rdpHasInsuranceYes", "rdpHasInsuranceNo", clientInsurance);
+        setRadioButtonState("rdpHasDriversLicenseYes", "rdpHasDriversLicenseNo", clientDriversLicense);
+        setRadioButtonState("rdpIsConvictedOffenseYes", "rdpIsConvictedOffenseNo", clientConvictedOffense);
+        setRadioButtonState("rdpIsConvictedMisdemeanorYes", "rdpIsConvictedMisdemeanorNo", clientConvictedMisdemeanor);
+        setRadioButtonState("rdpIsConvictedFelonyYes", "rdpIsConvictedFelonyNo", clientConvictedFelony);
+        setRadioButtonState("rdpIsWorkingVehicleYes", "rdpIsWorkingVehicleNo", clientWorkingVehicle);
+        setRadioButtonState("rdpIsConvictedFelonyCrimeYes", "rdpIsConvictedFelonyCrimeNo", clientConvictedFelonyCrime);
+
+
         document.getElementById("btnDDLHighestGradeCompleted").innerHTML = clientEducationLevelDescription;
         document.getElementById("btnDDLHighestGradeCompleted").value = clientEducationLevelID;
         
@@ -562,15 +564,15 @@ const Supplemental = (props) => {
             Language: $("#txtLanguage").val(),
             EducationLevelID: document.getElementById("btnDDLHighestGradeCompleted").value,
             HasExceptionEduc: getRadioButtonState("rdpIEPYes"),
-            // HasInterpreter: isInterpreterNeededChecked,
-            // HasMedicaid: isMedicaid,
-            // HasInsurance: isInsurance,
-            // HasDriversLicense: isDriversLicense,
-            // HasConvictedOffence: isConvictedOffense,
-            // HasConvictedMisdemeanor: isConvictedMisdemeanor,
-            // HasConvictedFelony: isConvictedFelony,
-            // HasVehicle: isWorkingVehicle,
-            // HasConvictedCrimeIntegrity: isConvictedFelonyCrime,
+            HasInterpreter: getRadioButtonState("rdpInterpreterNeededYes"),
+            HasMedicaid: getRadioButtonState("rdpMedicaidNeededYes"),
+            HasInsurance: getRadioButtonState("rdpHasInsuranceYes"),
+            HasDriversLicense: getRadioButtonState("rdpHasDriversLicenseYes"),
+            HasConvictedOffence: getRadioButtonState("rdpIsConvictedOffenseYes"),
+            HasConvictedMisdemeanor: getRadioButtonState("rdpIsConvictedMisdemeanorYes"),
+            HasConvictedFelony: getRadioButtonState("rdpIsConvictedFelonyYes"),
+            HasVehicle: getRadioButtonState("rdpIsWorkingVehicleYes"),
+            HasConvictedCrimeIntegrity: getRadioButtonState("rdpIsConvictedFelonyCrimeYes"),
             // FundingSourceID: fundingSourceID,
             // CareerSt: careerStation,
             // Comments: notes,
