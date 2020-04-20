@@ -264,6 +264,8 @@ const Supplemental = (props) => {
         $("#txtHomePhone").val(clientHomePhone);
         $("#txtHouseIncome").val(clientIncome);
         $("#txtLanguage").val(clientLanguage);
+        $("#txtNotes").val(clientNotes);
+        $("#txtIDNumber").val(clientIDNumber);
 
         setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
         setRadioButtonState("rdpInterpreterNeededYes", "rdpInterpreterNeededNo", clientInterpreterNeeded);
@@ -286,11 +288,14 @@ const Supplemental = (props) => {
         document.getElementById("btnDDLCareerStation").value = clientCareerStation;
         document.getElementById("btnDDLCareerStation").innerHTML = clientCareerStation;
 
+        document.getElementById("btnIDType").value = clientIDType;
+        document.getElementById("btnIDType").innerHTML = clientIDType;
+
+
         
         let idIssueDateObj = new Date(clientIDIssueDate);
         let convertedIssueDate = moment(idIssueDateObj).format('YYYY-MM-DD');
-        //console.log('the converted date is');
-        //console.log(convertedIssueDate);
+        
         document.getElementById("txtIDIssueDate").value = convertedIssueDate;
 
         let idExpirationDate = new Date(clientIDExpirationDate);
@@ -423,8 +428,6 @@ const Supplemental = (props) => {
     }
 
     function careerStationSelectHandler(event) {
-        //console.log(career);
-        //setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
 
         document.getElementById("btnDDLCareerStation").value = selectedValue;
@@ -432,17 +435,15 @@ const Supplemental = (props) => {
         document.getElementById("btnDDLCareerStation").innerHTML = selectedValue;
     }
 
-    function notesChangeHandler(event) {
-        //console.log(event.target.value);
-        //setResetButtonDisabled(false);
-        //setNotes(event.target.value);
-    }
 
     function idTypeSelectHandler(event) {
-        setResetButtonDisabled(false);
+        //setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
-        console.log(selectedValue);
-        setIDType(selectedValue);
+        //console.log(selectedValue);
+        //setIDType(selectedValue);
+
+        document.getElementById("btnIDType").value = selectedValue;
+        document.getElementById("btnIDType").innerHTML = selectedValue;
     }
 
     function livingSituationSelectHandler(event) {
@@ -473,10 +474,10 @@ const Supplemental = (props) => {
         setStudentStatus(selectedValue);
     }
 
-    function setIDNumberHandler(event) {
-        setResetButtonDisabled(false);
-        setIDNumber(event.target.value);
-    }
+    // function setIDNumberHandler(event) {
+    //     setResetButtonDisabled(false);
+    //     setIDNumber(event.target.value);
+    // }
 
     function setScarsHandler(event) {
         setResetButtonDisabled(false);
@@ -492,6 +493,9 @@ const Supplemental = (props) => {
     function handleIDIssueDateChange(event) {
         console.log('this is the id issue date');
         console.log(event.target.value);
+
+
+
         //setIDIssueDate(event.target.value);
         //setResetButtonDisabled(false);
         // console.log('this is the birth date');
@@ -581,9 +585,9 @@ const Supplemental = (props) => {
             HasConvictedCrimeIntegrity: getRadioButtonState("rdpIsConvictedFelonyCrimeYes"),
             FundingSourceID: document.getElementById("btnDDLFundingSource").value,
             CareerSt: document.getElementById("btnDDLCareerStation").value,
-            // Comments: notes,
-            // IDType: idType,
-            // IDNumber: idNumber,
+            Comments: $("#txtNotes").val(),
+            IDType: document.getElementById("btnIDType").value,
+            IDNumber: $("#txtIDNumber").val(),
             // IssueDate: idIssueDate,
             // ExpirationDate: idExpirationDate,
             // JobStatusID: jobStatusID,
@@ -940,7 +944,7 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-4">
                                         <label htmlFor="txtNotes"><strong>Notes</strong></label>
-                                        <textarea value={notes} onChange={notesChangeHandler} className="form-control"></textarea>
+                                        <textarea defaultValue="" id="txtNotes" className="form-control"></textarea>
                                     </div>
                                 </div>
                             </div> 
@@ -959,8 +963,8 @@ const Supplemental = (props) => {
                                     <div className="col-3">
                                        <label htmlFor="ddlIDType"><strong>ID Type</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                { idType }
+                                            <button type="button" id="btnIDType" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
+                                                
                                             </button>
                                             <div className="dropdown-menu">
                                                 <a key="Please Select" value="Please Select" onClick={idTypeSelectHandler} className="dropdown-item">Please Select</a>                                                
@@ -975,7 +979,7 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtIDNumber"><strong>ID Number</strong></label>
-                                        <input type="text" value={idNumber} onChange={setIDNumberHandler} className="form-control" id="txtIDNumber"></input>
+                                        <input type="text" defaultValue="" className="form-control" id="txtIDNumber"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtIssueDate"><strong>ID Issue Date</strong></label>
