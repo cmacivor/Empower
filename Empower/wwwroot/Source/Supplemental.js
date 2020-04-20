@@ -241,9 +241,9 @@ const Supplemental = (props) => {
         }
 
         if (clientValue) {
-            document.getElementById(rdYes).checked = clientValue;
+            document.getElementById(rdYes).checked = true;
         } else {
-            document.getElementById(rdNo).checked = clientValue;
+            document.getElementById(rdNo).checked = true;
         }
     }
 
@@ -649,7 +649,7 @@ const Supplemental = (props) => {
      }
 
      function updateClickHandler() {
-        let personID = sessionStorage.getItem('PersonID');
+        //let personID = sessionStorage.getItem('PersonID');
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental`;
         let sessionStorageData = getSessionData();
@@ -667,8 +667,7 @@ const Supplemental = (props) => {
             HouseholdIncome: $("#txtHouseIncome").val(),
             Language: $("#txtLanguage").val(),
             EducationLevelID: document.getElementById("btnDDLHighestGradeCompleted").value,
-            //EducationLevelID: clientEducationLevelID,
-            // HasExceptionEduc: isIepChecked,
+            HasExceptionEduc: getRadioButtonState("rdpIEPYes"),
             // HasInterpreter: isInterpreterNeededChecked,
             // HasMedicaid: isMedicaid,
             // HasInsurance: isInsurance,
@@ -866,15 +865,7 @@ const Supplemental = (props) => {
                                             <div className="dropdown-menu">
                                                 {educationLevelValueOptions}
                                             </div>
-                                        </div>
-                                        {/* <DropDown
-                                                onSelectValue={handleEducationLevelChange}
-                                                onSelectValueDescription={handleEducationLevelDescriptionChange}
-                                                selected={educationLevelID}
-                                                valueDescription={educationLevelDescription}
-                                                values={educationLevels}
-                                                isRequired={true} >
-                                        </DropDown> */}
+                                        </div>                                     
                                     </div> 
                                 </div>
                                 <br></br>
@@ -891,7 +882,6 @@ const Supplemental = (props) => {
                                                 <label className="form-check-label">No</label>
                                             </div>
                                         </div>                                
-                                        {/* <RadioButton name={"IEP"} isChecked={isIepChecked} setCheckedValue={setCheckedValueHandler} /> */}
                                     </div>
                                     <div className="col-4">
                                         <label><strong>Is Interpreter Needed</strong></label>
