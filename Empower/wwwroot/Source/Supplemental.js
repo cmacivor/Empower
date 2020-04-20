@@ -132,15 +132,15 @@ const Supplemental = (props) => {
 
     }
 
-    const [personID, setPersonID] = useState(props.clientProfilePersonID);
+    //const [personID, setPersonID] = useState(props.clientProfilePersonID);
 
-    const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
+    //const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
     //the dropdowns pulling values from the database
-    const [educationLevelID, setEducationLevelID] = useState(clientEducationLevelID);
-    const [educationLevelDescription, setEducationLevelDescription] = useState(clientEducationLevelDescription);
+    // const [educationLevelID, setEducationLevelID] = useState(clientEducationLevelID);
+    // const [educationLevelDescription, setEducationLevelDescription] = useState(clientEducationLevelDescription);
     const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
-    const [fundingSourceID, setFundingSourceID] = useState(clientFundingSourceID);
-    const [fundingSourceDescription, setFundingSourceDescription] = useState(clientFundingSourceDescription);
+    // const [fundingSourceID, setFundingSourceID] = useState(clientFundingSourceID);
+    // const [fundingSourceDescription, setFundingSourceDescription] = useState(clientFundingSourceDescription);
     const [fundingSourceValues, setFundingSourceValues] = useState(fundingSources);
     const [jobStatusID, setJobStatusID] = useState(jobStatusID);
     const [jobStatusDescription, setJobStatusDescription] = useState(clientJobStatusDescription);
@@ -150,24 +150,24 @@ const Supplemental = (props) => {
     const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
     
     //the dropdowns with hardcoded values
-    const [careerStation, setCareerStation] = useState(clientCareerStation);
-    const [idType, setIDType] = useState(clientIDType);
+    // const [careerStation, setCareerStation] = useState(clientCareerStation);
+    // const [idType, setIDType] = useState(clientIDType);
     const [livingSituation, setLivingSituation] = useState(clientLivingSituation);
     const [studentStatus, setStudentStatus] = useState(clientStudentStatus);
     const [educationLevel, setEducationLevel] = useState(clientHighestEducation);
     const [state, setEmployerState] = useState(clientEmployerState);
 
-    //the radio buttons
-    const [isIepChecked, setIsIepChecked] = useState(clientIEP);
-    const [isInterpreterNeededChecked, setIsInterpreterNeededChecked] = useState(clientInterpreterNeeded);
-    const [isMedicaid, setIsMedicaid] = useState(clientMedicaid);
-    const [isInsurance, setIsInsurance] = useState(clientInsurance);
-    const [isDriversLicense, setIsDriversLicense] = useState(clientDriversLicense);
-    const [isConvictedOffense, setIsConvictedOffense] = useState(clientConvictedOffense);
-    const [isConvictedMisdemeanor, setIsConvictedMisdemeanor] = useState(clientConvictedMisdemeanor);
-    const [isConvictedFelony, setIsConvictedFelony] = useState(clientConvictedFelony);
-    const [isWorkingVehicle, setIsWorkingVehicle] = useState(clientWorkingVehicle);
-    const [isConvictedFelonyCrime, setIsConvictedFelonyCrime] = useState(clientConvictedFelonyCrime);
+    // //the radio buttons
+    // const [isIepChecked, setIsIepChecked] = useState(clientIEP);
+    // const [isInterpreterNeededChecked, setIsInterpreterNeededChecked] = useState(clientInterpreterNeeded);
+    // const [isMedicaid, setIsMedicaid] = useState(clientMedicaid);
+    // const [isInsurance, setIsInsurance] = useState(clientInsurance);
+    // const [isDriversLicense, setIsDriversLicense] = useState(clientDriversLicense);
+    // const [isConvictedOffense, setIsConvictedOffense] = useState(clientConvictedOffense);
+    // const [isConvictedMisdemeanor, setIsConvictedMisdemeanor] = useState(clientConvictedMisdemeanor);
+    // const [isConvictedFelony, setIsConvictedFelony] = useState(clientConvictedFelony);
+    // const [isWorkingVehicle, setIsWorkingVehicle] = useState(clientWorkingVehicle);
+    // const [isConvictedFelonyCrime, setIsConvictedFelonyCrime] = useState(clientConvictedFelonyCrime);
     const [isDisabled, setIsDisabled] = useState(clientDisabled);
     
     //the date pickers
@@ -291,7 +291,6 @@ const Supplemental = (props) => {
         document.getElementById("btnIDType").value = clientIDType;
         document.getElementById("btnIDType").innerHTML = clientIDType;
 
-
         
         let idIssueDateObj = new Date(clientIDIssueDate);
         let convertedIssueDate = moment(idIssueDateObj).format('YYYY-MM-DD');
@@ -328,18 +327,18 @@ const Supplemental = (props) => {
             setEducationLevelValues(educationLevels);
 
             //Funding Source
-            setFundingSourceID(clientFundingSourceID);
-            setFundingSourceDescription(clientFundingSourceDescription);
+            //setFundingSourceID(clientFundingSourceID);
+            //setFundingSourceDescription(clientFundingSourceDescription);
             setFundingSourceValues(fundingSources);
 
             //Job Status
-            setJobStatusID(clientJobStatusID);
-            setJobStatusDescription(clientJobStatusDescription);
+            //setJobStatusID(clientJobStatusID);
+            //setJobStatusDescription(clientJobStatusDescription);
             setJobStatusValues(jobStatuses);
 
             //Marital Status
-            setMaritalStatusID(clientMaritalStatusID);
-            setMaritalStatusDescription(clientMaritalStatusDescription);
+            //setMaritalStatusID(clientMaritalStatusID);
+            //setMaritalStatusDescription(clientMaritalStatusDescription);
             setMaritalStatusValues(maritalStatuses);
 
         });
@@ -419,9 +418,6 @@ const Supplemental = (props) => {
         setMaritalStatusDescription(selectedMaritalStatus[0].Description);
     }
 
-
-   
-
     function setIsDisalbedHandler(disabled) {
         setResetButtonDisabled(false);
         setIsDisabled(disabled);
@@ -474,66 +470,14 @@ const Supplemental = (props) => {
         setStudentStatus(selectedValue);
     }
 
-    // function setIDNumberHandler(event) {
-    //     setResetButtonDisabled(false);
-    //     setIDNumber(event.target.value);
-    // }
+   
 
     function setScarsHandler(event) {
         setResetButtonDisabled(false);
         setScarsMarksTattoos(event.target.value);
     }
 
-    //TODO: put this into common file- see Info.js
-    function isValidDate(d) {
-        //return d.date instanceof Date && !isNaN(d);
-        return Object.prototype.toString.call(d.date) === '[object Date]';
-    }
-
-    function handleIDIssueDateChange(event) {
-        //console.log('this is the id issue date');
-        //console.log(event.target.value);
-
-        let selectedValue = event.target.value;
-        console.log(selectedValue);
-        
-        $("#txtIDIssueDate").val(selectedValue);
-
-
-
-        //setIDIssueDate(event.target.value);
-        //setResetButtonDisabled(false);
-        // console.log('this is the birth date');
-        // console.log(birthDate);
-        //  let isValid = isValidDate(idIssueDate);
-        // // console.log(isValid);
- 
-        //  if (!isValid) {
-        //      //setBirthDateRequired(true);
-        //      //setDobErrorDivCss('invalid-feedback d-block')
-        //  } else {
-        //      //setBirthDateRequired(false);
-        //      //setDobErrorDivCss('invalid-feedback');
-        //  }
- 
-        //  //setResetButtonDisabled(false); 
-        //  //setBirthDate(birthDate.date);
-        //  console.log(idIssueDate.date);
-        //  setIDIssueDate(idIssueDate.date);
-     }
-
-     function handleIdExpirationDateChange(idExpirationDate) {
-         let isValid = isValidDate(idExpirationDate);
-
-         if (!isValid) {
-
-         } else {
-
-         }
-
-         setIDExpirationDate(idExpirationDate.date);
-     }
-
+  
      function employerChangeHandler(event) {
          setResetButtonDisabled(false);
          setEmployer(event.target.value);
@@ -565,10 +509,10 @@ const Supplemental = (props) => {
         let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental`;
         let sessionStorageData = getSessionData();
 
-        let issueDate = $("#txtIDIssueDate").val();
-        console.log('the issue date');
-        let converted = new Date(issueDate);
-        console.log(converted);
+        // let issueDate = $("#txtIDIssueDate").val();
+        // console.log('the issue date');
+        // let converted = new Date(issueDate);
+        // console.log(converted);
 
         //the CWB fields
         let personSupplemental = 
@@ -599,7 +543,7 @@ const Supplemental = (props) => {
             IDType: document.getElementById("btnIDType").value,
             IDNumber: $("#txtIDNumber").val(),
             IssueDate: new Date($("#txtIDIssueDate").val()),
-            // ExpirationDate: idExpirationDate,
+            ExpirationDate: new Date($("#txtIDExpirationDate").val()),
             // JobStatusID: jobStatusID,
             // MaritalStatusID: maritalStatusID,
             // ScarMarks: scarsMarksTattos,
