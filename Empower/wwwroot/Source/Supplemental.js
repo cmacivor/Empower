@@ -266,6 +266,7 @@ const Supplemental = (props) => {
         $("#txtLanguage").val(clientLanguage);
         $("#txtNotes").val(clientNotes);
         $("#txtIDNumber").val(clientIDNumber);
+        $("#txtScarsMarks").val(clientScars);
 
         setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
         setRadioButtonState("rdpInterpreterNeededYes", "rdpInterpreterNeededNo", clientInterpreterNeeded);
@@ -277,7 +278,7 @@ const Supplemental = (props) => {
         setRadioButtonState("rdpIsConvictedFelonyYes", "rdpIsConvictedFelonyNo", clientConvictedFelony);
         setRadioButtonState("rdpIsWorkingVehicleYes", "rdpIsWorkingVehicleNo", clientWorkingVehicle);
         setRadioButtonState("rdpIsConvictedFelonyCrimeYes", "rdpIsConvictedFelonyCrimeNo", clientConvictedFelonyCrime);
-
+        setRadioButtonState("rdpIsDisabledYes", "rdpIsDisabledNo", clientDisabled);
 
         document.getElementById("btnDDLHighestGradeCompleted").innerHTML = clientEducationLevelDescription;
         document.getElementById("btnDDLHighestGradeCompleted").value = clientEducationLevelID;
@@ -291,10 +292,15 @@ const Supplemental = (props) => {
         document.getElementById("btnIDType").value = clientIDType;
         document.getElementById("btnIDType").innerHTML = clientIDType;
 
+        document.getElementById("btnDDLJobStatus").value = clientJobStatusID;
+        document.getElementById("btnDDLJobStatus").innerHTML = clientJobStatusDescription;
+
+        document.getElementById("btnDDLMaritalStatus").value = clientMaritalStatusID;
+        document.getElementById("btnDDLMaritalStatus").innerHTML = clientMaritalStatusDescription;
+
         
         let idIssueDateObj = new Date(clientIDIssueDate);
-        let convertedIssueDate = moment(idIssueDateObj).format('YYYY-MM-DD');
-        
+        let convertedIssueDate = moment(idIssueDateObj).format('YYYY-MM-DD');     
         document.getElementById("txtIDIssueDate").value = convertedIssueDate;
 
         let idExpirationDate = new Date(clientIDExpirationDate);
@@ -302,24 +308,6 @@ const Supplemental = (props) => {
         document.getElementById("txtIDExpirationDate").value = convertedIDExpirationDate;
 
         
-        //$("#txtIDIssueDate").val(convertedIssueDate);    
-        //setIDType(clientIDType);
-        //setIDNumber(clientIDNumber);
-    
-        // setScarsMarksTattoos(clientScars);
-        // setIsDisabled(clientDisabled);
-        // setLivingSituation(clientLivingSituation);
-        // setStudentStatus(clientStudentStatus);
-        // setEducationLevel(clientHighestEducation);
-        // setEmployer(clientEmployer);
-        // setSupervisor(clientSupervisor);
-        // setJobTitle(clientJobTitle);
-        // setAvgHoursPerWeek(clientHoursPerWeek);
-        // setEmployerAddress(clientEmployerAddress);
-        // setEmployerState(clientEmployerState);
-
- 
-
 
             //Education Level
             //setEducationLevelID(clientEducationLevelID);
@@ -365,9 +353,9 @@ const Supplemental = (props) => {
     //     setJobStatusID(jobStatus);
     // }
 
-    function handleJobStatusDescriptionChange(jobStatusDescription) {
-        setJobStatusDescription(jobStatusDescription);
-    }
+    // function handleJobStatusDescriptionChange(jobStatusDescription) {
+    //     setJobStatusDescription(jobStatusDescription);
+    // }
 
 
     function handleEducationLevelChange(event){        
@@ -397,31 +385,31 @@ const Supplemental = (props) => {
     function handleJobStatusChange(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
 
-        setJobStatusID(selectedValue);
+        document.getElementById("btnDDLJobStatus").value = selectedValue;
 
         let selectedJobStatus =  jobStatuses.filter(function(jobStatus) {
             return jobStatus.ID === parseInt(selectedValue);
         });
 
-        setJobStatusDescription(selectedJobStatus[0].Description);
+        document.getElementById("btnDDLJobStatus").innerHTML = selectedJobStatus[0].Description;
     }
 
     function handleMaritalStatusChange(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
 
-        setMaritalStatusID(selectedValue);
+        document.getElementById("btnDDLMaritalStatus").value = selectedValue;
 
         let selectedMaritalStatus  = maritalStatuses.filter(function(maritalStatus) {
             return maritalStatus.ID === parseInt(selectedValue);
         });
 
-        setMaritalStatusDescription(selectedMaritalStatus[0].Description);
+        document.getElementById("btnDDLMaritalStatus").innerHTML = selectedMaritalStatus[0].Description;
     }
 
-    function setIsDisalbedHandler(disabled) {
-        setResetButtonDisabled(false);
-        setIsDisabled(disabled);
-    }
+    // function setIsDisalbedHandler(disabled) {
+    //     setResetButtonDisabled(false);
+    //     setIsDisabled(disabled);
+    // }
 
     function careerStationSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -544,10 +532,10 @@ const Supplemental = (props) => {
             IDNumber: $("#txtIDNumber").val(),
             IssueDate: new Date($("#txtIDIssueDate").val()),
             ExpirationDate: new Date($("#txtIDExpirationDate").val()),
-            // JobStatusID: jobStatusID,
-            // MaritalStatusID: maritalStatusID,
-            // ScarMarks: scarsMarksTattos,
-            // IsDisable: isDisabled,
+            JobStatusID: document.getElementById("btnDDLJobStatus").value,
+            MaritalStatusID: document.getElementById("btnDDLMaritalStatus").value,
+            ScarMarks: $("#txtScarsMarks").val(),
+            IsDisable: getRadioButtonState("rdpIsDisabledYes"),
             // LivingSituation: livingSituation,
             // StudentStatus: studentStatus,
             // HighestEducation: educationLevel,
@@ -949,8 +937,8 @@ const Supplemental = (props) => {
                                     <div className="col-3">
                                         <label htmlFor="ddlJobStatus"><strong>Job Status</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                { jobStatusDescription }
+                                            <button type="button" id="btnDDLJobStatus" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                
                                             </button>
                                             <div className="dropdown-menu">
                                                 { jobStatusValueOptions }
@@ -960,8 +948,8 @@ const Supplemental = (props) => {
                                     <div className="col-3">
                                         <label htmlFor="ddlMaritalStatus"><strong>Marital Status</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                { maritalStatusDescription }
+                                            <button type="button" id="btnDDLMaritalStatus" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                
                                             </button>
                                             <div className="dropdown-menu">
                                                 { maritalStatusValueOptions }
@@ -970,11 +958,20 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtScarsMarks"><strong>Scars/Marks/Tattoos</strong></label>
-                                        <input id="txtScarsMarks" value={scarsMarksTattos} onChange={setScarsHandler} type="text" className="form-control"></input>
+                                        <input id="txtScarsMarks" defaultValue="" type="text" className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label><strong>Is Disabled</strong></label>
-                                        <RadioButton name={"rdIsDisabled"} isChecked={isDisabled} setCheckedValue={setIsDisalbedHandler} />
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsDisabled" id="rdpIsDisabledYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsDisabled" id="rdpIsDisabledNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div> 
                                     </div>
                                 </div>
                                 <br></br>
