@@ -175,14 +175,6 @@ const Supplemental = (props) => {
     const [idExpirationDate, setIDExpirationDate] = useState(clientIDExpirationDate);
 
     //textboxes
-    const [heightInFeet, setHeightInFeet] = useState(clientHeightInFeet);
-    const [heightInInches, setHeightInInches] = useState(clientHeighInInches);
-    const [weight, setWeight] = useState(clientWeight);
-    const [shoeSize, setShoeSize] = useState('');
-    const [houseHoldSize, setHouseHoldSize] = useState(clientHouseHoldSize);
-    const [homePhone, setHomePhone] = useState(clientHomePhone);
-    const [houseHoldIncome, setHouseHoldIncome] = useState(clientIncome);
-    const [primaryLanguage, setPrimaryLanguage] = useState(clientLanguage);
     const [notes, setNotes] = useState(clientNotes);
     const [idNumber, setIDNumber] = useState(clientIDNumber);
     const [scarsMarksTattos, setScarsMarksTattoos] = useState(clientScars);
@@ -313,14 +305,7 @@ const Supplemental = (props) => {
         // setEmployerAddress(clientEmployerAddress);
         // setEmployerState(clientEmployerState);
 
-                //for the date pickers
-                // if (state.isNewClient) {
-
-                //     let datePickerReset = new Date();
-                //     let datePickerResetUTC = convertDateToUtcFormat(datePickerReset);
-                //     setIDIssueDate(datePickerResetUTC);
-                //     setIDExpirationDate(datePickerResetUTC);
-                // }
+ 
 
 
             //Education Level
@@ -681,6 +666,7 @@ const Supplemental = (props) => {
             HomePhone: $("#txtHomePhone").val(),
             HouseholdIncome: $("#txtHouseIncome").val(),
             Language: $("#txtLanguage").val(),
+            EducationLevelID: document.getElementById("btnDDLHighestGradeCompleted").value,
             //EducationLevelID: clientEducationLevelID,
             // HasExceptionEduc: isIepChecked,
             // HasInterpreter: isInterpreterNeededChecked,
@@ -874,7 +860,7 @@ const Supplemental = (props) => {
                                     <div className="col-4">
                                         <label htmlFor="ddlEducationLevels"><strong>Highest Grade Completed</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" id="btnDDLHighestGradeCompleted" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            <button type="button" id="btnDDLHighestGradeCompleted" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                 
                                             </button>
                                             <div className="dropdown-menu">
