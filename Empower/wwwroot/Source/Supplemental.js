@@ -638,46 +638,6 @@ const Supplemental = (props) => {
          setIDExpirationDate(idExpirationDate.date);
      }
 
-    //  function heightInFeetChangeHandler(event) {
-    //     setResetButtonDisabled(false);
-    //     setHeightInFeet(event.target.value);
-    //  }
-
-    //  function heightInInchesChangeHandler(event) {
-    //     setResetButtonDisabled(false);
-    //      setHeightInInches(event.target.value);
-    //  }
-
-    //  function weightChangeHandler(event) {
-    //     setResetButtonDisabled(false);
-    //      setWeight(event.target.value);
-    //  }
-
-    //  function shoeSizeChangeHandler(event) {
-    //     setResetButtonDisabled(false);
-    //      setShoeSize(event.target.value);
-    //  }
-
-    //  function houseHoldSizeHandler(event) {
-    //     setResetButtonDisabled(false);
-    //      setHouseHoldSize(event.target.value);
-    //  }
-
-    //  function homePhoneChangeChandler(event) {
-    //     setResetButtonDisabled(false);
-    //      setHomePhone(event.target.value);
-    //  }
-
-    //  function houseHoldIncomeChangeHandler(event) {
-    //     setResetButtonDisabled(false);
-    //      setHouseHoldIncome(event.target.value);
-    //  }
-
-    //  function primaryLanguangeChangeHandler(event) {
-    //     setResetButtonDisabled(false);
-    //      setPrimaryLanguage(event.target.value);
-    //  }
-
      function employerChangeHandler(event) {
          setResetButtonDisabled(false);
          setEmployer(event.target.value);
