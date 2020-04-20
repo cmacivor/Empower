@@ -491,8 +491,13 @@ const Supplemental = (props) => {
     }
 
     function handleIDIssueDateChange(event) {
-        console.log('this is the id issue date');
-        console.log(event.target.value);
+        //console.log('this is the id issue date');
+        //console.log(event.target.value);
+
+        let selectedValue = event.target.value;
+        console.log(selectedValue);
+        
+        $("#txtIDIssueDate").val(selectedValue);
 
 
 
@@ -560,6 +565,11 @@ const Supplemental = (props) => {
         let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental`;
         let sessionStorageData = getSessionData();
 
+        let issueDate = $("#txtIDIssueDate").val();
+        console.log('the issue date');
+        let converted = new Date(issueDate);
+        console.log(converted);
+
         //the CWB fields
         let personSupplemental = 
         {
@@ -588,7 +598,7 @@ const Supplemental = (props) => {
             Comments: $("#txtNotes").val(),
             IDType: document.getElementById("btnIDType").value,
             IDNumber: $("#txtIDNumber").val(),
-            // IssueDate: idIssueDate,
+            IssueDate: new Date($("#txtIDIssueDate").val()),
             // ExpirationDate: idExpirationDate,
             // JobStatusID: jobStatusID,
             // MaritalStatusID: maritalStatusID,
@@ -983,7 +993,7 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtIssueDate"><strong>ID Issue Date</strong></label>
-                                        <input type="date" value="" onChange={handleIDIssueDateChange} id="txtIDIssueDate" className="form-control"></input>
+                                        <input type="date" defaultValue="" id="txtIDIssueDate" className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtIdExpirationDate"><strong>ID Expiration Date</strong></label>
