@@ -279,11 +279,18 @@ const Supplemental = (props) => {
 
         document.getElementById("btnDDLHighestGradeCompleted").innerHTML = clientEducationLevelDescription;
         document.getElementById("btnDDLHighestGradeCompleted").value = clientEducationLevelID;
+
+        document.getElementById("btnDDLFundingSource").innerHTML = clientFundingSourceDescription;
+        document.getElementById("btnDDLFundingSource").value = clientFundingSourceID;
+
+        document.getElementById("btnDDLCareerStation").value = clientCareerStation;
+        document.getElementById("btnDDLCareerStation").innerHTML = clientCareerStation;
+
         
         let idIssueDateObj = new Date(clientIDIssueDate);
         let convertedIssueDate = moment(idIssueDateObj).format('YYYY-MM-DD');
-        console.log('the converted date is');
-        console.log(convertedIssueDate);
+        //console.log('the converted date is');
+        //console.log(convertedIssueDate);
         document.getElementById("txtIDIssueDate").value = convertedIssueDate;
 
         let idExpirationDate = new Date(clientIDExpirationDate);
@@ -362,27 +369,25 @@ const Supplemental = (props) => {
     function handleEducationLevelChange(event){        
         let selectedValue = event.currentTarget.getAttribute('value');
         
-        //setEducationLevelID(selectedValue);
         document.getElementById("btnDDLHighestGradeCompleted").value = selectedValue;
         
         let selectedEducationLevel = educationLevels.filter(function (educationLevel) {
             return educationLevel.ID === parseInt(selectedValue)
         });
 
-        //setEducationLevelDescription(selectedEducationLevel[0].Description);
         document.getElementById("btnDDLHighestGradeCompleted").innerHTML = selectedEducationLevel[0].Description;
     }
 
     function handleFundingSourceChange(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
 
-        setFundingSourceID(selectedValue);
+        document.getElementById("btnDDLFundingSource").value = selectedValue;
 
         let selectedFundingSource =  fundingSources.filter(function(fundingSource) {
             return fundingSource.ID === parseInt(selectedValue);
         });
 
-        setFundingSourceDescription(selectedFundingSource[0].Description);
+        document.getElementById("btnDDLFundingSource").innerHTML = selectedFundingSource[0].Description;
     }
 
     function handleJobStatusChange(event) {
@@ -419,17 +424,18 @@ const Supplemental = (props) => {
 
     function careerStationSelectHandler(event) {
         //console.log(career);
-        setResetButtonDisabled(false);
+        //setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
-        console.log(selectedValue);
 
-        setCareerStation(selectedValue);
+        document.getElementById("btnDDLCareerStation").value = selectedValue;
+
+        document.getElementById("btnDDLCareerStation").innerHTML = selectedValue;
     }
 
     function notesChangeHandler(event) {
         //console.log(event.target.value);
-        setResetButtonDisabled(false);
-        setNotes(event.target.value);
+        //setResetButtonDisabled(false);
+        //setNotes(event.target.value);
     }
 
     function idTypeSelectHandler(event) {
@@ -573,8 +579,8 @@ const Supplemental = (props) => {
             HasConvictedFelony: getRadioButtonState("rdpIsConvictedFelonyYes"),
             HasVehicle: getRadioButtonState("rdpIsWorkingVehicleYes"),
             HasConvictedCrimeIntegrity: getRadioButtonState("rdpIsConvictedFelonyCrimeYes"),
-            // FundingSourceID: fundingSourceID,
-            // CareerSt: careerStation,
+            FundingSourceID: document.getElementById("btnDDLFundingSource").value,
+            CareerSt: document.getElementById("btnDDLCareerStation").value,
             // Comments: notes,
             // IDType: idType,
             // IDNumber: idNumber,
@@ -908,8 +914,8 @@ const Supplemental = (props) => {
                                     <div className="col-4">
                                         <label htmlFor="ddlFundingSources"><strong>Potential Funding Source</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                {fundingSourceDescription }
+                                            <button type="button" id="btnDDLFundingSource" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                
                                             </button>
                                             <div className="dropdown-menu">
                                                 { fundingSourceValueOptions }
@@ -920,8 +926,8 @@ const Supplemental = (props) => {
                                     <div className="col-4">
                                         <label htmlFor="ddlCareerStation"><strong>Career Station</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                {careerStation}
+                                            <button type="button" id="btnDDLCareerStation" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
+                                                
                                             </button>
                                             <div  className="dropdown-menu">
                                                 <a key={"Please Select"} value={"Please Select"} onClick={careerStationSelectHandler} className="dropdown-item">Please Select</a>
