@@ -330,50 +330,6 @@ const Supplemental = (props) => {
 
         });
         
-        // function clearForm() {
-        //     setHeightInFeet('');
-        // }
-
-
-      
-
-    
-
-    // useImperativeHandle(ref, () => ({
-    //     // updateDatePickers(idIssueDate, idExpirationDate) {
-
-    //     //     //let utcBirthDate = convertDateToUtcFormat(birthDate);
-
-    //     //     //setBirthDate(utcBirthDate);
-    //     //     //clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
-    //     //     //clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
-    //     //     let utcIDIssueDate = convertDateToUtcFormat(idIssueDate);
-    //     //     let utcIDExpirationDate = convertDateToUtcFormat(idExpirationDate);
-
-    //     //     setIDIssueDate(utcIDIssueDate);
-    //     //     setIDExpirationDate(utcIDExpirationDate);
-
-    //     // },
-
-    //     //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
-    //     clearForm() {
-    //         //clearFormForNewProfile();
-    //     }
-    // }));
-
-    function addPleaseSelect(options) {
-        let pleaseSelectItem = {
-            Name: "PleaseSelect",
-            Description: "Please Select",
-            Active: true,
-            ID: 0,
-            CreatedDate: new Date()
-        }
-
-        options.splice(0, 0, pleaseSelectItem);
-
-        return options;
-    }
 
     function convertDateToUtcFormat(date) {
         let javascriptDateObject = new Date(date);
@@ -451,70 +407,8 @@ const Supplemental = (props) => {
         setMaritalStatusDescription(selectedMaritalStatus[0].Description);
     }
 
-    // function handleEducationLevelDescriptionChange(educationLevel) {
-    //     setEducationLevelDescription(educationLevel);
-    // }
 
-    // function handleFundingSourceChange(fundingSource) {
-    //     setResetButtonDisabled(false);
-    //     setFundingSourceID(fundingSource);
-    // }
-
-    function handleFundingSourceDescriptionChange(fundingSourceDesc) {
-        setFundingSourceDescription(fundingSourceDesc);
-    }
-
-    function setCheckedValueHandler(iep) {
-        setResetButtonDisabled(false);
-        console.log('the iep value is:');
-        console.log(iep);       
-        setIsIepChecked(iep);
-    }
-
-    function setIsInterpreterNeededHandler(isInterpreter) {
-        setResetButtonDisabled(false);
-        setIsInterpreterNeededChecked(isInterpreter);
-    }
-
-    function setIsMedicaidHandler(medicaid) {
-        setResetButtonDisabled(false);
-        setIsMedicaid(medicaid);
-    }
-
-    function setIsInsuranceHandler(insurance) {
-        setResetButtonDisabled(false);
-        setIsInsurance(insurance);
-    }
-
-    function setIsDriversLicenseHandler(license) {
-        setResetButtonDisabled(false);
-        setIsDriversLicense(license);
-    }
-
-    function setIsConvictedOffenseHandler(offense) {
-        setResetButtonDisabled(false);
-        setIsConvictedOffense(offense);
-    }
-
-    function setIsConvictedMisdemeanorHandler(misdemeanor) {
-        setResetButtonDisabled(false);
-        setIsConvictedMisdemeanor(misdemeanor);
-    }
-
-    function setIsConvictedFelonyHandler(felony) {
-        setResetButtonDisabled(false);
-        setIsConvictedFelony(felony);
-    }
-
-    function setIsWorkingVehicleHandler(vehicle) {
-        setResetButtonDisabled(false);
-        setIsWorkingVehicle(vehicle);
-    }
-
-    function setIsConvictedFelonyCrimeHandler(crime) {
-        setResetButtonDisabled(false);
-        setIsConvictedFelonyCrime(crime);
-    }
+   
 
     function setIsDisalbedHandler(disabled) {
         setResetButtonDisabled(false);
@@ -885,45 +779,126 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-4">
                                         <label><strong>Is Interpreter Needed</strong></label>
-                                        <RadioButton name={"rdIsInterpreterNeeded"} isChecked={isInterpreterNeededChecked} setCheckedValue={setIsInterpreterNeededHandler}/>
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpInterpreterNeeded" id="rdpInterpreterNeededYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpInterpreterNeeded" id="rdpInterpreterNeededNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div> 
                                     </div>
                                     <div className="col-4">
                                         <label><strong>Medicaid*</strong></label>
-                                        <RadioButton name={"rdMedicaid"} isChecked={isMedicaid} setCheckedValue={setIsMedicaidHandler}/>
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpMedicaidNeeded" id="rdpMedicaidNeededYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpMedicaidNeeded" id="rdpMedicaidNeededNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div>
                                     </div>                   
                                 </div>
                                 <br></br>
                                 <div className="form-row">
                                     <div className="col-4">
                                         <label><strong>Insurance</strong></label>
-                                        <RadioButton name={"rdInsurance"} isChecked={isInsurance} setCheckedValue={setIsInsuranceHandler}/>
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpHasInsurance" id="rdpHasInsuranceYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpHasInsurance" id="rdpHasInsuranceNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="col-4">
                                         <label><strong>Driver's License</strong></label>
-                                        <RadioButton name={"rdDriversLicense"} isChecked={isDriversLicense} setCheckedValue={setIsDriversLicenseHandler}/>
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpHasDriversLicense" id="rdpHasDriversLicenseYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpHasDriversLicense" id="rdpHasDriversLicenseNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="col-4">
                                         <label><strong>Convicted Offense</strong></label>
-                                        <RadioButton name={"rdConvictedOffense"} isChecked={isConvictedOffense} setCheckedValue={setIsConvictedOffenseHandler}/>
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsConvictedOffense" id="rdpIsConvictedOffenseYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsConvictedOffense" id="rdpIsConvictedOffenseNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <br></br>
                                 <div className="form-row">
                                     <div className="col-3">
                                         <label><strong>Convicted Misdemeanor</strong></label>
-                                        <RadioButton name={"rdConvictedMisdemeanor" } isChecked={isConvictedMisdemeanor} setCheckedValue={setIsConvictedMisdemeanorHandler }/>
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsConvictedMisdemeanor" id="rdpIsConvictedMisdemeanorYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsConvictedMisdemeanor" id="rdpIsConvictedMisdemeanorNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="col-3">
                                         <label><strong>Convicted Felony</strong></label>
-                                        <RadioButton name={"rdConvictedFelony"} isChecked={isConvictedFelony} setCheckedValue={setIsConvictedFelonyHandler}/>
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsConvictedFelony" id="rdpIsConvictedFelonyYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsConvictedFelony" id="rdpIsConvictedFelonyNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="col-3">
                                         <label><strong>Working Vehicle</strong> </label>
-                                        <RadioButton name={"rdWorkingVehicle"} isChecked={isWorkingVehicle} setCheckedValue={setIsWorkingVehicleHandler}/>
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsWorkingVehicle" id="rdpIsWorkingVehicleYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsWorkingVehicle" id="rdpIsWorkingVehicleNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="col-3">
                                         <label><strong>Convicted Felony Crime (Integrity) </strong></label>
-                                        <RadioButton name={"rdConvictedFelonyCrime"} isChecked={isConvictedFelonyCrime} setCheckedValue={setIsConvictedFelonyCrimeHandler} />
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsConvictedFelonyCrime" id="rdpIsConvictedFelonyCrimeYes"  />
+                                                <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIsConvictedFelonyCrime" id="rdpIsConvictedFelonyCrimeNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <br></br>
@@ -938,14 +913,7 @@ const Supplemental = (props) => {
                                                 { fundingSourceValueOptions }
                                             </div>
                                         </div>
-                                        {/* <DropDown
-                                            onSelectValue={handleFundingSourceChange }
-                                            onSelectValueDescription={handleFundingSourceDescriptionChange }
-                                            selected={fundingSourceID }
-                                            valueDescription={fundingSourceDescription}
-                                            values={fundingSources }
-                                            isRequired={false} >
-                                        </DropDown> */}
+                                  
                                     </div>
                                     <div className="col-4">
                                         <label htmlFor="ddlCareerStation"><strong>Career Station</strong></label>
@@ -1004,23 +972,10 @@ const Supplemental = (props) => {
                                     <div className="col-3">
                                         <label htmlFor="txtIssueDate"><strong>ID Issue Date</strong></label>
                                         <input type="date" value="" onChange={handleIDIssueDateChange} id="txtIDIssueDate" className="form-control"></input>
-                                        {/* <DatePicker 
-                                            selected={ idIssueDate }
-                                            required={false}
-                                            onChange={date => handleIDIssueDateChange({date})}
-                                            className="form-control"                             
-                                        /> */}
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtIdExpirationDate"><strong>ID Expiration Date</strong></label>
-                                        <input type="date" defaultValue="" id="txtIDExpirationDate" className="form-control"></input>
-                                        {/* <DatePicker
-                                           selected={idExpirationDate}
-                                           required={false}
-                                           onChange={date => handleIdExpirationDateChange({date})}
-                                           className="form-control"
-                                           >
-                                        </DatePicker> */}
+                                        <input type="date" defaultValue="" id="txtIDExpirationDate" className="form-control"></input>                               
                                     </div>
                                 </div>
                                 <br></br>
@@ -1035,14 +990,6 @@ const Supplemental = (props) => {
                                                 { jobStatusValueOptions }
                                             </div>
                                         </div>
-                                        {/* <DropDown
-                                                onSelectValue={handleJobStatusChange }
-                                                onSelectValueDescription={handleJobStatusDescriptionChange}
-                                                selected={jobStatusID}
-                                                valueDescription={jobStatusDescription }
-                                                values={jobStatuses}
-                                                isRequired={false} >
-                                        </DropDown> */}
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="ddlMaritalStatus"><strong>Marital Status</strong></label>
@@ -1054,14 +1001,6 @@ const Supplemental = (props) => {
                                                 { maritalStatusValueOptions }
                                             </div>
                                         </div>
-                                        {/* <DropDown
-                                             onSelectValue={handleMaritalStatusChange}
-                                             onSelectValueDescription={handleMaritalStatusDescriptionChange}
-                                             selected={maritalStatusID}
-                                             valueDescription={maritalStatusDescription}
-                                             values={maritalStatuses}
-                                             isRequired={false}> 
-                                        </DropDown> */}
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtScarsMarks"><strong>Scars/Marks/Tattoos</strong></label>
