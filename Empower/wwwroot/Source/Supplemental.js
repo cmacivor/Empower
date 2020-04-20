@@ -268,18 +268,24 @@ const Supplemental = (props) => {
         //let personID = sessionStorage.getItem('PersonID');
         //console.log('this is the rereredng, hopefully');
         //console.log(props.clientProfilePersonID);
-        console.log('the id issue date');
-        console.log(clientIDIssueDate);
-        console.log('the expirtion date');
-        console.log(clientIDExpirationDate);
+        //console.log('the id issue date');
+        //console.log(clientIDIssueDate);
+        //console.log('the expirtion date');
+        //console.log(clientIDExpirationDate);
 
         //setHeightInFeet(clientHeightInFeet);
         $("#txtHeightFeet").val(clientHeightInFeet);
         $("#txtHeightInches").val(clientHeighInInches);
-        $("#txtWeight").val(clientWeight); 
+        $("#txtWeight").val(clientWeight);
+        $("#txtHouseSize").val(clientHouseHoldSize);
+        $("#txtHomePhone").val(clientHomePhone);
+        $("#txtHouseIncome").val(clientIncome);
+        $("#txtLanguage").val(clientLanguage);
 
         setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
-
+        document.getElementById("btnDDLHighestGradeCompleted").innerHTML = clientEducationLevelDescription;
+        document.getElementById("btnDDLHighestGradeCompleted").value = clientEducationLevelID;
+        
         let idIssueDateObj = new Date(clientIDIssueDate);
         let convertedIssueDate = moment(idIssueDateObj).format('YYYY-MM-DD');
         console.log('the converted date is');
@@ -318,8 +324,8 @@ const Supplemental = (props) => {
 
 
             //Education Level
-            setEducationLevelID(clientEducationLevelID);
-            setEducationLevelDescription(clientEducationLevelDescription);
+            //setEducationLevelID(clientEducationLevelID);
+            //setEducationLevelDescription(clientEducationLevelDescription);
             setEducationLevelValues(educationLevels);
 
             //Funding Source
@@ -413,14 +419,15 @@ const Supplemental = (props) => {
     function handleEducationLevelChange(event){        
         let selectedValue = event.currentTarget.getAttribute('value');
         
-        setEducationLevelID(selectedValue);
+        //setEducationLevelID(selectedValue);
+        document.getElementById("btnDDLHighestGradeCompleted").value = selectedValue;
         
         let selectedEducationLevel = educationLevels.filter(function (educationLevel) {
             return educationLevel.ID === parseInt(selectedValue)
         });
 
-        setEducationLevelDescription(selectedEducationLevel[0].Description);
-  
+        //setEducationLevelDescription(selectedEducationLevel[0].Description);
+        document.getElementById("btnDDLHighestGradeCompleted").innerHTML = selectedEducationLevel[0].Description;
     }
 
     function handleFundingSourceChange(event) {
@@ -710,11 +717,11 @@ const Supplemental = (props) => {
             HeightFt:  $("#txtHeightFeet").val(),
             HeightIn: $("#txtHeightInches").val(), 
             Weight: $("#txtWeight").val(),
-            // HouseholdSize: houseHoldSize,
-            // HomePhone: homePhone,
-            // HouseholdIncome: houseHoldIncome,
-            // Language: primaryLanguage,
-            // EducationLevelID: educationLevelID,
+            HouseholdSize: $("#txtHouseSize").val(),
+            HomePhone: $("#txtHomePhone").val(),
+            HouseholdIncome: $("#txtHouseIncome").val(),
+            Language: $("#txtLanguage").val(),
+            //EducationLevelID: clientEducationLevelID,
             // HasExceptionEduc: isIepChecked,
             // HasInterpreter: isInterpreterNeededChecked,
             // HasMedicaid: isMedicaid,
@@ -907,8 +914,8 @@ const Supplemental = (props) => {
                                     <div className="col-4">
                                         <label htmlFor="ddlEducationLevels"><strong>Highest Grade Completed</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                {educationLevelDescription }
+                                            <button type="button" id="btnDDLHighestGradeCompleted" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                
                                             </button>
                                             <div className="dropdown-menu">
                                                 {educationLevelValueOptions}
@@ -930,8 +937,8 @@ const Supplemental = (props) => {
                                         <label><strong> IEP</strong></label>
                                         <div>
                                             <div className="form-check form-check-inline">
-                                                    <input className="form-check-input" type="radio" name="rdpIEP" id="rdpIEPYes"  />
-                                                    <label className="form-check-label">Yes</label>         
+                                                <input className="form-check-input" type="radio" name="rdpIEP" id="rdpIEPYes"  />
+                                                <label className="form-check-label">Yes</label>         
                                             </div>
                                             <div className="form-check form-check-inline">
                                                 <input className="form-check-input" type="radio" name="rdpIEP" id="rdpIEPNo"  />
