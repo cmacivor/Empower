@@ -242,6 +242,26 @@ const Supplemental = (props) => {
     const [loadTab, setLoadTab] = useState(false);
 
 
+    function setRadioButtonState(rdYes, rdNo, clientValue) {
+        if (clientValue === null || clientValue === '') {
+            document.getElementById(rdNo).checked = true;
+            return;
+        }
+
+        if (clientValue) {
+            document.getElementById(rdYes).checked = clientValue;
+        } else {
+            document.getElementById(rdNo).checked = clientValue;
+        }
+    }
+
+    function getRadioButtonState(rdYes) {
+        let yesChecked = document.getElementById(rdYes).checked;
+        if (yesChecked) {
+            return true;
+        }
+        return false;
+    }
     
     useEffect(() => {
 
@@ -253,101 +273,39 @@ const Supplemental = (props) => {
         console.log('the expirtion date');
         console.log(clientIDExpirationDate);
 
+        //setHeightInFeet(clientHeightInFeet);
+        $("#txtHeightFeet").val(clientHeightInFeet);
+        $("#txtHeightInches").val(clientHeighInInches);
+        $("#txtWeight").val(clientWeight); 
 
-        setHeightInFeet(clientHeightInFeet);
-        setHeightInInches(clientHeighInInches);
-        setWeight(clientWeight);
-        setHouseHoldSize(clientHouseHoldSize);
-        setHomePhone(clientHomePhone);
-        setHouseHoldIncome(clientIncome);
-        setPrimaryLanguage(clientLanguage);
-        setIsIepChecked(clientIEP);
-        setIsInterpreterNeededChecked(clientInterpreterNeeded);
-        setIsMedicaid(clientMedicaid);
-        setIsInsurance(clientInsurance);
-        setIsDriversLicense(clientDriversLicense);
-        setIsConvictedOffense(clientConvictedOffense);
-        setIsConvictedMisdemeanor(clientConvictedMisdemeanor);
-        setIsConvictedFelony(clientConvictedFelony);
-        setIsWorkingVehicle(clientWorkingVehicle);
-        setIsConvictedFelonyCrime(clientConvictedFelonyCrime);
-        setCareerStation(clientCareerStation);
-        setNotes(clientNotes);
-        //setIDIssueDate(clientIDIssueDate); //can'tt do this, it causes an endless loop.
+        setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
+
         let idIssueDateObj = new Date(clientIDIssueDate);
         let convertedIssueDate = moment(idIssueDateObj).format('YYYY-MM-DD');
         console.log('the converted date is');
         console.log(convertedIssueDate);
         document.getElementById("txtIDIssueDate").value = convertedIssueDate;
-        //$("#txtIDIssueDate").val(convertedIssueDate);
 
-        //if (props.clientProfile !== undefined && props.clientProfile.PersonSupplemental !== null) {
-            // if (props.clientProfilePersonID !== 0 && (props.clientProfilePersonID !== personID) ) {
-            //     let personID = props.clientProfilePersonID;
-                
-            //     //clearForm();
+        let idExpirationDate = new Date(clientIDExpirationDate);
+        let convertedIDExpirationDate = moment(idExpirationDate).format('YYYY-MM-DD');
+        document.getElementById("txtIDExpirationDate").value = convertedIDExpirationDate;
 
-            //         let apiAddress = sessionStorage.getItem("baseApiAddress");
-            //         let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental/GetByPersonID/${personID}`;
-            //         let sessionStorageData = getSessionData();
-            
-            //         let clientHeightInFeet = '';
-            
-            //         fetch(fullPersonSupplementalAddress, {
-            //             method: 'GET',
-            //             headers: {
-            //                 'Content-Type': 'application/json',
-            //                 'Authorization': 'Bearer ' + sessionStorageData.Token
-            //             }
-            //             //body: JSON.stringify(personSupplemental)
-            //         }).then(result => result.json())
-            //          .then(personSupplemental => {
-            //             //let personSupplemental = result.Person.PersonSupplemental;
-            
-            //             //if (personSupplemental === null) return; 
-            
-            //             clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
-            
-            //             setHeightInFeet(clientHeightInFeet)
-            //         });
-            //     }
-
-                    // setHeightInFeet(clientHeightInFeet);
-                // setHeightInInches(clientHeighInInches);
-                // setWeight(clientWeight);
-                // setHouseHoldSize(clientHouseHoldSize);
-                // setHomePhone(clientHomePhone);
-                // setHouseHoldIncome(clientIncome);
-                // setPrimaryLanguage(clientLanguage);
-                // setIsIepChecked(clientIEP);
-                // setIsInterpreterNeededChecked(clientInterpreterNeeded);
-                // setIsMedicaid(clientMedicaid);
-                // setIsInsurance(clientInsurance);
-                // setIsDriversLicense(clientDriversLicense);
-                // setIsConvictedOffense(clientConvictedOffense);
-                // setIsConvictedMisdemeanor(clientConvictedMisdemeanor);
-                // setIsConvictedFelony(clientConvictedFelony);
-                // setIsWorkingVehicle(clientWorkingVehicle);
-                // setIsConvictedFelonyCrime(clientConvictedFelonyCrime);
-                // setCareerStation(clientCareerStation);
-                // setNotes(clientNotes);
-                // setIDType(clientIDType);
-                // setIDNumber(clientIDNumber);
-                // //setIDIssueDate(new Date());
-                // //setIDExpirationDate(new Date());
-                // //setIDIssueDate(clientIDIssueDate);
-                // //setIDExpirationDate(clientIDExpirationDate);
-                // setScarsMarksTattoos(clientScars);
-                // setIsDisabled(clientDisabled);
-                // setLivingSituation(clientLivingSituation);
-                // setStudentStatus(clientStudentStatus);
-                // setEducationLevel(clientHighestEducation);
-                // setEmployer(clientEmployer);
-                // setSupervisor(clientSupervisor);
-                // setJobTitle(clientJobTitle);
-                // setAvgHoursPerWeek(clientHoursPerWeek);
-                // setEmployerAddress(clientEmployerAddress);
-                // setEmployerState(clientEmployerState);
+        
+        //$("#txtIDIssueDate").val(convertedIssueDate);    
+        //setIDType(clientIDType);
+        //setIDNumber(clientIDNumber);
+    
+        // setScarsMarksTattoos(clientScars);
+        // setIsDisabled(clientDisabled);
+        // setLivingSituation(clientLivingSituation);
+        // setStudentStatus(clientStudentStatus);
+        // setEducationLevel(clientHighestEducation);
+        // setEmployer(clientEmployer);
+        // setSupervisor(clientSupervisor);
+        // setJobTitle(clientJobTitle);
+        // setAvgHoursPerWeek(clientHoursPerWeek);
+        // setEmployerAddress(clientEmployerAddress);
+        // setEmployerState(clientEmployerState);
 
                 //for the date pickers
                 // if (state.isNewClient) {
@@ -359,25 +317,25 @@ const Supplemental = (props) => {
                 // }
 
 
-                //Education Level
-                setEducationLevelID(clientEducationLevelID);
-                setEducationLevelDescription(clientEducationLevelDescription);
-                setEducationLevelValues(educationLevels);
+            //Education Level
+            setEducationLevelID(clientEducationLevelID);
+            setEducationLevelDescription(clientEducationLevelDescription);
+            setEducationLevelValues(educationLevels);
 
-                //Funding Source
-                setFundingSourceID(clientFundingSourceID);
-                setFundingSourceDescription(clientFundingSourceDescription);
-                setFundingSourceValues(fundingSources);
+            //Funding Source
+            setFundingSourceID(clientFundingSourceID);
+            setFundingSourceDescription(clientFundingSourceDescription);
+            setFundingSourceValues(fundingSources);
 
-                //Job Status
-                setJobStatusID(clientJobStatusID);
-                setJobStatusDescription(clientJobStatusDescription);
-                setJobStatusValues(jobStatuses);
+            //Job Status
+            setJobStatusID(clientJobStatusID);
+            setJobStatusDescription(clientJobStatusDescription);
+            setJobStatusValues(jobStatuses);
 
-                //Marital Status
-                setMaritalStatusID(clientMaritalStatusID);
-                setMaritalStatusDescription(clientMaritalStatusDescription);
-                setMaritalStatusValues(maritalStatuses);
+            //Marital Status
+            setMaritalStatusID(clientMaritalStatusID);
+            setMaritalStatusDescription(clientMaritalStatusDescription);
+            setMaritalStatusValues(maritalStatuses);
 
         });
         
@@ -640,7 +598,7 @@ const Supplemental = (props) => {
     function handleIDIssueDateChange(event) {
         console.log('this is the id issue date');
         console.log(event.target.value);
-        setIDIssueDate(event.target.value);
+        //setIDIssueDate(event.target.value);
         //setResetButtonDisabled(false);
         // console.log('this is the birth date');
         // console.log(birthDate);
@@ -673,45 +631,45 @@ const Supplemental = (props) => {
          setIDExpirationDate(idExpirationDate.date);
      }
 
-     function heightInFeetChangeHandler(event) {
-        setResetButtonDisabled(false);
-        setHeightInFeet(event.target.value);
-     }
+    //  function heightInFeetChangeHandler(event) {
+    //     setResetButtonDisabled(false);
+    //     setHeightInFeet(event.target.value);
+    //  }
 
-     function heightInInchesChangeHandler(event) {
-        setResetButtonDisabled(false);
-         setHeightInInches(event.target.value);
-     }
+    //  function heightInInchesChangeHandler(event) {
+    //     setResetButtonDisabled(false);
+    //      setHeightInInches(event.target.value);
+    //  }
 
-     function weightChangeHandler(event) {
-        setResetButtonDisabled(false);
-         setWeight(event.target.value);
-     }
+    //  function weightChangeHandler(event) {
+    //     setResetButtonDisabled(false);
+    //      setWeight(event.target.value);
+    //  }
 
-     function shoeSizeChangeHandler(event) {
-        setResetButtonDisabled(false);
-         setShoeSize(event.target.value);
-     }
+    //  function shoeSizeChangeHandler(event) {
+    //     setResetButtonDisabled(false);
+    //      setShoeSize(event.target.value);
+    //  }
 
-     function houseHoldSizeHandler(event) {
-        setResetButtonDisabled(false);
-         setHouseHoldSize(event.target.value);
-     }
+    //  function houseHoldSizeHandler(event) {
+    //     setResetButtonDisabled(false);
+    //      setHouseHoldSize(event.target.value);
+    //  }
 
-     function homePhoneChangeChandler(event) {
-        setResetButtonDisabled(false);
-         setHomePhone(event.target.value);
-     }
+    //  function homePhoneChangeChandler(event) {
+    //     setResetButtonDisabled(false);
+    //      setHomePhone(event.target.value);
+    //  }
 
-     function houseHoldIncomeChangeHandler(event) {
-        setResetButtonDisabled(false);
-         setHouseHoldIncome(event.target.value);
-     }
+    //  function houseHoldIncomeChangeHandler(event) {
+    //     setResetButtonDisabled(false);
+    //      setHouseHoldIncome(event.target.value);
+    //  }
 
-     function primaryLanguangeChangeHandler(event) {
-        setResetButtonDisabled(false);
-         setPrimaryLanguage(event.target.value);
-     }
+    //  function primaryLanguangeChangeHandler(event) {
+    //     setResetButtonDisabled(false);
+    //      setPrimaryLanguage(event.target.value);
+    //  }
 
      function employerChangeHandler(event) {
          setResetButtonDisabled(false);
@@ -863,38 +821,38 @@ const Supplemental = (props) => {
                                     <div className="col-3">
                                         <div className="form-group">
                                             <label htmlFor="txtHeightFeet"><strong>Height (Feet)</strong></label>
-                                            <input type="text" className="form-control" value={heightInFeet} onChange={heightInFeetChangeHandler} id="txtHeightFeet"></input>
+                                            <input type="text" className="form-control" defaultValue=""  id="txtHeightFeet"></input>
                                         </div>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtHeightInches"><strong>Height (Inches)</strong></label>
-                                        <input type="text" className="form-control" value={heightInInches} onChange={heightInInchesChangeHandler} id="txtHeightInches"></input>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtHeightInches"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtWeight"><strong>Weight (lbs.)</strong></label>
-                                        <input type="text" className="form-control" value={weight} onChange={weightChangeHandler} id="txtWeight"></input>
+                                        <input type="text" className="form-control" defaultValue="" id="txtWeight"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtShoeSize"><strong>Shoe size (inches)</strong></label>
-                                        <input type="text" className="form-control" value={shoeSize} onChange={shoeSizeChangeHandler} id="txtShoeSize"></input>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtShoeSize"></input>
                                     </div>
                                 </div>
                                 <div className="form-row">          
                                     <div className="col-2">
                                         <label htmlFor="txtHouseSize"><strong>Household Size</strong></label>
-                                        <input type="text" className="form-control" value={houseHoldSize} onChange={houseHoldSizeHandler} id="txtHouseSize"></input>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtHouseSize"></input>
                                     </div>
                                     <div className="col-2">
                                         <label htmlFor="txtHomePhone"><strong>Home Phone</strong></label>
-                                        <input type="text" className="form-control" value={homePhone} onChange={homePhoneChangeChandler} id="txtHomePhone"></input>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtHomePhone"></input>
                                     </div>
                                     <div className="col-2">
                                         <label htmlFor="txtHouseIncome"><strong>Household Income</strong></label>
-                                        <input type="text" className="form-control" value={houseHoldIncome } onChange={houseHoldIncomeChangeHandler} id="txtHouseIncome"></input>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtHouseIncome"></input>
                                     </div>
                                     <div className="col-2">
                                         <label htmlFor="txtLanguage"><strong>Primary Language</strong></label>
-                                        <input type="text" className="form-control" value={primaryLanguage} onChange={primaryLanguangeChangeHandler} id="txtLanguage"></input>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtLanguage"></input>
                                     </div>
                                     <div className="col-4">
                                         <label htmlFor="ddlEducationLevels"><strong>Highest Grade Completed</strong></label>
@@ -920,7 +878,17 @@ const Supplemental = (props) => {
                                 <div className="form-row">
                                     <div className="col-4">
                                         <label><strong> IEP</strong></label>
-                                        <RadioButton name={"IEP"} isChecked={isIepChecked} setCheckedValue={setCheckedValueHandler} />
+                                        <div>
+                                            <div className="form-check form-check-inline">
+                                                    <input className="form-check-input" type="radio" name="rdpIEP" id="rdpIEPYes"  />
+                                                    <label className="form-check-label">Yes</label>         
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input" type="radio" name="rdpIEP" id="rdpIEPNo"  />
+                                                <label className="form-check-label">No</label>
+                                            </div>
+                                        </div>                                
+                                        {/* <RadioButton name={"IEP"} isChecked={isIepChecked} setCheckedValue={setCheckedValueHandler} /> */}
                                     </div>
                                     <div className="col-4">
                                         <label><strong>Is Interpreter Needed</strong></label>
@@ -1052,6 +1020,7 @@ const Supplemental = (props) => {
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtIdExpirationDate"><strong>ID Expiration Date</strong></label>
+                                        <input type="date" defaultValue="" id="txtIDExpirationDate" className="form-control"></input>
                                         {/* <DatePicker
                                            selected={idExpirationDate}
                                            required={false}
