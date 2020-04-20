@@ -267,6 +267,11 @@ const Supplemental = (props) => {
         $("#txtNotes").val(clientNotes);
         $("#txtIDNumber").val(clientIDNumber);
         $("#txtScarsMarks").val(clientScars);
+        $("#txtEmployer").val(clientEmployer);
+        $("#txtSupervisor").val(clientSupervisor);
+        $("#txtJobTitle").val(clientJobTitle);
+        $("#txtHoursPerWeek").val(clientHoursPerWeek);
+        $("#txtEmployerAddress").val(clientEmployerAddress);
 
         setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
         setRadioButtonState("rdpInterpreterNeededYes", "rdpInterpreterNeededNo", clientInterpreterNeeded);
@@ -298,6 +303,17 @@ const Supplemental = (props) => {
         document.getElementById("btnDDLMaritalStatus").value = clientMaritalStatusID;
         document.getElementById("btnDDLMaritalStatus").innerHTML = clientMaritalStatusDescription;
 
+        document.getElementById("btnLivingSituation").value = clientLivingSituation;
+        document.getElementById("btnLivingSituation").innerHTML = clientLivingSituation;
+
+        document.getElementById("btnStudentStatus").value = clientStudentStatus;
+        document.getElementById("btnStudentStatus").innerHTML = clientStudentStatus;
+
+        document.getElementById("btnHighestEducationLevel").value = clientHighestEducation;
+        document.getElementById("btnHighestEducationLevel").innerHTML = clientHighestEducation;
+
+        document.getElementById("btnState").value = clientEmployerState;
+        document.getElementById("btnState").innerHTML = clientEmployerState;
         
         let idIssueDateObj = new Date(clientIDIssueDate);
         let convertedIssueDate = moment(idIssueDateObj).format('YYYY-MM-DD');     
@@ -339,23 +355,6 @@ const Supplemental = (props) => {
         return utcDate;
     }
 
-    function handleMaritalStatusChange(maritalStatus) {
-        setResetButtonDisabled(false);
-        setMaritalStatusID(maritalStatus);
-    }
-
-    function handleMaritalStatusDescriptionChange(maritalStatusDescription) {
-        setMaritalStatusDescription(maritalStatusDescription);
-    }
-
-    // function handleJobStatusChange(jobStatus) {
-    //     setResetButtonDisabled(false);
-    //     setJobStatusID(jobStatus);
-    // }
-
-    // function handleJobStatusDescriptionChange(jobStatusDescription) {
-    //     setJobStatusDescription(jobStatusDescription);
-    // }
 
 
     function handleEducationLevelChange(event){        
@@ -406,10 +405,6 @@ const Supplemental = (props) => {
         document.getElementById("btnDDLMaritalStatus").innerHTML = selectedMaritalStatus[0].Description;
     }
 
-    // function setIsDisalbedHandler(disabled) {
-    //     setResetButtonDisabled(false);
-    //     setIsDisabled(disabled);
-    // }
 
     function careerStationSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -421,86 +416,47 @@ const Supplemental = (props) => {
 
 
     function idTypeSelectHandler(event) {
-        //setResetButtonDisabled(false);
+      
         let selectedValue = event.currentTarget.getAttribute('value');
-        //console.log(selectedValue);
-        //setIDType(selectedValue);
-
+      
         document.getElementById("btnIDType").value = selectedValue;
         document.getElementById("btnIDType").innerHTML = selectedValue;
     }
 
     function livingSituationSelectHandler(event) {
-        setResetButtonDisabled(false);
+        
         let selectedValue = event.currentTarget.getAttribute('value');
-        console.log(selectedValue);
-        setLivingSituation(selectedValue);
+        
+        document.getElementById("btnLivingSituation").value = selectedValue;
+        document.getElementById("btnLivingSituation").innerHTML = selectedValue;
     }
 
     function highestEdLevelSelectHandler(event) {
-        setResetButtonDisabled(false);
+    
         let selectedValue = event.currentTarget.getAttribute('value');
-        console.log(selectedValue);
-        setEducationLevel(selectedValue);
+
+        document.getElementById("btnHighestEducationLevel").value = selectedValue;
+        document.getElementById("btnHighestEducationLevel").innerHTML = selectedValue;
     }
 
     function stateSelectHandler(event) {
-        setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
-        console.log(selectedValue);
-        setState(selectedValue);
+        document.getElementById("btnState").value = selectedValue;
+        document.getElementById("btnState").innerHTML = selectedValue;
     }
 
     function studentStatusSelectHandler(event) {
-        setResetButtonDisabled(false);
         let selectedValue = event.currentTarget.getAttribute('value');
-        console.log(selectedValue);
-        setStudentStatus(selectedValue);
+        document.getElementById("btnStudentStatus").value = selectedValue;
+        document.getElementById("btnStudentStatus").innerHTML = selectedValue;
     }
 
-   
-
-    function setScarsHandler(event) {
-        setResetButtonDisabled(false);
-        setScarsMarksTattoos(event.target.value);
-    }
-
-  
-     function employerChangeHandler(event) {
-         setResetButtonDisabled(false);
-         setEmployer(event.target.value);
-     }
-
-     function supervisorChangeHandler(event) {
-         setResetButtonDisabled(false);
-         setSupervisor(event.target.value);
-     }
-
-     function jobTitleChangeHandler(event) {
-         setResetButtonDisabled(false);
-         setJobTitle(event.target.value);
-     }
-
-     function hoursPerWeekChangeHandler(event) {
-         setResetButtonDisabled(false);
-         setAvgHoursPerWeek(event.target.value);
-     }
-
-     function employerAddressChangeHandler(event) {
-         setResetButtonDisabled(false);
-         setEmployerAddress(event.target.value);
-     }
 
      function updateClickHandler() {
         //let personID = sessionStorage.getItem('PersonID');
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental`;
         let sessionStorageData = getSessionData();
-
-        // let issueDate = $("#txtIDIssueDate").val();
-        // console.log('the issue date');
-        // let converted = new Date(issueDate);
-        // console.log(converted);
 
         //the CWB fields
         let personSupplemental = 
@@ -536,15 +492,15 @@ const Supplemental = (props) => {
             MaritalStatusID: document.getElementById("btnDDLMaritalStatus").value,
             ScarMarks: $("#txtScarsMarks").val(),
             IsDisable: getRadioButtonState("rdpIsDisabledYes"),
-            // LivingSituation: livingSituation,
-            // StudentStatus: studentStatus,
-            // HighestEducation: educationLevel,
-            // Employer: employer,
-            // Supervisor: supervisor,
-            // JobTitle: jobTitle,
-            // HoursPerWeek: avgHoursPerWeek,
-            // EmployerAddress: employerAddress,
-            // EmployerAddressState: state,
+            LivingSituation: document.getElementById("btnLivingSituation").value,
+            StudentStatus: document.getElementById("btnStudentStatus").value,
+            HighestEducation: document.getElementById("btnHighestEducationLevel").value,
+            Employer: $("#txtEmployer").val(),
+            Supervisor: $("#txtSupervisor").val(),
+            JobTitle: $("#txtJobTitle").val(),
+            HoursPerWeek: $("#txtHoursPerWeek").val(),
+            EmployerAddress: $("#txtEmployerAddress").val(), 
+            EmployerAddressState: document.getElementById("btnState").value,
             Active: true,
             CreatedDate: clientCreatedDate,
             CreatedBy: clientCreatedBy,
@@ -552,54 +508,7 @@ const Supplemental = (props) => {
             UpdatedBy: sessionStorageData.CurrentUser
         }
 
-        // //the CWB fields
-        // let personSupplemental = {
-        //     ID: personSupplementalID,
-        //     PersonID: personID,
-        //     HeightFt: heightInFeet,
-        //     HeightIn: heightInInches,
-        //     Weight: weight,
-        //     HouseholdSize: houseHoldSize,
-        //     HomePhone: homePhone,
-        //     HouseholdIncome: houseHoldIncome,
-        //     Language: primaryLanguage,
-        //     EducationLevelID: educationLevelID,
-        //     HasExceptionEduc: isIepChecked,
-        //     HasInterpreter: isInterpreterNeededChecked,
-        //     HasMedicaid: isMedicaid,
-        //     HasInsurance: isInsurance,
-        //     HasDriversLicense: isDriversLicense,
-        //     HasConvictedOffence: isConvictedOffense,
-        //     HasConvictedMisdemeanor: isConvictedMisdemeanor,
-        //     HasConvictedFelony: isConvictedFelony,
-        //     HasVehicle: isWorkingVehicle,
-        //     HasConvictedCrimeIntegrity: isConvictedFelonyCrime,
-        //     FundingSourceID: fundingSourceID,
-        //     CareerSt: careerStation,
-        //     Comments: notes,
-        //     IDType: idType,
-        //     IDNumber: idNumber,
-        //     IssueDate: idIssueDate,
-        //     ExpirationDate: idExpirationDate,
-        //     JobStatusID: jobStatusID,
-        //     MaritalStatusID: maritalStatusID,
-        //     ScarMarks: scarsMarksTattos,
-        //     IsDisable: isDisabled,
-        //     LivingSituation: livingSituation,
-        //     StudentStatus: studentStatus,
-        //     HighestEducation: educationLevel,
-        //     Employer: employer,
-        //     Supervisor: supervisor,
-        //     JobTitle: jobTitle,
-        //     HoursPerWeek: avgHoursPerWeek,
-        //     EmployerAddress: employerAddress,
-        //     EmployerAddressState: state,
-        //     Active: true,
-        //     CreatedDate: createdDate,
-        //     CreatedBy: createdBy,
-        //     UpdatedDate: new Date(),
-        //     UpdatedBy: sessionStorageData.CurrentUser
-        // }
+    
 
         fetch(fullPersonSupplementalAddress, {
             method: 'PUT',
@@ -979,8 +888,8 @@ const Supplemental = (props) => {
                                     <div className="col-4">
                                         <label htmlFor="ddlIDType"><strong>Living Situation</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                 { livingSituation }
+                                            <button type="button" id="btnLivingSituation" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
+                                                 
                                             </button>
                                             <div className="dropdown-menu">
                                                 <a key="Please Select" value="Please Select" onClick={livingSituationSelectHandler} className="dropdown-item">Please Select</a>
@@ -1001,8 +910,8 @@ const Supplemental = (props) => {
                                     <div className="col-4">
                                         <label htmlFor="ddlStudentStatus"><strong>Student Status</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                { studentStatus }
+                                            <button type="button" id="btnStudentStatus" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
+                                                
                                             </button>
                                             <div className="dropdown-menu">
                                                 <a key="Please Select" value="Please Select" onClick={studentStatusSelectHandler} className="dropdown-item">Please Select</a>
@@ -1018,8 +927,8 @@ const Supplemental = (props) => {
                                     <div className="col-4">
                                         <label htmlFor="ddlHighestEdLevel"><strong>Highest Education Level</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                { educationLevel }
+                                            <button type="button" id="btnHighestEducationLevel" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
+                                                
                                             </button>
                                             <div className="dropdown-menu">
                                                 <a key="Please Select" value="Please Select" onClick={highestEdLevelSelectHandler} className="dropdown-item">Please Select</a>
@@ -1042,26 +951,26 @@ const Supplemental = (props) => {
                                 <div className="form-row">
                                     <div className="col-3">
                                         <label htmlFor="txtEmployer"><strong>Employer</strong></label>
-                                        <input type="text" value={employer} onChange={employerChangeHandler} className="form-control"></input>
+                                        <input type="text" id="txtEmployer" defaultValue="" className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtSupervisor"><strong>Supervisor</strong></label>
-                                        <input type="text" value={supervisor} onChange={supervisorChangeHandler} className="form-control"></input>
+                                        <input type="text" id="txtSupervisor" defaultValue="" className="form-control"></input>
                                     </div>
                                     <div className="col-3">
                                         <label htmlFor="txtJobTitle"><strong>Job Title</strong></label>
-                                        <input type="text" value={jobTitle} onChange={jobTitleChangeHandler} className="form-control"></input>
+                                        <input type="text" id="txtJobTitle" defaultValue="" className="form-control"></input>
                                     </div>
                                     <div className="col-3">
-                                        <label htmlFor="txtJobTitle"><strong>Average Hours Per Week</strong></label>
-                                        <input type="text" value={avgHoursPerWeek} onChange={hoursPerWeekChangeHandler} className="form-control"></input>
+                                        <label htmlFor="txtHoursPerWeek"><strong>Average Hours Per Week</strong></label>
+                                        <input type="text" id="txtHoursPerWeek" defaultValue="" className="form-control"></input>
                                     </div>
                                 </div>
                                 <br></br>
                                 <div className="form-row">
                                     <div className="col-8">
                                         <label htmlFor="txtEmployerAddress"><strong>Address</strong></label>
-                                        <input type="text" value={employerAddress} onChange={employerAddressChangeHandler} className="form-control"></input>
+                                        <input type="text" id="txtEmployerAddress" defaultValue="" className="form-control"></input>
                                     </div>
                                 </div>
                                 <br></br>
@@ -1069,8 +978,8 @@ const Supplemental = (props) => {
                                     <div className="col-4">
                                         <label htmlFor="ddlState"><strong>Select State</strong></label>
                                         <div className="dropdown">
-                                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                { state }
+                                            <button type="button" id="btnState" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
+                                                
                                             </button>
                                             <div className="dropdown-menu">
                                                 <a key="Please Select" value="Please Select" onClick={stateSelectHandler} className="dropdown-item">Please Select</a>
