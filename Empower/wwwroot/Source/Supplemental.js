@@ -87,21 +87,21 @@ const Supplemental = (props) => {
         clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : false;
         clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : 'Please Select';
         clientNotes = (personSupplemental.Comments !== null) ? personSupplemental.Comments : '';
-        clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
+        clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : 'Please Select';
         clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
         clientIDIssueDate = (personSupplemental.IssueDate !== null) ? personSupplemental.IssueDate : '';        
         clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ?  personSupplemental.ExpirationDate : ''; 
         clientScars = (personSupplemental.ScarMarks !== null ) ? personSupplemental.ScarMarks : '';
         clientDisabled = (personSupplemental.IsDisable !== null) ? personSupplemental.IsDisable : '';
-        clientLivingSituation = (personSupplemental.LivingSituation !== null) ? personSupplemental.LivingSituation : '';
-        clientStudentStatus = (personSupplemental.StudentStatus !== null) ? personSupplemental.StudentStatus : '';
-        clientHighestEducation = (personSupplemental.HighestEducation !== null) ? personSupplemental.HighestEducation : '';
+        clientLivingSituation = (personSupplemental.LivingSituation !== null) ? personSupplemental.LivingSituation : 'Please Select';
+        clientStudentStatus = (personSupplemental.StudentStatus !== null) ? personSupplemental.StudentStatus : 'Please Select';
+        clientHighestEducation = (personSupplemental.HighestEducation !== null) ? personSupplemental.HighestEducation : 'Please Select';
         clientEmployer = (personSupplemental.Employer !== null) ? personSupplemental.Employer : '';
         clientSupervisor = (personSupplemental.Supervisor !== null ) ? personSupplemental.Supervisor : '';
         clientJobTitle = (personSupplemental.JobTitle !== null ) ? personSupplemental.JobTitle : '';
         clientHoursPerWeek = (personSupplemental.HoursPerWeek !== null ) ? personSupplemental.HoursPerWeek : '';
         clientEmployerAddress = (personSupplemental.EmployerAddress !== null ) ? personSupplemental.EmployerAddress : '';
-        clientEmployerState = (personSupplemental.EmployerAddressState !== null) ? personSupplemental.EmployerAddressState : '';
+        clientEmployerState = (personSupplemental.EmployerAddressState !== null) ? personSupplemental.EmployerAddressState : 'Please Select';
 
         //the dropdowns from database
         clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
@@ -235,14 +235,6 @@ const Supplemental = (props) => {
 
         });
         
-
-    function convertDateToUtcFormat(date) {
-        let javascriptDateObject = new Date(date);
-        let formattedDate = javascriptDateObject.toUTCString();
-        let utcDate = new Date(formattedDate);
-        return utcDate;
-    }
-
 
     function handleEducationLevelChange(event){        
         let selectedValue = event.currentTarget.getAttribute('value');
