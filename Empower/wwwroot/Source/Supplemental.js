@@ -90,7 +90,7 @@ const Supplemental = (props) => {
         clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
         clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
         clientIDIssueDate = (personSupplemental.IssueDate !== null) ? personSupplemental.IssueDate : '';        
-        clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ?  personSupplemental.ExpirationDate : ''; //convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
+        clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ?  personSupplemental.ExpirationDate : ''; 
         clientScars = (personSupplemental.ScarMarks !== null ) ? personSupplemental.ScarMarks : '';
         clientDisabled = (personSupplemental.IsDisable !== null) ? personSupplemental.IsDisable : '';
         clientLivingSituation = (personSupplemental.LivingSituation !== null) ? personSupplemental.LivingSituation : '';
@@ -124,15 +124,12 @@ const Supplemental = (props) => {
     //the dropdowns pulling values from the database
     const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
     const [fundingSourceValues, setFundingSourceValues] = useState(fundingSources);
-    const [jobStatusID, setJobStatusID] = useState(jobStatusID);
     const [jobStatusValues, setJobStatusValues] = useState(jobStatuses);
     const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
+
+    const [isRefreshed, setIsRefreshed] = useState(false);
     
     
-    //for the reset button, it will enable if anything is changed
-    const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
-
-
     function setRadioButtonState(rdYes, rdNo, clientValue) {
         if (clientValue === null || clientValue === '') {
             document.getElementById(rdNo).checked = true;
@@ -415,7 +412,7 @@ const Supplemental = (props) => {
      }
 
      function resetClickHandler() {
-
+        setIsRefreshed(true);
      }
 
    
@@ -939,7 +936,7 @@ const Supplemental = (props) => {
                         <input type="submit" onClick={updateClickHandler}  className="btn btn-primary mb-2" value="Update" />     
                     </div>
                     <div className="col-auto">
-                        <button type="button" onClick={resetClickHandler} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
+                        <button type="button" onClick={resetClickHandler}  className="btn btn-primary mb-2">Reset</button>
                     </div>
                 </div>
 
