@@ -5,7 +5,7 @@ import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import { useCacheService } from './useCacheService';
-import Supplemental from './Supplemental';
+import Supplemental from './SupplementalCWB';
 import {useStore} from './StateStores/store';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

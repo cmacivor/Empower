@@ -3,7 +3,7 @@ import { getSessionData } from './commonAdmin';
 import $ from 'jquery';
 import moment from 'moment';
 
-const Supplemental = (props) => {
+const SupplementalCWB = (props) => {
 
     let clientHeightInFeet = '';
     let clientHeighInInches = '';
@@ -951,4 +951,4 @@ const Supplemental = (props) => {
             </div>;
 };
 
-export default Supplemental;
+export default SupplementalCWB;
