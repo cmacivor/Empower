@@ -8,11 +8,13 @@ const SupplementalAdult = (props) => {
     let clientHeightInFeet = '';
     let clientHeighInInches = '';
     let clientWeight = '';
-    let clientHouseHoldSize = '';
+    //let clientHouseHoldSize = '';
+    let clientHairColor = '';
+    let clientEyeColor = '';
     let clientHomePhone = '';
     let clientIncome = '';
     let clientLanguage = '';
-    let clientIEP = false;
+    //let clientIEP = false;
     let clientInterpreterNeeded = false;
     let clientMedicaid = false;
     let clientInsurance = false;
@@ -66,6 +68,8 @@ const SupplementalAdult = (props) => {
     let fundingSources = props.fundingSourceValues;
     let jobStatuses = props.jobStatusValues;
 
+
+
     if (props.clientProfile !== undefined && props.clientProfile.PersonSupplemental !== null) {
 
         let personSupplemental = props.clientProfile.PersonSupplemental
@@ -73,21 +77,24 @@ const SupplementalAdult = (props) => {
         clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
         clientHeighInInches = (personSupplemental.HeightIn !== null) ? personSupplemental.HeightIn : '';
         clientWeight = (personSupplemental.Weight !== null) ? personSupplemental.Weight : '';
-        clientHouseHoldSize = (personSupplemental.HouseholdSize !== null) ? personSupplemental.HouseholdSize : '';
+        clientEyeColor = (personSupplemental.EyeColor !== null) ? personSupplemental.EyeColor : '';
+        clientHairColor = (personSupplemental.HairColor !== null) ? personSupplemental.HairColor : '';
+        //clientHouseHoldSize = (personSupplemental.HouseholdSize !== null) ? personSupplemental.HouseholdSize : '';
+        //clientEyeColor = ( )
         clientHomePhone = (personSupplemental.HomePhone !== null) ? personSupplemental.HomePhone : '';
         clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
         clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
-        clientIEP = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : false;
+        //clientIEP = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : false;
         clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : false;
         clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : false;
         clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : false;
         clientDriversLicense = (personSupplemental.HasDriversLicense !== null) ? personSupplemental.HasDriversLicense : false;
-        clientConvictedOffense = (personSupplemental.HasConvictedOffence !== null ) ? personSupplemental.HasConvictedOffence : false;
-        clientConvictedMisdemeanor = (personSupplemental.HasConvictedMisdemeanor !== null ) ? personSupplemental.HasConvictedMisdemeanor : false;
-        clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : false; 
-        clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : false;
-        clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : false;
-        clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : 'Please Select';
+        //clientConvictedOffense = (personSupplemental.HasConvictedOffence !== null ) ? personSupplemental.HasConvictedOffence : false;
+        //clientConvictedMisdemeanor = (personSupplemental.HasConvictedMisdemeanor !== null ) ? personSupplemental.HasConvictedMisdemeanor : false;
+        //clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : false; 
+        //clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : false;
+        //clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : false;
+        //clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : 'Please Select';
         clientNotes = (personSupplemental.Comments !== null) ? personSupplemental.Comments : '';
         clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : 'Please Select';
         clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
@@ -126,8 +133,8 @@ const SupplementalAdult = (props) => {
     }
 
     //the dropdowns pulling values from the database
-    const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
-    const [fundingSourceValues, setFundingSourceValues] = useState(fundingSources);
+    // const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
+    // const [fundingSourceValues, setFundingSourceValues] = useState(fundingSources);
     const [jobStatusValues, setJobStatusValues] = useState(jobStatuses);
     const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
 
@@ -154,19 +161,30 @@ const SupplementalAdult = (props) => {
         }
         return false;
     }
+
+    function getElementValue(element) {
+        let value = document.getElementById(element).value;
+
+        if (value === "" || value === "Please Select") {
+            return null;
+        }
+        return value;
+    }
     
     useEffect(() => {
 
         $("#txtHeightFeet").val(clientHeightInFeet);
         $("#txtHeightInches").val(clientHeighInInches);
         $("#txtWeight").val(clientWeight);
-        $("#txtHouseSize").val(clientHouseHoldSize);
+        $("#txtEyeColor").val(clientEyeColor);
+        $("#txtHairColor").val(clientHairColor);
+        //$("#txtHouseSize").val(clientHouseHoldSize);g
         $("#txtHomePhone").val(clientHomePhone);
-        $("#txtHouseIncome").val(clientIncome);
+        //$("#txtHouseIncome").val(clientIncome);
         $("#txtLanguage").val(clientLanguage);
         $("#txtNotes").val(clientNotes);
-        $("#txtIDNumber").val(clientIDNumber);
-        $("#txtScarsMarks").val(clientScars);
+        //$("#txtIDNumber").val(clientIDNumber);
+        //$("#txtScarsMarks").val(clientScars);
         $("#txtEmployer").val(clientEmployer);
         $("#txtSupervisor").val(clientSupervisor);
         $("#txtJobTitle").val(clientJobTitle);
@@ -175,26 +193,26 @@ const SupplementalAdult = (props) => {
         $("#txtEmployerCity").val(clientEmployerAddressCity);
         $("#txtEmployerZipCode").val(clientEmployerAddressZip);
 
-        setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
+        //setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
         setRadioButtonState("rdpInterpreterNeededYes", "rdpInterpreterNeededNo", clientInterpreterNeeded);
         setRadioButtonState("rdpMedicaidNeededYes", "rdpMedicaidNeededNo", clientMedicaid);
         setRadioButtonState("rdpHasInsuranceYes", "rdpHasInsuranceNo", clientInsurance);
         setRadioButtonState("rdpHasDriversLicenseYes", "rdpHasDriversLicenseNo", clientDriversLicense);
-        setRadioButtonState("rdpIsConvictedOffenseYes", "rdpIsConvictedOffenseNo", clientConvictedOffense);
-        setRadioButtonState("rdpIsConvictedMisdemeanorYes", "rdpIsConvictedMisdemeanorNo", clientConvictedMisdemeanor);
-        setRadioButtonState("rdpIsConvictedFelonyYes", "rdpIsConvictedFelonyNo", clientConvictedFelony);
-        setRadioButtonState("rdpIsWorkingVehicleYes", "rdpIsWorkingVehicleNo", clientWorkingVehicle);
-        setRadioButtonState("rdpIsConvictedFelonyCrimeYes", "rdpIsConvictedFelonyCrimeNo", clientConvictedFelonyCrime);
-        setRadioButtonState("rdpIsDisabledYes", "rdpIsDisabledNo", clientDisabled);
+        // setRadioButtonState("rdpIsConvictedOffenseYes", "rdpIsConvictedOffenseNo", clientConvictedOffense);
+        // setRadioButtonState("rdpIsConvictedMisdemeanorYes", "rdpIsConvictedMisdemeanorNo", clientConvictedMisdemeanor);
+        // setRadioButtonState("rdpIsConvictedFelonyYes", "rdpIsConvictedFelonyNo", clientConvictedFelony);
+        // setRadioButtonState("rdpIsWorkingVehicleYes", "rdpIsWorkingVehicleNo", clientWorkingVehicle);
+        // setRadioButtonState("rdpIsConvictedFelonyCrimeYes", "rdpIsConvictedFelonyCrimeNo", clientConvictedFelonyCrime);
+        // setRadioButtonState("rdpIsDisabledYes", "rdpIsDisabledNo", clientDisabled);
 
-        document.getElementById("btnDDLHighestGradeCompleted").innerHTML = clientEducationLevelDescription;
-        document.getElementById("btnDDLHighestGradeCompleted").value = clientEducationLevelID;
+        // document.getElementById("btnDDLHighestGradeCompleted").innerHTML = clientEducationLevelDescription;
+        // document.getElementById("btnDDLHighestGradeCompleted").value = clientEducationLevelID;
 
-        document.getElementById("btnDDLFundingSource").innerHTML = clientFundingSourceDescription;
-        document.getElementById("btnDDLFundingSource").value = clientFundingSourceID;
+        // document.getElementById("btnDDLFundingSource").innerHTML = clientFundingSourceDescription;
+        // document.getElementById("btnDDLFundingSource").value = clientFundingSourceID;
 
-        document.getElementById("btnDDLCareerStation").value = clientCareerStation;
-        document.getElementById("btnDDLCareerStation").innerHTML = clientCareerStation;
+        // document.getElementById("btnDDLCareerStation").value = clientCareerStation;
+        // document.getElementById("btnDDLCareerStation").innerHTML = clientCareerStation;
 
         document.getElementById("btnIDType").value = clientIDType;
         document.getElementById("btnIDType").innerHTML = clientIDType;
@@ -228,10 +246,10 @@ const SupplementalAdult = (props) => {
         
 
             //Education Level
-            setEducationLevelValues(educationLevels);
+            //setEducationLevelValues(educationLevels);
 
             //Funding Source
-            setFundingSourceValues(fundingSources);
+            //setFundingSourceValues(fundingSources);
 
             //Job Status
             setJobStatusValues(jobStatuses);
@@ -242,29 +260,29 @@ const SupplementalAdult = (props) => {
         });
         
 
-    function handleEducationLevelChange(event){        
-        let selectedValue = event.currentTarget.getAttribute('value');
+    // function handleEducationLevelChange(event){        
+    //     let selectedValue = event.currentTarget.getAttribute('value');
         
-        document.getElementById("btnDDLHighestGradeCompleted").value = selectedValue;
+    //     document.getElementById("btnDDLHighestGradeCompleted").value = selectedValue;
         
-        let selectedEducationLevel = educationLevels.filter(function (educationLevel) {
-            return educationLevel.ID === parseInt(selectedValue)
-        });
+    //     let selectedEducationLevel = educationLevels.filter(function (educationLevel) {
+    //         return educationLevel.ID === parseInt(selectedValue)
+    //     });
 
-        document.getElementById("btnDDLHighestGradeCompleted").innerHTML = selectedEducationLevel[0].Description;
-    }
+    //     document.getElementById("btnDDLHighestGradeCompleted").innerHTML = selectedEducationLevel[0].Description;
+    // }
 
-    function handleFundingSourceChange(event) {
-        let selectedValue = event.currentTarget.getAttribute('value');
+    // function handleFundingSourceChange(event) {
+    //     let selectedValue = event.currentTarget.getAttribute('value');
 
-        document.getElementById("btnDDLFundingSource").value = selectedValue;
+    //     document.getElementById("btnDDLFundingSource").value = selectedValue;
 
-        let selectedFundingSource =  fundingSources.filter(function(fundingSource) {
-            return fundingSource.ID === parseInt(selectedValue);
-        });
+    //     let selectedFundingSource =  fundingSources.filter(function(fundingSource) {
+    //         return fundingSource.ID === parseInt(selectedValue);
+    //     });
 
-        document.getElementById("btnDDLFundingSource").innerHTML = selectedFundingSource[0].Description;
-    }
+    //     document.getElementById("btnDDLFundingSource").innerHTML = selectedFundingSource[0].Description;
+    // }
 
     function handleJobStatusChange(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -289,16 +307,6 @@ const SupplementalAdult = (props) => {
 
         document.getElementById("btnDDLMaritalStatus").innerHTML = selectedMaritalStatus[0].Description;
     }
-
-
-    function careerStationSelectHandler(event) {
-        let selectedValue = event.currentTarget.getAttribute('value');
-
-        document.getElementById("btnDDLCareerStation").value = selectedValue;
-
-        document.getElementById("btnDDLCareerStation").innerHTML = selectedValue;
-    }
-
 
     function idTypeSelectHandler(event) {
       
@@ -338,56 +346,60 @@ const SupplementalAdult = (props) => {
 
 
      function updateClickHandler() {
-        //let personID = sessionStorage.getItem('PersonID');
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental`;
         let sessionStorageData = getSessionData();
+
+        let issueDate;
+        let issueDateTextBoxValue = getElementValue("txtIDIssueDate");
+        if (issueDateTextBoxValue !== null) {
+            issueDate = new Date(issueDateTextBoxValue);
+        } else {
+            issueDate = null;
+        }
 
         //the CWB fields
         let personSupplemental = 
         {
             ID: clientSupplementalID,
             PersonID: props.clientProfilePersonID,
-            HeightFt:  $("#txtHeightFeet").val(),
-            HeightIn: $("#txtHeightInches").val(), 
-            Weight: $("#txtWeight").val(),
-            HouseholdSize: $("#txtHouseSize").val(),
-            HomePhone: $("#txtHomePhone").val(),
-            HouseholdIncome: $("#txtHouseIncome").val(),
-            Language: $("#txtLanguage").val(),
-            EducationLevelID: document.getElementById("btnDDLHighestGradeCompleted").value,
-            HasExceptionEduc: getRadioButtonState("rdpIEPYes"),
+            //HeightFt:   ($("#txtHeightFeet").val() !== "") ? $("#txtHeightFeet").val() : null,
+            HeightFt: getElementValue("txtHeightFeet"),
+            HeightIn: getElementValue("txtHeightInches"), //$("#txtHeightInches").val(), 
+            Weight: getElementValue("txtWeight"), //$("#txtWeight").val(),
+            HairColor: getElementValue("txtHairColor"), //$("#txtHairColor").val(),
+            EyeColor: getElementValue("txtEyeColor"), //$("#txtEyeColor").val(),
+            HomePhone: getElementValue("txtHomePhone"), //$("#txtHomePhone").val(),
+            // //HouseholdIncome: $("#txtPlaceOfBirth").val(), //not in the database?
+            Language: getElementValue("txtLanguage"),  //$("#txtLanguage").val(),
+
             HasInterpreter: getRadioButtonState("rdpInterpreterNeededYes"),
             HasMedicaid: getRadioButtonState("rdpMedicaidNeededYes"),
             HasInsurance: getRadioButtonState("rdpHasInsuranceYes"),
             HasDriversLicense: getRadioButtonState("rdpHasDriversLicenseYes"),
-            HasConvictedOffence: getRadioButtonState("rdpIsConvictedOffenseYes"),
-            HasConvictedMisdemeanor: getRadioButtonState("rdpIsConvictedMisdemeanorYes"),
-            HasConvictedFelony: getRadioButtonState("rdpIsConvictedFelonyYes"),
-            HasVehicle: getRadioButtonState("rdpIsWorkingVehicleYes"),
-            HasConvictedCrimeIntegrity: getRadioButtonState("rdpIsConvictedFelonyCrimeYes"),
-            FundingSourceID: document.getElementById("btnDDLFundingSource").value,
-            CareerSt: document.getElementById("btnDDLCareerStation").value,
-            Comments: $("#txtNotes").val(),
-            IDType: document.getElementById("btnIDType").value,
-            IDNumber: $("#txtIDNumber").val(),
-            IssueDate: new Date($("#txtIDIssueDate").val()),
-            ExpirationDate: new Date($("#txtIDExpirationDate").val()),
-            JobStatusID: document.getElementById("btnDDLJobStatus").value,
-            MaritalStatusID: document.getElementById("btnDDLMaritalStatus").value,
-            ScarMarks: $("#txtScarsMarks").val(),
+            OtherAgencyContacts: getElementValue("txtOtherAgency"), //$("#txtOtherAgency").val(),
+            Comments: getElementValue("txtNotes"), //$("#txtNotes").val(),
+
+            // //Employer Details
+            IDType: getElementValue("btnIDType"),
+            IDNumber: getElementValue("txtIDNumber"), //$("#txtIDNumber").val(),
+            IssueDate: issueDate,  //new Date(getElementValue("txtIDIssueDate")),
+            ExpirationDate: new Date(getElementValue("txtIDExpirationDate")),
+            JobStatusID: getElementValue("btnDDLJobStatus"), //document.getElementById("btnDDLJobStatus").value,
+            MaritalStatusID: getElementValue("btnDDLMaritalStatus"), //document.getElementById("btnDDLMaritalStatus").value,
+            ScarMarks: getElementValue("txtScarsMarks"), //$("#txtScarsMarks").val(),
             IsDisable: getRadioButtonState("rdpIsDisabledYes"),
-            LivingSituation: document.getElementById("btnLivingSituation").value,
-            StudentStatus: document.getElementById("btnStudentStatus").value,
-            HighestEducation: document.getElementById("btnHighestEducationLevel").value,
-            Employer: $("#txtEmployer").val(),
-            Supervisor: $("#txtSupervisor").val(),
-            JobTitle: $("#txtJobTitle").val(),
-            HoursPerWeek: $("#txtHoursPerWeek").val(),
-            EmployerAddress: $("#txtEmployerAddress").val(), 
-            EmployerAddressState: document.getElementById("btnState").value,
-            EmployerAddressCity: $("#txtEmployerCity").val(),
-            EmployerAddressZip: $("#txtEmployerZipCode").val(),
+            LivingSituation: getElementValue("btnLivingSituation"), //document.getElementById("btnLivingSituation").value,
+            StudentStatus: getElementValue("btnStudentStatus"), //document.getElementById("btnStudentStatus").value,
+            HighestEducation: getElementValue("btnHighestEducationLevel"), //document.getElementById("btnHighestEducationLevel").value,
+            Employer: getElementValue("txtEmployer"), //$("#txtEmployer").val(),
+            Supervisor: getElementValue("txtSupervisor"), //$("#txtSupervisor").val(),
+            JobTitle: getElementValue("txtJobTitle"), //$("#txtJobTitle").val(),
+            HoursPerWeek: getElementValue("txtHoursPerWeek"), //$("#txtHoursPerWeek").val(),
+            EmployerAddress: getElementValue("txtEmployerAddress"), //$("#txtEmployerAddress").val(), 
+            EmployerAddressState: getElementValue("btnState"), //document.getElementById("btnState").value,
+            EmployerAddressCity: getElementValue("txtEmployerCity"), //$("#txtEmployerCity").val(),
+            EmployerAddressZip: getElementValue("txtEmployerZipCode"), //$("#txtEmployerZipCode").val(),
             Active: true,
             CreatedDate: clientCreatedDate,
             CreatedBy: clientCreatedBy,
@@ -418,21 +430,21 @@ const SupplementalAdult = (props) => {
    
 
      //set up the education level dropdown
-     let educationLevelValueOptions = [];
-     if (educationLevelValues.length > 0) {
+    //  let educationLevelValueOptions = [];
+    //  if (educationLevelValues.length > 0) {
  
-        educationLevelValueOptions = educationLevelValues.map((value) =>
-             <a key={value.ID} value={value.ID} description={value.Description} onClick={handleEducationLevelChange} className="dropdown-item">{value.Description}</a>
-         );
-     }
+    //     educationLevelValueOptions = educationLevelValues.map((value) =>
+    //          <a key={value.ID} value={value.ID} description={value.Description} onClick={handleEducationLevelChange} className="dropdown-item">{value.Description}</a>
+    //      );
+    //  }
 
      //funding sources
-     let fundingSourceValueOptions = [];
-     if (fundingSourceValues.length > 0) {
-        fundingSourceValueOptions = fundingSourceValues.map((value) =>
-            <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleFundingSourceChange} className="dropdown-item">{value.Description}</a>
-          );
-     }
+    //  let fundingSourceValueOptions = [];
+    //  if (fundingSourceValues.length > 0) {
+    //     fundingSourceValueOptions = fundingSourceValues.map((value) =>
+    //         <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleFundingSourceChange} className="dropdown-item">{value.Description}</a>
+    //       );
+    //  }
 
      //job statuses
      let jobStatusValueOptions = [];
@@ -479,55 +491,31 @@ const SupplementalAdult = (props) => {
                                         <input type="text" className="form-control" defaultValue="" id="txtWeight"></input>
                                     </div>
                                     <div className="col-3">
-                                        <label htmlFor="txtShoeSize"><strong>Shoe size (inches)</strong></label>
-                                        <input type="text" className="form-control" defaultValue=""  id="txtShoeSize"></input>
+                                        <label htmlFor="txtHairColor"><strong>Hair Color</strong></label>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtHairColor"></input>
                                     </div>
                                 </div>
                                 <div className="form-row">          
-                                    <div className="col-2">
-                                        <label htmlFor="txtHouseSize"><strong>Household Size</strong></label>
-                                        <input type="text" className="form-control" defaultValue=""  id="txtHouseSize"></input>
+                                    <div className="col-3">
+                                        <label htmlFor="txtEyeColor"><strong>Eye Color</strong></label>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtEyeColor"></input>
                                     </div>
-                                    <div className="col-2">
+                                    <div className="col-3">
                                         <label htmlFor="txtHomePhone"><strong>Home Phone</strong></label>
                                         <input type="text" className="form-control" defaultValue=""  id="txtHomePhone"></input>
                                     </div>
-                                    <div className="col-2">
-                                        <label htmlFor="txtHouseIncome"><strong>Household Income</strong></label>
-                                        <input type="text" className="form-control" defaultValue=""  id="txtHouseIncome"></input>
+                                    <div className="col-3">
+                                        <label htmlFor="txtPlaceOfBirth"><strong>Place of Birth</strong></label>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtPlaceOfBirth"></input>
                                     </div>
-                                    <div className="col-2">
+                                    <div className="col-3">
                                         <label htmlFor="txtLanguage"><strong>Primary Language</strong></label>
                                         <input type="text" className="form-control" defaultValue=""  id="txtLanguage"></input>
-                                    </div>
-                                    <div className="col-4">
-                                        <label htmlFor="ddlEducationLevels"><strong>Highest Grade Completed</strong></label>
-                                        <div className="dropdown">
-                                            <button type="button" id="btnDDLHighestGradeCompleted" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                
-                                            </button>
-                                            <div className="dropdown-menu">
-                                                {educationLevelValueOptions}
-                                            </div>
-                                        </div>                                     
-                                    </div> 
+                                    </div>                          
                                 </div>
                                 <br></br>
                                 <div className="form-row">
-                                    <div className="col-4">
-                                        <label><strong> IEP</strong></label>
-                                        <div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIEP" id="rdpIEPYes"  />
-                                                <label className="form-check-label">Yes</label>         
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIEP" id="rdpIEPNo"  />
-                                                <label className="form-check-label">No</label>
-                                            </div>
-                                        </div>                                
-                                    </div>
-                                    <div className="col-4">
+                                    <div className="col-3">
                                         <label><strong>Is Interpreter Needed</strong></label>
                                         <div>
                                             <div className="form-check form-check-inline">
@@ -540,7 +528,7 @@ const SupplementalAdult = (props) => {
                                             </div>
                                         </div> 
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-3">
                                         <label><strong>Medicaid*</strong></label>
                                         <div>
                                             <div className="form-check form-check-inline">
@@ -552,11 +540,8 @@ const SupplementalAdult = (props) => {
                                                 <label className="form-check-label">No</label>
                                             </div>
                                         </div>
-                                    </div>                   
-                                </div>
-                                <br></br>
-                                <div className="form-row">
-                                    <div className="col-4">
+                                    </div>
+                                    <div className="col-3">
                                         <label><strong>Insurance</strong></label>
                                         <div>
                                             <div className="form-check form-check-inline">
@@ -569,7 +554,7 @@ const SupplementalAdult = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-3">
                                         <label><strong>Driver's License</strong></label>
                                         <div>
                                             <div className="form-check form-check-inline">
@@ -581,110 +566,19 @@ const SupplementalAdult = (props) => {
                                                 <label className="form-check-label">No</label>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="col-4">
-                                        <label><strong>Convicted Offense</strong></label>
-                                        <div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsConvictedOffense" id="rdpIsConvictedOffenseYes"  />
-                                                <label className="form-check-label">Yes</label>         
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsConvictedOffense" id="rdpIsConvictedOffenseNo"  />
-                                                <label className="form-check-label">No</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                   
                                 </div>
                                 <br></br>
                                 <div className="form-row">
-                                    <div className="col-3">
-                                        <label><strong>Convicted Misdemeanor</strong></label>
-                                        <div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsConvictedMisdemeanor" id="rdpIsConvictedMisdemeanorYes"  />
-                                                <label className="form-check-label">Yes</label>         
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsConvictedMisdemeanor" id="rdpIsConvictedMisdemeanorNo"  />
-                                                <label className="form-check-label">No</label>
-                                            </div>
-                                        </div>
+                                    <div className="col-6">
+                                        <label><strong>Other Agency</strong></label>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtOtherAgency"></input>
                                     </div>
-                                    <div className="col-3">
-                                        <label><strong>Convicted Felony</strong></label>
-                                        <div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsConvictedFelony" id="rdpIsConvictedFelonyYes"  />
-                                                <label className="form-check-label">Yes</label>         
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsConvictedFelony" id="rdpIsConvictedFelonyNo"  />
-                                                <label className="form-check-label">No</label>
-                                            </div>
-                                        </div>
+                                    <div className="col-6">
+                                        <label><strong>Notes</strong></label>
+                                        <input type="text" className="form-control" defaultValue=""  id="txtNotes"></input>
                                     </div>
-                                    <div className="col-3">
-                                        <label><strong>Working Vehicle</strong> </label>
-                                        <div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsWorkingVehicle" id="rdpIsWorkingVehicleYes"  />
-                                                <label className="form-check-label">Yes</label>         
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsWorkingVehicle" id="rdpIsWorkingVehicleNo"  />
-                                                <label className="form-check-label">No</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-3">
-                                        <label><strong>Convicted Felony Crime (Integrity) </strong></label>
-                                        <div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsConvictedFelonyCrime" id="rdpIsConvictedFelonyCrimeYes"  />
-                                                <label className="form-check-label">Yes</label>         
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpIsConvictedFelonyCrime" id="rdpIsConvictedFelonyCrimeNo"  />
-                                                <label className="form-check-label">No</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br></br>
-                                <div className="form-row">
-                                    <div className="col-4">
-                                        <label htmlFor="ddlFundingSources"><strong>Potential Funding Source</strong></label>
-                                        <div className="dropdown">
-                                            <button type="button" id="btnDDLFundingSource" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                
-                                            </button>
-                                            <div className="dropdown-menu">
-                                                { fundingSourceValueOptions }
-                                            </div>
-                                        </div>
-                                  
-                                    </div>
-                                    <div className="col-4">
-                                        <label htmlFor="ddlCareerStation"><strong>Career Station</strong></label>
-                                        <div className="dropdown">
-                                            <button type="button" id="btnDDLCareerStation" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
-                                                
-                                            </button>
-                                            <div  className="dropdown-menu">
-                                                <a key={"Please Select"} value={"Please Select"} onClick={careerStationSelectHandler} className="dropdown-item">Please Select</a>
-                                                <a key={"Marshall"} value={"Marshall"} onClick={careerStationSelectHandler} className="dropdown-item">Marshall</a>
-                                                <a key={"East End"} value={"East End"} onClick={careerStationSelectHandler} className="dropdown-item">East End</a>
-                                                <a key={"South Side"} value={"South Side"} onClick={careerStationSelectHandler} className="dropdown-item">South Side</a>
-                                                <a key={"Other"} value={"Other"} onClick={careerStationSelectHandler} className="dropdown-item">Other</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-4">
-                                        <label htmlFor="txtNotes"><strong>Notes</strong></label>
-                                        <textarea defaultValue="" id="txtNotes" className="form-control"></textarea>
-                                    </div>
-                                </div>
+                                </div>                      
                             </div> 
                         </div>
                     </div> 
