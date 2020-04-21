@@ -1,9 +1,5 @@
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
-import DropDown from './Dropdown';
-import RadioButton from './RadioButton';
-import DatePicker from 'react-datepicker';
+import React, { useState, useEffect } from 'react';
 import { getSessionData } from './commonAdmin';
-import { Api } from './commonAdmin';
 import $ from 'jquery';
 import moment from 'moment';
 
@@ -68,16 +64,10 @@ const Supplemental = (props) => {
     let fundingSources = props.fundingSourceValues;
     let jobStatuses = props.jobStatusValues;
 
-    //this is really important
-    //if (props.clientProfile === undefined) return null;
     if (props.clientProfile !== undefined && props.clientProfile.PersonSupplemental !== null) {
 
         let personSupplemental = props.clientProfile.PersonSupplemental
             
-        // console.log('this is tthe supplemental');
-        // console.log(personSupplemental);
-        // console.log(educationLevels);
-
         clientHeightInFeet = (personSupplemental.HeightFt !== null) ? personSupplemental.HeightFt : '';
         clientHeighInInches = (personSupplemental.HeightIn !== null) ? personSupplemental.HeightIn : '';
         clientWeight = (personSupplemental.Weight !== null) ? personSupplemental.Weight : '';
@@ -100,8 +90,7 @@ const Supplemental = (props) => {
         clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : '';
         clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
         clientIDIssueDate = (personSupplemental.IssueDate !== null) ? personSupplemental.IssueDate : '';        
-        //clientIDIssueDate = (personSupplemental.IssueDate !== null) ? convertDateToUtcFormat(personSupplemental.IssueDate) : '';
-        clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ? convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
+        clientIDExpirationDate = (personSupplemental.ExpirationDate !== null) ?  personSupplemental.ExpirationDate : ''; //convertDateToUtcFormat(personSupplemental.ExpirationDate) : '';
         clientScars = (personSupplemental.ScarMarks !== null ) ? personSupplemental.ScarMarks : '';
         clientDisabled = (personSupplemental.IsDisable !== null) ? personSupplemental.IsDisable : '';
         clientLivingSituation = (personSupplemental.LivingSituation !== null) ? personSupplemental.LivingSituation : '';
@@ -132,106 +121,16 @@ const Supplemental = (props) => {
 
     }
 
-    //const [personID, setPersonID] = useState(props.clientProfilePersonID);
-
-    //const [personSupplementalID, setPersonSupplementalID ] = useState(clientSupplementalID);
     //the dropdowns pulling values from the database
-    // const [educationLevelID, setEducationLevelID] = useState(clientEducationLevelID);
-    // const [educationLevelDescription, setEducationLevelDescription] = useState(clientEducationLevelDescription);
     const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
-    // const [fundingSourceID, setFundingSourceID] = useState(clientFundingSourceID);
-    // const [fundingSourceDescription, setFundingSourceDescription] = useState(clientFundingSourceDescription);
     const [fundingSourceValues, setFundingSourceValues] = useState(fundingSources);
     const [jobStatusID, setJobStatusID] = useState(jobStatusID);
-    const [jobStatusDescription, setJobStatusDescription] = useState(clientJobStatusDescription);
     const [jobStatusValues, setJobStatusValues] = useState(jobStatuses);
-    const [maritalStatusID, setMaritalStatusID] = useState(clientMaritalStatusID);
-    const [maritalStatusDescription, setMaritalStatusDescription] = useState(clientMaritalStatusDescription);
     const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
     
-    //the dropdowns with hardcoded values
-    // const [careerStation, setCareerStation] = useState(clientCareerStation);
-    // const [idType, setIDType] = useState(clientIDType);
-    const [livingSituation, setLivingSituation] = useState(clientLivingSituation);
-    const [studentStatus, setStudentStatus] = useState(clientStudentStatus);
-    const [educationLevel, setEducationLevel] = useState(clientHighestEducation);
-    const [state, setEmployerState] = useState(clientEmployerState);
-
-    // //the radio buttons
-    // const [isIepChecked, setIsIepChecked] = useState(clientIEP);
-    // const [isInterpreterNeededChecked, setIsInterpreterNeededChecked] = useState(clientInterpreterNeeded);
-    // const [isMedicaid, setIsMedicaid] = useState(clientMedicaid);
-    // const [isInsurance, setIsInsurance] = useState(clientInsurance);
-    // const [isDriversLicense, setIsDriversLicense] = useState(clientDriversLicense);
-    // const [isConvictedOffense, setIsConvictedOffense] = useState(clientConvictedOffense);
-    // const [isConvictedMisdemeanor, setIsConvictedMisdemeanor] = useState(clientConvictedMisdemeanor);
-    // const [isConvictedFelony, setIsConvictedFelony] = useState(clientConvictedFelony);
-    // const [isWorkingVehicle, setIsWorkingVehicle] = useState(clientWorkingVehicle);
-    // const [isConvictedFelonyCrime, setIsConvictedFelonyCrime] = useState(clientConvictedFelonyCrime);
-    const [isDisabled, setIsDisabled] = useState(clientDisabled);
     
-    //the date pickers
-    const [idIssueDate, setIDIssueDate] = useState(clientIDIssueDate);
-    const [idExpirationDate, setIDExpirationDate] = useState(clientIDExpirationDate);
-
-    //textboxes
-    const [notes, setNotes] = useState(clientNotes);
-    const [idNumber, setIDNumber] = useState(clientIDNumber);
-    const [scarsMarksTattos, setScarsMarksTattoos] = useState(clientScars);
-    const [employer, setEmployer] = useState(clientEmployer);
-    const [supervisor, setSupervisor] = useState(clientSupervisor);
-    const [jobTitle, setJobTitle] = useState(clientJobTitle);
-    const [avgHoursPerWeek, setAvgHoursPerWeek] = useState(clientHoursPerWeek);
-    const [employerAddress, setEmployerAddress] = useState(clientEmployerAddress);
-
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
-
-    //audit
-    const [createdBy, setCreatedBy] = useState(clientCreatedBy);
-    const [createdDate, setCreatedDate] = useState(clientCreatedDate);
-    const [updatedBy, setUpdatedBy] = useState(clientUpdatedBy);
-    const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
-
-
-    //Reset variables to hold original state
-    //the reset dropdown values
-    const [prevEducationLevelID, setPrevEducationLevelID] = useState(3);
-    const [prevEducationLevelDescription, setPrevEducationLevelDescription] = useState('Please Select');
-    const [prevFundingSourceID, setPrevFundingSourceID] = useState(3);
-    const [prevFundingSourceDescription, setPrevFundingSourceDescription] = useState("Please Select");
-    const [prevJobStatusID, setPrevJobStatusID] = useState(3);
-    const [prevJobStatusDescription, setPrevJobStatusDescription] = useState("Please Select");
-    const [prevMaritalStatusID, setPrevMaritalStatusID] = useState(3);
-    const [prevMaritalStatusDescription, setPrevMaritalStatusDescription] = useState("Please Select");
-    
-    //the reset radio button values
-    const [prevIsIepChecked, setPrevIsIepChecked] = useState(false);
-    const [prevIsInterpreterNeededChecked, setPrevIsInterpreterNeededChecked] = useState(false);
-    const [prevIsMedicaid, setPrevIsMedicaid] = useState(false);
-    const [prevIsInsurance, setPrevIsInsurance] = useState(false);
-    const [prevIsDriversLicense, setPrevIsDriversLicense] = useState(false);
-    const [prevIsConvictedOffense, setPrevIsConvictedOffense] = useState(false);
-    const [prevIsConvictedMisdemeanor, setPrevIsConvictedMisdemeanor] = useState(false);
-    const [prevIsConvictedFelony, setPrevIsConvictedFelony] = useState(false);
-    const [prevIsWorkingVehicle, setPrevIsWorkingVehicle] = useState(false);
-    const [prevIsConvictedFelonyCrime, setPrevIsConvictedFelonyCrime] = useState(false);
-    const [prevIsDisabled, setPrevIsDisabled] = useState(false);
-    
-    //the reset textbox values
-    const [prevHeightInFeet, setPrevHeightInFeet] = useState('');
-    const [prevHeightInInches, setPrevHeightInInches] = useState('');
-    const [prevWeight, setPrevWeight] = useState('');
-    const [prevShoeSize, setPrevShoeSize] = useState('');
-    const [prevHouseHoldSize, setPrevHouseHoldSize] = useState('');
-    const [prevHomePhone, setPrevHomePhone] = useState('');
-    const [prevHouseHoldIncome, setPrevHouseHoldIncome] = useState('');
-    const [prevPrimaryLanguage, setPrevPrimaryLanguage] = useState('');
-    const [prevNotes, setPrevNotes] = useState('');
-    const [prevIdNumber, setPrevIDNumber] = useState('');
-    const [prevScarsMarksTattos, setPrevScarsMarksTattoos] = useState('');
-
-    const [loadTab, setLoadTab] = useState(false);
 
 
     function setRadioButtonState(rdYes, rdNo, clientValue) {
@@ -326,23 +225,15 @@ const Supplemental = (props) => {
         
 
             //Education Level
-            //setEducationLevelID(clientEducationLevelID);
-            //setEducationLevelDescription(clientEducationLevelDescription);
             setEducationLevelValues(educationLevels);
 
             //Funding Source
-            //setFundingSourceID(clientFundingSourceID);
-            //setFundingSourceDescription(clientFundingSourceDescription);
             setFundingSourceValues(fundingSources);
 
             //Job Status
-            //setJobStatusID(clientJobStatusID);
-            //setJobStatusDescription(clientJobStatusDescription);
             setJobStatusValues(jobStatuses);
 
             //Marital Status
-            //setMaritalStatusID(clientMaritalStatusID);
-            //setMaritalStatusDescription(clientMaritalStatusDescription);
             setMaritalStatusValues(maritalStatuses);
 
         });
@@ -354,7 +245,6 @@ const Supplemental = (props) => {
         let utcDate = new Date(formattedDate);
         return utcDate;
     }
-
 
 
     function handleEducationLevelChange(event){        
