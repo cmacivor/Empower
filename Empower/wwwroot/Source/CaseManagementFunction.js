@@ -5,7 +5,8 @@ import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import { useCacheService } from './useCacheService';
-import Supplemental from './SupplementalCWB';
+import SupplementalCWB from './SupplementalCWB';
+import SupplementalAdult from './SupplementalAdult';
 import {useStore} from './StateStores/store';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -160,15 +161,32 @@ const CaseManagementFunction = (props) => {
                          createErrorNotification={triggerErrorMessage} />                       
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
-                        
-                       <Supplemental 
-                       clientProfile={clientProfile.Person}
-                       clientProfilePersonID={personID}
-                       educationLevelValues={educationLevelsOptions}
-                       fundingSourceValues={fundingSourceOptions  }
-                       jobStatusValues={ jobStatusOptions } 
-                       maritalStatusValues={ maritalStatusOptions }
-                       createNotification={triggerToastMessage} />
+                        {
+                            parseInt(sessionData.SystemID) === systems.OCWB ?
+                            <SupplementalCWB 
+                            clientProfile={clientProfile.Person}
+                            clientProfilePersonID={personID}
+                            educationLevelValues={educationLevelsOptions}
+                            fundingSourceValues={fundingSourceOptions  }
+                            jobStatusValues={ jobStatusOptions } 
+                            maritalStatusValues={ maritalStatusOptions }
+                            createNotification={triggerToastMessage} /> : <div></div>
+                        }
+                        {
+                            parseInt(sessionData.SystemID) === systems.Adult ?
+                            
+                            <SupplementalAdult
+                                clientProfile={clientProfile.Person}
+                                clientProfilePersonID={personID}
+                                educationLevelValues={educationLevelsOptions}
+                                fundingSourceValues={fundingSourceOptions  }
+                                jobStatusValues={ jobStatusOptions } 
+                                maritalStatusValues={ maritalStatusOptions }
+                                createNotification={triggerToastMessage}
+                             /> : <div></div>
+                        }
+
+                  
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
                        address content
