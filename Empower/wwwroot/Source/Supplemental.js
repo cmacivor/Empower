@@ -39,6 +39,8 @@ const Supplemental = (props) => {
     let clientHoursPerWeek = '';
     let clientEmployerAddress = '';
     let clientEmployerState = '';
+    let clientEmployerAddressCity = '';
+    let clientEmployerAddressZip = '';
 
     
     //dropdowns from database
@@ -102,6 +104,8 @@ const Supplemental = (props) => {
         clientHoursPerWeek = (personSupplemental.HoursPerWeek !== null ) ? personSupplemental.HoursPerWeek : '';
         clientEmployerAddress = (personSupplemental.EmployerAddress !== null ) ? personSupplemental.EmployerAddress : '';
         clientEmployerState = (personSupplemental.EmployerAddressState !== null) ? personSupplemental.EmployerAddressState : 'Please Select';
+        clientEmployerAddressCity = (personSupplemental.EmployerAddressCity !== null) ? personSupplemental.EmployerAddressCity : '';
+        clientEmployerAddressZip = (personSupplemental.EmployerAddressZip !== null) ? personSupplemental.EmployerAddressZip : '';
 
         //the dropdowns from database
         clientEducationLevelID = (personSupplemental.EducationLevel !== null) ? personSupplemental.EducationLevel.ID : '';
@@ -168,6 +172,8 @@ const Supplemental = (props) => {
         $("#txtJobTitle").val(clientJobTitle);
         $("#txtHoursPerWeek").val(clientHoursPerWeek);
         $("#txtEmployerAddress").val(clientEmployerAddress);
+        $("#txtEmployerCity").val(clientEmployerAddressCity);
+        $("#txtEmployerZipCode").val(clientEmployerAddressZip);
 
         setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
         setRadioButtonState("rdpInterpreterNeededYes", "rdpInterpreterNeededNo", clientInterpreterNeeded);
@@ -380,6 +386,8 @@ const Supplemental = (props) => {
             HoursPerWeek: $("#txtHoursPerWeek").val(),
             EmployerAddress: $("#txtEmployerAddress").val(), 
             EmployerAddressState: document.getElementById("btnState").value,
+            EmployerAddressCity: $("#txtEmployerCity").val(),
+            EmployerAddressZip: $("#txtEmployerZipCode").val(),
             Active: true,
             CreatedDate: clientCreatedDate,
             CreatedBy: clientCreatedBy,
@@ -915,6 +923,14 @@ const Supplemental = (props) => {
                                                 <a key="WY" value="WY" onClick={stateSelectHandler} className="dropdown-item">WY</a>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className="col-4">
+                                        <label htmlFor="txtEmployerCity"><strong>City</strong></label>
+                                        <input type="text" id="txtEmployerCity" defaultValue="" className="form-control"></input>
+                                    </div>
+                                    <div className="col-4">
+                                        <label htmlFor="txtEmployerZipCode"><strong>Zip Code</strong></label>
+                                        <input type="text" id="txtEmployerZipCode" defaultValue="" className="form-control"></input>
                                     </div>
                                 </div>
                          
