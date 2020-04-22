@@ -8,23 +8,16 @@ const SupplementalAdult = (props) => {
     let clientHeightInFeet = '';
     let clientHeighInInches = '';
     let clientWeight = '';
-    //let clientHouseHoldSize = '';
     let clientHairColor = '';
     let clientEyeColor = '';
     let clientHomePhone = '';
     let clientIncome = '';
     let clientLanguage = '';
-    //let clientIEP = false;
     let clientInterpreterNeeded = false;
     let clientMedicaid = false;
     let clientInsurance = false;
     let clientDriversLicense = false;
-    let clientConvictedOffense = false;
-    let clientConvictedMisdemeanor = false;
-    let clientConvictedFelony = false;
-    let clientWorkingVehicle = false;
-    let clientConvictedFelonyCrime = false;
-    let clientCareerStation = '';
+    let clientOtherAgencyContacts = '';
     let clientNotes = '';
     let clientIDType = '';
     let clientIDNumber = '';
@@ -79,22 +72,15 @@ const SupplementalAdult = (props) => {
         clientWeight = (personSupplemental.Weight !== null) ? personSupplemental.Weight : '';
         clientEyeColor = (personSupplemental.EyeColor !== null) ? personSupplemental.EyeColor : '';
         clientHairColor = (personSupplemental.HairColor !== null) ? personSupplemental.HairColor : '';
-        //clientHouseHoldSize = (personSupplemental.HouseholdSize !== null) ? personSupplemental.HouseholdSize : '';
-        //clientEyeColor = ( )
+       
         clientHomePhone = (personSupplemental.HomePhone !== null) ? personSupplemental.HomePhone : '';
         clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
         clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
-        //clientIEP = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : false;
         clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : false;
         clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : false;
         clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : false;
         clientDriversLicense = (personSupplemental.HasDriversLicense !== null) ? personSupplemental.HasDriversLicense : false;
-        //clientConvictedOffense = (personSupplemental.HasConvictedOffence !== null ) ? personSupplemental.HasConvictedOffence : false;
-        //clientConvictedMisdemeanor = (personSupplemental.HasConvictedMisdemeanor !== null ) ? personSupplemental.HasConvictedMisdemeanor : false;
-        //clientConvictedFelony = (personSupplemental.HasConvictedFelony !== null) ? personSupplemental.HasConvictedFelony : false; 
-        //clientWorkingVehicle = (personSupplemental.HasVehicle !== null ) ? personSupplemental.HasVehicle : false;
-        //clientConvictedFelonyCrime = (personSupplemental.HasConvictedCrimeIntegrity !== null) ? personSupplemental.HasConvictedCrimeIntegrity : false;
-        //clientCareerStation = (personSupplemental.CareerSt !== null) ? personSupplemental.CareerSt : 'Please Select';
+        clientOtherAgencyContacts = (personSupplemental.OtherAgencyContacts !== null) ? personSupplemental.OtherAgencyContacts : false;
         clientNotes = (personSupplemental.Comments !== null) ? personSupplemental.Comments : '';
         clientIDType = (personSupplemental.IDType !== null) ? personSupplemental.IDType : 'Please Select';
         clientIDNumber = (personSupplemental.IDNumber !== null) ? personSupplemental.IDNumber : '';
@@ -133,8 +119,6 @@ const SupplementalAdult = (props) => {
     }
 
     //the dropdowns pulling values from the database
-    // const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
-    // const [fundingSourceValues, setFundingSourceValues] = useState(fundingSources);
     const [jobStatusValues, setJobStatusValues] = useState(jobStatuses);
     const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
 
@@ -178,13 +162,13 @@ const SupplementalAdult = (props) => {
         $("#txtWeight").val(clientWeight);
         $("#txtEyeColor").val(clientEyeColor);
         $("#txtHairColor").val(clientHairColor);
-        //$("#txtHouseSize").val(clientHouseHoldSize);g
         $("#txtHomePhone").val(clientHomePhone);
-        //$("#txtHouseIncome").val(clientIncome);
+        
         $("#txtLanguage").val(clientLanguage);
+        $("#txtOtherAgency").val(clientOtherAgencyContacts);
         $("#txtNotes").val(clientNotes);
-        //$("#txtIDNumber").val(clientIDNumber);
-        //$("#txtScarsMarks").val(clientScars);
+        $("#txtIDNumber").val(clientIDNumber);
+        $("#txtScarsMarks").val(clientScars);
         $("#txtEmployer").val(clientEmployer);
         $("#txtSupervisor").val(clientSupervisor);
         $("#txtJobTitle").val(clientJobTitle);
@@ -193,26 +177,11 @@ const SupplementalAdult = (props) => {
         $("#txtEmployerCity").val(clientEmployerAddressCity);
         $("#txtEmployerZipCode").val(clientEmployerAddressZip);
 
-        //setRadioButtonState("rdpIEPYes", "rdpIEPNo", clientIEP);
         setRadioButtonState("rdpInterpreterNeededYes", "rdpInterpreterNeededNo", clientInterpreterNeeded);
         setRadioButtonState("rdpMedicaidNeededYes", "rdpMedicaidNeededNo", clientMedicaid);
         setRadioButtonState("rdpHasInsuranceYes", "rdpHasInsuranceNo", clientInsurance);
         setRadioButtonState("rdpHasDriversLicenseYes", "rdpHasDriversLicenseNo", clientDriversLicense);
-        // setRadioButtonState("rdpIsConvictedOffenseYes", "rdpIsConvictedOffenseNo", clientConvictedOffense);
-        // setRadioButtonState("rdpIsConvictedMisdemeanorYes", "rdpIsConvictedMisdemeanorNo", clientConvictedMisdemeanor);
-        // setRadioButtonState("rdpIsConvictedFelonyYes", "rdpIsConvictedFelonyNo", clientConvictedFelony);
-        // setRadioButtonState("rdpIsWorkingVehicleYes", "rdpIsWorkingVehicleNo", clientWorkingVehicle);
-        // setRadioButtonState("rdpIsConvictedFelonyCrimeYes", "rdpIsConvictedFelonyCrimeNo", clientConvictedFelonyCrime);
-        // setRadioButtonState("rdpIsDisabledYes", "rdpIsDisabledNo", clientDisabled);
-
-        // document.getElementById("btnDDLHighestGradeCompleted").innerHTML = clientEducationLevelDescription;
-        // document.getElementById("btnDDLHighestGradeCompleted").value = clientEducationLevelID;
-
-        // document.getElementById("btnDDLFundingSource").innerHTML = clientFundingSourceDescription;
-        // document.getElementById("btnDDLFundingSource").value = clientFundingSourceID;
-
-        // document.getElementById("btnDDLCareerStation").value = clientCareerStation;
-        // document.getElementById("btnDDLCareerStation").innerHTML = clientCareerStation;
+        setRadioButtonState("rdpIsDisabledYes", "rdpIsDisabledNo", clientDisabled);
 
         document.getElementById("btnIDType").value = clientIDType;
         document.getElementById("btnIDType").innerHTML = clientIDType;
@@ -245,11 +214,6 @@ const SupplementalAdult = (props) => {
 
         
 
-            //Education Level
-            //setEducationLevelValues(educationLevels);
-
-            //Funding Source
-            //setFundingSourceValues(fundingSources);
 
             //Job Status
             setJobStatusValues(jobStatuses);
@@ -259,30 +223,6 @@ const SupplementalAdult = (props) => {
 
         });
         
-
-    // function handleEducationLevelChange(event){        
-    //     let selectedValue = event.currentTarget.getAttribute('value');
-        
-    //     document.getElementById("btnDDLHighestGradeCompleted").value = selectedValue;
-        
-    //     let selectedEducationLevel = educationLevels.filter(function (educationLevel) {
-    //         return educationLevel.ID === parseInt(selectedValue)
-    //     });
-
-    //     document.getElementById("btnDDLHighestGradeCompleted").innerHTML = selectedEducationLevel[0].Description;
-    // }
-
-    // function handleFundingSourceChange(event) {
-    //     let selectedValue = event.currentTarget.getAttribute('value');
-
-    //     document.getElementById("btnDDLFundingSource").value = selectedValue;
-
-    //     let selectedFundingSource =  fundingSources.filter(function(fundingSource) {
-    //         return fundingSource.ID === parseInt(selectedValue);
-    //     });
-
-    //     document.getElementById("btnDDLFundingSource").innerHTML = selectedFundingSource[0].Description;
-    // }
 
     function handleJobStatusChange(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -358,48 +298,55 @@ const SupplementalAdult = (props) => {
             issueDate = null;
         }
 
+        let expirationDate;
+        let expirationDateTextBoxValue = getElementValue("txtIDExpirationDate");
+        if (expirationDateTextBoxValue !== null) {
+            expirationDate = new Date(expirationDateTextBoxValue);
+        } else {
+            expirationDate = null;
+        }
+
         //the CWB fields
         let personSupplemental = 
         {
             ID: clientSupplementalID,
             PersonID: props.clientProfilePersonID,
-            //HeightFt:   ($("#txtHeightFeet").val() !== "") ? $("#txtHeightFeet").val() : null,
             HeightFt: getElementValue("txtHeightFeet"),
-            HeightIn: getElementValue("txtHeightInches"), //$("#txtHeightInches").val(), 
-            Weight: getElementValue("txtWeight"), //$("#txtWeight").val(),
-            HairColor: getElementValue("txtHairColor"), //$("#txtHairColor").val(),
-            EyeColor: getElementValue("txtEyeColor"), //$("#txtEyeColor").val(),
-            HomePhone: getElementValue("txtHomePhone"), //$("#txtHomePhone").val(),
+            HeightIn: getElementValue("txtHeightInches"),  
+            Weight: getElementValue("txtWeight"), 
+            HairColor: getElementValue("txtHairColor"), 
+            EyeColor: getElementValue("txtEyeColor"), 
+            HomePhone: getElementValue("txtHomePhone"), 
             // //HouseholdIncome: $("#txtPlaceOfBirth").val(), //not in the database?
-            Language: getElementValue("txtLanguage"),  //$("#txtLanguage").val(),
+            Language: getElementValue("txtLanguage"),  
 
             HasInterpreter: getRadioButtonState("rdpInterpreterNeededYes"),
             HasMedicaid: getRadioButtonState("rdpMedicaidNeededYes"),
             HasInsurance: getRadioButtonState("rdpHasInsuranceYes"),
             HasDriversLicense: getRadioButtonState("rdpHasDriversLicenseYes"),
-            OtherAgencyContacts: getElementValue("txtOtherAgency"), //$("#txtOtherAgency").val(),
-            Comments: getElementValue("txtNotes"), //$("#txtNotes").val(),
+            OtherAgencyContacts: getElementValue("txtOtherAgency"), 
+            Comments: getElementValue("txtNotes"), 
 
             // //Employer Details
             IDType: getElementValue("btnIDType"),
-            IDNumber: getElementValue("txtIDNumber"), //$("#txtIDNumber").val(),
-            IssueDate: issueDate,  //new Date(getElementValue("txtIDIssueDate")),
-            ExpirationDate: new Date(getElementValue("txtIDExpirationDate")),
-            JobStatusID: getElementValue("btnDDLJobStatus"), //document.getElementById("btnDDLJobStatus").value,
-            MaritalStatusID: getElementValue("btnDDLMaritalStatus"), //document.getElementById("btnDDLMaritalStatus").value,
-            ScarMarks: getElementValue("txtScarsMarks"), //$("#txtScarsMarks").val(),
+            IDNumber: getElementValue("txtIDNumber"), 
+            IssueDate: issueDate,  
+            ExpirationDate: expirationDate,
+            JobStatusID: getElementValue("btnDDLJobStatus"), 
+            MaritalStatusID: getElementValue("btnDDLMaritalStatus"), 
+            ScarMarks: getElementValue("txtScarsMarks"), 
             IsDisable: getRadioButtonState("rdpIsDisabledYes"),
-            LivingSituation: getElementValue("btnLivingSituation"), //document.getElementById("btnLivingSituation").value,
-            StudentStatus: getElementValue("btnStudentStatus"), //document.getElementById("btnStudentStatus").value,
-            HighestEducation: getElementValue("btnHighestEducationLevel"), //document.getElementById("btnHighestEducationLevel").value,
-            Employer: getElementValue("txtEmployer"), //$("#txtEmployer").val(),
-            Supervisor: getElementValue("txtSupervisor"), //$("#txtSupervisor").val(),
-            JobTitle: getElementValue("txtJobTitle"), //$("#txtJobTitle").val(),
-            HoursPerWeek: getElementValue("txtHoursPerWeek"), //$("#txtHoursPerWeek").val(),
-            EmployerAddress: getElementValue("txtEmployerAddress"), //$("#txtEmployerAddress").val(), 
-            EmployerAddressState: getElementValue("btnState"), //document.getElementById("btnState").value,
-            EmployerAddressCity: getElementValue("txtEmployerCity"), //$("#txtEmployerCity").val(),
-            EmployerAddressZip: getElementValue("txtEmployerZipCode"), //$("#txtEmployerZipCode").val(),
+            LivingSituation: getElementValue("btnLivingSituation"), 
+            StudentStatus: getElementValue("btnStudentStatus"), 
+            HighestEducation: getElementValue("btnHighestEducationLevel"), 
+            Employer: getElementValue("txtEmployer"), 
+            Supervisor: getElementValue("txtSupervisor"), 
+            JobTitle: getElementValue("txtJobTitle"), 
+            HoursPerWeek: getElementValue("txtHoursPerWeek"), 
+            EmployerAddress: getElementValue("txtEmployerAddress"), 
+            EmployerAddressState: getElementValue("btnState"), 
+            EmployerAddressCity: getElementValue("txtEmployerCity"), 
+            EmployerAddressZip: getElementValue("txtEmployerZipCode"), 
             Active: true,
             CreatedDate: clientCreatedDate,
             CreatedBy: clientCreatedBy,
@@ -407,7 +354,7 @@ const SupplementalAdult = (props) => {
             UpdatedBy: sessionStorageData.CurrentUser
         }
 
-    
+
 
         fetch(fullPersonSupplementalAddress, {
             method: 'PUT',
@@ -427,24 +374,6 @@ const SupplementalAdult = (props) => {
         setIsRefreshed(true);
      }
 
-   
-
-     //set up the education level dropdown
-    //  let educationLevelValueOptions = [];
-    //  if (educationLevelValues.length > 0) {
- 
-    //     educationLevelValueOptions = educationLevelValues.map((value) =>
-    //          <a key={value.ID} value={value.ID} description={value.Description} onClick={handleEducationLevelChange} className="dropdown-item">{value.Description}</a>
-    //      );
-    //  }
-
-     //funding sources
-    //  let fundingSourceValueOptions = [];
-    //  if (fundingSourceValues.length > 0) {
-    //     fundingSourceValueOptions = fundingSourceValues.map((value) =>
-    //         <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleFundingSourceChange} className="dropdown-item">{value.Description}</a>
-    //       );
-    //  }
 
      //job statuses
      let jobStatusValueOptions = [];
