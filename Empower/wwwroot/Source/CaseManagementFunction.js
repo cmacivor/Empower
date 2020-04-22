@@ -7,6 +7,7 @@ import Tab from 'react-bootstrap/Tab'
 import { useCacheService } from './useCacheService';
 import SupplementalCWB from './SupplementalCWB';
 import SupplementalAdult from './SupplementalAdult';
+import SupplementalJuvenile from './SupplementalJuvenile';
 import {useStore} from './StateStores/store';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -32,6 +33,7 @@ const CaseManagementFunction = (props) => {
     const [fundingSourceOptions, setFundingSourceOptions] = useState([]);
     const [jobStatusOptions, setJobStatusOptions] = useState([]);
     const [maritalStatusOptions, setMaritalStatusOptions] = useState([]);
+    const [schoolOptions, setSchoolOptions] = useState([]);
 
     useEffect(() => {
         //Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
@@ -41,6 +43,7 @@ const CaseManagementFunction = (props) => {
         //Api.getConfigDataByType("Suffix").then(suffixes => setSuffixes(suffixes));
         Api.getConfigDataByType("JobStatus").then(jobStatuses => setJobStatusOptions(jobStatuses)); 
         Api.getConfigDataByType("MaritalStatus").then(maritalStatuses => setMaritalStatusOptions(maritalStatuses));
+        Api.getConfigDataByType("School").then(schools => setSchoolOptions(schools));
         //Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
      }, []);
 
@@ -180,6 +183,17 @@ const CaseManagementFunction = (props) => {
                                 clientProfilePersonID={personID}
                                 educationLevelValues={educationLevelsOptions}
                                 fundingSourceValues={fundingSourceOptions  }
+                                jobStatusValues={ jobStatusOptions } 
+                                maritalStatusValues={ maritalStatusOptions }
+                                createNotification={triggerToastMessage}
+                             /> : <div></div>
+                        }
+                        {
+                            parseInt(sessionData.SystemID) === systems.Juvenile ?
+                            <SupplementalJuvenile
+                                clientProfile={clientProfile.Person}
+                                clientProfilePersonID={personID}
+                                schoolValues={schoolOptions}
                                 jobStatusValues={ jobStatusOptions } 
                                 maritalStatusValues={ maritalStatusOptions }
                                 createNotification={triggerToastMessage}
