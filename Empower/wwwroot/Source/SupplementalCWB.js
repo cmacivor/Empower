@@ -154,6 +154,15 @@ const SupplementalCWB = (props) => {
         }
         return false;
     }
+
+    function getElementValue(element) {
+        let value = document.getElementById(element).value;
+
+        if (value === "" || value === "Please Select") {
+            return null;
+        }
+        return value;
+    }
     
     useEffect(() => {
 
@@ -343,19 +352,35 @@ const SupplementalCWB = (props) => {
         let fullPersonSupplementalAddress = `${apiAddress}/api/PersonSupplemental`;
         let sessionStorageData = getSessionData();
 
+        let issueDate;
+        let issueDateTextBoxValue = getElementValue("txtIDIssueDate");
+        if (issueDateTextBoxValue !== null) {
+            issueDate = new Date(issueDateTextBoxValue);
+        } else {
+            issueDate = null;
+        }
+
+        let expirationDate;
+        let expirationDateTextBoxValue = getElementValue("txtIDExpirationDate");
+        if (expirationDateTextBoxValue !== null) {
+            expirationDate = new Date(expirationDateTextBoxValue);
+        } else {
+            expirationDate = null;
+        }
+
         //the CWB fields
         let personSupplemental = 
         {
             ID: clientSupplementalID,
             PersonID: props.clientProfilePersonID,
-            HeightFt:  $("#txtHeightFeet").val(),
-            HeightIn: $("#txtHeightInches").val(), 
-            Weight: $("#txtWeight").val(),
-            HouseholdSize: $("#txtHouseSize").val(),
-            HomePhone: $("#txtHomePhone").val(),
-            HouseholdIncome: $("#txtHouseIncome").val(),
-            Language: $("#txtLanguage").val(),
-            EducationLevelID: document.getElementById("btnDDLHighestGradeCompleted").value,
+            HeightFt:  getElementValue("txtHeightFeet"),
+            HeightIn: getElementValue("txtHeightInches"), 
+            Weight: getElementValue("txtWeight"), 
+            HouseholdSize: getElementValue("txtHouseSize"), 
+            HomePhone: getElementValue("txtHomePhone"), 
+            HouseholdIncome: getElementValue("txtHouseIncome"), 
+            Language: getElementValue("txtLanguage"), 
+            EducationLevelID: getElementValue("btnDDLHighestGradeCompleted"), 
             HasExceptionEduc: getRadioButtonState("rdpIEPYes"),
             HasInterpreter: getRadioButtonState("rdpInterpreterNeededYes"),
             HasMedicaid: getRadioButtonState("rdpMedicaidNeededYes"),
@@ -366,28 +391,28 @@ const SupplementalCWB = (props) => {
             HasConvictedFelony: getRadioButtonState("rdpIsConvictedFelonyYes"),
             HasVehicle: getRadioButtonState("rdpIsWorkingVehicleYes"),
             HasConvictedCrimeIntegrity: getRadioButtonState("rdpIsConvictedFelonyCrimeYes"),
-            FundingSourceID: document.getElementById("btnDDLFundingSource").value,
-            CareerSt: document.getElementById("btnDDLCareerStation").value,
-            Comments: $("#txtNotes").val(),
-            IDType: document.getElementById("btnIDType").value,
-            IDNumber: $("#txtIDNumber").val(),
-            IssueDate: new Date($("#txtIDIssueDate").val()),
-            ExpirationDate: new Date($("#txtIDExpirationDate").val()),
-            JobStatusID: document.getElementById("btnDDLJobStatus").value,
-            MaritalStatusID: document.getElementById("btnDDLMaritalStatus").value,
-            ScarMarks: $("#txtScarsMarks").val(),
+            FundingSourceID: getElementValue("btnDDLFundingSource"), 
+            CareerSt: getElementValue("btnDDLCareerStation"), 
+            Comments: getElementValue("txtNotes"), 
+            IDType: getElementValue("btnIDType"), 
+            IDNumber: getElementValue("txtIDNumber"), 
+            IssueDate: issueDate, 
+            ExpirationDate: expirationDate, 
+            JobStatusID: getElementValue("btnDDLJobStatus"), 
+            MaritalStatusID: getElementValue("btnDDLMaritalStatus"), 
+            ScarMarks: getElementValue("txtScarsMarks"), 
             IsDisable: getRadioButtonState("rdpIsDisabledYes"),
-            LivingSituation: document.getElementById("btnLivingSituation").value,
-            StudentStatus: document.getElementById("btnStudentStatus").value,
-            HighestEducation: document.getElementById("btnHighestEducationLevel").value,
-            Employer: $("#txtEmployer").val(),
-            Supervisor: $("#txtSupervisor").val(),
-            JobTitle: $("#txtJobTitle").val(),
-            HoursPerWeek: $("#txtHoursPerWeek").val(),
-            EmployerAddress: $("#txtEmployerAddress").val(), 
-            EmployerAddressState: document.getElementById("btnState").value,
-            EmployerAddressCity: $("#txtEmployerCity").val(),
-            EmployerAddressZip: $("#txtEmployerZipCode").val(),
+            LivingSituation: getElementValue("btnLivingSituation"), 
+            StudentStatus: getElementValue("btnStudentStatus"), 
+            HighestEducation: getElementValue("btnHighestEducationLevel"), 
+            Employer: getElementValue("txtEmployer"), 
+            Supervisor: getElementValue("txtSupervisor"), 
+            JobTitle: getElementValue("txtJobTitle"), 
+            HoursPerWeek: getElementValue("txtHoursPerWeek"), 
+            EmployerAddress: getElementValue("txtEmployerAddress"), 
+            EmployerAddressState: getElementValue("btnState"), 
+            EmployerAddressCity: getElementValue("txtEmployerCity"), 
+            EmployerAddressZip: getElementValue("txtEmployerZipCode"), 
             Active: true,
             CreatedDate: clientCreatedDate,
             CreatedBy: clientCreatedBy,
