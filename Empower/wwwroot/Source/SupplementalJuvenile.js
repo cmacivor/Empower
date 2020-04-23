@@ -48,8 +48,8 @@ const SupplementalJuvenile = (props) => {
     let clientJobStatusDescription = '';
     let clientMaritalStatusID = '';
     let clientMaritalStatusDescription = '';
-    let clientSchoolAttendedID = '';
-    let clientSchoolAttendedDescription = '';
+    let clientSchoolID = '';
+    let clientSchoolDescription = '';
 
     let clientSupplementalID = 0;
 
@@ -113,6 +113,8 @@ const SupplementalJuvenile = (props) => {
         clientJobStatusDescription = (personSupplemental.JobStatus !== null) ? personSupplemental.JobStatus.Name : 'Please Select';
         clientMaritalStatusID = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.ID : '';
         clientMaritalStatusDescription = (personSupplemental.MaritalStatus !== null ) ? personSupplemental.MaritalStatus.Name: 'Please Select';
+        clientSchoolID = (personSupplemental.School !== null ) ? personSupplemental.School.ID : '';
+        clientSchoolDescription = (personSupplemental.School !== null) ? personSupplemental.School.Name : 'Please Select';
 
         clientSupplementalID = (personSupplemental.ID !== null ) ? personSupplemental.ID : 0;
         clientCreatedDate = (personSupplemental.CreatedDate !== null) ? personSupplemental.CreatedDate : '';
@@ -188,7 +190,8 @@ const SupplementalJuvenile = (props) => {
         setRadioButtonState("rdpHasDriversLicenseYes", "rdpHasDriversLicenseNo", clientDriversLicense);
         setRadioButtonState("rdpIsDisabledYes", "rdpIsDisabledNo", clientDisabled);
 
-        //document.getElementById("btnDDLSchoolAttended").value = cl
+        document.getElementById("btnDDLSchoolAttended").value = clientSchoolID;
+        document.getElementById("btnDDLSchoolAttended").innerHTML = clientSchoolDescription;
 
         document.getElementById("btnIDType").value = clientIDType;
         document.getElementById("btnIDType").innerHTML = clientIDType;
@@ -347,7 +350,7 @@ const SupplementalJuvenile = (props) => {
             HasDriversLicense: getRadioButtonState("rdpHasDriversLicenseYes"),
             OtherAgencyContacts: getElementValue("txtOtherAgency"), 
             Comments: getElementValue("txtNotes"), 
-
+            SchoolID: getElementValue("btnDDLSchoolAttended"),
             // //Employer Details
             IDType: getElementValue("btnIDType"),
             IDNumber: getElementValue("txtIDNumber"), 
