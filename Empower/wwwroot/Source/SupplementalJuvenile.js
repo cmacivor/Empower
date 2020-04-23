@@ -125,6 +125,7 @@ const SupplementalJuvenile = (props) => {
     }
 
     //the dropdowns pulling values from the database
+    const [educationLevelValues, setEducationLevelValues] = useState(educationLevels);
     const [jobStatusValues, setJobStatusValues] = useState(jobStatuses);
     const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
     const [schoolValues, setSchoolValues ] = useState(schoolStatuses);
@@ -190,6 +191,9 @@ const SupplementalJuvenile = (props) => {
         setRadioButtonState("rdpHasDriversLicenseYes", "rdpHasDriversLicenseNo", clientDriversLicense);
         setRadioButtonState("rdpIsDisabledYes", "rdpIsDisabledNo", clientDisabled);
 
+        document.getElementById("btnDDLCurrentGrade").innerHTML = clientEducationLevelDescription;
+        document.getElementById("btnDDLCurrentGrade").value = clientEducationLevelID;
+
         document.getElementById("btnDDLSchoolAttended").value = clientSchoolID;
         document.getElementById("btnDDLSchoolAttended").innerHTML = clientSchoolDescription;
 
@@ -223,7 +227,9 @@ const SupplementalJuvenile = (props) => {
         document.getElementById("txtIDExpirationDate").value = convertedIDExpirationDate;
 
         
-
+            
+            //Education Level
+            setEducationLevelValues(educationLevels);
 
             //Job Status
             setJobStatusValues(jobStatuses);
@@ -235,6 +241,18 @@ const SupplementalJuvenile = (props) => {
 
         });
         
+    
+    function handleEducationLevelChange(event){        
+        let selectedValue = event.currentTarget.getAttribute('value');
+        
+        document.getElementById("btnDDLCurrentGrade").value = selectedValue;
+        
+        let selectedEducationLevel = educationLevels.filter(function (educationLevel) {
+            return educationLevel.ID === parseInt(selectedValue)
+        });
+
+        document.getElementById("btnDDLCurrentGrade").innerHTML = selectedEducationLevel[0].Description;
+    }
 
     function handleSchoolStatusChange(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -342,6 +360,7 @@ const SupplementalJuvenile = (props) => {
             EyeColor: getElementValue("txtEyeColor"), 
             HomePhone: getElementValue("txtHomePhone"), 
             // //HouseholdIncome: $("#txtPlaceOfBirth").val(), //not in the database?
+            EducationLevelID: getElementValue("btnDDLCurrentGrade"), 
             Language: getElementValue("txtLanguage"),  
             PhysicalHealth: getElementValue("txtPhysicalHealth"),
             HasInterpreter: getRadioButtonState("rdpInterpreterNeededYes"),
@@ -406,6 +425,16 @@ const SupplementalJuvenile = (props) => {
      }
 
 
+        //set up the education level dropdown
+        let educationLevelValueOptions = [];
+        if (educationLevelValues.length > 0) {
+    
+           educationLevelValueOptions = educationLevelValues.map((value) =>
+                <a key={value.ID} value={value.ID} description={value.Description} onClick={handleEducationLevelChange} className="dropdown-item">{value.Description}</a>
+            );
+        }
+
+
      //job statuses
      let jobStatusValueOptions = [];
      if (jobStatusValues.length > 0) {
@@ -428,7 +457,7 @@ const SupplementalJuvenile = (props) => {
                     <div className="card">
                         <div className="card-header">
                             <a className="card-link" data-toggle="collapse" href="#collapsibleSupplementalSection">
-                                Supplemental SupplementalJuvenile
+                                Supplemental Juvenile
                             </a>
                         </div>
                         
@@ -473,9 +502,10 @@ const SupplementalJuvenile = (props) => {
                                         <input type="text" className="form-control" defaultValue=""  id="txtPhysicalHealth"></input>
                                     </div>                          
                                 </div>
+                                <br/>
                                 <div className="form-row">
                                     <div className="col-4">
-                                        <label htmlFor="ddlIDType"><strong>School Attended</strong></label>
+                                        <label htmlFor="btnDDLSchoolAttended"><strong>School Attended</strong></label>
                                         <div className="dropdown">
                                             <button type="button" id="btnDDLSchoolAttended" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                 
@@ -484,21 +514,31 @@ const SupplementalJuvenile = (props) => {
                                                 { schoolOptions }
                                             </div>
                                         </div>
-
-                                        {/* <div className="dropdown">
-                                            <button type="button" id="btnIDType" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">                        
+                                    </div>
+                                    <div className="col-4">
+                                        <label htmlFor="btnDDLCurrentGrade"><strong>Current Grade</strong></label>
+                                        <div className="dropdown">
+                                            <button type="button" id="btnDDLCurrentGrade" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                 
                                             </button>
                                             <div className="dropdown-menu">
-                                                <a key="Please Select" value="Please Select" onClick={idTypeSelectHandler} className="dropdown-item">Please Select</a>                                                
-                                                <a key="Birth Certificate" value="Birth Certificate" onClick={idTypeSelectHandler} className="dropdown-item">Birth Certificate</a>
-                                                <a key="Driver's License" value="Driver's License" onClick={idTypeSelectHandler} className="dropdown-item">Driver's License</a>
-                                                <a key="Green Card" value="Green Card" onClick={idTypeSelectHandler} className="dropdown-item">Green Card</a>
-                                                <a key="Military" value="Military" onClick={idTypeSelectHandler} className="dropdown-item">Military</a>
-                                                <a key="Other" value="Other" onClick={idTypeSelectHandler} className="dropdown-item">Other</a>
-                                                <a key="Passport" value="Passport" onClick={idTypeSelectHandler} className="dropdown-item">Passport</a>
+                                                {educationLevelValueOptions}
                                             </div>
-                                        </div> */}
+                                        </div>
+                                    </div>
+                                    <div className="col-4">
+                                        <label htmlFor="txtSchoolYear"><strong>Year</strong></label>
+                                        <input type="text" className="form-control" defaultValue="" id="txtSchoolYear"></input>
+                                    </div>
+                                </div>
+                                <div className="form-row">
+                                    <div className="col-6">
+                                        <label htmlFor="txtPhysicalHealth"><strong>Physical Health</strong></label>
+                                        <textarea className="form-control" defaultValue="" id="txtPhysicalHealth"></textarea>
+                                    </div>
+                                    <div className="col-6">
+                                        <label htmlFor="txtMentalHealth"><strong>Mental Health</strong></label>
+                                        <textarea className="form-control" defaultValue="" id="txtMentalHealth"></textarea>
                                     </div>
                                 </div>
                                 <br></br>

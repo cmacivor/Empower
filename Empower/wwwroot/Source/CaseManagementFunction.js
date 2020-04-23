@@ -194,6 +194,7 @@ const CaseManagementFunction = (props) => {
                                 clientProfile={clientProfile.Person}
                                 clientProfilePersonID={personID}
                                 schoolValues={schoolOptions}
+                                educationLevelValues={educationLevelsOptions}
                                 jobStatusValues={ jobStatusOptions } 
                                 maritalStatusValues={ maritalStatusOptions }
                                 createNotification={triggerToastMessage}
