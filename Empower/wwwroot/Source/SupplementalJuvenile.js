@@ -14,6 +14,7 @@ const SupplementalJuvenile = (props) => {
     let clientIncome = '';
     let clientLanguage = '';
     let clientPhysicalHealth = '';
+    let clientMentalHealth = '';
     let clientInterpreterNeeded = false;
     let clientMedicaid = false;
     let clientInsurance = false;
@@ -80,6 +81,7 @@ const SupplementalJuvenile = (props) => {
         clientIncome = (personSupplemental.HouseholdIncome !== null) ? personSupplemental.HouseholdIncome : '';
         clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
         clientPhysicalHealth = (personSupplemental.PhysicalHealth !== null) ? personSupplemental.PhysicalHealth : '';
+        clientMentalHealth = (personSupplemental.MentalHealth !== null) ? personSupplemental.MentalHealth : '';
         clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : false;
         clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : false;
         clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : false;
@@ -172,6 +174,7 @@ const SupplementalJuvenile = (props) => {
         $("#txtHairColor").val(clientHairColor);
         $("#txtHomePhone").val(clientHomePhone);
         $("#txtPhysicalHealth").val(clientPhysicalHealth);
+        $("#txtMentalHealth").val(clientMentalHealth);
         $("#txtLanguage").val(clientLanguage);
         $("#txtOtherAgency").val(clientOtherAgencyContacts);
         $("#txtNotes").val(clientNotes);
@@ -361,8 +364,8 @@ const SupplementalJuvenile = (props) => {
             HomePhone: getElementValue("txtHomePhone"), 
             // //HouseholdIncome: $("#txtPlaceOfBirth").val(), //not in the database?
             EducationLevelID: getElementValue("btnDDLCurrentGrade"), 
-            Language: getElementValue("txtLanguage"),  
             PhysicalHealth: getElementValue("txtPhysicalHealth"),
+            MentalHealth : getElementValue("txtMentalHealth"),
             HasInterpreter: getRadioButtonState("rdpInterpreterNeededYes"),
             HasMedicaid: getRadioButtonState("rdpMedicaidNeededYes"),
             HasInsurance: getRadioButtonState("rdpHasInsuranceYes"),
@@ -493,18 +496,18 @@ const SupplementalJuvenile = (props) => {
                                         <label htmlFor="txtHomePhone"><strong>Home Phone</strong></label>
                                         <input type="text" className="form-control" defaultValue=""  id="txtHomePhone"></input>
                                     </div>
-                                    <div className="col-3">
+                                    {/* <div className="col-3">
                                         <label htmlFor="txtPlaceOfBirth"><strong>Place of Birth</strong></label>
                                         <input type="text" className="form-control" defaultValue=""  id="txtPlaceOfBirth"></input>
                                     </div>
                                     <div className="col-3">
-                                        <label htmlFor="txtLanguage"><strong>Physical Health</strong></label>
+                                        <label htmlFor="txtPhysicalHealth"><strong>Physical Health</strong></label>
                                         <input type="text" className="form-control" defaultValue=""  id="txtPhysicalHealth"></input>
-                                    </div>                          
+                                    </div>                           */}
                                 </div>
                                 <br/>
                                 <div className="form-row">
-                                    <div className="col-4">
+                                    <div className="col-6">
                                         <label htmlFor="btnDDLSchoolAttended"><strong>School Attended</strong></label>
                                         <div className="dropdown">
                                             <button type="button" id="btnDDLSchoolAttended" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -526,11 +529,12 @@ const SupplementalJuvenile = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-4">
+                                    {/* <div className="col-4">
                                         <label htmlFor="txtSchoolYear"><strong>Year</strong></label>
                                         <input type="text" className="form-control" defaultValue="" id="txtSchoolYear"></input>
-                                    </div>
+                                    </div> */}
                                 </div>
+                                <br/>
                                 <div className="form-row">
                                     <div className="col-6">
                                         <label htmlFor="txtPhysicalHealth"><strong>Physical Health</strong></label>
