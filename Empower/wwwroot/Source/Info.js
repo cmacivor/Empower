@@ -261,12 +261,9 @@ const Info = forwardRef((props, ref) => {
       //this is for the Merge modal
       function mergeCandidateCheckBoxClickHandler(event) {
         let $input = $(event.currentTarget.innerHTML);
-        //console.log($input.data("id"));
-
+    
         let clientProfileId = $input.data("id");
 
-        //let selectedValue = event.currentTarget.getAttribute('data-id');
-        //ergeCandidateSelections.push(selectedValue);
         mergeCandidateSelections.push(clientProfileId);
         setMergeCandidateSelections(mergeCandidateSelections);
       }
@@ -302,8 +299,6 @@ const Info = forwardRef((props, ref) => {
                 } 
     
             }).then(finalResult => {
-                //console.log('this is the final update');
-                //console.log(finalResult);
 
                 let person = finalResult.ClientProfile.Person;
                 
@@ -341,7 +336,6 @@ const Info = forwardRef((props, ref) => {
             alert('an error occurred while retrieving the Client Profile;');
         }
 
-        //toggle();
       }
 
 

@@ -891,30 +891,7 @@ const SearchJuvenile = (props) => {
                       />
                   </Grid> : <div></div> 
                 }
-                  <Modal size="lg" isOpen={modal} toggle={toggle}>
-                  <ModalHeader toggle={toggle}>Duplicates</ModalHeader>
-                  <ModalBody>
-                    <table id="mergeTable" className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">First Name</th>
-                          <th scope="col">Last Name</th>
-                          <th scope="col">Middle Name</th>
-                          <th scope="col">Date of Birth</th>
-                          <th scope="col">Gender</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {mergeModalTableRows}
-                      </tbody>
-                    </table>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color="primary" onClick={mergeProfiles}>Merge Services</Button>{' '}
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
-                  </ModalFooter>
-                </Modal>
+ 
             </div>;
 }
 
