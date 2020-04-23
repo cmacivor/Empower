@@ -5,7 +5,9 @@ import Info from './Info';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import { useCacheService } from './useCacheService';
-import Supplemental from './Supplemental';
+import SupplementalCWB from './SupplementalCWB';
+import SupplementalAdult from './SupplementalAdult';
+import SupplementalJuvenile from './SupplementalJuvenile';
 import {useStore} from './StateStores/store';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,10 +27,13 @@ const CaseManagementFunction = (props) => {
     const cacheService = useCacheService();
     const {state, dispatch} = useStore();
 
+    const [personID, setPersonID] = useState(0);
+
     const [educationLevelsOptions, setEducationLevelOptions] = useState([]);
     const [fundingSourceOptions, setFundingSourceOptions] = useState([]);
     const [jobStatusOptions, setJobStatusOptions] = useState([]);
     const [maritalStatusOptions, setMaritalStatusOptions] = useState([]);
+    const [schoolOptions, setSchoolOptions] = useState([]);
 
     useEffect(() => {
         //Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
@@ -38,6 +43,7 @@ const CaseManagementFunction = (props) => {
         //Api.getConfigDataByType("Suffix").then(suffixes => setSuffixes(suffixes));
         Api.getConfigDataByType("JobStatus").then(jobStatuses => setJobStatusOptions(jobStatuses)); 
         Api.getConfigDataByType("MaritalStatus").then(maritalStatuses => setMaritalStatusOptions(maritalStatuses));
+        Api.getConfigDataByType("School").then(schools => setSchoolOptions(schools));
         //Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
      }, []);
 
@@ -99,29 +105,13 @@ const CaseManagementFunction = (props) => {
 
     //to handle clicking on a row in the search grid, so this data is accessible elsewhere
     function SetClientProfile(clientProfile) {
-        console.log('this is case magemdm');
-        console.log(clientProfile);
+      
         //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was   
         setClientProfile(clientProfile); //updates the local state
-        sessionStorage.setItem("PersonID", clientProfile.ClientProfile.Person.ID);
-        sessionStorage.setItem("ClientProfileID", clientProfile.ClientProfile.ID);
+        setPersonID(clientProfile.ClientProfile.Person.ID);
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
         infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
-
-        // let idIssueDate = new Date();
-        // let idExpirationDate = new Date();
-
-        // if (clientProfile.Person.PersonSupplemental.IssueDate !== null) {
-        //     idIssueDate = clientProfile.Person.PersonSupplemental.IssueDate;
-        // }
-
-        // if (clientProfile.Person.PersonSupplemental.ExpirationDate !== null) {
-        //     idExpirationDate = clientProfile.Person.PersonSupplemental.ExpirationDate;
-        // }
-
-        // supplementalRef.current.updateDatePickers(idIssueDate, idExpirationDate);
-
     }
 
     let infoTabTitle = '';
@@ -174,15 +164,44 @@ const CaseManagementFunction = (props) => {
                          createErrorNotification={triggerErrorMessage} />                       
                     </Tab>
                     <Tab eventKey="supplemental" title="Supplemental" disabled={isTabDisabled}>
-                        
-                       <Supplemental 
-                       clientProfile={clientProfile.Person}
-                       
-                       educationLevelValues={educationLevelsOptions}
-                       fundingSourceValues={fundingSourceOptions  }
-                       jobStatusValues={ jobStatusOptions } 
-                       maritalStatusValues={ maritalStatusOptions }
-                       createNotification={triggerToastMessage} />
+                        {
+                            parseInt(sessionData.SystemID) === systems.OCWB ?
+                            <SupplementalCWB 
+                            clientProfile={clientProfile.Person}
+                            clientProfilePersonID={personID}
+                            educationLevelValues={educationLevelsOptions}
+                            fundingSourceValues={fundingSourceOptions  }
+                            jobStatusValues={ jobStatusOptions } 
+                            maritalStatusValues={ maritalStatusOptions }
+                            createNotification={triggerToastMessage} /> : <div></div>
+                        }
+                        {
+                            parseInt(sessionData.SystemID) === systems.Adult ?
+                            
+                            <SupplementalAdult
+                                clientProfile={clientProfile.Person}
+                                clientProfilePersonID={personID}
+                                educationLevelValues={educationLevelsOptions}
+                                fundingSourceValues={fundingSourceOptions  }
+                                jobStatusValues={ jobStatusOptions } 
+                                maritalStatusValues={ maritalStatusOptions }
+                                createNotification={triggerToastMessage}
+                             /> : <div></div>
+                        }
+                        {
+                            parseInt(sessionData.SystemID) === systems.Juvenile ?
+                            <SupplementalJuvenile
+                                clientProfile={clientProfile.Person}
+                                clientProfilePersonID={personID}
+                                schoolValues={schoolOptions}
+                                educationLevelValues={educationLevelsOptions}
+                                jobStatusValues={ jobStatusOptions } 
+                                maritalStatusValues={ maritalStatusOptions }
+                                createNotification={triggerToastMessage}
+                             /> : <div></div>
+                        }
+
+                  
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
                        address content
