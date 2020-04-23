@@ -9,6 +9,7 @@ import { GenerateUniqueID } from './NewClient';
 import { getSessionData } from './commonAdmin';
 import $ from 'jquery';
 import {getSystems} from './Constants';
+import {modal} from 'bootstrap/js/dist/modal';
 //const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent

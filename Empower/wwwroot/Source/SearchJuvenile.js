@@ -115,11 +115,11 @@ const SearchJuvenile = (props) => {
       );
 
   
-      function getMergeButtonIndex()
-      {
-        mergeButtonIndex++;
-        return `${mergeButtonIndex}`;
-      }
+      // function getMergeButtonIndex()
+      // {
+      //   mergeButtonIndex++;
+      //   return `${mergeButtonIndex}`;
+      // }
 
 
       useEffect(() => {
@@ -143,113 +143,113 @@ const SearchJuvenile = (props) => {
         // }
 
 
-        if (mergeOptions.length > 0 ) {
-          let tableRows = generateMergeCandidateRows();
-          setMergeModalTableRows(tableRows);
-          toggle();
-        }
+        // if (mergeOptions.length > 0 ) {
+        //   let tableRows = generateMergeCandidateRows();
+        //   setMergeModalTableRows(tableRows);
+        //   toggle();
+        // }
       }, [mergeOptions] );
 
      
-      const MergeButton = ({onExecute}) =>      
-      (
+      // const MergeButton = ({onExecute}) =>      
+      // (
         
-        <button
-            type="button"
-            className="btn btn-info btn-sm"
-            ref={mergeButtonRef}
-            id={getMergeButtonIndex()}
-            style={{ padding: 3 }}
-            onClick={(e) => {
-                let index;
+      //   <button
+      //       type="button"
+      //       className="btn btn-info btn-sm"
+      //       ref={mergeButtonRef}
+      //       id={getMergeButtonIndex()}
+      //       style={{ padding: 3 }}
+      //       onClick={(e) => {
+      //           let index;
 
-                let eventTarget = $(e.target);
+      //           let eventTarget = $(e.target);
 
-                //Get the index of the  row clicked. this will work if the event click correctly gets the button.
-                if (eventTarget.parent().attr("id") === undefined) {
-                   index = eventTarget.parent().parent().attr("id"); //this is if they click on the svg element inside the <button> instead of the button itself
-                } else {
-                   index = eventTarget.parent().attr("id");
-                }
+      //           //Get the index of the  row clicked. this will work if the event click correctly gets the button.
+      //           if (eventTarget.parent().attr("id") === undefined) {
+      //              index = eventTarget.parent().parent().attr("id"); //this is if they click on the svg element inside the <button> instead of the button itself
+      //           } else {
+      //              index = eventTarget.parent().attr("id");
+      //           }
                 
-                //findDOMNode is a React way of getting at the DOM directly
-                let el = findDOMNode(mergeButtonRef.current);
-                //notice what we're doing here- the "el" is now a jQuery object. Doing this because the grid API doesn't appear to have a straightforward way of accessing this data 
-                let tBody = $(el).parent().parent().parent(); //this gets the tbody
+      //           //findDOMNode is a React way of getting at the DOM directly
+      //           let el = findDOMNode(mergeButtonRef.current);
+      //           //notice what we're doing here- the "el" is now a jQuery object. Doing this because the grid API doesn't appear to have a straightforward way of accessing this data 
+      //           let tBody = $(el).parent().parent().parent(); //this gets the tbody
  
-                let allRows = tBody.find("tr"); //get all the rows!
+      //           let allRows = tBody.find("tr"); //get all the rows!
              
-                if (index !== undefined) {
-                  let selectedRow = allRows[index - 1];
+      //           if (index !== undefined) {
+      //             let selectedRow = allRows[index - 1];
 
-                  if (selectedRow !== undefined) {
-                    let currentRow = $(selectedRow);
+      //             if (selectedRow !== undefined) {
+      //               let currentRow = $(selectedRow);
 
-                    let firstName = $(currentRow.children()[1]).html();
-                    let lastName = $(currentRow.children()[2]).html();
-                    let middleName = $(currentRow.children()[3]).html();
-                    let vcinNumber = $(currentRow.children()[4]).html();
-                    let ssn = $(currentRow.children()[5]).html();
-                    let birthDate = $(currentRow.children()[6]).html();
-                    let gender = $(currentRow.children()[7]).html();
-                    let id = $(currentRow.children()[8]).html();
+      //               let firstName = $(currentRow.children()[1]).html();
+      //               let lastName = $(currentRow.children()[2]).html();
+      //               let middleName = $(currentRow.children()[3]).html();
+      //               let vcinNumber = $(currentRow.children()[4]).html();
+      //               let ssn = $(currentRow.children()[5]).html();
+      //               let birthDate = $(currentRow.children()[6]).html();
+      //               let gender = $(currentRow.children()[7]).html();
+      //               let id = $(currentRow.children()[8]).html();
 
-                    //next we use these values to calculate the UniqueID again
-                    let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, gender);
+      //               //next we use these values to calculate the UniqueID again
+      //               let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, gender);
                     
-                    let fullMergeClientAddress = `${apiAddress}/api/Person/GetduplicatePersons/${uniqueID}`;
+      //               let fullMergeClientAddress = `${apiAddress}/api/Person/GetduplicatePersons/${uniqueID}`;
 
-                    //retrieve a merge candidate by the unique ID
-                    fetch(fullMergeClientAddress, {
-                        method: 'get',
-                        mode: 'cors',
-                        headers: {
-                          'Content-Type': 'application/json',
-                          'Authorization': 'Bearer ' + sessionStorageData.Token
-                        }
-                    }).then(result => {
-                      return result.json();
-                    }).then(result => {
+      //               //retrieve a merge candidate by the unique ID
+      //               fetch(fullMergeClientAddress, {
+      //                   method: 'get',
+      //                   mode: 'cors',
+      //                   headers: {
+      //                     'Content-Type': 'application/json',
+      //                     'Authorization': 'Bearer ' + sessionStorageData.Token
+      //                   }
+      //               }).then(result => {
+      //                 return result.json();
+      //               }).then(result => {
 
-                        if (result.length === 0) {
-                            alert("No merge candidates found");
-                            return;
-                        }
+      //                   if (result.length === 0) {
+      //                       alert("No merge candidates found");
+      //                       return;
+      //                   }
 
-                      //We only want to display records that don't match the person ID of the row clicked
-                      let mergeCandidates = result.filter(function(item) {
+      //                 //We only want to display records that don't match the person ID of the row clicked
+      //                 let mergeCandidates = result.filter(function(item) {
                         
-                        return item.ID !== parseInt(id);
-                      });
+      //                   return item.ID !== parseInt(id);
+      //                 });
 
-                      //set the selected row ID, and the ids of the merge candidates to be passed to the second (PersonIdList) parameter of the MeargePerson() in the PersonController
-                      //these IDs needs to be the ClientProfileID, not the PersonID
-                      let searchResultSelectedRowByPersonId = rows.filter(function(item) {
-                        return item.PersonID === parseInt(id);
-                      });
+      //                 //set the selected row ID, and the ids of the merge candidates to be passed to the second (PersonIdList) parameter of the MeargePerson() in the PersonController
+      //                 //these IDs needs to be the ClientProfileID, not the PersonID
+      //                 let searchResultSelectedRowByPersonId = rows.filter(function(item) {
+      //                   return item.PersonID === parseInt(id);
+      //                 });
 
-                      let selectedRowClientProfileId = searchResultSelectedRowByPersonId[0].ID;
-                      setSelectedRowClientProfileId(selectedRowClientProfileId);
+      //                 let selectedRowClientProfileId = searchResultSelectedRowByPersonId[0].ID;
+      //                 setSelectedRowClientProfileId(selectedRowClientProfileId);
                       
-                      //this will trigger the useEffect defined elsewhere. This is necessary to only show the modal window once the mergeOptions is set- 
-                      //because setMergeOptions is asynchronous
-                      setMergeOptions(mergeCandidates);
+      //                 //this will trigger the useEffect defined elsewhere. This is necessary to only show the modal window once the mergeOptions is set- 
+      //                 //because setMergeOptions is asynchronous
+      //                 setMergeOptions(mergeCandidates);
 
-                    }).catch((error) => {
-                      console.log(error);
-                      alert(error);
-                    });
+      //               }).catch((error) => {
+      //                 console.log(error);
+      //                 alert(error);
+      //               });
 
                     
-                  }
-                }
-              e.stopPropagation();
-            }}
-            title={'Check to see if this client record can be merged'}
-          >   
-          <FaExchangeAlt />
-      </button>
-      );
+      //             }
+      //           }
+      //         e.stopPropagation();
+      //       }}
+      //       title={'Check to see if this client record can be merged'}
+      //     >   
+      //     <FaExchangeAlt />
+      // </button>
+      // );
 
       const DeleteButton = ({ onExecute }) => (
         <button
@@ -290,7 +290,7 @@ const SearchJuvenile = (props) => {
       const superUserCommandComponents = {
         //add: AddButton,
         //edit: EditButton,
-        edit: MergeButton,
+        //edit: MergeButton,
         delete: DeleteButton,
         //commit: CommitButton,
         //cancel: CancelButton,
@@ -299,7 +299,7 @@ const SearchJuvenile = (props) => {
       const search21PlusCommandComponents = {
         //add: AddButton,
         //edit: EditButton,
-        edit: MergeButton,
+        //edit: MergeButton,
         delete: Search21GridDeleteButton,
         //commit: CommitButton,
         //cancel: CancelButton,
@@ -849,7 +849,7 @@ const SearchJuvenile = (props) => {
                         <PagingPanel pageSizes={pageSizes} />
                        
                         <TableEditColumn width="60"
-                        showDeleteCommand showEditCommand commandComponent={SuperUserCommand} />
+                        showDeleteCommand  commandComponent={SuperUserCommand} />
                         <TableFixedColumns 
                             rightColumns={leftFixedColumns} />
                       
