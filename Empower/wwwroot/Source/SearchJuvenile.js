@@ -53,8 +53,6 @@ const SearchJuvenile = (props) => {
 
      const [rows, setRows] = useState([]);
      const [isGridVisible, setGridVisible] = useState(false);
-     //const [canDeleteRow, setCanDeleteRow ] = useState(false);
-    // const [canMergeProfiles, setCanMergeProfiles] = useState(true);
      const [leftFixedColumns] = useState([TableEditColumn.COLUMN_TYPE]);
      const [sorting, setSorting] = useState([]);
 
@@ -71,9 +69,6 @@ const SearchJuvenile = (props) => {
      const [search21CurrentPage, setSearch21CurrentPage] = useState(0);
      const [search21PageSize, setSearch21PageSize] = useState(5);
      const [search21PageSizes] = useState([5, 10, 15]);
-
-     //const [modal, setModal] = useState(false);
-     //const [mergeOptions, setMergeOptions ] = useState([]);
 
 
      //to test the global state
