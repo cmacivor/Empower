@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { EditingState, PagingState, IntegratedPaging, RowDetailState, SortingState, IntegratedSorting } from '@devexpress/dx-react-grid';
 import { Grid, Table, TableHeaderRow, TableEditColumn, TableFixedColumns, PagingPanel, TableRowDetail } from '@devexpress/dx-react-grid-bootstrap4';
-import moment from 'moment';
+//import moment from 'moment';
 import {getSessionData } from './commonAdmin';
 import {useStore} from './StateStores/store';
-import {Toast } from 'react-bootstrap';
+//import {Toast } from 'react-bootstrap';
 import {FaTrash, FaExchangeAlt} from 'react-icons/fa';
 import { findDOMNode } from 'react-dom';
 import $ from 'jquery';
-import { GenerateUniqueID } from './NewClient';
+//import { GenerateUniqueID } from './NewClient';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { getRoles } from './Constants';
 
@@ -23,7 +23,7 @@ const SearchJuvenile = (props) => {
     const [isSearchButtonEnabled, setIsSearchButtonDisabled] = useState(true);
     //for the merge button?
     const [editingRowIds, getEditingRowIds] = useState([]);
-    const [addedRows, setAddedRows] = useState([]);
+    //const [addedRows, setAddedRows] = useState([]);
     const [rowChanges, setRowChanges] = useState({});
 
     //grid state
@@ -53,8 +53,8 @@ const SearchJuvenile = (props) => {
 
      const [rows, setRows] = useState([]);
      const [isGridVisible, setGridVisible] = useState(false);
-     const [canDeleteRow, setCanDeleteRow ] = useState(false);
-     const [canMergeProfiles, setCanMergeProfiles] = useState(true);
+     //const [canDeleteRow, setCanDeleteRow ] = useState(false);
+    // const [canMergeProfiles, setCanMergeProfiles] = useState(true);
      const [leftFixedColumns] = useState([TableEditColumn.COLUMN_TYPE]);
      const [sorting, setSorting] = useState([]);
 
@@ -72,10 +72,9 @@ const SearchJuvenile = (props) => {
      const [search21PageSize, setSearch21PageSize] = useState(5);
      const [search21PageSizes] = useState([5, 10, 15]);
 
-     const [modal, setModal] = useState(false);
-     const [mergeOptions, setMergeOptions ] = useState([]);
-     //const toggle = () => setModal(!modal);
-     //const [mergeModalTableRows, setMergeModalTableRows] = useState('');
+     //const [modal, setModal] = useState(false);
+     //const [mergeOptions, setMergeOptions ] = useState([]);
+
 
      //to test the global state
      const {state, dispatch} = useStore();
@@ -121,7 +120,7 @@ const SearchJuvenile = (props) => {
         }
 
         
-      }, [mergeOptions] );
+      }, [] );
 
      
 
@@ -175,16 +174,6 @@ const SearchJuvenile = (props) => {
         );
       };
 
-      // const SuperUserCommand = ({ id, onExecute }) => {
-      //   const ButtonComponent = deleteCommandComponents[id];
-      //   return (
-      //     <ButtonComponent 
-      //       onExecute={onExecute}
-      //     />
-      //   );
-      // };
-
-
 
       const Search21PlusCommand = ({ id, onExecute }) => {
         const ButtonComponent = search21PlusCommandComponents[id];
@@ -214,19 +203,6 @@ const SearchJuvenile = (props) => {
 
       const commit21SearchGridChanges = ({ added, changed, deleted }) => {
         let changedRows;
-        // if (added) {
-        //   const startingAddedId = search21PlusGridRows.length > 0 ? search21PlusGridRows[rows.length - 1].id + 1 : 0;
-        //   changedRows = [
-        //     ...search21PlusGridRows,
-        //     ...added.map((row, index) => ({
-        //       id: startingAddedId + index,
-        //       ...row,
-        //     })),
-        //   ];
-        // }
-        // if (changed) {
-        //   changedRows = search21PlusGridRows.map(row => (changed[row.id] ? { ...row, ...changed[row.id] } : row));
-        // }
         if (deleted) {
             let index = deleted[0];
             let deletedRow = search21PlusGridRows[index];
@@ -241,19 +217,7 @@ const SearchJuvenile = (props) => {
 
       const commitChanges = ({ added, changed, deleted }) => {
         let changedRows;
-        // if (added) {
-        //   const startingAddedId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 0;
-        //   changedRows = [
-        //     ...rows,
-        //     ...added.map((row, index) => ({
-        //       id: startingAddedId + index,
-        //       ...row,
-        //     })),
-        //   ];
-        // }
-        // if (changed) {
-        //   changedRows = rows.map(row => (changed[row.id] ? { ...row, ...changed[row.id] } : row));
-        // }
+     
         if (deleted) {
             let index = deleted[0];
             let deletedRow = rows[index];
@@ -295,7 +259,6 @@ const SearchJuvenile = (props) => {
                      'Content-Type': 'application/json',
                      'Authorization': 'Bearer ' + sessionStorageData.Token
                  }
-                 //body: JSON.stringify(postData)
              }); 
  
              promise.then(result =>  {
@@ -549,7 +512,7 @@ const SearchJuvenile = (props) => {
                        
                 }
                 {
-                  //this grid is for Admin users. Admins can delete a row, but cannot merge.
+                  //this grid is for Admin and super users.
                     isGridVisible === true  ?
                     
                     <Grid className="card"
@@ -589,47 +552,6 @@ const SearchJuvenile = (props) => {
                       
                     </Grid> : <div></div> 
                 }
-                {/* {
-                  //this grid is forSuper users. Super users can delete and merge
-                    isGridVisible === true && isSuperUser ?
-                    
-                    <Grid className="card"
-                        rows={rows }
-                        columns={columns}
-                      >
-                      <SortingState
-                        sorting={sorting}
-                        onSortingChange={setSorting}
-                       />
-                       <IntegratedSorting />
-                      <RowDetailState/>
-                      <PagingState
-                        currentPage={currentPage}
-                        onCurrentPageChange={setCurrentPage}
-                        pageSize={pageSize}
-                        onPageSizeChange={setPageSize}
-                       />
-                       <IntegratedPaging/>
-                        <EditingState
-                            onCommitChanges={commitChanges}
-                            
-                            editingRowIds={editingRowIds}
-                            onEditingRowIdsChange={getEditingRowIds}
-                            rowChanges={rowChanges}
-                            onRowChangesChange={setRowChanges}
-                         />
-                        <Table tableComponent={TableComponent} rowComponent={TableRow}></Table>
-                        <TableHeaderRow showSortingControls />
-
-                        <PagingPanel pageSizes={pageSizes} />
-                       
-                        <TableEditColumn width="60"
-                        showDeleteCommand  commandComponent={DeleteCommand} />
-                        <TableFixedColumns 
-                            rightColumns={leftFixedColumns} />
-                      
-                    </Grid> : <div></div> 
-                } */}
                 {
                   isSearch21PlusGridVisible === true ?
 
