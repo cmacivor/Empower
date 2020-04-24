@@ -2,21 +2,16 @@ import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'rea
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useStore } from './StateStores/store';
-import SuffixDropdown from './SuffixDropdown';
-import RaceDropDown from './RaceDropdown';
-import GenderDropDown from './GenderDropdown';
 import moment from 'moment';
-import { useCacheService } from './useCacheService';
-import DropDown from './Dropdown';
-import { useForm, ErrorMessage } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Api } from './commonAdmin';
 import { GenerateUniqueID } from './NewClient';
 import { getSessionData } from './commonAdmin';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { findDOMNode } from 'react-dom';
 import $ from 'jquery';
-import {modal} from 'bootstrap/js/dist/modal';
 import {getSystems} from './Constants';
+import {modal} from 'bootstrap/js/dist/modal';
 //const {state, dispatch} = useStore();
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
@@ -54,10 +49,6 @@ const Info = forwardRef((props, ref) => {
     if (props.clientProfilePerson !== undefined) {
         //this is the Person data
         let clientInfo = props.clientProfilePerson.Person;
-        // console.log('the ClientProfile ID');
-        // console.log(props.clientProfile.ID);
-        //let clientProfileID = props.clientProfile.ID;
-       // console.log(clientProfileId);
 
         //need to create variables for each- if it's null, set to empty string for React controlled components
         clientLastName = (clientInfo.LastName !== null) ? clientInfo.LastName : '';
@@ -273,12 +264,9 @@ const Info = forwardRef((props, ref) => {
       //this is for the Merge modal
       function mergeCandidateCheckBoxClickHandler(event) {
         let $input = $(event.currentTarget.innerHTML);
-        //console.log($input.data("id"));
-
+    
         let clientProfileId = $input.data("id");
 
-        //let selectedValue = event.currentTarget.getAttribute('data-id');
-        //ergeCandidateSelections.push(selectedValue);
         mergeCandidateSelections.push(clientProfileId);
         setMergeCandidateSelections(mergeCandidateSelections);
       }
@@ -314,8 +302,6 @@ const Info = forwardRef((props, ref) => {
                 } 
     
             }).then(finalResult => {
-                //console.log('this is the final update');
-                //console.log(finalResult);
 
                 let person = finalResult.ClientProfile.Person;
                 
@@ -353,7 +339,6 @@ const Info = forwardRef((props, ref) => {
             alert('an error occurred while retrieving the Client Profile;');
         }
 
-        //toggle();
       }
 
 
@@ -1001,16 +986,6 @@ const Info = forwardRef((props, ref) => {
                 return item.ID !== parseInt(personID);
               });
 
-              //set the selected row ID, and the ids of the merge candidates to be passed to the second (PersonIdList) parameter of the MeargePerson() in the PersonController
-              //these IDs needs to be the ClientProfileID, not the PersonID
-            //   let searchResultSelectedRowByPersonId = rows.filter(function(item) {
-            //     return item.PersonID === parseInt(personID);
-            //   });
-
-            //   let selectedRowClientProfileId = searchResultSelectedRowByPersonId[0].ID;
-            //   setSelectedRowClientProfileId(selectedRowClientProfileId);
-
-
               
               //this will trigger the useEffect defined elsewhere. This is necessary to only show the modal window once the mergeOptions is set- 
               //because setMergeOptions is asynchronous
@@ -1141,7 +1116,6 @@ const Info = forwardRef((props, ref) => {
 
     return <div>
         <br></br>
-        {/* <form onSubmit={handleSubmit(updateButtonClickHandler)} className={formClass} noValidate> */}
             <div className="form-row">
                 <div className="col-3">
                     <div className="form-group">
@@ -1156,18 +1130,6 @@ const Info = forwardRef((props, ref) => {
                             required>
                         </input>
                         {hideLastNameError || <div className='errorDiv'>Please enter the last name.</div>}
-                        {/* {errors.txtLastName && <div className="invalid-feedback" >This field is required</div>} */}
-
-                        {/* <input type="text"
-                            ref={register({ required: true, maxLength: 50 })}
-                            value={lastName}
-                            onChange={e => infoTabOnChangeHandler(e, "txtLastName")}
-                            className="form-control"
-                            id="txtLastName"
-                            name="txtLastName"
-                            required>
-                        </input> */}
-
                     </div>
                 </div>
                 <div className="col-3">
@@ -1183,7 +1145,6 @@ const Info = forwardRef((props, ref) => {
                             required>
                         </input>
                         { hideFirstNameError || <div className='errorDiv'>Please enter the first name.</div> }
-                        {/* {errors.txtFirstName && <div className="invalid-feedback" >This field is required</div>} */}
                     </div>
 
                 </div>

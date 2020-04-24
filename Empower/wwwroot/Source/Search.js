@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { EditingState, PagingState, IntegratedPaging, RowDetailState, SortingState, IntegratedSorting } from '@devexpress/dx-react-grid';
 import { Grid, Table, TableHeaderRow, TableEditColumn, TableFixedColumns, PagingPanel, TableRowDetail } from '@devexpress/dx-react-grid-bootstrap4';
-import moment from 'moment';
 import {getSessionData } from './commonAdmin';
 import {useStore} from './StateStores/store';
 //import {Toast } from 'react-bootstrap';
 import {FaTrash, FaExchangeAlt} from 'react-icons/fa';
-import { getRoles } from './Constants';
 
 
 const Search = (props) => {
@@ -35,8 +33,6 @@ const Search = (props) => {
 
      const [rows, setRows] = useState([]);
      const [isGridVisible, setGridVisible] = useState(false);
-     const [canDeleteRow, setCanDeleteRow ] = useState(false);
-     const [canMergeProfiles, setCanMergeProfiles] = useState(true);
      const [leftFixedColumns] = useState([TableEditColumn.COLUMN_TYPE]);
      const [sorting, setSorting] = useState([]);
 
@@ -54,7 +50,7 @@ const Search = (props) => {
 
     
       useEffect(() => {
-        //let roles = getRoles();
+
       
       }, [] );
 
