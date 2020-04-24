@@ -84,11 +84,6 @@ const SearchJuvenile = (props) => {
       let sessionStorageData = getSessionData();
       let apiAddress = sessionStorage.getItem("baseApiAddress");
 
-      //let mergeButtonIndex = 0;
-
-      //let mergeButtonRef = React.createRef();
-
-      //if the user can see the Search21 button, they can also merge so no need to check
       const Search21GridCommandButton = ({ 
         onExecute, icon, text, hint, color,
       }) => (
@@ -162,30 +157,17 @@ const SearchJuvenile = (props) => {
         />
       );
 
-      const adminUserCommandComponents = {
+      const deleteCommandComponents = {
         delete: DeleteButton
       }
 
-      const superUserCommandComponents = {
-        //add: AddButton,
-        //edit: EditButton,
-        //edit: MergeButton,
-        delete: DeleteButton,
-        //commit: CommitButton,
-        //cancel: CancelButton,
-      };
-
+  
       const search21PlusCommandComponents = {
-        //add: AddButton,
-        //edit: EditButton,
-        //edit: MergeButton,
         delete: Search21GridDeleteButton,
-        //commit: CommitButton,
-        //cancel: CancelButton,
       };
 
-      const AdminUserCommand = ({ id, onExecute }) => {
-        const ButtonComponent = adminUserCommandComponents[id];
+      const DeleteCommand = ({ id, onExecute }) => {
+        const ButtonComponent = deleteCommandComponents[id];
         return (
           <ButtonComponent 
             onExecute={onExecute}
@@ -193,14 +175,14 @@ const SearchJuvenile = (props) => {
         );
       };
 
-      const SuperUserCommand = ({ id, onExecute }) => {
-        const ButtonComponent = superUserCommandComponents[id];
-        return (
-          <ButtonComponent 
-            onExecute={onExecute}
-          />
-        );
-      };
+      // const SuperUserCommand = ({ id, onExecute }) => {
+      //   const ButtonComponent = deleteCommandComponents[id];
+      //   return (
+      //     <ButtonComponent 
+      //       onExecute={onExecute}
+      //     />
+      //   );
+      // };
 
 
 
@@ -232,19 +214,19 @@ const SearchJuvenile = (props) => {
 
       const commit21SearchGridChanges = ({ added, changed, deleted }) => {
         let changedRows;
-        if (added) {
-          const startingAddedId = search21PlusGridRows.length > 0 ? search21PlusGridRows[rows.length - 1].id + 1 : 0;
-          changedRows = [
-            ...search21PlusGridRows,
-            ...added.map((row, index) => ({
-              id: startingAddedId + index,
-              ...row,
-            })),
-          ];
-        }
-        if (changed) {
-          changedRows = search21PlusGridRows.map(row => (changed[row.id] ? { ...row, ...changed[row.id] } : row));
-        }
+        // if (added) {
+        //   const startingAddedId = search21PlusGridRows.length > 0 ? search21PlusGridRows[rows.length - 1].id + 1 : 0;
+        //   changedRows = [
+        //     ...search21PlusGridRows,
+        //     ...added.map((row, index) => ({
+        //       id: startingAddedId + index,
+        //       ...row,
+        //     })),
+        //   ];
+        // }
+        // if (changed) {
+        //   changedRows = search21PlusGridRows.map(row => (changed[row.id] ? { ...row, ...changed[row.id] } : row));
+        // }
         if (deleted) {
             let index = deleted[0];
             let deletedRow = search21PlusGridRows[index];
@@ -259,19 +241,19 @@ const SearchJuvenile = (props) => {
 
       const commitChanges = ({ added, changed, deleted }) => {
         let changedRows;
-        if (added) {
-          const startingAddedId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 0;
-          changedRows = [
-            ...rows,
-            ...added.map((row, index) => ({
-              id: startingAddedId + index,
-              ...row,
-            })),
-          ];
-        }
-        if (changed) {
-          changedRows = rows.map(row => (changed[row.id] ? { ...row, ...changed[row.id] } : row));
-        }
+        // if (added) {
+        //   const startingAddedId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 0;
+        //   changedRows = [
+        //     ...rows,
+        //     ...added.map((row, index) => ({
+        //       id: startingAddedId + index,
+        //       ...row,
+        //     })),
+        //   ];
+        // }
+        // if (changed) {
+        //   changedRows = rows.map(row => (changed[row.id] ? { ...row, ...changed[row.id] } : row));
+        // }
         if (deleted) {
             let index = deleted[0];
             let deletedRow = rows[index];
@@ -568,7 +550,7 @@ const SearchJuvenile = (props) => {
                 }
                 {
                   //this grid is for Admin users. Admins can delete a row, but cannot merge.
-                    isGridVisible === true && isAdmin ?
+                    isGridVisible === true  ?
                     
                     <Grid className="card"
                         rows={rows }
@@ -601,13 +583,13 @@ const SearchJuvenile = (props) => {
                         <PagingPanel pageSizes={pageSizes} />
                        
                          <TableEditColumn width="60"
-                        showDeleteCommand  commandComponent={AdminUserCommand} />
+                        showDeleteCommand  commandComponent={DeleteCommand} />
                         <TableFixedColumns 
                             rightColumns={leftFixedColumns} /> 
                       
                     </Grid> : <div></div> 
                 }
-                {
+                {/* {
                   //this grid is forSuper users. Super users can delete and merge
                     isGridVisible === true && isSuperUser ?
                     
@@ -642,12 +624,12 @@ const SearchJuvenile = (props) => {
                         <PagingPanel pageSizes={pageSizes} />
                        
                         <TableEditColumn width="60"
-                        showDeleteCommand  commandComponent={SuperUserCommand} />
+                        showDeleteCommand  commandComponent={DeleteCommand} />
                         <TableFixedColumns 
                             rightColumns={leftFixedColumns} />
                       
                     </Grid> : <div></div> 
-                }
+                } */}
                 {
                   isSearch21PlusGridVisible === true ?
 
