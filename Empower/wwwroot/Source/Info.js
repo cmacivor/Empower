@@ -43,7 +43,9 @@ const Info = forwardRef((props, ref) => {
     let systemID = getSessionData().SystemID;
     let systems = getSystems();
     
-
+    let genderStatuses = props.genderValues;
+    let raceStatuses = props.raceValues;
+    let suffixStatuses = props.suffixValues;
 
     //the user clicked on a row in the search grid
     if (props.clientProfilePerson !== undefined) {
@@ -123,9 +125,9 @@ const Info = forwardRef((props, ref) => {
     const [raceDdlErrorDivCss, setRaceDdlErrorDivCss] = useState('invalid-feedback');
 
     //for the dropdowns
-    const [genderValues, setGenderValues] = useState([]);
-    const [suffixValues, setSuffixValues] = useState([]);
-    const [raceValues, setRaceValues] = useState([]);
+    const [genderValues, setGenderValues] = useState(genderStatuses);
+    const [suffixValues, setSuffixValues] = useState(suffixStatuses);
+    const [raceValues, setRaceValues] = useState(raceStatuses);
 
     const [hideLastNameError, setHideLastNameError] = useState(true);
     const [hideFirstNameError, setHideFirstNameError] = useState(true);
@@ -402,56 +404,60 @@ const Info = forwardRef((props, ref) => {
           }
 
 
-        Api.getConfigDataByType("Gender").then(options => {
-            //populate the options
-            let completeOptions = addPleaseSelect(options);
-            setGenderValues(completeOptions);
+        setGenderValues(genderStatuses);
+        setSuffixValues(suffixStatuses);
+        setRaceValues(raceStatuses);
 
-            if (clientGenderID === '') {
-                return;
-            }
+        // Api.getConfigDataByType("Gender").then(options => {
+        //     //populate the options
+        //     let completeOptions = addPleaseSelect(options);
+        //     setGenderValues(completeOptions);
 
-            let selectedGenderOption = genderValues.filter(function (gender) {
-                return gender.ID === parseInt(clientGenderID);
-            });
-            setGenderDescription(selectedGenderOption[0].Description);
-            setPrevGenderDescription(selectedGenderOption[0].Description)
+        //     if (clientGenderID === '') {
+        //         return;
+        //     }
 
-        });
+        //     let selectedGenderOption = genderValues.filter(function (gender) {
+        //         return gender.ID === parseInt(clientGenderID);
+        //     });
+        //     setGenderDescription(selectedGenderOption[0].Description);
+        //     setPrevGenderDescription(selectedGenderOption[0].Description)
 
-        Api.getConfigDataByType("Suffix").then(options => {
-            let completeOptions = addPleaseSelect(options);
-            setSuffixValues(completeOptions);
+        // });
 
-            if (clientSuffixID === '') {
-                return;
-            }
+        // Api.getConfigDataByType("Suffix").then(options => {
+        //     let completeOptions = addPleaseSelect(options);
+        //     setSuffixValues(completeOptions);
 
-            let selectedSuffixOption = suffixValues.filter(function (suffix) {
-                return suffix.ID === parseInt(clientSuffixID);
-            });
+        //     if (clientSuffixID === '') {
+        //         return;
+        //     }
 
-            setSuffixDescription(selectedSuffixOption[0].Description);
-            setPrevSuffixDescription(selectedSuffixOption[0].Description)
-        });
+        //     let selectedSuffixOption = suffixValues.filter(function (suffix) {
+        //         return suffix.ID === parseInt(clientSuffixID);
+        //     });
+
+        //     setSuffixDescription(selectedSuffixOption[0].Description);
+        //     setPrevSuffixDescription(selectedSuffixOption[0].Description)
+        // });
 
 
-        Api.getConfigDataByType("Race").then(options => {
-            let completeOptions = addPleaseSelect(options);
+        // Api.getConfigDataByType("Race").then(options => {
+        //     let completeOptions = addPleaseSelect(options);
 
-            setRaceValues(completeOptions);
+        //     setRaceValues(completeOptions);
 
-            if (clientRaceID === '') {
-                return;
-            }
+        //     if (clientRaceID === '') {
+        //         return;
+        //     }
 
-            let selectedRaceOption = raceValues.filter(function (race) {
-                return race.ID === parseInt(clientRaceID);
-            });
+        //     let selectedRaceOption = raceValues.filter(function (race) {
+        //         return race.ID === parseInt(clientRaceID);
+        //     });
 
-            setRaceDescription(selectedRaceOption[0].Description);
-            setPrevRaceDescription(selectedRaceOption[0].Description);
-        });
+        //     setRaceDescription(selectedRaceOption[0].Description);
+        //     setPrevRaceDescription(selectedRaceOption[0].Description);
+        // });
 
 
         setRaceDescription(clientRaceDescription);

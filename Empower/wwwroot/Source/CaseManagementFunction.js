@@ -29,6 +29,9 @@ const CaseManagementFunction = (props) => {
 
     const [personID, setPersonID] = useState(0);
 
+    const [genderOptions, setGenderOptions] = useState([]);
+    const [raceOptions, setRaceOptions] = useState([]);
+    const [suffixOptions, setSuffixOptions] = useState([]);
     const [educationLevelsOptions, setEducationLevelOptions] = useState([]);
     const [fundingSourceOptions, setFundingSourceOptions] = useState([]);
     const [jobStatusOptions, setJobStatusOptions] = useState([]);
@@ -36,11 +39,12 @@ const CaseManagementFunction = (props) => {
     const [schoolOptions, setSchoolOptions] = useState([]);
 
     useEffect(() => {
-        //Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
-        //Api.getConfigDataByType("Race").then(races => setRaces(races));
+        Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
+        Api.getConfigDataByType("Race").then(races => setRaceOptions(races));
+        Api.getConfigDataByType("Suffix").then(suffixes => setSuffixOptions(suffixes));
         Api.getConfigDataByType("EducationLevel").then(educationLevels => setEducationLevelOptions(educationLevels));
         Api.getConfigDataByType("FundingSource").then(fundingSources => setFundingSourceOptions(fundingSources));
-        //Api.getConfigDataByType("Suffix").then(suffixes => setSuffixes(suffixes));
+        
         Api.getConfigDataByType("JobStatus").then(jobStatuses => setJobStatusOptions(jobStatuses)); 
         Api.getConfigDataByType("MaritalStatus").then(maritalStatuses => setMaritalStatusOptions(maritalStatuses));
         Api.getConfigDataByType("School").then(schools => setSchoolOptions(schools));
@@ -158,8 +162,9 @@ const CaseManagementFunction = (props) => {
                         <Info clientProfilePerson={!state.isNewClient ? clientProfile.Person :  undefined }
                          clientProfile={clientProfile.ClientProfile }  
                          ref={infoRef}
-                         genderValues={cacheService.genderValues}
-                         raceValues={cacheService.raceValues}
+                         genderValues={genderOptions }
+                         raceValues={raceOptions}
+                         suffixValues={suffixOptions}
                          createNotification={triggerToastMessage}
                          createErrorNotification={triggerErrorMessage} />                       
                     </Tab>
