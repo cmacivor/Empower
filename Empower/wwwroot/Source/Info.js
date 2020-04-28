@@ -16,7 +16,7 @@ import {modal} from 'bootstrap/js/dist/modal';
 
 //using forwardRef as described here: https://stackoverflow.com/questions/37949981/call-child-method-from-parent
 //this allows the updateBirthDate() function to be called from the CaseManagement parent component
-const Info = forwardRef((props, ref) => {
+const Info = (props, ref) => {
     //to test the global state
     const { state, dispatch } = useStore();
 
@@ -31,6 +31,7 @@ const Info = forwardRef((props, ref) => {
     let clientAlias = '';
     let clientGenderID = '';
     let clientRaceID = '';
+    let clientBirthDate;
     let utcBirthDate = new Date();
     let diffInYears = '';
     let saveButtonShow = false;
@@ -60,6 +61,7 @@ const Info = forwardRef((props, ref) => {
         clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
         clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.FBINCIC : '';
         clientStateVcin = (clientInfo.StateORVCIN !== null) ? clientInfo.StateORVCIN : '';
+        clientBirthDate = (clientInfo.DOB !== null ) ? clientInfo.DOB : new Date();
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
@@ -141,9 +143,9 @@ const Info = forwardRef((props, ref) => {
     let clientRaceDescription = 'Please Select';
 
 
-    const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
-    const [raceDescription, setRaceDescription] = useState(clientRaceDescription);
-    const [suffixDescription, setSuffixDescription] = useState(clientSuffixDescription);
+    //const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
+    //const [raceDescription, setRaceDescription] = useState(clientRaceDescription);
+    //const [suffixDescription, setSuffixDescription] = useState(clientSuffixDescription);
 
 
     //variables to hold previous state- for when a value changes
@@ -181,19 +183,19 @@ const Info = forwardRef((props, ref) => {
   
     //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
     //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
-    useImperativeHandle(ref, () => ({
-        updateBirthDate(birthDate) {
+    // useImperativeHandle(ref, () => ({
+    //     updateBirthDate(birthDate) {
 
-            let utcBirthDate = convertDateToUtcFormat(birthDate);
+    //         let utcBirthDate = convertDateToUtcFormat(birthDate);
 
-            setBirthDate(utcBirthDate);
-        },
+    //         setBirthDate(utcBirthDate);
+    //     },
 
-        //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
-        clearForm() {
-            clearFormForNewProfile();
-        }
-    }));
+    //     //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
+    //     clearForm() {
+    //         clearFormForNewProfile();
+    //     }
+    // }));
 
     function toggle() {
         $('#possibleDuplicatesModal').modal('toggle');
@@ -307,29 +309,54 @@ const Info = forwardRef((props, ref) => {
 
                 let person = finalResult.ClientProfile.Person;
                 
-                let birthDateJavascriptDateObject = new Date(person.DOB);
-                let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
-                let diffInYears = calculateAge(birthDateJavascriptDateObject);
+                //let birthDateJavascriptDateObject = new Date(person.DOB);
+                //let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
+                //let diffInYears = calculateAge(birthDateJavascriptDateObject);
+                let convertedBirthDate = moment(person.DOB).format("YYY-MM-DD");
 
-                setPersonID(person.ID);
-                setLastName(person.LastName);
-                setFirstName(person.FirstName);
-                setMiddleName(person.MiddleName);
-                setSuffixID(person.SuffixID);
-                setRaceID(person.RaceID);
-                setRaceDescription(person.Race.Description);
-                setStateVcin(person.StateORVCIN);
-                setFbiNcicNumber(person.FBINCIC);
-                setBirthDate(utcBirthDate); 
-                setGenderID(person.GenderID);
-                setGenderDescription(person.Gender.Description);
-                setCurrentAge(diffInYears);
+                //setPersonID(person.ID);
 
-                setSSN(person.SSN);
-                setCreatedDate(person.CreatedDate);
-                setCreatedBy(person.CreatedBy);
-                setUpdatedDate(new Date()); 
-                setUpdatedBy(sessionStorageData.CurrentUser);
+                $("#txtLastName").val(person.LastName);
+                $("#txtFirstName").val(person.FirstName);
+                $("#txtMiddleName").val(person.MiddleName);
+                $("#txtStateVCIN").val(person.StateORVCIN);
+                $("#txtFbiNcicNumber").val(person.FBINCIC);
+                $("#txtDateOfBirth").val(convertedBirthDate);
+                $("#txtSSN").val(person.SSN);
+
+                document.getElementById("btnDDLGender").value = person.GenderID;
+                document.getElementById("btnDDLGender").innerHTML = person.Gender.Description;
+
+                document.getElementById("btnDDLRace").value = person.RaceID;
+                document.getElementById("btnDDLRace").innerHTML = person.Race.Description;
+
+                document.getElementById("btnDDLSuffix").value = person.SuffixID;
+                document.getElementById("btnDDLSuffix").innerHTML = person.Suffix.Description;
+
+                //setLastName(person.LastName);
+                //setFirstName(person.FirstName);
+                //setMiddleName(person.MiddleName);
+                //setSuffixID(person.SuffixID);
+                //setRaceID(person.RaceID);
+                //setRaceDescription(person.Race.Description);
+                //setStateVcin(person.StateORVCIN);
+                //setFbiNcicNumber(person.FBINCIC);
+                //setBirthDate(utcBirthDate); 
+                //setGenderID(person.GenderID);
+                //setGenderDescription(person.Gender.Description);
+                
+
+                //setCurrentAge(diffInYears);
+
+                $("#hdnCreatedDate").val(person.CreatedDate);
+                $("#hdnCreatedBy").val(person.CreatedBy);
+                $("#hdnPersonID").val(person.ID);
+                $("#hdnClientProfileID").val(finalResult.ClientProfile.ID); //TODO: how to populate this?
+
+                //setCreatedDate(person.CreatedDate);
+                //setCreatedBy(person.CreatedBy);
+                //setUpdatedDate(new Date()); 
+                //setUpdatedBy(sessionStorageData.CurrentUser);
 
                 toggle();
 
@@ -347,61 +374,89 @@ const Info = forwardRef((props, ref) => {
     //this will re-render the first name, last name, middle name, etc each time something changes, but NOT the dropdown values- those are handled in the select event handlers.
     //otherwise, when a selection in the dropdown is made, the useEffect overwrites what was just selected
     useEffect(() => {
-        setFirstName(clientFirstName);
-        setLastName(clientLastName);
-        setMiddleName(clientMiddleName);
-        setSuffixID(clientSuffixID);
-        setSSN(clientSSN);
-        setGenderID(clientGenderID);
-        setRaceID(clientRaceID);
-        setJts(clienttJTS);
-        setFbiNcicNumber(clientFbiNcic);
-        setStateVcin(clientStateVcin);
-        setAlias(clientAlias);
-        setCurrentAge(diffInYears);
-        setCreatedDate(clientCreatedDate);
-        setCreatedBy(clientCreatedBy);
-        
-        setPersonID(personID);
-        setClientProfileId(cProfileId);
 
-        setIsSaveButtonVisible(false);
+        $("#txtLastName").val(clientLastName);
+        $("#txtFirstName").val(clientFirstName);
+        $("#txtMiddleName").val(clientMiddleName);
+        $("#txtSSN").val(clientSSN);
+        $("#txtFbiNcicNumber").val(clientFbiNcic);
+
+        let convertedBirthDate = moment(clientBirthDate).format('YYYY-MM-DD');  
+        $("#txtDateOfBirth").val(convertedBirthDate);
+        $("#txtAlias").val(clientAlias);
+        $("#txtStateVCIN").val(clientStateVcin);
+        $("txtJTS").val(clienttJTS);
+
+        document.getElementById("btnDDLGender").value = clientGenderID;
+        document.getElementById("btnDDLGender").innerHTML = clientGenderDescription;
+
+        document.getElementById("btnDDLRace").value = clientRaceID;
+        document.getElementById("btnDDLRace").innerHTML = clientRaceDescription;
+
+        document.getElementById("btnDDLSuffix").value = clientSuffixID;
+        document.getElementById("btnDDLSuffix").innerHTML = clientSuffixDescription;
+
+        $("#hdnCreatedDate").val(clientCreatedDate);
+        $("#hdnCreatedBy").val(clientCreatedBy);
+        $("#hdnPersonID").val(personID);
+        $("#hdnClientProfileID").val(cProfileId);
+
+        //setFirstName(clientFirstName);
+        //setLastName(clientLastName);
+        //setMiddleName(clientMiddleName);
+        //setSuffixID(clientSuffixID);
+        //setSSN(clientSSN);
+        //setGenderID(clientGenderID);
+        //setRaceID(clientRaceID);
+        //setJts(clienttJTS);
+        //setFbiNcicNumber(clientFbiNcic);
+        //setStateVcin(clientStateVcin);
+        //setAlias(clientAlias);
+        //setCurrentAge(diffInYears);
         
-        //TODO:need to update the prev variables as well for the reset button
-         setPrevFirstName(clientFirstName);
-         setPrevLastName(clientLastName);
-         setPrevMiddleName(clientMiddleName);
-         setPrevSuffixID(clientSuffixID);
-         setPrevSsn(clientSSN);
-         setPrevBirthDate(utcBirthDate);
-         setPrevJts(clienttJTS);
-         setPrevFbiNcicNumber(clientFbiNcic);
-         setPrevStateVcin(clientStateVcin);
-         setPrevGenderId(clientGenderID);
-         setPrevRaceId(clientRaceID);
-         setPrevAlias(clientAlias);
-         setPrevCreatedDate(clientCreatedDate);
-         setPrevCreatedBy(clientCreatedBy);
-         setPrevUpdatedDate(clientUpdatedDate);
-         setPrevUpdatedBy(clientUpdatedBy);
+        //setCreatedDate(clientCreatedDate);
+        //setCreatedBy(clientCreatedBy);
+        
+        //setPersonID(personID);
+        //setClientProfileId(cProfileId);
+
+        //setIsSaveButtonVisible(false);
+        
+        // //TODO:need to update the prev variables as well for the reset button
+        //  setPrevFirstName(clientFirstName);
+        //  setPrevLastName(clientLastName);
+        //  setPrevMiddleName(clientMiddleName);
+        //  setPrevSuffixID(clientSuffixID);
+        //  setPrevSsn(clientSSN);
+        //  setPrevBirthDate(utcBirthDate);
+        //  setPrevJts(clienttJTS);
+        //  setPrevFbiNcicNumber(clientFbiNcic);
+        //  setPrevStateVcin(clientStateVcin);
+        //  setPrevGenderId(clientGenderID);
+        //  setPrevRaceId(clientRaceID);h
+        //  setPrevAlias(clientAlias);
+        //  setPrevCreatedDate(clientCreatedDate);
+        //  setPrevCreatedBy(clientCreatedBy);
+        //  setPrevUpdatedDate(clientUpdatedDate);
+        //  setPrevUpdatedBy(clientUpdatedBy);
     
 
         if (state.isNewClient) {
 
-            let birthDateReset = new Date();
-            let birthDateUTC = convertDateToUtcFormat(birthDateReset);
-            setBirthDate(birthDateUTC);
+            //let birthDateReset = new Date();
+            //let birthDateUTC = convertDateToUtcFormat(birthDateReset);
+            //setBirthDate(birthDateUTC);
         } else{
-            setHideLastNameError(true);
-            setHideFirstNameError(true);
-            setHideGenderError(true);
-            setHideRaceError(true);
+            //setHideLastNameError(true);
+            //setHideFirstNameError(true);
+            //setHideGenderError(true);
+            //setHideRaceError(true);
         }
 
-        if (mergeOptions.length > 0 ) {
-            generateMergeCandidateRows(mergeOptions, "mergeTable");
-            toggleMergeCandidatesModal();
-          }
+        // if (mergeOptions.length > 0 ) {
+        //     generateMergeCandidateRows(mergeOptions, "mergeTable");
+        //     toggleMergeCandidatesModal();
+        //   }
 
 
         setGenderValues(genderStatuses);
@@ -460,12 +515,12 @@ const Info = forwardRef((props, ref) => {
         // });
 
 
-        setRaceDescription(clientRaceDescription);
-        setGenderDescription(clientGenderDescription);
-        setRaceDescription(clientRaceDescription);
+        //setRaceDescription(clientRaceDescription);
+        //setGenderDescription(clientGenderDescription);
+        //setRaceDescription(clientRaceDescription);
 
 
-    }, [clientFirstName, clientLastName, clientRaceDescription, clientGenderDescription, mergeOptions]); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+    }); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
 
     function calculateAge(birthDate) {
         let difference = moment(new Date()).diff(birthDate);
@@ -474,19 +529,19 @@ const Info = forwardRef((props, ref) => {
         return diffInYears;
     }
 
-    function addPleaseSelect(options) {
-        let pleaseSelectItem = {
-            Name: "PleaseSelect",
-            Description: "Please Select",
-            Active: true,
-            ID: 0,
-            CreatedDate: new Date()
-        }
+    // function addPleaseSelect(options) {
+    //     let pleaseSelectItem = {
+    //         Name: "PleaseSelect",
+    //         Description: "Please Select",
+    //         Active: true,
+    //         ID: 0,
+    //         CreatedDate: new Date()
+    //     }
 
-        options.splice(0, 0, pleaseSelectItem);
+    //     options.splice(0, 0, pleaseSelectItem);
 
-        return options;
-    }
+    //     return options;
+    // }
 
     function convertDateToUtcFormat(date) {
         let birthDateJavascriptDateObject = new Date(date);
@@ -495,54 +550,54 @@ const Info = forwardRef((props, ref) => {
         return utcBirthDate;
     }
 
-    function infoTabOnChangeHandler(e, field) {
-        setResetButtonDisabled(false);
+    // function infoTabOnChangeHandler(e, field) {
+    //     setResetButtonDisabled(false);
 
-        if (field === "txtLastName") {
-            setLastName(e.target.value);
-            setHideLastNameError(true);
-        }
+    //     if (field === "txtLastName") {
+    //         setLastName(e.target.value);
+    //         setHideLastNameError(true);
+    //     }
 
-        if (field === "txtFirstName") {
-            setFirstName(e.target.value);
-            setHideFirstNameError(true);
-        }
+    //     if (field === "txtFirstName") {
+    //         setFirstName(e.target.value);
+    //         setHideFirstNameError(true);
+    //     }
 
-        if (field === "txtMiddleName") {
-            setMiddleName(e.target.value);
-        }
+    //     if (field === "txtMiddleName") {
+    //         setMiddleName(e.target.value);
+    //     }
 
-        if (field === "txtSSN") {
-            const ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
-            const isValidSsn = ssnRegex.test(e.target.value);
-            if (!isValidSsn) {
-                setSsnRequired(true);
-                setErroDivCss('invalid-feedback d-block');
-            } else {
-                setSsnRequired(undefined);
-                setErroDivCss('invalid-feedback');
-            }
+    //     if (field === "txtSSN") {
+    //         const ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
+    //         const isValidSsn = ssnRegex.test(e.target.value);
+    //         if (!isValidSsn) {
+    //             setSsnRequired(true);
+    //             setErroDivCss('invalid-feedback d-block');
+    //         } else {
+    //             setSsnRequired(undefined);
+    //             setErroDivCss('invalid-feedback');
+    //         }
 
-            setSSN(e.target.value);
-        }
+    //         setSSN(e.target.value);
+    //     }
 
-        if (field === "txtFbiNcicNumber") {
-            setFbiNcicNumber(e.target.value);
-        }
+    //     if (field === "txtFbiNcicNumber") {
+    //         setFbiNcicNumber(e.target.value);
+    //     }
 
-        if (field === "txtStateVCIN") {
-            setStateVcin(e.target.value);
-        }
+    //     if (field === "txtStateVCIN") {
+    //         setStateVcin(e.target.value);
+    //     }
 
-        if (field === "txtJTS") {
-            setJts(e.target.value);
-            setHideJTSError(true);
-        }
+    //     if (field === "txtJTS") {
+    //         setJts(e.target.value);
+    //         setHideJTSError(true);
+    //     }
 
-        if (field === "txtAlias") {
-            setAlias(e.target.value);
-        }
-    }
+    //     if (field === "txtAlias") {
+    //         setAlias(e.target.value);
+    //     }
+    // }
 
     function isValidDate(d) {
         let dateObject = new Date(d.date);
@@ -551,28 +606,28 @@ const Info = forwardRef((props, ref) => {
 
 
 
-    function handleDatePickerChange(birthDate) {
+    // function handleDatePickerChange(birthDate) {
 
-        if (birthDate.date === null) {
-            return;
-        }
+    //     if (birthDate.date === null) {
+    //         return;
+    //     }
 
-        let isValid = isDateofBirthValid(birthDate);
+    //     let isValid = isDateofBirthValid(birthDate);
 
-        if (!isValid) {
-            setBirthDateRequired(true);
-            setDobErrorDivCss('invalid-feedback d-block')
-        } else {
-            setBirthDateRequired(false);
-            setDobErrorDivCss('invalid-feedback');
-        }
+    //     if (!isValid) {
+    //         setBirthDateRequired(true);
+    //         setDobErrorDivCss('invalid-feedback d-block')
+    //     } else {
+    //         setBirthDateRequired(false);
+    //         setDobErrorDivCss('invalid-feedback');
+    //     }
 
-        setResetButtonDisabled(false);
-        setBirthDate(birthDate.date);
+    //     setResetButtonDisabled(false);
+    //     setBirthDate(birthDate.date);
 
-        let diffInYears = calculateAge(birthDate.date);
-        setCurrentAge(diffInYears);
-    }
+    //     let diffInYears = calculateAge(birthDate.date);
+    //     setCurrentAge(diffInYears);
+    // }
 
     function isDateofBirthValid(birthDate) {
 
@@ -585,56 +640,56 @@ const Info = forwardRef((props, ref) => {
         return true;
     }
 
-    function clearFormForNewProfile() {
-        setLastName('');
-        setFirstName('');
-        setMiddleName('');
-        setSSN('');
-        setSuffixID('');
-        setSuffixDescription('Please Select');
-        setGenderID('');
-        setRaceID('');
-        setRaceDescription('Please Select');
-        setGenderDescription('Please Select');
-        setFbiNcicNumber('');
-        setStateVcin('');
-        setAlias('');
-        setPersonID('');
-        setJts('');
-        setBirthDate(new Date());
-        setCreatedDate('');
-        setCreatedBy('');
-        setUpdatedDate('');
-        setUpdatedBy('');
-    }
+    // function clearFormForNewProfile() {
+    //     setLastName('');
+    //     setFirstName('');
+    //     setMiddleName('');
+    //     setSSN('');
+    //     setSuffixID('');
+    //     setSuffixDescription('Please Select');
+    //     setGenderID('');
+    //     setRaceID('');
+    //     setRaceDescription('Please Select');
+    //     setGenderDescription('Please Select');
+    //     setFbiNcicNumber('');
+    //     setStateVcin('');
+    //     setAlias('');
+    //     setPersonID('');
+    //     setJts('');
+    //     setBirthDate(new Date());
+    //     setCreatedDate('');
+    //     setCreatedBy('');
+    //     setUpdatedDate('');
+    //     setUpdatedBy('');
+    // }
 
 
     function resetForm() {
-        setLastName(prevLastName);
-        setFirstName(prevFirstName);
-        setMiddleName(prevMiddleName);
-        setSuffixID(prevSuffixID);
-        setSuffixDescription(prevSuffixDescription);
-        setSSN(prevSsn);
+        // setLastName(prevLastName);
+        // setFirstName(prevFirstName);
+        // setMiddleName(prevMiddleName);
+        // setSuffixID(prevSuffixID);
+        // setSuffixDescription(prevSuffixDescription);
+        // setSSN(prevSsn);
 
-        setBirthDate(prevBirthDate);
-        setJts(prevJts);
-        setFbiNcicNumber(prevFbiNcicNumber);
-        setStateVcin(prevStateVcin);
-        setAlias(prevAlias);
+        // setBirthDate(prevBirthDate);
+        // setJts(prevJts);
+        // setFbiNcicNumber(prevFbiNcicNumber);
+        // setStateVcin(prevStateVcin);
+        // setAlias(prevAlias);
 
-        setGenderID(prevGenderID);
-        setSuffixID(prevSuffixID);
-        setRaceID(prevRaceID);
-        setGenderDescription(prevGenderDescription);
-        setRaceDescription(prevRaceDescription);
+        // setGenderID(prevGenderID);
+        // setSuffixID(prevSuffixID);
+        // setRaceID(prevRaceID);
+        // setGenderDescription(prevGenderDescription);
+        // setRaceDescription(prevRaceDescription);
 
-        setCreatedDate(prevCreatedDate);
-        setCreatedBy(prevCreatedBy);
-        setUpdatedDate(prevUpdatedDate);
-        setUpdatedBy(prevUpdatedBy);
+        // setCreatedDate(prevCreatedDate);
+        // setCreatedBy(prevCreatedBy);
+        // setUpdatedDate(prevUpdatedDate);
+        // setUpdatedBy(prevUpdatedBy);
         
-        setPersonID(prevID);
+        // setPersonID(prevID);
     }
 
 
@@ -642,38 +697,52 @@ const Info = forwardRef((props, ref) => {
 
         setFormClass('needs-validation was-validated');
 
+        let lastName = $("#txtLastName").val();
+        let firstName = $("#txtFirstName").val();
+        let middleName = $("#txtMiddleName").val();
+        let raceID = document.getElementById("btnDDLRace").value;
+        let genderID = document.getElementById("btnDDLGender").value;
+        let suffixID = document.getElementById("btnDDLSuffix").value;
+        let stateVcin = $("#txtStateVCIN").val();
+        let jts = $("#txtJTS").val();
+        let fbiNcicNumber = $("#txtFbiNcicNumber").val();
+        let alias = $("#txtAlias").val();
+        let ssn = $("#txtSSN").val();
+        
         //validate first and last name
         if (lastName === '') {
-            setHideLastNameError(false);
+            //setHideLastNameError(false);
         }
 
-        if (lastName === '') {
-            setHideFirstNameError(false);
+        if (firstName === '') {
+            //setHideFirstNameError(false);
         }
 
         //validate the dropdowns
-        if (raceID === '') {
-            setHideRaceError(false);
+        if (raceID === 'Please Select') {
+            //setHideRaceError(false);
         }
 
-        if (genderID === '') {
-            setHideGenderError(false);
+        if (genderID === 'Please Select') {
+            //setHideGenderError(false);
         }
 
+        //TODO: is JTS required?
         if (jts === '') {
-            setHideJTSError(false);
+            //setHideJTSError(false);
         }
 
         //need to convert the birthDate a date object first
-        let birthDateObj = new Date(birthDate);
+        //let birthDateObj = new Date(birthDate);
+        let birthDate = new Date($("#txtBirthDate").val());
 
-        let isBirthDateValid = isDateofBirthValid(birthDateObj);
+        let isBirthDateValid = isDateofBirthValid(birthDate);
         if (!isBirthDateValid) {
-            setBirthDateRequired(true);
-            setDobErrorDivCss('invalid-feedback d-block')
+            //setBirthDateRequired(true);
+            //setDobErrorDivCss('invalid-feedback d-block')
         } else {
-            setBirthDateRequired(false);
-            setDobErrorDivCss('invalid-feedback');
+            //setBirthDateRequired(false);
+            //setDobErrorDivCss('invalid-feedback');
         }
 
         //need to check last name, first name, date of birth, race/ethnicity, and gender
@@ -735,10 +804,10 @@ const Info = forwardRef((props, ref) => {
                 })
             }
 
-            setHideRaceError(true);
-            setHideGenderError(true);
-            setHideLastNameError(true);
-            setHideFirstNameError(true);
+            //setHideRaceError(true);
+            //setHideGenderError(true);
+            //setHideLastNameError(true);
+            //setHideFirstNameError(true);
         }
     }
 
@@ -818,6 +887,11 @@ const Info = forwardRef((props, ref) => {
         .then(result => result.json())
         .then(savedPersonResult => {
 
+            if (savedPersonResult === null) {
+                props.createErrorNotification("An error occurred while saving the record.");
+                return;
+            }
+
             if (savedPersonResult === "SSN" || savedPersonResult === "JTS") {
                 handleJTSOrSSNError(savedPersonResult);
                 return;
@@ -853,24 +927,26 @@ const Info = forwardRef((props, ref) => {
                 let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
                 let diffInYears = calculateAge(birthDateJavascriptDateObject);
 
-                setLastName(savedPersonResult.Person.LastName);
-                setFirstName(savedPersonResult.Person.FirstName);
-                setMiddleName(savedPersonResult.Person.MiddleName);
-                setSuffixID(savedPersonResult.Person.SuffixID);
-                setSSN(savedPersonResult.Person.SSN);
-                setFbiNcicNumber(savedPersonResult.Person.FBINCIC);
-                setJts(savedPersonResult.Person.JTC);
-                setBirthDate(utcBirthDate);
-                setStateVcin(savedPersonResult.Person.StateORVCIN);
-                setAlias(savedPersonResult.Person.Alias);
-                setGenderID(savedPersonResult.Person.GenderID);
-                setRaceID(savedPersonResult.Person.RaceID);
-                setCurrentAge(diffInYears);
-                setPersonID(savedPersonResult.PersonID);
-                setCreatedDate(savedPersonResult.Person.CreatedDate);
-                setCreatedBy(savedPersonResult.Person.CreatedBy);
-                setUpdatedDate(savedPersonResult.Person.UpdatedDate);
-                setUpdatedBy(savedPersonResult.Person.UpdatedBy);
+            
+
+                //setLastName(savedPersonResult.Person.LastName);
+                //setFirstName(savedPersonResult.Person.FirstName);
+                //setMiddleName(savedPersonResult.Person.MiddleName);
+                // setSuffixID(savedPersonResult.Person.SuffixID);
+                // setSSN(savedPersonResult.Person.SSN);
+                // setFbiNcicNumber(savedPersonResult.Person.FBINCIC);
+                // setJts(savedPersonResult.Person.JTC);
+                // setBirthDate(utcBirthDate);
+                // setStateVcin(savedPersonResult.Person.StateORVCIN);
+                // setAlias(savedPersonResult.Person.Alias);
+                // setGenderID(savedPersonResult.Person.GenderID);
+                // setRaceID(savedPersonResult.Person.RaceID);
+                // setCurrentAge(diffInYears);
+                // setPersonID(savedPersonResult.PersonID);
+                // setCreatedDate(savedPersonResult.Person.CreatedDate);
+                // setCreatedBy(savedPersonResult.Person.CreatedBy);
+                // setUpdatedDate(savedPersonResult.Person.UpdatedDate);
+                // setUpdatedBy(savedPersonResult.Person.UpdatedBy);
 
                 //saveButtonShow = false;
                 setIsSaveButtonVisible(false);
@@ -882,6 +958,20 @@ const Info = forwardRef((props, ref) => {
     }
 
     function createNewClientFromDuplicateModal() {
+
+        let lastName = $("#txtLastName").val();
+        let firstName = $("#txtFirstName").val();
+        let middleName = $("#txtMiddleName").val();
+        let raceID = document.getElementById("btnDDLRace").value;
+        let genderID = document.getElementById("btnDDLGender").value;
+        let suffixID = document.getElementById("btnDDLSuffix").value;
+        let stateVcin = $("#txtStateVCIN").val();
+        let jts = $("#txtJTS").val();
+        let fbiNcicNumber = $("#txtFbiNcicNumber").val();
+        let alias = $("#txtAlias").val();
+        let ssn = $("#txtSSN").val();
+        let birthDate = new Date($("#txtBirthDate").val());
+
         let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
 
         let sessionStorageData = getSessionData();
@@ -916,52 +1006,75 @@ const Info = forwardRef((props, ref) => {
     function onSelectGenderHandler(event) {
 
         let selectedValue = event.currentTarget.getAttribute('value');
-        setGenderID(selectedValue);
+        //setGenderID(selectedValue);
 
         let selectedGenderOption = genderValues.filter(function (gender) {
             return gender.ID === parseInt(selectedValue)
         });
 
-        setGenderDescription(selectedGenderOption[0].Description);
+        document.getElementById("btnDDLGender").value = selectedValue;
+        document.getElementById("btnDDLGender").innerHTML = selectedGenderOption[0].Description;
+        //setGenderDescription(selectedGenderOption[0].Description);
 
-        if (selectedValue !== '' && parseInt(selectedValue) !== 0) {
-            setHideGenderError(true);
-        } else {
-            setHideGenderError(false);
-        }
+        // if (selectedValue !== '' && parseInt(selectedValue) !== 0) {
+        //     setHideGenderError(true);
+        // } else {
+        //     setHideGenderError(false);
+        // }
 
     }
 
     function onSelectSuffixHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-        setSuffixID(selectedValue);
+        //setSuffixID(selectedValue);
+
 
         let selectedSuffixOption = suffixValues.filter(function (suffix) {
             return suffix.ID === parseInt(selectedValue)
         });
 
-        setSuffixDescription(selectedSuffixOption[0].Description);
+        //setSuffixDescription(selectedSuffixOption[0].Description);
+
+        document.getElementById("btnDDLSuffix").value = selectedValue;
+        document.getElementById("btnDDLSuffix").innerHTML = selectedSuffixOption[0].Description;
     }
 
     function onSelectRaceHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-        setRaceID(selectedValue);
+        //setRaceID(selectedValue);
 
         let selectedRaceOption = raceValues.filter(function (race) {
             return race.ID === parseInt(selectedValue);
         });
 
-        setRaceDescription(selectedRaceOption[0].Description);
+        document.getElementById("btnDDLRace").value = selectedValue;
+        document.getElementById("btnDDLRace").innerHTML = selectedRaceOption[0].Description;
 
-        if (selectedValue !== '' && parseInt(selectedValue) !== 0) {
-            setHideRaceError(true);
-        } else {
-            setHideRaceError(false);
-        }
+        //setRaceDescription(selectedRaceOption[0].Description);
+
+        // if (selectedValue !== '' && parseInt(selectedValue) !== 0) {
+        //     setHideRaceError(true);
+        // } else {
+        //     setHideRaceError(false);
+        // }
 
     }
 
     function getMergeCandidates() {
+
+        let lastName = $("#txtLastName").val();
+        let firstName = $("#txtFirstName").val();
+        let middleName = $("#txtMiddleName").val();
+        //let raceID = document.getElementById("btnDDLRace").value;
+        let genderID = document.getElementById("btnDDLGender").value;
+        //let suffixID = document.getElementById("btnDDLSuffix").value;
+        //let stateVcin = $("#txtStateVCIN").val();
+        //let jts = $("#txtJTS").val();
+        //let fbiNcicNumber = $("#txtFbiNcicNumber").val();
+        //let alias = $("#txtAlias").val();
+        //let ssn = $("#txtSSN").val();
+        let birthDate = new Date($("#txtBirthDate").val());
+
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
         let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
@@ -1079,15 +1192,15 @@ const Info = forwardRef((props, ref) => {
         jtsOrVcin =  <div className="col-3">
             <label htmlFor="txtStateVCIN"><strong>State/VCIN Number</strong></label>
             <div className="input-group mb-3">
-                <input type="text" value={stateVcin} onChange={e => infoTabOnChangeHandler(e, "txtStateVCIN")} className="form-control" id="txtStateVCIN"></input>
+                <input type="text" defaultValue="" className="form-control" id="txtStateVCIN"></input>
             </div>
         </div>;
     } else {
         jtsOrVcin =  <div className="col-3">
                 <label htmlFor="txtJTS"><strong>JTS Number *</strong> </label>
                 <div className="input-group mb-3">
-                    <input type="text" ref={register({ required: true, maxLength: 50 })} value={jts} onChange={e => infoTabOnChangeHandler(e, "txtJTS")} className="form-control" id="txtJTS" name="txtJTS" required></input>
-                    {hideJTSError || <div className='errorDiv'>Please enter the JTS number.</div>}
+                    <input type="text" defaultValue="" className="form-control" id="txtJTS" name="txtJTS" required></input>
+                    {/* {hideJTSError || <div className='errorDiv'>Please enter the JTS number.</div>} */}
                 </div>
             </div>;
     }
@@ -1122,35 +1235,35 @@ const Info = forwardRef((props, ref) => {
 
     return <div>
         <br></br>
+            <input type="hidden" id="hdnCreatedDate" value=""/>
+            <input type="hidden" id="hdnCreatedBy" value="" />
+            <input type="hidden" id="hdnPersonID" value="" />
+            <input type="hidden" id="hdnClientProfileID" value="" />
             <div className="form-row">
                 <div className="col-3">
                     <div className="form-group">
                         <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
                         <input type="text"
-                           
-                            value={lastName}
-                            onChange={e => infoTabOnChangeHandler(e, "txtLastName")}
+                            defaultValue=""
                             className="form-control"
                             id="txtLastName"
                             name="txtLastName"
                             required>
                         </input>
-                        {hideLastNameError || <div className='errorDiv'>Please enter the last name.</div>}
+                        {/* {hideLastNameError || <div className='errorDiv'>Please enter the last name.</div>} */}
                     </div>
                 </div>
                 <div className="col-3">
                     <div className="form-group">
                         <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
                         <input type="text"
-                            ref={register({ required: true, maxLength: 50 })}
-                            value={firstName}
-                            onChange={e => infoTabOnChangeHandler(e, "txtFirstName")}
+                            defaultValue=""
                             className="form-control"
                             id="txtFirstName"
                             name="txtFirstName"
                             required>
                         </input>
-                        { hideFirstNameError || <div className='errorDiv'>Please enter the first name.</div> }
+                        {/* { hideFirstNameError || <div className='errorDiv'>Please enter the first name.</div> } */}
                     </div>
 
                 </div>
@@ -1158,22 +1271,20 @@ const Info = forwardRef((props, ref) => {
                     <div className="form-group">
                         <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
                         <input type="text"
-                            ref={register({ maxLength: 50 })}
-                            value={middleName}
-                            onChange={e => infoTabOnChangeHandler(e, "txtMiddleName")}
+                            defaultValue=""
                             className="form-control"
                             id="txtMiddleName"
                             name="txtMiddleName">
                         </input>
-                        {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div>}
+                        {/* {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div>} */}
                     </div>
 
                 </div>
                 <div className="col-3">
                     <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
                     <div className="dropdown">
-                        <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            {suffixDescription}
+                        <button type="button" id="btnDDLSuffix" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            
                         </button>
                         <div className="dropdown-menu">
                             {suffixValueOptions}
@@ -1186,14 +1297,13 @@ const Info = forwardRef((props, ref) => {
                     <div className="form-group">
                         <label htmlFor="txtSSN"><strong> SSN</strong></label>
                         <input type="text"
-                            value={ssn}
-                            onChange={e => infoTabOnChangeHandler(e, "txtSSN")}
+                            defaultValue=""
                             className="form-control"
                             id="txtSSN"
                             name="txtSSN"
-                            required={isSsnRequired}>
+                            required>
                         </input>
-                        <div className={errorDivCss}>Please enter the SSN in a valid format.</div>
+                        {/* <div className={errorDivCss}>Please enter the SSN in a valid format.</div> */}
                     </div>
                 </div>
                 {
@@ -1202,8 +1312,7 @@ const Info = forwardRef((props, ref) => {
                         <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
                         <div className="input-group mb-3">
                             <input type="text"
-                                value={fbiNcicNumber}
-                                onChange={e => infoTabOnChangeHandler(e, "txtFbiNcicNumber")}
+                                defaultValue=""
                                 className="form-control"
                                 id="txtFbiNcicNumber">
                             </input>
@@ -1220,14 +1329,15 @@ const Info = forwardRef((props, ref) => {
                 <div className="col-3">
                     <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                     <div className="input-group mb-3">
-                        <DatePicker
+                        <input type="date" defaultValue="" required id="txtBirthDate" className="form-control"></input>
+                        {/* <DatePicker
                             selected={birthDate}
                             required={isBirthDateRequired}
                             onChange={date => handleDatePickerChange({ date })}
                             className="form-control"
                             strictParsing
                         />
-                        <div className={dobErrorDivCss}>Please enter a valid birth date.</div>
+                        <div className={dobErrorDivCss}>Please enter a valid birth date.</div> */}
                     </div>
                 </div>
             </div>
@@ -1238,7 +1348,7 @@ const Info = forwardRef((props, ref) => {
                     <div className="col-2">
                         <label htmlFor="txtAlias"><strong>Alias</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" value={alias} onChange={e => infoTabOnChangeHandler(e, "txtAlias")} className="form-control" id="txtAlias"></input>
+                            <input type="text" defaultValue="" className="form-control" id="txtAlias"></input>
                         </div>
                     </div> : <div></div>
                 }
@@ -1246,8 +1356,8 @@ const Info = forwardRef((props, ref) => {
                 <div className="col-2">
                     <label htmlFor="ddlGender"><strong>Gender*</strong></label>
                     <div className="dropdown">
-                        <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            {genderDescription}
+                        <button type="button" id="btnDDLGender" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            
                         </button>
                         <div className="dropdown-menu">
                             {genderValueOptions}
@@ -1258,8 +1368,8 @@ const Info = forwardRef((props, ref) => {
                 <div className="col-4">
                     <label><strong>Race/Ethnicity*</strong></label>
                     <div className="dropdown">
-                        <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            {raceDescription}
+                        <button type="button" id="btnDDLRace" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            
                         </button>
                         <div className="dropdown-menu">
                             {raceValueOptions}
@@ -1343,6 +1453,6 @@ const Info = forwardRef((props, ref) => {
             </div>
     </div>;
 
-});
+};
 
 export default Info;

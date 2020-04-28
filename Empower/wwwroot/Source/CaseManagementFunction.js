@@ -22,7 +22,7 @@ const CaseManagementFunction = (props) => {
     const [activeTab, setActiveTab] = useState("search");
     const [clientProfile, setClientProfile] = useState(Object);
     const [ isSpinnerVisible, setIsSpinnerVisible ] = useState(false);
-    const infoRef = useRef();
+    //const infoRef = useRef();
     const supplementalRef = useRef();
     const cacheService = useCacheService();
     const {state, dispatch} = useStore();
@@ -94,7 +94,7 @@ const CaseManagementFunction = (props) => {
       setActiveTab(key);
     
       if (state.isNewClient) {
-          infoRef.current.clearForm();
+          //infoRef.current.clearForm();
       }
 
     }
@@ -115,7 +115,7 @@ const CaseManagementFunction = (props) => {
         setPersonID(clientProfile.ClientProfile.Person.ID);
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
-        infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
+        //infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
     }
 
     let infoTabTitle = '';
@@ -161,7 +161,7 @@ const CaseManagementFunction = (props) => {
                     <Tab eventKey="participantinfo" title={infoTabTitle} disabled={isTabDisabled}>
                         <Info clientProfilePerson={!state.isNewClient ? clientProfile.Person :  undefined }
                          clientProfile={clientProfile.ClientProfile }  
-                         ref={infoRef}
+                        
                          genderValues={genderOptions }
                          raceValues={raceOptions}
                          suffixValues={suffixOptions}
