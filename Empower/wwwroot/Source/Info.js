@@ -111,10 +111,10 @@ const Info = (props, ref) => {
     // const [genderID, setGenderID] = useState(clientGenderID);
     // const [raceID, setRaceID] = useState(clientRaceID);
     //const [currentAge, setCurrentAge] = useState(diffInYears);
-    const [ID, setPersonID] = useState(personID);
-    const [clientProfileId, setClientProfileId] = useState(cProfileId);
-    const [createdDate, setCreatedDate] = useState(clientCreatedDate);
-    const [createdBy, setCreatedBy] = useState(clientCreatedBy);
+    //const [ID, setPersonID] = useState(personID);
+    //const [clientProfileId, setClientProfileId] = useState(cProfileId);
+    //const [createdDate, setCreatedDate] = useState(clientCreatedDate);
+    //const [createdBy, setCreatedBy] = useState(clientCreatedBy);
     //const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
     //const [updatedBy, setUpdatedBy] = useState(clientUpdatedBy);
 
@@ -331,13 +331,23 @@ const Info = (props, ref) => {
                 $("#txtSSN").val(person.SSN);
 
                 document.getElementById("btnDDLGender").value = person.GenderID;
-                document.getElementById("btnDDLGender").innerHTML = person.Gender.Description;
+
+                if (person.Gender !== null) {
+                    document.getElementById("btnDDLGender").innerHTML = person.Gender.Description;
+                }
 
                 document.getElementById("btnDDLRace").value = person.RaceID;
-                document.getElementById("btnDDLRace").innerHTML = person.Race.Description;
+
+                if (person.Race !== null) {
+                    document.getElementById("btnDDLRace").innerHTML = person.Race.Description;
+                }
 
                 document.getElementById("btnDDLSuffix").value = person.SuffixID;
-                document.getElementById("btnDDLSuffix").innerHTML = person.Suffix.Description;
+
+                if (person.Suffix !== null) {
+                    document.getElementById("btnDDLSuffix").innerHTML = person.Suffix.Description;
+                }
+
 
                 //setLastName(person.LastName);
                 //setFirstName(person.FirstName);
@@ -366,7 +376,7 @@ const Info = (props, ref) => {
 
                 toggle();
 
-            });
+            }, [mergeOptions, mergeCandidateSelections]);
         }
         catch(error)
         {
@@ -706,7 +716,7 @@ const Info = (props, ref) => {
         
 
                 //saveButtonShow = false;
-                setIsSaveButtonVisible(false);
+                //setIsSaveButtonVisible(false);
                 
                 props.createNotification('The client profile was successfully created.');
             });
@@ -883,8 +893,10 @@ const Info = (props, ref) => {
         let deleteMergedClientProfilesAddress = `${apiAddress}/api/ClientProfile/DeleteMultipleClients`
 
         //the id parameter here is the ClientProfileID of the currently selected person. The PersonIdList are the people being merged into the current record.
+        let hdnClientProfileID = $("#hdnClientProfileID").val();
+
         let postData = {
-            id: clientProfileId,
+            id: hdnClientProfileID,
             PersonIdList: mergeCandidateSelections
         }
 
