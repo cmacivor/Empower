@@ -186,22 +186,12 @@ const Info = (props, ref) => {
 
     const [formClass, setFormClass] = useState('needs-validation');
     
-  
-    //see note at the top- this method is being called from the CaseManagement function. the ref and useImperativeHandle are necessary for this to work
-    //because the DatePicker is not a function component, we have to update the date of birth field this way. Doing it in useEffect() creates an endless loop- this is a quirk of React Hooks
-    // useImperativeHandle(ref, () => ({
-    //     updateBirthDate(birthDate) {
 
-    //         let utcBirthDate = convertDateToUtcFormat(birthDate);
-
-    //         setBirthDate(utcBirthDate);
-    //     },
-
-    //     //have to wrap resetForm() because it's not accessible from the parent at all- but defining clearForm() here means that clearForm() is accessible in the parent
-    //     clearForm() {
-    //         clearFormForNewProfile();
-    //     }
-    // }));
+    if (state.isNewClient) {
+        document.getElementById("btnDDLSuffix").innerHTML = 'Please Select';
+        document.getElementById("btnDDLRace").innerHTML = 'Please Select';
+        document.getElementById("btnDDLGender").innerHTML = 'Please Select';
+    }
 
     function toggle() {
         $('#possibleDuplicatesModal').modal('toggle');
