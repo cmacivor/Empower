@@ -61,16 +61,16 @@ const Info = (props, ref) => {
         clientFirstName = (clientInfo.FirstName !== null) ? clientInfo.FirstName : '';
         clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
         clientSuffixID = (clientInfo.SuffixID !== null) ? clientInfo.SuffixID : '';
-        clientSuffixDescription = (clientInfo.Suffix.Description !== null) ? clientInfo.Suffix.Description : '';
+        clientSuffixDescription = (clientInfo.Suffix !== null) ? clientInfo.Suffix.Description : 'Please Select';
         clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
         clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.FBINCIC : '';
         clientStateVcin = (clientInfo.StateORVCIN !== null) ? clientInfo.StateORVCIN : '';
         clientBirthDate = (clientInfo.DOB !== null ) ? clientInfo.DOB : new Date();
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
-        clientGenderDescription = (clientInfo.Gender.Description !== null) ? clientInfo.Gender.Description : '';
+        clientGenderDescription = (clientInfo.Gender !== null) ? clientInfo.Gender.Description : 'Please Select';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
-        clientRaceDescription = (clientInfo.Race.Description !== null ) ? clientInfo.Race.Description : '';
+        clientRaceDescription = (clientInfo.Race !== null ) ? clientInfo.Race.Description : 'Please Select';
         clienttJTS = (clientInfo.JTS !== null) ? clientInfo.JTS : '';
         personID = (clientInfo.ID !== null) ? clientInfo.ID : '';
         cProfileId = (props.clientProfile.ID !== null) ? props.clientProfile.ID : '';
@@ -318,7 +318,8 @@ const Info = (props, ref) => {
                 //let birthDateJavascriptDateObject = new Date(person.DOB);
                 //let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
                 //let diffInYears = calculateAge(birthDateJavascriptDateObject);
-                let convertedBirthDate = moment(person.DOB).format("YYY-MM-DD");
+                let birthDateObj = new Date(person.DOB);
+                let convertedBirthDate = moment(birthDateObj).format("YYYY-MM-DD");
 
                 //setPersonID(person.ID);
 
@@ -330,19 +331,21 @@ const Info = (props, ref) => {
                 $("#txtDateOfBirth").val(convertedBirthDate);
                 $("#txtSSN").val(person.SSN);
 
-                document.getElementById("btnDDLGender").value = person.GenderID;
+                //document.getElementById("btnDDLGender").value = person.GenderID;
+                document.getElementById("btnDDLGender").value = (person.GenderID !== null ) ? person.GenderID : "";
 
                 if (person.Gender !== null) {
                     document.getElementById("btnDDLGender").innerHTML = person.Gender.Description;
                 }
 
-                document.getElementById("btnDDLRace").value = person.RaceID;
+                //document.getElementById("btnDDLRace").value = person.RaceID;
+                document.getElementById("btnDDLRace").value = (person.RaceID !== null) ? person.RaceID : '';
 
                 if (person.Race !== null) {
                     document.getElementById("btnDDLRace").innerHTML = person.Race.Description;
                 }
 
-                document.getElementById("btnDDLSuffix").value = person.SuffixID;
+                document.getElementById("btnDDLSuffix").value = (person.SuffixID !== null) ? person.SuffixID : '';
 
                 if (person.Suffix !== null) {
                     document.getElementById("btnDDLSuffix").innerHTML = person.Suffix.Description;
@@ -376,7 +379,7 @@ const Info = (props, ref) => {
 
                 toggle();
 
-            }, [mergeOptions, mergeCandidateSelections]);
+            });
         }
         catch(error)
         {
