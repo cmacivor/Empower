@@ -24,13 +24,16 @@ const Info = (props, ref) => {
     let clientFirstName = '';
     let clientMiddleName = '';
     let clientSuffixID = '';
+    let clientSuffixDescription = '';
     let clientSSN = '';
     let clientFbiNcic = '';
     let clienttJTS = '';
     let clientStateVcin = '';
     let clientAlias = '';
     let clientGenderID = '';
+    let clientGenderDescription = ''
     let clientRaceID = '';
+    let clientRaceDescription = '';
     let clientBirthDate;
     let utcBirthDate = new Date();
     let diffInYears = '';
@@ -58,13 +61,16 @@ const Info = (props, ref) => {
         clientFirstName = (clientInfo.FirstName !== null) ? clientInfo.FirstName : '';
         clientMiddleName = (clientInfo.MiddleName !== null) ? clientInfo.MiddleName : '';
         clientSuffixID = (clientInfo.SuffixID !== null) ? clientInfo.SuffixID : '';
+        clientSuffixDescription = (clientInfo.Suffix.Description !== null) ? clientInfo.Suffix.Description : '';
         clientSSN = (clientInfo.SSN !== null) ? clientInfo.SSN : '';
         clientFbiNcic = (clientInfo.FBINCIC !== null) ? clientInfo.FBINCIC : '';
         clientStateVcin = (clientInfo.StateORVCIN !== null) ? clientInfo.StateORVCIN : '';
         clientBirthDate = (clientInfo.DOB !== null ) ? clientInfo.DOB : new Date();
         clientAlias = (clientInfo.Alias !== null) ? clientInfo.Alias : '';
         clientGenderID = (clientInfo.GenderID !== null) ? clientInfo.GenderID : '';
+        clientGenderDescription = (clientInfo.Gender.Description !== null) ? clientInfo.Gender.Description : '';
         clientRaceID = (clientInfo.RaceID !== null) ? clientInfo.RaceID : '';
+        clientRaceDescription = (clientInfo.Race.Description !== null ) ? clientInfo.Race.Description : '';
         clienttJTS = (clientInfo.JTS !== null) ? clientInfo.JTS : '';
         personID = (clientInfo.ID !== null) ? clientInfo.ID : '';
         cProfileId = (props.clientProfile.ID !== null) ? props.clientProfile.ID : '';
@@ -138,9 +144,9 @@ const Info = (props, ref) => {
     const [hideJTSError, setHideJTSError] = useState(true);
 
 
-    let clientSuffixDescription = 'Please Select';
-    let clientGenderDescription = 'Please Select';
-    let clientRaceDescription = 'Please Select';
+    //let clientSuffixDescription = 'Please Select';
+    //let clientGenderDescription = 'Please Select';
+    //let clientRaceDescription = 'Please Select';
 
 
     //const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
