@@ -110,7 +110,7 @@ const Info = (props, ref) => {
     // const [alias, setAlias] = useState(clientAlias);
     // const [genderID, setGenderID] = useState(clientGenderID);
     // const [raceID, setRaceID] = useState(clientRaceID);
-    const [currentAge, setCurrentAge] = useState(diffInYears);
+    //const [currentAge, setCurrentAge] = useState(diffInYears);
     const [ID, setPersonID] = useState(personID);
     const [clientProfileId, setClientProfileId] = useState(cProfileId);
     const [createdDate, setCreatedDate] = useState(clientCreatedDate);
@@ -408,123 +408,10 @@ const Info = (props, ref) => {
         $("#hdnPersonID").val(personID);
         $("#hdnClientProfileID").val(cProfileId);
 
-        //setFirstName(clientFirstName);
-        //setLastName(clientLastName);
-        //setMiddleName(clientMiddleName);
-        //setSuffixID(clientSuffixID);
-        //setSSN(clientSSN);
-        //setGenderID(clientGenderID);
-        //setRaceID(clientRaceID);
-        //setJts(clienttJTS);
-        //setFbiNcicNumber(clientFbiNcic);
-        //setStateVcin(clientStateVcin);
-        //setAlias(clientAlias);
-        //setCurrentAge(diffInYears);
-        
-        //setCreatedDate(clientCreatedDate);
-        //setCreatedBy(clientCreatedBy);
-        
-        //setPersonID(personID);
-        //setClientProfileId(cProfileId);
-
-        //setIsSaveButtonVisible(false);
-        
-        // //TODO:need to update the prev variables as well for the reset button
-        //  setPrevFirstName(clientFirstName);
-        //  setPrevLastName(clientLastName);
-        //  setPrevMiddleName(clientMiddleName);
-        //  setPrevSuffixID(clientSuffixID);
-        //  setPrevSsn(clientSSN);
-        //  setPrevBirthDate(utcBirthDate);
-        //  setPrevJts(clienttJTS);
-        //  setPrevFbiNcicNumber(clientFbiNcic);
-        //  setPrevStateVcin(clientStateVcin);
-        //  setPrevGenderId(clientGenderID);
-        //  setPrevRaceId(clientRaceID);h
-        //  setPrevAlias(clientAlias);
-        //  setPrevCreatedDate(clientCreatedDate);
-        //  setPrevCreatedBy(clientCreatedBy);
-        //  setPrevUpdatedDate(clientUpdatedDate);
-        //  setPrevUpdatedBy(clientUpdatedBy);
-    
-
-        if (state.isNewClient) {
-
-            //let birthDateReset = new Date();
-            //let birthDateUTC = convertDateToUtcFormat(birthDateReset);
-            //setBirthDate(birthDateUTC);
-        } else{
-            //setHideLastNameError(true);
-            //setHideFirstNameError(true);
-            //setHideGenderError(true);
-            //setHideRaceError(true);
-        }
-
-        // if (mergeOptions.length > 0 ) {
-        //     generateMergeCandidateRows(mergeOptions, "mergeTable");
-        //     toggleMergeCandidatesModal();
-        //   }
-
 
         setGenderValues(genderStatuses);
         setSuffixValues(suffixStatuses);
         setRaceValues(raceStatuses);
-
-        // Api.getConfigDataByType("Gender").then(options => {
-        //     //populate the options
-        //     let completeOptions = addPleaseSelect(options);
-        //     setGenderValues(completeOptions);
-
-        //     if (clientGenderID === '') {
-        //         return;
-        //     }
-
-        //     let selectedGenderOption = genderValues.filter(function (gender) {
-        //         return gender.ID === parseInt(clientGenderID);
-        //     });
-        //     setGenderDescription(selectedGenderOption[0].Description);
-        //     setPrevGenderDescription(selectedGenderOption[0].Description)
-
-        // });
-
-        // Api.getConfigDataByType("Suffix").then(options => {
-        //     let completeOptions = addPleaseSelect(options);
-        //     setSuffixValues(completeOptions);
-
-        //     if (clientSuffixID === '') {
-        //         return;
-        //     }
-
-        //     let selectedSuffixOption = suffixValues.filter(function (suffix) {
-        //         return suffix.ID === parseInt(clientSuffixID);
-        //     });
-
-        //     setSuffixDescription(selectedSuffixOption[0].Description);
-        //     setPrevSuffixDescription(selectedSuffixOption[0].Description)
-        // });
-
-
-        // Api.getConfigDataByType("Race").then(options => {
-        //     let completeOptions = addPleaseSelect(options);
-
-        //     setRaceValues(completeOptions);
-
-        //     if (clientRaceID === '') {
-        //         return;
-        //     }
-
-        //     let selectedRaceOption = raceValues.filter(function (race) {
-        //         return race.ID === parseInt(clientRaceID);
-        //     });
-
-        //     setRaceDescription(selectedRaceOption[0].Description);
-        //     setPrevRaceDescription(selectedRaceOption[0].Description);
-        // });
-
-
-        //setRaceDescription(clientRaceDescription);
-        //setGenderDescription(clientGenderDescription);
-        //setRaceDescription(clientRaceDescription);
 
 
     }); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
@@ -536,19 +423,7 @@ const Info = (props, ref) => {
         return diffInYears;
     }
 
-    // function addPleaseSelect(options) {
-    //     let pleaseSelectItem = {
-    //         Name: "PleaseSelect",
-    //         Description: "Please Select",
-    //         Active: true,
-    //         ID: 0,
-    //         CreatedDate: new Date()
-    //     }
 
-    //     options.splice(0, 0, pleaseSelectItem);
-
-    //     return options;
-    // }
 
     function convertDateToUtcFormat(date) {
         let birthDateJavascriptDateObject = new Date(date);
@@ -557,84 +432,13 @@ const Info = (props, ref) => {
         return utcBirthDate;
     }
 
-    // function infoTabOnChangeHandler(e, field) {
-    //     setResetButtonDisabled(false);
-
-    //     if (field === "txtLastName") {
-    //         setLastName(e.target.value);
-    //         setHideLastNameError(true);
-    //     }
-
-    //     if (field === "txtFirstName") {
-    //         setFirstName(e.target.value);
-    //         setHideFirstNameError(true);
-    //     }
-
-    //     if (field === "txtMiddleName") {
-    //         setMiddleName(e.target.value);
-    //     }
-
-    //     if (field === "txtSSN") {
-    //         const ssnRegex = RegExp(/^[0-9]{3}\-?[0-9]{2}\-?[0-9]{4}$/);
-    //         const isValidSsn = ssnRegex.test(e.target.value);
-    //         if (!isValidSsn) {
-    //             setSsnRequired(true);
-    //             setErroDivCss('invalid-feedback d-block');
-    //         } else {
-    //             setSsnRequired(undefined);
-    //             setErroDivCss('invalid-feedback');
-    //         }
-
-    //         setSSN(e.target.value);
-    //     }
-
-    //     if (field === "txtFbiNcicNumber") {
-    //         setFbiNcicNumber(e.target.value);
-    //     }
-
-    //     if (field === "txtStateVCIN") {
-    //         setStateVcin(e.target.value);
-    //     }
-
-    //     if (field === "txtJTS") {
-    //         setJts(e.target.value);
-    //         setHideJTSError(true);
-    //     }
-
-    //     if (field === "txtAlias") {
-    //         setAlias(e.target.value);
-    //     }
-    // }
+ 
 
     function isValidDate(d) {
         let dateObject = new Date(d.date);
         return Object.prototype.toString.call(dateObject) === '[object Date]';
     }
 
-
-
-    // function handleDatePickerChange(birthDate) {
-
-    //     if (birthDate.date === null) {
-    //         return;
-    //     }
-
-    //     let isValid = isDateofBirthValid(birthDate);
-
-    //     if (!isValid) {
-    //         setBirthDateRequired(true);
-    //         setDobErrorDivCss('invalid-feedback d-block')
-    //     } else {
-    //         setBirthDateRequired(false);
-    //         setDobErrorDivCss('invalid-feedback');
-    //     }
-
-    //     setResetButtonDisabled(false);
-    //     setBirthDate(birthDate.date);
-
-    //     let diffInYears = calculateAge(birthDate.date);
-    //     setCurrentAge(diffInYears);
-    // }
 
     function isDateofBirthValid(birthDate) {
 
@@ -647,56 +451,10 @@ const Info = (props, ref) => {
         return true;
     }
 
-    // function clearFormForNewProfile() {
-    //     setLastName('');
-    //     setFirstName('');
-    //     setMiddleName('');
-    //     setSSN('');
-    //     setSuffixID('');
-    //     setSuffixDescription('Please Select');
-    //     setGenderID('');
-    //     setRaceID('');
-    //     setRaceDescription('Please Select');
-    //     setGenderDescription('Please Select');
-    //     setFbiNcicNumber('');
-    //     setStateVcin('');
-    //     setAlias('');
-    //     setPersonID('');
-    //     setJts('');
-    //     setBirthDate(new Date());
-    //     setCreatedDate('');
-    //     setCreatedBy('');
-    //     setUpdatedDate('');
-    //     setUpdatedBy('');
-    // }
-
+ 
 
     function resetForm() {
-        // setLastName(prevLastName);
-        // setFirstName(prevFirstName);
-        // setMiddleName(prevMiddleName);
-        // setSuffixID(prevSuffixID);
-        // setSuffixDescription(prevSuffixDescription);
-        // setSSN(prevSsn);
-
-        // setBirthDate(prevBirthDate);
-        // setJts(prevJts);
-        // setFbiNcicNumber(prevFbiNcicNumber);
-        // setStateVcin(prevStateVcin);
-        // setAlias(prevAlias);
-
-        // setGenderID(prevGenderID);
-        // setSuffixID(prevSuffixID);
-        // setRaceID(prevRaceID);
-        // setGenderDescription(prevGenderDescription);
-        // setRaceDescription(prevRaceDescription);
-
-        // setCreatedDate(prevCreatedDate);
-        // setCreatedBy(prevCreatedBy);
-        // setUpdatedDate(prevUpdatedDate);
-        // setUpdatedBy(prevUpdatedBy);
-        
-        // setPersonID(prevID);
+     
     }
 
 
@@ -781,7 +539,8 @@ const Info = (props, ref) => {
             }
 
             //they already exist, and this is an update
-            if (ID !== '') {
+            let hdnPersonID = $("#hdnPersonID").val();
+            if (hdnPersonID !== '') {
        
                 let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
                 alert('The Unique License Number is: ' + uniqueID);
@@ -836,11 +595,15 @@ const Info = (props, ref) => {
     function UpdateClient(fullPersonAddress, postData) {
         let sessionStorageData = getSessionData();
 
-        postData.CreatedDate = createdDate;
-        postData.CreatedBy = createdBy;
+        let hdnCreatedDate = $("#hdnCreatedDate").val();
+        let hdnCreatedBy = $("#hdnCreatedBy").val();
+        let hdnPersonID = $("#hdnPersonID").val();
+
+        postData.CreatedDate = hdnCreatedDate;
+        postData.CreatedBy = hdnCreatedBy;
         postData.UpdatedDate = new Date();
         postData.UpdatedBy = sessionStorageData.CurrentUser
-        postData.ID = ID;
+        postData.ID = hdnPersonID;
 
          //make a PUT call with all of the parameters
          fetch(fullPersonAddress, {
@@ -854,6 +617,12 @@ const Info = (props, ref) => {
         })
         .then(result => result.json())
         .then(result => {
+
+            if  (result === null || result === 0) {
+                props.createErrorNotification("An error occurred while updating the record.");
+                return;
+            }
+
             if (result === "SSN" || result === "JTS") {
                 handleJTSOrSSNError(result);
                 return;
@@ -930,30 +699,11 @@ const Info = (props, ref) => {
             }).then(result => {
       
                 //need to update the state with the return result
-                let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
-                let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
-                let diffInYears = calculateAge(birthDateJavascriptDateObject);
+                //let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
+                //let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
+                //let diffInYears = calculateAge(birthDateJavascriptDateObject);
 
-            
-
-                //setLastName(savedPersonResult.Person.LastName);
-                //setFirstName(savedPersonResult.Person.FirstName);
-                //setMiddleName(savedPersonResult.Person.MiddleName);
-                // setSuffixID(savedPersonResult.Person.SuffixID);
-                // setSSN(savedPersonResult.Person.SSN);
-                // setFbiNcicNumber(savedPersonResult.Person.FBINCIC);
-                // setJts(savedPersonResult.Person.JTC);
-                // setBirthDate(utcBirthDate);
-                // setStateVcin(savedPersonResult.Person.StateORVCIN);
-                // setAlias(savedPersonResult.Person.Alias);
-                // setGenderID(savedPersonResult.Person.GenderID);
-                // setRaceID(savedPersonResult.Person.RaceID);
-                // setCurrentAge(diffInYears);
-                // setPersonID(savedPersonResult.PersonID);
-                // setCreatedDate(savedPersonResult.Person.CreatedDate);
-                // setCreatedBy(savedPersonResult.Person.CreatedBy);
-                // setUpdatedDate(savedPersonResult.Person.UpdatedDate);
-                // setUpdatedBy(savedPersonResult.Person.UpdatedBy);
+        
 
                 //saveButtonShow = false;
                 setIsSaveButtonVisible(false);
@@ -1330,7 +1080,7 @@ const Info = (props, ref) => {
                 <div className="col-3">
                     <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
                     <div className="inpu-group mb-3">
-                        <input type="text" readOnly value={currentAge} className="form-control"></input>
+                        <input type="text" readOnly value="" className="form-control"></input>
                     </div>
                 </div>
                 <div className="col-3">
