@@ -95,28 +95,28 @@ const Info = (props, ref) => {
     }
 
     //for validation
-    const { register, handleSubmit, watch, errors, triggerValidation } = useForm();
+    //const { register, handleSubmit, watch, errors, triggerValidation } = useForm();
 
     //set the state variables
-    const [lastName, setLastName] = useState(clientLastName);
-    const [firstName, setFirstName] = useState(clientFirstName);
-    const [middleName, setMiddleName] = useState(clientMiddleName);
-    const [suffixID, setSuffixID] = useState(clientSuffixID);
-    const [ssn, setSSN] = useState(clientSSN);
-    const [fbiNcicNumber, setFbiNcicNumber] = useState(clientFbiNcic);
-    const [birthDate, setBirthDate] = useState(utcBirthDate);
-    const [stateVcin, setStateVcin] = useState(clientStateVcin);
-    const [jts, setJts] = useState(clienttJTS);
-    const [alias, setAlias] = useState(clientAlias);
-    const [genderID, setGenderID] = useState(clientGenderID);
-    const [raceID, setRaceID] = useState(clientRaceID);
+    // const [lastName, setLastName] = useState(clientLastName);
+    // const [firstName, setFirstName] = useState(clientFirstName);
+    // const [middleName, setMiddleName] = useState(clientMiddleName);
+    // const [suffixID, setSuffixID] = useState(clientSuffixID);
+    // const [ssn, setSSN] = useState(clientSSN);
+    // const [fbiNcicNumber, setFbiNcicNumber] = useState(clientFbiNcic);
+    // const [birthDate, setBirthDate] = useState(utcBirthDate);
+    // const [stateVcin, setStateVcin] = useState(clientStateVcin);
+    // const [jts, setJts] = useState(clienttJTS);
+    // const [alias, setAlias] = useState(clientAlias);
+    // const [genderID, setGenderID] = useState(clientGenderID);
+    // const [raceID, setRaceID] = useState(clientRaceID);
     const [currentAge, setCurrentAge] = useState(diffInYears);
     const [ID, setPersonID] = useState(personID);
     const [clientProfileId, setClientProfileId] = useState(cProfileId);
     const [createdDate, setCreatedDate] = useState(clientCreatedDate);
     const [createdBy, setCreatedBy] = useState(clientCreatedBy);
-    const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
-    const [updatedBy, setUpdatedBy] = useState(clientUpdatedBy);
+    //const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
+    //const [updatedBy, setUpdatedBy] = useState(clientUpdatedBy);
 
     const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(saveButtonShow);
 
@@ -155,21 +155,21 @@ const Info = (props, ref) => {
 
 
     //variables to hold previous state- for when a value changes
-    const [prevLastName, setPrevLastName] = useState(clientLastName);
-    const [prevFirstName, setPrevFirstName] = useState(clientFirstName);
-    const [prevMiddleName, setPrevMiddleName] = useState(clientMiddleName);
-    const [prevSsn, setPrevSsn] = useState(clientSSN);
-    const [prevFbiNcicNumber, setPrevFbiNcicNumber] = useState(clientFbiNcic);
-    const [prevBirthDate, setPrevBirthDate ] = useState(utcBirthDate);
-    const [prevStateVcin, setPrevStateVcin] = useState(clientStateVcin);
-    const [prevJts, setPrevJts] = useState(clienttJTS);
-    const [prevAlias, setPrevAlias] = useState(clientAlias);
-    const [prevGenderID, setPrevGenderId] = useState(clientGenderID);
-    const [prevRaceID, setPrevRaceId] = useState(clientRaceID);
-    const [prevSuffixID, setPrevSuffixID] = useState(clientSuffixID);
-    const [prevGenderDescription, setPrevGenderDescription] = useState(clientGenderDescription);
-    const [prevRaceDescription, setPrevRaceDescription] = useState(clientRaceDescription);
-    const [prevSuffixDescription, setPrevSuffixDescription] = useState(clientSuffixDescription);
+    // const [prevLastName, setPrevLastName] = useState(clientLastName);
+    // const [prevFirstName, setPrevFirstName] = useState(clientFirstName);
+    // const [prevMiddleName, setPrevMiddleName] = useState(clientMiddleName);
+    // const [prevSsn, setPrevSsn] = useState(clientSSN);
+    // const [prevFbiNcicNumber, setPrevFbiNcicNumber] = useState(clientFbiNcic);
+    // const [prevBirthDate, setPrevBirthDate ] = useState(utcBirthDate);
+    // const [prevStateVcin, setPrevStateVcin] = useState(clientStateVcin);
+    // const [prevJts, setPrevJts] = useState(clienttJTS);
+    // const [prevAlias, setPrevAlias] = useState(clientAlias);
+    // const [prevGenderID, setPrevGenderId] = useState(clientGenderID);
+    // const [prevRaceID, setPrevRaceId] = useState(clientRaceID);
+    // const [prevSuffixID, setPrevSuffixID] = useState(clientSuffixID);
+    // const [prevGenderDescription, setPrevGenderDescription] = useState(clientGenderDescription);
+    // const [prevRaceDescription, setPrevRaceDescription] = useState(clientRaceDescription);
+    // const [prevSuffixDescription, setPrevSuffixDescription] = useState(clientSuffixDescription);
 
     //for the Merge function
     const [selectedRowClientProfileId, setSelectedRowClientProfileId ] = useState(0);
@@ -178,11 +178,11 @@ const Info = (props, ref) => {
     const [mergeOptions, setMergeOptions ] = useState([]);
 
     //Audit details
-    const [prevID, setPrevId] = useState(personID);
-    const [prevCreatedDate, setPrevCreatedDate] = useState(clientCreatedDate);
-    const [prevCreatedBy, setPrevCreatedBy] = useState(clientCreatedBy);
-    const [prevUpdatedDate, setPrevUpdatedDate] = useState(clientUpdatedDate);
-    const [prevUpdatedBy, setPrevUpdatedBy ] = useState(clientUpdatedBy);
+    // const [prevID, setPrevId] = useState(personID);
+    // const [prevCreatedDate, setPrevCreatedDate] = useState(clientCreatedDate);
+    // const [prevCreatedBy, setPrevCreatedBy] = useState(clientCreatedBy);
+    // const [prevUpdatedDate, setPrevUpdatedDate] = useState(clientUpdatedDate);
+    // const [prevUpdatedBy, setPrevUpdatedBy ] = useState(clientUpdatedBy);
 
     const [formClass, setFormClass] = useState('needs-validation');
     
@@ -387,11 +387,12 @@ const Info = (props, ref) => {
         $("#txtSSN").val(clientSSN);
         $("#txtFbiNcicNumber").val(clientFbiNcic);
 
-        let convertedBirthDate = moment(clientBirthDate).format('YYYY-MM-DD');  
+        let birthDateObj = new Date(clientBirthDate);
+        let convertedBirthDate = moment(birthDateObj).format('YYYY-MM-DD');  
         $("#txtDateOfBirth").val(convertedBirthDate);
         $("#txtAlias").val(clientAlias);
         $("#txtStateVCIN").val(clientStateVcin);
-        $("txtJTS").val(clienttJTS);
+        $("#txtJTS").val(clienttJTS);
 
         document.getElementById("btnDDLGender").value = clientGenderID;
         document.getElementById("btnDDLGender").innerHTML = clientGenderDescription;
@@ -740,7 +741,7 @@ const Info = (props, ref) => {
 
         //need to convert the birthDate a date object first
         //let birthDateObj = new Date(birthDate);
-        let birthDate = new Date($("#txtBirthDate").val());
+        let birthDate = new Date($("#txtDateOfBirth").val());
 
         let isBirthDateValid = isDateofBirthValid(birthDate);
         if (!isBirthDateValid) {
@@ -976,7 +977,7 @@ const Info = (props, ref) => {
         let fbiNcicNumber = $("#txtFbiNcicNumber").val();
         let alias = $("#txtAlias").val();
         let ssn = $("#txtSSN").val();
-        let birthDate = new Date($("#txtBirthDate").val());
+        let birthDate = new Date($("#txtDateOfBirth").val());
 
         let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
 
@@ -1079,7 +1080,7 @@ const Info = (props, ref) => {
         //let fbiNcicNumber = $("#txtFbiNcicNumber").val();
         //let alias = $("#txtAlias").val();
         //let ssn = $("#txtSSN").val();
-        let birthDate = new Date($("#txtBirthDate").val());
+        let birthDate = new Date($("#txtDateOfBirth").val());
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
 
@@ -1335,7 +1336,7 @@ const Info = (props, ref) => {
                 <div className="col-3">
                     <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                     <div className="input-group mb-3">
-                        <input type="date" defaultValue="" required id="txtBirthDate" className="form-control"></input>
+                        <input type="date" defaultValue="" required id="txtDateOfBirth" className="form-control"></input>
                         {/* <DatePicker
                             selected={birthDate}
                             required={isBirthDateRequired}
