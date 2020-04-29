@@ -131,7 +131,7 @@ const SupplementalCWB = (props) => {
     const [jobStatusValues, setJobStatusValues] = useState(jobStatuses);
     const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
 
-    const [isRefreshed, setIsRefreshed] = useState(false);
+    const [isRefreshed, setIsRefreshed] = useState(0);
     
     
     function setRadioButtonState(rdYes, rdNo, clientValue) {
@@ -437,7 +437,7 @@ const SupplementalCWB = (props) => {
      }
 
      function resetClickHandler() {
-        setIsRefreshed(true);
+        setIsRefreshed(isRefreshed + 1);
      }
 
    

@@ -132,7 +132,7 @@ const SupplementalJuvenile = (props) => {
     const [maritalStatusValues, setMaritalStatusValues] = useState(maritalStatuses);
     const [schoolValues, setSchoolValues ] = useState(schoolStatuses);
 
-    const [isRefreshed, setIsRefreshed] = useState(false);
+    const [isRefreshed, setIsRefreshed] = useState(0);
     
     
     function setRadioButtonState(rdYes, rdNo, clientValue) {
@@ -417,7 +417,7 @@ const SupplementalJuvenile = (props) => {
      }
 
      function resetClickHandler() {
-        setIsRefreshed(true);
+        setIsRefreshed(isRefreshed + 1);
      }
 
      let schoolOptions = [];
