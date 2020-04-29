@@ -95,96 +95,34 @@ const Info = (props, ref) => {
     }
 
     //for validation
-    //const { register, handleSubmit, watch, errors, triggerValidation } = useForm();
-
-    //set the state variables
-    // const [lastName, setLastName] = useState(clientLastName);
-    // const [firstName, setFirstName] = useState(clientFirstName);
-    // const [middleName, setMiddleName] = useState(clientMiddleName);
-    // const [suffixID, setSuffixID] = useState(clientSuffixID);
-    // const [ssn, setSSN] = useState(clientSSN);
-    // const [fbiNcicNumber, setFbiNcicNumber] = useState(clientFbiNcic);
-    // const [birthDate, setBirthDate] = useState(utcBirthDate);
-    // const [stateVcin, setStateVcin] = useState(clientStateVcin);
-    // const [jts, setJts] = useState(clienttJTS);
-    // const [alias, setAlias] = useState(clientAlias);
-    // const [genderID, setGenderID] = useState(clientGenderID);
-    // const [raceID, setRaceID] = useState(clientRaceID);
-    //const [currentAge, setCurrentAge] = useState(diffInYears);
-    //const [ID, setPersonID] = useState(personID);
-    //const [clientProfileId, setClientProfileId] = useState(cProfileId);
-    //const [createdDate, setCreatedDate] = useState(clientCreatedDate);
-    //const [createdBy, setCreatedBy] = useState(clientCreatedBy);
-    //const [updatedDate, setUpdatedDate] = useState(clientUpdatedDate);
-    //const [updatedBy, setUpdatedBy] = useState(clientUpdatedBy);
 
     const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(saveButtonShow);
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
     //SSN field 
-    const [isSsnRequired, setSsnRequired] = useState(false);
-    const [errorDivCss, setErroDivCss] = useState('invalid-feedback');
+    //const [isSsnRequired, setSsnRequired] = useState(false);
+    //const [errorDivCss, setErroDivCss] = useState('invalid-feedback');
     //Date of Birth field
-    const [isBirthDateRequired, setBirthDateRequired] = useState(false);
-    const [dobErrorDivCss, setDobErrorDivCss] = useState('invalid-feedback');
+    //const [isBirthDateRequired, setBirthDateRequired] = useState(false);
+    //const [dobErrorDivCss, setDobErrorDivCss] = useState('invalid-feedback');
     //Race dropddown
-    const [isRaceDropdownRequired, setIsRaceDropdownRequired] = useState(false);
-    const [raceDdlErrorDivCss, setRaceDdlErrorDivCss] = useState('invalid-feedback');
+    //const [isRaceDropdownRequired, setIsRaceDropdownRequired] = useState(false);
+    //const [raceDdlErrorDivCss, setRaceDdlErrorDivCss] = useState('invalid-feedback');
 
     //for the dropdowns
     const [genderValues, setGenderValues] = useState(genderStatuses);
     const [suffixValues, setSuffixValues] = useState(suffixStatuses);
     const [raceValues, setRaceValues] = useState(raceStatuses);
 
-    const [hideLastNameError, setHideLastNameError] = useState(true);
-    const [hideFirstNameError, setHideFirstNameError] = useState(true);
-    const [hideGenderError, setHideGenderError] = useState(true);
-    const [hideRaceError, setHideRaceError] = useState(true);
-    const [hideJTSError, setHideJTSError] = useState(true);
-
-
-    //let clientSuffixDescription = 'Please Select';
-    //let clientGenderDescription = 'Please Select';
-    //let clientRaceDescription = 'Please Select';
-
-
-    //const [genderDescription, setGenderDescription] = useState(clientGenderDescription);
-    //const [raceDescription, setRaceDescription] = useState(clientRaceDescription);
-    //const [suffixDescription, setSuffixDescription] = useState(clientSuffixDescription);
-
-
-    //variables to hold previous state- for when a value changes
-    // const [prevLastName, setPrevLastName] = useState(clientLastName);
-    // const [prevFirstName, setPrevFirstName] = useState(clientFirstName);
-    // const [prevMiddleName, setPrevMiddleName] = useState(clientMiddleName);
-    // const [prevSsn, setPrevSsn] = useState(clientSSN);
-    // const [prevFbiNcicNumber, setPrevFbiNcicNumber] = useState(clientFbiNcic);
-    // const [prevBirthDate, setPrevBirthDate ] = useState(utcBirthDate);
-    // const [prevStateVcin, setPrevStateVcin] = useState(clientStateVcin);
-    // const [prevJts, setPrevJts] = useState(clienttJTS);
-    // const [prevAlias, setPrevAlias] = useState(clientAlias);
-    // const [prevGenderID, setPrevGenderId] = useState(clientGenderID);
-    // const [prevRaceID, setPrevRaceId] = useState(clientRaceID);
-    // const [prevSuffixID, setPrevSuffixID] = useState(clientSuffixID);
-    // const [prevGenderDescription, setPrevGenderDescription] = useState(clientGenderDescription);
-    // const [prevRaceDescription, setPrevRaceDescription] = useState(clientRaceDescription);
-    // const [prevSuffixDescription, setPrevSuffixDescription] = useState(clientSuffixDescription);
+  
 
     //for the Merge function
-    const [selectedRowClientProfileId, setSelectedRowClientProfileId ] = useState(0);
-    const [mergeCandidateClientProfileIds, setMergeCandidateClientProfileIds] = useState([]);
     const [mergeCandidateSelections, setMergeCandidateSelections] = useState([]);
     const [mergeOptions, setMergeOptions ] = useState([]);
 
-    //Audit details
-    // const [prevID, setPrevId] = useState(personID);
-    // const [prevCreatedDate, setPrevCreatedDate] = useState(clientCreatedDate);
-    // const [prevCreatedBy, setPrevCreatedBy] = useState(clientCreatedBy);
-    // const [prevUpdatedDate, setPrevUpdatedDate] = useState(clientUpdatedDate);
-    // const [prevUpdatedBy, setPrevUpdatedBy ] = useState(clientUpdatedBy);
 
-    const [formClass, setFormClass] = useState('needs-validation');
+   // const [formClass, setFormClass] = useState('needs-validation');
     
 
     if (state.isNewClient) {
@@ -261,6 +199,18 @@ const Info = (props, ref) => {
 
       }
 
+      function birthDateChangeHandler(event) {
+         console.log(event.target.value);
+
+         let isValid = isValidDate(event.target.value);
+         if (isValid) {
+             let dateInput = new Date(event.target.value);
+             let age = calculateAge(dateInput);
+             $("#txtCurrentAge").val(age);
+
+         }
+      }
+
       //this is for the Merge modal
       function mergeCandidateCheckBoxClickHandler(event) {
         let $input = $(event.currentTarget.innerHTML);
@@ -305,13 +255,8 @@ const Info = (props, ref) => {
 
                 let person = finalResult.ClientProfile.Person;
                 
-                //let birthDateJavascriptDateObject = new Date(person.DOB);
-                //let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
-                //let diffInYears = calculateAge(birthDateJavascriptDateObject);
                 let birthDateObj = new Date(person.DOB);
                 let convertedBirthDate = moment(birthDateObj).format("YYYY-MM-DD");
-
-                //setPersonID(person.ID);
 
                 $("#txtLastName").val(person.LastName);
                 $("#txtFirstName").val(person.FirstName);
@@ -321,14 +266,12 @@ const Info = (props, ref) => {
                 $("#txtDateOfBirth").val(convertedBirthDate);
                 $("#txtSSN").val(person.SSN);
 
-                //document.getElementById("btnDDLGender").value = person.GenderID;
                 document.getElementById("btnDDLGender").value = (person.GenderID !== null ) ? person.GenderID : "";
 
                 if (person.Gender !== null) {
                     document.getElementById("btnDDLGender").innerHTML = person.Gender.Description;
                 }
 
-                //document.getElementById("btnDDLRace").value = person.RaceID;
                 document.getElementById("btnDDLRace").value = (person.RaceID !== null) ? person.RaceID : '';
 
                 if (person.Race !== null) {
@@ -340,32 +283,12 @@ const Info = (props, ref) => {
                 if (person.Suffix !== null) {
                     document.getElementById("btnDDLSuffix").innerHTML = person.Suffix.Description;
                 }
-
-
-                //setLastName(person.LastName);
-                //setFirstName(person.FirstName);
-                //setMiddleName(person.MiddleName);
-                //setSuffixID(person.SuffixID);
-                //setRaceID(person.RaceID);
-                //setRaceDescription(person.Race.Description);
-                //setStateVcin(person.StateORVCIN);
-                //setFbiNcicNumber(person.FBINCIC);
-                //setBirthDate(utcBirthDate); 
-                //setGenderID(person.GenderID);
-                //setGenderDescription(person.Gender.Description);
-                
-
-                //setCurrentAge(diffInYears);
+          
 
                 $("#hdnCreatedDate").val(person.CreatedDate);
                 $("#hdnCreatedBy").val(person.CreatedBy);
                 $("#hdnPersonID").val(person.ID);
                 $("#hdnClientProfileID").val(finalResult.ClientProfile.ID); //TODO: how to populate this?
-
-                //setCreatedDate(person.CreatedDate);
-                //setCreatedBy(person.CreatedBy);
-                //setUpdatedDate(new Date()); 
-                //setUpdatedBy(sessionStorageData.CurrentUser);
 
                 toggle();
 
@@ -443,16 +366,16 @@ const Info = (props, ref) => {
     }
 
 
-    function isDateofBirthValid(birthDate) {
+    // function isDateofBirthValid(birthDate) {
 
-        let isValid = isValidDate(birthDate);
+    //     let isValid = isValidDate(birthDate);
 
-        if (!isValid) {
-            return false;
-        }
+    //     if (!isValid) {
+    //         return false;
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
  
 
@@ -462,8 +385,6 @@ const Info = (props, ref) => {
 
 
     const TriggerValidationHandler = () => {
-
-        //setFormClass('needs-validation was-validated');
 
         let lastName = $("#txtLastName").val();
         let firstName = $("#txtFirstName").val();
@@ -480,15 +401,11 @@ const Info = (props, ref) => {
         
         //validate first and last name
         if (lastName === '') {
-            $("#frmInfo").addClass("was-validated");
-            //return;
-            //setHideLastNameError(false);
+            $("#frmInfo").addClass("was-validated");      
         }
 
         if (firstName === '') {
-            $("#frmInfo").addClass("was-validated");
-            //return;
-            //setHideFirstNameError(false);
+            $("#frmInfo").addClass("was-validated");   
         }
 
         if (birthDateString === '') {
@@ -497,25 +414,17 @@ const Info = (props, ref) => {
 
         //validate the dropdowns
         if (raceID === '') {
-            $("#frmInfo").addClass("was-validated");
-            //setHideRaceError(false);
-            //return;
+            $("#frmInfo").addClass("was-validated");   
             document.getElementById("divRaceError").removeAttribute("style");
         }
 
         if (genderID === '') {
-            $("#frmInfo").addClass("was-validated");
-            //setHideGenderError(false);
+            $("#frmInfo").addClass("was-validated");         
             document.getElementById("divGenderError").removeAttribute("style");
-            //return;
-
         }
 
-        //TODO: is JTS required?
         if (jts === '') {
             $("#frmInfo").addClass("was-validated");
-            //return;
-            //setHideJTSError(false);
         }
 
         if (lastName === "" || firstName === "" ||  raceID === "" || genderID === "" || jts === "") {
@@ -526,14 +435,8 @@ const Info = (props, ref) => {
         //let birthDateObj = new Date(birthDate);
         let birthDate = new Date($("#txtDateOfBirth").val());
 
-        let isBirthDateValid = isDateofBirthValid(birthDate);
-        if (!isBirthDateValid) {
-            //setBirthDateRequired(true);
-            //setDobErrorDivCss('invalid-feedback d-block')
-        } else {
-            //setBirthDateRequired(false);
-            //setDobErrorDivCss('invalid-feedback');
-        }
+        //let isBirthDateValid = isDateofBirthValid(birthDate);
+
 
         //need to check last name, first name, date of birth, race/ethnicity, and gender
         let currentDate = new Date();
@@ -593,12 +496,7 @@ const Info = (props, ref) => {
                         CreateNewClient(postData, uniqueID);
                     }
                 })
-            }
-
-            //setHideRaceError(true);
-            //setHideGenderError(true);
-            //setHideLastNameError(true);
-            //setHideFirstNameError(true);
+            }       
         }
     }
 
@@ -788,8 +686,7 @@ const Info = (props, ref) => {
     function onSelectGenderHandler(event) {
 
         let selectedValue = event.currentTarget.getAttribute('value');
-        //setGenderID(selectedValue);
-
+      
         let selectedGenderOption = genderValues.filter(function (gender) {
             return gender.ID === parseInt(selectedValue)
         });
@@ -802,26 +699,15 @@ const Info = (props, ref) => {
             document.getElementById("divGenderError").setAttribute("style", "display:none");
         }
 
-        //setGenderDescription(selectedGenderOption[0].Description);
-
-        // if (selectedValue !== '' && parseInt(selectedValue) !== 0) {
-        //     setHideGenderError(true);
-        // } else {
-        //     setHideGenderError(false);
-        // }
-
     }
 
     function onSelectSuffixHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-        //setSuffixID(selectedValue);
-
+ 
 
         let selectedSuffixOption = suffixValues.filter(function (suffix) {
             return suffix.ID === parseInt(selectedValue)
         });
-
-        //setSuffixDescription(selectedSuffixOption[0].Description);
 
         document.getElementById("btnDDLSuffix").value = selectedValue;
         document.getElementById("btnDDLSuffix").innerHTML = selectedSuffixOption[0].Description;
@@ -829,8 +715,7 @@ const Info = (props, ref) => {
 
     function onSelectRaceHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-        //setRaceID(selectedValue);
-
+     
         let selectedRaceOption = raceValues.filter(function (race) {
             return race.ID === parseInt(selectedValue);
         });
@@ -1118,21 +1003,13 @@ const Info = (props, ref) => {
                     <div className="col-3">
                         <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
                         <div className="inpu-group mb-3">
-                            <input type="text" readOnly value="" className="form-control"></input>
+                            <input type="text" id="txtCurrentAge" readOnly defaultValue="" className="form-control"></input>
                         </div>
                     </div>
                     <div className="col-3">
                         <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
-                            <input type="date" defaultValue="" required id="txtDateOfBirth" className="form-control"></input>
-                            {/* <DatePicker
-                                selected={birthDate}
-                                required={isBirthDateRequired}
-                                onChange={date => handleDatePickerChange({ date })}
-                                className="form-control"
-                                strictParsing
-                            />
-                            <div className={dobErrorDivCss}>Please enter a valid birth date.</div> */}
+                            <input type="date" defaultValue="" onChange={birthDateChangeHandler} required id="txtDateOfBirth" className="form-control"></input>            
                         </div>
                     </div>
                 </div>
