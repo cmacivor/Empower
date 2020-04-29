@@ -89,8 +89,7 @@ const Info = (props, ref) => {
 
     } 
         
-    //for the reset button, it will enable if anything is changed
-    const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
+    const [isRefreshed, setIsRefreshed] = useState(false);
   
     //for the dropdowns
     const [genderValues, setGenderValues] = useState(genderStatuses);
@@ -270,7 +269,7 @@ const Info = (props, ref) => {
                 $("#hdnCreatedDate").val(person.CreatedDate);
                 $("#hdnCreatedBy").val(person.CreatedBy);
                 $("#hdnPersonID").val(person.ID);
-                $("#hdnClientProfileID").val(finalResult.ClientProfile.ID); //TODO: how to populate this?
+                $("#hdnClientProfileID").val(finalResult.ClientProfile.ID); 
 
                 toggle();
 
@@ -346,7 +345,7 @@ const Info = (props, ref) => {
  
 
     function resetForm() {
-     
+        setIsRefreshed(true);
     }
 
 
@@ -979,7 +978,7 @@ const Info = (props, ref) => {
                         <button type="button" onClick={getMergeCandidates} className="btn btn-primary mb-2">Get Merge Candidates</button>
                     </div>
                     <div className="col-auto">
-                        <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
+                        <button type="button" onClick={resetForm}  className="btn btn-primary mb-2">Reset</button>
                     </div>
                 </div>
             <div className="modal fade" id="possibleDuplicatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
