@@ -463,7 +463,7 @@ const Info = (props, ref) => {
 
     const TriggerValidationHandler = () => {
 
-        setFormClass('needs-validation was-validated');
+        //setFormClass('needs-validation was-validated');
 
         let lastName = $("#txtLastName").val();
         let firstName = $("#txtFirstName").val();
@@ -479,25 +479,42 @@ const Info = (props, ref) => {
         
         //validate first and last name
         if (lastName === '') {
+            $("#frmInfo").addClass("was-validated");
+            //return;
             //setHideLastNameError(false);
         }
 
         if (firstName === '') {
+            $("#frmInfo").addClass("was-validated");
+            //return;
             //setHideFirstNameError(false);
         }
 
         //validate the dropdowns
-        if (raceID === 'Please Select') {
+        if (raceID === '') {
+            $("#frmInfo").addClass("was-validated");
             //setHideRaceError(false);
+            //return;
+            document.getElementById("divRaceError").removeAttribute("style");
         }
 
-        if (genderID === 'Please Select') {
+        if (genderID === '') {
+            $("#frmInfo").addClass("was-validated");
             //setHideGenderError(false);
+            document.getElementById("divGenderError").removeAttribute("style");
+            //return;
+
         }
 
         //TODO: is JTS required?
         if (jts === '') {
+            $("#frmInfo").addClass("was-validated");
+            //return;
             //setHideJTSError(false);
+        }
+
+        if (lastName === "" || firstName === "" ||  raceID === "" || genderID === "" || jts === "") {
+            return;
         }
 
         //need to convert the birthDate a date object first
@@ -996,223 +1013,224 @@ const Info = (props, ref) => {
   
 
     return <div>
-        <br></br>
-            <input type="hidden" id="hdnCreatedDate" value=""/>
-            <input type="hidden" id="hdnCreatedBy" value="" />
-            <input type="hidden" id="hdnPersonID" value="" />
-            <input type="hidden" id="hdnClientProfileID" value="" />
-            <div className="form-row">
-                <div className="col-3">
-                    <div className="form-group">
-                        <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
-                        <input type="text"
-                            defaultValue=""
-                            className="form-control"
-                            id="txtLastName"
-                            name="txtLastName"
-                            required>
-                        </input>
-                        {/* {hideLastNameError || <div className='errorDiv'>Please enter the last name.</div>} */}
-                    </div>
-                </div>
-                <div className="col-3">
-                    <div className="form-group">
-                        <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
-                        <input type="text"
-                            defaultValue=""
-                            className="form-control"
-                            id="txtFirstName"
-                            name="txtFirstName"
-                            required>
-                        </input>
-                        {/* { hideFirstNameError || <div className='errorDiv'>Please enter the first name.</div> } */}
-                    </div>
-
-                </div>
-                <div className="col-3">
-                    <div className="form-group">
-                        <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
-                        <input type="text"
-                            defaultValue=""
-                            className="form-control"
-                            id="txtMiddleName"
-                            name="txtMiddleName">
-                        </input>
-                        {/* {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div>} */}
-                    </div>
-
-                </div>
-                <div className="col-3">
-                    <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
-                    <div className="dropdown">
-                        <button type="button" id="btnDDLSuffix" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            
-                        </button>
-                        <div className="dropdown-menu">
-                            {suffixValueOptions}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="form-row">
-                <div className="col-3">
-                    <div className="form-group">
-                        <label htmlFor="txtSSN"><strong> SSN</strong></label>
-                        <input type="text"
-                            defaultValue=""
-                            className="form-control"
-                            id="txtSSN"
-                            name="txtSSN"
-                            required>
-                        </input>
-                        {/* <div className={errorDivCss}>Please enter the SSN in a valid format.</div> */}
-                    </div>
-                </div>
-                {
-                    parseInt(systemID) !== parseInt(systems.Juvenile) ?
+            <form id="frmInfo">
+                <br></br>
+                <input type="hidden" id="hdnCreatedDate" value=""/>
+                <input type="hidden" id="hdnCreatedBy" value="" />
+                <input type="hidden" id="hdnPersonID" value="" />
+                <input type="hidden" id="hdnClientProfileID" value="" />
+                <div className="form-row">
                     <div className="col-3">
-                        <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
-                        <div className="input-group mb-3">
+                        <div className="form-group">
+                            <label htmlFor="txtLastName"><strong>Last Name *</strong></label>
                             <input type="text"
                                 defaultValue=""
                                 className="form-control"
-                                id="txtFbiNcicNumber">
+                                id="txtLastName"
+                                name="txtLastName"
+                                required>
                             </input>
+                            {/* {hideLastNameError || <div className='errorDiv'>Please enter the last name.</div>} */}
                         </div>
-                    </div> : <div></div>
-                }
-         
-                <div className="col-3">
-                    <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
-                    <div className="inpu-group mb-3">
-                        <input type="text" readOnly value="" className="form-control"></input>
+                    </div>
+                    <div className="col-3">
+                        <div className="form-group">
+                            <label htmlFor="txtFirstName"><strong> First Name *</strong></label>
+                            <input type="text"
+                                defaultValue=""
+                                className="form-control"
+                                id="txtFirstName"
+                                name="txtFirstName"
+                                required>
+                            </input>
+                            {/* { hideFirstNameError || <div className='errorDiv'>Please enter the first name.</div> } */}
+                        </div>
+
+                    </div>
+                    <div className="col-3">
+                        <div className="form-group">
+                            <label htmlFor="txtMiddleName"><strong>Middle Name</strong></label>
+                            <input type="text"
+                                defaultValue=""
+                                className="form-control"
+                                id="txtMiddleName"
+                                name="txtMiddleName">
+                            </input>
+                            {/* {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div>} */}
+                        </div>
+
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="ddlSuffix"><strong>Suffix</strong></label>
+                        <div className="dropdown">
+                            <button type="button" id="btnDDLSuffix" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                
+                            </button>
+                            <div className="dropdown-menu">
+                                {suffixValueOptions}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="col-3">
-                    <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
-                    <div className="input-group mb-3">
-                        <input type="date" defaultValue="" required id="txtDateOfBirth" className="form-control"></input>
-                        {/* <DatePicker
-                            selected={birthDate}
-                            required={isBirthDateRequired}
-                            onChange={date => handleDatePickerChange({ date })}
-                            className="form-control"
-                            strictParsing
-                        />
-                        <div className={dobErrorDivCss}>Please enter a valid birth date.</div> */}
+                <div className="form-row">
+                    <div className="col-3">
+                        <div className="form-group">
+                            <label htmlFor="txtSSN"><strong> SSN</strong></label>
+                            <input type="text"
+                                defaultValue=""
+                                className="form-control"
+                                id="txtSSN"
+                                name="txtSSN">
+                            </input>
+                            {/* <div className={errorDivCss}>Please enter the SSN in a valid format.</div> */}
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div className="form-row">
-                {jtsOrVcin}
-                {
-                    parseInt(systemID) !== parseInt(systems.Juvenile) ?
-                    <div className="col-2">
-                        <label htmlFor="txtAlias"><strong>Alias</strong></label>
+                    {
+                        parseInt(systemID) !== parseInt(systems.Juvenile) ?
+                        <div className="col-3">
+                            <label htmlFor="txtFbiNcicNumber"><strong> FBI/NCIC Number </strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text"
+                                    defaultValue=""
+                                    className="form-control"
+                                    id="txtFbiNcicNumber">
+                                </input>
+                            </div>
+                        </div> : <div></div>
+                    }
+            
+                    <div className="col-3">
+                        <label htmlFor="txtCurrentAge"><strong>Current Age</strong></label>
+                        <div className="inpu-group mb-3">
+                            <input type="text" readOnly value="" className="form-control"></input>
+                        </div>
+                    </div>
+                    <div className="col-3">
+                        <label htmlFor="txtDateOfBirth"><strong> Date of Birth *</strong></label>
                         <div className="input-group mb-3">
-                            <input type="text" defaultValue="" className="form-control" id="txtAlias"></input>
-                        </div>
-                    </div> : <div></div>
-                }
-              
-                <div className="col-2">
-                    <label htmlFor="ddlGender"><strong>Gender*</strong></label>
-                    <div className="dropdown">
-                        <button type="button" id="btnDDLGender" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            
-                        </button>
-                        <div className="dropdown-menu">
-                            {genderValueOptions}
+                            <input type="date" defaultValue="" required id="txtDateOfBirth" className="form-control"></input>
+                            {/* <DatePicker
+                                selected={birthDate}
+                                required={isBirthDateRequired}
+                                onChange={date => handleDatePickerChange({ date })}
+                                className="form-control"
+                                strictParsing
+                            />
+                            <div className={dobErrorDivCss}>Please enter a valid birth date.</div> */}
                         </div>
                     </div>
-                    {hideGenderError || <div className='errorDiv'>Please select a value.</div>}
                 </div>
-                <div className="col-4">
-                    <label><strong>Race/Ethnicity*</strong></label>
-                    <div className="dropdown">
-                        <button type="button" id="btnDDLRace" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            
-                        </button>
-                        <div className="dropdown-menu">
-                            {raceValueOptions}
+                <div className="form-row">
+                    {jtsOrVcin}
+                    {
+                        parseInt(systemID) !== parseInt(systems.Juvenile) ?
+                        <div className="col-2">
+                            <label htmlFor="txtAlias"><strong>Alias</strong></label>
+                            <div className="input-group mb-3">
+                                <input type="text" defaultValue="" className="form-control" id="txtAlias"></input>
+                            </div>
+                        </div> : <div></div>
+                    }
+                
+                    <div className="col-2">
+                        <label htmlFor="ddlGender"><strong>Gender*</strong></label>
+                        <div className="dropdown">
+                            <button type="button" id="btnDDLGender" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                
+                            </button>
+                            <div className="dropdown-menu">
+                                {genderValueOptions}
+                            </div>
+                        </div>
+                        <div style={{display:'none'}} id="divGenderError" className='errorDiv'>Please select a value.</div>
+                    </div>
+                    <div className="col-4">
+                        <label><strong>Race/Ethnicity*</strong></label>
+                        <div className="dropdown">
+                            <button type="button" id="btnDDLRace" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                
+                            </button>
+                            <div className="dropdown-menu">
+                                {raceValueOptions}
+                            </div>
+                        </div>
+                        <div style={{display:'none'}} id="divRaceError" className='errorDiv'>Please select a value.</div>
+                    </div>
+                </div>
+                <div className="form-row float-right">
+                    {buttonType}
+                    <div className="col-auto">
+                        <button type="button" onClick={getMergeCandidates} className="btn btn-primary mb-2">Get Merge Candidates</button>
+                    </div>
+                    <div className="col-auto">
+                        <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
+                    </div>
+                </div>
+            <div className="modal fade" id="possibleDuplicatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-lg" role="document">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Duplicates</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                        <table id="duplicatesTable" className="table">
+                        <thead>
+                            <tr>
+                            <th scope="col"></th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Middle Name</th>
+                            <th scope="col">Date of Birth</th>
+                            <th scope="col">Gender</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        </table>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-primary" onClick={createNewClientFromDuplicateModal} >Save New</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                         </div>
                     </div>
-                    {hideRaceError || <div className='errorDiv'>Please select a value.</div>}
                 </div>
-            </div>
-            <div className="form-row float-right">
-                {buttonType}
-                <div className="col-auto">
-                    <button type="button" onClick={getMergeCandidates} className="btn btn-primary mb-2">Get Merge Candidates</button>
-                </div>
-                <div className="col-auto">
-                    <button type="button" onClick={resetForm} disabled={isResetButtonDisabled} className="btn btn-primary mb-2">Reset</button>
-                </div>
-            </div>
-        <div className="modal fade" id="possibleDuplicatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-lg" role="document">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Duplicates</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                    <table id="duplicatesTable" className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">First Name</th>
-                          <th scope="col">Last Name</th>
-                          <th scope="col">Middle Name</th>
-                          <th scope="col">Date of Birth</th>
-                          <th scope="col">Gender</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-primary" onClick={createNewClientFromDuplicateModal} >Save New</button>
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+                <div className="modal fade" id="mergeCandidatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-lg" role="document">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Merge Candidates</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                        <table id="mergeTable" className="table">
+                        <thead>
+                            <tr>
+                            <th scope="col"></th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Middle Name</th>
+                            <th scope="col">Date of Birth</th>
+                            <th scope="col">Gender</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        </table>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={mergeProfiles} className="btn btn-primary">Merge</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="modal fade" id="mergeCandidatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-lg" role="document">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Merge Candidates</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                    <table id="mergeTable" className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col"></th>
-                          <th scope="col">First Name</th>
-                          <th scope="col">Last Name</th>
-                          <th scope="col">Middle Name</th>
-                          <th scope="col">Date of Birth</th>
-                          <th scope="col">Gender</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      </tbody>
-                    </table>
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" onClick={mergeProfiles} className="btn btn-primary">Merge</button>
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
+            </form>
     </div>;
 
 };
