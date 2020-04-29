@@ -89,7 +89,7 @@ const Info = (props, ref) => {
 
     } 
         
-    const [isRefreshed, setIsRefreshed] = useState(false);
+    const [isRefreshed, setIsRefreshed] = useState(0);
   
     //for the dropdowns
     const [genderValues, setGenderValues] = useState(genderStatuses);
@@ -344,9 +344,6 @@ const Info = (props, ref) => {
     }
  
 
-    function resetForm() {
-        setIsRefreshed(true);
-    }
 
 
     const TriggerValidationHandler = () => {
@@ -978,7 +975,7 @@ const Info = (props, ref) => {
                         <button type="button" onClick={getMergeCandidates} className="btn btn-primary mb-2">Get Merge Candidates</button>
                     </div>
                     <div className="col-auto">
-                        <button type="button" onClick={resetForm}  className="btn btn-primary mb-2">Reset</button>
+                        <button type="button" onClick={() => setIsRefreshed(isRefreshed + 1)}  className="btn btn-primary mb-2">Reset</button>
                     </div>
                 </div>
             <div className="modal fade" id="possibleDuplicatesModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
