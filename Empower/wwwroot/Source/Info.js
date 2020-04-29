@@ -37,7 +37,7 @@ const Info = (props, ref) => {
     let clientBirthDate;
     let utcBirthDate = new Date();
     let diffInYears = '';
-    let saveButtonShow = false;
+    //let saveButtonShow = false;
     let personID = '';
     let cProfileId = '';
     let clientCreatedDate = '';
@@ -87,16 +87,8 @@ const Info = (props, ref) => {
         //calculate age
         diffInYears = calculateAge(birthDateJavascriptDateObject);
 
-        saveButtonShow = false;
-    } else {
-        saveButtonShow = true;
+    } 
         
-    }
-
-    //for validation
-
-    //const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(saveButtonShow);
-
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
   
@@ -786,31 +778,17 @@ const Info = (props, ref) => {
                 return result.json();
             }).then(result => {
                 if (result === "success") {
-                //toggle(); //close the modal
+                
                 alert('the client profiles were successfully merged');  
                 }
             });
             }
         });
   
-        //toggle();
         toggleMergeCandidatesModal();
       }
 
-    //handle whether to show a Save or Update button
-    // let buttonType;
-    // if (isSaveButtonVisible) {
 
-    //     buttonType = <div className="col-auto">
-    //         <button type="button" onClick={TriggerValidationHandler} className="btn btn-primary mb-2">Save</button>
-    //     </div>;
-
-    // } else {
-
-    //     buttonType = <div className="col-auto">
-    //         <input type="submit" onClick={TriggerValidationHandler} className="btn btn-primary mb-2" value="Update" />
-    //     </div>;
-    // }
 
     //handle whether to show the JTS field (if Juvenile) or State/VCIN (if the others)
     let jtsOrVcin;
