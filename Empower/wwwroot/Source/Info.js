@@ -84,7 +84,6 @@ const Info = (props, ref) => {
 
         utcBirthDate = convertDateToUtcFormat(clientInfo.DOB);
 
-
         //calculate age
         diffInYears = calculateAge(birthDateJavascriptDateObject);
 
@@ -96,20 +95,11 @@ const Info = (props, ref) => {
 
     //for validation
 
-    const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(saveButtonShow);
+    //const [isSaveButtonVisible, setIsSaveButtonVisible] = useState(saveButtonShow);
 
     //for the reset button, it will enable if anything is changed
     const [isResetButtonDisabled, setResetButtonDisabled] = useState(true);
-    //SSN field 
-    //const [isSsnRequired, setSsnRequired] = useState(false);
-    //const [errorDivCss, setErroDivCss] = useState('invalid-feedback');
-    //Date of Birth field
-    //const [isBirthDateRequired, setBirthDateRequired] = useState(false);
-    //const [dobErrorDivCss, setDobErrorDivCss] = useState('invalid-feedback');
-    //Race dropddown
-    //const [isRaceDropdownRequired, setIsRaceDropdownRequired] = useState(false);
-    //const [raceDdlErrorDivCss, setRaceDdlErrorDivCss] = useState('invalid-feedback');
-
+  
     //for the dropdowns
     const [genderValues, setGenderValues] = useState(genderStatuses);
     const [suffixValues, setSuffixValues] = useState(suffixStatuses);
@@ -120,15 +110,15 @@ const Info = (props, ref) => {
     //for the Merge function
     const [mergeCandidateSelections, setMergeCandidateSelections] = useState([]);
     const [mergeOptions, setMergeOptions ] = useState([]);
-
-
-   // const [formClass, setFormClass] = useState('needs-validation');
-    
+ 
 
     if (state.isNewClient) {
         document.getElementById("btnDDLSuffix").innerHTML = 'Please Select';
         document.getElementById("btnDDLRace").innerHTML = 'Please Select';
         document.getElementById("btnDDLGender").innerHTML = 'Please Select';
+        //document.getElementById("btnSave").innerHTML = "Save";
+    } else {
+        //document.getElementById("btnSave").innerHTML = "Update";
     }
 
     function toggle() {
@@ -302,9 +292,6 @@ const Info = (props, ref) => {
 
       }
 
-
-    //this will re-render the first name, last name, middle name, etc each time something changes, but NOT the dropdown values- those are handled in the select event handlers.
-    //otherwise, when a selection in the dropdown is made, the useEffect overwrites what was just selected
     useEffect(() => {
 
         $("#txtLastName").val(clientLastName);
@@ -340,7 +327,7 @@ const Info = (props, ref) => {
         setRaceValues(raceStatuses);
 
 
-    }); //see this article: https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects
+    }); 
 
     function calculateAge(birthDate) {
         let difference = moment(new Date()).diff(birthDate);
@@ -364,19 +351,6 @@ const Info = (props, ref) => {
         let dateObject = new Date(d.date);
         return Object.prototype.toString.call(dateObject) === '[object Date]';
     }
-
-
-    // function isDateofBirthValid(birthDate) {
-
-    //     let isValid = isValidDate(birthDate);
-
-    //     if (!isValid) {
-    //         return false;
-    //     }
-
-    //     return true;
-    // }
-
  
 
     function resetForm() {
@@ -434,8 +408,6 @@ const Info = (props, ref) => {
         //need to convert the birthDate a date object first
         //let birthDateObj = new Date(birthDate);
         let birthDate = new Date($("#txtDateOfBirth").val());
-
-        //let isBirthDateValid = isDateofBirthValid(birthDate);
 
 
         //need to check last name, first name, date of birth, race/ethnicity, and gender
@@ -620,17 +592,7 @@ const Info = (props, ref) => {
                 },
                 body: JSON.stringify(listToUpdate)
             }).then(result => {
-      
-                //need to update the state with the return result
-                //let birthDateJavascriptDateObject = new Date(savedPersonResult.Person.DOB);
-                //let utcBirthDate = convertDateToUtcFormat(birthDateJavascriptDateObject);
-                //let diffInYears = calculateAge(birthDateJavascriptDateObject);
-
-        
-
-                //saveButtonShow = false;
-                //setIsSaveButtonVisible(false);
-                
+           
                 props.createNotification('The client profile was successfully created.');
             });
             
@@ -728,14 +690,6 @@ const Info = (props, ref) => {
             document.getElementById("divRaceError").setAttribute("style", "display:none");
         }
 
-        //setRaceDescription(selectedRaceOption[0].Description);
-
-        // if (selectedValue !== '' && parseInt(selectedValue) !== 0) {
-        //     setHideRaceError(true);
-        // } else {
-        //     setHideRaceError(false);
-        // }
-
     }
 
     function getMergeCandidates() {
@@ -743,14 +697,9 @@ const Info = (props, ref) => {
         let lastName = $("#txtLastName").val();
         let firstName = $("#txtFirstName").val();
         let middleName = $("#txtMiddleName").val();
-        //let raceID = document.getElementById("btnDDLRace").value;
+
         let genderID = document.getElementById("btnDDLGender").value;
-        //let suffixID = document.getElementById("btnDDLSuffix").value;
-        //let stateVcin = $("#txtStateVCIN").val();
-        //let jts = $("#txtJTS").val();
-        //let fbiNcicNumber = $("#txtFbiNcicNumber").val();
-        //let alias = $("#txtAlias").val();
-        //let ssn = $("#txtSSN").val();
+
         let birthDate = new Date($("#txtDateOfBirth").val());
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -783,10 +732,8 @@ const Info = (props, ref) => {
                 return item.ID !== parseInt(personID);
               });
 
-              
-              //this will trigger the useEffect defined elsewhere. This is necessary to only show the modal window once the mergeOptions is set- 
-              //because setMergeOptions is asynchronous
-              setMergeOptions(mergeCandidates);
+              toggleMergeCandidatesModal(); 
+              generateMergeCandidateRows(mergeCandidates, "mergeTable");
 
             }).catch((error) => {
               console.log(error);
@@ -851,19 +798,19 @@ const Info = (props, ref) => {
       }
 
     //handle whether to show a Save or Update button
-    let buttonType;
-    if (isSaveButtonVisible) {
+    // let buttonType;
+    // if (isSaveButtonVisible) {
 
-        buttonType = <div className="col-auto">
-            <button type="button" onClick={TriggerValidationHandler} className="btn btn-primary mb-2">Save</button>
-        </div>;
+    //     buttonType = <div className="col-auto">
+    //         <button type="button" onClick={TriggerValidationHandler} className="btn btn-primary mb-2">Save</button>
+    //     </div>;
 
-    } else {
+    // } else {
 
-        buttonType = <div className="col-auto">
-            <input type="submit" onClick={TriggerValidationHandler} className="btn btn-primary mb-2" value="Update" />
-        </div>;
-    }
+    //     buttonType = <div className="col-auto">
+    //         <input type="submit" onClick={TriggerValidationHandler} className="btn btn-primary mb-2" value="Update" />
+    //     </div>;
+    // }
 
     //handle whether to show the JTS field (if Juvenile) or State/VCIN (if the others)
     let jtsOrVcin;
@@ -931,7 +878,6 @@ const Info = (props, ref) => {
                                 name="txtLastName"
                                 required>
                             </input>
-                            {/* {hideLastNameError || <div className='errorDiv'>Please enter the last name.</div>} */}
                         </div>
                     </div>
                     <div className="col-3">
@@ -944,7 +890,6 @@ const Info = (props, ref) => {
                                 name="txtFirstName"
                                 required>
                             </input>
-                            {/* { hideFirstNameError || <div className='errorDiv'>Please enter the first name.</div> } */}
                         </div>
 
                     </div>
@@ -957,7 +902,6 @@ const Info = (props, ref) => {
                                 id="txtMiddleName"
                                 name="txtMiddleName">
                             </input>
-                            {/* {errors.txtMiddleName && <div className="invalid-feedback" >This field may not exceed 50 characters.</div>} */}
                         </div>
 
                     </div>
@@ -983,7 +927,6 @@ const Info = (props, ref) => {
                                 id="txtSSN"
                                 name="txtSSN">
                             </input>
-                            {/* <div className={errorDivCss}>Please enter the SSN in a valid format.</div> */}
                         </div>
                     </div>
                     {
@@ -1051,7 +994,9 @@ const Info = (props, ref) => {
                     </div>
                 </div>
                 <div className="form-row float-right">
-                    {buttonType}
+                    <div className="col-auto">
+                        <button type="button" id="btnSave" onClick={TriggerValidationHandler} className="btn btn-primary mb-2">Save</button>
+                    </div>
                     <div className="col-auto">
                         <button type="button" onClick={getMergeCandidates} className="btn btn-primary mb-2">Get Merge Candidates</button>
                     </div>
