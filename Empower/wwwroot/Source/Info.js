@@ -476,6 +476,7 @@ const Info = (props, ref) => {
         let fbiNcicNumber = $("#txtFbiNcicNumber").val();
         let alias = $("#txtAlias").val();
         let ssn = $("#txtSSN").val();
+        let birthDateString = $("#txtDateOfBirth").val();
         
         //validate first and last name
         if (lastName === '') {
@@ -488,6 +489,10 @@ const Info = (props, ref) => {
             $("#frmInfo").addClass("was-validated");
             //return;
             //setHideFirstNameError(false);
+        }
+
+        if (birthDateString === '') {
+            $("#frmInfo").addClass("was-validated");
         }
 
         //validate the dropdowns
@@ -791,6 +796,12 @@ const Info = (props, ref) => {
 
         document.getElementById("btnDDLGender").value = selectedValue;
         document.getElementById("btnDDLGender").innerHTML = selectedGenderOption[0].Description;
+
+
+        if (selectedValue !== '') {
+            document.getElementById("divGenderError").setAttribute("style", "display:none");
+        }
+
         //setGenderDescription(selectedGenderOption[0].Description);
 
         // if (selectedValue !== '' && parseInt(selectedValue) !== 0) {
@@ -826,6 +837,11 @@ const Info = (props, ref) => {
 
         document.getElementById("btnDDLRace").value = selectedValue;
         document.getElementById("btnDDLRace").innerHTML = selectedRaceOption[0].Description;
+
+
+        if (selectedValue !== '') {
+            document.getElementById("divRaceError").setAttribute("style", "display:none");
+        }
 
         //setRaceDescription(selectedRaceOption[0].Description);
 
