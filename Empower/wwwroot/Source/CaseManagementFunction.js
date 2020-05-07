@@ -22,13 +22,16 @@ const CaseManagementFunction = (props) => {
     const [activeTab, setActiveTab] = useState("search");
     const [clientProfile, setClientProfile] = useState(Object);
     const [ isSpinnerVisible, setIsSpinnerVisible ] = useState(false);
-    const infoRef = useRef();
+    //const infoRef = useRef();
     const supplementalRef = useRef();
     const cacheService = useCacheService();
     const {state, dispatch} = useStore();
 
     const [personID, setPersonID] = useState(0);
 
+    const [genderOptions, setGenderOptions] = useState([]);
+    const [raceOptions, setRaceOptions] = useState([]);
+    const [suffixOptions, setSuffixOptions] = useState([]);
     const [educationLevelsOptions, setEducationLevelOptions] = useState([]);
     const [fundingSourceOptions, setFundingSourceOptions] = useState([]);
     const [jobStatusOptions, setJobStatusOptions] = useState([]);
@@ -36,11 +39,12 @@ const CaseManagementFunction = (props) => {
     const [schoolOptions, setSchoolOptions] = useState([]);
 
     useEffect(() => {
-        //Api.getConfigDataByType("Gender").then(genders => setGenders(genders));
-        //Api.getConfigDataByType("Race").then(races => setRaces(races));
+        Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
+        Api.getConfigDataByType("Race").then(races => setRaceOptions(races));
+        Api.getConfigDataByType("Suffix").then(suffixes => setSuffixOptions(suffixes));
         Api.getConfigDataByType("EducationLevel").then(educationLevels => setEducationLevelOptions(educationLevels));
         Api.getConfigDataByType("FundingSource").then(fundingSources => setFundingSourceOptions(fundingSources));
-        //Api.getConfigDataByType("Suffix").then(suffixes => setSuffixes(suffixes));
+        
         Api.getConfigDataByType("JobStatus").then(jobStatuses => setJobStatusOptions(jobStatuses)); 
         Api.getConfigDataByType("MaritalStatus").then(maritalStatuses => setMaritalStatusOptions(maritalStatuses));
         Api.getConfigDataByType("School").then(schools => setSchoolOptions(schools));
@@ -90,7 +94,7 @@ const CaseManagementFunction = (props) => {
       setActiveTab(key);
     
       if (state.isNewClient) {
-          infoRef.current.clearForm();
+          //infoRef.current.clearForm();
       }
 
     }
@@ -111,7 +115,7 @@ const CaseManagementFunction = (props) => {
         setPersonID(clientProfile.ClientProfile.Person.ID);
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
-        infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
+        //infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
     }
 
     let infoTabTitle = '';
@@ -157,9 +161,10 @@ const CaseManagementFunction = (props) => {
                     <Tab eventKey="participantinfo" title={infoTabTitle} disabled={isTabDisabled}>
                         <Info clientProfilePerson={!state.isNewClient ? clientProfile.Person :  undefined }
                          clientProfile={clientProfile.ClientProfile }  
-                         ref={infoRef}
-                         genderValues={cacheService.genderValues}
-                         raceValues={cacheService.raceValues}
+                        
+                         genderValues={genderOptions }
+                         raceValues={raceOptions}
+                         suffixValues={suffixOptions}
                          createNotification={triggerToastMessage}
                          createErrorNotification={triggerErrorMessage} />                       
                     </Tab>
