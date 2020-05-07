@@ -508,7 +508,7 @@ const SearchJuvenile = (props) => {
                 }
                 {
                   //this grid is for Admin and super users.
-                    isGridVisible === true  ?
+                    isGridVisible === true && (isAdmin || isSuperUser)  ?
                     
                     <Grid className="card"
                         rows={rows }
