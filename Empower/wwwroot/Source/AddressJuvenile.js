@@ -81,7 +81,6 @@ const AddressJuvenile = (props) => {
 
 
         //superuser, admin, djs
-        //if (roleId === "1" || roleId === "2" || roleId === "3") {
           if (addressTypeId === 1 || addressTypeId === 2) {
 
             $("#txtDJSAddressLineOne").val(addressLineOne);

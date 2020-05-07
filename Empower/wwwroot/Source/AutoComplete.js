@@ -177,12 +177,14 @@
                           return address.address === e.target.innerText;
                       });
     
-                      console.log(addressProperties);
+                      //console.log(addressProperties);
     
                       if (addressTypeId === 1) {
                           $("#txtDJSAddressLineOne").val(addressProperties[0].attributes.StAddr);
                           $("#txtDJSZip").val(addressProperties[0].attributes.ZIP);
                           $("#hdnLatitude").val(addressProperties[0].attributes.Latitude);
+                          $("#txtDJSCity").val('Richmond');
+                          $("#txtDJSState").val('VA');
                           $("#hdnLongitude").val(addressProperties[0].attributes.Longitude);
                           $("#txtDJSCouncilDistrict").val(addressProperties[0].attributes.CouncilDistrict);
                           $("#hdnGISCode").val(addressProperties[0].attributes.Ref_ID);
@@ -199,6 +201,8 @@
                       if (addressTypeId === 3) {
                           $("#txtCSUAddressLineOne").val(addressProperties[0].attributes.StAddr);
                           $("#txtCSUZip").val(addressProperties[0].attributes.ZIP);
+                          $("#txtCSUCity").val('Richmond');
+                          $("#txtCSUState").val('VA');
                           $("#hdnLatitude").val(addressProperties[0].attributes.Latitude);
                           $("#hdnLongitude").val(addressProperties[0].attributes.Longitude);
                           $("#txtCSUCouncilDistrict").val(addressProperties[0].attributes.CouncilDistrict);
