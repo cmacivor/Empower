@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
 import {  Api } from './commonAdmin';
+import AddressJuvenile from './AddressJuvenile';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -209,7 +210,9 @@ const CaseManagementFunction = (props) => {
                   
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
-                       address content
+                       <AddressJuvenile
+                         clientProfile={clientProfile.Person} 
+                       />
                     </Tab>
                     <Tab eventKey="familyinfo" title="Family Info" disabled={isTabDisabled}>
                        Family info content
