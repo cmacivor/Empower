@@ -130,7 +130,7 @@ const AddressJuvenile = (props) => {
         $('#BingSearchModal').modal('toggle');
     }
 
-    function addCSUEventListener(addressCell) {
+    function addCSUEventListener(addressCell, resources) {
         addressCell.addEventListener('click', function(event) {
                         
             let selectedAddress = event.currentTarget.innerHTML;
@@ -338,6 +338,14 @@ const AddressJuvenile = (props) => {
             postData.AddressLineTwo = $("#txtDJSAddressLineTwo").val();
             postData.Zip = $("#txtDJSZip").val();
             postData.CouncilDistrict = $("#txtDJSCouncilDistrict").val();
+
+            //clear the CSU fields
+            $("#txtCSUAddressLineOne").val("");
+            $("#txtCSUAddressLineTwo").val("");
+            $("#txtCSUZip").val("");
+            $("#txtCSUCouncilDistrict").val("");
+            $("#txtCSUCity").val("");
+            $("#txtCSUState").val("");
         }
 
         //the CSU fields are populated
@@ -346,11 +354,19 @@ const AddressJuvenile = (props) => {
             postData.AddressLineTwo = $("#txtCSUAddressLineTwo").val();
             postData.Zip = $("#txtCSUZip").val();
             postData.CouncilDistrict = $("#txtCSUCouncilDistrict").val();
+
+            //clear the DJS fields
+            $("#txtDJSAddressLineOne").val("");
+            $("#txtDJSAddressLineTwo").val("");
+            $("#txtDJSZip").val("");
+            $("#txtDJSCouncilDistrict").val("");
+            $("#txtDJSCity").val("");
+            $("#txtDJSState").val("");
         }
 
 
-        // let apiAddress = sessionStorage.getItem("baseApiAddress");
-        let apiAddress = "http://localhost:57612";
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        //let apiAddress = "http://localhost:57612";
 
         let personAddress = `${apiAddress}/api/PersonAddress`;
 

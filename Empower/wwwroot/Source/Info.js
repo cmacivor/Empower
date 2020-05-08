@@ -96,8 +96,6 @@ const Info = (props, ref) => {
     const [suffixValues, setSuffixValues] = useState(suffixStatuses);
     const [raceValues, setRaceValues] = useState(raceStatuses);
 
-  
-
     //for the Merge function
     const [mergeCandidateSelections, setMergeCandidateSelections] = useState([]);
     const [mergeOptions, setMergeOptions ] = useState([]);
