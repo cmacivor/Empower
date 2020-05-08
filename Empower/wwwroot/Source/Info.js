@@ -720,6 +720,7 @@ const Info = (props, ref) => {
                 return item.ID !== parseInt(personID);
               });
 
+
               toggleMergeCandidatesModal(); 
               generateMergeCandidateRows(mergeCandidates, "mergeTable");
 

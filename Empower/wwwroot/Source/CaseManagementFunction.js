@@ -211,7 +211,8 @@ const CaseManagementFunction = (props) => {
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
                        <AddressJuvenile
-                         clientProfile={clientProfile.Person} 
+                         clientProfile={clientProfile.Person}
+                         createNotification={triggerToastMessage} 
                        />
                     </Tab>
                     <Tab eventKey="familyinfo" title="Family Info" disabled={isTabDisabled}>

@@ -286,11 +286,11 @@ const AddressJuvenile = (props) => {
 
         let sessionStorageData = getSessionData();
 
-        let addressTypeID = $("#hdnAdddressTypeID").val();
+        let hdnAddressTypeID = $("#hdnAdddressTypeID").val();
 
         let postData = {
             //PersonID: personID,
-            AddressTypeID: addressTypeId,
+            AddressTypeID: hdnAddressTypeID,
             GISCode: $("#hdnGISCode").val(),
             Latitude: $("#hdnLatitude").val(),
             Longitude: $("#hdnLongitude").val(),
@@ -333,7 +333,7 @@ const AddressJuvenile = (props) => {
         }
 
         //the DJS fields are populated
-        if (addressTypeID === "1" || addressTypeID === "2") {
+        if (hdnAddressTypeID === "1" || hdnAddressTypeID === "2") {
             postData.AddressLineOne = $("#txtDJSAddressLineOne").val();
             postData.AddressLineTwo = $("#txtDJSAddressLineTwo").val();
             postData.Zip = $("#txtDJSZip").val();
@@ -341,7 +341,7 @@ const AddressJuvenile = (props) => {
         }
 
         //the CSU fields are populated
-        if (addressTypeID === "3" || addressTypeID === "4") {
+        if (hdnAddressTypeID === "3" || hdnAddressTypeID === "4") {
             postData.AddressLineOne = $("#txtCSUAddressLineOne").val();
             postData.AddressLineTwo = $("#txtCSUAddressLineTwo").val();
             postData.Zip = $("#txtCSUZip").val();
@@ -365,7 +365,10 @@ const AddressJuvenile = (props) => {
         })
         .then(result => result.json())
         .then(result => {
-            console.log(result);
+            //console.log(result);
+            if (result !== 0) {
+                props.createNotification("The address was successfully updated.");
+            }
         });
 
     }
