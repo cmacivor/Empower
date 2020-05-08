@@ -15,6 +15,7 @@ import {getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
 import {  Api } from './commonAdmin';
 import AddressJuvenile from './AddressJuvenile';
+import AddressAdult from './AddressAdult';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -210,10 +211,21 @@ const CaseManagementFunction = (props) => {
                   
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
-                       <AddressJuvenile
-                         clientProfile={clientProfile.Person}
-                         createNotification={triggerToastMessage} 
-                       />
+                        {
+                            parseInt(sessionData.SystemID) === systems.Juvenile ? 
+                            <AddressJuvenile
+                                clientProfile={clientProfile.Person}
+                                createNotification={triggerToastMessage} 
+                            /> : <div></div>
+                        }
+                        {
+                            parseInt(sessionData.SystemID) === systems.Adult ?
+                            <AddressAdult
+                                clientProfile={clientProfile.Person}
+                                createNotification={triggerToastMessage}
+                            /> : <div></div>
+                        }
+               
                     </Tab>
                     <Tab eventKey="familyinfo" title="Family Info" disabled={isTabDisabled}>
                        Family info content
