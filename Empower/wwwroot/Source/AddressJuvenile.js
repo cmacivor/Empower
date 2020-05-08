@@ -145,6 +145,8 @@ const AddressJuvenile = (props) => {
             $("#txtCSUState").val(filteredAddress[0].address.adminDistrict);
             $("#txtCSUZip").val(filteredAddress[0].address.postalCode);
 
+            toggle();
+
         }, false);
     }
 
@@ -161,6 +163,8 @@ const AddressJuvenile = (props) => {
             $("#txtDJSCity").val(filteredAddress[0].address.adminDistrict2);
             $("#txtDJSState").val(filteredAddress[0].address.adminDistrict);
             $("#txtDJSZip").val(filteredAddress[0].address.postalCode);
+
+            toggle();
 
         }, false);
     }
