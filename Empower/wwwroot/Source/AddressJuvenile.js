@@ -50,6 +50,7 @@ const AddressJuvenile = (props) => {
     }
 
     const [bingAddresses, setBingAddresses] = useState([]);
+    const [isRefreshed, setIsRefreshed] = useState(0);
 
     useEffect(() => {
 
@@ -167,7 +168,11 @@ const AddressJuvenile = (props) => {
     function searchBing(txtAddressSearch) {
         let tableRef = document.getElementById("bingTable").getElementsByTagName('tbody')[0];
 
-        let address = document.getElementById(txtAddressSearch).value;   //$("#txtDJSAddressSearch").val();
+        let address = document.getElementById(txtAddressSearch).value; 
+        
+        if (address === "") {
+            return;
+        }
 
         let baseUrl = "https://dev.virtualearth.net/REST/v1/Locations?countryRegion=US&addressLine=" + address;
 
@@ -482,6 +487,9 @@ const AddressJuvenile = (props) => {
             </div>
             <div className="col-auto">
                 <button id="btnUpdateAddress" className="btn btn-primary" onClick={updateAddress} >Update</button>
+            </div>
+            <div className="col-auto">
+                <button type="button" onClick={() => setIsRefreshed(isRefreshed + 1)}  className="btn btn-primary mb-2">Reset</button>
             </div>
         </div>
         <div className="modal fade" id="BingSearchModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
