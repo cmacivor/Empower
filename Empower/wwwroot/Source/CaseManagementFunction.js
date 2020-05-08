@@ -223,6 +223,7 @@ const CaseManagementFunction = (props) => {
                             <AddressAdult
                                 clientProfile={clientProfile.Person}
                                 createNotification={triggerToastMessage}
+                                createErrorNotification={triggerErrorMessage}
                             /> : <div></div>
                         }
                

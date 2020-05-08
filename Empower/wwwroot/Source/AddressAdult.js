@@ -16,6 +16,8 @@ const AddressJuvenile = (props) => {
     let addressTypeId = 0;
     let city = '';
     let state = '';
+    let comments = '';
+    let timeAtCurrentAddress = '';
 
     let gisCode = '';
     let latitude = '';
@@ -41,6 +43,8 @@ const AddressJuvenile = (props) => {
             councilDistrict = (personInfo.CouncilDistrict !== null) ? personInfo.CouncilDistrict : '';
             city = (personInfo.City !== null) ? personInfo.City : '';
             state = (personInfo.State !== null) ? personInfo.State : '';
+            comments =(personInfo.Comments !== null) ? personInfo.Comments : '';
+            timeAtCurrentAddress = (personInfo.TimeAtCurrentAddress !== null) ? personInfo.TimeAtCurrentAddress : '';
             gisCode = (personInfo.GISCode !== null ) ? personInfo.GISCode : '';
             latitude = (personInfo.Latitude !== null ) ? personInfo.Latitude : '';
             longitude = (personInfo.Longitude !== null) ? personInfo.Longitude : '';
@@ -57,66 +61,46 @@ const AddressJuvenile = (props) => {
         let sessionData = getSessionData();
         let roleId = sessionData.RoleID;
 
-        //enable or disable the fields by role type
-        if (roleId === "1" || roleId === "2" || roleId === "3") {
-            $("#txtCSUAddressSearch").prop('disabled', true);
-            $("#txtCSUAddressLineOne").prop('disabled', true);
-            $("#txtCSUAddressLineTwo").prop('disabled', true);
-            $("#txtCSUZip").prop('disabled', true);
-            $("#txtCSUCouncilDistrict").prop('disabled', true);
-            $("#txtCSUCity").prop('disabled', true);
-            $("#txtCSUState").prop('disabled', true);
-        } 
+        // //enable or disable the fields by role type
+        // if (roleId === "1" || roleId === "2" || roleId === "3") {
+        //     $("#txtCSUAddressSearch").prop('disabled', true);
+        //     $("#txtCSUAddressLineOne").prop('disabled', true);
+        //     $("#txtCSUAddressLineTwo").prop('disabled', true);
+        //     $("#txtCSUZip").prop('disabled', true);
+        //     $("#txtCSUCouncilDistrict").prop('disabled', true);
+        //     $("#txtCSUCity").prop('disabled', true);
+        //     $("#txtCSUState").prop('disabled', true);
+        // } 
 
-        //disable the DJS fields if they're a CSU user
-        if (roleId === "4") {
-            $("#txtDJSAddressSearch").prop('disabled', true);
-            $("#txtDJSAddressLineOne").prop('disabled', true);
-            $("#txtDJSAddressLineTwo").prop('disabled', true);
-            $("#txtDJSZip").prop('disabled', true);
-            $("#txtDJSCouncilDistrict").prop('disabled', true);
-            $("#txtDJSCity").prop('disabled', true);
-            $("#txtDJSState").prop('disabled', true);
+        // //disable the DJS fields if they're a CSU user
+        // if (roleId === "4") {
+        //     $("#txtDJSAddressSearch").prop('disabled', true);
+        //     $("#txtDJSAddressLineOne").prop('disabled', true);
+        //     $("#txtDJSAddressLineTwo").prop('disabled', true);
+        //     $("#txtDJSZip").prop('disabled', true);
+        //     $("#txtDJSCouncilDistrict").prop('disabled', true);
+        //     $("#txtDJSCity").prop('disabled', true);
+        //     $("#txtDJSState").prop('disabled', true);
+        // }
+
+
+        $("#txtDJSAddressLineOne").val(addressLineOne);
+        $("#txtDJSAddressLineTwo").val(addressLineTwo);
+        $("#txtDJSZip").val(addressZip);
+        $("#txtDJSComments").val(comments);
+        $("#txtTimeCurrentAddress").val(timeAtCurrentAddress);
+
+        //it's a DJS-City address
+        if (addressTypeId === 1) {
+            $("#txtDJSCity").val('Richmond');
+            $("#txtDJSState").val('VA');
         }
-
-
-
-        //superuser, admin, djs
-          if (addressTypeId === 1 || addressTypeId === 2) {
-
-            $("#txtDJSAddressLineOne").val(addressLineOne);
-            $("#txtDJSAddressLineTwo").val(addressLineTwo);
-            $("#txtDJSZip").val(addressZip);
-            $("#txtDJSCouncilDistrict").val(councilDistrict);
-    
-            //it's a DJS-City address
-            if (addressTypeId === 1) {
-                $("#txtDJSCity").val('Richmond');
-                $("#txtDJSState").val('VA');
-            }
-            else { // it's a DJS non-city address
-                $("#txtDJSCity").val(city);
-                $("#txtDJSState").val(state);
-            }
+        else { // it's a DJS non-city address
+            $("#txtDJSCity").val(city);
+            $("#txtDJSState").val(state);
         }
-
-        //CSU
-        if (addressTypeId === 3 || addressTypeId === 4) {
-            $("#txtCSUAddressLineOne").val(addressLineOne);
-            $("#txtCSUAddressLineTwo").val(addressLineTwo);
-            $("#txtCSUZip").val(addressZip);
-            $("#txtCSUCouncilDistrict").val(councilDistrict);
-
-            if (addressTypeId === 3) {
-                $("#txtCSUCity").val("Richmond");
-                $("#txtCSUState").val('VA');
-            }
-            else {
-                $("#txtCSUCity").val(city);
-                $("#txtCSUState").val(state);
-            }
-        }
-
+        
+        $("#hdnAdddressTypeID").val(addressTypeId);
         $("#hdnAddressCreatedDate").val(createdDate);
         $("#hdnAddressCreatedBy").val(createdBy);
         $("#hdnGISCode").val(gisCode);
@@ -131,24 +115,24 @@ const AddressJuvenile = (props) => {
         $('#BingSearchModal').modal('toggle');
     }
 
-    function addCSUEventListener(addressCell, resources) {
-        addressCell.addEventListener('click', function(event) {
+    // function addCSUEventListener(addressCell, resources) {
+    //     addressCell.addEventListener('click', function(event) {
                         
-            let selectedAddress = event.currentTarget.innerHTML;
+    //         let selectedAddress = event.currentTarget.innerHTML;
 
-            let filteredAddress = resources.filter(function(address) {
-                return address.name === selectedAddress;
-            });
+    //         let filteredAddress = resources.filter(function(address) {
+    //             return address.name === selectedAddress;
+    //         });
 
-            $("#txtCSUAddressLineOne").val(filteredAddress[0].address.addressLine);
-            $("#txtCSUCity").val(filteredAddress[0].address.adminDistrict2);
-            $("#txtCSUState").val(filteredAddress[0].address.adminDistrict);
-            $("#txtCSUZip").val(filteredAddress[0].address.postalCode);
+    //         $("#txtCSUAddressLineOne").val(filteredAddress[0].address.addressLine);
+    //         $("#txtCSUCity").val(filteredAddress[0].address.adminDistrict2);
+    //         $("#txtCSUState").val(filteredAddress[0].address.adminDistrict);
+    //         $("#txtCSUZip").val(filteredAddress[0].address.postalCode);
 
-            toggle();
+    //         toggle();
 
-        }, false);
-    }
+    //     }, false);
+    // }
 
     function addDJSEventListener(addressCell, resources) {
         addressCell.addEventListener('click', function(event) {
@@ -163,6 +147,7 @@ const AddressJuvenile = (props) => {
             $("#txtDJSCity").val(filteredAddress[0].address.adminDistrict2);
             $("#txtDJSState").val(filteredAddress[0].address.adminDistrict);
             $("#txtDJSZip").val(filteredAddress[0].address.postalCode);
+            $("#hdnAdddressTypeID").val("2");
 
             toggle();
 
@@ -210,12 +195,12 @@ const AddressJuvenile = (props) => {
                     addressCell.style = "cursor:pointer";
 
 
-                    if (txtAddressSearch === "txtDJSAddressSearch") {
+                    //if (txtAddressSearch === "txtDJSAddressSearch") {
                         addDJSEventListener(addressCell, resources);
-                    }
-                    else {
-                        addCSUEventListener(addressCell, resources);
-                    }                           
+                    //}
+                    //else {
+                        //addCSUEventListener(addressCell, resources);
+                    //}                           
                 });
             },
             error: function(e) {
@@ -230,18 +215,18 @@ const AddressJuvenile = (props) => {
         searchBing("txtDJSAddressSearch");
     }
 
-    function searchCSUBingClickHandler() {
-        searchBing("txtCSUAddressSearch");
-    }
+    // function searchCSUBingClickHandler() {
+    //     searchBing("txtCSUAddressSearch");
+    // }
 
 
     function djsSearchOnChangeEventHandler(event) {
         onChangeEventHandler(event, 1, "txtDJSAddressSearch");
     }
 
-    function csuSearchOnChangeEventHandler(event) {
-        onChangeEventHandler(event, 3, "txtCSUAddressSearch");
-    }
+    // function csuSearchOnChangeEventHandler(event) {
+    //     onChangeEventHandler(event, 3, "txtCSUAddressSearch");
+    // }
 
 
     function onChangeEventHandler(event, addressTypeId, searchBoxId) {
@@ -266,10 +251,10 @@ const AddressJuvenile = (props) => {
             return result.json();
         }).then(result => {
 
-            populateSearchBox(result, addressTypeId, searchBoxId);
+            populateSearchBox(result, 1, searchBoxId);
 
             //set the AddressTypeID
-            $("#hdnAdddressTypeID").val(addressTypeId);
+            $("#hdnAdddressTypeID").val(1);
 
         });
     }
@@ -286,9 +271,9 @@ const AddressJuvenile = (props) => {
 
     }
 
-    function csuOnKeyDownEventHandler(e) {
-        onKeyDownHandler(e, "txtCSUAddressSearch");
-    }
+    // function csuOnKeyDownEventHandler(e) {
+    //     onKeyDownHandler(e, "txtCSUAddressSearch");
+    // }
 
 
     function updateAddress() {
@@ -342,36 +327,38 @@ const AddressJuvenile = (props) => {
         }
 
         //the DJS fields are populated
-        if (hdnAddressTypeID === "1" || hdnAddressTypeID === "2") {
+        //if (hdnAddressTypeID === "1" || hdnAddressTypeID === "2") {
             postData.AddressLineOne = $("#txtDJSAddressLineOne").val();
             postData.AddressLineTwo = $("#txtDJSAddressLineTwo").val();
             postData.Zip = $("#txtDJSZip").val();
             postData.CouncilDistrict = $("#txtDJSCouncilDistrict").val();
+            postData.Comments = $("#txtDJSComments").val();
+            postData.TimeAtCurrentAddress = $("#txtTimeCurrentAddress").val();
 
             //clear the CSU fields
-            $("#txtCSUAddressLineOne").val("");
-            $("#txtCSUAddressLineTwo").val("");
-            $("#txtCSUZip").val("");
-            $("#txtCSUCouncilDistrict").val("");
-            $("#txtCSUCity").val("");
-            $("#txtCSUState").val("");
-        }
+            // $("#txtCSUAddressLineOne").val("");
+            // $("#txtCSUAddressLineTwo").val("");
+            // $("#txtCSUZip").val("");
+            // $("#txtCSUCouncilDistrict").val("");
+            // $("#txtCSUCity").val("");
+            // $("#txtCSUState").val("");
+       // }
 
-        //the CSU fields are populated
-        if (hdnAddressTypeID === "3" || hdnAddressTypeID === "4") {
-            postData.AddressLineOne = $("#txtCSUAddressLineOne").val();
-            postData.AddressLineTwo = $("#txtCSUAddressLineTwo").val();
-            postData.Zip = $("#txtCSUZip").val();
-            postData.CouncilDistrict = $("#txtCSUCouncilDistrict").val();
+        // //the CSU fields are populated
+        // if (hdnAddressTypeID === "3" || hdnAddressTypeID === "4") {
+        //     postData.AddressLineOne = $("#txtCSUAddressLineOne").val();
+        //     postData.AddressLineTwo = $("#txtCSUAddressLineTwo").val();
+        //     postData.Zip = $("#txtCSUZip").val();
+        //     postData.CouncilDistrict = $("#txtCSUCouncilDistrict").val();
 
-            //clear the DJS fields
-            $("#txtDJSAddressLineOne").val("");
-            $("#txtDJSAddressLineTwo").val("");
-            $("#txtDJSZip").val("");
-            $("#txtDJSCouncilDistrict").val("");
-            $("#txtDJSCity").val("");
-            $("#txtDJSState").val("");
-        }
+        //     //clear the DJS fields
+        //     $("#txtDJSAddressLineOne").val("");
+        //     $("#txtDJSAddressLineTwo").val("");
+        //     $("#txtDJSZip").val("");
+        //     $("#txtDJSCouncilDistrict").val("");
+        //     $("#txtDJSCity").val("");
+        //     $("#txtDJSState").val("");
+        // }
 
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -390,7 +377,12 @@ const AddressJuvenile = (props) => {
         })
         .then(result => result.json())
         .then(result => {
-            //console.log(result);
+
+            if (result === null || result.Message !== undefined) {
+                props.createErrorNotification("An error occurred while saving the adddress.");
+                return;
+            }
+
             if (result !== 0) {
                 props.createNotification("The address was successfully updated.");
             }
