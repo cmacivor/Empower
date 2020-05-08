@@ -206,26 +206,7 @@ const AddressJuvenile = (props) => {
                     }
                     else {
                         addCSUEventListener(addressCell, resources);
-                    }
-
-
-                    // addressCell.addEventListener('click', function(event) {
-                        
-                    //     let selectedAddress = event.currentTarget.innerHTML;
-
-                    //     let filteredAddress = resources.filter(function(address) {
-                    //         return address.name === selectedAddress;
-                    //     });
-
-        
-                
-                    //     $("#txtDJSAddressLineOne").val(filteredAddress[0].address.addressLine);
-                    //     $("#txtDJSCity").val(filteredAddress[0].address.adminDistrict2);
-                    //     $("#txtDJSState").val(filteredAddress[0].address.adminDistrict);
-                    //     $("#txtDJSZip").val(filteredAddress[0].address.postalCode);
-
-                    // }, false);
-                                        
+                    }                           
                 });
             },
             error: function(e) {
@@ -244,77 +225,6 @@ const AddressJuvenile = (props) => {
         searchBing("txtCSUAddressSearch");
     }
 
-  
-
-    function searchBingClickHandler() {
-
-
-        let tableRef = document.getElementById("bingTable").getElementsByTagName('tbody')[0];
-
-        let address = $("#txtDJSAddressSearch").val();
-
-        let baseUrl = "https://dev.virtualearth.net/REST/v1/Locations?countryRegion=US&addressLine=" + address;
-
-        //Using the jQuery way because the Fetch API doesn't support JSONP
-        $.ajax({
-            url: baseUrl,
-            dataType: "jsonp",
-            jsonp: "jsonp",
-            data: {
-                key: "AioE2WYI4PFEB6QJ05ws3SYzEfBmT4Dq4GcO-ACemmZnFi5pyKjXeE44i9Qz0QOS",
-            },
-            success: function(response) {
-                //console.log(response);
-                var resources = response.resourceSets[0].resources;
-                console.log(resources);
-
-                //setBingAddresses(resources);
-
-                document.getElementById("bingTableBody").innerHTML = "";
-                resources.forEach(addressItem => {
-                    let newRow = tableRef.insertRow();
-
-                    let iconCell = newRow.insertCell(0);
-                    let icon = document.createElement("i");
-                    icon.classList.add("fas");
-                    icon.classList.add("fa-arrow-down");
-                    //iconCell.appendChild({FaArrowDown})
-
-                    let addressCell = newRow.insertCell(1);
-                    addressCell.innerText = addressItem.name;
-                    addressCell.style = "cursor:pointer";
-                    addressCell.addEventListener('click', function(event) {
-                        
-                        let selectedAddress = event.currentTarget.innerHTML;
-
-                        let filteredAddress = resources.filter(function(address) {
-                            return address.name === selectedAddress;
-                        });
-
-                        //console.log(filteredAddress[0].address.addressLine );
-                        $("#txtDJSAddressLineOne").val(filteredAddress[0].address.addressLine);
-                        $("#txtDJSCity").val(filteredAddress[0].address.adminDistrict2);
-                        $("#txtDJSState").val(filteredAddress[0].address.adminDistrict);
-                        $("#txtDJSZip").val(filteredAddress[0].address.postalCode);
-
-                        $("#hdnAdddressTypeID").val("3");
-                    
-
-                    }, false);      
-                });
-            },
-            error: function(e) {
-                console.log(e.statusText);
-            }
-        });
-           
-        toggle();
-    }
-
-    function getCSUAddressesFromBing() {
-
-    }
-
 
     function djsSearchOnChangeEventHandler(event) {
         onChangeEventHandler(event, 1, "txtDJSAddressSearch");
@@ -326,13 +236,12 @@ const AddressJuvenile = (props) => {
 
 
     function onChangeEventHandler(event, addressTypeId, searchBoxId) {
-        //console.log('on change event');
+        
         let input = event.target.value;
         
         let url = "https://starappdev2.richva.ci.richmond.va.us/services/geodataapi/api/searchaddress?street=";
 
         if (input.length < 5){
-            //setSearchResults([]); 
             return;    
         }
 
@@ -343,12 +252,10 @@ const AddressJuvenile = (props) => {
             //mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
-                //'Authorization': 'Bearer ' + sessionStorage.Token
             }
         }).then(result => {
             return result.json();
         }).then(result => {
-            //console.log(result); //returns an array of objects, address property is what we want
 
             populateSearchBox(result, addressTypeId, searchBoxId);
 
@@ -359,7 +266,6 @@ const AddressJuvenile = (props) => {
     }
 
    
-
     document.addEventListener("click", function (e) {
         closeAllLists(e.target, "txtDJSAddressSearch");
 
@@ -556,7 +462,7 @@ const AddressJuvenile = (props) => {
             <div className="col-8">          
             </div>
             <div className="col-auto">
-                <button id="btnUpdateAddress" onClick={updateAddress} >Update</button>
+                <button id="btnUpdateAddress" className="btn btn-primary" onClick={updateAddress} >Update</button>
             </div>
         </div>
         <div className="modal fade" id="BingSearchModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
