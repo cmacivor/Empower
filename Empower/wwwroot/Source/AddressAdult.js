@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {addActive, closeAllLists, removeActive, populateSearchBox, onKeyDownHandler } from './AutoComplete';
 import { getSessionData } from './commonAdmin';
-import {FaTrash, FaExchangeAlt, FaArrowDown} from 'react-icons/fa';
 import $ from 'jquery';
 
 
@@ -61,29 +60,6 @@ const AddressJuvenile = (props) => {
         let sessionData = getSessionData();
         let roleId = sessionData.RoleID;
 
-        // //enable or disable the fields by role type
-        // if (roleId === "1" || roleId === "2" || roleId === "3") {
-        //     $("#txtCSUAddressSearch").prop('disabled', true);
-        //     $("#txtCSUAddressLineOne").prop('disabled', true);
-        //     $("#txtCSUAddressLineTwo").prop('disabled', true);
-        //     $("#txtCSUZip").prop('disabled', true);
-        //     $("#txtCSUCouncilDistrict").prop('disabled', true);
-        //     $("#txtCSUCity").prop('disabled', true);
-        //     $("#txtCSUState").prop('disabled', true);
-        // } 
-
-        // //disable the DJS fields if they're a CSU user
-        // if (roleId === "4") {
-        //     $("#txtDJSAddressSearch").prop('disabled', true);
-        //     $("#txtDJSAddressLineOne").prop('disabled', true);
-        //     $("#txtDJSAddressLineTwo").prop('disabled', true);
-        //     $("#txtDJSZip").prop('disabled', true);
-        //     $("#txtDJSCouncilDistrict").prop('disabled', true);
-        //     $("#txtDJSCity").prop('disabled', true);
-        //     $("#txtDJSState").prop('disabled', true);
-        // }
-
-
         $("#txtDJSAddressLineOne").val(addressLineOne);
         $("#txtDJSAddressLineTwo").val(addressLineTwo);
         $("#txtDJSZip").val(addressZip);
@@ -115,44 +91,6 @@ const AddressJuvenile = (props) => {
         $('#BingSearchModal').modal('toggle');
     }
 
-    // function addCSUEventListener(addressCell, resources) {
-    //     addressCell.addEventListener('click', function(event) {
-                        
-    //         let selectedAddress = event.currentTarget.innerHTML;
-
-    //         let filteredAddress = resources.filter(function(address) {
-    //             return address.name === selectedAddress;
-    //         });
-
-    //         $("#txtCSUAddressLineOne").val(filteredAddress[0].address.addressLine);
-    //         $("#txtCSUCity").val(filteredAddress[0].address.adminDistrict2);
-    //         $("#txtCSUState").val(filteredAddress[0].address.adminDistrict);
-    //         $("#txtCSUZip").val(filteredAddress[0].address.postalCode);
-
-    //         toggle();
-
-    //     }, false);
-    // }
-
-    function addDJSEventListener(addressCell, resources) {
-        addressCell.addEventListener('click', function(event) {
-                        
-            let selectedAddress = event.currentTarget.innerHTML;
-
-            let filteredAddress = resources.filter(function(address) {
-                return address.name === selectedAddress;
-            });
-
-            $("#txtDJSAddressLineOne").val(filteredAddress[0].address.addressLine);
-            $("#txtDJSCity").val(filteredAddress[0].address.adminDistrict2);
-            $("#txtDJSState").val(filteredAddress[0].address.adminDistrict);
-            $("#txtDJSZip").val(filteredAddress[0].address.postalCode);
-            $("#hdnAdddressTypeID").val("2");
-
-            toggle();
-
-        }, false);
-    }
 
     function searchBing(txtAddressSearch) {
         let tableRef = document.getElementById("bingTable").getElementsByTagName('tbody')[0];
@@ -176,10 +114,7 @@ const AddressJuvenile = (props) => {
             success: function(response) {
                 //console.log(response);
                 var resources = response.resourceSets[0].resources;
-                console.log(resources);
-
-                //setBingAddresses(resources);
-
+                
                 document.getElementById("bingTableBody").innerHTML = "";
 
                 resources.forEach(addressItem => {
@@ -193,14 +128,7 @@ const AddressJuvenile = (props) => {
                     let addressCell = newRow.insertCell(1);
                     addressCell.innerText = addressItem.name;
                     addressCell.style = "cursor:pointer";
-
-
-                    //if (txtAddressSearch === "txtDJSAddressSearch") {
-                        addDJSEventListener(addressCell, resources);
-                    //}
-                    //else {
-                        //addCSUEventListener(addressCell, resources);
-                    //}                           
+                         
                 });
             },
             error: function(e) {
@@ -215,18 +143,9 @@ const AddressJuvenile = (props) => {
         searchBing("txtDJSAddressSearch");
     }
 
-    // function searchCSUBingClickHandler() {
-    //     searchBing("txtCSUAddressSearch");
-    // }
-
-
     function djsSearchOnChangeEventHandler(event) {
         onChangeEventHandler(event, 1, "txtDJSAddressSearch");
     }
-
-    // function csuSearchOnChangeEventHandler(event) {
-    //     onChangeEventHandler(event, 3, "txtCSUAddressSearch");
-    // }
 
 
     function onChangeEventHandler(event, addressTypeId, searchBoxId) {
@@ -271,10 +190,6 @@ const AddressJuvenile = (props) => {
 
     }
 
-    // function csuOnKeyDownEventHandler(e) {
-    //     onKeyDownHandler(e, "txtCSUAddressSearch");
-    // }
-
 
     function updateAddress() {
 
@@ -283,22 +198,13 @@ const AddressJuvenile = (props) => {
         let hdnAddressTypeID = $("#hdnAdddressTypeID").val();
 
         let postData = {
-            //PersonID: personID,
             AddressTypeID: hdnAddressTypeID,
             GISCode: $("#hdnGISCode").val(),
             Latitude: $("#hdnLatitude").val(),
             Longitude: $("#hdnLongitude").val(),
-            //AddressLineOne: $("#txtDJSAddressLineOne").val(),
-            //AddressLineTwo: $("#txtDJSAddressLineTwo").val(),
             City: 'RICHMOND', 
             State: 'VA', 
-            //Zip: $("#txtDJSZip").val(),
-            //CouncilDistrict: $("#txtDJSCouncilDistrict").val(),
             Active: true,
-            //CreatedBy: sessionStorageData.CurrentUser,
-            //CreatedDate: new Date(),
-            //UpdatedDate: new Date(),
-            //UpdatedBy: sessionStorageData.CurrentUser
         };
 
         let addressId = $("#hdnAddressID").val();
@@ -326,8 +232,6 @@ const AddressJuvenile = (props) => {
             postData.CreatedBy = sessionStorageData.CurrentUser;
         }
 
-        //the DJS fields are populated
-        //if (hdnAddressTypeID === "1" || hdnAddressTypeID === "2") {
             postData.AddressLineOne = $("#txtDJSAddressLineOne").val();
             postData.AddressLineTwo = $("#txtDJSAddressLineTwo").val();
             postData.Zip = $("#txtDJSZip").val();
@@ -335,34 +239,8 @@ const AddressJuvenile = (props) => {
             postData.Comments = $("#txtDJSComments").val();
             postData.TimeAtCurrentAddress = $("#txtTimeCurrentAddress").val();
 
-            //clear the CSU fields
-            // $("#txtCSUAddressLineOne").val("");
-            // $("#txtCSUAddressLineTwo").val("");
-            // $("#txtCSUZip").val("");
-            // $("#txtCSUCouncilDistrict").val("");
-            // $("#txtCSUCity").val("");
-            // $("#txtCSUState").val("");
-       // }
-
-        // //the CSU fields are populated
-        // if (hdnAddressTypeID === "3" || hdnAddressTypeID === "4") {
-        //     postData.AddressLineOne = $("#txtCSUAddressLineOne").val();
-        //     postData.AddressLineTwo = $("#txtCSUAddressLineTwo").val();
-        //     postData.Zip = $("#txtCSUZip").val();
-        //     postData.CouncilDistrict = $("#txtCSUCouncilDistrict").val();
-
-        //     //clear the DJS fields
-        //     $("#txtDJSAddressLineOne").val("");
-        //     $("#txtDJSAddressLineTwo").val("");
-        //     $("#txtDJSZip").val("");
-        //     $("#txtDJSCouncilDistrict").val("");
-        //     $("#txtDJSCity").val("");
-        //     $("#txtDJSState").val("");
-        // }
-
-
         let apiAddress = sessionStorage.getItem("baseApiAddress");
-        //let apiAddress = "http://localhost:57612";
+        
 
         let personAddress = `${apiAddress}/api/PersonAddress`;
 
