@@ -75,7 +75,7 @@ const AddressJuvenile = (props) => {
         $("#txtDJSZip").val(addressZip);
         $("#txtDJSComments").val(comments);
         $("#txtDJSCouncilDistrict").val(councilDistrict);
-        //$("#txtTimeCurrentAddress").val(timeAtCurrentAddress);
+
 
         //it's a DJS-City address
         if (addressTypeId === 1) {
@@ -101,7 +101,6 @@ const AddressJuvenile = (props) => {
         $("#hdnAddressID").val(addressID);
         $("#hdnPersonID").val(personID);
 
-        //$("#hdnPropertyTypeId").val(propertyTypeId);
 
         setPropertyTypes(propertyTypes);
     });
@@ -280,7 +279,6 @@ const AddressJuvenile = (props) => {
         postData.Zip = $("#txtDJSZip").val();
         postData.CouncilDistrict = $("#txtDJSCouncilDistrict").val();
         postData.Comments = $("#txtDJSComments").val();
-            //postData.TimeAtCurrentAddress = $("#txtTimeCurrentAddress").val();
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         
@@ -323,12 +321,6 @@ const AddressJuvenile = (props) => {
         document.getElementById("btnDDLRRHAProperty").innerHTML = selectedPropertType[0].Description;
     }
 
-    // let fundingSourceValueOptions = [];
-    // if (fundingSourceValues.length > 0) {
-    //    fundingSourceValueOptions = fundingSourceValues.map((value) =>
-    //        <a key={value.ID} value={value.ID} description={value.Description} onClick={ handleFundingSourceChange} className="dropdown-item">{value.Description}</a>
-    //      );
-    // }
 
     let propertyTypeValueOptions = [];
     if (propertyTypesValues.length > 0 ) {
