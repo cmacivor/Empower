@@ -298,22 +298,13 @@ const AddressJuvenile = (props) => {
         let hdnAddressTypeID = $("#hdnAdddressTypeID").val();
 
         let postData = {
-            //PersonID: personID,
             AddressTypeID: hdnAddressTypeID,
             GISCode: $("#hdnGISCode").val(),
             Latitude: $("#hdnLatitude").val(),
             Longitude: $("#hdnLongitude").val(),
-            //AddressLineOne: $("#txtDJSAddressLineOne").val(),
-            //AddressLineTwo: $("#txtDJSAddressLineTwo").val(),
             City: 'RICHMOND', 
             State: 'VA', 
-            //Zip: $("#txtDJSZip").val(),
-            //CouncilDistrict: $("#txtDJSCouncilDistrict").val(),
             Active: true,
-            //CreatedBy: sessionStorageData.CurrentUser,
-            //CreatedDate: new Date(),
-            //UpdatedDate: new Date(),
-            //UpdatedBy: sessionStorageData.CurrentUser
         };
 
         let addressId = $("#hdnAddressID").val();

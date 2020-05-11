@@ -16,7 +16,10 @@ const AddressJuvenile = (props) => {
     let city = '';
     let state = '';
     let comments = '';
-    let timeAtCurrentAddress = '';
+    let isHomeless = '';
+    let propertyTypeId = '';
+    let propertyTypeDescription = '';
+
 
     let gisCode = '';
     let latitude = '';
@@ -32,6 +35,7 @@ const AddressJuvenile = (props) => {
         personID = props.clientProfile.Person.ID;
 
         if (props.clientProfile.PersonAddress.length > 0) {
+            console.log(props.clientProfile.PersonAddress);
     
             let personInfo = props.clientProfile.PersonAddress[0];
             addressID = personInfo.ID;
@@ -44,7 +48,11 @@ const AddressJuvenile = (props) => {
             city = (personInfo.City !== null) ? personInfo.City : '';
             state = (personInfo.State !== null) ? personInfo.State : '';
             comments =(personInfo.Comments !== null) ? personInfo.Comments : '';
-            timeAtCurrentAddress = (personInfo.TimeAtCurrentAddress !== null) ? personInfo.TimeAtCurrentAddress : '';
+
+            propertyTypeId = (personInfo.PropertyTypeID !== null ) ? personInfo.PropertyTypeID : '';
+            propertyTypeDescription = (personInfo.PropertyType.Description !== null) ? personInfo.PropertyType.Description : ' Please Select';
+            isHomeless = (personInfo.Homeless !== null) ? personInfo.Homeless : '';
+
             gisCode = (personInfo.GISCode !== null ) ? personInfo.GISCode : '';
             latitude = (personInfo.Latitude !== null ) ? personInfo.Latitude : '';
             longitude = (personInfo.Longitude !== null) ? personInfo.Longitude : '';
@@ -66,7 +74,8 @@ const AddressJuvenile = (props) => {
         $("#txtDJSAddressLineTwo").val(addressLineTwo);
         $("#txtDJSZip").val(addressZip);
         $("#txtDJSComments").val(comments);
-        $("#txtTimeCurrentAddress").val(timeAtCurrentAddress);
+        $("#txtDJSCouncilDistrict").val(councilDistrict);
+        //$("#txtTimeCurrentAddress").val(timeAtCurrentAddress);
 
         //it's a DJS-City address
         if (addressTypeId === 1) {
@@ -77,6 +86,11 @@ const AddressJuvenile = (props) => {
             $("#txtDJSCity").val(city);
             $("#txtDJSState").val(state);
         }
+
+        document.getElementById("btnDDLRRHAProperty").value = propertyTypeId ;
+        document.getElementById("btnDDLRRHAProperty").innerHTML = propertyTypeDescription;
+
+        setRadioButtonState("rdpIsHomelessYes", "rdpIsHomelessNo", isHomeless);
         
         $("#hdnAdddressTypeID").val(addressTypeId);
         $("#hdnAddressCreatedDate").val(createdDate);
@@ -86,7 +100,7 @@ const AddressJuvenile = (props) => {
         $("#hdnLongitude").val(longitude);
         $("#hdnAddressID").val(addressID);
         $("#hdnPersonID").val(personID);
-
+        $("#hdnPropertyTypeId").val(propertyTypeId);
 
         setPropertyTypes(propertyTypes);
     });
@@ -102,6 +116,14 @@ const AddressJuvenile = (props) => {
         } else {
             document.getElementById(rdNo).checked = true;
         }
+    }
+
+    function getRadioButtonState(rdYes) {
+        let yesChecked = document.getElementById(rdYes).checked;
+        if (yesChecked) {
+            return true;
+        }
+        return false;
     }
 
 
@@ -223,6 +245,8 @@ const AddressJuvenile = (props) => {
             City: 'RICHMOND', 
             State: 'VA', 
             Active: true,
+            Homeless : getRadioButtonState("rdpIsHomelessYes"),
+            PropertyTypeID: $("#hdnPropertyTypeId").val()
         };
 
         let addressId = $("#hdnAddressID").val();
@@ -250,12 +274,12 @@ const AddressJuvenile = (props) => {
             postData.CreatedBy = sessionStorageData.CurrentUser;
         }
 
-            postData.AddressLineOne = $("#txtDJSAddressLineOne").val();
-            postData.AddressLineTwo = $("#txtDJSAddressLineTwo").val();
-            postData.Zip = $("#txtDJSZip").val();
-            postData.CouncilDistrict = $("#txtDJSCouncilDistrict").val();
-            postData.Comments = $("#txtDJSComments").val();
-            postData.TimeAtCurrentAddress = $("#txtTimeCurrentAddress").val();
+        postData.AddressLineOne = $("#txtDJSAddressLineOne").val();
+        postData.AddressLineTwo = $("#txtDJSAddressLineTwo").val();
+        postData.Zip = $("#txtDJSZip").val();
+        postData.CouncilDistrict = $("#txtDJSCouncilDistrict").val();
+        postData.Comments = $("#txtDJSComments").val();
+            //postData.TimeAtCurrentAddress = $("#txtTimeCurrentAddress").val();
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         
@@ -324,6 +348,7 @@ const AddressJuvenile = (props) => {
         <input type="hidden" id="hdnGISCode" value="" />
         <input type="hidden" id="hdnLatitude" value="" />
         <input type="hidden" id="hdnLongitude" value="" />
+        <input type="hidden" id="hdnPropertyTypeId" value="" />
         <div className="form-row">
             <div className="col-6">
                 <h5>DJS Address</h5>
@@ -367,7 +392,7 @@ const AddressJuvenile = (props) => {
         </div>
         <div className="form-row">
             <div className="form-group col-md-3">
-                <input type="text" className="form-control" id="txtCouncilDistrict" placeholder="Council District" defaultValue="" />
+                <input type="text" className="form-control" id="txtDJSCouncilDistrict" placeholder="Council District" defaultValue="" />
             </div>
         </div>
         <div className="form-row">
