@@ -100,7 +100,8 @@ const AddressJuvenile = (props) => {
         $("#hdnLongitude").val(longitude);
         $("#hdnAddressID").val(addressID);
         $("#hdnPersonID").val(personID);
-        $("#hdnPropertyTypeId").val(propertyTypeId);
+
+        //$("#hdnPropertyTypeId").val(propertyTypeId);
 
         setPropertyTypes(propertyTypes);
     });
@@ -246,7 +247,7 @@ const AddressJuvenile = (props) => {
             State: 'VA', 
             Active: true,
             Homeless : getRadioButtonState("rdpIsHomelessYes"),
-            PropertyTypeID: $("#hdnPropertyTypeId").val()
+            PropertyTypeID: document.getElementById("btnDDLRRHAProperty").value  
         };
 
         let addressId = $("#hdnAddressID").val();
