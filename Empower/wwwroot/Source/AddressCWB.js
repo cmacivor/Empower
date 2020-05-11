@@ -18,7 +18,7 @@ const AddressJuvenile = (props) => {
     let comments = '';
     let isHomeless = '';
     let propertyTypeId = '';
-    let propertyTypeDescription = '';
+    let propertyTypeDescription = 'Please Select';
 
 
     let gisCode = '';
@@ -50,7 +50,7 @@ const AddressJuvenile = (props) => {
             comments =(personInfo.Comments !== null) ? personInfo.Comments : '';
 
             propertyTypeId = (personInfo.PropertyTypeID !== null ) ? personInfo.PropertyTypeID : '';
-            propertyTypeDescription = (personInfo.PropertyType.Description !== null) ? personInfo.PropertyType.Description : ' Please Select';
+            propertyTypeDescription = (personInfo.PropertyType !== null) ? personInfo.PropertyType.Name : ' Please Select';
             isHomeless = (personInfo.Homeless !== null) ? personInfo.Homeless : '';
 
             gisCode = (personInfo.GISCode !== null ) ? personInfo.GISCode : '';
