@@ -128,6 +128,8 @@ const AddressJuvenile = (props) => {
                     let addressCell = newRow.insertCell(1);
                     addressCell.innerText = addressItem.name;
                     addressCell.style = "cursor:pointer";
+
+                    addDJSEventListener(addressCell, resources);
                          
                 });
             },
@@ -145,6 +147,25 @@ const AddressJuvenile = (props) => {
 
     function djsSearchOnChangeEventHandler(event) {
         onChangeEventHandler(event, 1, "txtDJSAddressSearch");
+    }
+
+    function addDJSEventListener(addressCell, resources) {
+        addressCell.addEventListener('click', function(event) {
+                        
+            let selectedAddress = event.currentTarget.innerHTML;
+
+            let filteredAddress = resources.filter(function(address) {
+                return address.name === selectedAddress;
+            });
+
+            $("#txtDJSAddressLineOne").val(filteredAddress[0].address.addressLine);
+            $("#txtDJSCity").val(filteredAddress[0].address.adminDistrict2);
+            $("#txtDJSState").val(filteredAddress[0].address.adminDistrict);
+            $("#txtDJSZip").val(filteredAddress[0].address.postalCode);
+
+            toggle();
+
+        }, false);
     }
 
 
