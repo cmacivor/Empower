@@ -303,7 +303,7 @@ const AddressJuvenile = (props) => {
         <input type="hidden" id="hdnLongitude" value="" />
         <div className="form-row">
             <div className="col-6">
-                <h5>DJS Address</h5>
+                <h5>Client Address</h5>
                 <div className="input-group mb-3">
                     <input type="text" placeholder="Start typing DJU Address"  onKeyDown={onKeyDownEventHandler} onChange={djsSearchOnChangeEventHandler} id="txtDJSAddressSearch" className="form-control" defaultValue="" />
                     <div className="input-group-append">
