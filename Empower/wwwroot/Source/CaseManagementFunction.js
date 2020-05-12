@@ -14,6 +14,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import {getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
 import {  Api } from './commonAdmin';
+import AddressJuvenile from './AddressJuvenile';
+import AddressAdult from './AddressAdult';
+import AddressCWB from './AddressCWB';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -37,6 +40,7 @@ const CaseManagementFunction = (props) => {
     const [jobStatusOptions, setJobStatusOptions] = useState([]);
     const [maritalStatusOptions, setMaritalStatusOptions] = useState([]);
     const [schoolOptions, setSchoolOptions] = useState([]);
+    const [propertyTypeOptions, setPropertyTypes] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -48,7 +52,7 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("JobStatus").then(jobStatuses => setJobStatusOptions(jobStatuses)); 
         Api.getConfigDataByType("MaritalStatus").then(maritalStatuses => setMaritalStatusOptions(maritalStatuses));
         Api.getConfigDataByType("School").then(schools => setSchoolOptions(schools));
-        //Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
+        Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
      }, []);
 
 
@@ -57,9 +61,6 @@ const CaseManagementFunction = (props) => {
     let sessionData = getSessionData();
 
     let systems = getSystems();
-
-    //let genderValueDropDownOptions = [];
-    //let raceValueDropDownOptions = [];
 
 
     function triggerToastMessage(message) {       
@@ -204,12 +205,34 @@ const CaseManagementFunction = (props) => {
                                 maritalStatusValues={ maritalStatusOptions }
                                 createNotification={triggerToastMessage}
                              /> : <div></div>
-                        }
-
-                  
+                        }                  
                     </Tab>
                     <Tab eventKey="address" title="Address" disabled={isTabDisabled}>
-                       address content
+                        {
+                            parseInt(sessionData.SystemID) === systems.Juvenile ? 
+                            <AddressJuvenile
+                                clientProfile={clientProfile.Person}
+                                createNotification={triggerToastMessage} 
+                            /> : <div></div>
+                        }
+                        {
+                            parseInt(sessionData.SystemID) === systems.Adult ?
+                            <AddressAdult
+                                clientProfile={clientProfile.Person}
+                                createNotification={triggerToastMessage}
+                                createErrorNotification={triggerErrorMessage}
+                            /> : <div></div>
+                        }
+                        {
+                            parseInt(sessionData.SystemID) === systems.OCWB ?
+                            <AddressCWB
+                                clientProfile={clientProfile.Person}
+                                propertyTypeValues={propertyTypeOptions}
+                                createNotification={triggerToastMessage}
+                                createErrorNotification={triggerErrorMessage}
+                             /> : <div></div>
+                        }
+               
                     </Tab>
                     <Tab eventKey="familyinfo" title="Family Info" disabled={isTabDisabled}>
                        Family info content
