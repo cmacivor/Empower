@@ -4,6 +4,7 @@ import $ from 'jquery';
 
 const FamilyInfo = (props) => {
 
+    let personId = '';
     let lastName = '';
     let firstName = '';
     let middleName = '';
@@ -14,7 +15,8 @@ const FamilyInfo = (props) => {
     let relationships = props.relationshipValues;
     let suffixes = props.suffixValues;
 
-    if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null) { 
+    if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null) {
+        personId = props.clientProfile.Person.ID;
 
     }
 
@@ -25,6 +27,7 @@ const FamilyInfo = (props) => {
 
     useEffect(() => {
 
+        $("#hdnFMPersonId").val(personId);
 
         setMaritalStatusValues(maritalStatuses);
         setRelationshipValues(relationships);
@@ -98,8 +101,109 @@ const FamilyInfo = (props) => {
         );
     }
 
+    function setRadioButtonState(rdYes, rdNo, clientValue) {
+        if (clientValue === null || clientValue === '') {
+            document.getElementById(rdNo).checked = true;
+            return;
+        }
+
+        if (clientValue) {
+            document.getElementById(rdYes).checked = true;
+        } else {
+            document.getElementById(rdNo).checked = true;
+        }
+    }
+
+    function getRadioButtonState(rdYes) {
+        let yesChecked = document.getElementById(rdYes).checked;
+        if (yesChecked) {
+            return true;
+        }
+        return false;
+    }
+
+
+    function saveNewFamilyProfile() {
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullPersonFamilyProfileAddress = `${apiAddress}/api/FamilyProfile`;
+        let sessionStorageData = getSessionData();
+
+        //first, we create the family profile person object. this gets saved first
+        let person = {
+            LastName: $("#txtFMLastName").val(),
+            FirstName: $("#txtFMFirstName").val(),
+            MiddleName: $("#txtFMMiddleName").val(),
+            SuffixID: $("#btnFMSuffix").val(),
+            SSN: $("#txtFMSSN").val(),
+            Active: true,
+            CreatedDate: new Date(),
+            CreatedBy: sessionStorageData.CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
+        }
+
+        let familyProfile = {
+            ClientProfilePersonID: $("#hdnFMPersonId").val(),
+            RelationshipID: $("#btnFMRelationship").val(),
+            PrimaryContactFlag: getRadioButtonState("rdpEmergencyContactYes"),
+            Person: person,
+            Active: true,
+            CreatedDate: new Date(),
+            CreatedBy: sessionStorageData.CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
+        }
+
+        let personSupplemental = {
+            MaritalStatusID: $("#btnFMMaritalStatus").val(),
+            Income: $("#txtMonthlyIncome").val(),
+            HasFHH: getRadioButtonState("rdpIsFHHYes"),
+            HasEmergencyContactNo: getRadioButtonState("rdpEmergencyContactYes"),
+            HomePhone: $("#txtFMHomePhone").val(),
+            WorkPhone: $("#txtWorkFMPhone").val(),
+            WorkPhoneExt: $("#txtWorkPhoneExt").val(),
+            OtherPhone: $("txtFMAltPhone").val(),
+            Comments : $("#txtFMComments").val(),
+            Active: true,
+            CreatedDate: new Date(),
+            CreatedBy: sessionStorageData.CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
+        }
+
+        let familyProfileViewModel = {
+            FamilyProfile: familyProfile,
+            personSupplemental: personSupplemental
+        }
+
+
+        fetch(fullPersonFamilyProfileAddress, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(familyProfileViewModel)
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+
+            if (result === null) {
+                props.createErrorNotification("an error occurred while saving the record.");
+                return;
+            }
+
+            props.createNotification('The family profile was successfully updated.');
+        });
+
+
+
+    }
+
      return <div>
          <br></br>
+         <input type="hidden" defaultValue="" id="hdnFMPersonId" />
          <h5>Family Info</h5>
          <button id="btnAddFamilyMember" onClick={addFamilyMember} className="btn btn-primary">Add Family Member</button>
          <div className="modal fade" id="familyMemberModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -141,7 +245,7 @@ const FamilyInfo = (props) => {
                             </div>
                             <div className="col-4">
                                 <label htmlFor="txtFMSSN"><strong>SSN</strong></label>
-                                <input type="text" className="form-control" defaultValue=""></input>
+                                <input type="text" id="txtFMSSN" className="form-control" defaultValue=""></input>
                             </div>
                             <div className="col-4">
                                 <label htmlFor="ddlFMMaritalStatus"><strong>Marital Status</strong></label>
@@ -203,15 +307,11 @@ const FamilyInfo = (props) => {
                         <div className="form-row">
                             <div className="col-3">
                                 <label><strong>Home Phone</strong></label>
-                                <input type="text" id="txtHomePhone" defaultValue="" className="form-control" />
-                            </div>
-                            <div className="col-1">
-                                <label><strong>Ext.</strong></label>
-                                <input type="text" className="form-control" id="txtHomePhoneExt" />
+                                <input type="text" id="txtFMHomePhone" defaultValue="" className="form-control" />
                             </div>
                             <div className="col-3">
                                 <label><strong>Work Phone</strong></label>
-                                <input type="text" id="txtWorkPhone" defaultValue="" className="form-control" />
+                                <input type="text" id="txtWorkFMPhone" defaultValue="" className="form-control" />
                             </div>
                             <div className="col-1">
                                 <label><strong>Ext.</strong></label>
@@ -219,7 +319,7 @@ const FamilyInfo = (props) => {
                             </div>
                             <div className="col-3">
                                 <label><strong>Alt Phone</strong></label>
-                                <input type="text" id="txtAltPhone" defaultValue="" className="form-control" />
+                                <input type="text" id="txtFMAltPhone" defaultValue="" className="form-control" />
                             </div>
                             <div className="col-1">
                                 <label><strong>Ext.</strong></label>
@@ -229,12 +329,12 @@ const FamilyInfo = (props) => {
                         <br></br>
                         <div className="form-row">
                             <label><strong>Comments</strong></label>
-                            <textarea id="txtComments" className="form-control" defaultValue="" />
+                            <textarea id="txtFMComments" className="form-control" defaultValue="" />
                         </div>
 
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary"  >Save New</button>
+                        <button type="button" className="btn btn-primary" onClick={saveNewFamilyProfile}  >Save New</button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>

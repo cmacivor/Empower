@@ -434,6 +434,7 @@ const SupplementalCWB = (props) => {
             console.log(result);
             props.createNotification('The client profile was successfully updated.');
         });
+        
      }
 
      function resetClickHandler() {
