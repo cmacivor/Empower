@@ -126,6 +126,7 @@ const FamilyInfo = (props) => {
                                 <input type="text" className="form-control" defaultValue=""  id="txtFMLastName"></input>
                             </div>
                         </div>
+                        <br></br>
                         <div className="form-row">    
                             <div className="col-4">
                                 <label htmlFor="ddlEducationLevels"><strong>Relationship</strong></label>
@@ -154,8 +155,9 @@ const FamilyInfo = (props) => {
                                 </div> 
                             </div> 
                         </div>
+                        <br></br>
                         <div className="form-row">
-                            <div className="col-4">
+                            <div className="col-3">
                                 <label htmlFor="ddlFMSuffix"><strong>Suffix</strong></label>
                                 <div className="dropdown">
                                     <button type="button" id="btnFMSuffix" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -165,8 +167,71 @@ const FamilyInfo = (props) => {
                                         {suffixValueOptions}
                                     </div>
                                 </div> 
-                            </div> 
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="lblMonthlyIncome"><strong>Monthly Income($)</strong> </label>
+                                <input type="text" id="txtMonthlyIncome" className="form-control" defaultValue=""></input>
+                            </div>
+                            <div className="col-3">
+                                <label><strong>FHH</strong></label>
+                                <div>
+                                    <div className="form-check form-check-inline">
+                                        <input className="form-check-input" type="radio" name="rdpIsFHH" id="rdpIsFHHYes"  />
+                                        <label className="form-check-label">Yes</label>         
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <input className="form-check-input" type="radio" name="rdpIsFHH" id="rdpIsFHHNo"  />
+                                        <label className="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-3">
+                                <label htmlFor="lblEmergencyContact">Emergency Contact?</label>
+                                <div>
+                                    <div className="form-check form-check-inline">
+                                        <input className="form-check-input" type="radio" name="rdpEmergencyContact" id="rdpEmergencyContactYes"  />
+                                        <label className="form-check-label">Yes</label>         
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <input className="form-check-input" type="radio" name="rdpEmergencyContact" id="rdpEmergencyContactNo"  />
+                                        <label className="form-check-label">No</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <br></br>
+                        <div className="form-row">
+                            <div className="col-3">
+                                <label><strong>Home Phone</strong></label>
+                                <input type="text" id="txtHomePhone" defaultValue="" className="form-control" />
+                            </div>
+                            <div className="col-1">
+                                <label><strong>Ext.</strong></label>
+                                <input type="text" className="form-control" id="txtHomePhoneExt" />
+                            </div>
+                            <div className="col-3">
+                                <label><strong>Work Phone</strong></label>
+                                <input type="text" id="txtWorkPhone" defaultValue="" className="form-control" />
+                            </div>
+                            <div className="col-1">
+                                <label><strong>Ext.</strong></label>
+                                <input type="text" className="form-control" id="txtWorkPhoneExt" defaultValue="" />
+                            </div>
+                            <div className="col-3">
+                                <label><strong>Alt Phone</strong></label>
+                                <input type="text" id="txtAltPhone" defaultValue="" className="form-control" />
+                            </div>
+                            <div className="col-1">
+                                <label><strong>Ext.</strong></label>
+                                <input type="text" className="form-control" id="txtAltPhoneExt" defaultValue="" />
+                            </div>
+                        </div>
+                        <br></br>
+                        <div className="form-row">
+                            <label><strong>Comments</strong></label>
+                            <textarea id="txtComments" className="form-control" defaultValue="" />
+                        </div>
+
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-primary"  >Save New</button>
