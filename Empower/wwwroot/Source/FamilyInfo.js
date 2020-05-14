@@ -126,15 +126,17 @@ const FamilyInfo = (props) => {
             $("#txtAltPhoneExt").val(personSupplemental.OtherPhoneExt);
             $("#txtFMComments").val(personSupplemental.Comments);
 
+            $("#hdnCurrentFamilyProfileID").val(result[0].FamilyProfile.ID);
+            $("#hdnFamilyProfileCreatedDate").val(result[0].FamilyProfile.CreatedDate);
+            $("#hdnFamilyProfileCreatedBy").val(result[0].FamilyProfile.CreatedBy);
+            $("#hdnPersonCreatedDate").val(person.CreatedDate);
+            $("#hdnPersonCreatedBy").val(person.CreatedBy);
+            $("#hdnPersonSupplementalCreatedDate").val(personSupplemental.CreatedDate);
+            $("#hdnPersonSupplementalCreatedBy").val(personSupplemental.CreatedBy);
+
             $('#familyMemberModal').modal('toggle');
 
 
-            // if (result === null) {
-            //     props.createErrorNotification("an error occurred while saving the record.");
-            //     return;
-            // }
-
-            // props.createNotification('The family profile was successfully updated.');
         });
 
     }
@@ -226,6 +228,11 @@ const FamilyInfo = (props) => {
 
     function saveNewFamilyProfile() {
 
+        let familyProfileID = $("#hdnCurrentFamilyProfileID").val();
+        if (familyProfileID !== "") {
+            //the save button was clicked on an existing record
+        }
+
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonFamilyProfileAddress = `${apiAddress}/api/FamilyProfile`;
         let sessionStorageData = getSessionData();
@@ -306,6 +313,14 @@ const FamilyInfo = (props) => {
 
      return <div>
          <br></br>
+         <input type="hidden" defaultValue="" id="hdnCurrentFamilyProfileID" />
+         <input type="hidden" defaultValue="" id="hdnFamilyProfileCreatedDate" />
+         <input type="hidden" defaultValue="" id="hdnFamilyProfileCreatedBy" />
+         <input type="hidden" defaultValue="" id="hdnPersonCreatedDate" />
+         <input type="hidden" defaultValue="" id="hdnPersonCreatedBy" />
+         <input type="hidden" defaultValue="" id="hdnPersonSupplementalCreatedDate" />
+         <input type="hidden" defaultValue="" id="hdnPersonSupplementalCreatedBy" />
+
          <input type="hidden" defaultValue="" id="hdnFMPersonId" />
          <h5>Family Info</h5>
          <button id="btnAddFamilyMember" onClick={addFamilyMember} className="btn btn-primary">Add Family Member</button>
