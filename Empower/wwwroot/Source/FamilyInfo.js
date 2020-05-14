@@ -26,6 +26,7 @@ const FamilyInfo = (props) => {
         familyInfoTable = <table id="tblFamilyInfo" className="table">
                 <thead>
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">Last Name</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Middle Name</th>
@@ -35,12 +36,12 @@ const FamilyInfo = (props) => {
                         <th scope="col">Work Phone</th>
                         <th scope="col">Emergency Contact</th>
                     </tr>
-               
                 </thead>
                 <tbody>
                     {
                         familyProfile.map((value) =>    
                             <tr key={value.FamilyProfile.ID}>
+                                <td><button id="btnEdit" data-id={value.FamilyProfile.ID}  className="btnEdit" onClick={getFamilyMemberDetails} >Edit</button> </td>
                                 <td>{value.FamilyProfile.Person.LastName }</td>
                                 <td>{value.FamilyProfile.Person.FirstName }</td>
                                 <td>{value.FamilyProfile.Person.MiddleName }</td>
@@ -73,6 +74,11 @@ const FamilyInfo = (props) => {
 
     function addFamilyMember() {
         $('#familyMemberModal').modal('toggle');
+    }
+
+    function getFamilyMemberDetails() {
+       let familyProfileID =  $(".btnEdit").data("id");
+       console.log(familyProfileID);
     }
 
     function handleMaritalStatusChange(event){        
@@ -234,6 +240,7 @@ const FamilyInfo = (props) => {
             props.createNotification('The family profile was successfully updated.');
         });
 
+        $('#familyMemberModal').modal('toggle');
     }
 
 
