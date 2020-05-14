@@ -124,6 +124,7 @@ const FamilyInfo = (props) => {
             $("#txtWorkPhoneExt").val(personSupplemental.WorkPhoneExt);
             $("#txtFMAltPhone").val(personSupplemental.OtherPhone);
             $("#txtAltPhoneExt").val(personSupplemental.OtherPhoneExt);
+            $("#txtFMComments").val(personSupplemental.Comments);
 
             $('#familyMemberModal').modal('toggle');
 
