@@ -15,14 +15,47 @@ const FamilyInfo = (props) => {
     let relationships = props.relationshipValues;
     let suffixes = props.suffixValues;
 
-    if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null) {
+
+    let familyInfoTable;
+
+    if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0) {
         personId = props.clientProfile.Person.ID;
+
+        let familyProfile = props.clientProfile.FamilyProfile;
+
+        familyInfoTable = <table id="tblFamilyInfo">
+                <thead>
+                    <tr>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Middle Name</th>
+                        <th scope="col">Suffix</th>
+                        <th scope="col">Relationship</th>
+                        <th scope="col">Home Phone</th>
+                        <th scope="col">Work Phone</th>
+                        <th scope="col">Emergency Contact</th>
+                    </tr>
+               
+                </thead>
+                <tbody>
+                    {
+                        familyProfile.map((value) =>    
+                            <tr key={value.FamilyProfile.ID}>
+                                <td>{value.FamilyProfile.ID } </td>
+                                <td>{value.FamilyProfile.ClientProfilePersonID}</td>
+                            </tr>
+                        )
+                    }
+                </tbody>
+            </table>
 
     }
 
     const [maritalStatusValues, setMaritalStatusValues ] = useState(maritalStatuses);
     const [relationshipValues, setRelationshipValues] = useState(relationships);
     const [suffixValues, setSuffixValues ] = useState(suffixes);
+
+    //const [familyInfoTable, setFamilyTable ] = useState('');
 
 
     useEffect(() => {
@@ -32,6 +65,51 @@ const FamilyInfo = (props) => {
         setMaritalStatusValues(maritalStatuses);
         setRelationshipValues(relationships);
         setSuffixValues(suffixes);
+
+        // if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0)
+        // {
+        //     let familInfoTableRows = [];
+        //     let tableRef = document.getElementById(tableName).getElementsByTagName('tbody')[0];
+        //     props.clientProfile.FamilyProfile.forEach(function(familyInfo) {
+                
+        //     });
+        // }
+
+        // let famTable;
+        // if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0) {
+
+        //     famTable = <table id="tblFamilyInfo">
+        //         <thead>
+        //             <tr>
+        //                 <th scope="col">Last Name</th>
+        //                 <th scope="col">First Name</th>
+        //                 <th scope="col">Middle Name</th>
+        //                 <th scope="col">Suffix</th>
+        //                 <th scope="col">Relationship</th>
+        //                 <th scope="col">Home Phone</th>
+        //                 <th scope="col">Work Phone</th>
+        //                 <th scope="col">Emergency Contact</th>
+        //             </tr>
+               
+        //         </thead>
+        //         <tbody>
+        //           {
+        //                props.clientProfile.FamilyProfile.forEach(function(familyProfile)    {
+        //                    <tr>
+        //                       {/* <td> { familyProfile.FamilyProfile.Person.LastName } </td> */}
+        //                       this is a test
+        //                    </tr>
+    
+        //                 })
+        //           }
+    
+                    
+        //         </tbody>
+        //     </table>
+
+        //     setFamilyTable(famTable);
+        //}
+      
     });
 
     function addFamilyMember() {
@@ -197,15 +275,18 @@ const FamilyInfo = (props) => {
             props.createNotification('The family profile was successfully updated.');
         });
 
-
-
     }
+
+
+
 
      return <div>
          <br></br>
          <input type="hidden" defaultValue="" id="hdnFMPersonId" />
          <h5>Family Info</h5>
          <button id="btnAddFamilyMember" onClick={addFamilyMember} className="btn btn-primary">Add Family Member</button>
+         <br></br>
+         {familyInfoTable}
          <div className="modal fade" id="familyMemberModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
