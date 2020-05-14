@@ -23,7 +23,7 @@ const FamilyInfo = (props) => {
 
         let familyProfile = props.clientProfile.FamilyProfile;
 
-        familyInfoTable = <table id="tblFamilyInfo">
+        familyInfoTable = <table id="tblFamilyInfo" className="table">
                 <thead>
                     <tr>
                         <th scope="col">Last Name</th>
@@ -41,8 +41,14 @@ const FamilyInfo = (props) => {
                     {
                         familyProfile.map((value) =>    
                             <tr key={value.FamilyProfile.ID}>
-                                <td>{value.FamilyProfile.ID } </td>
-                                <td>{value.FamilyProfile.ClientProfilePersonID}</td>
+                                <td>{value.FamilyProfile.Person.LastName }</td>
+                                <td>{value.FamilyProfile.Person.FirstName }</td>
+                                <td>{value.FamilyProfile.Person.MiddleName }</td>
+                                <td>{value.FamilyProfile.Person.Suffix.Description }</td>
+                                <td>{value.FamilyProfile.Relationship.Description } </td>
+                                <td>{value.PersonSupplemental.HomePhone }  </td>
+                                <td>{value.PersonSupplemental.WorkPhone }  </td>
+                                <td>{ (value.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No'  }  </td>
                             </tr>
                         )
                     }
@@ -55,8 +61,6 @@ const FamilyInfo = (props) => {
     const [relationshipValues, setRelationshipValues] = useState(relationships);
     const [suffixValues, setSuffixValues ] = useState(suffixes);
 
-    //const [familyInfoTable, setFamilyTable ] = useState('');
-
 
     useEffect(() => {
 
@@ -65,51 +69,6 @@ const FamilyInfo = (props) => {
         setMaritalStatusValues(maritalStatuses);
         setRelationshipValues(relationships);
         setSuffixValues(suffixes);
-
-        // if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0)
-        // {
-        //     let familInfoTableRows = [];
-        //     let tableRef = document.getElementById(tableName).getElementsByTagName('tbody')[0];
-        //     props.clientProfile.FamilyProfile.forEach(function(familyInfo) {
-                
-        //     });
-        // }
-
-        // let famTable;
-        // if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0) {
-
-        //     famTable = <table id="tblFamilyInfo">
-        //         <thead>
-        //             <tr>
-        //                 <th scope="col">Last Name</th>
-        //                 <th scope="col">First Name</th>
-        //                 <th scope="col">Middle Name</th>
-        //                 <th scope="col">Suffix</th>
-        //                 <th scope="col">Relationship</th>
-        //                 <th scope="col">Home Phone</th>
-        //                 <th scope="col">Work Phone</th>
-        //                 <th scope="col">Emergency Contact</th>
-        //             </tr>
-               
-        //         </thead>
-        //         <tbody>
-        //           {
-        //                props.clientProfile.FamilyProfile.forEach(function(familyProfile)    {
-        //                    <tr>
-        //                       {/* <td> { familyProfile.FamilyProfile.Person.LastName } </td> */}
-        //                       this is a test
-        //                    </tr>
-    
-        //                 })
-        //           }
-    
-                    
-        //         </tbody>
-        //     </table>
-
-        //     setFamilyTable(famTable);
-        //}
-      
     });
 
     function addFamilyMember() {
@@ -285,7 +244,8 @@ const FamilyInfo = (props) => {
          <input type="hidden" defaultValue="" id="hdnFMPersonId" />
          <h5>Family Info</h5>
          <button id="btnAddFamilyMember" onClick={addFamilyMember} className="btn btn-primary">Add Family Member</button>
-         <br></br>
+         <br/>
+         <br/>
          {familyInfoTable}
          <div className="modal fade" id="familyMemberModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg" role="document">
