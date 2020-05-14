@@ -79,7 +79,7 @@ const FamilyInfo = (props) => {
     function getFamilyMemberDetails(event) {
       
        let familyProfileID = event.currentTarget.getAttribute("data-id");
-       console.log(familyProfileID);
+       //console.log(familyProfileID);
 
        let apiAddress = sessionStorage.getItem("baseApiAddress");
        let fullPersonFamilyProfileAddress = `${apiAddress}/api/ClientProfile/FamilyProfile/${familyProfileID}`;
@@ -95,6 +95,17 @@ const FamilyInfo = (props) => {
         }).then(result => result.json())
         .then(result => {
             console.log(result);
+
+            let person = result[0].FamilyProfile.Person;
+            //console.log(lastName);
+
+            $("#txtFMLastName").val(person.LastName);
+            $("#txtFMFirstName").val(person.FirstName);
+            $("#txtFMMiddleName").val(person.MiddleName);
+
+
+            $('#familyMemberModal').modal('toggle');
+
 
             // if (result === null) {
             //     props.createErrorNotification("an error occurred while saving the record.");
