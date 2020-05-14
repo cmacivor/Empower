@@ -41,7 +41,7 @@ const FamilyInfo = (props) => {
                     {
                         familyProfile.map((value) =>    
                             <tr key={value.FamilyProfile.ID}>
-                                <td><button id="btnEdit" data-id={value.FamilyProfile.ID}  className="btnEdit" onClick={getFamilyMemberDetails} >Edit</button> </td>
+                                <td><button id="btnEdit" data-id={value.FamilyProfile.ClientProfilePersonID}  className="btn btn-primary" onClick={getFamilyMemberDetails} >Edit</button> </td>
                                 <td>{value.FamilyProfile.Person.LastName }</td>
                                 <td>{value.FamilyProfile.Person.FirstName }</td>
                                 <td>{value.FamilyProfile.Person.MiddleName }</td>
@@ -76,9 +76,34 @@ const FamilyInfo = (props) => {
         $('#familyMemberModal').modal('toggle');
     }
 
-    function getFamilyMemberDetails() {
-       let familyProfileID =  $(".btnEdit").data("id");
+    function getFamilyMemberDetails(event) {
+      
+       let familyProfileID = event.currentTarget.getAttribute("data-id");
        console.log(familyProfileID);
+
+       let apiAddress = sessionStorage.getItem("baseApiAddress");
+       let fullPersonFamilyProfileAddress = `${apiAddress}/api/ClientProfile/FamilyProfile/${familyProfileID}`;
+       let sessionStorageData = getSessionData();
+
+       fetch(fullPersonFamilyProfileAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+            //body: JSON.stringify(familyProfileViewModel)
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+
+            // if (result === null) {
+            //     props.createErrorNotification("an error occurred while saving the record.");
+            //     return;
+            // }
+
+            // props.createNotification('The family profile was successfully updated.');
+        });
+
     }
 
     function handleMaritalStatusChange(event){        
