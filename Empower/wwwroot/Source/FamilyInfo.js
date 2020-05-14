@@ -97,12 +97,33 @@ const FamilyInfo = (props) => {
             console.log(result);
 
             let person = result[0].FamilyProfile.Person;
+            let relationship = result[0].FamilyProfile.Relationship;
+            let personSupplemental = result[0].PersonSupplemental;
             //console.log(lastName);
 
             $("#txtFMLastName").val(person.LastName);
             $("#txtFMFirstName").val(person.FirstName);
             $("#txtFMMiddleName").val(person.MiddleName);
+            document.getElementById("btnFMRelationship").value = relationship.ID;
+            document.getElementById("btnFMRelationship").innerHTML = relationship.Description;
+            $("#txtFMSSN").val(person.SSN);
 
+            document.getElementById("btnFMMaritalStatus").value = personSupplemental.MaritalStatus.ID;
+            document.getElementById("btnFMMaritalStatus").innerHTML = personSupplemental.MaritalStatus.Description;
+
+            document.getElementById("btnFMSuffix").value = person.Suffix.ID;
+            document.getElementById("btnFMSuffix").innerHTML = person.Suffix.Description;
+
+            $("#txtMonthlyIncome").val(personSupplemental.Income);
+
+            setRadioButtonState("rdpIsFHHYes", "rdpIsFHHNo", personSupplemental.HasFHH);
+            setRadioButtonState("rdpEmergencyContactYes", "rdpEmergencyContactNo", personSupplemental.HasEmergencyContactNo);
+
+            $("#txtFMHomePhone").val(personSupplemental.HomePhone);
+            $("#txtWorkFMPhone").val(personSupplemental.WorkPhone);
+            $("#txtWorkPhoneExt").val(personSupplemental.WorkPhoneExt);
+            $("#txtFMAltPhone").val(personSupplemental.OtherPhone);
+            $("#txtAltPhoneExt").val(personSupplemental.OtherPhoneExt);
 
             $('#familyMemberModal').modal('toggle');
 
