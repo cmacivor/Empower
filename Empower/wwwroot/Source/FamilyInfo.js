@@ -18,9 +18,12 @@ const FamilyInfo = (props) => {
 
     let familyInfoTable;
 
-    if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0) {
+    if (props.clientProfile !== undefined) {
         personId = props.clientProfile.Person.ID;
+    }
 
+    if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0) {
+       
         let familyProfile = props.clientProfile.FamilyProfile;
 
         familyInfoTable = <table id="tblFamilyInfo" className="table">
@@ -125,8 +128,11 @@ const FamilyInfo = (props) => {
             $("#txtFMAltPhone").val(personSupplemental.OtherPhone);
             $("#txtAltPhoneExt").val(personSupplemental.OtherPhoneExt);
             $("#txtFMComments").val(personSupplemental.Comments);
+            $("#hdnPersonSupplementalID").val(personSupplemental.ID);
 
             $("#hdnCurrentFamilyProfileID").val(result[0].FamilyProfile.ID);
+            $("#hdnFamilyMemberID").val(result[0].FamilyProfile.FamilyMemberID);
+            
             $("#hdnFamilyProfileCreatedDate").val(result[0].FamilyProfile.CreatedDate);
             $("#hdnFamilyProfileCreatedBy").val(result[0].FamilyProfile.CreatedBy);
             $("#hdnPersonCreatedDate").val(person.CreatedDate);
@@ -135,7 +141,6 @@ const FamilyInfo = (props) => {
             $("#hdnPersonSupplementalCreatedBy").val(personSupplemental.CreatedBy);
 
             $('#familyMemberModal').modal('toggle');
-
 
         });
 
@@ -228,14 +233,20 @@ const FamilyInfo = (props) => {
 
     function saveNewFamilyProfile() {
 
-        let familyProfileID = $("#hdnCurrentFamilyProfileID").val();
-        if (familyProfileID !== "") {
-            //the save button was clicked on an existing record
-        }
-
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonFamilyProfileAddress = `${apiAddress}/api/FamilyProfile`;
         let sessionStorageData = getSessionData();
+
+        let familyProfileID = $("#hdnCurrentFamilyProfileID").val();
+
+        let familyProfileCreatedDate = (familyProfileID !== "") ? $("#hdnFamilyProfileCreatedDate").val() : new Date();
+        let familyProfileCreatedBy = (familyProfileID !== "") ? $("#hdnFamilyProfileCreatedBy").val() : sessionStorageData.CurrentUser;
+        let personCreatedDate = (familyProfileID !== "") ? $("#hdnPersonCreatedDate").val() : new Date();
+        let personCreatedBy = (familyProfileID !== "") ? $("#hdnPersonCreatedBy").val() : sessionStorageData.CurrentUser;
+        let personSupplementalCreatedDate = (familyProfileID !== "") ? $("#hdnPersonSupplementalCreatedDate").val() : new Date();
+        let personSupplementalCreatedBy = (familyProfileID !== "") ? $("#hdnPersonSupplementalCreatedBy").val() : sessionStorageData.CurrentUser;
+
+        let methodType = (familyProfileID !== "") ? 'PUT' : 'POST';
 
         //first, we create the family profile person object. this gets saved first
         let person = {
@@ -245,8 +256,8 @@ const FamilyInfo = (props) => {
             SuffixID: $("#btnFMSuffix").val(),
             SSN: $("#txtFMSSN").val(),
             Active: true,
-            CreatedDate: new Date(),
-            CreatedBy: sessionStorageData.CurrentUser,
+            CreatedDate: personCreatedDate,
+            CreatedBy: personCreatedBy,
             UpdatedDate: new Date(),
             UpdatedBy: sessionStorageData.CurrentUser
         }
@@ -257,8 +268,8 @@ const FamilyInfo = (props) => {
             PrimaryContactFlag: getRadioButtonState("rdpEmergencyContactYes"),
             Person: person,
             Active: true,
-            CreatedDate: new Date(),
-            CreatedBy: sessionStorageData.CurrentUser,
+            CreatedDate: familyProfileCreatedDate,
+            CreatedBy: familyProfileCreatedBy,
             UpdatedDate: new Date(),
             UpdatedBy: sessionStorageData.CurrentUser
         }
@@ -274,10 +285,17 @@ const FamilyInfo = (props) => {
             OtherPhone: $("txtFMAltPhone").val(),
             Comments : $("#txtFMComments").val(),
             Active: true,
-            CreatedDate: new Date(),
-            CreatedBy: sessionStorageData.CurrentUser,
+            CreatedDate: personSupplementalCreatedDate,
+            CreatedBy: personSupplementalCreatedBy,
             UpdatedDate: new Date(),
             UpdatedBy: sessionStorageData.CurrentUser
+        }
+
+        //this is an update, and we need to pass these params
+        if (familyProfileID !== "") {
+            person.ID = $("#hdnFMPersonId").val(),
+            familyProfile.FamilyMemberID = $("#hdnFamilyMemberID").val(),
+            personSupplemental.ID = $("#hdnPersonSupplementalID").val()
         }
 
         let familyProfileViewModel = {
@@ -287,7 +305,7 @@ const FamilyInfo = (props) => {
 
 
         fetch(fullPersonFamilyProfileAddress, {
-            method: 'POST',
+            method: methodType,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + sessionStorageData.Token
@@ -297,7 +315,7 @@ const FamilyInfo = (props) => {
         .then(result => {
             console.log(result);
 
-            if (result === null) {
+            if (result === null || result.Message !== null) {
                 props.createErrorNotification("an error occurred while saving the record.");
                 return;
             }
@@ -309,18 +327,17 @@ const FamilyInfo = (props) => {
     }
 
 
-
-
      return <div>
          <br></br>
          <input type="hidden" defaultValue="" id="hdnCurrentFamilyProfileID" />
+         <input type="hidden" defaultValue="" id="hdnFamilyMemberID" />
+         <input type="hidden" defaultValue="" id="hdnPersonSupplementalID" />
          <input type="hidden" defaultValue="" id="hdnFamilyProfileCreatedDate" />
          <input type="hidden" defaultValue="" id="hdnFamilyProfileCreatedBy" />
          <input type="hidden" defaultValue="" id="hdnPersonCreatedDate" />
          <input type="hidden" defaultValue="" id="hdnPersonCreatedBy" />
          <input type="hidden" defaultValue="" id="hdnPersonSupplementalCreatedDate" />
          <input type="hidden" defaultValue="" id="hdnPersonSupplementalCreatedBy" />
-
          <input type="hidden" defaultValue="" id="hdnFMPersonId" />
          <h5>Family Info</h5>
          <button id="btnAddFamilyMember" onClick={addFamilyMember} className="btn btn-primary">Add Family Member</button>
