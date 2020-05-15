@@ -102,6 +102,10 @@ const FamilyInfo = (props) => {
         .then(result => {
             console.log(result);
 
+            if (result === null || result === undefined) {
+                props.createErrorNotification("an error occurred while retrieving the record.");
+            }
+
             let person = result[0].FamilyProfile.Person;
             let relationship = result[0].FamilyProfile.Relationship;
             let personSupplemental = result[0].PersonSupplemental;
@@ -110,15 +114,23 @@ const FamilyInfo = (props) => {
             $("#txtFMLastName").val(person.LastName);
             $("#txtFMFirstName").val(person.FirstName);
             $("#txtFMMiddleName").val(person.MiddleName);
-            document.getElementById("btnFMRelationship").value = relationship.ID;
-            document.getElementById("btnFMRelationship").innerHTML = relationship.Description;
+
+            if (relationship !== null) {
+                document.getElementById("btnFMRelationship").value = relationship.ID;
+                document.getElementById("btnFMRelationship").innerHTML = relationship.Description;
+            }
+
             $("#txtFMSSN").val(person.SSN);
 
-            document.getElementById("btnFMMaritalStatus").value = personSupplemental.MaritalStatus.ID;
-            document.getElementById("btnFMMaritalStatus").innerHTML = personSupplemental.MaritalStatus.Description;
+            if (personSupplemental.MaritalStatus !== null) {
+                document.getElementById("btnFMMaritalStatus").value = personSupplemental.MaritalStatus.ID;
+                document.getElementById("btnFMMaritalStatus").innerHTML = personSupplemental.MaritalStatus.Description;
+            }
 
-            document.getElementById("btnFMSuffix").value = person.Suffix.ID;
-            document.getElementById("btnFMSuffix").innerHTML = person.Suffix.Description;
+            if (person.Suffix !== null) {
+                document.getElementById("btnFMSuffix").value = person.Suffix.ID;
+                document.getElementById("btnFMSuffix").innerHTML = person.Suffix.Description;
+            }
 
             $("#txtMonthlyIncome").val(personSupplemental.Income);
 
@@ -132,6 +144,7 @@ const FamilyInfo = (props) => {
             $("#txtAltPhoneExt").val(personSupplemental.OtherPhoneExt);
             $("#txtFMComments").val(personSupplemental.Comments);
             $("#hdnPersonSupplementalID").val(personSupplemental.ID);
+            $("#hdnPersonSupplementalPersonID").val(personSupplemental.PersonID);
 
             $("#hdnCurrentFamilyProfileID").val(result[0].FamilyProfile.ID);
             $("#hdnFamilyMemberID").val(result[0].FamilyProfile.FamilyMemberID);
@@ -298,7 +311,9 @@ const FamilyInfo = (props) => {
         if (familyProfileID !== "") {
             person.ID = $("#hdnFMPersonId").val(),
             familyProfile.FamilyMemberID = $("#hdnFamilyMemberID").val(),
-            personSupplemental.ID = $("#hdnPersonSupplementalID").val()
+            personSupplemental.ID = $("#hdnPersonSupplementalID").val(),
+            personSupplemental.PersonID = $("#hdnPersonSupplementalPersonID").val(), //$("#hdnFMPersonId").val(),
+            familyProfile.ID = familyProfileID
         }
 
         let familyProfileViewModel = {
@@ -335,6 +350,7 @@ const FamilyInfo = (props) => {
          <input type="hidden" defaultValue="" id="hdnCurrentFamilyProfileID" />
          <input type="hidden" defaultValue="" id="hdnFamilyMemberID" />
          <input type="hidden" defaultValue="" id="hdnPersonSupplementalID" />
+         <input type="hidden" defaultValue="" id="hdnPersonSupplementalPersonID" />
          <input type="hidden" defaultValue="" id="hdnFamilyProfileCreatedDate" />
          <input type="hidden" defaultValue="" id="hdnFamilyProfileCreatedBy" />
          <input type="hidden" defaultValue="" id="hdnPersonCreatedDate" />
