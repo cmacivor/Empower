@@ -5,6 +5,7 @@ import $ from 'jquery';
 const FamilyInfo = (props) => {
 
     let personId = '';
+    let clientProfileId = '';
     let lastName = '';
     let firstName = '';
     let middleName = '';
@@ -20,6 +21,7 @@ const FamilyInfo = (props) => {
 
     if (props.clientProfile !== undefined) {
         personId = props.clientProfile.Person.ID;
+        clientProfileId = props.clientProfileID.ID;
     }
 
     if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0) {
@@ -69,6 +71,7 @@ const FamilyInfo = (props) => {
     useEffect(() => {
 
         $("#hdnFMPersonId").val(personId);
+        $("#hdnClientProfileId").val(clientProfileId);
 
         setMaritalStatusValues(maritalStatuses);
         setRelationshipValues(relationships);
@@ -263,7 +266,7 @@ const FamilyInfo = (props) => {
         }
 
         let familyProfile = {
-            ClientProfilePersonID: $("#hdnFMPersonId").val(),
+            ClientProfilePersonID: $("#hdnClientProfileId").val(),
             RelationshipID: $("#btnFMRelationship").val(),
             PrimaryContactFlag: getRadioButtonState("rdpEmergencyContactYes"),
             Person: person,
@@ -315,7 +318,7 @@ const FamilyInfo = (props) => {
         .then(result => {
             console.log(result);
 
-            if (result === null || result.Message !== null) {
+            if (result === null || result.Message !== undefined) {
                 props.createErrorNotification("an error occurred while saving the record.");
                 return;
             }
@@ -339,6 +342,7 @@ const FamilyInfo = (props) => {
          <input type="hidden" defaultValue="" id="hdnPersonSupplementalCreatedDate" />
          <input type="hidden" defaultValue="" id="hdnPersonSupplementalCreatedBy" />
          <input type="hidden" defaultValue="" id="hdnFMPersonId" />
+         <input type="hidden" defaultValue="" id="hdnClientProfileId" />
          <h5>Family Info</h5>
          <button id="btnAddFamilyMember" onClick={addFamilyMember} className="btn btn-primary">Add Family Member</button>
          <br/>

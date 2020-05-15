@@ -240,6 +240,7 @@ const CaseManagementFunction = (props) => {
                     <Tab eventKey="familyinfo" title="Family Info" disabled={isTabDisabled}>
                        <FamilyInfo
                             clientProfile={clientProfile.Person}
+                            clientProfileID={clientProfile.ClientProfile }
                             maritalStatusValues={ maritalStatusOptions }
                             relationshipValues = {relationshipOptions }
                             suffixValues= { suffixOptions }
