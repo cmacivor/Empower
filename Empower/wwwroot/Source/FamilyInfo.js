@@ -6,10 +6,10 @@ const FamilyInfo = (props) => {
 
     let personId = '';
     let clientProfileId = '';
-    let lastName = '';
-    let firstName = '';
-    let middleName = '';
-    let ssn = '';
+    //let lastName = '';
+    //let firstName = '';
+    //let middleName = '';
+    //let ssn = '';
 
     
     let maritalStatuses = props.maritalStatusValues;
@@ -309,7 +309,7 @@ const FamilyInfo = (props) => {
 
         //this is an update, and we need to pass these params
         if (familyProfileID !== "") {
-            person.ID = $("#hdnFMPersonId").val(),
+            person.ID = $("#hdnPersonSupplementalPersonID").val(), //$("#hdnFMPersonId").val(),
             familyProfile.FamilyMemberID = $("#hdnFamilyMemberID").val(),
             personSupplemental.ID = $("#hdnPersonSupplementalID").val(),
             personSupplemental.PersonID = $("#hdnPersonSupplementalPersonID").val(), //$("#hdnFMPersonId").val(),
