@@ -46,7 +46,7 @@ const FamilyInfo = (props) => {
                     {
                         familyProfile.map((value) =>    
                             <tr key={value.FamilyProfile.ID}>
-                                <td><button id="btnEdit" data-id={value.FamilyProfile.ClientProfilePersonID}  className="btn btn-primary" onClick={getFamilyMemberDetails} >Edit</button> </td>
+                                <td><button id="btnEdit" data-id={props.clientProfile.Person.ID}  className="btn btn-primary" onClick={getFamilyMemberDetails} >Edit</button> </td>
                                 <td>{value.FamilyProfile.Person.LastName }</td>
                                 <td>{value.FamilyProfile.Person.FirstName }</td>
                                 <td>{value.FamilyProfile.Person.MiddleName }</td>
