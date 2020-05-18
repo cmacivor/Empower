@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {addActive, closeAllLists, removeActive, populateSearchBox, onKeyDownHandler } from './AutoComplete';
+import {addActive, closeAllLists, removeActive, populateSearchBox, onKeyDownHandler, populateDJSFields } from './AutoComplete';
 import { getSessionData } from './commonAdmin';
 import $ from 'jquery';
 
@@ -210,7 +210,8 @@ const AddressJuvenile = (props) => {
             return result.json();
         }).then(result => {
 
-            populateSearchBox(result, 1, searchBoxId);
+            //populateSearchBox(result, 1, searchBoxId);
+            populateSearchBox(result, searchBoxId, populateDJSFields);
 
             //set the AddressTypeID
             $("#hdnAdddressTypeID").val(1);

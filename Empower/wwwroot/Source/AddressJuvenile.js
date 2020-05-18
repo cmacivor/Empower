@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {addActive, closeAllLists, removeActive, populateSearchBox, onKeyDownHandler } from './AutoComplete';
+import {addActive, closeAllLists, removeActive, populateSearchBox, onKeyDownHandler, populateCSUFields, populateDJSFields } from './AutoComplete';
 import { getSessionData } from './commonAdmin';
 import {FaTrash, FaExchangeAlt, FaArrowDown} from 'react-icons/fa';
 import $ from 'jquery';
@@ -266,7 +266,13 @@ const AddressJuvenile = (props) => {
             return result.json();
         }).then(result => {
 
-            populateSearchBox(result, addressTypeId, searchBoxId);
+            //populateSearchBox(result, addressTypeId, searchBoxId);
+            if (addressTypeId === 3) {
+                populateSearchBox(result, searchBoxId, populateCSUFields);
+            }  
+            if (addressTypeId === 1) {
+                populateSearchBox(result, searchBoxId, populateDJSFields);
+            }
 
             //set the AddressTypeID
             $("#hdnAdddressTypeID").val(addressTypeId);
