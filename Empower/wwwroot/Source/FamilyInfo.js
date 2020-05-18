@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getSessionData } from './commonAdmin';
 import $ from 'jquery';
+import AddressModal from './AddressModal';
 
 const FamilyInfo = (props) => {
 
@@ -32,6 +33,7 @@ const FamilyInfo = (props) => {
                 <thead>
                     <tr>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                         <th scope="col">Last Name</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Middle Name</th>
@@ -47,6 +49,7 @@ const FamilyInfo = (props) => {
                         familyProfile.map((value) =>    
                             <tr key={value.FamilyProfile.ID}>
                                 <td><button id="btnEdit" data-id={props.clientProfile.Person.ID}  className="btn btn-primary" onClick={getFamilyMemberDetails} >Edit</button> </td>
+                                <td><button id="btnAddress" className="btn btn-primary" onClick={toggleAddressModal}>Address</button> </td>
                                 <td>{value.FamilyProfile.Person.LastName }</td>
                                 <td>{value.FamilyProfile.Person.FirstName }</td>
                                 <td>{value.FamilyProfile.Person.MiddleName }</td>
@@ -77,6 +80,10 @@ const FamilyInfo = (props) => {
         setRelationshipValues(relationships);
         setSuffixValues(suffixes);
     });
+
+    function toggleAddressModal() {
+        $('#addressModal').modal('toggle');
+    }
 
     function addFamilyMember() {
         $('#familyMemberModal').modal('toggle');
@@ -498,6 +505,7 @@ const FamilyInfo = (props) => {
                 </div>
             </div>
         </div>
+        <AddressModal />
      </div>;
 };
 
