@@ -297,13 +297,13 @@ const AddressModal = (props) => {
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Duplicates</h5>
+                        <h5 className="modal-title" id="exampleModalLabel">Addresses</h5>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        <div className="form-row">
+
                             <br></br>
                                 <input type="hidden" id="hdnAmAddressID" value="" />
                                 <input type="hidden" id="hdnAmAdddressTypeID" value="" />
@@ -322,12 +322,39 @@ const AddressModal = (props) => {
                                         </div>
                                     </div>  
                                 </div>
-                                <br></br>
                                 <div className="form-row">
-                                    <label id="lblDJSAddressType"></label>
-                                    <input type="text" placeholder="Address Line 1" id="txtAmAddressLineOne" className="form-control" defaultValue=""/>
+                                    <div className="form-group col-md-8">
+                                        <input type="text" placeholder="Address Line 1" id="txtAmAddressLineOne" className="form-control" defaultValue=""/>
+                                    </div>
+                                </div>
+                                <div className="form-row ">
+                                    <div className="form-group col-md-8">
+                                        <input type="text" placeholder="Address Line 2" id="txtAmAddressLineTwo" className="form-control" defaultValue=""/>
+                                    </div>
                                 </div>
                                 <div className="form-row">
+                                    <div className="form-group col-md-4">
+                                        <input type="text" placeholder="City" className="form-control" id="txtAmCity" defaultValue="Richmond"/>
+                                    </div>
+                                    <div className="form-group col-md-2">
+                                        <input type="text" placeholder="State" id="txtAmState" className="form-control" defaultValue="VA"/>
+                                    </div>
+                                    <div className="form-group col-md-2">
+                                        <input type="text" className="form-control" placeholder="Zip" id="txtAmZip" defaultValue=""/>
+                                    </div>
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-8">
+                                        <input type="text" className="form-control" placeholder="Comments" id="txtAmComments" defaultValue="" />
+                                    </div>          
+                                </div>
+                                <div className="form-row">
+                                    <div className="form-group col-md-8">
+                                        <input type="text" className="form-control" id="txtAmTimeCurrentAddress" placeholder="Time in Current Address" defaultValue="" />
+                                    </div>
+                                </div>
+
+                                {/* <div className="form-row">
                                     <input type="text" placeholder="Address Line 2" id="txtAmAddressLineTwo" className="form-control" defaultValue=""/>
                                 </div>
                                 <div className="form-row">
@@ -350,7 +377,7 @@ const AddressModal = (props) => {
                                     <div className="form-group col-md-3">
                                         <input type="text" className="form-control" id="txtAmTimeCurrentAddress" placeholder="Time in Current Address" defaultValue="" />
                                     </div>
-                                </div>
+                                </div> */}
 
                                 {/* <div className="form-row">
                                     <div className="col-6">
@@ -397,7 +424,7 @@ const AddressModal = (props) => {
                                     </div>
                                 </div> */}
                             
-                        </div>
+                        
                     </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-primary">Save New</button>

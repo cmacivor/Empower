@@ -62,20 +62,20 @@
         }
 
         export function populateAmSearchFields(addressProperties) {
-            $("#txtDJSAddressLineOne").val(addressProperties[0].attributes.StAddr);
-            $("#txtDJSZip").val(addressProperties[0].attributes.ZIP);
+            $("#txtAmAddressLineOne").val(addressProperties[0].attributes.StAddr);
+            $("#txtAmZip").val(addressProperties[0].attributes.ZIP);
             $("#hdnLatitude").val(addressProperties[0].attributes.Latitude);
-            $("#txtDJSCity").val('Richmond');
-            $("#txtDJSState").val('VA');
+            $("#txtAmCity").val('Richmond');
+            $("#txtAmState").val('VA');
             $("#hdnLongitude").val(addressProperties[0].attributes.Longitude);
-            $("#txtDJSCouncilDistrict").val(addressProperties[0].attributes.CouncilDistrict);
+            //$("#txtDJSCouncilDistrict").val(addressProperties[0].attributes.CouncilDistrict);
             $("#hdnGISCode").val(addressProperties[0].attributes.Ref_ID);
 
             document.getElementById("lblDJSAddressType").innerHTML = "Valid DJS City Address"
                       
             if (addressProperties[0].attributes.SubAddType !== null && addressProperties[0].attributes.SubAddUnit !== null) {
                 let addressLineTwo = addressProperties[0].attributes.SubAddType + " " + addressProperties[0].attributes.SubAddUnit;
-                $("#txtDJSAddressLineTwo").val(addressLineTwo);
+                $("#txtAmAddressLineTwo").val(addressLineTwo);
             }
         }
 
