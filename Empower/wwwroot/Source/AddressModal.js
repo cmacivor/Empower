@@ -216,7 +216,7 @@ const AddressModal = (props) => {
 
     function updateAddress() {
 
-        let familyMemberPersonID = props.familyMemberPersonID;
+        let personID = props.PersonID;
 
         let sessionStorageData = getSessionData();
 
@@ -239,7 +239,7 @@ const AddressModal = (props) => {
             methodType = 'PUT';
 
             postData.ID = addressID;
-            postData.PersonID = $("#hdnPersonID").val();
+            postData.PersonID = personID; //$("#hdnPersonID").val();
             
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;
@@ -249,7 +249,7 @@ const AddressModal = (props) => {
         } else { //it's a new record
             methodType = 'POST';
 
-            postData.PersonID = $("#hdnPersonID").val();
+            postData.PersonID = personID; //$("#hdnPersonID").val();
 
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;

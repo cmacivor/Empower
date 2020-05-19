@@ -529,7 +529,7 @@ const FamilyInfo = (props) => {
                 </div>
             </div>
         </div>
-        <AddressModal familyMemberPersonID={familyMemberPersonID} />
+        <AddressModal PersonID={familyMemberPersonID} />
      </div>;
 };
 
