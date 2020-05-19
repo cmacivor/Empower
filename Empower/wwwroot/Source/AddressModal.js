@@ -51,7 +51,7 @@ const AddressModal = (props) => {
         }
     }
 
-    const [bingAddresses, setBingAddresses] = useState([]);
+    const [isBingSectionVisible, setIsBingSectionVisible] = useState(false);
     const [isRefreshed, setIsRefreshed] = useState(0);
 
     useEffect(() => {
@@ -83,6 +83,8 @@ const AddressModal = (props) => {
         $("#hdnLongitude").val(longitude);
         $("#hdnAddressID").val(addressID);
         $("#hdnPersonID").val(personID);
+
+        $("#bingAlert").hide();
     });
 
 
@@ -111,7 +113,7 @@ const AddressModal = (props) => {
                 key: "AioE2WYI4PFEB6QJ05ws3SYzEfBmT4Dq4GcO-ACemmZnFi5pyKjXeE44i9Qz0QOS",
             },
             success: function(response) {
-                //console.log(response);
+                console.log(response);
                 var resources = response.resourceSets[0].resources;
                 
                 document.getElementById("bingTableBody").innerHTML = "";
@@ -119,16 +121,17 @@ const AddressModal = (props) => {
                 resources.forEach(addressItem => {
                     let newRow = tableRef.insertRow();
 
-                    let iconCell = newRow.insertCell(0);
-                    let icon = document.createElement("i");
-                    icon.classList.add("fas");
-                    icon.classList.add("fa-arrow-down");
+                    //let iconCell = newRow.insertCell(0);
+                    //let icon = document.createElement("i");
+                    //icon.classList.add("fas");
+                    //icon.classList.add("fa-arrow-down");
          
-                    let addressCell = newRow.insertCell(1);
-                    addressCell.innerText = addressItem.name;
-                    addressCell.style = "cursor:pointer";
+                    //let addressCell = newRow.insertCell(0);
+                    //addressCell.innerText = 'test test'; //addressItem.name;
+                    //addressCell.style = "cursor:pointer";
+                    document.getElementById("testContent").innerHTML = addressItem.name;
 
-                    addDJSEventListener(addressCell, resources);
+                    //addDJSEventListener(addressCell, resources);
                          
                 });
             },
@@ -136,8 +139,10 @@ const AddressModal = (props) => {
                 console.log(e.statusText);
             }
         });
-           
+          
+        $("#bingAlert").show();
         //toggle();
+        //setIsBingSectionVisible(true);
     }
 
     function searchDJSBingClickHandler() {
@@ -304,6 +309,23 @@ const AddressModal = (props) => {
                         </button>
                     </div>
                     <div className="modal-body">
+                        
+                    
+                        <div id="bingAlert" className="alert alert-success" role="alert">
+                            <p id="testContent" ></p>
+                                {/* <table id="bingTable" className="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bingTableBody">
+
+                                </tbody>
+                            </table> */}
+                        </div> 
+                           
+                        
                         <br></br>
                         <input type="hidden" id="hdnAmAddressID" value="" />
                         <input type="hidden" id="hdnAmAdddressTypeID" value="" />
