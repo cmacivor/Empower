@@ -288,6 +288,8 @@ const AddressModal = (props) => {
             }
         });
 
+        $('#addressModal').modal('toggle');
+
     }
 
 
