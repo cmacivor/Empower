@@ -49,7 +49,7 @@ const FamilyInfo = (props) => {
                         familyProfile.map((value) =>    
                             <tr key={value.FamilyProfile.ID}>
                                 <td><button id="btnEdit" data-id={props.clientProfile.Person.ID}  className="btn btn-primary" onClick={getFamilyMemberDetails} >Edit</button> </td>
-                                <td><button id="btnAddress" className="btn btn-primary" onClick={toggleAddressModal}>Address</button> </td>
+                                <td><button id="btnAddress" data-id={ value.FamilyProfile.FamilyMemberID } className="btn btn-primary" onClick={toggleAddressModal}>Address</button> </td>
                                 <td>{value.FamilyProfile.Person.LastName }</td>
                                 <td>{value.FamilyProfile.Person.FirstName }</td>
                                 <td>{value.FamilyProfile.Person.MiddleName }</td>
@@ -81,7 +81,29 @@ const FamilyInfo = (props) => {
         setSuffixValues(suffixes);
     });
 
-    function toggleAddressModal() {
+    function toggleAddressModal(event) {
+        let selectedFamilyMemberPersonID = event.currentTarget.getAttribute("data-id");
+
+        $("#hdnCurrentFamilyMemberPersonID").val(selectedFamilyMemberPersonID);
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let sessionStorageData = getSessionData();
+
+        let familyMemberPersonAddressUrl = `${apiAddress}/api/PersonAddress/GetByPersonID/${selectedFamilyMemberPersonID}`;
+
+        fetch(familyMemberPersonAddressUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+        });
+
+        
+
         $('#addressModal').modal('toggle');
     }
 
@@ -354,6 +376,7 @@ const FamilyInfo = (props) => {
 
      return <div>
          <br></br>
+         <input type="hidden" defaultValue="" id="hdnCurrentFamilyMemberPersonID" />
          <input type="hidden" defaultValue="" id="hdnCurrentFamilyProfileID" />
          <input type="hidden" defaultValue="" id="hdnFamilyMemberID" />
          <input type="hidden" defaultValue="" id="hdnPersonSupplementalID" />
