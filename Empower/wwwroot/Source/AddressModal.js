@@ -201,10 +201,6 @@ const AddressModal = (props) => {
 
    
     document.addEventListener("click", function (e) {
-        //closeAllLists(e.target, "txtDJSAddressSearch");
-
-        //closeAllLists(e.target, "txtCSUAddressSearch");
-
         closeAllLists(e.target, "txtAmAddressSearch");
     });
 
@@ -220,7 +216,8 @@ const AddressModal = (props) => {
 
         let sessionStorageData = getSessionData();
 
-        let hdnAddressTypeID = $("#hdnAdddressTypeID").val();
+        let hdnAddressTypeID = $("#hdnAmAdddressTypeID").val();
+
 
         let postData = {
             AddressTypeID: hdnAddressTypeID,
@@ -232,19 +229,19 @@ const AddressModal = (props) => {
             Active: true,
         };
 
-        let addressId = $("#hdnAddressID").val();
+        let addressId = $("#hdnAmAddressID").val();
         let methodType = '';
 
         if (addressId !== "") { //it's an existing record
             methodType = 'PUT';
 
-            postData.ID = addressID;
+            postData.ID = addressId;
             postData.PersonID = personID; //$("#hdnPersonID").val();
             
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;
-            postData.CreatedDate = $("#hdnAddressCreatedDate").val();
-            postData.CreatedBy = $("#hdnAddressCreatedBy").val();
+            postData.CreatedDate = $("#hdnAmAddressCreatedDate").val();
+            postData.CreatedBy = $("#hdnAmAddressCreatedBy").val();
 
         } else { //it's a new record
             methodType = 'POST';

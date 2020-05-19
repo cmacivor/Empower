@@ -70,6 +70,7 @@ const FamilyInfo = (props) => {
     const [relationshipValues, setRelationshipValues] = useState(relationships);
     const [suffixValues, setSuffixValues ] = useState(suffixes);
     const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
+    const [addressID, setAddressID] = useState(0);
 
 
     useEffect(() => {
@@ -80,7 +81,8 @@ const FamilyInfo = (props) => {
         setMaritalStatusValues(maritalStatuses);
         setRelationshipValues(relationships);
         setSuffixValues(suffixes);
-    });
+    }, [addressID]);
+
 
     function toggleAddressModal(event) {
         let selectedFamilyMemberPersonID = event.currentTarget.getAttribute("data-id");
@@ -102,7 +104,22 @@ const FamilyInfo = (props) => {
             }
         }).then(result => result.json())
         .then(result => {
+
             console.log(result);
+            //setAddressID(result.ID);
+
+            $("#hdnAmAddressID").val(result.ID);
+            $("#hdnAmAdddressTypeID").val(result.AddressTypeID);
+            $("#hdnAmAddressCreatedDate").val(result.CreatedDate);
+            $("#hdnAmAddressCreatedBy").val(result.CreatedBy);
+            $("#txtAmAddressLineOne").val(result.AddressLineOne);
+            $("#txtAmAddressLineTwo").val(result.AddressLineTwo);
+            $("#txtAmCity").val(result.City);
+            $("#txtAmState").val(result.State);
+            $("#txtAmZip").val(result.Zip);
+            $("#txtAmComments").val(result.Comments);
+            $("#txtAmTimeCurrentAddress").val(result.TimeAtCurrentAddress);
+
         });
 
         $('#addressModal').modal('toggle');
@@ -374,6 +391,14 @@ const FamilyInfo = (props) => {
         $('#familyMemberModal').modal('toggle');
     }
 
+    function createNotification(message) {
+        props.createNotification(message);
+    }
+
+    function createErrorNotification(message) {
+        props.createErrorNotification(message);
+    }
+
 
      return <div>
          <br></br>
@@ -529,7 +554,7 @@ const FamilyInfo = (props) => {
                 </div>
             </div>
         </div>
-        <AddressModal PersonID={familyMemberPersonID} />
+        <AddressModal PersonID={familyMemberPersonID} createNotification={ createNotification } createErrorNotification={ createErrorNotification } />
      </div>;
 };
 
