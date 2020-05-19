@@ -69,6 +69,7 @@ const FamilyInfo = (props) => {
     const [maritalStatusValues, setMaritalStatusValues ] = useState(maritalStatuses);
     const [relationshipValues, setRelationshipValues] = useState(relationships);
     const [suffixValues, setSuffixValues ] = useState(suffixes);
+    const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
 
 
     useEffect(() => {
@@ -86,6 +87,8 @@ const FamilyInfo = (props) => {
 
         $("#hdnCurrentFamilyMemberPersonID").val(selectedFamilyMemberPersonID);
 
+        setFamilyMemberPersonID(selectedFamilyMemberPersonID);
+
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let sessionStorageData = getSessionData();
 
@@ -101,8 +104,6 @@ const FamilyInfo = (props) => {
         .then(result => {
             console.log(result);
         });
-
-        
 
         $('#addressModal').modal('toggle');
     }
@@ -528,7 +529,7 @@ const FamilyInfo = (props) => {
                 </div>
             </div>
         </div>
-        <AddressModal />
+        <AddressModal familyMemberPersonID={familyMemberPersonID} />
      </div>;
 };
 
