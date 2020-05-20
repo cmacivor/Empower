@@ -123,6 +123,7 @@ const AddressJuvenile = (props) => {
         $("hdnLatitude").val(latitude);
         $("#hdnLongitude").val(longitude);
         $("#hdnAddressID").val(addressID);
+        //console.log('this is the person ID' + personID);
         $("#hdnPersonID").val(personID);
     });
 
@@ -320,7 +321,7 @@ const AddressJuvenile = (props) => {
             methodType = 'PUT';
 
             postData.ID = addressID;
-            postData.PersonID = $("#hdnPersonID").val();
+            postData.PersonID = props.clientProfile.Person.ID; //$("#hdnPersonID").val();
             
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;
@@ -330,7 +331,7 @@ const AddressJuvenile = (props) => {
         } else { //it's a new record
             methodType = 'POST';
 
-            postData.PersonID = $("#hdnPersonID").val();
+            postData.PersonID = props.clientProfile.Person.ID; //$("#hdnPersonID").val();
 
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;
