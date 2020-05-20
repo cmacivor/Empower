@@ -94,7 +94,9 @@ const AddressModal = (props) => {
 
 
     function searchBing(txtAddressSearch) {
-        let tableRef = document.getElementById("bingTable").getElementsByTagName('tbody')[0];
+        //let tableRef = document.getElementById("bingTable").getElementsByTagName('tbody')[0];
+
+        let alertRef = document.getElementById("bingAlert");
 
         let address = document.getElementById(txtAddressSearch).value; 
         
@@ -119,17 +121,22 @@ const AddressModal = (props) => {
                 document.getElementById("bingTableBody").innerHTML = "";
 
                 resources.forEach(addressItem => {
-                    let newRow = tableRef.insertRow();
+                    //let newRow = tableRef.insertRow();
 
                     //let iconCell = newRow.insertCell(0);
                     //let icon = document.createElement("i");
                     //icon.classList.add("fas");
                     //icon.classList.add("fa-arrow-down");
+                    
+                    let addressItemElement = document.createElement("p");
+                    addressItemElement.innerText = addressItem.name;
+                    addressItemElement.style = "cursor:pointer";
+                    alertRef.appendChild(addressItemElement);
          
                     //let addressCell = newRow.insertCell(0);
                     //addressCell.innerText = 'test test'; //addressItem.name;
                     //addressCell.style = "cursor:pointer";
-                    document.getElementById("testContent").innerHTML = addressItem.name;
+                    //document.getElementById("testContent").innerHTML = addressItem.name;
 
                     //addDJSEventListener(addressCell, resources);
                          
@@ -312,7 +319,7 @@ const AddressModal = (props) => {
                         
                     
                         <div id="bingAlert" className="alert alert-success" role="alert">
-                            <p id="testContent" ></p>
+                           
                                 {/* <table id="bingTable" className="table">
                                 <thead>
                                     <tr>
