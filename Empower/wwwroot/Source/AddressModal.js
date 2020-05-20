@@ -156,6 +156,8 @@ const AddressModal = (props) => {
                 return address.name === selectedAddress;
             });
 
+            console.log(filteredAddress[0].address.postalCode);
+
             $("#txtAmAddressLineOne").val(filteredAddress[0].address.addressLine);
             $("#hdnAmAdddressTypeID").val(2);
             $("#txtAmCity").val(filteredAddress[0].address.adminDistrict2);
@@ -253,8 +255,8 @@ const AddressModal = (props) => {
 
             postData.AddressLineOne = $("#txtAmAddressLineOne").val();
             postData.AddressLineTwo = $("#txtAmAddressLineTwo").val();
-            postData.Zip = $("#txtDJSZip").val();
-            postData.CouncilDistrict = $("#txtDJSCouncilDistrict").val();
+            postData.Zip = $("#txtAmZip").val();
+            //postData.CouncilDistrict = $("#txtDJSCouncilDistrict").val();
             postData.Comments = $("#txtAmComments").val();
             postData.TimeAtCurrentAddress = $("#txtAmTimeCurrentAddress").val();
 
