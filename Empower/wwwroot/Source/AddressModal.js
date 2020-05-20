@@ -210,7 +210,35 @@ const AddressModal = (props) => {
     }
 
     function sameAsClientButtonClickHandler() {
-        console.log(props.ClientPersonID);
+        //console.log(props.ClientPersonID);
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let sessionStorageData = getSessionData();
+
+        let clientPersonAddressUrl = `${apiAddress}/api/PersonAddress/GetByPersonID/${props.ClientPersonID}`;
+
+        fetch(clientPersonAddressUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+
+            $("#hdnAmAddressID").val(result.ID);
+            $("#hdnAmAdddressTypeID").val(result.AddressTypeID);
+            $("#hdnAmAddressCreatedDate").val(result.CreatedDate);
+            $("#hdnAmAddressCreatedBy").val(result.CreatedBy);
+            $("#txtAmAddressLineOne").val(result.AddressLineOne);
+            $("#txtAmAddressLineTwo").val(result.AddressLineTwo);
+            $("#txtAmCity").val(result.City);
+            $("#txtAmState").val(result.State);
+            $("#txtAmZip").val(result.Zip);
+            $("#txtAmComments").val(result.Comments);
+            $("#txtAmTimeCurrentAddress").val(result.TimeAtCurrentAddress);
+
+        });
     }
 
 
