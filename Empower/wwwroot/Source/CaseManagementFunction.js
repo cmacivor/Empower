@@ -215,7 +215,8 @@ const CaseManagementFunction = (props) => {
                             parseInt(sessionData.SystemID) === systems.Juvenile ? 
                             <AddressJuvenile
                                 clientProfile={clientProfile.Person}
-                                createNotification={triggerToastMessage} 
+                                createNotification={triggerToastMessage}
+                                createErrorNotification={triggerErrorMessage} 
                             /> : <div></div>
                         }
                         {

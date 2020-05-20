@@ -388,6 +388,11 @@ const AddressJuvenile = (props) => {
         .then(result => result.json())
         .then(result => {
             //console.log(result);
+            if (result === null || result.Message !== undefined) {
+                props.createErrorNotification("An error occurred while saving the adddress.");
+                return;
+            }
+
             if (result !== 0) {
                 props.createNotification("The address was successfully updated.");
             }
