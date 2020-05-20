@@ -226,7 +226,6 @@ const AddressModal = (props) => {
         }).then(result => result.json())
         .then(result => {
 
-            $("#hdnAmAddressID").val(result.ID);
             $("#hdnAmAdddressTypeID").val(result.AddressTypeID);
             $("#hdnAmAddressCreatedDate").val(result.CreatedDate);
             $("#hdnAmAddressCreatedBy").val(result.CreatedBy);
