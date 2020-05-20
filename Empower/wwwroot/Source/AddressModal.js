@@ -209,6 +209,10 @@ const AddressModal = (props) => {
 
     }
 
+    function sameAsClientButtonClickHandler() {
+        console.log(props.ClientPersonID);
+    }
+
 
     function updateAddress() {
 
@@ -304,8 +308,7 @@ const AddressModal = (props) => {
                     </div>
                     <div className="modal-body">
                         <div id="bingAlert" className="alert alert-success" role="alert">
-                           
-                      
+                                        
                         </div>    
                         <br></br>
                         <input type="hidden" id="hdnAmAddressID" value="" />
@@ -358,8 +361,8 @@ const AddressModal = (props) => {
                         </div>             
                     </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary">Same As Client</button>
-                            <button type="button" onClick={updateAddress} className="btn btn-primary">Save New</button>
+                            <button type="button" className="btn btn-primary" onClick={ sameAsClientButtonClickHandler } >Same As Client</button>
+                            <button type="button" onClick={updateAddress} className="btn btn-primary">Save</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>

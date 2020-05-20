@@ -71,6 +71,7 @@ const FamilyInfo = (props) => {
     const [suffixValues, setSuffixValues ] = useState(suffixes);
     const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
     const [addressID, setAddressID] = useState(0);
+    const [clientPersonID, setClientPersonID] = useState(0);
 
 
     useEffect(() => {
@@ -81,7 +82,9 @@ const FamilyInfo = (props) => {
         setMaritalStatusValues(maritalStatuses);
         setRelationshipValues(relationships);
         setSuffixValues(suffixes);
-    }, [addressID]);
+
+
+    }, [addressID, clientPersonID]);
 
 
     function toggleAddressModal(event) {
@@ -90,6 +93,7 @@ const FamilyInfo = (props) => {
         $("#hdnCurrentFamilyMemberPersonID").val(selectedFamilyMemberPersonID);
 
         setFamilyMemberPersonID(selectedFamilyMemberPersonID);
+        setClientPersonID(personId);
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let sessionStorageData = getSessionData();
@@ -554,7 +558,12 @@ const FamilyInfo = (props) => {
                 </div>
             </div>
         </div>
-        <AddressModal PersonID={familyMemberPersonID} createNotification={ createNotification } createErrorNotification={ createErrorNotification } />
+        <AddressModal
+         PersonID={familyMemberPersonID}
+         ClientPersonID={clientPersonID}
+          createNotification={ createNotification } 
+          createErrorNotification={ createErrorNotification }
+        />
      </div>;
 };
 
