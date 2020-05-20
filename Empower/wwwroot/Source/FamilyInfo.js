@@ -48,8 +48,8 @@ const FamilyInfo = (props) => {
                     {
                         familyProfile.map((value) =>    
                             <tr key={value.FamilyProfile.ID}>
-                                <td><button id="btnEdit" data-id={props.clientProfile.Person.ID}  className="btn btn-primary" onClick={getFamilyMemberDetails} >Edit</button> </td>
-                                <td><button id="btnAddress" data-id={ value.FamilyProfile.FamilyMemberID } className="btn btn-primary" onClick={toggleAddressModal}>Address</button> </td>
+                                <td><button id="btnEdit" data-id={props.clientProfile.Person.ID}  className="btn btn-secondary btn-sm" onClick={getFamilyMemberDetails} title="edit the family member" >Edit</button> </td>
+                                <td><button id="btnAddress" data-id={ value.FamilyProfile.FamilyMemberID } className="btn btn-secondary btn-sm" onClick={toggleAddressModal} title="edit the family member's address" >Address</button> </td>
                                 <td>{value.FamilyProfile.Person.LastName }</td>
                                 <td>{value.FamilyProfile.Person.FirstName }</td>
                                 <td>{value.FamilyProfile.Person.MiddleName }</td>
