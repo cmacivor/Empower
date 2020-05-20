@@ -121,8 +121,6 @@ const AddressModal = (props) => {
                 document.getElementById("bingTableBody").innerHTML = "";
 
                 resources.forEach(addressItem => {
-                    //let newRow = tableRef.insertRow();
-
                     //let iconCell = newRow.insertCell(0);
                     //let icon = document.createElement("i");
                     //icon.classList.add("fas");
@@ -133,13 +131,7 @@ const AddressModal = (props) => {
                     addressItemElement.style = "cursor:pointer";
                     alertRef.appendChild(addressItemElement);
          
-                    //let addressCell = newRow.insertCell(0);
-                    //addressCell.innerText = 'test test'; //addressItem.name;
-                    //addressCell.style = "cursor:pointer";
-                    //document.getElementById("testContent").innerHTML = addressItem.name;
-
-                    //addDJSEventListener(addressCell, resources);
-                         
+                    addDJSEventListener(addressItemElement, resources);     
                 });
             },
             error: function(e) {
@@ -173,8 +165,6 @@ const AddressModal = (props) => {
             $("#txtAmCity").val(filteredAddress[0].address.adminDistrict2);
             $("#txtAmState").val(filteredAddress[0].address.adminDistrict);
             $("#txtAmZip").val(filteredAddress[0].address.postalCode);
-
-            //toggle();
 
         }, false);
     }
