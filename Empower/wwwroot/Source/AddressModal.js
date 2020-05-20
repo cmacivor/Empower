@@ -88,11 +88,6 @@ const AddressModal = (props) => {
     });
 
 
-    // function toggle() {
-    //     $('#addressModal').modal('toggle');
-    // }
-
-
     function searchBing(txtAddressSearch) {
         //let tableRef = document.getElementById("bingTable").getElementsByTagName('tbody')[0];
 
@@ -162,6 +157,7 @@ const AddressModal = (props) => {
             });
 
             $("#txtAmAddressLineOne").val(filteredAddress[0].address.addressLine);
+            $("#hdnAmAdddressTypeID").val(2);
             $("#txtAmCity").val(filteredAddress[0].address.adminDistrict2);
             $("#txtAmState").val(filteredAddress[0].address.adminDistrict);
             $("#txtAmZip").val(filteredAddress[0].address.postalCode);
@@ -219,7 +215,6 @@ const AddressModal = (props) => {
         let sessionStorageData = getSessionData();
 
         let hdnAddressTypeID = $("#hdnAmAdddressTypeID").val();
-
 
         let postData = {
             AddressTypeID: hdnAddressTypeID,
@@ -306,23 +301,10 @@ const AddressModal = (props) => {
                         </button>
                     </div>
                     <div className="modal-body">
-                        
-                    
                         <div id="bingAlert" className="alert alert-success" role="alert">
                            
-                                {/* <table id="bingTable" className="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Address</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bingTableBody">
-
-                                </tbody>
-                            </table> */}
-                        </div> 
-                           
-                        
+                      
+                        </div>    
                         <br></br>
                         <input type="hidden" id="hdnAmAddressID" value="" />
                         <input type="hidden" id="hdnAmAdddressTypeID" value="" />
