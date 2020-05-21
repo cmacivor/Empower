@@ -72,16 +72,17 @@ const FamilyInfo = (props) => {
     const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
     const [addressID, setAddressID] = useState(0);
     const [clientPersonID, setClientPersonID] = useState(0);
+    const [isRefreshed, setIsRefreshed] = useState(0);
 
 
     useEffect(() => {
 
-        $("#hdnFMPersonId").val(personId);
-        $("#hdnClientProfileId").val(clientProfileId);
+        //$("#hdnFMPersonId").val(personId);
+        //$("#hdnClientProfileId").val(clientProfileId);
 
-        setMaritalStatusValues(maritalStatuses);
-        setRelationshipValues(relationships);
-        setSuffixValues(suffixes);
+        //setMaritalStatusValues(maritalStatuses);
+        //setRelationshipValues(relationships);
+        //setSuffixValues(suffixes);
 
 
     }, [addressID, clientPersonID]);
@@ -151,6 +152,7 @@ const FamilyInfo = (props) => {
             //body: JSON.stringify(familyProfileViewModel)
         }).then(result => result.json())
         .then(result => {
+            
             console.log(result);
 
             if (result === null || result === undefined) {
@@ -218,7 +220,7 @@ const FamilyInfo = (props) => {
         
         document.getElementById("btnFMMaritalStatus").value = selectedValue;
         
-        let selectedMaritalStatus =  maritalStatusValues.filter(function (educationLevel) {
+        let selectedMaritalStatus =  maritalStatuses.filter(function (educationLevel) {
             return educationLevel.ID === parseInt(selectedValue)
         });
 
@@ -230,7 +232,7 @@ const FamilyInfo = (props) => {
         
         document.getElementById("btnFMRelationship").value = selectedValue;
         
-        let selectedRelationship =  relationshipValues.filter(function (maritalStatus) {
+        let selectedRelationship = relationships.filter(function (maritalStatus) {
             return maritalStatus.ID === parseInt(selectedValue)
         });
 
@@ -242,7 +244,7 @@ const FamilyInfo = (props) => {
         
         document.getElementById("btnFMSuffix").value = selectedValue;
         
-        let selectedSuffix =  suffixValues.filter(function (suffix) {
+        let selectedSuffix =  suffixes.filter(function (suffix) {
             return suffix.ID === parseInt(selectedValue)
         });
 
@@ -251,27 +253,27 @@ const FamilyInfo = (props) => {
 
 
     let maritalStatusValueOptions = [];
-    if (maritalStatusValues.length > 0) {
+    if ( maritalStatuses.length > 0) {
 
-        maritalStatusValueOptions = maritalStatusValues.map((value) =>
+        maritalStatusValueOptions = maritalStatuses.map((value) =>
             <a key={value.ID} value={value.ID} description={value.Description} onClick={handleMaritalStatusChange} className="dropdown-item">{value.Description}</a>
         );
     }
 
     
     let relationshipValueOptions = [];
-    if (relationshipValues.length > 0) {
+    if ( relationships.length > 0) {
 
-        relationshipValueOptions = relationshipValues.map((value) =>
+        relationshipValueOptions = relationships.map((value) =>
             <a key={value.ID} value={value.ID} description={value.Description} onClick={handleRelationshipChange} className="dropdown-item">{value.Description}</a>
         );
     }
 
     
     let suffixValueOptions = [];
-    if (suffixValues.length > 0) {
+    if ( suffixes.length > 0) {
 
-        suffixValueOptions = suffixValues.map((value) =>
+        suffixValueOptions = suffixes.map((value) =>
             <a key={value.ID} value={value.ID} description={value.Description} onClick={handleSuffixChange } className="dropdown-item">{value.Description}</a>
         );
     }
@@ -330,7 +332,7 @@ const FamilyInfo = (props) => {
         }
 
         let familyProfile = {
-            ClientProfilePersonID: $("#hdnClientProfileId").val(),
+            ClientProfilePersonID: clientProfileId, //$("#hdnClientProfileId").val(),
             RelationshipID: $("#btnFMRelationship").val(),
             PrimaryContactFlag: getRadioButtonState("rdpEmergencyContactYes"),
             Person: person,
@@ -390,9 +392,13 @@ const FamilyInfo = (props) => {
             }
 
             props.createNotification('The family profile was successfully updated.');
+
+
         });
 
         $('#familyMemberModal').modal('toggle');
+
+        setIsRefreshed(isRefreshed +1);
     }
 
     function createNotification(message) {
