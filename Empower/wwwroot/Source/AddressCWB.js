@@ -261,8 +261,8 @@ const AddressJuvenile = (props) => {
             
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;
-            postData.CreatedDate = $("#hdnAddressCreatedDate").val();
-            postData.CreatedBy = $("#hdnAddressCreatedBy").val();
+            postData.CreatedDate = createdDate; //$("#hdnAddressCreatedDate").val();
+            postData.CreatedBy = createdBy; //$("#hdnAddressCreatedBy").val();
 
         } else { //it's a new record
             methodType = 'POST';

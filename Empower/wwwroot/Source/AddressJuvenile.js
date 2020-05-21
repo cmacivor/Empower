@@ -314,10 +314,10 @@ const AddressJuvenile = (props) => {
             Active: true,
         };
 
-        let addressId = $("#hdnAddressID").val();
+        //let addressId = $("#hdnAddressID").val();
         let methodType = '';
 
-        if (addressId !== "") { //it's an existing record
+        if (addressID !== "") { //it's an existing record
             methodType = 'PUT';
 
             postData.ID = addressID;
@@ -325,8 +325,8 @@ const AddressJuvenile = (props) => {
             
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;
-            postData.CreatedDate = $("#hdnAddressCreatedDate").val();
-            postData.CreatedBy = $("#hdnAddressCreatedBy").val();
+            postData.CreatedDate = createdDate; //$("#hdnAddressCreatedDate").val();
+            postData.CreatedBy = createdBy; //$("#hdnAddressCreatedBy").val();
 
         } else { //it's a new record
             methodType = 'POST';
