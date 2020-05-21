@@ -48,7 +48,7 @@ const FamilyInfo = (props) => {
                     {
                         familyProfile.map((value) =>    
                             <tr key={value.FamilyProfile.ID}>
-                                <td><button id="btnEdit" data-id={props.clientProfile.Person.ID}  className="btn btn-secondary btn-sm" onClick={getFamilyMemberDetails} title="edit the family member" >Edit</button> </td>
+                                <td><button id="btnEdit" data-id={props.clientProfile.Person.ID} data-familymemberid={value.FamilyProfile.ID}  className="btn btn-secondary btn-sm" onClick={getFamilyMemberDetails} title="edit the family member" >Edit</button> </td>
                                 <td><button id="btnAddress" data-id={ value.FamilyProfile.FamilyMemberID } className="btn btn-secondary btn-sm" onClick={toggleAddressModal} title="edit the family member's address" >Address</button> </td>
                                 <td>{value.FamilyProfile.Person.LastName }</td>
                                 <td>{value.FamilyProfile.Person.FirstName }</td>
@@ -136,11 +136,14 @@ const FamilyInfo = (props) => {
 
     function getFamilyMemberDetails(event) {
       
-       let familyProfileID = event.currentTarget.getAttribute("data-id");
+       let clientID = event.currentTarget.getAttribute("data-id");
+
+       let familyMemberID = event.currentTarget.getAttribute("data-familymemberid");
+       //console.log(familyMemberID);
        //console.log(familyProfileID);
 
        let apiAddress = sessionStorage.getItem("baseApiAddress");
-       let fullPersonFamilyProfileAddress = `${apiAddress}/api/ClientProfile/FamilyProfile/${familyProfileID}`;
+       let fullPersonFamilyProfileAddress = `${apiAddress}/api/ClientProfile/FamilyProfile/${clientID}`;
        let sessionStorageData = getSessionData();
 
        fetch(fullPersonFamilyProfileAddress, {
@@ -152,16 +155,25 @@ const FamilyInfo = (props) => {
             //body: JSON.stringify(familyProfileViewModel)
         }).then(result => result.json())
         .then(result => {
-            
+
             console.log(result);
 
-            if (result === null || result === undefined) {
+            if (result === null || result === undefined || result.length === 0)  {
                 props.createErrorNotification("an error occurred while retrieving the record.");
+                return;
             }
 
-            let person = result[0].FamilyProfile.Person;
-            let relationship = result[0].FamilyProfile.Relationship;
-            let personSupplemental = result[0].PersonSupplemental;
+            //filter the result by the familyMemberID
+            let selectedFamilyMember = result.filter(function(familyMember) {
+                return familyMember.FamilyProfile.ID === parseInt(familyMemberID);
+            });
+
+            //console.log('here it is');
+            //console.log(selectedFamilyMember);
+
+            let person = selectedFamilyMember[0].FamilyProfile.Person;
+            let relationship = selectedFamilyMember[0].FamilyProfile.Relationship;
+            let personSupplemental = selectedFamilyMember[0].PersonSupplemental;
             //console.log(lastName);
 
             $("#txtFMLastName").val(person.LastName);
