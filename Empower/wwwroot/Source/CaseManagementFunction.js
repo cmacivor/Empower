@@ -17,6 +17,7 @@ import {  Api } from './commonAdmin';
 import AddressJuvenile from './AddressJuvenile';
 import AddressAdult from './AddressAdult';
 import AddressCWB from './AddressCWB';
+import FamilyInfo from './FamilyInfo';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -41,6 +42,7 @@ const CaseManagementFunction = (props) => {
     const [maritalStatusOptions, setMaritalStatusOptions] = useState([]);
     const [schoolOptions, setSchoolOptions] = useState([]);
     const [propertyTypeOptions, setPropertyTypes] = useState([]);
+    const [relationshipOptions, setRelationshipOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -53,6 +55,7 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("MaritalStatus").then(maritalStatuses => setMaritalStatusOptions(maritalStatuses));
         Api.getConfigDataByType("School").then(schools => setSchoolOptions(schools));
         Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
+        Api.getConfigDataByType("Relationship").then(relationships => setRelationshipOptions(relationships));
      }, []);
 
 
@@ -212,7 +215,8 @@ const CaseManagementFunction = (props) => {
                             parseInt(sessionData.SystemID) === systems.Juvenile ? 
                             <AddressJuvenile
                                 clientProfile={clientProfile.Person}
-                                createNotification={triggerToastMessage} 
+                                createNotification={triggerToastMessage}
+                                createErrorNotification={triggerErrorMessage} 
                             /> : <div></div>
                         }
                         {
@@ -235,7 +239,15 @@ const CaseManagementFunction = (props) => {
                
                     </Tab>
                     <Tab eventKey="familyinfo" title="Family Info" disabled={isTabDisabled}>
-                       Family info content
+                       <FamilyInfo
+                            clientProfile={clientProfile.Person}
+                            clientProfileID={clientProfile.ClientProfile }
+                            maritalStatusValues={ maritalStatusOptions }
+                            relationshipValues = {relationshipOptions }
+                            suffixValues= { suffixOptions }
+                            createNotification={triggerToastMessage}
+                            createErrorNotification={triggerErrorMessage}
+                        />
                     </Tab>
                     <Tab eventKey="program" title="Program" disabled={isTabDisabled}>
                        program content

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {addActive, closeAllLists, removeActive, populateSearchBox, onKeyDownHandler } from './AutoComplete';
+import {addActive, closeAllLists, removeActive, populateSearchBox, onKeyDownHandler, populateDJSFields } from './AutoComplete';
 import { getSessionData } from './commonAdmin';
 import $ from 'jquery';
 
@@ -191,7 +191,8 @@ const AddressJuvenile = (props) => {
             return result.json();
         }).then(result => {
 
-            populateSearchBox(result, 1, searchBoxId);
+            //populateSearchBox(result, 1, searchBoxId);
+            populateSearchBox(result, searchBoxId, populateDJSFields);
 
             //set the AddressTypeID
             $("#hdnAdddressTypeID").val(1);
@@ -228,24 +229,24 @@ const AddressJuvenile = (props) => {
             Active: true,
         };
 
-        let addressId = $("#hdnAddressID").val();
+        //let addressId = $("#hdnAddressID").val();
         let methodType = '';
 
-        if (addressId !== "") { //it's an existing record
+        if (addressID !== "") { //it's an existing record
             methodType = 'PUT';
 
             postData.ID = addressID;
-            postData.PersonID = $("#hdnPersonID").val();
+            postData.PersonID = props.clientProfile.Person.ID; //$("#hdnPersonID").val();
             
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;
-            postData.CreatedDate = $("#hdnAddressCreatedDate").val();
-            postData.CreatedBy = $("#hdnAddressCreatedBy").val();
+            postData.CreatedDate = createdDate; //$("#hdnAddressCreatedDate").val();
+            postData.CreatedBy = createdBy; //$("#hdnAddressCreatedBy").val();
 
         } else { //it's a new record
             methodType = 'POST';
 
-            postData.PersonID = $("#hdnPersonID").val();
+            postData.PersonID = props.clientProfile.Person.ID; //$("#hdnPersonID").val();
 
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;

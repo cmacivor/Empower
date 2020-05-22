@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {addActive, closeAllLists, removeActive, populateSearchBox, onKeyDownHandler } from './AutoComplete';
+import {addActive, closeAllLists, removeActive, populateSearchBox, onKeyDownHandler, populateCSUFields, populateDJSFields } from './AutoComplete';
 import { getSessionData } from './commonAdmin';
 import {FaTrash, FaExchangeAlt, FaArrowDown} from 'react-icons/fa';
 import $ from 'jquery';
@@ -123,6 +123,7 @@ const AddressJuvenile = (props) => {
         $("hdnLatitude").val(latitude);
         $("#hdnLongitude").val(longitude);
         $("#hdnAddressID").val(addressID);
+        //console.log('this is the person ID' + personID);
         $("#hdnPersonID").val(personID);
     });
 
@@ -266,7 +267,13 @@ const AddressJuvenile = (props) => {
             return result.json();
         }).then(result => {
 
-            populateSearchBox(result, addressTypeId, searchBoxId);
+            //populateSearchBox(result, addressTypeId, searchBoxId);
+            if (addressTypeId === 3) {
+                populateSearchBox(result, searchBoxId, populateCSUFields);
+            }  
+            if (addressTypeId === 1) {
+                populateSearchBox(result, searchBoxId, populateDJSFields);
+            }
 
             //set the AddressTypeID
             $("#hdnAdddressTypeID").val(addressTypeId);
@@ -307,24 +314,24 @@ const AddressJuvenile = (props) => {
             Active: true,
         };
 
-        let addressId = $("#hdnAddressID").val();
+        //let addressId = $("#hdnAddressID").val();
         let methodType = '';
 
-        if (addressId !== "") { //it's an existing record
+        if (addressID !== "") { //it's an existing record
             methodType = 'PUT';
 
             postData.ID = addressID;
-            postData.PersonID = $("#hdnPersonID").val();
+            postData.PersonID = props.clientProfile.Person.ID; //$("#hdnPersonID").val();
             
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;
-            postData.CreatedDate = $("#hdnAddressCreatedDate").val();
-            postData.CreatedBy = $("#hdnAddressCreatedBy").val();
+            postData.CreatedDate = createdDate; //$("#hdnAddressCreatedDate").val();
+            postData.CreatedBy = createdBy; //$("#hdnAddressCreatedBy").val();
 
         } else { //it's a new record
             methodType = 'POST';
 
-            postData.PersonID = $("#hdnPersonID").val();
+            postData.PersonID = props.clientProfile.Person.ID; //$("#hdnPersonID").val();
 
             postData.UpdatedDate = new Date();
             postData.UpdatedBy = sessionStorageData.CurrentUser;
@@ -382,6 +389,11 @@ const AddressJuvenile = (props) => {
         .then(result => result.json())
         .then(result => {
             //console.log(result);
+            if (result === null || result.Message !== undefined) {
+                props.createErrorNotification("An error occurred while saving the adddress.");
+                return;
+            }
+
             if (result !== 0) {
                 props.createNotification("The address was successfully updated.");
             }
