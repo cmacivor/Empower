@@ -31,10 +31,12 @@ const FamilyInfo = (props) => {
     const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
     const [clientPersonID, setClientPersonID] = useState(0);
     const [isRefreshed, setIsRefreshed] = useState(0);
+    const [familyInfoTableState, setFamilyInfoTableState ] = useState(familyInfoTable);
 
 
     useEffect(() => {
 
+        
 
     }, [clientPersonID]);
 
@@ -105,9 +107,6 @@ const FamilyInfo = (props) => {
             }
         })
         .then(result => {
-
-            ///console.log(result);
-
             if (result !== null || result !== undefined) {
                 
                 $("#hdnAmAddressID").val(result.ID);
@@ -129,6 +128,25 @@ const FamilyInfo = (props) => {
 
     function addFamilyMember() {
         $('#familyMemberModal').modal('toggle');
+    }
+
+    function getFamilyMembers() {
+       let clientID = props.clientProfile.Person.ID;
+       let apiAddress = sessionStorage.getItem("baseApiAddress");
+       let fullPersonFamilyProfileAddress = `${apiAddress}/api/ClientProfile/FamilyProfile/${clientID}`;
+       let sessionStorageData = getSessionData();
+
+       fetch(fullPersonFamilyProfileAddress, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+        }).then(result => result.json())
+        .then(result => { 
+            console.log(result);
+        });
+
     }
 
     function getFamilyMemberDetails(event) {
