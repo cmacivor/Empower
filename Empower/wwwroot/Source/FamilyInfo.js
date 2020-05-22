@@ -34,11 +34,19 @@ const FamilyInfo = (props) => {
     const [familyInfoTableState, setFamilyInfoTableState ] = useState(familyInfoTable);
 
 
+    
     useEffect(() => {
 
         
+        //console.log('this is the useEffect running');
+    });
 
-    }, [clientPersonID]);
+
+    // useEffect(() => {
+
+        
+
+    // }, [clientPersonID]);
 
 
     function generateTable(familyProfile) {
