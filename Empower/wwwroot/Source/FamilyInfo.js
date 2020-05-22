@@ -31,13 +31,15 @@ const FamilyInfo = (props) => {
     const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
     const [clientPersonID, setClientPersonID] = useState(0);
     const [isRefreshed, setIsRefreshed] = useState(0);
-    //const [familyInfoTableState, setFamilyInfoTableState ] = useState(familyInfoTable);
+    const [familyMembers, setFamilyMembers ] = useState([]);
 
 
     
     useEffect(() => {
 
-        
+        if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0 && familyMembers.length === 0 ) {
+            getFamilyMembers();
+        }
         //console.log('this is the useEffect running');
     });
 
@@ -153,6 +155,7 @@ const FamilyInfo = (props) => {
         }).then(result => result.json())
         .then(result => { 
             console.log(result);
+            setFamilyMembers(result);
         });
 
     }
