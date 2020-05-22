@@ -31,7 +31,7 @@ const FamilyInfo = (props) => {
     const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
     const [clientPersonID, setClientPersonID] = useState(0);
     const [isRefreshed, setIsRefreshed] = useState(0);
-    const [familyInfoTableState, setFamilyInfoTableState ] = useState(familyInfoTable);
+    //const [familyInfoTableState, setFamilyInfoTableState ] = useState(familyInfoTable);
 
 
     
