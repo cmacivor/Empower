@@ -24,7 +24,23 @@ const FamilyInfo = (props) => {
        
         let familyProfile = props.clientProfile.FamilyProfile;
 
-        familyInfoTable = <table id="tblFamilyInfo" className="table">
+        familyInfoTable = generateTable(familyProfile);
+
+    }
+
+    const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
+    const [clientPersonID, setClientPersonID] = useState(0);
+    const [isRefreshed, setIsRefreshed] = useState(0);
+
+
+    useEffect(() => {
+
+
+    }, [clientPersonID]);
+
+
+    function generateTable(familyProfile) {
+        return <table id="tblFamilyInfo" className="table">
                 <thead>
                     <tr>
                         <th scope="col"></th>
@@ -58,22 +74,7 @@ const FamilyInfo = (props) => {
                     }
                 </tbody>
             </table>
-
     }
-
-    //const [maritalStatusValues, setMaritalStatusValues ] = useState(maritalStatuses);
-    //const [relationshipValues, setRelationshipValues] = useState(relationships);
-    //const [suffixValues, setSuffixValues ] = useState(suffixes);
-    const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
-    const [addressID, setAddressID] = useState(0);
-    const [clientPersonID, setClientPersonID] = useState(0);
-    const [isRefreshed, setIsRefreshed] = useState(0);
-
-
-    useEffect(() => {
-
-
-    }, [addressID, clientPersonID]);
 
 
     function toggleAddressModal(event) {
