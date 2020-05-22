@@ -7,11 +7,6 @@ const FamilyInfo = (props) => {
 
     let personId = '';
     let clientProfileId = '';
-    //let lastName = '';
-    //let firstName = '';
-    //let middleName = '';
-    //let ssn = '';
-
     
     let maritalStatuses = props.maritalStatusValues;
     let relationships = props.relationshipValues;
@@ -66,9 +61,9 @@ const FamilyInfo = (props) => {
 
     }
 
-    const [maritalStatusValues, setMaritalStatusValues ] = useState(maritalStatuses);
-    const [relationshipValues, setRelationshipValues] = useState(relationships);
-    const [suffixValues, setSuffixValues ] = useState(suffixes);
+    //const [maritalStatusValues, setMaritalStatusValues ] = useState(maritalStatuses);
+    //const [relationshipValues, setRelationshipValues] = useState(relationships);
+    //const [suffixValues, setSuffixValues ] = useState(suffixes);
     const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
     const [addressID, setAddressID] = useState(0);
     const [clientPersonID, setClientPersonID] = useState(0);
@@ -76,13 +71,6 @@ const FamilyInfo = (props) => {
 
 
     useEffect(() => {
-
-        //$("#hdnFMPersonId").val(personId);
-        //$("#hdnClientProfileId").val(clientProfileId);
-
-        //setMaritalStatusValues(maritalStatuses);
-        //setRelationshipValues(relationships);
-        //setSuffixValues(suffixes);
 
 
     }, [addressID, clientPersonID]);
@@ -107,24 +95,31 @@ const FamilyInfo = (props) => {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + sessionStorageData.Token
             }
-        }).then(result => result.json())
+        }).then(result =>  {
+            if (result.status === 400) {
+                return result.json();
+            }
+            else {
+                return null;
+            }
+        })
         .then(result => {
 
             console.log(result);
-            //setAddressID(result.ID);
 
-            $("#hdnAmAddressID").val(result.ID);
-            $("#hdnAmAdddressTypeID").val(result.AddressTypeID);
-            $("#hdnAmAddressCreatedDate").val(result.CreatedDate);
-            $("#hdnAmAddressCreatedBy").val(result.CreatedBy);
-            $("#txtAmAddressLineOne").val(result.AddressLineOne);
-            $("#txtAmAddressLineTwo").val(result.AddressLineTwo);
-            $("#txtAmCity").val(result.City);
-            $("#txtAmState").val(result.State);
-            $("#txtAmZip").val(result.Zip);
-            $("#txtAmComments").val(result.Comments);
-            $("#txtAmTimeCurrentAddress").val(result.TimeAtCurrentAddress);
-
+            if (result !== null || result !== undefined || result.length !== 0) {
+                $("#hdnAmAddressID").val(result.ID);
+                $("#hdnAmAdddressTypeID").val(result.AddressTypeID);
+                $("#hdnAmAddressCreatedDate").val(result.CreatedDate);
+                $("#hdnAmAddressCreatedBy").val(result.CreatedBy);
+                $("#txtAmAddressLineOne").val(result.AddressLineOne);
+                $("#txtAmAddressLineTwo").val(result.AddressLineTwo);
+                $("#txtAmCity").val(result.City);
+                $("#txtAmState").val(result.State);
+                $("#txtAmZip").val(result.Zip);
+                $("#txtAmComments").val(result.Comments);
+                $("#txtAmTimeCurrentAddress").val(result.TimeAtCurrentAddress);
+            }
         });
 
         $('#addressModal').modal('toggle');
@@ -139,8 +134,6 @@ const FamilyInfo = (props) => {
        let clientID = event.currentTarget.getAttribute("data-id");
 
        let familyMemberID = event.currentTarget.getAttribute("data-familymemberid");
-       //console.log(familyMemberID);
-       //console.log(familyProfileID);
 
        let apiAddress = sessionStorage.getItem("baseApiAddress");
        let fullPersonFamilyProfileAddress = `${apiAddress}/api/ClientProfile/FamilyProfile/${clientID}`;
@@ -152,7 +145,6 @@ const FamilyInfo = (props) => {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + sessionStorageData.Token
             }
-            //body: JSON.stringify(familyProfileViewModel)
         }).then(result => result.json())
         .then(result => {
 
@@ -168,13 +160,9 @@ const FamilyInfo = (props) => {
                 return familyMember.FamilyProfile.ID === parseInt(familyMemberID);
             });
 
-            //console.log('here it is');
-            //console.log(selectedFamilyMember);
-
             let person = selectedFamilyMember[0].FamilyProfile.Person;
             let relationship = selectedFamilyMember[0].FamilyProfile.Relationship;
             let personSupplemental = selectedFamilyMember[0].PersonSupplemental;
-            //console.log(lastName);
 
             $("#txtFMLastName").val(person.LastName);
             $("#txtFMFirstName").val(person.FirstName);
@@ -344,7 +332,7 @@ const FamilyInfo = (props) => {
         }
 
         let familyProfile = {
-            ClientProfilePersonID: clientProfileId, //$("#hdnClientProfileId").val(),
+            ClientProfilePersonID: clientProfileId, 
             RelationshipID: $("#btnFMRelationship").val(),
             PrimaryContactFlag: getRadioButtonState("rdpEmergencyContactYes"),
             Person: person,
@@ -374,10 +362,10 @@ const FamilyInfo = (props) => {
 
         //this is an update, and we need to pass these params
         if (familyProfileID !== "") {
-            person.ID = $("#hdnPersonSupplementalPersonID").val(), //$("#hdnFMPersonId").val(),
+            person.ID = $("#hdnPersonSupplementalPersonID").val(), 
             familyProfile.FamilyMemberID = $("#hdnFamilyMemberID").val(),
             personSupplemental.ID = $("#hdnPersonSupplementalID").val(),
-            personSupplemental.PersonID = $("#hdnPersonSupplementalPersonID").val(), //$("#hdnFMPersonId").val(),
+            personSupplemental.PersonID = $("#hdnPersonSupplementalPersonID").val(), 
             familyProfile.ID = familyProfileID
         }
 
