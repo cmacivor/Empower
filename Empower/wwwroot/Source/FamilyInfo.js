@@ -96,18 +96,19 @@ const FamilyInfo = (props) => {
                 'Authorization': 'Bearer ' + sessionStorageData.Token
             }
         }).then(result =>  {
-            if (result.status === 400) {
+            if (result.status === 200) {
                 return result.json();
             }
             else {
-                return null;
+                return result;
             }
         })
         .then(result => {
 
-            console.log(result);
+            ///console.log(result);
 
-            if (result !== null || result !== undefined || result.length !== 0) {
+            if (result !== null || result !== undefined) {
+                
                 $("#hdnAmAddressID").val(result.ID);
                 $("#hdnAmAdddressTypeID").val(result.AddressTypeID);
                 $("#hdnAmAddressCreatedDate").val(result.CreatedDate);
@@ -148,7 +149,7 @@ const FamilyInfo = (props) => {
         }).then(result => result.json())
         .then(result => {
 
-            console.log(result);
+            //console.log(result);
 
             if (result === null || result === undefined || result.length === 0)  {
                 props.createErrorNotification("an error occurred while retrieving the record.");

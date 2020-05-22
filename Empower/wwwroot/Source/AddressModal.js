@@ -75,7 +75,7 @@ const AddressModal = (props) => {
             $("#txtAmState").val(state);
         }
         
-        $("#hdnAdddressTypeID").val(addressTypeId);
+        $("#hdnAmAdddressTypeID").val(addressTypeId);
         $("#hdnAddressCreatedDate").val(createdDate);
         $("#hdnAddressCreatedBy").val(createdBy);
         $("#hdnGISCode").val(gisCode);
@@ -147,6 +147,7 @@ const AddressModal = (props) => {
         onChangeEventHandler(event, 1, "txtAmAddressSearch");
     }
 
+    //used in the bing search- when an address is selected from the pop-up 
     function addDJSEventListener(addressCell, resources) {
         addressCell.addEventListener('click', function(event) {
                         
@@ -156,7 +157,7 @@ const AddressModal = (props) => {
                 return address.name === selectedAddress;
             });
 
-            console.log(filteredAddress[0].address.postalCode);
+            //console.log(filteredAddress[0].address.postalCode);
 
             $("#txtAmAddressLineOne").val(filteredAddress[0].address.addressLine);
             $("#hdnAmAdddressTypeID").val(2);
@@ -192,11 +193,10 @@ const AddressModal = (props) => {
 
             //populateSearchBox(result, 1, searchBoxId);
             populateSearchBox(result, searchBoxId, populateAmSearchFields);
-
-            //set the AddressTypeID
-            $("#hdnAdddressTypeID").val(1);
-
         });
+
+        //set the AddressTypeID
+        $("#hdnAmAdddressTypeID").val(1);
     }
 
    
