@@ -41,7 +41,7 @@ const FamilyInfo = (props) => {
             getFamilyMembers();
         }
         //console.log('this is the useEffect running');
-    });
+    }, [ familyMembers ]);
 
 
     // useEffect(() => {
