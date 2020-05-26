@@ -27,20 +27,12 @@ const FamilyInfo = (props) => {
         familyInfoTable = generateTable(familyProfile);
 
     }
-
-    const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
-    const [clientPersonID, setClientPersonID] = useState(0);
-    const [isRefreshed, setIsRefreshed] = useState(0);
-    const [familyMembers, setFamilyMembers ] = useState([]);
-
-
     
     useEffect(() => {
 
         if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0) {
             getFamilyMembers();
         }
-        //console.log('this is the useEffect running');
     });
 
 
@@ -103,41 +95,6 @@ const FamilyInfo = (props) => {
             emergencyContactCell.innerText = (profile.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No';
 
         });
-
-        // return <table id="tblFamilyInfo" className="table">
-        //         <thead>
-        //             <tr>
-        //                 <th scope="col"></th>
-        //                 <th scope="col"></th>
-        //                 <th scope="col">Last Name</th>
-        //                 <th scope="col">First Name</th>
-        //                 <th scope="col">Middle Name</th>
-        //                 <th scope="col">Suffix</th>s
-        //                 <th scope="col">Relationship</th>
-        //                 <th scope="col">Home Phone</th>
-        //                 <th scope="col">Work Phone</th>
-        //                 <th scope="col">Emergency Contact</th>
-        //             </tr>
-        //         </thead>
-        //         <tbody>
-        //             {
-        //                 familyProfile.map((value) =>    
-        //                     <tr key={value.FamilyProfile.ID}>
-        //                         <td><button id="btnEdit" data-id={props.clientProfile.Person.ID} data-familymemberid={value.FamilyProfile.ID}  className="btn btn-secondary btn-sm" onClick={getFamilyMemberDetails} title="edit the family member" >Edit</button> </td>
-        //                         <td><button id="btnAddress" data-id={ value.FamilyProfile.FamilyMemberID } className="btn btn-secondary btn-sm" onClick={toggleAddressModal} title="edit the family member's address" >Address</button> </td>
-        //                         <td>{value.FamilyProfile.Person.LastName }</td>
-        //                         <td>{value.FamilyProfile.Person.FirstName }</td>
-        //                         <td>{value.FamilyProfile.Person.MiddleName }</td>
-        //                         <td>{value.FamilyProfile.Person.Suffix.Description }</td>
-        //                         <td>{value.FamilyProfile.Relationship.Description } </td>
-        //                         <td>{value.PersonSupplemental.HomePhone }  </td>
-        //                         <td>{value.PersonSupplemental.WorkPhone }  </td>
-        //                         <td>{ (value.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No'  }  </td>
-        //                     </tr>
-        //                 )
-        //             }
-        //         </tbody>
-        //     </table>
     }
 
 
@@ -145,9 +102,6 @@ const FamilyInfo = (props) => {
         let selectedFamilyMemberPersonID = event.currentTarget.getAttribute("data-id");
 
         $("#hdnCurrentFamilyMemberPersonID").val(selectedFamilyMemberPersonID);
-
-        //setFamilyMemberPersonID(selectedFamilyMemberPersonID);
-        //setClientPersonID(personId);
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let sessionStorageData = getSessionData();
@@ -189,6 +143,7 @@ const FamilyInfo = (props) => {
     }
 
     function addFamilyMember() {
+        clearFamilyMemberModal();
         $('#familyMemberModal').modal('toggle');
     }
 
@@ -208,12 +163,13 @@ const FamilyInfo = (props) => {
         .then(result => { 
             console.log(result);
             generateTable(result);
-            //setFamilyMembers(result);
         });
 
     }
 
     function getFamilyMemberDetails(event) {
+
+       clearFamilyMemberModal();
       
        let clientID = event.currentTarget.getAttribute("data-id");
 
@@ -296,7 +252,36 @@ const FamilyInfo = (props) => {
             $('#familyMemberModal').modal('toggle');
 
         });
+    }
 
+    function clearFamilyMemberModal() {
+        $("#txtFMLastName").val('');
+        $("#txtFMFirstName").val('');
+        $("#txtFMMiddleName").val('');
+        document.getElementById("btnFMRelationship").innerHTML = 'Please Select';
+        document.getElementById("btnFMMaritalStatus").innerHTML = 'Please Select';
+        document.getElementById("btnFMSuffix").innerHTML = 'Please Select';
+        $("#txtMonthlyIncome").val('');
+        setRadioButtonState('rdpIsFHHYes', 'rdpIsFHHNo', false);
+        setRadioButtonState('rdpEmergencyContactYes', 'rdpEmergencyContactNo', false);
+        $("#txtFMHomePhone").val('');
+        $("#txtWorkFMPhone").val('');
+        $("#txtWorkPhoneExt").val('');
+        $("#txtFMAltPhone").val('');
+        $("#txtAltPhoneExt").val('');
+        $("#txtFMComments").val('');
+
+        $("#hdnPersonSupplementalID").val('');
+        $("#hdnPersonSupplementalPersonID").val('');
+        $("#hdnCurrentFamilyProfileID").val('');
+        $("#hdnFamilyMemberID").val('');
+
+        $("#hdnFamilyProfileCreatedDate").val('');
+        $("#hdnFamilyProfileCreatedBy").val('');
+        $("#hdnPersonCreatedDate").val('');
+        $("#hdnPersonCreatedBy").val('');
+        $("#hdnPersonSupplementalCreatedDate").val('');
+        $("#hdnPersonSupplementalCreatedBy").val('');
     }
 
     function handleMaritalStatusChange(event){        
@@ -483,8 +468,6 @@ const FamilyInfo = (props) => {
         });
 
         $('#familyMemberModal').modal('toggle');
-
-        //setIsRefreshed(isRefreshed +1);
     }
 
     function createNotification(message) {
@@ -670,7 +653,6 @@ const FamilyInfo = (props) => {
             </div>
         </div>
         <AddressModal
-         PersonID={familyMemberPersonID}
          ClientPersonID={personId}
           createNotification={ createNotification } 
           createErrorNotification={ createErrorNotification }

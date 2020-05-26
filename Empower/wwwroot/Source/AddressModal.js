@@ -245,7 +245,6 @@ const AddressModal = (props) => {
 
     function updateAddress() {
 
-        //let personID = props.PersonID;
         let personID = $("#hdnCurrentFamilyMemberPersonID").val();
 
         let sessionStorageData = getSessionData();
