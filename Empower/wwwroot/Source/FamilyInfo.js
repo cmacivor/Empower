@@ -44,48 +44,68 @@ const FamilyInfo = (props) => {
     }, [ familyMembers ]);
 
 
-    // useEffect(() => {
-
-        
-
-    // }, [clientPersonID]);
-
-
     function generateTable(familyProfile) {
-        return <table id="tblFamilyInfo" className="table">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Middle Name</th>
-                        <th scope="col">Suffix</th>
-                        <th scope="col">Relationship</th>
-                        <th scope="col">Home Phone</th>
-                        <th scope="col">Work Phone</th>
-                        <th scope="col">Emergency Contact</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        familyProfile.map((value) =>    
-                            <tr key={value.FamilyProfile.ID}>
-                                <td><button id="btnEdit" data-id={props.clientProfile.Person.ID} data-familymemberid={value.FamilyProfile.ID}  className="btn btn-secondary btn-sm" onClick={getFamilyMemberDetails} title="edit the family member" >Edit</button> </td>
-                                <td><button id="btnAddress" data-id={ value.FamilyProfile.FamilyMemberID } className="btn btn-secondary btn-sm" onClick={toggleAddressModal} title="edit the family member's address" >Address</button> </td>
-                                <td>{value.FamilyProfile.Person.LastName }</td>
-                                <td>{value.FamilyProfile.Person.FirstName }</td>
-                                <td>{value.FamilyProfile.Person.MiddleName }</td>
-                                <td>{value.FamilyProfile.Person.Suffix.Description }</td>
-                                <td>{value.FamilyProfile.Relationship.Description } </td>
-                                <td>{value.PersonSupplemental.HomePhone }  </td>
-                                <td>{value.PersonSupplemental.WorkPhone }  </td>
-                                <td>{ (value.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No'  }  </td>
-                            </tr>
-                        )
-                    }
-                </tbody>
-            </table>
+
+        let tableRef = document.getElementById("tblFamilyInfo").getElementsByTagName('tbody')[0];
+        tableRef.innerHTML = "";
+        familyProfile.forEach(profile => {
+            let newRow = tableRef.insertRow();
+
+            let editButton = document.createElement("button");
+            editButton.classList.add("btn");
+            editButton.classList.add("btn-secondary");
+            editButton.classList.add("btn-sm");
+            editButton.setAttribute("data-id", props.clientProfile.Person.ID);
+            editButton.setAttribute("data-familymemberid", profile.FamilyProfile.ID);
+            editButton.innerText = "Edit";
+            editButton.title = "edit the family member";
+            editButton.onclick = getFamilyMemberDetails;
+
+
+
+            let editFamilyButtonCell = newRow.insertCell(0);
+            editFamilyButtonCell.appendChild(editButton);
+
+            let lastNameCell = newRow.insertCell(1);
+            lastNameCell.innerText = profile.FamilyProfile.Person.LastName;
+            lastNameCell.style = "cursor:pointer";
+
+        });
+
+        // return <table id="tblFamilyInfo" className="table">
+        //         <thead>
+        //             <tr>
+        //                 <th scope="col"></th>
+        //                 <th scope="col"></th>
+        //                 <th scope="col">Last Name</th>
+        //                 <th scope="col">First Name</th>
+        //                 <th scope="col">Middle Name</th>
+        //                 <th scope="col">Suffix</th>s
+        //                 <th scope="col">Relationship</th>
+        //                 <th scope="col">Home Phone</th>
+        //                 <th scope="col">Work Phone</th>
+        //                 <th scope="col">Emergency Contact</th>
+        //             </tr>
+        //         </thead>
+        //         <tbody>
+        //             {
+        //                 familyProfile.map((value) =>    
+        //                     <tr key={value.FamilyProfile.ID}>
+        //                         <td><button id="btnEdit" data-id={props.clientProfile.Person.ID} data-familymemberid={value.FamilyProfile.ID}  className="btn btn-secondary btn-sm" onClick={getFamilyMemberDetails} title="edit the family member" >Edit</button> </td>
+        //                         <td><button id="btnAddress" data-id={ value.FamilyProfile.FamilyMemberID } className="btn btn-secondary btn-sm" onClick={toggleAddressModal} title="edit the family member's address" >Address</button> </td>
+        //                         <td>{value.FamilyProfile.Person.LastName }</td>
+        //                         <td>{value.FamilyProfile.Person.FirstName }</td>
+        //                         <td>{value.FamilyProfile.Person.MiddleName }</td>
+        //                         <td>{value.FamilyProfile.Person.Suffix.Description }</td>
+        //                         <td>{value.FamilyProfile.Relationship.Description } </td>
+        //                         <td>{value.PersonSupplemental.HomePhone }  </td>
+        //                         <td>{value.PersonSupplemental.WorkPhone }  </td>
+        //                         <td>{ (value.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No'  }  </td>
+        //                     </tr>
+        //                 )
+        //             }
+        //         </tbody>
+        //     </table>
     }
 
 
@@ -460,7 +480,26 @@ const FamilyInfo = (props) => {
          <button id="btnAddFamilyMember" onClick={addFamilyMember} className="btn btn-primary">Add Family Member</button>
          <br/>
          <br/>
-         {familyInfoTable}
+         <table id="tblFamilyInfo" className="table">
+             <thead>
+                 <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Middle Name</th>
+                    <th scope="col">Suffix</th>
+                    <th scope="col">Relationship</th>
+                    <th scope="col">Home Phone</th>
+                    <th scope="col">Work Phone</th>
+                    <th scope="col">Emergency Contact</th>
+                 </tr>
+             </thead>
+             <tbody>
+
+             </tbody>
+         </table>
+         {/* {familyInfoTable} */}
          <div className="modal fade" id="familyMemberModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
