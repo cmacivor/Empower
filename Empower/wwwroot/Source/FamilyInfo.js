@@ -80,7 +80,27 @@ const FamilyInfo = (props) => {
 
             let lastNameCell = newRow.insertCell(2);
             lastNameCell.innerText = profile.FamilyProfile.Person.LastName;
-            lastNameCell.style = "cursor:pointer";
+            
+            let firstNameCell = newRow.insertCell(3);
+            firstNameCell.innerText = profile.FamilyProfile.Person.FirstName;
+
+            let middleNameCell = newRow.insertCell(4);
+            middleNameCell.innerText = profile.FamilyProfile.Person.MiddleName;           
+
+            let suffixCell = newRow.insertCell(5);
+            suffixCell.innerText = profile.FamilyProfile.Person.Suffix.Description;
+
+            let relationshipCell = newRow.insertCell(6);
+            relationshipCell.innerText = profile.FamilyProfile.Relationship.Description;
+
+            let homePhoneCell = newRow.insertCell(7);
+            homePhoneCell.innerText = profile.PersonSupplemental.HomePhone;
+
+            let workPhoneCell = newRow.insertCell(8);
+            workPhoneCell.innerText = profile.PersonSupplemental.WorkPhone;
+
+            let emergencyContactCell = newRow.insertCell(9);
+            emergencyContactCell.innerText = (profile.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No';
 
         });
 
