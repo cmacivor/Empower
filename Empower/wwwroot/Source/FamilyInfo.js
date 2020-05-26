@@ -51,6 +51,7 @@ const FamilyInfo = (props) => {
         familyProfile.forEach(profile => {
             let newRow = tableRef.insertRow();
 
+            //add the edit button
             let editButton = document.createElement("button");
             editButton.classList.add("btn");
             editButton.classList.add("btn-secondary");
@@ -61,12 +62,23 @@ const FamilyInfo = (props) => {
             editButton.title = "edit the family member";
             editButton.onclick = getFamilyMemberDetails;
 
-
-
             let editFamilyButtonCell = newRow.insertCell(0);
             editFamilyButtonCell.appendChild(editButton);
 
-            let lastNameCell = newRow.insertCell(1);
+            //add the Address button
+            let addressButton = document.createElement("button");
+            addressButton.classList.add("btn");
+            addressButton.classList.add("btn-secondary");
+            addressButton.classList.add("btn-sm");
+            addressButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
+            addressButton.innerText = "Address";
+            addressButton.title = "edit the family member's address";
+            addressButton.onclick = toggleAddressModal;
+
+            let addressButtonCell = newRow.insertCell(1);
+            addressButtonCell.appendChild(addressButton);
+
+            let lastNameCell = newRow.insertCell(2);
             lastNameCell.innerText = profile.FamilyProfile.Person.LastName;
             lastNameCell.style = "cursor:pointer";
 
@@ -114,8 +126,8 @@ const FamilyInfo = (props) => {
 
         $("#hdnCurrentFamilyMemberPersonID").val(selectedFamilyMemberPersonID);
 
-        setFamilyMemberPersonID(selectedFamilyMemberPersonID);
-        setClientPersonID(personId);
+        //setFamilyMemberPersonID(selectedFamilyMemberPersonID);
+        //setClientPersonID(personId);
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let sessionStorageData = getSessionData();
@@ -636,7 +648,7 @@ const FamilyInfo = (props) => {
         </div>
         <AddressModal
          PersonID={familyMemberPersonID}
-         ClientPersonID={clientPersonID}
+         ClientPersonID={personId}
           createNotification={ createNotification } 
           createErrorNotification={ createErrorNotification }
         />
