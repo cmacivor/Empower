@@ -37,11 +37,11 @@ const FamilyInfo = (props) => {
     
     useEffect(() => {
 
-        if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0 && familyMembers.length === 0 ) {
+        if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0) {
             getFamilyMembers();
         }
         //console.log('this is the useEffect running');
-    }, [ familyMembers ]);
+    });
 
 
     function generateTable(familyProfile) {
@@ -88,10 +88,10 @@ const FamilyInfo = (props) => {
             middleNameCell.innerText = profile.FamilyProfile.Person.MiddleName;           
 
             let suffixCell = newRow.insertCell(5);
-            suffixCell.innerText = profile.FamilyProfile.Person.Suffix.Description;
+            suffixCell.innerText = (profile.FamilyProfile.Person.Suffix !== null) ? profile.FamilyProfile.Person.Suffix.Description : '';
 
             let relationshipCell = newRow.insertCell(6);
-            relationshipCell.innerText = profile.FamilyProfile.Relationship.Description;
+            relationshipCell.innerText = (profile.FamilyProfile.Relationship !== null) ? profile.FamilyProfile.Relationship.Description : '';
 
             let homePhoneCell = newRow.insertCell(7);
             homePhoneCell.innerText = profile.PersonSupplemental.HomePhone;
@@ -207,7 +207,8 @@ const FamilyInfo = (props) => {
         }).then(result => result.json())
         .then(result => { 
             console.log(result);
-            setFamilyMembers(result);
+            generateTable(result);
+            //setFamilyMembers(result);
         });
 
     }
@@ -474,6 +475,8 @@ const FamilyInfo = (props) => {
                 return;
             }
 
+            getFamilyMembers();
+
             props.createNotification('The family profile was successfully updated.');
 
 
@@ -481,7 +484,7 @@ const FamilyInfo = (props) => {
 
         $('#familyMemberModal').modal('toggle');
 
-        setIsRefreshed(isRefreshed +1);
+        //setIsRefreshed(isRefreshed +1);
     }
 
     function createNotification(message) {
