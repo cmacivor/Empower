@@ -94,6 +94,52 @@ const FamilyInfo = (props) => {
             let emergencyContactCell = newRow.insertCell(9);
             emergencyContactCell.innerText = (profile.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No';
 
+            //add the delete button for each row
+            let deleteButton = document.createElement("button");
+            deleteButton.classList.add("btn");
+            deleteButton.classList.add("btn-danger");
+            deleteButton.classList.add("btn-sm");
+            deleteButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
+            deleteButton.innerText = "Delete";
+            deleteButton.title = "delete the family member";
+            deleteButton.onclick = deleteFamilyMember;
+
+            let deleteButtonCell = newRow.insertCell(10);
+            deleteButtonCell.appendChild(deleteButton);
+
+        });
+    }
+
+    function deleteFamilyMember(event) {
+        let selectedFamilyMemberId = event.currentTarget.getAttribute("data-id");
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let sessionStorageData = getSessionData();
+
+        let familyMemberPersonAddressUrl = `${apiAddress}/api/FamilyProfile/DeleteMember/${selectedFamilyMemberId}`;
+
+        fetch(familyMemberPersonAddressUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => {
+            if (result.status === 200) {
+                return result.json();
+            }
+            else {
+                return result;
+            }
+        }).then(result => {
+            if (result === "Success") {
+               props.createNotification("The family member record was successfully deleted.");
+               getFamilyMembers();
+               return;
+            } else {
+                props.createErrorNotification("An error occured.");
+                console.log(result);
+            }
         });
     }
 
@@ -161,7 +207,7 @@ const FamilyInfo = (props) => {
         }
         }).then(result => result.json())
         .then(result => { 
-            console.log(result);
+            //console.log(result);
             generateTable(result);
         });
 
