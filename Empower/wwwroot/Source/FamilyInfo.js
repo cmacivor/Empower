@@ -218,8 +218,10 @@ const FamilyInfo = (props) => {
        clearFamilyMemberModal();
       
        let clientID = event.currentTarget.getAttribute("data-id");
+       console.log('the clientID is' + clientID);
 
        let familyMemberID = event.currentTarget.getAttribute("data-familymemberid");
+       console.log('the family memberID is ' + familyMemberID);
 
        let apiAddress = sessionStorage.getItem("baseApiAddress");
        let fullPersonFamilyProfileAddress = `${apiAddress}/api/ClientProfile/FamilyProfile/${clientID}`;
@@ -234,7 +236,7 @@ const FamilyInfo = (props) => {
         }).then(result => result.json())
         .then(result => {
 
-            //console.log(result);
+            console.log(result);
 
             if (result === null || result === undefined || result.length === 0)  {
                 props.createErrorNotification("an error occurred while retrieving the record.");
@@ -246,9 +248,15 @@ const FamilyInfo = (props) => {
                 return familyMember.FamilyProfile.ID === parseInt(familyMemberID);
             });
 
+            //console.log(selectedFamilyMember);
+
             let person = selectedFamilyMember[0].FamilyProfile.Person;
             let relationship = selectedFamilyMember[0].FamilyProfile.Relationship;
             let personSupplemental = selectedFamilyMember[0].PersonSupplemental;
+            let familyProfile = selectedFamilyMember[0].FamilyProfile;
+
+            console.log('this is the family profile');
+            console.log(familyProfile);
 
             $("#txtFMLastName").val(person.LastName);
             $("#txtFMFirstName").val(person.FirstName);
@@ -285,11 +293,13 @@ const FamilyInfo = (props) => {
             $("#hdnPersonSupplementalID").val(personSupplemental.ID);
             $("#hdnPersonSupplementalPersonID").val(personSupplemental.PersonID);
 
-            $("#hdnCurrentFamilyProfileID").val(result[0].FamilyProfile.ID);
-            $("#hdnFamilyMemberID").val(result[0].FamilyProfile.FamilyMemberID);
+            //$("#hdnCurrentFamilyProfileID").val(result[0].FamilyProfile.ID);
+            $("#hdnCurrentFamilyProfileID").val(familyProfile.ID);
+            //$("#hdnFamilyMemberID").val(result[0].FamilyProfile.FamilyMemberID);
+            $("#hdnFamilyMemberID").val(familyProfile.FamilyMemberID);
             
-            $("#hdnFamilyProfileCreatedDate").val(result[0].FamilyProfile.CreatedDate);
-            $("#hdnFamilyProfileCreatedBy").val(result[0].FamilyProfile.CreatedBy);
+            $("#hdnFamilyProfileCreatedDate").val(familyProfile.CreatedDate);
+            $("#hdnFamilyProfileCreatedBy").val(familyProfile.CreatedBy);
             $("#hdnPersonCreatedDate").val(person.CreatedDate);
             $("#hdnPersonCreatedBy").val(person.CreatedBy);
             $("#hdnPersonSupplementalCreatedDate").val(personSupplemental.CreatedDate);
@@ -481,7 +491,7 @@ const FamilyInfo = (props) => {
             familyProfile.FamilyMemberID = $("#hdnFamilyMemberID").val(),
             personSupplemental.ID = $("#hdnPersonSupplementalID").val(),
             personSupplemental.PersonID = $("#hdnPersonSupplementalPersonID").val(), 
-            familyProfile.ID = familyProfileID
+            familyProfile.ID = familyProfileID //$("#hdnFamilyMemberID").val() //familyProfileID
         }
 
         let familyProfileViewModel = {
@@ -692,7 +702,7 @@ const FamilyInfo = (props) => {
 
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary" onClick={saveNewFamilyProfile}  >Save New</button>
+                        <button type="button" className="btn btn-primary" onClick={saveNewFamilyProfile}  >Save</button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
