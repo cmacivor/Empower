@@ -215,6 +215,8 @@ const AddressModal = (props) => {
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let sessionStorageData = getSessionData();
 
+        //let clientPersonID = $("#hdnCurrentFamilyMemberPersonID").val();
+
         let clientPersonAddressUrl = `${apiAddress}/api/PersonAddress/GetByPersonID/${props.ClientPersonID}`;
 
         fetch(clientPersonAddressUrl, {
@@ -243,7 +245,7 @@ const AddressModal = (props) => {
 
     function updateAddress() {
 
-        let personID = props.PersonID;
+        let personID = $("#hdnCurrentFamilyMemberPersonID").val();
 
         let sessionStorageData = getSessionData();
 

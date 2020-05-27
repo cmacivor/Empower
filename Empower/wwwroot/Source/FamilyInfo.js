@@ -24,65 +24,130 @@ const FamilyInfo = (props) => {
        
         let familyProfile = props.clientProfile.FamilyProfile;
 
-        familyInfoTable = <table id="tblFamilyInfo" className="table">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Middle Name</th>
-                        <th scope="col">Suffix</th>
-                        <th scope="col">Relationship</th>
-                        <th scope="col">Home Phone</th>
-                        <th scope="col">Work Phone</th>
-                        <th scope="col">Emergency Contact</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        familyProfile.map((value) =>    
-                            <tr key={value.FamilyProfile.ID}>
-                                <td><button id="btnEdit" data-id={props.clientProfile.Person.ID} data-familymemberid={value.FamilyProfile.ID}  className="btn btn-secondary btn-sm" onClick={getFamilyMemberDetails} title="edit the family member" >Edit</button> </td>
-                                <td><button id="btnAddress" data-id={ value.FamilyProfile.FamilyMemberID } className="btn btn-secondary btn-sm" onClick={toggleAddressModal} title="edit the family member's address" >Address</button> </td>
-                                <td>{value.FamilyProfile.Person.LastName }</td>
-                                <td>{value.FamilyProfile.Person.FirstName }</td>
-                                <td>{value.FamilyProfile.Person.MiddleName }</td>
-                                <td>{value.FamilyProfile.Person.Suffix.Description }</td>
-                                <td>{value.FamilyProfile.Relationship.Description } </td>
-                                <td>{value.PersonSupplemental.HomePhone }  </td>
-                                <td>{value.PersonSupplemental.WorkPhone }  </td>
-                                <td>{ (value.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No'  }  </td>
-                            </tr>
-                        )
-                    }
-                </tbody>
-            </table>
+        familyInfoTable = generateTable(familyProfile);
 
     }
-
-    //const [maritalStatusValues, setMaritalStatusValues ] = useState(maritalStatuses);
-    //const [relationshipValues, setRelationshipValues] = useState(relationships);
-    //const [suffixValues, setSuffixValues ] = useState(suffixes);
-    const [familyMemberPersonID, setFamilyMemberPersonID] = useState(0);
-    const [addressID, setAddressID] = useState(0);
-    const [clientPersonID, setClientPersonID] = useState(0);
-    const [isRefreshed, setIsRefreshed] = useState(0);
-
-
+    
     useEffect(() => {
 
+        if (props.clientProfile !== undefined && props.clientProfile.FamilyProfile !== null && props.clientProfile.FamilyProfile.length > 0) {
+            getFamilyMembers();
+        }
+    });
 
-    }, [addressID, clientPersonID]);
+
+    function generateTable(familyProfile) {
+
+        let tableRef = document.getElementById("tblFamilyInfo").getElementsByTagName('tbody')[0];
+        tableRef.innerHTML = "";
+        familyProfile.forEach(profile => {
+            let newRow = tableRef.insertRow();
+
+            //add the edit button
+            let editButton = document.createElement("button");
+            editButton.classList.add("btn");
+            editButton.classList.add("btn-secondary");
+            editButton.classList.add("btn-sm");
+            editButton.setAttribute("data-id", props.clientProfile.Person.ID);
+            editButton.setAttribute("data-familymemberid", profile.FamilyProfile.ID);
+            editButton.innerText = "Edit";
+            editButton.title = "edit the family member";
+            editButton.onclick = getFamilyMemberDetails;
+
+            let editFamilyButtonCell = newRow.insertCell(0);
+            editFamilyButtonCell.appendChild(editButton);
+
+            //add the Address button
+            let addressButton = document.createElement("button");
+            addressButton.classList.add("btn");
+            addressButton.classList.add("btn-secondary");
+            addressButton.classList.add("btn-sm");
+            addressButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
+            addressButton.innerText = "Address";
+            addressButton.title = "edit the family member's address";
+            addressButton.onclick = toggleAddressModal;
+
+            let addressButtonCell = newRow.insertCell(1);
+            addressButtonCell.appendChild(addressButton);
+
+            let lastNameCell = newRow.insertCell(2);
+            lastNameCell.innerText = profile.FamilyProfile.Person.LastName;
+            
+            let firstNameCell = newRow.insertCell(3);
+            firstNameCell.innerText = profile.FamilyProfile.Person.FirstName;
+
+            let middleNameCell = newRow.insertCell(4);
+            middleNameCell.innerText = profile.FamilyProfile.Person.MiddleName;           
+
+            let suffixCell = newRow.insertCell(5);
+            suffixCell.innerText = (profile.FamilyProfile.Person.Suffix !== null) ? profile.FamilyProfile.Person.Suffix.Description : '';
+
+            let relationshipCell = newRow.insertCell(6);
+            relationshipCell.innerText = (profile.FamilyProfile.Relationship !== null) ? profile.FamilyProfile.Relationship.Description : '';
+
+            let homePhoneCell = newRow.insertCell(7);
+            homePhoneCell.innerText = profile.PersonSupplemental.HomePhone;
+
+            let workPhoneCell = newRow.insertCell(8);
+            workPhoneCell.innerText = profile.PersonSupplemental.WorkPhone;
+
+            let emergencyContactCell = newRow.insertCell(9);
+            emergencyContactCell.innerText = (profile.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No';
+
+            //add the delete button for each row
+            let deleteButton = document.createElement("button");
+            deleteButton.classList.add("btn");
+            deleteButton.classList.add("btn-danger");
+            deleteButton.classList.add("btn-sm");
+            deleteButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
+            deleteButton.innerText = "Delete";
+            deleteButton.title = "delete the family member";
+            deleteButton.onclick = deleteFamilyMember;
+
+            let deleteButtonCell = newRow.insertCell(10);
+            deleteButtonCell.appendChild(deleteButton);
+
+        });
+    }
+
+    function deleteFamilyMember(event) {
+        let selectedFamilyMemberId = event.currentTarget.getAttribute("data-id");
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let sessionStorageData = getSessionData();
+
+        let familyMemberPersonAddressUrl = `${apiAddress}/api/FamilyProfile/DeleteMember/${selectedFamilyMemberId}`;
+
+        fetch(familyMemberPersonAddressUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => {
+            if (result.status === 200) {
+                return result.json();
+            }
+            else {
+                return result;
+            }
+        }).then(result => {
+            if (result === "Success") {
+               props.createNotification("The family member record was successfully deleted.");
+               getFamilyMembers();
+               return;
+            } else {
+                props.createErrorNotification("An error occured.");
+                console.log(result);
+            }
+        });
+    }
 
 
     function toggleAddressModal(event) {
         let selectedFamilyMemberPersonID = event.currentTarget.getAttribute("data-id");
 
         $("#hdnCurrentFamilyMemberPersonID").val(selectedFamilyMemberPersonID);
-
-        setFamilyMemberPersonID(selectedFamilyMemberPersonID);
-        setClientPersonID(personId);
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let sessionStorageData = getSessionData();
@@ -104,9 +169,6 @@ const FamilyInfo = (props) => {
             }
         })
         .then(result => {
-
-            ///console.log(result);
-
             if (result !== null || result !== undefined) {
                 
                 $("#hdnAmAddressID").val(result.ID);
@@ -127,14 +189,39 @@ const FamilyInfo = (props) => {
     }
 
     function addFamilyMember() {
+        clearFamilyMemberModal();
         $('#familyMemberModal').modal('toggle');
     }
 
+    function getFamilyMembers() {
+       let clientID = props.clientProfile.Person.ID;
+       let apiAddress = sessionStorage.getItem("baseApiAddress");
+       let fullPersonFamilyProfileAddress = `${apiAddress}/api/ClientProfile/FamilyProfile/${clientID}`;
+       let sessionStorageData = getSessionData();
+
+       fetch(fullPersonFamilyProfileAddress, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+        }).then(result => result.json())
+        .then(result => { 
+            //console.log(result);
+            generateTable(result);
+        });
+
+    }
+
     function getFamilyMemberDetails(event) {
+
+       clearFamilyMemberModal();
       
        let clientID = event.currentTarget.getAttribute("data-id");
+       console.log('the clientID is' + clientID);
 
        let familyMemberID = event.currentTarget.getAttribute("data-familymemberid");
+       console.log('the family memberID is ' + familyMemberID);
 
        let apiAddress = sessionStorage.getItem("baseApiAddress");
        let fullPersonFamilyProfileAddress = `${apiAddress}/api/ClientProfile/FamilyProfile/${clientID}`;
@@ -149,7 +236,7 @@ const FamilyInfo = (props) => {
         }).then(result => result.json())
         .then(result => {
 
-            //console.log(result);
+            console.log(result);
 
             if (result === null || result === undefined || result.length === 0)  {
                 props.createErrorNotification("an error occurred while retrieving the record.");
@@ -161,9 +248,15 @@ const FamilyInfo = (props) => {
                 return familyMember.FamilyProfile.ID === parseInt(familyMemberID);
             });
 
+            //console.log(selectedFamilyMember);
+
             let person = selectedFamilyMember[0].FamilyProfile.Person;
             let relationship = selectedFamilyMember[0].FamilyProfile.Relationship;
             let personSupplemental = selectedFamilyMember[0].PersonSupplemental;
+            let familyProfile = selectedFamilyMember[0].FamilyProfile;
+
+            console.log('this is the family profile');
+            console.log(familyProfile);
 
             $("#txtFMLastName").val(person.LastName);
             $("#txtFMFirstName").val(person.FirstName);
@@ -200,11 +293,13 @@ const FamilyInfo = (props) => {
             $("#hdnPersonSupplementalID").val(personSupplemental.ID);
             $("#hdnPersonSupplementalPersonID").val(personSupplemental.PersonID);
 
-            $("#hdnCurrentFamilyProfileID").val(result[0].FamilyProfile.ID);
-            $("#hdnFamilyMemberID").val(result[0].FamilyProfile.FamilyMemberID);
+            //$("#hdnCurrentFamilyProfileID").val(result[0].FamilyProfile.ID);
+            $("#hdnCurrentFamilyProfileID").val(familyProfile.ID);
+            //$("#hdnFamilyMemberID").val(result[0].FamilyProfile.FamilyMemberID);
+            $("#hdnFamilyMemberID").val(familyProfile.FamilyMemberID);
             
-            $("#hdnFamilyProfileCreatedDate").val(result[0].FamilyProfile.CreatedDate);
-            $("#hdnFamilyProfileCreatedBy").val(result[0].FamilyProfile.CreatedBy);
+            $("#hdnFamilyProfileCreatedDate").val(familyProfile.CreatedDate);
+            $("#hdnFamilyProfileCreatedBy").val(familyProfile.CreatedBy);
             $("#hdnPersonCreatedDate").val(person.CreatedDate);
             $("#hdnPersonCreatedBy").val(person.CreatedBy);
             $("#hdnPersonSupplementalCreatedDate").val(personSupplemental.CreatedDate);
@@ -213,7 +308,36 @@ const FamilyInfo = (props) => {
             $('#familyMemberModal').modal('toggle');
 
         });
+    }
 
+    function clearFamilyMemberModal() {
+        $("#txtFMLastName").val('');
+        $("#txtFMFirstName").val('');
+        $("#txtFMMiddleName").val('');
+        document.getElementById("btnFMRelationship").innerHTML = 'Please Select';
+        document.getElementById("btnFMMaritalStatus").innerHTML = 'Please Select';
+        document.getElementById("btnFMSuffix").innerHTML = 'Please Select';
+        $("#txtMonthlyIncome").val('');
+        setRadioButtonState('rdpIsFHHYes', 'rdpIsFHHNo', false);
+        setRadioButtonState('rdpEmergencyContactYes', 'rdpEmergencyContactNo', false);
+        $("#txtFMHomePhone").val('');
+        $("#txtWorkFMPhone").val('');
+        $("#txtWorkPhoneExt").val('');
+        $("#txtFMAltPhone").val('');
+        $("#txtAltPhoneExt").val('');
+        $("#txtFMComments").val('');
+
+        $("#hdnPersonSupplementalID").val('');
+        $("#hdnPersonSupplementalPersonID").val('');
+        $("#hdnCurrentFamilyProfileID").val('');
+        $("#hdnFamilyMemberID").val('');
+
+        $("#hdnFamilyProfileCreatedDate").val('');
+        $("#hdnFamilyProfileCreatedBy").val('');
+        $("#hdnPersonCreatedDate").val('');
+        $("#hdnPersonCreatedBy").val('');
+        $("#hdnPersonSupplementalCreatedDate").val('');
+        $("#hdnPersonSupplementalCreatedBy").val('');
     }
 
     function handleMaritalStatusChange(event){        
@@ -367,7 +491,7 @@ const FamilyInfo = (props) => {
             familyProfile.FamilyMemberID = $("#hdnFamilyMemberID").val(),
             personSupplemental.ID = $("#hdnPersonSupplementalID").val(),
             personSupplemental.PersonID = $("#hdnPersonSupplementalPersonID").val(), 
-            familyProfile.ID = familyProfileID
+            familyProfile.ID = familyProfileID //$("#hdnFamilyMemberID").val() //familyProfileID
         }
 
         let familyProfileViewModel = {
@@ -392,14 +516,14 @@ const FamilyInfo = (props) => {
                 return;
             }
 
+            getFamilyMembers();
+
             props.createNotification('The family profile was successfully updated.');
 
 
         });
 
         $('#familyMemberModal').modal('toggle');
-
-        setIsRefreshed(isRefreshed +1);
     }
 
     function createNotification(message) {
@@ -430,7 +554,26 @@ const FamilyInfo = (props) => {
          <button id="btnAddFamilyMember" onClick={addFamilyMember} className="btn btn-primary">Add Family Member</button>
          <br/>
          <br/>
-         {familyInfoTable}
+         <table id="tblFamilyInfo" className="table">
+             <thead>
+                 <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Middle Name</th>
+                    <th scope="col">Suffix</th>
+                    <th scope="col">Relationship</th>
+                    <th scope="col">Home Phone</th>
+                    <th scope="col">Work Phone</th>
+                    <th scope="col">Emergency Contact</th>
+                 </tr>
+             </thead>
+             <tbody>
+
+             </tbody>
+         </table>
+         {/* {familyInfoTable} */}
          <div className="modal fade" id="familyMemberModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
@@ -559,15 +702,14 @@ const FamilyInfo = (props) => {
 
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary" onClick={saveNewFamilyProfile}  >Save New</button>
+                        <button type="button" className="btn btn-primary" onClick={saveNewFamilyProfile}  >Save</button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
         <AddressModal
-         PersonID={familyMemberPersonID}
-         ClientPersonID={clientPersonID}
+         ClientPersonID={personId}
           createNotification={ createNotification } 
           createErrorNotification={ createErrorNotification }
         />
