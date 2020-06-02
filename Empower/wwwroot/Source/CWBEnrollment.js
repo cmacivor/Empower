@@ -5,6 +5,9 @@ import $ from 'jquery';
 
 const Enrollment = (props) => {
 
+    //console.log(props.assistanceTypeValues);
+    let assistanceTypes = props.assistanceTypeValues;
+
     useEffect(() => {
 
         document.getElementById("btnViewTanf").value = 'Please Select';
@@ -60,6 +63,18 @@ const Enrollment = (props) => {
         document.getElementById("btnFullTimePartTime").innerHTML = selectedValue;
     }
 
+    function ddlAssistanceTypeSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+        
+        document.getElementById("btnAssistanceType").value = selectedValue;
+        
+        let selectedSuffix =  suffixes.filter(function (suffix) {
+            return suffix.ID === parseInt(selectedValue)
+        });
+
+        document.getElementById("btnAssistanceType").innerHTML = selectedSuffix[0].Description;
+    }
+
     function saveEnrollment() {
        
         let enrollmentDate = new Date($("#txtEnrollmentDate").val());
@@ -95,6 +110,14 @@ const Enrollment = (props) => {
         }
 
         console.log(snapEt);
+    }
+
+    let assistanceTypeValueOptions = [];
+    if ( assistanceTypes.length > 0) {
+
+        assistanceTypeValueOptions = assistanceTypes.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlAssistanceTypeSelectHandler  } className="dropdown-item">{value.Description}</a>
+        );
     }
 
     return <div>
@@ -145,10 +168,11 @@ const Enrollment = (props) => {
                                 <div className="col-4">
                                     <label htmlFor="ddlAssistanceType"><strong>Assistance Type</strong></label>
                                     <div className="dropdown">
-                                        <button type="button" id="btnViewTanf" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                        <button type="button" id="btnAssistanceType" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                             
                                         </button>
                                         <div className="dropdown-menu">
+                                            { assistanceTypeValueOptions }
                                             {/* {maritalStatusValueOptions} */}
                                         </div>
                                     </div>

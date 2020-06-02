@@ -44,6 +44,7 @@ const CaseManagementFunction = (props) => {
     const [schoolOptions, setSchoolOptions] = useState([]);
     const [propertyTypeOptions, setPropertyTypes] = useState([]);
     const [relationshipOptions, setRelationshipOptions] = useState([]);
+    const [assistanceTypeOptions, setAssistanceTypeOptions ] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -57,6 +58,7 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("School").then(schools => setSchoolOptions(schools));
         Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
         Api.getConfigDataByType("Relationship").then(relationships => setRelationshipOptions(relationships));
+        Api.getConfigDataByType("AssistanceType").then(assistanceTypes => setAssistanceTypeOptions(assistanceTypes));
      }, []);
 
 
@@ -253,7 +255,10 @@ const CaseManagementFunction = (props) => {
                     <Tab eventKey="program" title="Program" disabled={isTabDisabled}>
                         {
                             parseInt(sessionData.SystemID) === systems.OCWB ?
-                            <CWBEnrollment /> : <div></div>
+                            <CWBEnrollment 
+                                assistanceTypeValues = { assistanceTypeOptions }
+                             /> 
+                            : <div></div>
                         }
                        program content
                     </Tab>
