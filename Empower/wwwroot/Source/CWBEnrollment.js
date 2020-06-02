@@ -130,7 +130,7 @@ const Enrollment = (props) => {
        
         let enrollmentDate = new Date($("#txtEnrollmentDate").val());
         let snapEt = new Date($("#txtSnapEt").val());
-        let nextApptDate = new Date($("txtNextApptDate#").val());
+
 
         let viewTanf = document.getElementById("btnViewTanf").value;
 
@@ -154,7 +154,7 @@ const Enrollment = (props) => {
             EmployerName: getElementValue("txtEnrollmentEmployerName"),
             EmployerPosition: getElementValue("txtEnrollmentPosition"),
             EmployerStartDate: new Date($("#txtEnrollmentStartDate").val()),
-            EmployerWages: getElementValue($("#txtEnrollmentWagesPerHour").val()),
+            EmployerWages: getElementValue("txtEnrollmentWagesPerHour"),
             JudgeID: getElementValue("btnViewTanf"), //"Participating in VIEW/TANF"
             NextCourtDate: new Date($("#txtApptDate").val()), //Next Appt. Date
             PlacementLevelID: getElementValue("btnSnapEt") //10, //this is "Participating in SNAP-ET"
@@ -260,7 +260,7 @@ const Enrollment = (props) => {
                             <div className="form-row">
                                 <div className="col-4">
                                     <label htmlFor="txtEnrollmentEmployerName"><strong>Employer Name</strong></label>
-                                    <input type="text" id="txtEmployerName" className="form-control"></input>
+                                    <input type="text" id="txtEnrollmentEmployerName" className="form-control"></input>
                                 </div>
                                 <div className="col-4">
                                     <label htmlFor="txtEnrollmentPosition"><strong>Position</strong></label>
