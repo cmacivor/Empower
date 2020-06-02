@@ -7,6 +7,7 @@ const Enrollment = (props) => {
 
     //console.log(props.assistanceTypeValues);
     let assistanceTypes = props.assistanceTypeValues;
+    let careerPathways = props.careerPathwayValues;
 
     useEffect(() => {
 
@@ -24,6 +25,12 @@ const Enrollment = (props) => {
 
         document.getElementById("btnFullTimePartTime").value = 'Please Select';
         document.getElementById("btnFullTimePartTime").innerHTML = 'Please Select';
+
+        document.getElementById("btnAssistanceType").value = 'Please Select';        
+        document.getElementById("btnAssistanceType").innerHTML = 'Please Select';
+
+        document.getElementById("btnCareerPathwayPosition").value = 'Please Select';
+        document.getElementById("btnCareerPathwayPosition").innerHTML = 'Please Select';
 
      });
 
@@ -51,9 +58,15 @@ const Enrollment = (props) => {
 
     function ddlCareerPathwayPositionSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-      
+
         document.getElementById("btnCareerPathwayPosition").value = selectedValue;
-        document.getElementById("btnCareerPathwayPosition").innerHTML = selectedValue;
+
+        let selectedCareerPathway =  careerPathways.filter(function (careerPathway) {
+            return careerPathway.ID === parseInt(selectedValue)
+        });
+
+        document.getElementById("btnCareerPathwayPosition").innerHTML = selectedCareerPathway[0].Description;
+      
     }
 
     function ddlPartTimeFullTimeSelectHandler(event) {
@@ -68,11 +81,20 @@ const Enrollment = (props) => {
         
         document.getElementById("btnAssistanceType").value = selectedValue;
         
-        let selectedSuffix =  suffixes.filter(function (suffix) {
+        let selectedAssistanceType =  assistanceTypes.filter(function (suffix) {
             return suffix.ID === parseInt(selectedValue)
         });
 
-        document.getElementById("btnAssistanceType").innerHTML = selectedSuffix[0].Description;
+        document.getElementById("btnAssistanceType").innerHTML = selectedAssistanceType[0].Description;
+    }
+
+    function getElementValue(element) {
+        let value = document.getElementById(element).value;
+
+        if (value === "" || value === "Please Select") {
+            return null;
+        }
+        return value;
     }
 
     function saveEnrollment() {
@@ -93,7 +115,7 @@ const Enrollment = (props) => {
         }
 
         let placment ={
-            AssistanceTypeID: 0,
+            AssistanceTypeID: getElementValue("btnAssistanceType") ,
             CareerPathwayID: 0,
             ClientProfileID: 0,
             CourtOrderDate: enrollmentDate,
@@ -117,6 +139,14 @@ const Enrollment = (props) => {
 
         assistanceTypeValueOptions = assistanceTypes.map((value) =>
             <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlAssistanceTypeSelectHandler  } className="dropdown-item">{value.Description}</a>
+        );
+    }
+
+    let careerPathWayValueOptions = [];
+    if ( careerPathways.length > 0) {
+
+        careerPathWayValueOptions = careerPathways.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlCareerPathwayPositionSelectHandler  } className="dropdown-item">{value.Description}</a>
         );
     }
 
@@ -219,19 +249,7 @@ const Enrollment = (props) => {
                                         </div>
                                     </div> 
                                 </div>
-                                <div className="col-4">
-                                    <label htmlFor="ddlCareerPathWayPosition" id="ddlCareerPathwayPosition"><strong> Career Pathway Position</strong></label>
-                                    <div className="dropdown">
-                                        <button type="button" id="btnCareerPathwayPosition" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                            
-                                        </button>
-                                        <div className="dropdown-menu">
-                                            <a key="Please Select" value="Please Select" onClick={ ddlCareerPathwayPositionSelectHandler } className="dropdown-item">Please Select</a>                                                
-                                            <a key="Yes" value="Yes" onClick={ddlCareerPathwayPositionSelectHandler} className="dropdown-item">Yes</a>
-                                            <a key="No" value="No" onClick={ddlCareerPathwayPositionSelectHandler} className="dropdown-item">No</a>
-                                        </div>
-                                    </div> 
-                                </div>
+                            
                             </div>
                             <br/>
                             <div className="form-row">
@@ -245,6 +263,17 @@ const Enrollment = (props) => {
                                             <a key="Please Select" value="Please Select" onClick={ ddlPartTimeFullTimeSelectHandler  } className="dropdown-item">Please Select</a>                                                
                                             <a key="Full-Time" value="Full-Time" onClick={ddlPartTimeFullTimeSelectHandler} className="dropdown-item">Full-Time</a>
                                             <a key="Part-Time" value="Part-Time" onClick={ddlPartTimeFullTimeSelectHandler} className="dropdown-item">Part-Time</a>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div className="col-4">
+                                    <label htmlFor="ddlCareerPathWayPosition" id="ddlCareerPathwayPosition"><strong> Career Pathway Position</strong></label>
+                                    <div className="dropdown">
+                                        <button type="button" id="btnCareerPathwayPosition" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            
+                                        </button>
+                                        <div className="dropdown-menu">
+                                            { careerPathWayValueOptions }
                                         </div>
                                     </div> 
                                 </div>

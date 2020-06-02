@@ -45,6 +45,7 @@ const CaseManagementFunction = (props) => {
     const [propertyTypeOptions, setPropertyTypes] = useState([]);
     const [relationshipOptions, setRelationshipOptions] = useState([]);
     const [assistanceTypeOptions, setAssistanceTypeOptions ] = useState([]);
+    const [careerPathwayOptions, setCareerPathWayOptions ] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -59,6 +60,7 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
         Api.getConfigDataByType("Relationship").then(relationships => setRelationshipOptions(relationships));
         Api.getConfigDataByType("AssistanceType").then(assistanceTypes => setAssistanceTypeOptions(assistanceTypes));
+        Api.getConfigDataByType("CareerPathway").then(careerPathways => setCareerPathWayOptions(careerPathways));
      }, []);
 
 
@@ -257,6 +259,7 @@ const CaseManagementFunction = (props) => {
                             parseInt(sessionData.SystemID) === systems.OCWB ?
                             <CWBEnrollment 
                                 assistanceTypeValues = { assistanceTypeOptions }
+                                careerPathwayValues = { careerPathwayOptions }
                              /> 
                             : <div></div>
                         }
