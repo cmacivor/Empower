@@ -18,6 +18,7 @@ import AddressJuvenile from './AddressJuvenile';
 import AddressAdult from './AddressAdult';
 import AddressCWB from './AddressCWB';
 import FamilyInfo from './FamilyInfo';
+import CWBEnrollment from './CWBEnrollment';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -250,6 +251,10 @@ const CaseManagementFunction = (props) => {
                         />
                     </Tab>
                     <Tab eventKey="program" title="Program" disabled={isTabDisabled}>
+                        {
+                            parseInt(sessionData.SystemID) === systems.OCWB ?
+                            <CWBEnrollment /> : <div></div>
+                        }
                        program content
                     </Tab>
                     <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
