@@ -5,7 +5,14 @@ import $ from 'jquery';
 
 const Enrollment = (props) => {
 
-    //console.log(props.assistanceTypeValues);
+    let personId = '';
+    let clientProfileId = '';
+
+    if (props.clientProfile !== undefined) {
+        personId = props.clientProfile.Person.ID;
+        clientProfileId = props.clientProfileID.ID;
+    }
+
     let assistanceTypes = props.assistanceTypeValues;
     let careerPathways = props.careerPathwayValues;
 
@@ -42,10 +49,32 @@ const Enrollment = (props) => {
     function ddlViewTanfSelectEventHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
       
-        console.log(selectedValue);
         document.getElementById("btnViewTanf").value = selectedValue;
-        document.getElementById("btnViewTanf").innerHTML = selectedValue;
-        
+
+        let displayValue;
+        if (selectedValue === "35") {
+            displayValue = "Yes";
+        } else if (selectedValue === "36") {
+            displayValue = "No";
+        }
+
+        document.getElementById("btnViewTanf").innerHTML =  displayValue;
+    }
+
+    function ddlSnapSelectEventHandler(event) {
+        //btnSnapEt
+        let selectedValue = event.currentTarget.getAttribute('value');
+      
+        document.getElementById("btnSnapEt").value = selectedValue;
+
+        let displayValue;
+        if (selectedValue === "24") {
+            displayValue = "Yes";
+        } else if (selectedValue === "25") {
+            displayValue = "No";
+        }
+
+        document.getElementById("btnSnapEt").innerHTML = displayValue; //selectedValue;
     }
 
     function ddlBenefitsSelectEventHandler(event) {
@@ -116,22 +145,24 @@ const Enrollment = (props) => {
 
         let placment ={
             AssistanceTypeID: getElementValue("btnAssistanceType") ,
-            CareerPathwayID: 0,
-            ClientProfileID: 0,
+            CareerPathwayID: getElementValue("btnCareerPathwayPosition"),
+            ClientProfileID:  clientProfileId,
             CourtOrderDate: enrollmentDate,
-            CourtOrderNarrative: '', //will be the comments
-            EmployerBenefits: 'Yes',
-            EmployerFullPartTime: 'FullTime',
-            EmployerName: 'test employer',
-            EmployerPosition: 'test position',
-            EmployerStartDate: new Date(),
-            EmployerWages: 100,
-            JudgeID: 12,
-            NextCourtDate: new Date(),
-            PlacementLevelID: 10,
+            CourtOrderNarrative: getElementValue("txtEnrollmentComments"), //will be the comments
+            EmployerBenefits: getElementValue("btnEnrollmentBenefits"),
+            EmployerFullPartTime: getElementValue("btnFullTimePartTime"),
+            EmployerName: getElementValue("txtEnrollmentEmployerName"),
+            EmployerPosition: getElementValue("txtEnrollmentPosition"),
+            EmployerStartDate: new Date($("#txtEnrollmentStartDate").val()),
+            EmployerWages: getElementValue($("#txtEnrollmentWagesPerHour").val()),
+            JudgeID: getElementValue("btnViewTanf"), //"Participating in VIEW/TANF"
+            NextCourtDate: new Date($("#txtApptDate").val()), //Next Appt. Date
+            PlacementLevelID: getElementValue("btnSnapEt") //10, //this is "Participating in SNAP-ET"
         }
 
-        console.log(snapEt);
+        console.log(placment);
+
+        //console.log(snapEt);
     }
 
     let assistanceTypeValueOptions = [];
@@ -172,7 +203,17 @@ const Enrollment = (props) => {
                                 </div>
                                 <div className="col-4">
                                     <label htmlFor="txtSnapEt"><strong> Participating in SNAP-ET *</strong></label>
-                                    <input type="date" defaultValue="" id="txtSnapEt" className="form-control" required ></input>
+                                    <div className="dropdown">
+                                        <button type="button" id="btnSnapEt" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            
+                                        </button>
+                                        <div className="dropdown-menu">
+                                            <a key="Please Select" value="Please Select" onClick={ ddlSnapSelectEventHandler } className="dropdown-item">Please Select</a>                                                
+                                            <a key="24" value="24" onClick={ddlSnapSelectEventHandler} className="dropdown-item">Yes</a>
+                                            <a key="25" value="25" onClick={ddlSnapSelectEventHandler} className="dropdown-item">No</a>
+                                        </div>
+                                    </div>
+                                    <div style={{display:'none'}} id="divSnapEtError" className='errorDiv'>Please select a value.</div> 
                                 </div>
                                 <div className="col-4">
                                     <label htmlFor="txtNextApptDate"><strong>Next Appt. Date</strong> </label>
@@ -189,8 +230,8 @@ const Enrollment = (props) => {
                                         </button>
                                         <div className="dropdown-menu">
                                             <a key="Please Select" value="Please Select" onClick={ddlViewTanfSelectEventHandler} className="dropdown-item">Please Select</a>                                                
-                                            <a key="Yes" value="Yes" onClick={ddlViewTanfSelectEventHandler} className="dropdown-item">Yes</a>
-                                            <a key="No" value="No" onClick={ddlViewTanfSelectEventHandler} className="dropdown-item">No</a>
+                                            <a key="35" value="35" onClick={ddlViewTanfSelectEventHandler} className="dropdown-item">Yes</a>
+                                            <a key="36" value="36" onClick={ddlViewTanfSelectEventHandler} className="dropdown-item">No</a>
                                         </div>
                                     </div>
                                     <div style={{display:'none'}} id="divViewTanfError" className='errorDiv'>Please select a value.</div> 
