@@ -260,7 +260,7 @@ const CaseManagementFunction = (props) => {
                             <CWBEnrollment 
                                 assistanceTypeValues = { assistanceTypeOptions }
                                 careerPathwayValues = { careerPathwayOptions }
-                                clientProfileID={clientProfile.ClientProfile }
+                                clientProfile={clientProfile.ClientProfile }
                              /> 
                             : <div></div>
                         }

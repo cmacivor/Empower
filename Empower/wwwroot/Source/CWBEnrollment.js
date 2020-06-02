@@ -10,7 +10,7 @@ const Enrollment = (props) => {
 
     if (props.clientProfile !== undefined) {
         personId = props.clientProfile.Person.ID;
-        clientProfileId = props.clientProfileID.ID;
+        clientProfileId = props.clientProfile.ID;
     }
 
     let assistanceTypes = props.assistanceTypeValues;
