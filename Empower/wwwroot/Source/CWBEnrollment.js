@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
+import moment from 'moment';
 //import modal from './bootstrap.js';
 //import {modal} from './bootstrap.js';
 
@@ -160,9 +161,8 @@ const Enrollment = (props) => {
             document.getElementById("btnCareerPathwayPosition").innerHTML = result.CareerPathway.Name;
             document.getElementById("btnCareerPathwayPosition").value = result.CareerPathwayID;
 
-            //Court Order Date
-            let enrollmentDate = new Date(result.CourtOrderDate);
-            $("#txtEnrollmentDate").val(enrollmentDate);
+            let convertedEnrollmentDate = moment(new Date(result.CourtOrderDate)).format('YYYY-MM-DD');
+            $("#txtEnrollmentDate").val(convertedEnrollmentDate);
             $("#txtEnrollmentComments").val(result.CourtOrderNarrative);
             
             document.getElementById("btnEnrollmentBenefits").innerHTML = result.EmployerBenefits;
@@ -174,8 +174,8 @@ const Enrollment = (props) => {
             $("#txtEnrollmentEmployerName").val(result.EmployerName);
             $("#txtEnrollmentPosition").val(result.EmployerPosition);
 
-            let startDate = new Date(result.EmployerStartDate);
-            $("#txtEnrollmentStartDate").val(startDate);
+            let convertedEmployerStartDate = moment(new Date(result.EmployerStartDate)).format('YYYY-MM-DD');
+            $("#txtEnrollmentStartDate").val(convertedEmployerStartDate);
 
             $("#txtEnrollmentWagesPerHour").val(result.EmployerWages);
 
@@ -183,8 +183,8 @@ const Enrollment = (props) => {
             document.getElementById("btnViewTanf").innerText = result.Judge.Name;
             document.getElementById("btnViewTanf").value = result.JudgeID;
 
-            let nextCourtDate = new Date(result.NextCourtDate);
-            $("#txtApptDate").val(nextCourtDate);
+            let convertedNextCourtDate = moment(new Date(result.NextCourtDate)).format('YYYY-MM-DD');
+            $("#txtApptDate").val(convertedNextCourtDate);
 
             document.getElementById("btnSnapEt").innerText = result.PlacementLevel.Name;
             document.getElementById("btnSnapEt").value = result.PlacementLevelID;
@@ -197,7 +197,7 @@ const Enrollment = (props) => {
 
 
             openEnrollmentModal();
-            
+
         });
     }
 
