@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
+import { getSessionData } from './commonAdmin';
 //import modal from './bootstrap.js';
 //import {modal} from './bootstrap.js';
 
@@ -127,6 +128,10 @@ const Enrollment = (props) => {
     }
 
     function saveEnrollment() {
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullPersonPlacementAddress = `${apiAddress}/api/Placement`;
+        let sessionStorageData = getSessionData();
        
         let enrollmentDate = new Date($("#txtEnrollmentDate").val());
         let snapEt = new Date($("#txtSnapEt").val());
@@ -157,10 +162,44 @@ const Enrollment = (props) => {
             EmployerWages: getElementValue("txtEnrollmentWagesPerHour"),
             JudgeID: getElementValue("btnViewTanf"), //"Participating in VIEW/TANF"
             NextCourtDate: new Date($("#txtApptDate").val()), //Next Appt. Date
-            PlacementLevelID: getElementValue("btnSnapEt") //10, //this is "Participating in SNAP-ET"
+            PlacementLevelID: getElementValue("btnSnapEt"), //10, //this is "Participating in SNAP-ET"
+            Active: true,
+            CreatedDate: new Date(),
+            CreatedBy: sessionStorageData.CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
         }
 
-        console.log(placment);
+
+        let placementViewModel = {
+            Placement: placment,
+            Enrollment: null,
+            PlacementOffense: null,
+        }
+
+        
+        fetch(fullPersonPlacementAddress, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(placementViewModel)
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+
+            if (result === null || result.Message !== undefined) {
+                props.createErrorNotification("an error occurred while saving the record.");
+                return;
+            }
+
+            //getFamilyMembers();
+
+            props.createNotification('The placement was successfully saved.');
+        });
+
+        //console.log(placment);
 
         //console.log(snapEt);
     }
