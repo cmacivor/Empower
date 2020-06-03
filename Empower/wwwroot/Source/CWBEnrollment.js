@@ -137,6 +137,70 @@ const Enrollment = (props) => {
         return value;
     }
 
+    function getPlacement(event) {
+
+        let selectedPlacementID = event.currentTarget.getAttribute("data-id");
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullGetPlacementAddress = `${apiAddress}/api/Placement/GetPlacement/${selectedPlacementID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetPlacementAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            
+            console.log(result);
+            document.getElementById("btnAssistanceType").innerHTML = result.AssistanceType.Name;
+            document.getElementById("btnAssistanceType").value = result.AssistanceTypeID;
+
+            document.getElementById("btnCareerPathwayPosition").innerHTML = result.CareerPathway.Name;
+            document.getElementById("btnCareerPathwayPosition").value = result.CareerPathwayID;
+
+            //Court Order Date
+            let enrollmentDate = new Date(result.CourtOrderDate);
+            $("#txtEnrollmentDate").val(enrollmentDate);
+            $("#txtEnrollmentComments").val(result.CourtOrderNarrative);
+            
+            document.getElementById("btnEnrollmentBenefits").innerHTML = result.EmployerBenefits;
+            document.getElementById("btnEnrollmentBenefits").value = result.EmployerBenefits;
+
+            document.getElementById("btnFullTimePartTime").innerText = result.EmployerFullPartTime;
+            document.getElementById("btnFullTimePartTime").value = result.EmployerFullPartTime;
+
+            $("#txtEnrollmentEmployerName").val(result.EmployerName);
+            $("#txtEnrollmentPosition").val(result.EmployerPosition);
+
+            let startDate = new Date(result.EmployerStartDate);
+            $("#txtEnrollmentStartDate").val(startDate);
+
+            $("#txtEnrollmentWagesPerHour").val(result.EmployerWages);
+
+            //View/TANF
+            document.getElementById("btnViewTanf").innerText = result.Judge.Name;
+            document.getElementById("btnViewTanf").value = result.JudgeID;
+
+            let nextCourtDate = new Date(result.NextCourtDate);
+            $("#txtApptDate").val(nextCourtDate);
+
+            document.getElementById("btnSnapEt").innerText = result.PlacementLevel.Name;
+            document.getElementById("btnSnapEt").value = result.PlacementLevelID;
+
+            $("#hdnPlacementID").val(result.ID);
+            $("#hdnPlacementCreatedDate").val(result.CreatedDate);
+            $("#hdnPlacementCreatedBy").val(result.CreatedBy);
+            $("#hdnPlacementUpdatedDate").val(result.UpdatedDate);
+            $("#hdnPlacementUpdatedBy").val(result.UpdatedBy);
+
+
+            openEnrollmentModal();
+            
+        });
+    }
+
     
     function generateTable(placements) {
 
@@ -159,7 +223,8 @@ const Enrollment = (props) => {
             placementButton.setAttribute("data-id", placement.Placement.ID);
             placementButton.innerText = "Edit Placement";
             placementButton.title = "edit the Placement";
-            //addressButton.onclick = toggleAddressModal;
+            placementButton.onclick = getPlacement;
+
 
             let bodyDiv = document.createElement("div");
             bodyDiv.classList.add("card-body");
@@ -187,74 +252,7 @@ const Enrollment = (props) => {
             divRef.appendChild(parentCard);
         });
 
-        // familyProfile.forEach(profile => {
-        //     let newRow = tableRef.insertRow();
-
-        //     //add the edit button
-        //     let editButton = document.createElement("button");
-        //     editButton.classList.add("btn");
-        //     editButton.classList.add("btn-secondary");
-        //     editButton.classList.add("btn-sm");
-        //     editButton.setAttribute("data-id", props.clientProfile.Person.ID);
-        //     editButton.setAttribute("data-familymemberid", profile.FamilyProfile.ID);
-        //     editButton.innerText = "Edit";
-        //     editButton.title = "edit the family member";
-        //     editButton.onclick = getFamilyMemberDetails;
-
-        //     let editFamilyButtonCell = newRow.insertCell(0);
-        //     editFamilyButtonCell.appendChild(editButton);
-
-        //     //add the Address button
-        //     let addressButton = document.createElement("button");
-        //     addressButton.classList.add("btn");
-        //     addressButton.classList.add("btn-secondary");
-        //     addressButton.classList.add("btn-sm");
-        //     addressButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
-        //     addressButton.innerText = "Address";
-        //     addressButton.title = "edit the family member's address";
-        //     addressButton.onclick = toggleAddressModal;
-
-        //     let addressButtonCell = newRow.insertCell(1);
-        //     addressButtonCell.appendChild(addressButton);
-
-        //     let lastNameCell = newRow.insertCell(2);
-        //     lastNameCell.innerText = profile.FamilyProfile.Person.LastName;
-            
-        //     let firstNameCell = newRow.insertCell(3);
-        //     firstNameCell.innerText = profile.FamilyProfile.Person.FirstName;
-
-        //     let middleNameCell = newRow.insertCell(4);
-        //     middleNameCell.innerText = profile.FamilyProfile.Person.MiddleName;           
-
-        //     let suffixCell = newRow.insertCell(5);
-        //     suffixCell.innerText = (profile.FamilyProfile.Person.Suffix !== null) ? profile.FamilyProfile.Person.Suffix.Description : '';
-
-        //     let relationshipCell = newRow.insertCell(6);
-        //     relationshipCell.innerText = (profile.FamilyProfile.Relationship !== null) ? profile.FamilyProfile.Relationship.Description : '';
-
-        //     let homePhoneCell = newRow.insertCell(7);
-        //     homePhoneCell.innerText = profile.PersonSupplemental.HomePhone;
-
-        //     let workPhoneCell = newRow.insertCell(8);
-        //     workPhoneCell.innerText = profile.PersonSupplemental.WorkPhone;
-
-        //     let emergencyContactCell = newRow.insertCell(9);
-        //     emergencyContactCell.innerText = (profile.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No';
-
-        //     //add the delete button for each row
-        //     let deleteButton = document.createElement("button");
-        //     deleteButton.classList.add("btn");
-        //     deleteButton.classList.add("btn-danger");
-        //     deleteButton.classList.add("btn-sm");
-        //     deleteButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
-        //     deleteButton.innerText = "Delete";
-        //     deleteButton.title = "delete the family member";
-        //     deleteButton.onclick = deleteFamilyMember;
-
-        //     let deleteButtonCell = newRow.insertCell(10);
-        //     deleteButtonCell.appendChild(deleteButton);
-
-        // });
+  
     }
 
     function saveEnrollment() {
@@ -356,6 +354,11 @@ const Enrollment = (props) => {
         <button id="btnAddEnrollment" onClick={openEnrollmentModal} className="btn btn-primary">Add Enrollment</button>
         <br/>
         <br/>
+        <input type="hidden" id="hdnPlacementID" />
+        <input type="hidden" id="hdnPlacementCreatedDate" />
+        <input type="hidden" id="hdnPlacementCreatedBy" />
+        <input type="hidden" id="hdnPlacementUpdatedDate" />
+        <input type="hidden" id="hdnPlacementUpdatedBy" />
         <div id="placementsContainer">
 
         </div>
