@@ -143,6 +143,7 @@ const Enrollment = (props) => {
         let divRef = document.getElementById("placementsContainer");
         divRef.innerHTML = "";
         placements.forEach(placement => {
+            console.log(placement);
             let parentCard = document.createElement("div");
             parentCard.classList.add("card");
             
@@ -150,9 +151,20 @@ const Enrollment = (props) => {
             headerDiv.classList.add("card-header");
             parentCard.appendChild(headerDiv);
 
+            //add the Edit Placement button
+            let placementButton = document.createElement("button");
+            placementButton.classList.add("btn");
+            placementButton.classList.add("btn-secondary");
+            placementButton.classList.add("btn-sm");
+            placementButton.setAttribute("data-id", placement.Placement.ID);
+            placementButton.innerText = "Edit Placement";
+            placementButton.title = "edit the Placement";
+            //addressButton.onclick = toggleAddressModal;
+
             let bodyDiv = document.createElement("div");
             bodyDiv.classList.add("card-body");
             parentCard.appendChild(bodyDiv);
+            bodyDiv.appendChild(placementButton);
 
             let table = document.createElement("table");
             table.classList.add("table");
