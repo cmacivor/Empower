@@ -261,6 +261,7 @@ const CaseManagementFunction = (props) => {
                                 assistanceTypeValues = { assistanceTypeOptions }
                                 careerPathwayValues = { careerPathwayOptions }
                                 clientProfile={clientProfile.ClientProfile }
+                                placement={clientProfile.Placement }
                                 createNotification={triggerToastMessage}
                                 createErrorNotification={triggerErrorMessage}
                              /> 

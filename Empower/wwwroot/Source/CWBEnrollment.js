@@ -8,16 +8,26 @@ const Enrollment = (props) => {
 
     let personId = '';
     let clientProfileId = '';
+    let placements;
 
     if (props.clientProfile !== undefined) {
         personId = props.clientProfile.Person.ID;
         clientProfileId = props.clientProfile.ID;
+        //console.log('the client profile in Enrollment.js');
+        //console.log(props.clientProfile);
+       
+
     }
 
     let assistanceTypes = props.assistanceTypeValues;
     let careerPathways = props.careerPathwayValues;
-
+    
     useEffect(() => {
+
+        if (props.clientProfile !== undefined) {
+            placements = props.placement;
+            generateTable(placements);
+        }
 
         document.getElementById("btnViewTanf").value = 'Please Select';
         document.getElementById("btnViewTanf").innerHTML = 'Please Select';
@@ -127,6 +137,114 @@ const Enrollment = (props) => {
         return value;
     }
 
+    
+    function generateTable(placements) {
+
+        let divRef = document.getElementById("placementsContainer");
+        divRef.innerHTML = "";
+        placements.forEach(placement => {
+            let parentCard = document.createElement("div");
+            parentCard.classList.add("card");
+            
+            let headerDiv = document.createElement("div");
+            headerDiv.classList.add("card-header");
+            parentCard.appendChild(headerDiv);
+
+            let bodyDiv = document.createElement("div");
+            bodyDiv.classList.add("card-body");
+            parentCard.appendChild(bodyDiv);
+
+            let table = document.createElement("table");
+            table.classList.add("table");
+
+            //create the Referral rows 
+            let header = table.createTHead();
+            let row = header.insertRow(0);
+            let serviceNameCell = row.insertCell(0);
+            serviceNameCell.innerHTML = "<strong> Service Name</strong>";
+            let beginDateCell = row.insertCell(1);
+            beginDateCell.innerHTML = "<strong>Begin Date</strong>";
+            let endDateCell = row.insertCell(2);
+            endDateCell.innerHTML = "<strong>End Date</strong>";
+            let caseStatusCell = row.insertCell(3);
+            caseStatusCell.innerHTML = "<strong>Case Status</strong>";
+
+
+            bodyDiv.appendChild(table);
+
+            divRef.appendChild(parentCard);
+        });
+
+        // familyProfile.forEach(profile => {
+        //     let newRow = tableRef.insertRow();
+
+        //     //add the edit button
+        //     let editButton = document.createElement("button");
+        //     editButton.classList.add("btn");
+        //     editButton.classList.add("btn-secondary");
+        //     editButton.classList.add("btn-sm");
+        //     editButton.setAttribute("data-id", props.clientProfile.Person.ID);
+        //     editButton.setAttribute("data-familymemberid", profile.FamilyProfile.ID);
+        //     editButton.innerText = "Edit";
+        //     editButton.title = "edit the family member";
+        //     editButton.onclick = getFamilyMemberDetails;
+
+        //     let editFamilyButtonCell = newRow.insertCell(0);
+        //     editFamilyButtonCell.appendChild(editButton);
+
+        //     //add the Address button
+        //     let addressButton = document.createElement("button");
+        //     addressButton.classList.add("btn");
+        //     addressButton.classList.add("btn-secondary");
+        //     addressButton.classList.add("btn-sm");
+        //     addressButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
+        //     addressButton.innerText = "Address";
+        //     addressButton.title = "edit the family member's address";
+        //     addressButton.onclick = toggleAddressModal;
+
+        //     let addressButtonCell = newRow.insertCell(1);
+        //     addressButtonCell.appendChild(addressButton);
+
+        //     let lastNameCell = newRow.insertCell(2);
+        //     lastNameCell.innerText = profile.FamilyProfile.Person.LastName;
+            
+        //     let firstNameCell = newRow.insertCell(3);
+        //     firstNameCell.innerText = profile.FamilyProfile.Person.FirstName;
+
+        //     let middleNameCell = newRow.insertCell(4);
+        //     middleNameCell.innerText = profile.FamilyProfile.Person.MiddleName;           
+
+        //     let suffixCell = newRow.insertCell(5);
+        //     suffixCell.innerText = (profile.FamilyProfile.Person.Suffix !== null) ? profile.FamilyProfile.Person.Suffix.Description : '';
+
+        //     let relationshipCell = newRow.insertCell(6);
+        //     relationshipCell.innerText = (profile.FamilyProfile.Relationship !== null) ? profile.FamilyProfile.Relationship.Description : '';
+
+        //     let homePhoneCell = newRow.insertCell(7);
+        //     homePhoneCell.innerText = profile.PersonSupplemental.HomePhone;
+
+        //     let workPhoneCell = newRow.insertCell(8);
+        //     workPhoneCell.innerText = profile.PersonSupplemental.WorkPhone;
+
+        //     let emergencyContactCell = newRow.insertCell(9);
+        //     emergencyContactCell.innerText = (profile.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No';
+
+        //     //add the delete button for each row
+        //     let deleteButton = document.createElement("button");
+        //     deleteButton.classList.add("btn");
+        //     deleteButton.classList.add("btn-danger");
+        //     deleteButton.classList.add("btn-sm");
+        //     deleteButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
+        //     deleteButton.innerText = "Delete";
+        //     deleteButton.title = "delete the family member";
+        //     deleteButton.onclick = deleteFamilyMember;
+
+        //     let deleteButtonCell = newRow.insertCell(10);
+        //     deleteButtonCell.appendChild(deleteButton);
+
+        // });
+    }
+
     function saveEnrollment() {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -224,6 +342,30 @@ const Enrollment = (props) => {
         <h3>Program</h3>
         <br/>
         <button id="btnAddEnrollment" onClick={openEnrollmentModal} className="btn btn-primary">Add Enrollment</button>
+        <br/>
+        <br/>
+        <div id="placementsContainer">
+
+        </div>
+        {/* <table id="tblPlacements" className="table">
+             <thead>
+                 <tr>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Middle Name</th>
+                    <th scope="col">Suffix</th>
+                    <th scope="col">Relationship</th>
+                    <th scope="col">Home Phone</th>
+                    <th scope="col">Work Phone</th>
+                    <th scope="col">Emergency Contact</th>
+                 </tr>
+             </thead>
+             <tbody>
+
+             </tbody>
+         </table> */}
         <form id="frmEnrollment">
             <div className="modal fade" id="enrollmentModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
