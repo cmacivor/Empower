@@ -155,10 +155,29 @@ const Enrollment = (props) => {
                 return;
             }
 
+            getPlacementsByClientProfileID();
+
+
             props.createNotification('The placement was successfully deleted.');
 
-            
+        });
+    }
 
+    function getPlacementsByClientProfileID() {
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let clientProfileID = props.clientProfile.ID;
+        let fullGetPlacementsAddress = `${apiAddress}/api/Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetPlacementsAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            generateTable(result);
         });
     }
 
@@ -316,8 +335,6 @@ const Enrollment = (props) => {
             $("#frmEnrollment").addClass("was-validated");
             document.getElementById("divViewTanfError").removeAttribute("style");
         }
-
-        
 
         let placement ={
             AssistanceTypeID: getElementValue("btnAssistanceType") ,
