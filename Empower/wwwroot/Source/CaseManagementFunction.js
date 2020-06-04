@@ -18,6 +18,7 @@ import AddressJuvenile from './AddressJuvenile';
 import AddressAdult from './AddressAdult';
 import AddressCWB from './AddressCWB';
 import FamilyInfo from './FamilyInfo';
+import CWBEnrollment from './CWBEnrollment';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -43,6 +44,8 @@ const CaseManagementFunction = (props) => {
     const [schoolOptions, setSchoolOptions] = useState([]);
     const [propertyTypeOptions, setPropertyTypes] = useState([]);
     const [relationshipOptions, setRelationshipOptions] = useState([]);
+    const [assistanceTypeOptions, setAssistanceTypeOptions ] = useState([]);
+    const [careerPathwayOptions, setCareerPathWayOptions ] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -56,6 +59,8 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("School").then(schools => setSchoolOptions(schools));
         Api.getConfigDataByType("PropertyType").then(propertyTypes => setPropertyTypes(propertyTypes));
         Api.getConfigDataByType("Relationship").then(relationships => setRelationshipOptions(relationships));
+        Api.getConfigDataByType("AssistanceType").then(assistanceTypes => setAssistanceTypeOptions(assistanceTypes));
+        Api.getConfigDataByType("CareerPathway").then(careerPathways => setCareerPathWayOptions(careerPathways));
      }, []);
 
 
@@ -250,6 +255,18 @@ const CaseManagementFunction = (props) => {
                         />
                     </Tab>
                     <Tab eventKey="program" title="Program" disabled={isTabDisabled}>
+                        {
+                            parseInt(sessionData.SystemID) === systems.OCWB ?
+                            <CWBEnrollment 
+                                assistanceTypeValues = { assistanceTypeOptions }
+                                careerPathwayValues = { careerPathwayOptions }
+                                clientProfile={clientProfile.ClientProfile }
+                                placement={clientProfile.Placement }
+                                createNotification={triggerToastMessage}
+                                createErrorNotification={triggerErrorMessage}
+                             /> 
+                            : <div></div>
+                        }
                        program content
                     </Tab>
                     <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
