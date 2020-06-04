@@ -53,7 +53,7 @@ const Enrollment = (props) => {
 
      });
 
-    function openEnrollmentModal() {
+    function toggleEnrollmentModal() {
         //TODO: add function to clear the modal on opening
         $("#enrollmentModal").modal('toggle');
     }
@@ -196,7 +196,7 @@ const Enrollment = (props) => {
             $("#hdnPlacementUpdatedBy").val(result.UpdatedBy);
 
 
-            openEnrollmentModal();
+             toggleEnrollmentModal();
 
         });
     }
@@ -276,7 +276,9 @@ const Enrollment = (props) => {
             document.getElementById("divViewTanfError").removeAttribute("style");
         }
 
-        let placment ={
+        
+
+        let placement ={
             AssistanceTypeID: getElementValue("btnAssistanceType") ,
             CareerPathwayID: getElementValue("btnCareerPathwayPosition"),
             ClientProfileID:  clientProfileId,
@@ -292,22 +294,34 @@ const Enrollment = (props) => {
             NextCourtDate: new Date($("#txtApptDate").val()), //Next Appt. Date
             PlacementLevelID: getElementValue("btnSnapEt"), //10, //this is "Participating in SNAP-ET"
             Active: true,
-            CreatedDate: new Date(),
-            CreatedBy: sessionStorageData.CurrentUser,
+            //CreatedDate: new Date(),
+            //CreatedBy: sessionStorageData.CurrentUser,
             UpdatedDate: new Date(),
             UpdatedBy: sessionStorageData.CurrentUser
         }
 
+        let methodType = "";
+        let placementID = $("#hdnPlacementID").val();
+
+        if (placementID !== "") {
+            methodType = "PUT"
+            placement.CreatedDate = $("#hdnPlacementCreatedDate").val();
+            placement.CreatedBy = $("#hdnPlacementCreatedBy").val();
+            placement.ID = $("#hdnPlacementID").val();
+        } else {
+            methodType = "POST";
+        }
+
 
         let placementViewModel = {
-            Placement: placment,
+            Placement: placement,
             Enrollment: null,
             PlacementOffense: null,
         }
 
         
         fetch(fullPersonPlacementAddress, {
-            method: 'POST',
+            method: methodType,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + sessionStorageData.Token
@@ -322,9 +336,9 @@ const Enrollment = (props) => {
                 return;
             }
 
-            //getFamilyMembers();
-
             props.createNotification('The placement was successfully saved.');
+
+            toggleEnrollmentModal();
         });
 
         //console.log(placment);
@@ -351,7 +365,7 @@ const Enrollment = (props) => {
     return <div>
         <h3>Program</h3>
         <br/>
-        <button id="btnAddEnrollment" onClick={openEnrollmentModal} className="btn btn-primary">Add Enrollment</button>
+        <button id="btnAddEnrollment" onClick={toggleEnrollmentModal} className="btn btn-primary">Add Enrollment</button>
         <br/>
         <br/>
         <input type="hidden" id="hdnPlacementID" />
