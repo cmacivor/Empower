@@ -14,9 +14,6 @@ const Enrollment = (props) => {
     if (props.clientProfile !== undefined) {
         personId = props.clientProfile.Person.ID;
         clientProfileId = props.clientProfile.ID;
-        //console.log('the client profile in Enrollment.js');
-        //console.log(props.clientProfile);
-       
 
     }
 
@@ -138,6 +135,33 @@ const Enrollment = (props) => {
         return value;
     }
 
+    function deletePlacement(event) {
+        let selectedPlacementID = event.currentTarget.getAttribute("data-id");
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullDeletePlacementAddress = `${apiAddress}/api/Placement/Deleteplacement/${selectedPlacementID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullDeletePlacementAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            
+            if (result === null || result.Message !== undefined) {
+                props.createErrorNotification("an error occurred while deleting the record.");
+                return;
+            }
+
+            props.createNotification('The placement was successfully deleted.');
+
+            
+
+        });
+    }
+
     function getPlacement(event) {
 
         let selectedPlacementID = event.currentTarget.getAttribute("data-id");
@@ -207,7 +231,15 @@ const Enrollment = (props) => {
         let divRef = document.getElementById("placementsContainer");
         divRef.innerHTML = "";
         placements.forEach(placement => {
-            console.log(placement);
+            //console.log(placement);
+            let placementRecord;
+            if (placement.Placement !== undefined) {
+                placementRecord = placement.Placement;
+            }
+            else {
+                placementRecord = placement;
+            }
+
             let parentCard = document.createElement("div");
             parentCard.classList.add("card");
             
@@ -220,16 +252,27 @@ const Enrollment = (props) => {
             placementButton.classList.add("btn");
             placementButton.classList.add("btn-secondary");
             placementButton.classList.add("btn-sm");
-            placementButton.setAttribute("data-id", placement.Placement.ID);
+            placementButton.setAttribute("data-id", placementRecord.ID);
             placementButton.innerText = "Edit Placement";
             placementButton.title = "edit the Placement";
             placementButton.onclick = getPlacement;
+
+            //add the delete button
+            let placementDeleteButton = document.createElement("button");
+            placementDeleteButton.classList.add("btn");
+            placementDeleteButton.classList.add("btn-secondary");
+            placementDeleteButton.classList.add("btn-sm");
+            placementDeleteButton.setAttribute("data-id", placementRecord.ID);
+            placementDeleteButton.innerText = "Delete";
+            placementDeleteButton.title = "Delete placement";
+            placementDeleteButton.onclick = deletePlacement;
 
 
             let bodyDiv = document.createElement("div");
             bodyDiv.classList.add("card-body");
             parentCard.appendChild(bodyDiv);
             bodyDiv.appendChild(placementButton);
+            bodyDiv.appendChild(placementDeleteButton);
 
             let table = document.createElement("table");
             table.classList.add("table");
@@ -251,8 +294,6 @@ const Enrollment = (props) => {
 
             divRef.appendChild(parentCard);
         });
-
-  
     }
 
     function saveEnrollment() {
@@ -310,6 +351,8 @@ const Enrollment = (props) => {
             placement.ID = $("#hdnPlacementID").val();
         } else {
             methodType = "POST";
+            placement.CreatedDate = new Date(),
+            placement.CreatedBy = sessionStorageData.CurrentUser;
         }
 
 
@@ -335,6 +378,8 @@ const Enrollment = (props) => {
                 props.createErrorNotification("an error occurred while saving the record.");
                 return;
             }
+
+            generateTable(result);
 
             props.createNotification('The placement was successfully saved.');
 
