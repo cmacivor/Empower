@@ -7,12 +7,25 @@ const Referral = (props) => {
 
     let careerAdvisors = props.staffValues;
 
-    console.log(props.staffValues);
-
-
     function ddlCareerAdvisorSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-        console.log(selectedValue);
+       
+        let selectedAdvisor = careerAdvisors.filter(function(advisor) {
+            return advisor.ID === parseInt(selectedValue);
+        });
+
+        //console.log(selectedAdvisor);
+        let txtReferralEmail = document.getElementById("txtReferralEmail");
+        txtReferralEmail.innerText = selectedAdvisor[0].EMail;
+
+        let txtReferralPhone = document.getElementById("txtReferralPhone");
+        txtReferralPhone.innerText = selectedAdvisor[0].Phone;
+
+        let txtReferralFax = document.getElementById("txtReferralFax");
+        txtReferralFax.innerText = selectedAdvisor[0].Fax;
+
+        let txtReferralTitle = document.getElementById("txtReferralTitle");
+        txtReferralTitle.innerText = selectedAdvisor[0].JobTitle.Name;
     }
 
     
@@ -63,18 +76,30 @@ const Referral = (props) => {
                             </div>
                             <div className="form-row">
                                 <div className="col-3">
-                                    <label><strong>Email</strong> </label>
+                                    <label><strong>Phone</strong></label>
+                                    <div id="txtReferralPhone">
+
+                                    </div>
                                 </div>
                                 <div className="col-3">
-                                    <label><strong>Phone</strong></label>
+                                    <label><strong>Email</strong> </label>
+                                    <div id="txtReferralEmail">
+
+                                    </div>
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="col-3">
                                     <label><strong>Fax</strong></label>
+                                    <div id="txtReferralFax">
+
+                                    </div>
                                 </div>
                                 <div className="col-3">
                                     <label><strong>Title</strong></label>
+                                    <div id="txtReferralTitle">
+
+                                    </div>
                                 </div>
                             </div>            
                             <div className="form-row">
