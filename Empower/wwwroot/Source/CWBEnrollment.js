@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
+import Referral from './Referral';
 //import modal from './bootstrap.js';
 //import {modal} from './bootstrap.js';
 
@@ -14,7 +15,6 @@ const Enrollment = (props) => {
     if (props.clientProfile !== undefined) {
         personId = props.clientProfile.Person.ID;
         clientProfileId = props.clientProfile.ID;
-
     }
 
     let assistanceTypes = props.assistanceTypeValues;
@@ -53,6 +53,10 @@ const Enrollment = (props) => {
     function toggleEnrollmentModal() {
         //TODO: add function to clear the modal on opening
         $("#enrollmentModal").modal('toggle');
+    }
+
+    function togglePlacementModal() {
+        $("#referralModal").modal('toggle');
     }
 
     function ddlViewTanfSelectEventHandler(event) {
@@ -305,7 +309,19 @@ const Enrollment = (props) => {
 
             //create the Referral rows 
             let header = table.createTHead();
-            let row = header.insertRow(0);
+            let addReferralRow = header.insertRow(0);
+            let addReferralCell = addReferralRow.insertCell(0);
+
+            let addReferralButton = document.createElement("button");
+            addReferralButton.classList.add("btn");
+            addReferralButton.classList.add("btn-secondary");
+            addReferralButton.classList.add("btn-sm");
+            addReferralButton.innerText = "Add Referral";
+            addReferralButton.onclick = togglePlacementModal;
+
+            addReferralCell.appendChild(addReferralButton);
+
+            let row = header.insertRow(1);
             let serviceNameCell = row.insertCell(0);
             serviceNameCell.innerHTML = "<strong> Service Name</strong>";
             let beginDateCell = row.insertCell(1);
@@ -589,6 +605,7 @@ const Enrollment = (props) => {
                 </div>
             </div>
         </form>
+        <Referral />
     </div>
 }
 
