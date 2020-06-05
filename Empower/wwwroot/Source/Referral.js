@@ -7,6 +7,8 @@ const Referral = (props) => {
 
     let careerAdvisors = props.staffValues;
 
+    console.log(props.staffValues);
+
 
     function ddlCareerAdvisorSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -18,7 +20,7 @@ const Referral = (props) => {
     if ( careerAdvisors.length > 0) {
 
         careerAdvisorValueOptions = careerAdvisors.map((value) =>
-            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlCareerAdvisorSelectHandler  } className="dropdown-item">{value.Description}</a>
+            <a key={value.ID} value={value.ID} description={value.LastName + ', ' + value.FirstName} onClick={ ddlCareerAdvisorSelectHandler  } className="dropdown-item">{value.LastName + ', ' + value.FirstName}</a>
         );
     }
 

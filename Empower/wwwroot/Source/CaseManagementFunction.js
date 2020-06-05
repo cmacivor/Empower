@@ -62,7 +62,11 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("Relationship").then(relationships => setRelationshipOptions(relationships));
         Api.getConfigDataByType("AssistanceType").then(assistanceTypes => setAssistanceTypeOptions(assistanceTypes));
         Api.getConfigDataByType("CareerPathway").then(careerPathways => setCareerPathWayOptions(careerPathways));
-        Api.getConfigDataByType("Staff").then(staff => setStaffOptions(staff));
+        //TODO: how to reduce the number of API calls?
+        if (staffOptions.length === 0) {
+            Api.getConfigDataByType("Staff").then(staff => setStaffOptions(staff));
+        }
+
      }, []);
 
 
