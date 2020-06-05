@@ -39,14 +39,56 @@ const Referral = (props) => {
                                 </div>
                             </div>
                             <div className="form-row">
-                                <label htmlFor="txtSnapEt"><strong> Career Advisor Name *</strong></label>
-                                <div className="dropdown">
-                                    <button type="button" id="btnSnapEt" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                        
-                                    </button>
-                                    <div className="dropdown-menu">
-                                        { careerAdvisorValueOptions }
+                                <div className="col-6">
+                                    <label htmlFor="ddlReferralDate"><strong>Career Advisor Name *</strong></label>
+                                    <div className="dropdown">
+                                        <button type="button" id="btnCareerAdvisorName" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            
+                                        </button>
+                                        <div className="dropdown-menu">
+                                            {/* {maritalStatusValueOptions} */}
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col-4">
+                                    <label><strong>Referral Source Details</strong></label>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col-3">
+                                    <label><strong>Email</strong> </label>
+                                </div>
+                                <div className="col-3">
+                                    <label><strong>Phone</strong></label>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col-3">
+                                    <label><strong>Fax</strong></label>
+                                </div>
+                                <div className="col-3">
+                                    <label><strong>Title</strong></label>
+                                </div>
+                            </div>            
+                            <div className="form-row">
+                                <div className="col-6">
+                                    <label htmlFor="ddlReferralDate"><strong>Refer to this Service *</strong></label>
+                                    <div className="dropdown">
+                                        <button type="button" id="btnReferToService" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            
+                                        </button>
+                                        <div className="dropdown-menu">
+                                            {/* {maritalStatusValueOptions} */}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="col-6">
+                                    <label htmlFor="txtReferralNotes"><strong>Notes</strong></label>
+                                    <textarea  className="form-control" defaultValue="" id="txtReferralNotes" />
                                 </div>
                             </div>
                         </div>
