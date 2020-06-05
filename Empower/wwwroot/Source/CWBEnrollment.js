@@ -19,6 +19,7 @@ const Enrollment = (props) => {
 
     let assistanceTypes = props.assistanceTypeValues;
     let careerPathways = props.careerPathwayValues;
+    let staff = props.staffValues;
     
     useEffect(() => {
 
@@ -605,7 +606,9 @@ const Enrollment = (props) => {
                 </div>
             </div>
         </form>
-        <Referral />
+        <Referral
+            staffValues = {staff}
+         />
     </div>
 }
 

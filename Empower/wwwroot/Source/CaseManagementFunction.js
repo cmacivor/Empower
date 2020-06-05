@@ -46,6 +46,7 @@ const CaseManagementFunction = (props) => {
     const [relationshipOptions, setRelationshipOptions] = useState([]);
     const [assistanceTypeOptions, setAssistanceTypeOptions ] = useState([]);
     const [careerPathwayOptions, setCareerPathWayOptions ] = useState([]);
+    const [staffOptions, setStaffOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -61,6 +62,7 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("Relationship").then(relationships => setRelationshipOptions(relationships));
         Api.getConfigDataByType("AssistanceType").then(assistanceTypes => setAssistanceTypeOptions(assistanceTypes));
         Api.getConfigDataByType("CareerPathway").then(careerPathways => setCareerPathWayOptions(careerPathways));
+        Api.getConfigDataByType("Staff").then(staff => setStaffOptions(staff));
      }, []);
 
 
@@ -260,6 +262,7 @@ const CaseManagementFunction = (props) => {
                             <CWBEnrollment 
                                 assistanceTypeValues = { assistanceTypeOptions }
                                 careerPathwayValues = { careerPathwayOptions }
+                                staffValues = { staffOptions }
                                 clientProfile={clientProfile.ClientProfile }
                                 placement={clientProfile.Placement }
                                 createNotification={triggerToastMessage}

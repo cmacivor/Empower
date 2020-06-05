@@ -5,20 +5,22 @@ import moment from 'moment';
 
 const Referral = (props) => {
 
-    let careerAdvisors = props.careerAdvisorValues;
+    let careerAdvisors = props.staffValues;
+
 
     function ddlCareerAdvisorSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
+        console.log(selectedValue);
     }
 
     
     let careerAdvisorValueOptions = [];
-    // if ( careerAdvisors.length > 0) {
+    if ( careerAdvisors.length > 0) {
 
-    //     assistanceTypeValueOptions = careerAdvisors.map((value) =>
-    //         <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlCareerAdvisorSelectHandler  } className="dropdown-item">{value.Description}</a>
-    //     );
-    // }
+        careerAdvisorValueOptions = careerAdvisors.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlCareerAdvisorSelectHandler  } className="dropdown-item">{value.Description}</a>
+        );
+    }
 
     return <div>
            <form id="frmReferral">
@@ -46,6 +48,7 @@ const Referral = (props) => {
                                             
                                         </button>
                                         <div className="dropdown-menu">
+                                            { careerAdvisorValueOptions }
                                             {/* {maritalStatusValueOptions} */}
                                         </div>
                                     </div>
