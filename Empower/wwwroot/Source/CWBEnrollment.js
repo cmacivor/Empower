@@ -197,12 +197,15 @@ const Enrollment = (props) => {
         }).then(result => result.json())
         .then(result => {
             
-            console.log(result);
-            document.getElementById("btnAssistanceType").innerHTML = result.AssistanceType.Name;
-            document.getElementById("btnAssistanceType").value = result.AssistanceTypeID;
+            if (result.AssistanceType !== undefined && result.AssistanceType !== null) {
+                document.getElementById("btnAssistanceType").innerHTML = result.AssistanceType.Name;
+                document.getElementById("btnAssistanceType").value = result.AssistanceTypeID;
+            }
 
-            document.getElementById("btnCareerPathwayPosition").innerHTML = result.CareerPathway.Name;
-            document.getElementById("btnCareerPathwayPosition").value = result.CareerPathwayID;
+            if (result.CareerPathway !== undefined && result.CareerPathway !== null) {
+                document.getElementById("btnCareerPathwayPosition").innerHTML = result.CareerPathway.Name;
+                document.getElementById("btnCareerPathwayPosition").value = result.CareerPathwayID;
+            }
 
             let convertedEnrollmentDate = moment(new Date(result.CourtOrderDate)).format('YYYY-MM-DD');
             $("#txtEnrollmentDate").val(convertedEnrollmentDate);
@@ -223,14 +226,18 @@ const Enrollment = (props) => {
             $("#txtEnrollmentWagesPerHour").val(result.EmployerWages);
 
             //View/TANF
-            document.getElementById("btnViewTanf").innerText = result.Judge.Name;
-            document.getElementById("btnViewTanf").value = result.JudgeID;
+            if (result.Judge !== undefined && result.Judge !== null) {
+                document.getElementById("btnViewTanf").innerText = result.Judge.Name;
+                document.getElementById("btnViewTanf").value = result.JudgeID;
+            }
 
             let convertedNextCourtDate = moment(new Date(result.NextCourtDate)).format('YYYY-MM-DD');
             $("#txtApptDate").val(convertedNextCourtDate);
 
-            document.getElementById("btnSnapEt").innerText = result.PlacementLevel.Name;
-            document.getElementById("btnSnapEt").value = result.PlacementLevelID;
+            if (result.PlacementLevel !== undefined && result.PlacementLevel !== null) {
+                document.getElementById("btnSnapEt").innerText = result.PlacementLevel.Name;
+                document.getElementById("btnSnapEt").value = result.PlacementLevelID;
+            }
 
             $("#hdnPlacementID").val(result.ID);
             $("#hdnPlacementCreatedDate").val(result.CreatedDate);
@@ -315,7 +322,7 @@ const Enrollment = (props) => {
         });
     }
 
-    function saveEnrollment() {
+    function savePlacement() {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonPlacementAddress = `${apiAddress}/api/Placement`;
@@ -438,25 +445,7 @@ const Enrollment = (props) => {
         <div id="placementsContainer">
 
         </div>
-        {/* <table id="tblPlacements" className="table">
-             <thead>
-                 <tr>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Middle Name</th>
-                    <th scope="col">Suffix</th>
-                    <th scope="col">Relationship</th>
-                    <th scope="col">Home Phone</th>
-                    <th scope="col">Work Phone</th>
-                    <th scope="col">Emergency Contact</th>
-                 </tr>
-             </thead>
-             <tbody>
-
-             </tbody>
-         </table> */}
+   
         <form id="frmEnrollment">
             <div className="modal fade" id="enrollmentModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
@@ -593,7 +582,7 @@ const Enrollment = (props) => {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" onClick={saveEnrollment} >Save</button>
+                            <button type="button" className="btn btn-primary" onClick={savePlacement} >Save</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
