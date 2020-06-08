@@ -83,7 +83,7 @@ const Referral = (props) => {
     function saveEnrollment() {
         let referralDate = moment(new Date($("#txtReferralDate").val())).format('YYYY-MM-DD');
         let careerAdvisor = $("#btnCareerAdvisorName").val();
-        let referToService = $("btnReferToService").val();
+        let referToService = $("#btnReferToService").val();
         let comments = $("#txtReferralNotes").val();
 
         let enrollment = {
