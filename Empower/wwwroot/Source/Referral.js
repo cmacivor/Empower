@@ -7,6 +7,31 @@ const Referral = (props) => {
 
     let careerAdvisors = props.staffValues;
 
+    const [serviceProgramCategories, setServiceProgramCategories ] = useState([]);
+
+    useEffect(() => { 
+        getServiceProgramCategories();
+    }, []);
+
+    function getServiceProgramCategories() {
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullServiceProgramCategory = `${apiAddress}/AllServiceProgramCategory`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullServiceProgramCategory, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+            setServiceProgramCategories(result);
+        });
+    }
+
+
     function ddlCareerAdvisorSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
        
@@ -28,6 +53,12 @@ const Referral = (props) => {
         txtReferralTitle.innerText = selectedAdvisor[0].JobTitle.Name;
     }
 
+    function ddlServiceProgramCategorySelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        console.log(selectedValue);
+    }
+
     
     let careerAdvisorValueOptions = [];
     if ( careerAdvisors.length > 0) {
@@ -35,6 +66,13 @@ const Referral = (props) => {
         careerAdvisorValueOptions = careerAdvisors.map((value) =>
             <a key={value.ID} value={value.ID} description={value.LastName + ', ' + value.FirstName} onClick={ ddlCareerAdvisorSelectHandler  } className="dropdown-item">{value.LastName + ', ' + value.FirstName}</a>
         );
+    }
+
+    let serviceProgramCategoryOptions = [];
+    if (serviceProgramCategories.length > 0) {
+        serviceProgramCategoryOptions = serviceProgramCategories.map((value) =>
+        <a key={value.ServiceProgramCategoryID} value={value.ServiceProgramCategoryID} description={value.ServiceName} onClick={ ddlServiceProgramCategorySelectHandler } className="dropdown-item">{value.ServiceName}</a>
+    );
     }
 
     return <div>
@@ -110,6 +148,7 @@ const Referral = (props) => {
                                             
                                         </button>
                                         <div className="dropdown-menu">
+                                            {serviceProgramCategoryOptions}
                                             {/* {maritalStatusValueOptions} */}
                                         </div>
                                     </div>
