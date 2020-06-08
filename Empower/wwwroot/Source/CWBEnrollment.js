@@ -317,6 +317,8 @@ const Enrollment = (props) => {
             addReferralButton.classList.add("btn");
             addReferralButton.classList.add("btn-secondary");
             addReferralButton.classList.add("btn-sm");
+            addReferralButton.setAttribute("data-id", placementRecord.ID);
+            $("#hdnCurrentlySelectedPlacementID").val(placementRecord.ID);
             addReferralButton.innerText = "Add Referral";
             addReferralButton.onclick = togglePlacementModal;
 

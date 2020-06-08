@@ -10,6 +10,12 @@ const Referral = (props) => {
     const [serviceProgramCategories, setServiceProgramCategories ] = useState([]);
 
     useEffect(() => { 
+        document.getElementById('btnCareerAdvisorName').value = 'Please Select';
+        document.getElementById('btnCareerAdvisorName').innerText = 'Please Select';
+
+        document.getElementById('btnReferToService').value = 'Please Select';
+        document.getElementById('btnReferToService').innerText = 'Please Select';
+
         getServiceProgramCategories();
     }, []);
 
@@ -35,9 +41,13 @@ const Referral = (props) => {
     function ddlCareerAdvisorSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
        
+        $("#btnCareerAdvisorName").val(selectedValue);
+    
         let selectedAdvisor = careerAdvisors.filter(function(advisor) {
             return advisor.ID === parseInt(selectedValue);
         });
+
+        document.getElementById('btnCareerAdvisorName').innerText = selectedAdvisor[0].LastName + ", " + selectedAdvisor[0].FirstName;
 
         //console.log(selectedAdvisor);
         let txtReferralEmail = document.getElementById("txtReferralEmail");
@@ -56,7 +66,36 @@ const Referral = (props) => {
     function ddlServiceProgramCategorySelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
 
-        console.log(selectedValue);
+        //console.log(selectedValue);
+        
+        let selectedServiceProgramCategory = serviceProgramCategories.filter(function(spc) {
+            return spc.ServiceProgramCategoryID === parseInt(selectedValue);
+        });
+
+        console.log(selectedServiceProgramCategory);
+
+        $("#btnReferToService").val(selectedValue);
+
+        document.getElementById("btnReferToService").innerText = selectedServiceProgramCategory[0].ServiceName;
+
+    }
+
+    function saveEnrollment() {
+        let referralDate = moment(new Date($("#txtReferralDate").val())).format('YYYY-MM-DD');
+        let careerAdvisor = $("#btnCareerAdvisorName").val();
+        let referToService = $("btnReferToService").val();
+        let comments = $("#txtReferralNotes").val();
+
+        let enrollment = {
+            PlacementID: $("#hdnCurrentlySelectedPlacementID").val(),
+            ReferralDate: referralDate,
+            //ServiceProgramCategoryID: $("#btnCareerAdvisorName").val(),
+            CounselorID: careerAdvisor,
+            ServiceProgramCategoryID: referToService,
+            Comments: comments
+        }
+
+        console.log(enrollment);
     }
 
     
@@ -72,10 +111,11 @@ const Referral = (props) => {
     if (serviceProgramCategories.length > 0) {
         serviceProgramCategoryOptions = serviceProgramCategories.map((value) =>
         <a key={value.ServiceProgramCategoryID} value={value.ServiceProgramCategoryID} description={value.ServiceName} onClick={ ddlServiceProgramCategorySelectHandler } className="dropdown-item">{value.ServiceName}</a>
-    );
+      );
     }
 
     return <div>
+           <input type="hidden" id="hdnCurrentlySelectedPlacementID"/>
            <form id="frmReferral">
             <div className="modal fade" id="referralModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
@@ -142,7 +182,7 @@ const Referral = (props) => {
                             </div>            
                             <div className="form-row">
                                 <div className="col-6">
-                                    <label htmlFor="ddlReferralDate"><strong>Refer to this Service *</strong></label>
+                                    <label htmlFor="btnReferToService"><strong>Refer to this Service *</strong></label>
                                     <div className="dropdown">
                                         <button type="button" id="btnReferToService" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                             
@@ -162,7 +202,7 @@ const Referral = (props) => {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary">Save</button>
+                            <button type="button" className="btn btn-primary" onClick={ saveEnrollment } >Save</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
