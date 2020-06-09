@@ -158,106 +158,115 @@ const Referral = (props) => {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div className="card">
-                                <div className="card-header">Service Details</div>
-                                    <div className="card-body">
-                                    <div className="form-row">
-                                        <div className="col-4">
-                                            <label htmlFor="txtReferralDate"><strong>Referral Date</strong></label>
-                                            <input type="date" defaultValue="" id="txtReferralDate" className="form-control"></input>
-                                        </div>
+                            <div id="accordion"> 
+                                <div className="card">
+                                    <div className="card-header">
+                                        Service Details
                                     </div>
-                                    <div className="form-row">
-                                        <div className="col-6">
-                                            <label htmlFor="ddlReferralDate"><strong>Career Advisor Name *</strong></label>
-                                            <div className="dropdown">
-                                                <button type="button" id="btnCareerAdvisorName" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                    
-                                                </button>
-                                                <div className="dropdown-menu">
-                                                    { careerAdvisorValueOptions }
-                                                    {/* {maritalStatusValueOptions} */}
+                                        <div className="card-body">
+                                        <div className="form-row">
+                                            <div className="col-4">
+                                                <label htmlFor="txtReferralDate"><strong>Referral Date</strong></label>
+                                                <input type="date" defaultValue="" id="txtReferralDate" className="form-control"></input>
+                                            </div>
+                                        </div>
+                                        <div className="form-row">
+                                            <div className="col-6">
+                                                <label htmlFor="ddlReferralDate"><strong>Career Advisor Name *</strong></label>
+                                                <div className="dropdown">
+                                                    <button type="button" id="btnCareerAdvisorName" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                        
+                                                    </button>
+                                                    <div className="dropdown-menu">
+                                                        { careerAdvisorValueOptions }
+                                                        {/* {maritalStatusValueOptions} */}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="form-row">
-                                        <div className="col-4">
-                                            <label><strong>Referral Source Details</strong></label>
-                                        </div>
-                                    </div>
-                                    <div className="form-row">
-                                        <div className="col-3">
-                                            <label><strong>Phone</strong></label>
-                                            <div id="txtReferralPhone">
-
+                                        <div className="form-row">
+                                            <div className="col-4">
+                                                <label><strong>Referral Source Details</strong></label>
                                             </div>
                                         </div>
-                                        <div className="col-3">
-                                            <label><strong>Email</strong> </label>
-                                            <div id="txtReferralEmail">
+                                        <div className="form-row">
+                                            <div className="col-3">
+                                                <label><strong>Phone</strong></label>
+                                                <div id="txtReferralPhone">
 
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="form-row">
-                                        <div className="col-3">
-                                            <label><strong>Fax</strong></label>
-                                            <div id="txtReferralFax">
+                                            <div className="col-3">
+                                                <label><strong>Email</strong> </label>
+                                                <div id="txtReferralEmail">
 
-                                            </div>
-                                        </div>
-                                        <div className="col-3">
-                                            <label><strong>Title</strong></label>
-                                            <div id="txtReferralTitle">
-
-                                            </div>
-                                        </div>
-                                    </div>            
-                                    <div className="form-row">
-                                        <div className="col-6">
-                                            <label htmlFor="btnReferToService"><strong>Refer to this Service *</strong></label>
-                                            <div className="dropdown">
-                                                <button type="button" id="btnReferToService" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                    
-                                                </button>
-                                                <div className="dropdown-menu">
-                                                    {serviceProgramCategoryOptions}
-                                                    {/* {maritalStatusValueOptions} */}
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="form-row">
-                                        <div className="col-6">
-                                            <label htmlFor="txtReferralNotes"><strong>Notes</strong></label>
-                                            <textarea  className="form-control" defaultValue="" id="txtReferralNotes" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card">
-                                <div className="card-header">More Details</div>
-                                    <div className="card-body">
+                                        <div className="form-row">
+                                            <div className="col-3">
+                                                <label><strong>Fax</strong></label>
+                                                <div id="txtReferralFax">
+
+                                                </div>
+                                            </div>
+                                            <div className="col-3">
+                                                <label><strong>Title</strong></label>
+                                                <div id="txtReferralTitle">
+
+                                                </div>
+                                            </div>
+                                        </div>            
                                         <div className="form-row">
                                             <div className="col-6">
-                                                <label htmlFor="txtReferralStatusNotes"><strong>Referral Status Note</strong></label>
-                                                <textarea className="form-control" defaultValue="" id="txtReferralStatusNotes" className="form-control" />
+                                                <label htmlFor="btnReferToService"><strong>Refer to this Service *</strong></label>
+                                                <div className="dropdown">
+                                                    <button type="button" id="btnReferToService" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                        
+                                                    </button>
+                                                    <div className="dropdown-menu">
+                                                        {serviceProgramCategoryOptions}
+                                                        {/* {maritalStatusValueOptions} */}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className="form-row">
-                                            <div className="col-4">
-                                                <label htmlFor="txtServiceBeginDate"><strong>Service Begin Date</strong></label>
-                                                <input type="date" id="txtServiceBeginDate" defaultValue="" className="form-control" />
-                                            </div>
-                                            <div className="col-4">
-                                                <label htmlFor="txtServiceEndDate"><strong>Service Begin Date</strong></label>
-                                                <input type="date" id="txtServiceEndDate" defaultValue="" className="form-control" />
+                                            <div className="col-6">
+                                                <label htmlFor="txtReferralNotes"><strong>Notes</strong></label>
+                                                <textarea  className="form-control" defaultValue="" id="txtReferralNotes" />
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div className="card">
+                                    <div className="card-header">
+                                        <a class="collapsed card-link" data-toggle="collapse" href="#moreDetails">
+                                            More Details
+                                        </a>
+                                    </div>
+                                    <div id="moreDetails" class="collapse" data-parent="#accordion">
+                                        <div className="card-body">
+                                            <div className="form-row">
+                                                <div className="col-6">
+                                                    <label htmlFor="txtReferralStatusNotes"><strong>Referral Status Note</strong></label>
+                                                    <textarea className="form-control" defaultValue="" id="txtReferralStatusNotes" className="form-control" />
+                                                </div>
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-4">
+                                                    <label htmlFor="txtServiceBeginDate"><strong>Service Begin Date</strong></label>
+                                                    <input type="date" id="txtServiceBeginDate" defaultValue="" className="form-control" />
+                                                </div>
+                                                <div className="col-4">
+                                                    <label htmlFor="txtServiceEndDate"><strong>Service Begin Date</strong></label>
+                                                    <input type="date" id="txtServiceEndDate" defaultValue="" className="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-primary" onClick={ saveEnrollment } >Save</button>
