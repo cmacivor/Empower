@@ -347,7 +347,7 @@ const Enrollment = (props) => {
                 let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
                 enrollmentRowsIndex = enrollmentRowsIndex + 1;
                 let serviceNameCell = enrollmentRow.insertCell(0);
-                serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ID;
+                serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ServiceProgram.Name;
                 let beginDateCell = enrollmentRow.insertCell(1);
                 beginDateCell.innerText = enrollment.Enrollment.CreatedDate;
 
