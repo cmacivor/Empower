@@ -7,8 +7,9 @@ const Referral = (props) => {
 
     let careerAdvisors = props.staffValues;
     let serviceReleases = props.serviceReleaseValues;
-    console.log('the service releases');
-    console.log(serviceReleases);
+    let serviceOutcomes = props.serviceOutcomeValues;
+    console.log('the service ouutcomes');
+    console.log(serviceOutcomes);
 
     const [serviceProgramCategories, setServiceProgramCategories ] = useState([]);
 

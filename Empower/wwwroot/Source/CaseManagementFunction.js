@@ -48,6 +48,7 @@ const CaseManagementFunction = (props) => {
     const [careerPathwayOptions, setCareerPathWayOptions ] = useState([]);
     const [staffOptions, setStaffOptions] = useState([]);
     const [serviceReleaseOptions, setServiceReleaseOptions] = useState([]);
+    const [serviceOutcomeOptions, setServiceOutcomeOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -68,6 +69,7 @@ const CaseManagementFunction = (props) => {
             Api.getConfigDataByType("Staff").then(staff => setStaffOptions(staff));
         }
         Api.getConfigDataByType("ServiceRelease").then(serviceReleases => setServiceReleaseOptions(serviceReleases));
+        Api.getConfigDataByType("ServiceOutcome").then(serviceOutcomes => setServiceOutcomeOptions(serviceOutcomes));
 
      }, []);
 
@@ -269,6 +271,7 @@ const CaseManagementFunction = (props) => {
                                 assistanceTypeValues = { assistanceTypeOptions }
                                 careerPathwayValues = { careerPathwayOptions }
                                 serviceReleaseValues = { serviceReleaseOptions }
+                                serviceOutcomeValues = { serviceOutcomeOptions }
                                 staffValues = { staffOptions }
                                 clientProfile={clientProfile.ClientProfile }
                                 placement={clientProfile.Placement }

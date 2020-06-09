@@ -21,6 +21,7 @@ const Enrollment = (props) => {
     let careerPathways = props.careerPathwayValues;
     let staff = props.staffValues;
     let serviceReleases = props.serviceReleaseValues;
+    let serviceOutcomes = props.serviceOutcomeValues;
     
     useEffect(() => {
 
@@ -631,6 +632,7 @@ const Enrollment = (props) => {
         <Referral
             staffValues = {staff}
             serviceReleaseValues = {serviceReleases }
+            serviceOutcomeValues = { serviceOutcomes }
             togglePlacementModal={togglePlacementModal}
             createNotification={props.createNotification}
             createErrorNotification={props.createErrorNotification}
