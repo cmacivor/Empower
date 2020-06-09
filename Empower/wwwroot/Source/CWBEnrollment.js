@@ -610,6 +610,9 @@ const Enrollment = (props) => {
         </form>
         <Referral
             staffValues = {staff}
+            togglePlacementModal={togglePlacementModal}
+            createNotification={props.createNotification}
+            createErrorNotification={props.createErrorNotification}
          />
     </div>
 }

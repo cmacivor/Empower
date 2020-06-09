@@ -81,6 +81,11 @@ const Referral = (props) => {
     }
 
     function saveEnrollment() {
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullPersonEnrollmentAddress = `${apiAddress}/api/Enrollment`;
+        let sessionStorageData = getSessionData();
+
         let referralDate = moment(new Date($("#txtReferralDate").val())).format('YYYY-MM-DD');
         let careerAdvisor = $("#btnCareerAdvisorName").val();
         let referToService = $("#btnReferToService").val();
@@ -92,10 +97,39 @@ const Referral = (props) => {
             //ServiceProgramCategoryID: $("#btnCareerAdvisorName").val(),
             CounselorID: careerAdvisor,
             ServiceProgramCategoryID: referToService,
-            Comments: comments
+            Comments: comments,
+            Active: true,
+            CreatedDate: new Date(),
+            CreatedBy: sessionStorageData.CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
         }
 
-        console.log(enrollment);
+        //console.log(enrollment);
+
+        fetch(fullPersonEnrollmentAddress, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(enrollment)
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+
+            if (result === null || result.Message !== undefined) {
+                props.createErrorNotification("an error occurred while saving the record.");
+                return;
+            }
+
+            //generateTable(result);
+
+            props.createNotification('The enrollment was successfully saved.');
+
+            //toggleEnrollmentModal();
+            props.togglePlacementModal();
+        });
     }
 
     
