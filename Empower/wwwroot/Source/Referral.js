@@ -6,6 +6,9 @@ import moment from 'moment';
 const Referral = (props) => {
 
     let careerAdvisors = props.staffValues;
+    let serviceReleases = props.serviceReleaseValues;
+    console.log('the service releases');
+    console.log(serviceReleases);
 
     const [serviceProgramCategories, setServiceProgramCategories ] = useState([]);
 
@@ -80,6 +83,24 @@ const Referral = (props) => {
 
     }
 
+    
+    function ddlServiceReleaseSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+
+        
+        let selectedRelease = serviceReleases.filter(function(serviceRelease) {
+            return serviceRelease.ID === parseInt(selectedValue);
+        });
+
+        console.log(selectedRelease);
+
+        $("#btnCaseStatus").val(selectedValue);
+
+        document.getElementById("btnCaseStatus").innerText = selectedRelease[0].Name;
+
+    }
+
     function saveEnrollment() {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -142,6 +163,13 @@ const Referral = (props) => {
     if (serviceProgramCategories.length > 0) {
         serviceProgramCategoryOptions = serviceProgramCategories.map((value) =>
         <a key={value.ServiceProgramCategoryID} value={value.ServiceProgramCategoryID} description={value.ServiceName} onClick={ ddlServiceProgramCategorySelectHandler } className="dropdown-item">{value.ServiceName}</a>
+      );
+    }
+
+    let serviceReleaseOptions = [];
+    if ( serviceReleases.length > 0) {
+        serviceReleaseOptions = serviceReleases.map((value) =>
+        <a key={value.ID} value={value.ID} description={value.Name} onClick={ ddlServiceReleaseSelectHandler } className="dropdown-item">{value.Name}</a>
       );
     }
 
@@ -241,11 +269,11 @@ const Referral = (props) => {
                                 </div>
                                 <div className="card">
                                     <div className="card-header">
-                                        <a class="collapsed card-link" data-toggle="collapse" href="#moreDetails">
+                                        <a className="collapsed card-link" data-toggle="collapse" href="#moreDetails">
                                             More Details
                                         </a>
                                     </div>
-                                    <div id="moreDetails" class="collapse" data-parent="#accordion">
+                                    <div id="moreDetails" className="collapse" data-parent="#accordion">
                                         <div className="card-body">
                                             <div className="form-row">
                                                 <div className="col-6">
@@ -261,6 +289,20 @@ const Referral = (props) => {
                                                 <div className="col-4">
                                                     <label htmlFor="txtServiceEndDate"><strong>Service Begin Date</strong></label>
                                                     <input type="date" id="txtServiceEndDate" defaultValue="" className="form-control" />
+                                                </div>
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-6">
+                                                    <label htmlFor="ddlCaseStatus"><strong>Case Status</strong></label>
+                                                    <div className="dropdown">
+                                                        <button type="button" id="btnCaseStatus" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                            
+                                                        </button>
+                                                        <div className="dropdown-menu">
+                                                            { serviceReleaseOptions }
+                                                            {/* {maritalStatusValueOptions} */}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

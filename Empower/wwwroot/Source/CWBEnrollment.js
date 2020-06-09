@@ -20,6 +20,7 @@ const Enrollment = (props) => {
     let assistanceTypes = props.assistanceTypeValues;
     let careerPathways = props.careerPathwayValues;
     let staff = props.staffValues;
+    let serviceReleases = props.serviceReleaseValues;
     
     useEffect(() => {
 
@@ -629,6 +630,7 @@ const Enrollment = (props) => {
         </form>
         <Referral
             staffValues = {staff}
+            serviceReleaseValues = {serviceReleases }
             togglePlacementModal={togglePlacementModal}
             createNotification={props.createNotification}
             createErrorNotification={props.createErrorNotification}
