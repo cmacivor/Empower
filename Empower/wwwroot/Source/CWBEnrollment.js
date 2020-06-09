@@ -328,10 +328,6 @@ const Enrollment = (props) => {
             console.log('for each placement, the enrollment');
             console.log(placement.Enrollment); // this is an array
 
-            placement.Enrollment.forEach(function(enrollment) {
-                console.log(enrollment);
-            });
-
             let row = header.insertRow(1);
             let serviceNameCell = row.insertCell(0);
             serviceNameCell.innerHTML = "<strong> Service Name</strong>";
@@ -341,6 +337,21 @@ const Enrollment = (props) => {
             endDateCell.innerHTML = "<strong>End Date</strong>";
             let caseStatusCell = row.insertCell(3);
             caseStatusCell.innerHTML = "<strong>Case Status</strong>";
+
+            let tbody = table.createTBody();
+
+            let enrollmentRowsIndex = 0;
+            placement.Enrollment.forEach(function(enrollment) {
+                console.log(enrollment);
+
+                let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
+                enrollmentRowsIndex = enrollmentRowsIndex + 1;
+                let serviceNameCell = enrollmentRow.insertCell(0);
+                serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ID;
+                let beginDateCell = enrollmentRow.insertCell(1);
+                beginDateCell.innerText = enrollment.Enrollment.CreatedDate;
+
+            });
 
 
             bodyDiv.appendChild(table);
