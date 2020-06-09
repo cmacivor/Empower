@@ -24,6 +24,7 @@ const Enrollment = (props) => {
     useEffect(() => {
 
         if (props.clientProfile !== undefined) {
+
             placements = props.placement;
             generateTable(placements);
         }
@@ -323,6 +324,13 @@ const Enrollment = (props) => {
             addReferralButton.onclick = togglePlacementModal;
 
             addReferralCell.appendChild(addReferralButton);
+
+            console.log('for each placement, the enrollment');
+            console.log(placement.Enrollment); // this is an array
+
+            placement.Enrollment.forEach(function(enrollment) {
+                console.log(enrollment);
+            });
 
             let row = header.insertRow(1);
             let serviceNameCell = row.insertCell(0);
