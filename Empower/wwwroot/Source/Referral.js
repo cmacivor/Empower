@@ -229,7 +229,6 @@ const Referral = (props) => {
                                                     </button>
                                                     <div className="dropdown-menu">
                                                         { careerAdvisorValueOptions }
-                                                        {/* {maritalStatusValueOptions} */}
                                                     </div>
                                                 </div>
                                             </div>
@@ -276,7 +275,6 @@ const Referral = (props) => {
                                                     </button>
                                                     <div className="dropdown-menu">
                                                         {serviceProgramCategoryOptions}
-                                                        {/* {maritalStatusValueOptions} */}
                                                     </div>
                                                 </div>
                                             </div>
@@ -336,9 +334,14 @@ const Referral = (props) => {
                                                         </button>
                                                         <div className="dropdown-menu">
                                                             { serviceOutcomeOptions }
-                                                            {/* {maritalStatusValueOptions} */}
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-4">
+                                                    <label htmlFor="txtDateCaseAssigned"><strong>Date Case Assigned</strong></label>
+                                                    <input type="date" id="txtDateCaseAssigned" className="form-control" />
                                                 </div>
                                             </div>
                                         </div>
