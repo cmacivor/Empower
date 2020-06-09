@@ -102,6 +102,21 @@ const Referral = (props) => {
 
     }
 
+    function ddlServiceOutcomeSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+  
+        let selectedOutcome = serviceOutcomes.filter(function(serviceOutcome) {
+            return serviceOutcome.ID === parseInt(selectedValue);
+        });
+
+        console.log(selectedOutcome);
+
+        $("#btnServiceOutcome").val(selectedValue);
+
+        document.getElementById("btnServiceOutcome").innerText = selectedOutcome[0].Name;
+
+    }
+
     function saveEnrollment() {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -174,6 +189,12 @@ const Referral = (props) => {
       );
     }
 
+    let serviceOutcomeOptions = [];
+    if ( serviceOutcomes.length > 0) {
+        serviceOutcomeOptions = serviceOutcomes.map((value) =>
+        <a key={value.ID} value={value.ID} description={value.Name} onClick={ ddlServiceOutcomeSelectHandler } className="dropdown-item">{value.Name}</a>
+      );
+    }
     return <div>
            <input type="hidden" id="hdnCurrentlySelectedPlacementID"/>
            <form id="frmReferral">
@@ -301,6 +322,20 @@ const Referral = (props) => {
                                                         </button>
                                                         <div className="dropdown-menu">
                                                             { serviceReleaseOptions }
+                                                            {/* {maritalStatusValueOptions} */}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-6">
+                                                    <label htmlFor="ddlCaseStatus"><strong>Referral Source</strong></label>
+                                                    <div className="dropdown">
+                                                        <button type="button" id="btnServiceOutcome" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                            
+                                                        </button>
+                                                        <div className="dropdown-menu">
+                                                            { serviceOutcomeOptions }
                                                             {/* {maritalStatusValueOptions} */}
                                                         </div>
                                                     </div>
