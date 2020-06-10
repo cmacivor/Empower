@@ -222,7 +222,25 @@ const Enrollment = (props) => {
             }
 
             $("#txtReferralNotes").val(result.Comments);
+            $("#txtReferralStatusNotes").val(result.SuppComments);
 
+            let serviceBeginDate = moment(new Date(result.BeginDate)).format('YYYY-MM-DD');
+            $("#txtServiceBeginDate").val(serviceBeginDate);
+            let serviceEndDate = moment(new Date(result.EndDate)).format('YYYY-MM-DD');
+            $("#txtServiceEndDate").val(serviceEndDate);
+
+            if (result.ServiceRelease !== null) {
+                $("#btnCaseStatus").val(result.ServiceReleaseID);
+                document.getElementById("btnCaseStatus").innerText = result.ServiceRelease.Name;
+            }
+
+            if (result.ServiceOutcome !== null) {
+                $("#btnServiceOutcome").val(result.ServiceOutcomeID);
+                document.getElementById("btnServiceOutcome").innerText = result.ServiceOutcome.Name;
+            }
+
+            let DateCaseAssigned = moment(new Date(result.DateCaseAssigned)).format('YYYY-MM-DD');
+            $("#txtDateCaseAssigned").val(DateCaseAssigned);
 
             togglePlacementModal();
         });

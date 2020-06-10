@@ -324,7 +324,7 @@ const Referral = (props) => {
                                                     <input type="date" id="txtServiceBeginDate" defaultValue="" className="form-control" />
                                                 </div>
                                                 <div className="col-4">
-                                                    <label htmlFor="txtServiceEndDate"><strong>Service Begin Date</strong></label>
+                                                    <label htmlFor="txtServiceEndDate"><strong>Service End Date</strong></label>
                                                     <input type="date" id="txtServiceEndDate" defaultValue="" className="form-control" />
                                                 </div>
                                             </div>
