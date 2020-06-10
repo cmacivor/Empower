@@ -27,8 +27,9 @@ const Enrollment = (props) => {
 
         if (props.clientProfile !== undefined) {
 
-            placements = props.placement;
-            generateTable(placements);
+            //placements = props.placement;
+            getPlacementsByClientProfileID();
+            //generateTable(placements);
         }
 
         document.getElementById("btnViewTanf").value = 'Please Select';
@@ -97,7 +98,7 @@ const Enrollment = (props) => {
     function ddlBenefitsSelectEventHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
       
-        console.log(selectedValue);
+        //console.log(selectedValue);
         document.getElementById("btnEnrollmentBenefits").value = selectedValue;
         document.getElementById("btnEnrollmentBenefits").innerHTML = selectedValue;
     }
@@ -174,7 +175,8 @@ const Enrollment = (props) => {
     function getPlacementsByClientProfileID() {
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let clientProfileID = props.clientProfile.ID;
-        let fullGetPlacementsAddress = `${apiAddress}/api/Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
+        //let fullGetPlacementsAddress = `${apiAddress}/api/Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
+        let fullGetPlacementsAddress = `${apiAddress}/api/ClientProfile/GetPlacementsByClientProfileId/${clientProfileID}`;
         let sessionStorageData = getSessionData();
 
         fetch(fullGetPlacementsAddress, {
@@ -185,6 +187,8 @@ const Enrollment = (props) => {
             }
         }).then(result => result.json())
         .then(result => {
+            //console.log('the new method');
+            //console.log(result);
             generateTable(result);
         });
     }
@@ -327,8 +331,8 @@ const Enrollment = (props) => {
 
             addReferralCell.appendChild(addReferralButton);
 
-            console.log('for each placement, the enrollment');
-            console.log(placement.Enrollment); // this is an array
+            //console.log('for each placement, the enrollment');
+            //console.log(placement.Enrollment); // this is an array
 
             let row = header.insertRow(1);
             let serviceNameCell = row.insertCell(0);
@@ -343,30 +347,33 @@ const Enrollment = (props) => {
             let tbody = table.createTBody();
 
             let enrollmentRowsIndex = 0;
-            placement.Enrollment.forEach(function(enrollment) {
-                console.log(enrollment);
-
-                let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
-                enrollmentRowsIndex = enrollmentRowsIndex + 1;
-                let serviceNameCell = enrollmentRow.insertCell(0);
-                if (enrollment.Enrollment.ServiceProgramCategory !== null) {
-                    serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ServiceProgram.Name;
-                }
-
-                let beginDateCell = enrollmentRow.insertCell(1);
-                beginDateCell.innerText = enrollment.Enrollment.BeginDate;
-
-                let endDateCell = enrollmentRow.insertCell(2);
-                let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
-                endDateCell.innerText = convertedEndDate;
-
-                let caseStatusCell = enrollmentRow.insertCell(3);
-                if (enrollment.Enrollment.ServiceRelease !== null) {
-                    caseStatusCell.innerText = enrollment.Enrollment.ServiceRelease.Name;
-                }
-                //let serviceReleaseCell = 
-
-            });
+            if (placement.Enrollment !== undefined && placement.Enrollment !== null) {
+                placement.Enrollment.forEach(function(enrollment) {
+                    //console.log(enrollment);
+    
+                    let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
+                    enrollmentRowsIndex = enrollmentRowsIndex + 1;
+                    let serviceNameCell = enrollmentRow.insertCell(0);
+                    if (enrollment.Enrollment.ServiceProgramCategory !== null) {
+                        serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ServiceProgram.Name;
+                    }
+    
+                    let beginDateCell = enrollmentRow.insertCell(1);
+                    beginDateCell.innerText = enrollment.Enrollment.BeginDate;
+    
+                    let endDateCell = enrollmentRow.insertCell(2);
+                    let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
+                    endDateCell.innerText = convertedEndDate;
+    
+                    let caseStatusCell = enrollmentRow.insertCell(3);
+                    if (enrollment.Enrollment.ServiceRelease !== null) {
+                        caseStatusCell.innerText = enrollment.Enrollment.ServiceRelease.Name;
+                    }
+                    //let serviceReleaseCell = 
+    
+                });
+            }
+    
 
 
             bodyDiv.appendChild(table);
@@ -449,7 +456,7 @@ const Enrollment = (props) => {
             body: JSON.stringify(placementViewModel)
         }).then(result => result.json())
         .then(result => {
-            console.log(result);
+            //console.log(result);
 
             if (result === null || result.Message !== undefined) {
                 props.createErrorNotification("an error occurred while saving the record.");
@@ -647,6 +654,7 @@ const Enrollment = (props) => {
             serviceReleaseValues = {serviceReleases }
             serviceOutcomeValues = { serviceOutcomes }
             togglePlacementModal={togglePlacementModal}
+            refreshEnrollmentGrid = { getPlacementsByClientProfileID }
             createNotification={props.createNotification}
             createErrorNotification={props.createErrorNotification}
          />

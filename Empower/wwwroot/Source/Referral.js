@@ -178,6 +178,8 @@ const Referral = (props) => {
             props.createNotification('The enrollment was successfully saved.');
 
             props.togglePlacementModal();
+
+            props.refreshEnrollmentGrid();
         });
     }
 
