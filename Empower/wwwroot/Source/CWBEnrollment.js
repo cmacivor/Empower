@@ -209,6 +209,21 @@ const Enrollment = (props) => {
         .then(result => {
             console.log(result);
 
+            //txtReferralDate
+            let referralDate = moment(new Date(result.ReferralDate)).format('YYYY-MM-DD');
+            $("#txtReferralDate").val(referralDate);
+            if (result.Counselor !== null) {
+                $("#btnCareerAdvisorName").val(result.Counselor.ID);
+                document.getElementById("btnCareerAdvisorName").innerText = result.Counselor.LastName + ", " + result.Counselor.FirstName;
+            }
+            if (result.ServiceProgramCategory !== null) {
+                $("#btnReferToService").val(result.ServiceProgramCategory.ServiceProgram.ID);
+                document.getElementById("btnReferToService").innerText = result.ServiceProgramCategory.ServiceProgram.Name;
+            }
+
+            $("#txtReferralNotes").val(result.Comments);
+
+
             togglePlacementModal();
         });
     }
