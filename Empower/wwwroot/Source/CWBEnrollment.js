@@ -195,6 +195,9 @@ const Enrollment = (props) => {
 
     function getEnrollment(event) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
+        let selectedPlacementID = event.currentTarget.getAttribute("data-placementid");
+        $("#hdnPlacementID").val(selectedPlacementID);
+
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullGetEnrollmentAddress = `${apiAddress}/api/Enrollment/GetEnrollment/${selectedEnrollmentID}`;
         let sessionStorageData = getSessionData();
@@ -207,7 +210,7 @@ const Enrollment = (props) => {
             }
         }).then(result => result.json())
         .then(result => {
-            console.log(result);
+            //console.log(result);
 
             //txtReferralDate
             let referralDate = moment(new Date(result.ReferralDate)).format('YYYY-MM-DD');
@@ -241,6 +244,10 @@ const Enrollment = (props) => {
 
             let DateCaseAssigned = moment(new Date(result.DateCaseAssigned)).format('YYYY-MM-DD');
             $("#txtDateCaseAssigned").val(DateCaseAssigned);
+
+            $("#hdnEnrollmentID").val(result.ID);
+            $("#hdnReferralCreatedDate").val(result.CreatedDate);
+            $("#hdnCreatedBy").val(result.CreatedBy);
 
             togglePlacementModal();
         });
@@ -415,6 +422,7 @@ const Enrollment = (props) => {
                     editEnrollmentButton.classList.add("btn-secondary");
                     editEnrollmentButton.classList.add("btn-sm");
                     editEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
+                    editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
                     editEnrollmentButton.innerText = "Edit Referral";
                     editEnrollmentButton.onclick = getEnrollment;
                     editButtonCell.appendChild(editEnrollmentButton);

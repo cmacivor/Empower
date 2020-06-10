@@ -8,8 +8,8 @@ const Referral = (props) => {
     let careerAdvisors = props.staffValues;
     let serviceReleases = props.serviceReleaseValues;
     let serviceOutcomes = props.serviceOutcomeValues;
-    console.log('the service ouutcomes');
-    console.log(serviceOutcomes);
+    //console.log('the service ouutcomes');
+    //console.log(serviceOutcomes);
 
     const [serviceProgramCategories, setServiceProgramCategories ] = useState([]);
 
@@ -45,7 +45,7 @@ const Referral = (props) => {
             }
         }).then(result => result.json())
         .then(result => {
-            console.log(result);
+            //console.log(result);
             setServiceProgramCategories(result);
         });
     }
@@ -137,8 +137,11 @@ const Referral = (props) => {
         let referToService = $("#btnReferToService").val();
         let comments = $("#txtReferralNotes").val();
 
+        let serviceReleaseID = $("#btnCaseStatus").val();
+        let serviceOutcomeID = $("#btnServiceOutcome").val();
+
         let enrollment = {
-            PlacementID: $("#hdnCurrentlySelectedPlacementID").val(),
+            PlacementID: $("#hdnPlacementID").val(),
             ReferralDate: referralDate,
             //ServiceProgramCategoryID: $("#btnCareerAdvisorName").val(),
             CounselorID: careerAdvisor,
@@ -147,20 +150,34 @@ const Referral = (props) => {
             SuppComments: $("#txtReferralStatusNotes").val(),
             BeginDate: moment(new Date($("#txtServiceBeginDate").val())).format('YYYY-MM-DD'),
             EndDate: moment(new Date($("#txtServiceEndDate").val())).format('YYYY-MM-DD'),
-            ServiceReleaseID: $("#btnCaseStatus").val(),
-            ServiceOutcomeID: $("#btnServiceOutcome").val(),
+            ServiceReleaseID: serviceReleaseID, //$("#btnCaseStatus").val(),
+            ServiceOutcomeID: serviceOutcomeID,//$("#btnServiceOutcome").val(),
             DateCaseAssigned: $("#txtDateCaseAssigned").val(),
             Active: true,
-            CreatedDate: new Date(),
-            CreatedBy: sessionStorageData.CurrentUser,
+            //CreatedDate: new Date(),
+            //CreatedBy: sessionStorageData.CurrentUser,
             UpdatedDate: new Date(),
             UpdatedBy: sessionStorageData.CurrentUser
         }
 
+        let methodType = '';
+        if ($("#hdnEnrollmentID").val() !== "") { //this is an UPDATE
+            methodType  = 'PUT';
+            enrollment.CreatedDate = new Date($("#hdnReferralCreatedDate").val());
+            enrollment.CreatedBy = $("#hdnCreatedBy").val();
+            enrollment.ID = $("#hdnEnrollmentID").val();
+        } else {
+            methodType = 'POST';
+            enrollment.CreatedDate = new Date();
+            enrollment.CreatedBy = sessionStorageData.CurrentUser;
+        }
+
+   
+
         //console.log(enrollment);
 
         fetch(fullPersonEnrollmentAddress, {
-            method: 'POST',
+            method: methodType,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + sessionStorageData.Token
@@ -213,7 +230,10 @@ const Referral = (props) => {
       );
     }
     return <div>
-           <input type="hidden" id="hdnCurrentlySelectedPlacementID"/>
+           <input type="hidden" id="hdnEnrollmentID" />
+           <input type="hidden" id="hdnReferralCreatedDate" />
+           <input type="hidden" id="hdnCreatedBy" />
+
            <form id="frmReferral">
             <div className="modal fade" id="referralModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
