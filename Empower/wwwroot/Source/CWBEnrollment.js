@@ -290,6 +290,7 @@ const Enrollment = (props) => {
             placementButton.classList.add("btn");
             placementButton.classList.add("btn-secondary");
             placementButton.classList.add("btn-sm");
+            placementButton.classList.add("mr-2");
             placementButton.setAttribute("data-id", placementRecord.ID);
             placementButton.innerText = "Edit Placement";
             placementButton.title = "edit the Placement";
@@ -299,6 +300,7 @@ const Enrollment = (props) => {
             let placementDeleteButton = document.createElement("button");
             placementDeleteButton.classList.add("btn");
             placementDeleteButton.classList.add("btn-secondary");
+            
             placementDeleteButton.classList.add("btn-sm");
             placementDeleteButton.setAttribute("data-id", placementRecord.ID);
             placementDeleteButton.innerText = "Delete";
@@ -379,6 +381,10 @@ const Enrollment = (props) => {
             bodyDiv.appendChild(table);
 
             divRef.appendChild(parentCard);
+            
+            let lineBreak = document.createElement("br");
+            divRef.appendChild(lineBreak);
+
         });
     }
 
