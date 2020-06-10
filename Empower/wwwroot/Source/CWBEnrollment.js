@@ -349,9 +349,22 @@ const Enrollment = (props) => {
                 let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
                 enrollmentRowsIndex = enrollmentRowsIndex + 1;
                 let serviceNameCell = enrollmentRow.insertCell(0);
-                serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ServiceProgram.Name;
+                if (enrollment.Enrollment.ServiceProgramCategory !== null) {
+                    serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ServiceProgram.Name;
+                }
+
                 let beginDateCell = enrollmentRow.insertCell(1);
-                beginDateCell.innerText = enrollment.Enrollment.CreatedDate;
+                beginDateCell.innerText = enrollment.Enrollment.BeginDate;
+
+                let endDateCell = enrollmentRow.insertCell(2);
+                let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
+                endDateCell.innerText = convertedEndDate;
+
+                let caseStatusCell = enrollmentRow.insertCell(3);
+                if (enrollment.Enrollment.ServiceRelease !== null) {
+                    caseStatusCell.innerText = enrollment.Enrollment.ServiceRelease.Name;
+                }
+                //let serviceReleaseCell = 
 
             });
 

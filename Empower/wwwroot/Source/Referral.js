@@ -20,6 +20,15 @@ const Referral = (props) => {
         document.getElementById('btnReferToService').value = 'Please Select';
         document.getElementById('btnReferToService').innerText = 'Please Select';
 
+        //btnCaseStatus
+        document.getElementById('btnCaseStatus').value = 'Please Select';
+        document.getElementById('btnCaseStatus').innerText = 'Please Select';
+
+        //btnServiceOutcome
+        document.getElementById('btnServiceOutcome').value = 'Please Select';
+        document.getElementById('btnServiceOutcome').innerText = 'Please Select';
+
+
         getServiceProgramCategories();
     }, []);
 
@@ -135,6 +144,12 @@ const Referral = (props) => {
             CounselorID: careerAdvisor,
             ServiceProgramCategoryID: referToService,
             Comments: comments,
+            SuppComments: $("#txtReferralStatusNotes").val(),
+            BeginDate: moment(new Date($("#txtServiceBeginDate").val())).format('YYYY-MM-DD'),
+            EndDate: moment(new Date($("#txtServiceEndDate").val())).format('YYYY-MM-DD'),
+            ServiceReleaseID: $("#btnCaseStatus").val(),
+            ServiceOutcomeID: $("#btnServiceOutcome").val(),
+            DateCaseAssigned: $("#txtDateCaseAssigned").val(),
             Active: true,
             CreatedDate: new Date(),
             CreatedBy: sessionStorageData.CurrentUser,
@@ -327,7 +342,7 @@ const Referral = (props) => {
                                             </div>
                                             <div className="form-row">
                                                 <div className="col-6">
-                                                    <label htmlFor="ddlCaseStatus"><strong>Referral Source</strong></label>
+                                                    <label htmlFor="btnServiceOutcome"><strong>Referral Source</strong></label>
                                                     <div className="dropdown">
                                                         <button type="button" id="btnServiceOutcome" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                             
