@@ -193,6 +193,26 @@ const Enrollment = (props) => {
         });
     }
 
+    function getEnrollment(event) {
+        let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullGetEnrollmentAddress = `${apiAddress}/api/Enrollment/GetEnrollment/${selectedEnrollmentID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetEnrollmentAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+
+            togglePlacementModal();
+        });
+    }
+
     function getPlacement(event) {
 
         let selectedPlacementID = event.currentTarget.getAttribute("data-id");
@@ -322,6 +342,7 @@ const Enrollment = (props) => {
             let addReferralRow = header.insertRow(0);
             let addReferralCell = addReferralRow.insertCell(0);
 
+            //button to add new Referrals/Enrollments
             let addReferralButton = document.createElement("button");
             addReferralButton.classList.add("btn");
             addReferralButton.classList.add("btn-secondary");
@@ -333,8 +354,6 @@ const Enrollment = (props) => {
 
             addReferralCell.appendChild(addReferralButton);
 
-            //console.log('for each placement, the enrollment');
-            //console.log(placement.Enrollment); // this is an array
 
             let row = header.insertRow(1);
             let serviceNameCell = row.insertCell(0);
@@ -355,19 +374,34 @@ const Enrollment = (props) => {
     
                     let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
                     enrollmentRowsIndex = enrollmentRowsIndex + 1;
-                    let serviceNameCell = enrollmentRow.insertCell(0);
+
+                    //button to edit a Referral/Enrollment
+                    let editButtonCell = enrollmentRow.insertCell(0);
+                    let editEnrollmentButton = document.createElement("button");
+                    editEnrollmentButton.classList.add("btn");
+                    editEnrollmentButton.classList.add("btn-secondary");
+                    editEnrollmentButton.classList.add("btn-sm");
+                    editEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
+                    editEnrollmentButton.innerText = "Edit Referral";
+                    editEnrollmentButton.onclick = getEnrollment;
+                    editButtonCell.appendChild(editEnrollmentButton);
+
+                    //editButtonCell.classList.add("btn");
+                    //editButtonCell
+
+                    let serviceNameCell = enrollmentRow.insertCell(1);
                     if (enrollment.Enrollment.ServiceProgramCategory !== null) {
                         serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ServiceProgram.Name;
                     }
     
-                    let beginDateCell = enrollmentRow.insertCell(1);
+                    let beginDateCell = enrollmentRow.insertCell(2);
                     beginDateCell.innerText = enrollment.Enrollment.BeginDate;
     
-                    let endDateCell = enrollmentRow.insertCell(2);
+                    let endDateCell = enrollmentRow.insertCell(3);
                     let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
                     endDateCell.innerText = convertedEndDate;
     
-                    let caseStatusCell = enrollmentRow.insertCell(3);
+                    let caseStatusCell = enrollmentRow.insertCell(4);
                     if (enrollment.Enrollment.ServiceRelease !== null) {
                         caseStatusCell.innerText = enrollment.Enrollment.ServiceRelease.Name;
                     }
