@@ -396,13 +396,14 @@ const Enrollment = (props) => {
 
 
             let row = header.insertRow(1);
-            let serviceNameCell = row.insertCell(0);
+            let buttonHeaderCell = row.insertCell(0);
+            let serviceNameCell = row.insertCell(1);
             serviceNameCell.innerHTML = "<strong> Service Name</strong>";
-            let beginDateCell = row.insertCell(1);
+            let beginDateCell = row.insertCell(2);
             beginDateCell.innerHTML = "<strong>Begin Date</strong>";
-            let endDateCell = row.insertCell(2);
+            let endDateCell = row.insertCell(3);
             endDateCell.innerHTML = "<strong>End Date</strong>";
-            let caseStatusCell = row.insertCell(3);
+            let caseStatusCell = row.insertCell(4);
             caseStatusCell.innerHTML = "<strong>Case Status</strong>";
 
             let tbody = table.createTBody();
@@ -426,9 +427,6 @@ const Enrollment = (props) => {
                     editEnrollmentButton.innerText = "Edit Referral";
                     editEnrollmentButton.onclick = getEnrollment;
                     editButtonCell.appendChild(editEnrollmentButton);
-
-                    //editButtonCell.classList.add("btn");
-                    //editButtonCell
 
                     let serviceNameCell = enrollmentRow.insertCell(1);
                     if (enrollment.Enrollment.ServiceProgramCategory !== null) {
@@ -483,8 +481,6 @@ const Enrollment = (props) => {
             $("#frmEnrollment").addClass("was-validated");
             document.getElementById("divViewTanfError").removeAttribute("style");
         }
-
-        let assistanceTypeID = getElementValue("btnAssistanceType"); 
 
         let placement ={
             AssistanceTypeID: getElementValue("btnAssistanceType"),
