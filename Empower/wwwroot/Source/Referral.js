@@ -126,6 +126,15 @@ const Referral = (props) => {
 
     }
 
+    function getElementValue(element) {
+        let value = document.getElementById(element).value;
+
+        if (value === "" || value === "Please Select") {
+            return null;
+        }
+        return value;
+    }
+
     function saveEnrollment() {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -133,12 +142,14 @@ const Referral = (props) => {
         let sessionStorageData = getSessionData();
 
         let referralDate = moment(new Date($("#txtReferralDate").val())).format('YYYY-MM-DD');
-        let careerAdvisor = $("#btnCareerAdvisorName").val();
-        let referToService = $("#btnReferToService").val();
+        let careerAdvisor = getElementValue("btnCareerAdvisorName"); //$("#btnCareerAdvisorName").val();
+        let referToService = getElementValue("btnReferToService"); //$("#btnReferToService").val();
         let comments = $("#txtReferralNotes").val();
 
-        let serviceReleaseID = $("#btnCaseStatus").val();
-        let serviceOutcomeID = $("#btnServiceOutcome").val();
+        //let serviceReleaseID = $("#btnCaseStatus").val();
+        let serviceReleaseID = getElementValue("btnCaseStatus");
+        //let serviceOutcomeID = $("#btnServiceOutcome").val();
+        let serviceOutcomeID = getElementValue("btnServiceOutcome");
 
         let enrollment = {
             PlacementID: $("#hdnPlacementID").val(),
