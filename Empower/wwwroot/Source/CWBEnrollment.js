@@ -544,7 +544,8 @@ const Enrollment = (props) => {
                 return;
             }
 
-            generateTable(result);
+            //generateTable(result);
+            getPlacementsByClientProfileID();
 
             props.createNotification('The placement was successfully saved.');
 
