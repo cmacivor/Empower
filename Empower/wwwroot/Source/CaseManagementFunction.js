@@ -46,6 +46,9 @@ const CaseManagementFunction = (props) => {
     const [relationshipOptions, setRelationshipOptions] = useState([]);
     const [assistanceTypeOptions, setAssistanceTypeOptions ] = useState([]);
     const [careerPathwayOptions, setCareerPathWayOptions ] = useState([]);
+    const [staffOptions, setStaffOptions] = useState([]);
+    const [serviceReleaseOptions, setServiceReleaseOptions] = useState([]);
+    const [serviceOutcomeOptions, setServiceOutcomeOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -61,6 +64,13 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("Relationship").then(relationships => setRelationshipOptions(relationships));
         Api.getConfigDataByType("AssistanceType").then(assistanceTypes => setAssistanceTypeOptions(assistanceTypes));
         Api.getConfigDataByType("CareerPathway").then(careerPathways => setCareerPathWayOptions(careerPathways));
+        //TODO: how to reduce the number of API calls?
+        if (staffOptions.length === 0) {
+            Api.getConfigDataByType("Staff").then(staff => setStaffOptions(staff));
+        }
+        Api.getConfigDataByType("ServiceRelease").then(serviceReleases => setServiceReleaseOptions(serviceReleases));
+        Api.getConfigDataByType("ServiceOutcome").then(serviceOutcomes => setServiceOutcomeOptions(serviceOutcomes));
+
      }, []);
 
 
@@ -260,6 +270,9 @@ const CaseManagementFunction = (props) => {
                             <CWBEnrollment 
                                 assistanceTypeValues = { assistanceTypeOptions }
                                 careerPathwayValues = { careerPathwayOptions }
+                                serviceReleaseValues = { serviceReleaseOptions }
+                                serviceOutcomeValues = { serviceOutcomeOptions }
+                                staffValues = { staffOptions }
                                 clientProfile={clientProfile.ClientProfile }
                                 placement={clientProfile.Placement }
                                 createNotification={triggerToastMessage}

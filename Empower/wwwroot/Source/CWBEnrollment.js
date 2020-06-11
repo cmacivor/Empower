@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
+import Referral from './Referral';
 //import modal from './bootstrap.js';
 //import {modal} from './bootstrap.js';
 
@@ -14,17 +15,21 @@ const Enrollment = (props) => {
     if (props.clientProfile !== undefined) {
         personId = props.clientProfile.Person.ID;
         clientProfileId = props.clientProfile.ID;
-
     }
 
     let assistanceTypes = props.assistanceTypeValues;
     let careerPathways = props.careerPathwayValues;
+    let staff = props.staffValues;
+    let serviceReleases = props.serviceReleaseValues;
+    let serviceOutcomes = props.serviceOutcomeValues;
     
     useEffect(() => {
 
         if (props.clientProfile !== undefined) {
-            placements = props.placement;
-            generateTable(placements);
+
+            //placements = props.placement;
+            getPlacementsByClientProfileID();
+            //generateTable(placements);
         }
 
         document.getElementById("btnViewTanf").value = 'Please Select';
@@ -53,6 +58,10 @@ const Enrollment = (props) => {
     function toggleEnrollmentModal() {
         //TODO: add function to clear the modal on opening
         $("#enrollmentModal").modal('toggle');
+    }
+
+    function togglePlacementModal() {
+        $("#referralModal").modal('toggle');
     }
 
     function ddlViewTanfSelectEventHandler(event) {
@@ -89,7 +98,7 @@ const Enrollment = (props) => {
     function ddlBenefitsSelectEventHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
       
-        console.log(selectedValue);
+        //console.log(selectedValue);
         document.getElementById("btnEnrollmentBenefits").value = selectedValue;
         document.getElementById("btnEnrollmentBenefits").innerHTML = selectedValue;
     }
@@ -123,7 +132,7 @@ const Enrollment = (props) => {
             return suffix.ID === parseInt(selectedValue)
         });
 
-        document.getElementById("btnAssistanceType").innerHTML = selectedAssistanceType[0].Description;
+        document.getElementById("btnAssistanceType").innerHTML = selectedAssistanceType[0].Name;
     }
 
     function getElementValue(element) {
@@ -166,7 +175,8 @@ const Enrollment = (props) => {
     function getPlacementsByClientProfileID() {
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let clientProfileID = props.clientProfile.ID;
-        let fullGetPlacementsAddress = `${apiAddress}/api/Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
+        //let fullGetPlacementsAddress = `${apiAddress}/api/Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
+        let fullGetPlacementsAddress = `${apiAddress}/api/ClientProfile/GetPlacementsByClientProfileId/${clientProfileID}`;
         let sessionStorageData = getSessionData();
 
         fetch(fullGetPlacementsAddress, {
@@ -177,7 +187,69 @@ const Enrollment = (props) => {
             }
         }).then(result => result.json())
         .then(result => {
+            //console.log('the new method');
+            //console.log(result);
             generateTable(result);
+        });
+    }
+
+    function getEnrollment(event) {
+        let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
+        let selectedPlacementID = event.currentTarget.getAttribute("data-placementid");
+        $("#hdnPlacementID").val(selectedPlacementID);
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullGetEnrollmentAddress = `${apiAddress}/api/Enrollment/GetEnrollment/${selectedEnrollmentID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetEnrollmentAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            //console.log(result);
+
+            //txtReferralDate
+            let referralDate = moment(new Date(result.ReferralDate)).format('YYYY-MM-DD');
+            $("#txtReferralDate").val(referralDate);
+            if (result.Counselor !== null) {
+                $("#btnCareerAdvisorName").val(result.Counselor.ID);
+                document.getElementById("btnCareerAdvisorName").innerText = result.Counselor.LastName + ", " + result.Counselor.FirstName;
+            }
+            if (result.ServiceProgramCategory !== null) {
+                $("#btnReferToService").val(result.ServiceProgramCategory.ServiceProgram.ID);
+                document.getElementById("btnReferToService").innerText = result.ServiceProgramCategory.ServiceProgram.Name;
+            }
+
+            $("#txtReferralNotes").val(result.Comments);
+            $("#txtReferralStatusNotes").val(result.SuppComments);
+
+            let serviceBeginDate = moment(new Date(result.BeginDate)).format('YYYY-MM-DD');
+            $("#txtServiceBeginDate").val(serviceBeginDate);
+            let serviceEndDate = moment(new Date(result.EndDate)).format('YYYY-MM-DD');
+            $("#txtServiceEndDate").val(serviceEndDate);
+
+            if (result.ServiceRelease !== null) {
+                $("#btnCaseStatus").val(result.ServiceReleaseID);
+                document.getElementById("btnCaseStatus").innerText = result.ServiceRelease.Name;
+            }
+
+            if (result.ServiceOutcome !== null) {
+                $("#btnServiceOutcome").val(result.ServiceOutcomeID);
+                document.getElementById("btnServiceOutcome").innerText = result.ServiceOutcome.Name;
+            }
+
+            let DateCaseAssigned = moment(new Date(result.DateCaseAssigned)).format('YYYY-MM-DD');
+            $("#txtDateCaseAssigned").val(DateCaseAssigned);
+
+            $("#hdnEnrollmentID").val(result.ID);
+            $("#hdnReferralCreatedDate").val(result.CreatedDate);
+            $("#hdnCreatedBy").val(result.CreatedBy);
+
+            togglePlacementModal();
         });
     }
 
@@ -197,12 +269,15 @@ const Enrollment = (props) => {
         }).then(result => result.json())
         .then(result => {
             
-            console.log(result);
-            document.getElementById("btnAssistanceType").innerHTML = result.AssistanceType.Name;
-            document.getElementById("btnAssistanceType").value = result.AssistanceTypeID;
+            if (result.AssistanceType !== undefined && result.AssistanceType !== null) {
+                document.getElementById("btnAssistanceType").innerHTML = result.AssistanceType.Name;
+                document.getElementById("btnAssistanceType").value = result.AssistanceTypeID;
+            }
 
-            document.getElementById("btnCareerPathwayPosition").innerHTML = result.CareerPathway.Name;
-            document.getElementById("btnCareerPathwayPosition").value = result.CareerPathwayID;
+            if (result.CareerPathway !== undefined && result.CareerPathway !== null) {
+                document.getElementById("btnCareerPathwayPosition").innerHTML = result.CareerPathway.Name;
+                document.getElementById("btnCareerPathwayPosition").value = result.CareerPathwayID;
+            }
 
             let convertedEnrollmentDate = moment(new Date(result.CourtOrderDate)).format('YYYY-MM-DD');
             $("#txtEnrollmentDate").val(convertedEnrollmentDate);
@@ -223,14 +298,18 @@ const Enrollment = (props) => {
             $("#txtEnrollmentWagesPerHour").val(result.EmployerWages);
 
             //View/TANF
-            document.getElementById("btnViewTanf").innerText = result.Judge.Name;
-            document.getElementById("btnViewTanf").value = result.JudgeID;
+            if (result.Judge !== undefined && result.Judge !== null) {
+                document.getElementById("btnViewTanf").innerText = result.Judge.Name;
+                document.getElementById("btnViewTanf").value = result.JudgeID;
+            }
 
             let convertedNextCourtDate = moment(new Date(result.NextCourtDate)).format('YYYY-MM-DD');
             $("#txtApptDate").val(convertedNextCourtDate);
 
-            document.getElementById("btnSnapEt").innerText = result.PlacementLevel.Name;
-            document.getElementById("btnSnapEt").value = result.PlacementLevelID;
+            if (result.PlacementLevel !== undefined && result.PlacementLevel !== null) {
+                document.getElementById("btnSnapEt").innerText = result.PlacementLevel.Name;
+                document.getElementById("btnSnapEt").value = result.PlacementLevelID;
+            }
 
             $("#hdnPlacementID").val(result.ID);
             $("#hdnPlacementCreatedDate").val(result.CreatedDate);
@@ -271,6 +350,7 @@ const Enrollment = (props) => {
             placementButton.classList.add("btn");
             placementButton.classList.add("btn-secondary");
             placementButton.classList.add("btn-sm");
+            placementButton.classList.add("mr-2");
             placementButton.setAttribute("data-id", placementRecord.ID);
             placementButton.innerText = "Edit Placement";
             placementButton.title = "edit the Placement";
@@ -280,6 +360,7 @@ const Enrollment = (props) => {
             let placementDeleteButton = document.createElement("button");
             placementDeleteButton.classList.add("btn");
             placementDeleteButton.classList.add("btn-secondary");
+            
             placementDeleteButton.classList.add("btn-sm");
             placementDeleteButton.setAttribute("data-id", placementRecord.ID);
             placementDeleteButton.innerText = "Delete";
@@ -298,24 +379,89 @@ const Enrollment = (props) => {
 
             //create the Referral rows 
             let header = table.createTHead();
-            let row = header.insertRow(0);
-            let serviceNameCell = row.insertCell(0);
+            let addReferralRow = header.insertRow(0);
+            let addReferralCell = addReferralRow.insertCell(0);
+
+            //button to add new Referrals/Enrollments
+            let addReferralButton = document.createElement("button");
+            addReferralButton.classList.add("btn");
+            addReferralButton.classList.add("btn-secondary");
+            addReferralButton.classList.add("btn-sm");
+            addReferralButton.setAttribute("data-id", placementRecord.ID);
+            $("#hdnCurrentlySelectedPlacementID").val(placementRecord.ID);
+            addReferralButton.innerText = "Add Referral";
+            addReferralButton.onclick = togglePlacementModal;
+
+            addReferralCell.appendChild(addReferralButton);
+
+
+            let row = header.insertRow(1);
+            let buttonHeaderCell = row.insertCell(0);
+            let serviceNameCell = row.insertCell(1);
             serviceNameCell.innerHTML = "<strong> Service Name</strong>";
-            let beginDateCell = row.insertCell(1);
+            let beginDateCell = row.insertCell(2);
             beginDateCell.innerHTML = "<strong>Begin Date</strong>";
-            let endDateCell = row.insertCell(2);
+            let endDateCell = row.insertCell(3);
             endDateCell.innerHTML = "<strong>End Date</strong>";
-            let caseStatusCell = row.insertCell(3);
+            let caseStatusCell = row.insertCell(4);
             caseStatusCell.innerHTML = "<strong>Case Status</strong>";
+
+            let tbody = table.createTBody();
+
+            let enrollmentRowsIndex = 0;
+            if (placement.Enrollment !== undefined && placement.Enrollment !== null) {
+                placement.Enrollment.forEach(function(enrollment) {
+                    //console.log(enrollment);
+    
+                    let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
+                    enrollmentRowsIndex = enrollmentRowsIndex + 1;
+
+                    //button to edit a Referral/Enrollment
+                    let editButtonCell = enrollmentRow.insertCell(0);
+                    let editEnrollmentButton = document.createElement("button");
+                    editEnrollmentButton.classList.add("btn");
+                    editEnrollmentButton.classList.add("btn-secondary");
+                    editEnrollmentButton.classList.add("btn-sm");
+                    editEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
+                    editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
+                    editEnrollmentButton.innerText = "Edit Referral";
+                    editEnrollmentButton.onclick = getEnrollment;
+                    editButtonCell.appendChild(editEnrollmentButton);
+
+                    let serviceNameCell = enrollmentRow.insertCell(1);
+                    if (enrollment.Enrollment.ServiceProgramCategory !== null) {
+                        serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ServiceProgram.Name;
+                    }
+    
+                    let beginDateCell = enrollmentRow.insertCell(2);
+                    beginDateCell.innerText = enrollment.Enrollment.BeginDate;
+    
+                    let endDateCell = enrollmentRow.insertCell(3);
+                    let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
+                    endDateCell.innerText = convertedEndDate;
+    
+                    let caseStatusCell = enrollmentRow.insertCell(4);
+                    if (enrollment.Enrollment.ServiceRelease !== null) {
+                        caseStatusCell.innerText = enrollment.Enrollment.ServiceRelease.Name;
+                    }
+                    //let serviceReleaseCell = 
+    
+                });
+            }
+    
 
 
             bodyDiv.appendChild(table);
 
             divRef.appendChild(parentCard);
+            
+            let lineBreak = document.createElement("br");
+            divRef.appendChild(lineBreak);
+
         });
     }
 
-    function saveEnrollment() {
+    function savePlacement() {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonPlacementAddress = `${apiAddress}/api/Placement`;
@@ -337,7 +483,7 @@ const Enrollment = (props) => {
         }
 
         let placement ={
-            AssistanceTypeID: getElementValue("btnAssistanceType") ,
+            AssistanceTypeID: getElementValue("btnAssistanceType"),
             CareerPathwayID: getElementValue("btnCareerPathwayPosition"),
             ClientProfileID:  clientProfileId,
             CourtOrderDate: enrollmentDate,
@@ -389,14 +535,15 @@ const Enrollment = (props) => {
             body: JSON.stringify(placementViewModel)
         }).then(result => result.json())
         .then(result => {
-            console.log(result);
+            //console.log(result);
 
             if (result === null || result.Message !== undefined) {
                 props.createErrorNotification("an error occurred while saving the record.");
                 return;
             }
 
-            generateTable(result);
+            //generateTable(result);
+            getPlacementsByClientProfileID();
 
             props.createNotification('The placement was successfully saved.');
 
@@ -412,7 +559,7 @@ const Enrollment = (props) => {
     if ( assistanceTypes.length > 0) {
 
         assistanceTypeValueOptions = assistanceTypes.map((value) =>
-            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlAssistanceTypeSelectHandler  } className="dropdown-item">{value.Description}</a>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlAssistanceTypeSelectHandler  } className="dropdown-item">{value.Name}</a>
         );
     }
 
@@ -438,25 +585,7 @@ const Enrollment = (props) => {
         <div id="placementsContainer">
 
         </div>
-        {/* <table id="tblPlacements" className="table">
-             <thead>
-                 <tr>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Middle Name</th>
-                    <th scope="col">Suffix</th>
-                    <th scope="col">Relationship</th>
-                    <th scope="col">Home Phone</th>
-                    <th scope="col">Work Phone</th>
-                    <th scope="col">Emergency Contact</th>
-                 </tr>
-             </thead>
-             <tbody>
-
-             </tbody>
-         </table> */}
+   
         <form id="frmEnrollment">
             <div className="modal fade" id="enrollmentModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
@@ -593,13 +722,22 @@ const Enrollment = (props) => {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" onClick={saveEnrollment} >Save</button>
+                            <button type="button" className="btn btn-primary" onClick={savePlacement} >Save</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
+        <Referral
+            staffValues = {staff}
+            serviceReleaseValues = {serviceReleases }
+            serviceOutcomeValues = { serviceOutcomes }
+            togglePlacementModal={togglePlacementModal}
+            refreshEnrollmentGrid = { getPlacementsByClientProfileID }
+            createNotification={props.createNotification}
+            createErrorNotification={props.createErrorNotification}
+         />
     </div>
 }
 
