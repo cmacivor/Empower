@@ -132,7 +132,7 @@ const Enrollment = (props) => {
             return suffix.ID === parseInt(selectedValue)
         });
 
-        document.getElementById("btnAssistanceType").innerHTML = selectedAssistanceType[0].Description;
+        document.getElementById("btnAssistanceType").innerHTML = selectedAssistanceType[0].Name;
     }
 
     function getElementValue(element) {
@@ -484,8 +484,10 @@ const Enrollment = (props) => {
             document.getElementById("divViewTanfError").removeAttribute("style");
         }
 
+        let assistanceTypeID = getElementValue("btnAssistanceType"); 
+
         let placement ={
-            AssistanceTypeID: getElementValue("btnAssistanceType") ,
+            AssistanceTypeID: getElementValue("btnAssistanceType"),
             CareerPathwayID: getElementValue("btnCareerPathwayPosition"),
             ClientProfileID:  clientProfileId,
             CourtOrderDate: enrollmentDate,
@@ -561,7 +563,7 @@ const Enrollment = (props) => {
     if ( assistanceTypes.length > 0) {
 
         assistanceTypeValueOptions = assistanceTypes.map((value) =>
-            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlAssistanceTypeSelectHandler  } className="dropdown-item">{value.Description}</a>
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlAssistanceTypeSelectHandler  } className="dropdown-item">{value.Name}</a>
         );
     }
 
