@@ -141,7 +141,8 @@ const Referral = (props) => {
         let fullPersonEnrollmentAddress = `${apiAddress}/api/Enrollment`;
         let sessionStorageData = getSessionData();
 
-        let referralDate = moment(new Date($("#txtReferralDate").val())).format('YYYY-MM-DD');
+        //let convReferralDate = new Date( $("#txtReferralDate").val());
+        let referralDate =  new Date($("#txtReferralDate").val()); //moment(convReferralDate).format('YYYY-MM-DD');
         let careerAdvisor = getElementValue("btnCareerAdvisorName"); //$("#btnCareerAdvisorName").val();
         let referToService = getElementValue("btnReferToService"); //$("#btnReferToService").val();
         let comments = $("#txtReferralNotes").val();
@@ -159,8 +160,8 @@ const Referral = (props) => {
             ServiceProgramCategoryID: referToService,
             Comments: comments,
             SuppComments: $("#txtReferralStatusNotes").val(),
-            BeginDate: moment(new Date($("#txtServiceBeginDate").val())).format('YYYY-MM-DD'),
-            EndDate: moment(new Date($("#txtServiceEndDate").val())).format('YYYY-MM-DD'),
+            BeginDate: new Date($("#txtServiceBeginDate").val()), //moment(new Date($("#txtServiceBeginDate").val())).format('YYYY-MM-DD'),
+            EndDate: new Date($("#txtServiceEndDate").val()), //moment(new Date($("#txtServiceEndDate").val())).format('YYYY-MM-DD'),
             ServiceReleaseID: serviceReleaseID, //$("#btnCaseStatus").val(),
             ServiceOutcomeID: serviceOutcomeID,//$("#btnServiceOutcome").val(),
             DateCaseAssigned: $("#txtDateCaseAssigned").val(),
