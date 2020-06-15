@@ -449,11 +449,13 @@ const Enrollment = (props) => {
                     let editButtonCell = enrollmentRow.insertCell(0);
                     let editEnrollmentButton = document.createElement("button");
                     editEnrollmentButton.classList.add("btn");
-                    editEnrollmentButton.classList.add("btn-secondary");
+                    editEnrollmentButton.classList.add("btn-info");
                     editEnrollmentButton.classList.add("btn-sm");
                     editEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
                     editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
-                    editEnrollmentButton.innerText = "Edit Referral";
+                    let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
+                    editEnrollmentButton.innerHTML = faPencil;
+                    //editEnrollmentButton.innerText = "Edit Referral";
                     editEnrollmentButton.onclick = getEnrollment;
                     editButtonCell.appendChild(editEnrollmentButton);
 
