@@ -188,12 +188,17 @@ const Enrollment = (props) => {
 
     function generatePrintModal() {
         let divClientProfile = document.getElementById("divClientProfile");
+        divClientProfile.innerText = "";
+
+        let clientProfileHeader = document.createElement("h4");
+        clientProfileHeader.innerText = "Profile Information";
     
         //divClientProfile.innerText = "";
         let firstRow = document.createElement("div");
 
         let fullName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
         firstRow.innerText = fullName;
+        divClientProfile.appendChild(clientProfileHeader);
         divClientProfile.appendChild(firstRow);
         //divClientProfile.innerText = fullName;
         //$("#participantLastName").val(fullName);

@@ -57,8 +57,7 @@ const PrintEnrollment = (props) => {
                            <div className="form-row">
 
                                <div id="divClientProfile" className="col-6">
-                                    <h4>Profile Information</h4>
-                                   <label><strong>Participant's Name</strong></label>
+                            
 
                                </div>
                            </div>
