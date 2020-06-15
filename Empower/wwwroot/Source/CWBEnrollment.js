@@ -323,6 +323,34 @@ const Enrollment = (props) => {
         });
     }
 
+    function deleteEnrollment(event) {
+        let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullDeleteEnrollmentAddress = `${apiAddress}/api/Enrollment/DeleteEnrollment/${selectedEnrollmentID}`;
+        let sessionStorageData = getSessionData();
+
+
+        fetch(fullDeleteEnrollmentAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            if (result === undefined || result == null ) {
+                props.createErrorNotification("an error occurred.")
+                return;
+            }
+
+            getPlacementsByClientProfileID();
+
+            props.createNotification("the enrollment was deleted.");
+
+        });
+    }
+
     
     function generateTable(placements) {
 
@@ -396,7 +424,7 @@ const Enrollment = (props) => {
 
 
             let row = header.insertRow(1);
-            let buttonHeaderCell = row.insertCell(0);
+            row.insertCell(0);
             let serviceNameCell = row.insertCell(1);
             serviceNameCell.innerHTML = "<strong> Service Name</strong>";
             let beginDateCell = row.insertCell(2);
@@ -405,7 +433,8 @@ const Enrollment = (props) => {
             endDateCell.innerHTML = "<strong>End Date</strong>";
             let caseStatusCell = row.insertCell(4);
             caseStatusCell.innerHTML = "<strong>Case Status</strong>";
-
+            row.insertCell(5);
+        
             let tbody = table.createTBody();
 
             let enrollmentRowsIndex = 0;
@@ -444,7 +473,16 @@ const Enrollment = (props) => {
                     if (enrollment.Enrollment.ServiceRelease !== null) {
                         caseStatusCell.innerText = enrollment.Enrollment.ServiceRelease.Name;
                     }
-                    //let serviceReleaseCell = 
+
+                    let deleteButtonCell = enrollmentRow.insertCell(5);
+                    let deleteEnrollmentButton = document.createElement("button");
+                    deleteEnrollmentButton.classList.add("btn");
+                    deleteEnrollmentButton.classList.add("btn-secondary");
+                    deleteEnrollmentButton.classList.add("btn-sm");
+                    deleteEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
+                    deleteEnrollmentButton.innerText = "Delete";
+                    deleteEnrollmentButton.onclick = deleteEnrollment
+                    deleteButtonCell.appendChild(deleteEnrollmentButton);
     
                 });
             }
