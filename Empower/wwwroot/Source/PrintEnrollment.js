@@ -5,10 +5,42 @@ import moment from 'moment';
 
 const PrintEnrollment = (props) => {
 
-    $("#printModal").on('show.bs.modal', function(){
-        //alert('The modal is about to be shown.');
-        console.log('the print modal');
-      });
+    // if (props.clientProfile !== undefined) {
+    //     personId = props.clientProfile.Person.ID;
+    //     clientProfileId = props.clientProfile.ID;
+    // }
+
+    // $("#printModal").on('show.bs.modal', function() {
+    //     //alert('The modal is about to be shown.');
+    //     //console.log('the print modal');
+    //     //console.log($("#hdnPrintSelectedEnrollmentID").val());
+    //     //console.log(props.clientProfileID);
+
+    //     //getPlacementsByClientProfileID(props.clientProfileID);
+
+    //   });
+
+    //   function getPlacementsByClientProfileID(clientProfileID) {
+    //     let apiAddress = sessionStorage.getItem("baseApiAddress");
+        
+    //     //let fullGetPlacementsAddress = `${apiAddress}/api/Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
+    //     let fullGetPlacementsAddress = `${apiAddress}/api/ClientProfile/GetPlacementsByClientProfileId/${clientProfileID}`;
+    //     let sessionStorageData = getSessionData();
+
+    //     fetch(fullGetPlacementsAddress, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + sessionStorageData.Token
+    //         }
+    //     }).then(result => result.json())
+    //     .then(result => {
+    //         console.log(result);
+    //         //console.log('the new method');
+    //         //console.log(result);
+    //         //generateTable(result);
+    //     });
+    // }
 
     return <div>
         <form id="frmPrint">
@@ -23,8 +55,11 @@ const PrintEnrollment = (props) => {
                         </div>
                         <div className="modal-body">
                            <div className="form-row">
-                               <div className="col-6">
-                                   Test
+
+                               <div id="divClientProfile" className="col-6">
+                                    <h4>Profile Information</h4>
+                                   <label><strong>Participant's Name</strong></label>
+
                                </div>
                            </div>
                         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
@@ -31,6 +31,7 @@ const Enrollment = (props) => {
 
             //placements = props.placement;
             getPlacementsByClientProfileID();
+            generatePrintModal();
             //generateTable(placements);
         }
 
@@ -55,7 +56,7 @@ const Enrollment = (props) => {
         document.getElementById("btnCareerPathwayPosition").value = 'Please Select';
         document.getElementById("btnCareerPathwayPosition").innerHTML = 'Please Select';
 
-     });
+     }, [getPlacementsByClientProfileID]);
 
     function toggleEnrollmentModal() {
         //TODO: add function to clear the modal on opening
@@ -67,6 +68,9 @@ const Enrollment = (props) => {
     }
 
     function togglePrintScreen() {
+        //let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
+        //$("#hdnPrintSelectedEnrollmentID").val(selectedEnrollmentID);
+
         $("#printModal").modal('toggle');
     }
 
@@ -178,7 +182,20 @@ const Enrollment = (props) => {
         });
     }
 
-    function getPlacementsByClientProfileID() {
+    function generatePrintModal() {
+        let divClientProfile = document.getElementById("divClientProfile");
+    
+        //divClientProfile.innerText = "";
+        let firstRow = document.createElement("div");
+
+        let fullName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
+        firstRow.innerText = fullName;
+        divClientProfile.appendChild(firstRow);
+        //divClientProfile.innerText = fullName;
+        //$("#participantLastName").val(fullName);
+    }
+
+    function  getPlacementsByClientProfileID() {
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let clientProfileID = props.clientProfile.ID;
         //let fullGetPlacementsAddress = `${apiAddress}/api/Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
@@ -797,7 +814,9 @@ const Enrollment = (props) => {
             createNotification={props.createNotification}
             createErrorNotification={props.createErrorNotification}
          />
-         <PrintEnrollment />
+         <PrintEnrollment 
+         clientProfileID = {clientProfileId }
+         clientProfile ={props.clientProfile} />
     </div>
 }
 
