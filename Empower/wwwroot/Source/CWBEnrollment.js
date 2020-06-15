@@ -3,6 +3,8 @@ import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
 import Referral from './Referral';
+import PrintEnrollment from './PrintEnrollment';
+
 //import modal from './bootstrap.js';
 //import {modal} from './bootstrap.js';
 
@@ -62,6 +64,10 @@ const Enrollment = (props) => {
 
     function togglePlacementModal() {
         $("#referralModal").modal('toggle');
+    }
+
+    function togglePrintScreen() {
+        $("#printModal").modal('toggle');
     }
 
     function ddlViewTanfSelectEventHandler(event) {
@@ -459,6 +465,17 @@ const Enrollment = (props) => {
                     editEnrollmentButton.onclick = getEnrollment;
                     editButtonCell.appendChild(editEnrollmentButton);
 
+                    //add the print button and put it next to edit
+                    let printButton = document.createElement("button");
+                    printButton.classList.add("btn");
+                    printButton.classList.add('btn-info');
+                    printButton.classList.add('btn-sm');
+                    printButton.setAttribute("data-id", enrollment.Enrollment.ID);
+                    let faPrint = "<i class='fa fa-print' aria-hidden='true'></i>";
+                    printButton.innerHTML = faPrint;
+                    printButton.onclick = togglePrintScreen;
+                    editButtonCell.appendChild(printButton);
+
                     let serviceNameCell = enrollmentRow.insertCell(1);
                     if (enrollment.Enrollment.ServiceProgramCategory !== null) {
                         serviceNameCell.innerText = enrollment.Enrollment.ServiceProgramCategory.ServiceProgram.Name;
@@ -482,7 +499,9 @@ const Enrollment = (props) => {
                     deleteEnrollmentButton.classList.add("btn-secondary");
                     deleteEnrollmentButton.classList.add("btn-sm");
                     deleteEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                    deleteEnrollmentButton.innerText = "Delete";
+                    let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
+                    deleteEnrollmentButton.innerHTML = faTrash;
+                    //deleteEnrollmentButton.innerText = "Delete";
                     deleteEnrollmentButton.onclick = deleteEnrollment
                     deleteButtonCell.appendChild(deleteEnrollmentButton);
     
@@ -778,6 +797,7 @@ const Enrollment = (props) => {
             createNotification={props.createNotification}
             createErrorNotification={props.createErrorNotification}
          />
+         <PrintEnrollment />
     </div>
 }
 
