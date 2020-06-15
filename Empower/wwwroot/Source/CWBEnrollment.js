@@ -30,7 +30,9 @@ const Enrollment = (props) => {
         if (props.clientProfile !== undefined) {
 
             //placements = props.placement;
-            getPlacementsByClientProfileID();
+            //let placementVM = fetchPlacements();
+            generateTable(props.placement);
+
             generatePrintModal();
             //generateTable(placements);
         }
@@ -56,7 +58,7 @@ const Enrollment = (props) => {
         document.getElementById("btnCareerPathwayPosition").value = 'Please Select';
         document.getElementById("btnCareerPathwayPosition").innerHTML = 'Please Select';
 
-     }, [getPlacementsByClientProfileID]);
+     });
 
     function toggleEnrollmentModal() {
         //TODO: add function to clear the modal on opening
@@ -174,6 +176,8 @@ const Enrollment = (props) => {
                 return;
             }
 
+            // let placementVM = fetchPlacements();
+            // generateTable(placementVM);
             getPlacementsByClientProfileID();
 
 
@@ -195,25 +199,48 @@ const Enrollment = (props) => {
         //$("#participantLastName").val(fullName);
     }
 
-    function  getPlacementsByClientProfileID() {
+    function fetchPlacements() {
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let clientProfileID = props.clientProfile.ID;
         //let fullGetPlacementsAddress = `${apiAddress}/api/Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
         let fullGetPlacementsAddress = `${apiAddress}/api/ClientProfile/GetPlacementsByClientProfileId/${clientProfileID}`;
         let sessionStorageData = getSessionData();
 
-        fetch(fullGetPlacementsAddress, {
+       return fetch(fullGetPlacementsAddress, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + sessionStorageData.Token
             }
-        }).then(result => result.json())
-        .then(result => {
-            //console.log('the new method');
-            //console.log(result);
-            generateTable(result);
-        });
+        }).then(result => result.json());
+    }
+
+    function  getPlacementsByClientProfileID() {
+        // let apiAddress = sessionStorage.getItem("baseApiAddress");
+        // let clientProfileID = props.clientProfile.ID;
+        // //let fullGetPlacementsAddress = `${apiAddress}/api/`Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
+        // let fullGetPlacementsAddress = `${apiAddress}/api/ClientProfile/GetPlacementsByClientProfileId/${clientProfileID}`;
+        // let sessionStorageData = getSessionData();
+
+        // fetch(fullGetPlacementsAddress, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Bearer ' + sessionStorageData.Token
+        //     }
+        // }).then(result => result.json())
+        // .then(result => {
+        //     //console.log('the new method');
+        //     //console.log(result);
+            
+        // });
+
+
+        // let placement = fetchPlacements();
+
+        // generateTable(placement);
+
+        fetchPlacements().then(placement => generateTable(placement));
     }
 
     function getEnrollment(event) {
@@ -367,6 +394,8 @@ const Enrollment = (props) => {
                 return;
             }
 
+            // let placementVM = fetchPlacements();
+            // generateTable(placementVM);
             getPlacementsByClientProfileID();
 
             props.createNotification("the enrollment was deleted.");
@@ -618,7 +647,9 @@ const Enrollment = (props) => {
                 return;
             }
 
-            //generateTable(result);
+
+            // let placementVM = fetchPlacements();
+            // generateTable(placementVM);
             getPlacementsByClientProfileID();
 
             props.createNotification('The placement was successfully saved.');
