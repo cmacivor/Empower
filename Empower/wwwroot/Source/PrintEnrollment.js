@@ -54,34 +54,46 @@ const PrintEnrollment = (props) => {
                             </button>
                         </div>
                         <div className="modal-body">
-                           <div className="form-row">
+                           <div className="row">
                                <div className="col-6">
-                                    <label><strong>Participant's Name</strong></label>
-                                    <div id="divParticipantName" ></div>
+                                   <div className="form-group">
+                                        <label><strong>Participant's Name</strong></label>
+                                        <div id="divParticipantName" ></div>
+                                   </div>
                                </div>
                                 <div  className="col-6">
-                                    <label><strong>SSN</strong></label>
-                                    <div id="divClientSSN"></div>
+                                    <div className="form-group">
+                                        <label><strong>SSN</strong></label>
+                                        <div id="divClientSSN"></div>
+                                    </div>
                                 </div>
                            </div>
-                           <div className="form-row">
+                           <div className="row">
                                <div className="col-6">
-                                   <label><strong>Gender</strong></label>
-                                   <div id="divGender"></div>
+                                   <div className="form-group">
+                                        <label><strong>Gender</strong></label>
+                                        <div id="divGender"></div>
+                                   </div>
                                </div>
                                <div className="col-6">
-                                   <label><strong>Race</strong></label>
-                                   <div id="divRace"></div>
+                                   <div className="form-group">
+                                        <label><strong>Race</strong></label>
+                                        <div id="divRace"></div>
+                                   </div>
                                </div>
                            </div>
-                           <div className="form-row">
+                           <div className="row">
                                <div className="col-6">
-                                    <label><strong>State/VCIN</strong></label>
-                                    <div id="divStateVCIN"></div>
+                                    <div className="form-group">
+                                        <label><strong>State/VCIN</strong></label>
+                                        <div id="divStateVCIN"></div>
+                                    </div>
                                </div>
                                <div className="col-6">
-                                   <label><strong>Current Age</strong></label>
-                                   <div id="divCurrentAge"></div>
+                                   <div className="form-group">
+                                        <label><strong>Current Age</strong></label>
+                                        <div id="divCurrentAge"></div>
+                                   </div>
                                </div>
                            </div>
                         </div>
