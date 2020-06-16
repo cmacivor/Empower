@@ -54,8 +54,10 @@ const PrintEnrollment = (props) => {
                             </button>
                         </div>
                         <div className="modal-body">
-                           <div id="divClientProfile" className="lightBorder"> 
-                                <div className="row">
+                           <div id="divClientProfile" className="lightBorder">
+                                
+
+                                {/* <div className="row">
                                     <div className="col-6">
                                         <div className="form-group">
                                             <label><strong>Participant's Name</strong></label>
@@ -96,7 +98,30 @@ const PrintEnrollment = (props) => {
                                             <div id="divCurrentAge"></div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
+                           </div>
+                           <br/>
+                           <h3>Family Information</h3>
+                           <div className="row">
+                               <div className="col-12">
+                                   <table className="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Last Name</th>
+                                                <th>First Name</th>
+                                                <th>Middle Name</th>
+                                                <th>Suffix</th>
+                                                <th>Relationship</th>
+                                                <th>Home Phone</th>
+                                                <th>Work Phone</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="familyMemberTbody">
+
+                                        </tbody>
+                                   </table>
+                               
+                               </div>
                            </div>
                         </div>
                         <div className="modal-footer">

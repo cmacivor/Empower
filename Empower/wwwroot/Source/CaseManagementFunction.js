@@ -274,6 +274,7 @@ const CaseManagementFunction = (props) => {
                                 serviceOutcomeValues = { serviceOutcomeOptions }
                                 staffValues = { staffOptions }
                                 clientProfile={clientProfile.ClientProfile }
+                                familyProfiles={clientProfile.Person }
                                 placement={clientProfile.Placement }
                                 createNotification={triggerToastMessage}
                                 createErrorNotification={triggerErrorMessage}

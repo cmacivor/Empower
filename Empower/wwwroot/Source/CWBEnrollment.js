@@ -15,6 +15,10 @@ const Enrollment = (props) => {
     let placements;
 
     if (props.clientProfile !== undefined) {
+        //console.log('the family profiles in CWB');
+        //console.log(props.familyProfiles.FamilyProfile);
+        //console.log(props.clientProfile);
+
         personId = props.clientProfile.Person.ID;
         clientProfileId = props.clientProfile.ID;
     }
@@ -33,7 +37,7 @@ const Enrollment = (props) => {
             //let placementVM = fetchPlacements();
             generateTable(props.placement);
 
-            generatePrintModal();
+            generatePrintModal(props.placement);
             //generateTable(placements);
         }
 
@@ -193,30 +197,81 @@ const Enrollment = (props) => {
         return diffInYears;
     }
 
-    function generatePrintModal() {
-        let divClientProfile = document.getElementById("divParticipantName");
-        divClientProfile.innerText = "";
+    function createColumnGroup(labelText, content) {
+        //let row = document.createElement("div");
+        //row.classList.add("row");
 
-        let clientProfileHeader = document.createElement("h5");
-        clientProfileHeader.innerText = "Profile Information";
+        let col = document.createElement("div")
+        col.classList.add("col-6");
+
+        let formGroup = document.createElement("div");
+        formGroup.classList.add("form-group");
+
+        let strong = document.createElement("strong");
+        strong.innerText = labelText;
+
+        let label = document.createElement("label");
+        label.appendChild(strong);
+
+        let contentDiv = document.createElement("div");
+        contentDiv.innerText = content;
     
-        divClientProfile.innerText = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
+        formGroup.appendChild(label);
+        formGroup.appendChild(contentDiv);
+        col.appendChild(formGroup);
 
-        let divSSN = document.getElementById("divClientSSN");
-        divSSN.innerText = props.clientProfile.Person.SSN;
+        return col;
+    } 
 
-        let divGender = document.getElementById("divGender");
-        divGender.innerText = props.clientProfile.Person.Gender.Name;
+    function generatePrintModal(placements) {
 
-        let divRace = document.getElementById("divRace");
-        divRace.innerText = props.clientProfile.Person.Race.Name;
+        //if (props.placement !== undefined && props.placement !== null && props.placement.length > 0) {
 
-        let divStateVCIN = document.getElementById("divStateVCIN");
-        divStateVCIN.innerText = props.clientProfile.Person.StateORVCIN;
+            //let placements = props.placement;
+            let divClientProfile = document.getElementById("divClientProfile");
+            divClientProfile.innerText = "";
 
-        let divCurrentAge = document.getElementById("divCurrentAge");
-        let currentAge = calculateAge(props.clientProfile.Person.DOB);
-        divCurrentAge.innerText = currentAge;
+            placements.forEach(placement => {
+                let firstRow = document.createElement("div");
+                firstRow.classList.add("row");
+                let participantName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
+                let participantNameColGroup = createColumnGroup("Profile Information", participantName);
+                //console.log(participantNameColGroup);
+                firstRow.appendChild(participantNameColGroup);
+
+
+                divClientProfile.appendChild(firstRow); 
+    
+            });
+    
+        //}
+ 
+
+
+
+        // let divClientProfile = document.getElementById("divParticipantName");
+        // divClientProfile.innerText = "";
+
+        // let clientProfileHeader = document.createElement("h5");
+        // clientProfileHeader.innerText = "Profile Information";
+    
+        // divClientProfile.innerText = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
+
+        // let divSSN = document.getElementById("divClientSSN");
+        // divSSN.innerText = props.clientProfile.Person.SSN;
+
+        // let divGender = document.getElementById("divGender");
+        // divGender.innerText = props.clientProfile.Person.Gender.Name;
+
+        // let divRace = document.getElementById("divRace");
+        // divRace.innerText = props.clientProfile.Person.Race.Name;
+
+        // let divStateVCIN = document.getElementById("divStateVCIN");
+        // divStateVCIN.innerText = props.clientProfile.Person.StateORVCIN;
+
+        // let divCurrentAge = document.getElementById("divCurrentAge");
+        // let currentAge = calculateAge(props.clientProfile.Person.DOB);
+        // divCurrentAge.innerText = currentAge;
 
         //divClientProfile.innerText = "";
         // let firstRow = document.createElement("div");
