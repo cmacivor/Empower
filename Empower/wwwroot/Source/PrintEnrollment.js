@@ -55,11 +55,14 @@ const PrintEnrollment = (props) => {
                         </div>
                         <div className="modal-body">
                            <div className="form-row">
-
-                               <div id="divClientProfile" className="col-6">
-                            
-
+                               <div className="col-6">
+                                    <label><strong>Participant's Name</strong></label>
+                                    <div id="divParticipantName" ></div>
                                </div>
+                                <div  className="col-6">
+                                    <label><strong>SSN</strong></label>
+                                    <div id="divClientSSN"></div>
+                                </div>
                            </div>
                         </div>
                         <div className="modal-footer">

@@ -187,19 +187,32 @@ const Enrollment = (props) => {
     }
 
     function generatePrintModal() {
-        let divClientProfile = document.getElementById("divClientProfile");
+        let divClientProfile = document.getElementById("divParticipantName");
         divClientProfile.innerText = "";
 
-        let clientProfileHeader = document.createElement("h4");
+        let clientProfileHeader = document.createElement("h5");
         clientProfileHeader.innerText = "Profile Information";
     
-        //divClientProfile.innerText = "";
-        let firstRow = document.createElement("div");
+        divClientProfile.innerText = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
 
-        let fullName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
-        firstRow.innerText = fullName;
-        divClientProfile.appendChild(clientProfileHeader);
-        divClientProfile.appendChild(firstRow);
+        let divSSN = document.getElementById("divClientSSN");
+        divSSN.innerText = props.clientProfile.Person.SSN;
+        
+
+        //divClientProfile.innerText = "";
+        // let firstRow = document.createElement("div");
+        
+        // let fullName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
+        // firstRow.innerText = fullName;
+        // divClientProfile.appendChild(clientProfileHeader);
+        // divClientProfile.appendChild(firstRow);
+
+        // let ssnDiv = document.getElementById("divClientSSN");
+        // let ssnLabel = document.createElement("label");
+        // let ssnStrong = document.createElement("strong");
+        // ssnStrong.innerText = "Participant's Name";
+        // ssnDiv.innerText = props.clientProfile.Person.SSN;
+
         //divClientProfile.innerText = fullName;
         //$("#participantLastName").val(fullName);
     }
