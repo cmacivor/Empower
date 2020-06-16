@@ -221,29 +221,53 @@ const Enrollment = (props) => {
         col.appendChild(formGroup);
 
         return col;
-    } 
+    }
+    
+    function createRow() {
+        let row = document.createElement("div");
+        row.classList.add("row");
+
+        return row;
+    }
 
     function generatePrintModal(placements) {
 
-        //if (props.placement !== undefined && props.placement !== null && props.placement.length > 0) {
 
-            //let placements = props.placement;
-            let divClientProfile = document.getElementById("divClientProfile");
-            divClientProfile.innerText = "";
+        //let placements = props.placement;
+        let divClientProfile = document.getElementById("divClientProfile");
+        divClientProfile.innerText = "";
 
-            placements.forEach(placement => {
-                let firstRow = document.createElement("div");
-                firstRow.classList.add("row");
-                let participantName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
-                let participantNameColGroup = createColumnGroup("Profile Information", participantName);
-                //console.log(participantNameColGroup);
-                firstRow.appendChild(participantNameColGroup);
+        placements.forEach(placement => {
 
+            let firstRow = createRow(); document.createElement("div");
+            
+            let participantName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
+            let participantNameColGroup = createColumnGroup("Participant's Name", participantName);
+            
+            firstRow.appendChild(participantNameColGroup);
 
-                divClientProfile.appendChild(firstRow); 
-    
-            });
-    
+            let ssnGroup = createColumnGroup("SSN", props.clientProfile.Person.SSN);
+            firstRow.appendChild(ssnGroup);
+
+            let secondRow = createRow(); 
+            let genderGroup = createColumnGroup("Gender", props.clientProfile.Person.Gender.Name);
+            secondRow.appendChild(genderGroup);
+            let raceGroup = createColumnGroup("Race", props.clientProfile.Person.Race.Name);
+            secondRow.appendChild(raceGroup);
+
+            let thirdRow = createRow();
+            let stateVcin = createColumnGroup("State/VCIN", props.clientProfile.Person.StateORVCIN);
+            let currentAge = calculateAge(props.clientProfile.Person.DOB);
+            let age = createColumnGroup("Current age", currentAge);
+            thirdRow.appendChild(stateVcin);
+            thirdRow.appendChild(age);
+
+            
+            divClientProfile.appendChild(firstRow);
+            divClientProfile.appendChild(secondRow); 
+            divClientProfile.appendChild(thirdRow);
+        });
+
         //}
  
 
