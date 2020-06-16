@@ -166,3 +166,13 @@ body {
 .btn-group button:hover {
   background-color: #3e8e41;
 }
+
+/*For the border on the print button */
+.lightBorder {
+  border: 2px solid black;
+  margin: auto;  
+  padding: 5px;
+ /*  text-align: center; */
+  /* border-style: solid;
+  border-width: medium; */
+}
