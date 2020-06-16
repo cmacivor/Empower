@@ -64,6 +64,26 @@ const PrintEnrollment = (props) => {
                                     <div id="divClientSSN"></div>
                                 </div>
                            </div>
+                           <div className="form-row">
+                               <div className="col-6">
+                                   <label><strong>Gender</strong></label>
+                                   <div id="divGender"></div>
+                               </div>
+                               <div className="col-6">
+                                   <label><strong>Race</strong></label>
+                                   <div id="divRace"></div>
+                               </div>
+                           </div>
+                           <div className="form-row">
+                               <div className="col-6">
+                                    <label><strong>State/VCIN</strong></label>
+                                    <div id="divStateVCIN"></div>
+                               </div>
+                               <div className="col-6">
+                                   <label><strong>Current Age</strong></label>
+                                   <div id="divCurrentAge"></div>
+                               </div>
+                           </div>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-primary" >Save</button>

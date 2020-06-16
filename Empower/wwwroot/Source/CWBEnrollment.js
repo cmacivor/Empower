@@ -186,6 +186,13 @@ const Enrollment = (props) => {
         });
     }
 
+    function calculateAge(birthDate) {
+        let difference = moment(new Date()).diff(birthDate);
+        let duration = moment.duration(difference, 'milliseconds');
+        let diffInYears = Math.round(duration.asYears());
+        return diffInYears;
+    }
+
     function generatePrintModal() {
         let divClientProfile = document.getElementById("divParticipantName");
         divClientProfile.innerText = "";
@@ -197,7 +204,19 @@ const Enrollment = (props) => {
 
         let divSSN = document.getElementById("divClientSSN");
         divSSN.innerText = props.clientProfile.Person.SSN;
-        
+
+        let divGender = document.getElementById("divGender");
+        divGender.innerText = props.clientProfile.Person.Gender.Name;
+
+        let divRace = document.getElementById("divRace");
+        divRace.innerText = props.clientProfile.Person.Race.Name;
+
+        let divStateVCIN = document.getElementById("divStateVCIN");
+        divStateVCIN.innerText = props.clientProfile.Person.StateORVCIN;
+
+        let divCurrentAge = document.getElementById("divCurrentAge");
+        let currentAge = calculateAge(props.clientProfile.Person.DOB);
+        divCurrentAge.innerText = currentAge;
 
         //divClientProfile.innerText = "";
         // let firstRow = document.createElement("div");
