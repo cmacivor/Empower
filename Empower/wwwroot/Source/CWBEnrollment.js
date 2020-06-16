@@ -37,7 +37,7 @@ const Enrollment = (props) => {
             //let placementVM = fetchPlacements();
             generateTable(props.placement);
 
-            generatePrintModal(props.placement);
+            generatePrintModal(props.placement, props.familyProfiles.FamilyProfile);
             //generateTable(placements);
         }
 
@@ -230,8 +230,7 @@ const Enrollment = (props) => {
         return row;
     }
 
-    function generatePrintModal(placements) {
-
+    function generatePrintModal(placements, familyProfiles) {
 
         //let placements = props.placement;
         let divClientProfile = document.getElementById("divClientProfile");
@@ -268,51 +267,57 @@ const Enrollment = (props) => {
             divClientProfile.appendChild(thirdRow);
         });
 
-        //}
- 
+        // let familyTable = document.getElementById("familyTable");
+        // let familyTBody = familyTable.createTBody();
+        let familyTableContainer = document.getElementById("familyTableContainer");
+        familyTableContainer.innerText = "";
+        let familyTable = document.createElement("table");
+        familyTable.classList.add("table");
 
+        //create the headers
+        let familyHeader = familyTable.createTHead();
+        let familyHeaderRow = familyHeader.insertRow(0);
+        let lastNameHeader = familyHeaderRow.insertCell(0);
+        lastNameHeader.innerHTML = "<strong>Last Name</strong>";
+        let firstNameHeader = familyHeaderRow.insertCell(1);
+        firstNameHeader.innerHTML = "<strong>First Name</strong>";
+        let middleNameHeader = familyHeaderRow.insertCell(2);
+        middleNameHeader.innerHTML = "<strong>Middle Name</strong>";
+        let suffixHeader = familyHeaderRow.insertCell(3);
+        suffixHeader.innerHTML = "<strong>Suffix</strong>";
+        let relationshipHeader = familyHeaderRow.insertCell(4);
+        relationshipHeader.innerHTML = "<strong>Relationship</strong>";
+        let homePhoneHeader = familyHeaderRow.insertCell(5);
+        homePhoneHeader.innerHTML = "<strong>Home Phone</strong>";
+        let workPhoneHeader = familyHeaderRow.insertCell(6);
+        workPhoneHeader.innerHTML = "<strong>Work Phone</strong>"
 
+        let familyTableTBody = familyTable.createTBody();
 
-        // let divClientProfile = document.getElementById("divParticipantName");
-        // divClientProfile.innerText = "";
+        familyTableContainer.appendChild(familyTable);
 
-        // let clientProfileHeader = document.createElement("h5");
-        // clientProfileHeader.innerText = "Profile Information";
-    
-        // divClientProfile.innerText = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
+        familyProfiles.forEach(familyProfile => {
+            console.log(familyProfile);
 
-        // let divSSN = document.getElementById("divClientSSN");
-        // divSSN.innerText = props.clientProfile.Person.SSN;
+            let dataRow = familyTableTBody.insertRow();
+            let lastNameCell = dataRow.insertCell(0);
+            lastNameCell.innerText = familyProfile.FamilyProfile.Person.LastName;
+            let firstNameCell = dataRow.insertCell(1);
+            firstNameCell.innerText = familyProfile.FamilyProfile.Person.FirstName;
+            let middleNameCell = dataRow.insertCell(2);
+            middleNameCell.innerText = familyProfile.FamilyProfile.Person.MiddleName;
+            let suffixCell = dataRow.insertCell(3);
+            suffixCell.innerText = familyProfile.FamilyProfile.Person.Suffix.Name;
+            let relationshipCell = dataRow.insertCell(4);
+            relationshipCell.innerText = familyProfile.FamilyProfile.Relationship.Description;
+            let homePhoneCell = dataRow.insertCell(5);
+            homePhoneCell.innerText = familyProfile.PersonSupplemental.HomePhone;
+            let workPhoneCell = dataRow.insertCell(6);
+            workPhoneCell.innerText = familyProfile.PersonSupplemental.WorkPhone;
 
-        // let divGender = document.getElementById("divGender");
-        // divGender.innerText = props.clientProfile.Person.Gender.Name;
+            
+        });
 
-        // let divRace = document.getElementById("divRace");
-        // divRace.innerText = props.clientProfile.Person.Race.Name;
-
-        // let divStateVCIN = document.getElementById("divStateVCIN");
-        // divStateVCIN.innerText = props.clientProfile.Person.StateORVCIN;
-
-        // let divCurrentAge = document.getElementById("divCurrentAge");
-        // let currentAge = calculateAge(props.clientProfile.Person.DOB);
-        // divCurrentAge.innerText = currentAge;
-
-        //divClientProfile.innerText = "";
-        // let firstRow = document.createElement("div");
-        
-        // let fullName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
-        // firstRow.innerText = fullName;
-        // divClientProfile.appendChild(clientProfileHeader);
-        // divClientProfile.appendChild(firstRow);
-
-        // let ssnDiv = document.getElementById("divClientSSN");
-        // let ssnLabel = document.createElement("label");
-        // let ssnStrong = document.createElement("strong");
-        // ssnStrong.innerText = "Participant's Name";
-        // ssnDiv.innerText = props.clientProfile.Person.SSN;
-
-        //divClientProfile.innerText = fullName;
-        //$("#participantLastName").val(fullName);
     }
 
     function fetchPlacements() {
@@ -670,8 +675,6 @@ const Enrollment = (props) => {
                 });
             }
     
-
-
             bodyDiv.appendChild(table);
 
             divRef.appendChild(parentCard);
