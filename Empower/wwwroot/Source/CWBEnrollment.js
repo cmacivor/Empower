@@ -230,44 +230,41 @@ const Enrollment = (props) => {
         return row;
     }
 
-    function generatePrintModal(placements, familyProfiles) {
-
-        //let placements = props.placement;
+    function buildClientProfileHeaderForPrintModal() {
         let divClientProfile = document.getElementById("divClientProfile");
         divClientProfile.innerText = "";
 
-        placements.forEach(placement => {
-
-            let firstRow = createRow(); document.createElement("div");
+        let firstRow = createRow(); document.createElement("div");
             
-            let participantName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
-            let participantNameColGroup = createColumnGroup("Participant's Name", participantName);
-            
-            firstRow.appendChild(participantNameColGroup);
+        let participantName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
+        let participantNameColGroup = createColumnGroup("Participant's Name", participantName);
+        
+        firstRow.appendChild(participantNameColGroup);
 
-            let ssnGroup = createColumnGroup("SSN", props.clientProfile.Person.SSN);
-            firstRow.appendChild(ssnGroup);
+        let ssnGroup = createColumnGroup("SSN", props.clientProfile.Person.SSN);
+        firstRow.appendChild(ssnGroup);
 
-            let secondRow = createRow(); 
-            let genderGroup = createColumnGroup("Gender", props.clientProfile.Person.Gender.Name);
-            secondRow.appendChild(genderGroup);
-            let raceGroup = createColumnGroup("Race", props.clientProfile.Person.Race.Name);
-            secondRow.appendChild(raceGroup);
+        let secondRow = createRow(); 
+        let genderGroup = createColumnGroup("Gender", props.clientProfile.Person.Gender.Name);
+        secondRow.appendChild(genderGroup);
+        let raceGroup = createColumnGroup("Race", props.clientProfile.Person.Race.Name);
+        secondRow.appendChild(raceGroup);
 
-            let thirdRow = createRow();
-            let stateVcin = createColumnGroup("State/VCIN", props.clientProfile.Person.StateORVCIN);
-            let currentAge = calculateAge(props.clientProfile.Person.DOB);
-            let age = createColumnGroup("Current age", currentAge);
-            thirdRow.appendChild(stateVcin);
-            thirdRow.appendChild(age);
+        let thirdRow = createRow();
+        let stateVcin = createColumnGroup("State/VCIN", props.clientProfile.Person.StateORVCIN);
+        let currentAge = calculateAge(props.clientProfile.Person.DOB);
+        let age = createColumnGroup("Current age", currentAge);
+        thirdRow.appendChild(stateVcin);
+        thirdRow.appendChild(age);
 
-            
-            divClientProfile.appendChild(firstRow);
-            divClientProfile.appendChild(secondRow); 
-            divClientProfile.appendChild(thirdRow);
-        });
+        
+        divClientProfile.appendChild(firstRow);
+        divClientProfile.appendChild(secondRow); 
+        divClientProfile.appendChild(thirdRow);
+    }
 
-        // let familyTable = document.getElementById("familyTable");
+    function buildFamilyTableForPrintModal(familyProfiles) {
+  // let familyTable = document.getElementById("familyTable");
         // let familyTBody = familyTable.createTBody();
         let familyTableContainer = document.getElementById("familyTableContainer");
         familyTableContainer.innerText = "";
@@ -313,10 +310,20 @@ const Enrollment = (props) => {
             let homePhoneCell = dataRow.insertCell(5);
             homePhoneCell.innerText = familyProfile.PersonSupplemental.HomePhone;
             let workPhoneCell = dataRow.insertCell(6);
-            workPhoneCell.innerText = familyProfile.PersonSupplemental.WorkPhone;
-
-            
+            workPhoneCell.innerText = familyProfile.PersonSupplemental.WorkPhone;        
         });
+    }
+
+    function generatePrintModal(placements, familyProfiles) {
+
+        buildClientProfileHeaderForPrintModal();
+        
+        buildFamilyTableForPrintModal(familyProfiles);
+    
+        placements.forEach(placement => {
+   
+        });
+
 
     }
 
