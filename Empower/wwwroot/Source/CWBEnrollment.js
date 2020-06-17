@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
@@ -230,6 +230,7 @@ const Enrollment = (props) => {
         return row;
     }
 
+    //build the client profile box in the print modal
     function buildClientProfileHeaderForPrintModal() {
         let divClientProfile = document.getElementById("divClientProfile");
         divClientProfile.innerText = "";
@@ -263,6 +264,7 @@ const Enrollment = (props) => {
         divClientProfile.appendChild(thirdRow);
     }
 
+    //creates the table of family members in the print modal
     function buildFamilyTableForPrintModal(familyProfiles) {
   // let familyTable = document.getElementById("familyTable");
         // let familyTBody = familyTable.createTBody();
@@ -314,6 +316,7 @@ const Enrollment = (props) => {
         });
     }
 
+    //builds the placement boxes in the print modal
     function generatePlacementRows(placements) {
         let divPlacements = document.getElementById("divPlacements");        
         divPlacements.innerText = "";
@@ -329,7 +332,45 @@ const Enrollment = (props) => {
             let participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", placement.Placement.PlacementLevel.Name);
             firstRow.appendChild(participateInSnapGroup);
 
+            let secondRow = createRow();
+            let formattedCourtDate = moment(new Date(placement.Placement.NextCourtDate)).format('YYYY-MM-DD');
+            let nextApptDateGroup = createColumnGroup("Next Appt. Date", formattedCourtDate);
+            secondRow.appendChild(nextApptDateGroup);
+            let viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", placement.Placement.Judge.Name);
+            secondRow.appendChild(viewTanfGroup);
+
+            let thirdRow = createRow();
+            let assisTanceTypeGroup = createColumnGroup("Assistance Type", placement.Placement.AssistanceType.Name);
+            thirdRow.appendChild(assisTanceTypeGroup);
+
+            let fourthRow = createRow();
+            let commentsGroup = createColumnGroup("Comments", placement.Placement.Comments);
+            fourthRow.appendChild(commentsGroup);
+
+            let fifthRow = createRow();
+            let formattedEmploymentStartDate = moment(new Date(placement.Placement.EmployerStartDate)).format('YYYY-MM-DD');
+            let employmentStartDateGroup = createColumnGroup("Employment Start Date", formattedEmploymentStartDate);
+            fifthRow.appendChild(employmentStartDateGroup);
+            let wagesGroup = createColumnGroup("Wages ($ per hour)", placement.Placement.EmployerWages);
+            fifthRow.appendChild(wagesGroup);
+
+            let sixthRow = createRow();
+            let employerBenefitsGroup = createColumnGroup("Benefits", placement.Placement.EmployerWages);
+            sixthRow.appendChild(employerBenefitsGroup);
+            let careerPathWayGroup = createColumnGroup("Career Pathway Position", placement.Placement.CareerPathway.Name);
+            sixthRow.appendChild(careerPathWayGroup);
+
+            let seventhRow = createRow();
+            let fullOrPartTime = createColumnGroup("Full or Part-Time", placement.Placement.EmployerFullPartTime);
+            seventhRow.appendChild(fullOrPartTime);
+
             highlightedBox.appendChild(firstRow);
+            highlightedBox.appendChild(secondRow);
+            highlightedBox.appendChild(thirdRow);
+            highlightedBox.appendChild(fourthRow);
+            highlightedBox.appendChild(fifthRow);
+            highlightedBox.appendChild(sixthRow);
+            highlightedBox.appendChild(seventhRow);
 
             divPlacements.appendChild(highlightedBox);
 
