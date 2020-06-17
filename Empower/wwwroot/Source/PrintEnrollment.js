@@ -60,23 +60,11 @@ const PrintEnrollment = (props) => {
                            <br/>
                            <h3>Family Information</h3>
                            <div className="row">
-                               <div id="familyTableContainer" className="col-12">
-                                   {/* <table id="familyTable" className="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Last Name</th>
-                                                <th>First Name</th>
-                                                <th>Middle Name</th>
-                                                <th>Suffix</th>
-                                                <th>Relationship</th>
-                                                <th>Home Phone</th>
-                                                <th>Work Phone</th>
-                                            </tr>
-                                        </thead>
-                                     
-                                   </table> */}
-                               
+                               <div id="familyTableContainer" className="col-12">        
                                </div>
+                           </div>
+                           <div id="divPlacements">
+                                
                            </div>
                         </div>
                         <div className="modal-footer">

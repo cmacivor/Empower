@@ -234,7 +234,7 @@ const Enrollment = (props) => {
         let divClientProfile = document.getElementById("divClientProfile");
         divClientProfile.innerText = "";
 
-        let firstRow = createRow(); document.createElement("div");
+        let firstRow = createRow(); //document.createElement("div");
             
         let participantName = props.clientProfile.Person.FirstName + " " + props.clientProfile.Person.LastName;
         let participantNameColGroup = createColumnGroup("Participant's Name", participantName);
@@ -314,17 +314,35 @@ const Enrollment = (props) => {
         });
     }
 
+    function generatePlacementRows(placements) {
+        let divPlacements = document.getElementById("divPlacements");        
+        divPlacements.innerText = "";
+        placements.forEach(placement => {
+            let highlightedBox = document.createElement("div");
+            highlightedBox.classList.add("lightBorder");
+
+            let firstRow = createRow();
+
+            let courtOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
+            let enrollmentDateGroup = createColumnGroup("Enrollment Date", courtOrderDate);
+            firstRow.appendChild(enrollmentDateGroup);
+            let participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", placement.Placement.PlacementLevel.Name);
+            firstRow.appendChild(participateInSnapGroup);
+
+            highlightedBox.appendChild(firstRow);
+
+            divPlacements.appendChild(highlightedBox);
+
+        });
+    }
+
     function generatePrintModal(placements, familyProfiles) {
 
         buildClientProfileHeaderForPrintModal();
         
         buildFamilyTableForPrintModal(familyProfiles);
     
-        placements.forEach(placement => {
-   
-        });
-
-
+        generatePlacementRows(placements);
     }
 
     function fetchPlacements() {
