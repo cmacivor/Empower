@@ -63,8 +63,13 @@ const PrintEnrollment = (props) => {
                                <div id="familyTableContainer" className="col-12">        
                                </div>
                            </div>
+                           <h3>Placements</h3>
                            <div id="divPlacements">
-                                
+
+                           </div>
+                           <h3>Enrollments</h3>
+                           <div id="divEnrollments">
+
                            </div>
                         </div>
                         <div className="modal-footer">

@@ -374,7 +374,56 @@ const Enrollment = (props) => {
 
             divPlacements.appendChild(highlightedBox);
 
+
+            generateEnrollmentRows(placement);
+
         });
+    }
+
+    function generateEnrollmentRows(enrollments) {
+        let divEnrollments = document.getElementById("divEnrollments");
+        divEnrollments.innerText = "";
+        //console.log('the enrollments');
+        //console.log(enrollments);
+
+        //for each enrollment, write the enrollment -> Staff rows, and then the enrollment.
+        enrollments.Enrollment.forEach(enrollment => {
+            
+
+            //first make the enrollment box
+            let enrollmentBox = document.createElement("div");
+            enrollmentBox.classList.add("lightBorder");
+            let enrollmentTitle = document.createElement("h5");
+            enrollmentTitle.innerText = "Referral";
+            enrollmentBox.appendChild(enrollmentTitle);
+
+            let enrollmentFirstRow = createRow();
+            let formattedEnrollmentReferralDate = moment(new Date( enrollment.Enrollment.ReferralDate)).format('YYYY-MM-DD');
+            let enrollmentReferralDateGroup = createColumnGroup("Referral Date", formattedEnrollmentReferralDate);
+            enrollmentFirstRow.appendChild(enrollmentReferralDateGroup);
+
+            enrollmentBox.appendChild(enrollmentFirstRow);
+
+            let lineBreak = document.createElement("br");
+            divEnrollments.appendChild(lineBreak);
+
+            //build the counselor box for the enrollment
+            let counselorHighlightedBox = document.createElement("div");
+            counselorHighlightedBox.classList.add("lightBorder");
+            let counselorTitle = document.createElement("h5");
+            counselorTitle.innerText = "Counselor";
+            counselorHighlightedBox.appendChild(counselorTitle);
+            
+            let firstRow = createRow();
+            let counselorFirstNameGroup = createColumnGroup("Full Name", enrollment.Enrollment.Counselor.FirstName + " " + enrollment.Enrollment.Counselor.LastName);
+            firstRow.appendChild(counselorFirstNameGroup);
+
+            counselorHighlightedBox.appendChild(firstRow);
+            
+            divEnrollments.appendChild(enrollmentBox);
+            divEnrollments.appendChild(counselorHighlightedBox);
+        });
+
     }
 
     function generatePrintModal(placements, familyProfiles) {
@@ -403,29 +452,6 @@ const Enrollment = (props) => {
     }
 
     function  getPlacementsByClientProfileID() {
-        // let apiAddress = sessionStorage.getItem("baseApiAddress");
-        // let clientProfileID = props.clientProfile.ID;
-        // //let fullGetPlacementsAddress = `${apiAddress}/api/`Placement/GetPlacementsByClientProfileID/${clientProfileID}`;
-        // let fullGetPlacementsAddress = `${apiAddress}/api/ClientProfile/GetPlacementsByClientProfileId/${clientProfileID}`;
-        // let sessionStorageData = getSessionData();
-
-        // fetch(fullGetPlacementsAddress, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': 'Bearer ' + sessionStorageData.Token
-        //     }
-        // }).then(result => result.json())
-        // .then(result => {
-        //     //console.log('the new method');
-        //     //console.log(result);
-            
-        // });
-
-
-        // let placement = fetchPlacements();
-
-        // generateTable(placement);
 
         fetchPlacements().then(placement => generateTable(placement));
     }
