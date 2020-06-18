@@ -417,11 +417,28 @@ const Enrollment = (props) => {
             let firstRow = createRow();
             let counselorFirstNameGroup = createColumnGroup("Full Name", enrollment.Enrollment.Counselor.FirstName + " " + enrollment.Enrollment.Counselor.LastName);
             firstRow.appendChild(counselorFirstNameGroup);
+            let titleGroup = createColumnGroup("Title", enrollment.Enrollment.Counselor.JobTitle.Name);
+            firstRow.appendChild(titleGroup);
+            
+            let secondCounselorRow = createRow();
+            let phoneNumberGroup = createColumnGroup("Phone Number", enrollment.Enrollment.Counselor.Phone);
+            secondCounselorRow.appendChild(phoneNumberGroup);
+            let faxGroup = createColumnGroup("Fax", enrollment.Enrollment.Counselor.Fax);
+            secondCounselorRow.appendChild(faxGroup);
+
+            let thirdCounselorRow = createRow();
+            let emailGroup = createColumnGroup("E-Mail", enrollment.Enrollment.Counselor.EMail);
+            thirdCounselorRow.appendChild(emailGroup);
+            let departmentGroup = createColumnGroup("Department", enrollment.Enrollment.Counselor.Department);
+            thirdCounselorRow.appendChild(departmentGroup);
 
             counselorHighlightedBox.appendChild(firstRow);
+            counselorHighlightedBox.appendChild(secondCounselorRow);
+            counselorHighlightedBox.appendChild(thirdCounselorRow);
             
             divEnrollments.appendChild(enrollmentBox);
             divEnrollments.appendChild(counselorHighlightedBox);
+            
         });
 
     }
