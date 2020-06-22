@@ -17,29 +17,26 @@ const EmploymentPlan = (props) => {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div id="accordion">
-                                <div className="card">
-                                    <div className="card-header">
-                                        Goals
-                                    </div>
-                                    <div id="moreDetails" className="collapse" data-parent="#accordion">
-                                        <div className="card-body">
-                                            <div className="form-row">
-                                                <div className="col-12">
-                                                    <label htmlFor="txtEmploymentGoal"><strong>Employment Goal</strong></label>
-                                                    <textarea id="txtEmploymentGoal" className="form-control" defaultValue="" ></textarea>
-                                                </div>
-                                            </div>
-                                            <div className="form-row">
-                                                <div className="col-12">
-                                                    <label htmlFor="txtEducationalTrainingGoal"><strong>Educational/Training Goal *</strong></label>
-                                                    <textarea id="txtEducationalTrainingGoal" className="form-control" defaultValue="" ></textarea>
-                                                </div>
-                                            </div>            
+                            <div className="card">
+                                <div className="card-header">
+                                    Goals
+                                </div>
+                                <div className="card-body">
+                                    <div className="form-row">
+                                        <div className="col-12">
+                                            <label htmlFor="txtEmploymentGoal"><strong>Employment Goal</strong></label>
+                                            <textarea id="txtEmploymentGoal" className="form-control" defaultValue="" ></textarea>
                                         </div>
                                     </div>
+                                    <div className="form-row">
+                                        <div className="col-12">
+                                            <label htmlFor="txtEducationalTrainingGoal"><strong>Educational/Training Goal *</strong></label>
+                                            <textarea id="txtEducationalTrainingGoal" className="form-control" defaultValue="" ></textarea>
+                                        </div>
+                                    </div>            
                                 </div>
                             </div>
+                            <br/>
                             <div id="occupationStrengthsAccordion">   
                                 <div className="card">
                                     <div className="card-header">
@@ -65,6 +62,7 @@ const EmploymentPlan = (props) => {
                                     </div>
                                 </div>
                             </div>
+                            <br></br>
                             <div id="educationalTrainingAccordion">
                                 <div className="card">
                                     <div className="card-header">
