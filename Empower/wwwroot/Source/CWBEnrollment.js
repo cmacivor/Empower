@@ -157,6 +157,9 @@ const Enrollment = (props) => {
     function createColumnGroup(labelText, content) {
         //let row = document.createElement("div");
         //row.classList.add("row");
+        if (content === undefined || content === null) {
+            content = "";
+        }
 
         let col = document.createElement("div")
         col.classList.add("col-6");
@@ -286,18 +289,36 @@ const Enrollment = (props) => {
             let courtOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
             let enrollmentDateGroup = createColumnGroup("Enrollment Date", courtOrderDate);
             firstRow.appendChild(enrollmentDateGroup);
-            let participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", placement.Placement.PlacementLevel.Name);
+
+            let participateInSnapGroup;
+            if (placement.Placement.PlacementLevel !== null) {
+                participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", placement.Placement.PlacementLevel.Name);
+            } else {
+                participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", "");
+            }
             firstRow.appendChild(participateInSnapGroup);
 
             let secondRow = createRow();
             let formattedCourtDate = moment(new Date(placement.Placement.NextCourtDate)).format('YYYY-MM-DD');
             let nextApptDateGroup = createColumnGroup("Next Appt. Date", formattedCourtDate);
             secondRow.appendChild(nextApptDateGroup);
-            let viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", placement.Placement.Judge.Name);
+
+            let viewTanfGroup; 
+            if (placement.Placement.Judge.Name) {
+                viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", placement.Placement.Judge.Name);
+            } else {
+                viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", "");
+            }
             secondRow.appendChild(viewTanfGroup);
 
             let thirdRow = createRow();
-            let assisTanceTypeGroup = createColumnGroup("Assistance Type", placement.Placement.AssistanceType.Name);
+            let assisTanceTypeGroup;
+            if (placement.Placement.AssistanceType !== null) {
+                assisTanceTypeGroup = createColumnGroup("Assistance Type", placement.Placement.AssistanceType.Name);
+            } else {
+                assisTanceTypeGroup = createColumnGroup("Assistance Type", "");
+            }
+
             thirdRow.appendChild(assisTanceTypeGroup);
 
             let fourthRow = createRow();
@@ -314,7 +335,14 @@ const Enrollment = (props) => {
             let sixthRow = createRow();
             let employerBenefitsGroup = createColumnGroup("Benefits", placement.Placement.EmployerWages);
             sixthRow.appendChild(employerBenefitsGroup);
-            let careerPathWayGroup = createColumnGroup("Career Pathway Position", placement.Placement.CareerPathway.Name);
+
+            let careerPathWayGroup
+            if (placement.Placement.CareerPathway !== null) {
+                careerPathWayGroup = createColumnGroup("Career Pathway Position", placement.Placement.CareerPathway.Name);
+            } else {
+                careerPathWayGroup = createColumnGroup("Career Pathway Position", "");
+            }
+
             sixthRow.appendChild(careerPathWayGroup);
 
             let seventhRow = createRow();

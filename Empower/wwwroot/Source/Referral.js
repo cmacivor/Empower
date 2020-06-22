@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
+import { generateTable, getPlacementsByClientProfileID, togglePlacementModal, toggleEnrollmentModal } from './EnrollmentTabHelpers';
 
 const Referral = (props) => {
 
@@ -207,9 +208,11 @@ const Referral = (props) => {
 
             props.createNotification('The enrollment was successfully saved.');
 
-            props.togglePlacementModal();
+            togglePlacementModal();
+            //props.togglePlacementModal();
 
-            props.refreshEnrollmentGrid();
+            getPlacementsByClientProfileID();
+            //props.refreshEnrollmentGrid();
         });
     }
 
