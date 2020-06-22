@@ -17,7 +17,7 @@ const EmploymentPlan = (props) => {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div id="accordion"> 
+                            <div id="accordion">
                                 <div className="card">
                                     <div className="card-header">
                                         Goals
@@ -39,13 +39,15 @@ const EmploymentPlan = (props) => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div id="occupationStrengthsAccordion">   
                                 <div className="card">
                                     <div className="card-header">
-                                        <a className="collapsed card-link" data-toggle="collapse" href="#moreDetails">
+                                        <a className="collapsed card-link" data-toggle="collapse" href="#occupationalStrengthDetails">
                                             Occupational Strengths
                                         </a>
                                     </div>
-                                    <div id="moreDetails" className="collapse" data-parent="#accordion">
+                                    <div id="occupationalStrengthDetails" className="collapse" data-parent="#occupationStrengthsAccordion">
                                         <div className="card-body">
                                             <div className="form-row">
                                                 <div className="col-12">
@@ -62,13 +64,15 @@ const EmploymentPlan = (props) => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div id="educationalTrainingAccordion">
                                 <div className="card">
                                     <div className="card-header">
-                                        <a className="collapsed card-link" data-toggle="collapse" href="#moreDetails">
+                                        <a className="collapsed card-link" data-toggle="collapse" href="#educationTrainingDetails">
                                             Education and Training Strengths
                                         </a>
                                     </div>
-                                    <div id="moreDetails" className="collapse" data-parent="#accordion">
+                                    <div id="educationTrainingDetails" className="collapse" data-parent="#educationalTrainingAccordion">
                                         <div className="card-body">
                                             <div className="form-row">
                                                 <div className="col-12">
