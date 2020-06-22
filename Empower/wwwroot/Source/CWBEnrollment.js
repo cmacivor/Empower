@@ -69,7 +69,11 @@ const Enrollment = (props) => {
         $("#enrollmentModal").modal('toggle');
     }
 
-    function togglePlacementModal() {
+    function togglePlacementModal(event) {
+        let selectedPlacementID = event.currentTarget.getAttribute("data-id");
+        //$("#btnSaveEnrollment").data()
+        document.getElementById("btnSaveEnrollment").setAttribute("data-id", selectedPlacementID);
+
         $("#referralModal").modal('toggle');
     }
 
@@ -698,7 +702,7 @@ const Enrollment = (props) => {
             addReferralButton.classList.add("btn-secondary");
             addReferralButton.classList.add("btn-sm");
             addReferralButton.setAttribute("data-id", placementRecord.ID);
-            $("#hdnCurrentlySelectedPlacementID").val(placementRecord.ID);
+            
             addReferralButton.innerText = "Add Referral";
             addReferralButton.onclick = togglePlacementModal;
 

@@ -135,7 +135,8 @@ const Referral = (props) => {
         return value;
     }
 
-    function saveEnrollment() {
+    function saveEnrollment(event) {
+        let selectedPlacementID = event.currentTarget.getAttribute("data-id");
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonEnrollmentAddress = `${apiAddress}/api/Enrollment`;
@@ -153,7 +154,7 @@ const Referral = (props) => {
         let serviceOutcomeID = getElementValue("btnServiceOutcome");
 
         let enrollment = {
-            PlacementID: $("#hdnPlacementID").val(),
+            PlacementID: selectedPlacementID, //$("#hdnPlacementID").val(),
             ReferralDate: referralDate,
             //ServiceProgramCategoryID: $("#btnCareerAdvisorName").val(),
             CounselorID: careerAdvisor,
@@ -399,7 +400,7 @@ const Referral = (props) => {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" onClick={ saveEnrollment } >Save</button>
+                            <button type="button" className="btn btn-primary" id="btnSaveEnrollment" onClick={ saveEnrollment } >Save</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
