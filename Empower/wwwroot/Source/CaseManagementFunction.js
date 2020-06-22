@@ -133,6 +133,9 @@ const CaseManagementFunction = (props) => {
         setClientProfile(clientProfile); //updates the local state
         setPersonID(clientProfile.ClientProfile.Person.ID);
 
+        sessionStorage.setItem('clientProfileID', clientProfile.ClientProfile.ID);
+        sessionStorage.setItem('clientProfilePersonID', clientProfile.ClientProfile.PersonID);
+
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
         //infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
     }
