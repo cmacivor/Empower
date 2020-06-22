@@ -17,7 +17,6 @@ export function toggleEnrollmentModal() {
 function fetchPlacements() {
     let apiAddress = sessionStorage.getItem("baseApiAddress");
 
-    //let clientProfileID = props.clientProfile.ID;
     let clientProfileID = sessionStorage.getItem("clientProfileID");
 
     let fullGetPlacementsAddress = `${apiAddress}/api/ClientProfile/GetPlacementsByClientProfileId/${clientProfileID}`;

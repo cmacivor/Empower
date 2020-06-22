@@ -10,6 +10,7 @@ import SupplementalAdult from './SupplementalAdult';
 import SupplementalJuvenile from './SupplementalJuvenile';
 import {useStore} from './StateStores/store';
 import {ToastContainer, toast} from 'react-toastify';
+import {triggerToastMessage, triggerErrorMessage  } from './ToastHelper';
 import 'react-toastify/dist/ReactToastify.css';
 import {getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
@@ -81,27 +82,7 @@ const CaseManagementFunction = (props) => {
     let systems = getSystems();
 
 
-    function triggerToastMessage(message) {       
-        toast.success(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true
-            });
-    }
 
-    function triggerErrorMessage(message){
-        toast.error(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true
-        });
-    }
 
     function EnableTabs() {
         setEnabled(false);
