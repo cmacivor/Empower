@@ -9,6 +9,10 @@ function togglePrintScreen() {
     $("#printModal").modal('toggle');
 }
 
+function toggleEmploymentPlanModal() {
+    $("#employmentPlanModal").modal('toggle');
+}
+
 export function toggleEnrollmentModal() {
     //TODO: add function to clear the modal on opening
     $("#enrollmentModal").modal('toggle');
@@ -354,6 +358,17 @@ export function generateTable(placements) {
                 printButton.innerHTML = faPrint;
                 printButton.onclick = togglePrintScreen;
                 editButtonCell.appendChild(printButton);
+
+                //add the Add/Edit Employment button
+                let employmentButton = document.createElement("button");
+                employmentButton.classList.add("btn");
+                employmentButton.classList.add("btn-info");
+                employmentButton.classList.add("btn-sm");
+                employmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
+                let faSuitCase = "<i class='fa fa-suitcase' aria-hidden='true'></i>";
+                employmentButton.innerHTML = faSuitCase;
+                employmentButton.onclick = toggleEmploymentPlanModal;
+                editButtonCell.appendChild(employmentButton);
 
                 let serviceNameCell = enrollmentRow.insertCell(1);
                 if (enrollment.Enrollment.ServiceProgramCategory !== null) {

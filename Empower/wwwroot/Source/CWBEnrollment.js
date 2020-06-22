@@ -4,6 +4,7 @@ import { getSessionData } from './commonAdmin';
 import moment from 'moment';
 import Referral from './Referral';
 import PrintEnrollment from './PrintEnrollment';
+import EmploymentPlan from './EmploymentPlan';
 import { generateTable, getPlacementsByClientProfileID, togglePlacementModal, toggleEnrollmentModal } from './EnrollmentTabHelpers';
 
 //import modal from './bootstrap.js';
@@ -719,6 +720,7 @@ const Enrollment = (props) => {
          <PrintEnrollment 
          clientProfileID = {clientProfileId }
          clientProfile ={props.clientProfile} />
+         <EmploymentPlan />
     </div>
 }
 
