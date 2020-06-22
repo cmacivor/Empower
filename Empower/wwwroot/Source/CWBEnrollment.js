@@ -70,9 +70,12 @@ const Enrollment = (props) => {
     }
 
     function togglePlacementModal(event) {
-        let selectedPlacementID = event.currentTarget.getAttribute("data-id");
-        //$("#btnSaveEnrollment").data()
-        document.getElementById("btnSaveEnrollment").setAttribute("data-id", selectedPlacementID);
+        if (event !== undefined) {
+            let selectedPlacementID = event.currentTarget.getAttribute("data-id");
+            //$("#btnSaveEnrollment").data()
+            document.getElementById("btnSaveEnrollment").setAttribute("data-id", selectedPlacementID);
+        }
+
 
         $("#referralModal").modal('toggle');
     }
