@@ -23,8 +23,22 @@ function getEmploymentPlan(selectedEnrollmentID) {
         }
     }).then(result => result.json())
     .then(result => {
-        console.log(result);
+        //console.log(result);
 
+        if (result !== null) {
+            $("#txtEmploymentGoal").val(result.EmploymentGoal);
+            $("#txtEducationalTrainingGoal").val(result.EduTrainGoal);
+            $("#txtEPWorkExperience").val(result.WorkExperience);
+            $("#txtEPStrengths").val(result.Strengths);
+            $("#txtAdditionalTrainingAttended").val(result.AddtlTraining);
+            $("#txtCredentialsReceived").val(result.Credentials);
+            $("#txtBarriersToEmployment").val(result.Barriers);
+            $("#hdnEmploymentPlanCreatedDate").val(result.CreatedDate);
+            $("#hdnEmploymentPlanCreatedBy").val(result.CreatedBy);
+            $("#hdnEmploymentPlanID").val(result.ID);
+        }
+
+       
         // if (result === null || result.Message !== undefined) {
         //     triggerErrorMessage("an error occurred while saving the record.");
         //     return;

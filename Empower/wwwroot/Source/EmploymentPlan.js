@@ -11,7 +11,7 @@ const EmploymentPlan = (props) => {
     function saveEmploymentPlan() {
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
-        let fullPersonEmploymentPlanAddress = `${apiAddress}/api/EmploymentPlan`;
+        let fullPersonEmploymentPlanAddress = ""; //= `${apiAddress}/api/EmploymentPlan`;
         let sessionStorageData = getSessionData();
 
         let employmentPlan = {
@@ -24,14 +24,30 @@ const EmploymentPlan = (props) => {
             Credentials: $("#txtCredentialsReceived").val(),
             Barriers: $("#txtBarriersToEmployment").val(),
             Active: true,
-            CreatedDate: new Date(),
-            CreatedBy: sessionStorageData.CurrentUser,
+            //CreatedDate: new Date(),
+            //CreatedBy: sessionStorageData.CurrentUser,
             UpdatedDate: new Date(),
             UpdatedBy: sessionStorageData.CurrentUser
         }
 
+        let employmentPlanID = $("#hdnEmploymentPlanID").val();
+        
+        let methodType = "";
+        if (employmentPlanID !== "") {
+            methodType = "PUT";
+            employmentPlan.ID = employmentPlanID;
+            employmentPlan.CreatedDate = new Date($("#hdnEmploymentPlanCreatedDate").val());
+            employmentPlan.CreatedBy = $("#hdnEmploymentPlanCreatedBy").val();
+            fullPersonEmploymentPlanAddress = `${apiAddress}/api/EmploymentPlan/UpdateEmploymentPlan/${employmentPlanID}`;
+        } else {
+            methodType = "POST";
+            employmentPlan.CreatedDate = new Date();
+            employmentPlan.CreatedBy = sessionStorageData.CurrentUser;
+            fullPersonEmploymentPlanAddress = `${apiAddress}/api/EmploymentPlan`;
+        }
+
         fetch(fullPersonEmploymentPlanAddress, {
-            method: 'POST',
+            method: methodType,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + sessionStorageData.Token
@@ -55,6 +71,9 @@ const EmploymentPlan = (props) => {
     }
 
     return <div>
+            <input type="hidden" id="hdnEmploymentPlanCreatedDate" />
+            <input type="hidden" id="hdnEmploymentPlanCreatedBy" />
+            <input type="hidden" id="hdnEmploymentPlanID" />
               <form id="frmEmploymentPlan">
             <div className="modal fade" id="employmentPlanModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
