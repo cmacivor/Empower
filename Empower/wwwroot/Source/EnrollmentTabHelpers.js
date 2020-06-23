@@ -7,11 +7,43 @@ function togglePrintScreen() {
     $("#printModal").modal('toggle');
 }
 
+
+function getEmploymentPlan(selectedEnrollmentID) {
+    //let selectedEnrollmentID = event.currentTarget.getAttribute('value');
+
+    let apiAddress = sessionStorage.getItem("baseApiAddress");
+    let fullGetEmploymentPlanAddress = `${apiAddress}/api/EmploymentPlan/GetEmploymentPlan/${selectedEnrollmentID}`;
+    let sessionStorageData = getSessionData();
+
+    fetch(fullGetEmploymentPlanAddress, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+    }).then(result => result.json())
+    .then(result => {
+        console.log(result);
+
+        // if (result === null || result.Message !== undefined) {
+        //     triggerErrorMessage("an error occurred while saving the record.");
+        //     return;
+        // }
+
+        //triggerToastMessage('The enrollment was successfully saved.');
+
+        toggleEmploymentPlanModal();
+
+    });
+}
+
 export function toggleEmploymentPlanModal(event) {
     if (event !== undefined) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
         //$("#btnSaveEnrollment").data()
         document.getElementById("btnSaveEmploymentPlan").setAttribute("data-id", selectedEnrollmentID);
+
+        getEmploymentPlan(selectedEnrollmentID);
     }
 
     $("#employmentPlanModal").modal('toggle');
