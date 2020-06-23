@@ -186,10 +186,6 @@ const Referral = (props) => {
             enrollment.CreatedBy = sessionStorageData.CurrentUser;
         }
 
-   
-
-        //console.log(enrollment);
-
         fetch(fullPersonEnrollmentAddress, {
             method: methodType,
             headers: {

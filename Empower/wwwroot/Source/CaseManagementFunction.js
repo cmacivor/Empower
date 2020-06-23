@@ -81,9 +81,6 @@ const CaseManagementFunction = (props) => {
 
     let systems = getSystems();
 
-
-
-
     function EnableTabs() {
         setEnabled(false);
         setDefaultTab("participantinfo");

@@ -1,9 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
-
+import { getPlacementsByClientProfileID, toggleEmploymentPlanModal } from './EnrollmentTabHelpers';
+import {triggerToastMessage, triggerErrorMessage  } from './ToastHelper';
 
 const EmploymentPlan = (props) => {
+
+
+    function saveEmploymentPlan() {
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullPersonEmploymentPlanAddress = `${apiAddress}/api/EmploymentPlan`;
+        let sessionStorageData = getSessionData();
+
+        let employmentPlan = {
+            EnrollmentID: $("#btnSaveEmploymentPlan").data("id"),
+            EmploymentGoal: $("#txtEmploymentGoal").val(),
+            EduTrainGoal: $("#txtEducationalTrainingGoal").val(),
+            WorkExperience: $("#txtEPWorkExperience").val(),
+            Strengths: $("#txtEPStrengths").val(),
+            AddtlTraining: $("#txtAdditionalTrainingAttended").val(),
+            Credentials: $("#txtCredentialsReceived").val(),
+            Barriers: $("#txtBarriersToEmployment").val(),
+            Active: true,
+            CreatedDate: new Date(),
+            CreatedBy: sessionStorageData.CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
+        }
+
+        fetch(fullPersonEmploymentPlanAddress, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(employmentPlan)
+        }).then(result => result.json())
+        .then(result => {
+            //console.log(result);
+
+            if (result === null || result.Message !== undefined) {
+                triggerErrorMessage("an error occurred while saving the record.");
+                return;
+            }
+
+            triggerToastMessage('The enrollment was successfully saved.');
+
+            toggleEmploymentPlanModal();
+
+            getPlacementsByClientProfileID();
+        });
+    }
 
     return <div>
               <form id="frmEmploymentPlan">
@@ -96,7 +144,7 @@ const EmploymentPlan = (props) => {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" id="btnSaveEmploymentPlan"  >Save</button>
+                            <button type="button" className="btn btn-primary" id="btnSaveEmploymentPlan" onClick={saveEmploymentPlan} >Save</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>

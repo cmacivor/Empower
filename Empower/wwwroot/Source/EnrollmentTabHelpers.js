@@ -3,13 +3,17 @@ import { getSessionData } from './commonAdmin';
 import moment from 'moment';
 
 function togglePrintScreen() {
-    //let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
-    //$("#hdnPrintSelectedEnrollmentID").val(selectedEnrollmentID);
 
     $("#printModal").modal('toggle');
 }
 
-function toggleEmploymentPlanModal() {
+export function toggleEmploymentPlanModal(event) {
+    if (event !== undefined) {
+        let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
+        //$("#btnSaveEnrollment").data()
+        document.getElementById("btnSaveEmploymentPlan").setAttribute("data-id", selectedEnrollmentID);
+    }
+
     $("#employmentPlanModal").modal('toggle');
 }
 
@@ -122,11 +126,7 @@ function deleteEnrollment(event) {
             return;
         }
 
-
-        // generateTable(placementVM);
         getPlacementsByClientProfileID();
-
-        //props.createNotification("the enrollment was deleted.");
 
     });
 }
@@ -137,7 +137,6 @@ export function togglePlacementModal(event) {
         //$("#btnSaveEnrollment").data()
         document.getElementById("btnSaveEnrollment").setAttribute("data-id", selectedPlacementID);
     }
-
 
     $("#referralModal").modal('toggle');
 }
@@ -359,7 +358,7 @@ export function generateTable(placements) {
                 printButton.onclick = togglePrintScreen;
                 editButtonCell.appendChild(printButton);
 
-                //add the Add/Edit Employment button
+                //add the Add/Edit Employment Plan button
                 let employmentButton = document.createElement("button");
                 employmentButton.classList.add("btn");
                 employmentButton.classList.add("btn-info");
