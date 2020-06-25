@@ -5,7 +5,12 @@ import moment from 'moment';
 import Referral from './Referral';
 import PrintEnrollment from './PrintEnrollment';
 import EmploymentPlan from './EmploymentPlan';
-import { generateTable, getPlacementsByClientProfileID, togglePlacementModal, toggleEnrollmentModal } from './EnrollmentTabHelpers';
+import { generateTable, 
+    getPlacementsByClientProfileID, 
+    togglePlacementModal,
+    toggleEnrollmentModal, 
+    createColumnGroup, 
+    createRow } from './EnrollmentTabHelpers';
 
 //import modal from './bootstrap.js';
 //import {modal} from './bootstrap.js';
@@ -155,41 +160,7 @@ const Enrollment = (props) => {
         return diffInYears;
     }
 
-    function createColumnGroup(labelText, content) {
-        //let row = document.createElement("div");
-        //row.classList.add("row");
-        if (content === undefined || content === null) {
-            content = "";
-        }
 
-        let col = document.createElement("div")
-        col.classList.add("col-6");
-
-        let formGroup = document.createElement("div");
-        formGroup.classList.add("form-group");
-
-        let strong = document.createElement("strong");
-        strong.innerText = labelText;
-
-        let label = document.createElement("label");
-        label.appendChild(strong);
-
-        let contentDiv = document.createElement("div");
-        contentDiv.innerText = content;
-    
-        formGroup.appendChild(label);
-        formGroup.appendChild(contentDiv);
-        col.appendChild(formGroup);
-
-        return col;
-    }
-    
-    function createRow() {
-        let row = document.createElement("div");
-        row.classList.add("row");
-
-        return row;
-    }
 
     //build the client profile box in the print modal
     function buildClientProfileHeaderForPrintModal() {

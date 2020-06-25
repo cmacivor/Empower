@@ -491,3 +491,39 @@ export function generateTable(placements) {
 
     });
 }
+
+export function createColumnGroup(labelText, content) {
+    //let row = document.createElement("div");
+    //row.classList.add("row");
+    if (content === undefined || content === null) {
+        content = "";
+    }
+
+    let col = document.createElement("div")
+    col.classList.add("col-6");
+
+    let formGroup = document.createElement("div");
+    formGroup.classList.add("form-group");
+
+    let strong = document.createElement("strong");
+    strong.innerText = labelText;
+
+    let label = document.createElement("label");
+    label.appendChild(strong);
+
+    let contentDiv = document.createElement("div");
+    contentDiv.innerText = content;
+
+    formGroup.appendChild(label);
+    formGroup.appendChild(contentDiv);
+    col.appendChild(formGroup);
+
+    return col;
+}
+
+export function createRow() {
+    let row = document.createElement("div");
+    row.classList.add("row");
+
+    return row;
+}
