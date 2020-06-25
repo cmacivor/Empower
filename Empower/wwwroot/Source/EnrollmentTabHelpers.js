@@ -286,6 +286,50 @@ function deletePlacement(event) {
 }
 
 
+function buildEditPlacementButton(placementRecord) {
+          //add the Edit Placement button
+          let placementButton = document.createElement("button");
+          placementButton.classList.add("btn");
+          placementButton.classList.add("btn-secondary");
+          placementButton.classList.add("btn-sm");
+          placementButton.classList.add("mr-2");
+          placementButton.setAttribute("data-id", placementRecord.ID);
+          placementButton.innerText = "Edit Placement";
+          placementButton.title = "edit the Placement";
+          placementButton.onclick = getPlacement;
+
+          return placementButton;
+}
+
+function buildDeletePlacementButton(placementRecord) {
+        //add the delete button
+        let placementDeleteButton = document.createElement("button");
+        placementDeleteButton.classList.add("btn");
+        placementDeleteButton.classList.add("btn-secondary");
+        
+        placementDeleteButton.classList.add("btn-sm");
+        placementDeleteButton.setAttribute("data-id", placementRecord.ID);
+        placementDeleteButton.innerText = "Delete";
+        placementDeleteButton.title = "Delete placement";
+        placementDeleteButton.onclick = deletePlacement;
+
+        return placementDeleteButton;
+}
+
+function buildPrintButton(enrollment) {
+        //add the print button and put it next to edit
+        let printButton = document.createElement("button");
+        printButton.classList.add("btn");
+        printButton.classList.add('btn-info');
+        printButton.classList.add('btn-sm');
+        printButton.setAttribute("data-id", enrollment.Enrollment.ID);
+        let faPrint = "<i class='fa fa-print' aria-hidden='true'></i>";
+        printButton.innerHTML = faPrint;
+        printButton.onclick = togglePrintScreen;
+
+        return printButton;
+}
+
 export function generateTable(placements) {
 
     let divRef = document.getElementById("placementsContainer");
@@ -307,28 +351,9 @@ export function generateTable(placements) {
         headerDiv.classList.add("card-header");
         parentCard.appendChild(headerDiv);
 
-        //add the Edit Placement button
-        let placementButton = document.createElement("button");
-        placementButton.classList.add("btn");
-        placementButton.classList.add("btn-secondary");
-        placementButton.classList.add("btn-sm");
-        placementButton.classList.add("mr-2");
-        placementButton.setAttribute("data-id", placementRecord.ID);
-        placementButton.innerText = "Edit Placement";
-        placementButton.title = "edit the Placement";
-        placementButton.onclick = getPlacement;
+        let placementButton = buildEditPlacementButton(placementRecord);
 
-        //add the delete button
-        let placementDeleteButton = document.createElement("button");
-        placementDeleteButton.classList.add("btn");
-        placementDeleteButton.classList.add("btn-secondary");
-        
-        placementDeleteButton.classList.add("btn-sm");
-        placementDeleteButton.setAttribute("data-id", placementRecord.ID);
-        placementDeleteButton.innerText = "Delete";
-        placementDeleteButton.title = "Delete placement";
-        placementDeleteButton.onclick = deletePlacement;
-
+        let placementDeleteButton = buildDeletePlacementButton(placementRecord);
 
         let bodyDiv = document.createElement("div");
         bodyDiv.classList.add("card-body");
@@ -355,7 +380,6 @@ export function generateTable(placements) {
         addReferralButton.onclick = togglePlacementModal;
 
         addReferralCell.appendChild(addReferralButton);
-
 
         let row = header.insertRow(1);
         row.insertCell(0);
@@ -393,15 +417,8 @@ export function generateTable(placements) {
                 editEnrollmentButton.onclick = getEnrollment;
                 editButtonCell.appendChild(editEnrollmentButton);
 
-                //add the print button and put it next to edit
-                let printButton = document.createElement("button");
-                printButton.classList.add("btn");
-                printButton.classList.add('btn-info');
-                printButton.classList.add('btn-sm');
-                printButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                let faPrint = "<i class='fa fa-print' aria-hidden='true'></i>";
-                printButton.innerHTML = faPrint;
-                printButton.onclick = togglePrintScreen;
+                let printButton = buildPrintButton(enrollment);
+
                 editButtonCell.appendChild(printButton);
 
                 //add the Add/Edit Employment Plan button
