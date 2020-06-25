@@ -265,68 +265,7 @@ const Enrollment = (props) => {
     //     });
     // }
 
-    function generateEnrollmentRows(enrollments) {
-        let divEnrollments = document.getElementById("divEnrollments");
-        divEnrollments.innerText = "";
-        //console.log('the enrollments');
-        //console.log(enrollments);
-
-        //for each enrollment, write the enrollment -> Staff rows, and then the enrollment.
-        enrollments.Enrollment.forEach(enrollment => {
-            
-
-            //first make the enrollment box
-            let enrollmentBox = document.createElement("div");
-            enrollmentBox.classList.add("lightBorder");
-            let enrollmentTitle = document.createElement("h5");
-            enrollmentTitle.innerText = "Referral";
-            enrollmentBox.appendChild(enrollmentTitle);
-
-            let enrollmentFirstRow = createRow();
-            let formattedEnrollmentReferralDate = moment(new Date( enrollment.Enrollment.ReferralDate)).format('YYYY-MM-DD');
-            let enrollmentReferralDateGroup = createColumnGroup("Referral Date", formattedEnrollmentReferralDate);
-            enrollmentFirstRow.appendChild(enrollmentReferralDateGroup);
-
-            enrollmentBox.appendChild(enrollmentFirstRow);
-
-            let lineBreak = document.createElement("br");
-            divEnrollments.appendChild(lineBreak);
-
-            //build the counselor box for the enrollment
-            let counselorHighlightedBox = document.createElement("div");
-            counselorHighlightedBox.classList.add("lightBorder");
-            let counselorTitle = document.createElement("h5");
-            counselorTitle.innerText = "Counselor";
-            counselorHighlightedBox.appendChild(counselorTitle);
-            
-            let firstRow = createRow();
-            let counselorFirstNameGroup = createColumnGroup("Full Name", enrollment.Enrollment.Counselor.FirstName + " " + enrollment.Enrollment.Counselor.LastName);
-            firstRow.appendChild(counselorFirstNameGroup);
-            let titleGroup = createColumnGroup("Title", enrollment.Enrollment.Counselor.JobTitle.Name);
-            firstRow.appendChild(titleGroup);
-            
-            let secondCounselorRow = createRow();
-            let phoneNumberGroup = createColumnGroup("Phone Number", enrollment.Enrollment.Counselor.Phone);
-            secondCounselorRow.appendChild(phoneNumberGroup);
-            let faxGroup = createColumnGroup("Fax", enrollment.Enrollment.Counselor.Fax);
-            secondCounselorRow.appendChild(faxGroup);
-
-            let thirdCounselorRow = createRow();
-            let emailGroup = createColumnGroup("E-Mail", enrollment.Enrollment.Counselor.EMail);
-            thirdCounselorRow.appendChild(emailGroup);
-            let departmentGroup = createColumnGroup("Department", enrollment.Enrollment.Counselor.Department);
-            thirdCounselorRow.appendChild(departmentGroup);
-
-            counselorHighlightedBox.appendChild(firstRow);
-            counselorHighlightedBox.appendChild(secondCounselorRow);
-            counselorHighlightedBox.appendChild(thirdCounselorRow);
-            
-            divEnrollments.appendChild(enrollmentBox);
-            divEnrollments.appendChild(counselorHighlightedBox);
-            
-        });
-
-    }
+ 
 
     function generatePrintModal(placements, familyProfiles) {
 
