@@ -2,10 +2,7 @@ import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
 
-function togglePrintScreen() {
 
-    $("#printModal").modal('toggle');
-}
 
 
 function getEmploymentPlan(selectedEnrollmentID) {
@@ -435,9 +432,9 @@ export function generateTable(placements) {
                 editEnrollmentButton.onclick = getEnrollment;
                 editButtonCell.appendChild(editEnrollmentButton);
 
-                let printButton = buildPrintButton(enrollment);
+                //let printButton = buildPrintButton(enrollment);
 
-                editButtonCell.appendChild(printButton);
+                //editButtonCell.appendChild(printButton);
 
                 //add the Add/Edit Employment Plan button
                 let employmentButton = document.createElement("button");
@@ -526,4 +523,111 @@ export function createRow() {
     row.classList.add("row");
 
     return row;
+}
+
+
+function buildPlacementInfoBoxForPrintModal(placement) {
+
+    let highlightedBox = document.createElement("div");
+    highlightedBox.classList.add("lightBorder");
+
+    let firstRow = createRow();
+
+    let courtOrderDate = moment(new Date(placement.CourtOrderDate)).format('YYYY-MM-DD');
+    let enrollmentDateGroup = createColumnGroup("Enrollment Date", courtOrderDate);
+    firstRow.appendChild(enrollmentDateGroup);
+
+    let participateInSnapGroup;
+    if (placement.PlacementLevel !== null) {
+        participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", placement.PlacementLevel.Name);
+    } else {
+        participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", "");
+    }
+    firstRow.appendChild(participateInSnapGroup);
+
+    let secondRow = createRow();
+    let formattedCourtDate = moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD');
+    let nextApptDateGroup = createColumnGroup("Next Appt. Date", formattedCourtDate);
+    secondRow.appendChild(nextApptDateGroup);
+
+    let viewTanfGroup; 
+    if (placement.Judge.Name) {
+        viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", placement.Judge.Name);
+    } else {
+        viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", "");
+    }
+    secondRow.appendChild(viewTanfGroup);
+
+    let thirdRow = createRow();
+    let assisTanceTypeGroup;
+    if (placement.AssistanceType !== null) {
+        assisTanceTypeGroup = createColumnGroup("Assistance Type", placement.AssistanceType.Name);
+    } else {
+        assisTanceTypeGroup = createColumnGroup("Assistance Type", "");
+    }
+
+    thirdRow.appendChild(assisTanceTypeGroup);
+
+    let fourthRow = createRow();
+    let commentsGroup = createColumnGroup("Comments", placement.Comments);
+    fourthRow.appendChild(commentsGroup);
+
+    let fifthRow = createRow();
+    let formattedEmploymentStartDate = moment(new Date(placement.EmployerStartDate)).format('YYYY-MM-DD');
+    let employmentStartDateGroup = createColumnGroup("Employment Start Date", formattedEmploymentStartDate);
+    fifthRow.appendChild(employmentStartDateGroup);
+    let wagesGroup = createColumnGroup("Wages ($ per hour)", placement.EmployerWages);
+    fifthRow.appendChild(wagesGroup);
+
+    let sixthRow = createRow();
+    let employerBenefitsGroup = createColumnGroup("Benefits", placement.EmployerWages);
+    sixthRow.appendChild(employerBenefitsGroup);
+
+    let careerPathWayGroup
+    if (placement.CareerPathway !== null) {
+        careerPathWayGroup = createColumnGroup("Career Pathway Position", placement.CareerPathway.Name);
+    } else {
+        careerPathWayGroup = createColumnGroup("Career Pathway Position", "");
+    }
+
+    sixthRow.appendChild(careerPathWayGroup);
+
+    let seventhRow = createRow();
+    let fullOrPartTime = createColumnGroup("Full or Part-Time", placement.EmployerFullPartTime);
+    seventhRow.appendChild(fullOrPartTime);
+
+    highlightedBox.appendChild(firstRow);
+    highlightedBox.appendChild(secondRow);
+    highlightedBox.appendChild(thirdRow);
+    highlightedBox.appendChild(fourthRow);
+    highlightedBox.appendChild(fifthRow);
+    highlightedBox.appendChild(sixthRow);
+    highlightedBox.appendChild(seventhRow);
+
+    return highlightedBox;
+}
+
+function togglePrintScreen(event) {
+
+    if (event !== undefined) {
+        let selectedPlacementID = event.currentTarget.getAttribute("data-id");
+        console.log(selectedPlacementID);
+
+        fetchPlacements().then(placement => {
+
+            let selectedPlacement = placement.filter(function(selected) {
+                return selected.Placement.ID === parseInt(selectedPlacementID);
+            });
+
+            // console.log('here it is');
+            // console.log(selectedPlacement[0].Placement);
+
+            let placementBox = buildPlacementInfoBoxForPrintModal(selectedPlacement[0].Placement);
+            let divPlacements = document.getElementById("divPlacements");
+            divPlacements.appendChild(placementBox);
+
+        });
+    }
+
+    $("#printModal").modal('toggle');
 }
