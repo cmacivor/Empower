@@ -277,86 +277,94 @@ const Enrollment = (props) => {
         });
     }
 
+    function buildPlacementInfoBoxForPrintModal(placement) {
+
+        let highlightedBox = document.createElement("div");
+        highlightedBox.classList.add("lightBorder");
+
+        let firstRow = createRow();
+
+        let courtOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
+        let enrollmentDateGroup = createColumnGroup("Enrollment Date", courtOrderDate);
+        firstRow.appendChild(enrollmentDateGroup);
+
+        let participateInSnapGroup;
+        if (placement.Placement.PlacementLevel !== null) {
+            participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", placement.Placement.PlacementLevel.Name);
+        } else {
+            participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", "");
+        }
+        firstRow.appendChild(participateInSnapGroup);
+
+        let secondRow = createRow();
+        let formattedCourtDate = moment(new Date(placement.Placement.NextCourtDate)).format('YYYY-MM-DD');
+        let nextApptDateGroup = createColumnGroup("Next Appt. Date", formattedCourtDate);
+        secondRow.appendChild(nextApptDateGroup);
+
+        let viewTanfGroup; 
+        if (placement.Placement.Judge.Name) {
+            viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", placement.Placement.Judge.Name);
+        } else {
+            viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", "");
+        }
+        secondRow.appendChild(viewTanfGroup);
+
+        let thirdRow = createRow();
+        let assisTanceTypeGroup;
+        if (placement.Placement.AssistanceType !== null) {
+            assisTanceTypeGroup = createColumnGroup("Assistance Type", placement.Placement.AssistanceType.Name);
+        } else {
+            assisTanceTypeGroup = createColumnGroup("Assistance Type", "");
+        }
+
+        thirdRow.appendChild(assisTanceTypeGroup);
+
+        let fourthRow = createRow();
+        let commentsGroup = createColumnGroup("Comments", placement.Placement.Comments);
+        fourthRow.appendChild(commentsGroup);
+
+        let fifthRow = createRow();
+        let formattedEmploymentStartDate = moment(new Date(placement.Placement.EmployerStartDate)).format('YYYY-MM-DD');
+        let employmentStartDateGroup = createColumnGroup("Employment Start Date", formattedEmploymentStartDate);
+        fifthRow.appendChild(employmentStartDateGroup);
+        let wagesGroup = createColumnGroup("Wages ($ per hour)", placement.Placement.EmployerWages);
+        fifthRow.appendChild(wagesGroup);
+
+        let sixthRow = createRow();
+        let employerBenefitsGroup = createColumnGroup("Benefits", placement.Placement.EmployerWages);
+        sixthRow.appendChild(employerBenefitsGroup);
+
+        let careerPathWayGroup
+        if (placement.Placement.CareerPathway !== null) {
+            careerPathWayGroup = createColumnGroup("Career Pathway Position", placement.Placement.CareerPathway.Name);
+        } else {
+            careerPathWayGroup = createColumnGroup("Career Pathway Position", "");
+        }
+
+        sixthRow.appendChild(careerPathWayGroup);
+
+        let seventhRow = createRow();
+        let fullOrPartTime = createColumnGroup("Full or Part-Time", placement.Placement.EmployerFullPartTime);
+        seventhRow.appendChild(fullOrPartTime);
+
+        highlightedBox.appendChild(firstRow);
+        highlightedBox.appendChild(secondRow);
+        highlightedBox.appendChild(thirdRow);
+        highlightedBox.appendChild(fourthRow);
+        highlightedBox.appendChild(fifthRow);
+        highlightedBox.appendChild(sixthRow);
+        highlightedBox.appendChild(seventhRow);
+
+        return highlightedBox;
+    }
+
     //builds the placement boxes in the print modal
     function generatePlacementRows(placements) {
         let divPlacements = document.getElementById("divPlacements");        
         divPlacements.innerText = "";
         placements.forEach(placement => {
-            let highlightedBox = document.createElement("div");
-            highlightedBox.classList.add("lightBorder");
 
-            let firstRow = createRow();
-
-            let courtOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
-            let enrollmentDateGroup = createColumnGroup("Enrollment Date", courtOrderDate);
-            firstRow.appendChild(enrollmentDateGroup);
-
-            let participateInSnapGroup;
-            if (placement.Placement.PlacementLevel !== null) {
-                participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", placement.Placement.PlacementLevel.Name);
-            } else {
-                participateInSnapGroup = createColumnGroup("Participating in SNAP-ET", "");
-            }
-            firstRow.appendChild(participateInSnapGroup);
-
-            let secondRow = createRow();
-            let formattedCourtDate = moment(new Date(placement.Placement.NextCourtDate)).format('YYYY-MM-DD');
-            let nextApptDateGroup = createColumnGroup("Next Appt. Date", formattedCourtDate);
-            secondRow.appendChild(nextApptDateGroup);
-
-            let viewTanfGroup; 
-            if (placement.Placement.Judge.Name) {
-                viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", placement.Placement.Judge.Name);
-            } else {
-                viewTanfGroup = createColumnGroup("Participating in VIEW/TANF", "");
-            }
-            secondRow.appendChild(viewTanfGroup);
-
-            let thirdRow = createRow();
-            let assisTanceTypeGroup;
-            if (placement.Placement.AssistanceType !== null) {
-                assisTanceTypeGroup = createColumnGroup("Assistance Type", placement.Placement.AssistanceType.Name);
-            } else {
-                assisTanceTypeGroup = createColumnGroup("Assistance Type", "");
-            }
-
-            thirdRow.appendChild(assisTanceTypeGroup);
-
-            let fourthRow = createRow();
-            let commentsGroup = createColumnGroup("Comments", placement.Placement.Comments);
-            fourthRow.appendChild(commentsGroup);
-
-            let fifthRow = createRow();
-            let formattedEmploymentStartDate = moment(new Date(placement.Placement.EmployerStartDate)).format('YYYY-MM-DD');
-            let employmentStartDateGroup = createColumnGroup("Employment Start Date", formattedEmploymentStartDate);
-            fifthRow.appendChild(employmentStartDateGroup);
-            let wagesGroup = createColumnGroup("Wages ($ per hour)", placement.Placement.EmployerWages);
-            fifthRow.appendChild(wagesGroup);
-
-            let sixthRow = createRow();
-            let employerBenefitsGroup = createColumnGroup("Benefits", placement.Placement.EmployerWages);
-            sixthRow.appendChild(employerBenefitsGroup);
-
-            let careerPathWayGroup
-            if (placement.Placement.CareerPathway !== null) {
-                careerPathWayGroup = createColumnGroup("Career Pathway Position", placement.Placement.CareerPathway.Name);
-            } else {
-                careerPathWayGroup = createColumnGroup("Career Pathway Position", "");
-            }
-
-            sixthRow.appendChild(careerPathWayGroup);
-
-            let seventhRow = createRow();
-            let fullOrPartTime = createColumnGroup("Full or Part-Time", placement.Placement.EmployerFullPartTime);
-            seventhRow.appendChild(fullOrPartTime);
-
-            highlightedBox.appendChild(firstRow);
-            highlightedBox.appendChild(secondRow);
-            highlightedBox.appendChild(thirdRow);
-            highlightedBox.appendChild(fourthRow);
-            highlightedBox.appendChild(fifthRow);
-            highlightedBox.appendChild(sixthRow);
-            highlightedBox.appendChild(seventhRow);
+            let highlightedBox = buildPlacementInfoBoxForPrintModal(placement);
 
             divPlacements.appendChild(highlightedBox);
 
@@ -435,7 +443,7 @@ const Enrollment = (props) => {
         
         buildFamilyTableForPrintModal(familyProfiles);
     
-        generatePlacementRows(placements);
+        //generatePlacementRows(placements);
     }
 
  

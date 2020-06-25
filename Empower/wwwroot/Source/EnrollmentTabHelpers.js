@@ -306,7 +306,7 @@ function buildDeletePlacementButton(placementRecord) {
         let placementDeleteButton = document.createElement("button");
         placementDeleteButton.classList.add("btn");
         placementDeleteButton.classList.add("btn-secondary");
-        
+        placementDeleteButton.classList.add("mr-2");
         placementDeleteButton.classList.add("btn-sm");
         placementDeleteButton.setAttribute("data-id", placementRecord.ID);
         placementDeleteButton.innerText = "Delete";
@@ -314,6 +314,21 @@ function buildDeletePlacementButton(placementRecord) {
         placementDeleteButton.onclick = deletePlacement;
 
         return placementDeleteButton;
+}
+
+function buildPrintHeaderButton(placementRecord) {
+      //add the print button and put it next to edit
+      let printButton = document.createElement("button");
+      printButton.classList.add("btn");
+      printButton.classList.add('btn-info');
+      printButton.classList.add('btn-sm');
+      printButton.setAttribute("data-id", placementRecord.ID);
+      printButton.innerText = "Print";
+      //let faPrint = "<i class='fa fa-print' aria-hidden='true'></i>";
+     //printButton.innerHTML = faPrint;
+      printButton.onclick = togglePrintScreen;
+
+      return printButton;
 }
 
 function buildPrintButton(enrollment) {
@@ -355,11 +370,14 @@ export function generateTable(placements) {
 
         let placementDeleteButton = buildDeletePlacementButton(placementRecord);
 
+        let placementPrintHeaderButton = buildPrintHeaderButton(placementRecord);
+
         let bodyDiv = document.createElement("div");
         bodyDiv.classList.add("card-body");
         parentCard.appendChild(bodyDiv);
         bodyDiv.appendChild(placementButton);
         bodyDiv.appendChild(placementDeleteButton);
+        bodyDiv.appendChild(placementPrintHeaderButton);
 
         let table = document.createElement("table");
         table.classList.add("table");
