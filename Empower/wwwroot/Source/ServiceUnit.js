@@ -5,8 +5,37 @@ import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 
 
+function ddlServiceUnitYearSelectHandler(event) {
+    let selectedValue = event.currentTarget.getAttribute('value');
+    console.log(selectedValue);
+}
 
 let serviceUnitYears = [];
+let currentYear = new Date().getFullYear();
+let oldestYear = currentYear - 20;
+// console.log("current year: " + currentYear);
+// console.log("oldest: " + oldestYear);
+
+var i;
+for (i = 0; i < 20; i++) {
+    oldestYear++;
+    //console.log(oldestYear);
+    serviceUnitYears.push(oldestYear);
+  //text += "The number is " + i + "<br>";
+  //yearToPrint = oldestYear + 1;
+  //console.log(yearToPrint);
+}
+
+let serviceUnitYearOptions = serviceUnitYears.map((value) =>
+    <a key={value} value={value}  onClick={ ddlServiceUnitYearSelectHandler  } className="dropdown-item">{value}</a>
+ );
+
+// if ( assistanceTypes.length > 0) {
+
+//     assistanceTypeValueOptions = assistanceTypes.map((value) =>
+//         <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlAssistanceTypeSelectHandler  } className="dropdown-item">{value.Name}</a>
+//     );
+// }
 
 
 const ServiceUnit = (props) => {
@@ -19,7 +48,7 @@ const ServiceUnit = (props) => {
                 <div className="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Enrollment</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">Service Units</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -41,13 +70,13 @@ const ServiceUnit = (props) => {
                             </div>
                             <div className="form-row">
                                 <div className="col-4">
-                                    <label htmlFor="btnServiceYear"><strong> Month *</strong></label>
+                                    <label htmlFor="btnServiceYear"><strong> Years *</strong></label>
                                     <div className="dropdown">
                                         <button type="button" id="btnServiceYear" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                             
                                         </button>
                                         <div className="dropdown-menu">
-                                           
+                                           {serviceUnitYearOptions }
                                         </div>
                                     </div>
                                 </div>
