@@ -5,6 +5,7 @@ import moment from 'moment';
 import Referral from './Referral';
 import PrintEnrollment from './PrintEnrollment';
 import EmploymentPlan from './EmploymentPlan';
+import ServiceUnit from './ServiceUnit';
 import { generateTable, 
     getPlacementsByClientProfileID, 
     togglePlacementModal,
@@ -542,6 +543,7 @@ const Enrollment = (props) => {
          clientProfileID = {clientProfileId }
          clientProfile ={props.clientProfile} />
          <EmploymentPlan />
+         <ServiceUnit />
     </div>
 }
 

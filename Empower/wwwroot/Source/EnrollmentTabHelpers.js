@@ -424,6 +424,7 @@ export function generateTable(placements) {
                 editEnrollmentButton.classList.add("btn");
                 editEnrollmentButton.classList.add("btn-info");
                 editEnrollmentButton.classList.add("btn-sm");
+                editEnrollmentButton.classList.add("mr-2");
                 editEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
                 editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
                 let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
@@ -432,6 +433,17 @@ export function generateTable(placements) {
                 editEnrollmentButton.onclick = getEnrollment;
                 editButtonCell.appendChild(editEnrollmentButton);
 
+                //add button for Service Units
+                let serviceUnitButton = document.createElement("button");
+                serviceUnitButton.classList.add("btn");
+                serviceUnitButton.classList.add("btn-info");
+                serviceUnitButton.classList.add("btn-sm");
+                serviceUnitButton.setAttribute("data-id", enrollment.Enrollment.ID);
+                let faSuitCase = "<i class='fa fa-suitcase' aria-hidden='true'></i>";
+                serviceUnitButton.innerHTML = faSuitCase;
+                serviceUnitButton.onclick = toggleServiceUnitModal;
+
+                editButtonCell.appendChild(serviceUnitButton);
 
                 //add the Add/Edit Employment Plan button
                 //keeping this commented out because it seems that this functionality is never used
@@ -697,4 +709,15 @@ function togglePrintScreen(event) {
     }
 
     $("#printModal").modal('toggle');
+}
+
+function toggleServiceUnitModal(event) {
+    if (event !== undefined) {
+        let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
+
+        //TODO: get all the service units by enrollmentID
+
+    }
+
+    $("#serviceUnitModal").modal('toggle');
 }
