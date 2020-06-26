@@ -82,6 +82,10 @@ const Enrollment = (props) => {
         }
 
         document.getElementById("btnViewTanf").innerHTML =  displayValue;
+
+        if (selectedValue !== 'Please Select') {
+            document.getElementById("divViewTanfError").setAttribute("style", "display:none");
+        }
     }
 
     function ddlSnapSelectEventHandler(event) {
@@ -97,7 +101,11 @@ const Enrollment = (props) => {
             displayValue = "No";
         }
 
-        document.getElementById("btnSnapEt").innerHTML = displayValue; //selectedValue;
+        document.getElementById("btnSnapEt").innerHTML = displayValue; 
+
+        if (selectedValue !== 'Please Select') {
+            document.getElementById("divSnapEtError").setAttribute("style", "display:none");
+        }
     }
 
     function ddlBenefitsSelectEventHandler(event) {
