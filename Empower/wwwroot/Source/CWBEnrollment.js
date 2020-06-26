@@ -263,18 +263,19 @@ const Enrollment = (props) => {
        
         let enrollmentDate = new Date($("#txtEnrollmentDate").val());
 
-        let snapEt = $("#txtSnapEt").val(); //new Date($("#txtSnapEt").val());
+        let snapEt = document.getElementById("btnSnapEt").value; 
 
         let viewTanf = document.getElementById("btnViewTanf").value;
 
-        if (snapEt === '') {
+        if (snapEt === 'Please Select') {
             $("#frmEnrollment").addClass("was-validated");
+            document.getElementById("divSnapEtError").removeAttribute("style");
             return;
         }
 
-        if (viewTanf === '') {
+        if (viewTanf === 'Please Select') {
             $("#frmEnrollment").addClass("was-validated");
-            //document.getElementById("divViewTanfError").removeAttribute("style");
+            document.getElementById("divViewTanfError").removeAttribute("style");
             return;
         }
 
