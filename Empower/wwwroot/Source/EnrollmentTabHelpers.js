@@ -711,11 +711,11 @@ function togglePrintScreen(event) {
     $("#printModal").modal('toggle');
 }
 
-function toggleServiceUnitModal(event) {
+export function toggleServiceUnitModal(event) {
     if (event !== undefined) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
 
-        //TODO: get all the service units by enrollmentID
+        $("#hdnServiceUnitEnrollmentID").val(selectedEnrollmentID)
 
     }
 
