@@ -12,8 +12,6 @@ import { generateTable,
     createColumnGroup, 
     createRow } from './EnrollmentTabHelpers';
 
-//import modal from './bootstrap.js';
-//import {modal} from './bootstrap.js';
 
 const Enrollment = (props) => {
 
@@ -22,9 +20,6 @@ const Enrollment = (props) => {
     let placements;
 
     if (props.clientProfile !== undefined) {
-        //console.log('the family profiles in CWB');
-        //console.log(props.familyProfiles.FamilyProfile);
-        //console.log(props.clientProfile);
 
         personId = props.clientProfile.Person.ID;
         clientProfileId = props.clientProfile.ID;
@@ -48,6 +43,9 @@ const Enrollment = (props) => {
 
         document.getElementById("btnViewTanf").value = 'Please Select';
         document.getElementById("btnViewTanf").innerHTML = 'Please Select';
+
+        document.getElementById("btnSnapEt").value = 'Please Select';
+        document.getElementById("btnSnapEt").innerHTML = 'Please Select';
 
         document.getElementById("btnViewTanf").value = 'Please Select';
         document.getElementById("btnViewTanf").innerHTML = 'Please Select';
@@ -198,8 +196,7 @@ const Enrollment = (props) => {
 
     //creates the table of family members in the print modal
     function buildFamilyTableForPrintModal(familyProfiles) {
-  // let familyTable = document.getElementById("familyTable");
-        // let familyTBody = familyTable.createTBody();
+ 
         let familyTableContainer = document.getElementById("familyTableContainer");
         familyTableContainer.innerText = "";
         let familyTable = document.createElement("table");
@@ -249,31 +246,11 @@ const Enrollment = (props) => {
     }
 
 
-    //builds the placement boxes in the print modal
-    // function generatePlacementRows(placements) {
-    //     let divPlacements = document.getElementById("divPlacements");        
-    //     divPlacements.innerText = "";
-    //     placements.forEach(placement => {
-
-    //         let highlightedBox = buildPlacementInfoBoxForPrintModal(placement);
-
-    //         divPlacements.appendChild(highlightedBox);
-
-
-    //         generateEnrollmentRows(placement);
-
-    //     });
-    // }
-
- 
-
     function generatePrintModal(placements, familyProfiles) {
 
         buildClientProfileHeaderForPrintModal();
         
         buildFamilyTableForPrintModal(familyProfiles);
-    
-        //generatePlacementRows(placements);
     }
 
  
@@ -285,18 +262,20 @@ const Enrollment = (props) => {
         let sessionStorageData = getSessionData();
        
         let enrollmentDate = new Date($("#txtEnrollmentDate").val());
-        let snapEt = new Date($("#txtSnapEt").val());
 
+        let snapEt = $("#txtSnapEt").val(); //new Date($("#txtSnapEt").val());
 
         let viewTanf = document.getElementById("btnViewTanf").value;
 
         if (snapEt === '') {
             $("#frmEnrollment").addClass("was-validated");
+            return;
         }
 
         if (viewTanf === '') {
             $("#frmEnrollment").addClass("was-validated");
-            document.getElementById("divViewTanfError").removeAttribute("style");
+            //document.getElementById("divViewTanfError").removeAttribute("style");
+            return;
         }
 
         let placement ={
@@ -359,17 +338,12 @@ const Enrollment = (props) => {
                 return;
             }
 
-            // generateTable(placementVM);
             getPlacementsByClientProfileID();
 
             props.createNotification('The placement was successfully saved.');
 
             toggleEnrollmentModal();
         });
-
-        //console.log(placment);
-
-        //console.log(snapEt);
     }
 
     let assistanceTypeValueOptions = [];
