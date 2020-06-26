@@ -452,7 +452,8 @@ export function generateTable(placements) {
                 }
 
                 let beginDateCell = enrollmentRow.insertCell(2);
-                beginDateCell.innerText = enrollment.Enrollment.BeginDate;
+                let convertedBeginDate = moment(new Date(enrollment.Enrollment.BeginDate)).format('YYYY-MM-DD');
+                beginDateCell.innerText = convertedBeginDate;
 
                 let endDateCell = enrollmentRow.insertCell(3);
                 let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
