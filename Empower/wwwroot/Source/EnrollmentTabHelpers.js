@@ -328,18 +328,62 @@ function buildPrintHeaderButton(placementRecord) {
       return printButton;
 }
 
-function buildPrintButton(enrollment) {
-        //add the print button and put it next to edit
-        let printButton = document.createElement("button");
-        printButton.classList.add("btn");
-        printButton.classList.add('btn-info');
-        printButton.classList.add('btn-sm');
-        printButton.setAttribute("data-id", enrollment.Enrollment.ID);
-        let faPrint = "<i class='fa fa-print' aria-hidden='true'></i>";
-        printButton.innerHTML = faPrint;
-        printButton.onclick = togglePrintScreen;
+// function buildPrintButton(enrollment) {
+//         //add the print button and put it next to edit
+//         let printButton = document.createElement("button");
+//         printButton.classList.add("btn");
+//         printButton.classList.add('btn-info');
+//         printButton.classList.add('btn-sm');
+//         printButton.setAttribute("data-id", enrollment.Enrollment.ID);
+//         let faPrint = "<i class='fa fa-print' aria-hidden='true'></i>";
+//         printButton.innerHTML = faPrint;
+//         printButton.onclick = togglePrintScreen;
 
-        return printButton;
+//         return printButton;
+// }
+
+
+function populateServiceUnitModalTable(serviceUnits) {
+
+    let serviceUnitDiv = document.getElementById("divServiceUnitsTableContainer");
+    serviceUnitDiv.innerHTML = "";
+    let table = document.createElement("table");
+    table.classList.add("table");
+    let header = table.createTHead();
+    let headerRow = header.insertRow(0);
+    let detailsCell = headerRow.insertCell(0); //for the edit button column
+    let monthCell = headerRow.insertCell(1);
+    monthCell.innerHTML = "<strong>Month</strong>";
+    let yearCell = headerRow.insertCell(2);
+    yearCell.innerHTML = "<strong>Year</strong>";
+    let unitsCell = headerRow.insertCell(3);
+    unitsCell.innerHTML = "<strong>Units</strong>";
+    let deleteCell = headerRow.insertCell(4);
+
+    let tbody = table.createTBody();
+
+    let serviceUnitRowIndex = 0;
+    serviceUnits.forEach(serviceUnit => {
+        let serviceUnitRow = tbody.insertRow(serviceUnitRowIndex);
+        let serviceUnitCell = serviceUnitRow.insertCell(0);
+        //create the edit button
+        let serviceUnitEditButton = document.createElement("button");
+        serviceUnitEditButton.classList.add("btn");
+        serviceUnitEditButton.classList.add("btn-info");
+        serviceUnitEditButton.classList.add("btn-sm");
+        let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
+        serviceUnitEditButton.innerHTML = faPencil;
+        serviceUnitCell.appendChild(serviceUnitEditButton);
+
+        let serviceUnitMonthCell = serviceUnitRow.insertCell(1);
+        serviceUnitMonthCell.innerText = serviceUnit.Month;
+
+        let serviceUnitYearCell = serviceUnitRow.insertCell(2);
+        serviceUnitYearCell.innerText = serviceUnit.Year;
+
+    });
+
+    serviceUnitDiv.appendChild(table);
 }
 
 export function generateTable(placements) {
@@ -413,7 +457,10 @@ export function generateTable(placements) {
         let enrollmentRowsIndex = 0;
         if (placement.Enrollment !== undefined && placement.Enrollment !== null) {
             placement.Enrollment.forEach(function(enrollment) {
-                //console.log(enrollment);
+                console.log('the enrollment');
+                console.log(enrollment);
+
+                populateServiceUnitModalTable(enrollment.ServiceUnit);
 
                 let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
                 enrollmentRowsIndex = enrollmentRowsIndex + 1;

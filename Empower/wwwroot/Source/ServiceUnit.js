@@ -112,8 +112,7 @@ const ServiceUnit = (props) => {
                 props.createErrorNotification("an error occurred while saving the record.");
                 return;
             }
-    
-            //toggleServiceUnitModal();
+
     
             triggerToastMessage("The service unit was successfully saved");
     
@@ -188,8 +187,23 @@ const ServiceUnit = (props) => {
                                     <input type="text" className="form-control" id="txtServiceUnits" defaultValue="" required />
                                 </div>
                             </div>
+                            <br/>
                             <div id="divServiceUnitsTableContainer" className="form-row">
 
+                                {/* <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th scop="col"></th>
+                                            <th scope="col">Month</th>
+                                            <th scope="col">Year</th>
+                                            <th scope="col">Units</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tblServiceUnitsBody">
+
+                                    </tbody>
+                                </table> */}
                             </div>
                         </div>
                         <div className="modal-footer">
