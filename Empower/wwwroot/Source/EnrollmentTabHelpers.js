@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
+import { triggerErrorMessage } from './ToastHelper';
 
 
 
@@ -328,6 +329,53 @@ function buildPrintHeaderButton(placementRecord) {
       return printButton;
 }
 
+export function getServiceUnitsByEnrollmentID() {
+    let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+    let enrollmentID = $("#hdnServiceUnitEnrollmentID").val();
+
+    let fullGetPlacementsAddress = `${apiAddress}/api/ServiceUnit/GetByEnrollmentID/${enrollmentID}`;
+    let sessionStorageData = getSessionData();
+
+   return fetch(fullGetPlacementsAddress, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+    }).then(result => result.json())
+    .then(result => {
+        //console.log(result);
+        populateServiceUnitModalTable(result);
+    });
+
+}
+
+
+function deleteServiceUnitButtonClickHandler(event) {
+    if (event !== undefined) {
+        event.preventDefault();
+
+        let serviceUnitID = event.currentTarget.getAttribute("data-id");
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullDeleteServiceUnitAddress = `${apiAddress}/api/ServiceUnit/Delete/${serviceUnitID}`;
+        let sessionStorageData = getSessionData();
+        
+        fetch(fullDeleteServiceUnitAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            getServiceUnitsByEnrollmentID();
+
+            triggerErrorMessage("the service unit was successfully deleted.");
+        });
+    }
+}
+
 
 function populateServiceUnitModalOnRowClick(event) {
     if (event !== undefined) {
@@ -349,6 +397,8 @@ function populateServiceUnitModalOnRowClick(event) {
         $("#hdnServiceUnitID").val(serviceUnitID);
     }
 }
+
+
 
 
 export function populateServiceUnitModalTable(serviceUnits) {
@@ -393,6 +443,17 @@ export function populateServiceUnitModalTable(serviceUnits) {
 
         let unitsCell = serviceUnitRow.insertCell(3);
         unitsCell.innerText = serviceUnit.Units;
+
+        let deleteButtonCell = serviceUnitRow.insertCell(4);
+        let serviceUnitDeleteButton = document.createElement("button");
+        serviceUnitDeleteButton.classList.add("btn");
+        serviceUnitDeleteButton.classList.add("btn-info");
+        serviceUnitDeleteButton.classList.add("btn-danger");
+        serviceUnitDeleteButton.setAttribute("data-id", serviceUnit.ID);
+        let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
+        serviceUnitDeleteButton.innerHTML = faTrash;
+        serviceUnitDeleteButton.onclick = deleteServiceUnitButtonClickHandler
+        deleteButtonCell.appendChild(serviceUnitDeleteButton);
 
     });
 
@@ -539,7 +600,7 @@ export function generateTable(placements) {
                 let deleteButtonCell = enrollmentRow.insertCell(5);
                 let deleteEnrollmentButton = document.createElement("button");
                 deleteEnrollmentButton.classList.add("btn");
-                deleteEnrollmentButton.classList.add("btn-secondary");
+                deleteEnrollmentButton.classList.add("btn-danger");
                 deleteEnrollmentButton.classList.add("btn-sm");
                 deleteEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
                 let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
