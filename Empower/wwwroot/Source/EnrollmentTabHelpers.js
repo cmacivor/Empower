@@ -399,8 +399,6 @@ function populateServiceUnitModalOnRowClick(event) {
 }
 
 
-
-
 export function populateServiceUnitModalTable(serviceUnits) {
 
     let serviceUnitDiv = document.getElementById("divServiceUnitsTableContainer");
@@ -559,12 +557,22 @@ export function generateTable(placements) {
                 serviceUnitButton.classList.add("btn");
                 serviceUnitButton.classList.add("btn-info");
                 serviceUnitButton.classList.add("btn-sm");
+                serviceUnitButton.classList.add("mr-2");
                 serviceUnitButton.setAttribute("data-id", enrollment.Enrollment.ID);
                 let faSuitCase = "<i class='fa fa-suitcase' aria-hidden='true'></i>";
                 serviceUnitButton.innerHTML = faSuitCase;
                 serviceUnitButton.onclick = toggleServiceUnitModal;
-
                 editButtonCell.appendChild(serviceUnitButton);
+
+                let progressNoteButton = document.createElement("button");
+                progressNoteButton.classList.add("btn");
+                progressNoteButton.classList.add("btn-info");
+                progressNoteButton.classList.add("btn-sm");
+                progressNoteButton.setAttribute("data-id", enrollment.Enrollment.ID);
+                let stickyNote = "<i class='fa fa-sticky-note-o' aria-hidden='true'></i>";
+                progressNoteButton.innerHTML = stickyNote;
+                progressNoteButton.onclick = toggleProgressNoteModal;
+                editButtonCell.appendChild(progressNoteButton);
 
                 //add the Add/Edit Employment Plan button
                 //keeping this commented out because it seems that this functionality is never used
@@ -841,4 +849,12 @@ export function toggleServiceUnitModal(event) {
     }
 
     $("#serviceUnitModal").modal('toggle');
+}
+
+function toggleProgressNoteModal(event) {
+    if (event !== undefined) {
+        let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
+    }
+
+    $("#progressNoteModal").modal("toggle");
 }

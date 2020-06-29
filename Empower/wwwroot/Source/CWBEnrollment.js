@@ -6,6 +6,7 @@ import Referral from './Referral';
 import PrintEnrollment from './PrintEnrollment';
 import EmploymentPlan from './EmploymentPlan';
 import ServiceUnit from './ServiceUnit';
+import ProgressNote from './ProgressNote';
 import { generateTable, 
     getPlacementsByClientProfileID, 
     togglePlacementModal,
@@ -546,6 +547,7 @@ const Enrollment = (props) => {
          clientProfile ={props.clientProfile} />
          <EmploymentPlan />
          <ServiceUnit />
+         <ProgressNote />
     </div>
 }
 
