@@ -25,7 +25,7 @@ const ProgressNote = (props) => {
                             </div>
                             <div className="form-row">
                                 <div className="col-4">
-                                    <label htmlFor="btnProgressNoteComment">Comment</label>
+                                    <label htmlFor="btnProgressNoteComment"><strong> Comment</strong></label>
                                     <textarea id="txtProgressNoteComments" className="form-control" defaultValue="" />
                                 </div>
                             </div>
@@ -41,20 +41,21 @@ const ProgressNote = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-6">
+                                <div className="col-4">
+                                    <label><strong>Duration</strong> </label>
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td><i className="fa fa-arrow-up" aria-hidden="true"></i></td>
-                                                <td><i className="fa fa-arrow-up" aria-hidden="true"></i></td>
+                                                <td className="text-center"><i className="fa fa-arrow-up" aria-hidden="true"></i></td>
+                                                <td className="text-center"><i className="fa fa-arrow-up" aria-hidden="true"></i></td>
                                             </tr>
                                             <tr>
-                                                <td><input type="text" className="form-control"></input></td>
+                                                <td><input type="text"  className="form-control"></input></td>
                                                 <td><input type="text" className="form-control"></input></td>
                                             </tr>
                                             <tr>
-                                                <td><i className="fa fa-arrow-down" aria-hidden="true"></i></td>
-                                                <td><i className="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                <td className="text-center"><i className="fa fa-arrow-down" aria-hidden="true"></i></td>
+                                                <td className="text-center"><i className="fa fa-arrow-down" aria-hidden="true"></i></td>
                                             </tr>
                                         </tbody>
                                     </table>
