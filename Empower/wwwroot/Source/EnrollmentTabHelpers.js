@@ -351,7 +351,7 @@ function populateServiceUnitModalOnRowClick(event) {
 }
 
 
-function populateServiceUnitModalTable(serviceUnits) {
+export function populateServiceUnitModalTable(serviceUnits) {
 
     let serviceUnitDiv = document.getElementById("divServiceUnitsTableContainer");
     serviceUnitDiv.innerHTML = "";

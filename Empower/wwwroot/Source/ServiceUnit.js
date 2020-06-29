@@ -4,7 +4,8 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import { toggleServiceUnitModal } from './EnrollmentTabHelpers';
-import {triggerToastMessage, triggerErrorMessage  } from './ToastHelper';
+import {triggerToastMessage, triggerErrorMessage,  } from './ToastHelper';
+import { populateServiceUnitModalTable } from './EnrollmentTabHelpers';
 
 
 const ServiceUnit = (props) => {
@@ -63,7 +64,8 @@ const ServiceUnit = (props) => {
             }
         }).then(result => result.json())
         .then(result => {
-            console.log(result);
+            //console.log(result);
+            populateServiceUnitModalTable(result);
         });
 
     }
