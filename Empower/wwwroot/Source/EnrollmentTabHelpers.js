@@ -328,19 +328,26 @@ function buildPrintHeaderButton(placementRecord) {
       return printButton;
 }
 
-// function buildPrintButton(enrollment) {
-//         //add the print button and put it next to edit
-//         let printButton = document.createElement("button");
-//         printButton.classList.add("btn");
-//         printButton.classList.add('btn-info');
-//         printButton.classList.add('btn-sm');
-//         printButton.setAttribute("data-id", enrollment.Enrollment.ID);
-//         let faPrint = "<i class='fa fa-print' aria-hidden='true'></i>";
-//         printButton.innerHTML = faPrint;
-//         printButton.onclick = togglePrintScreen;
 
-//         return printButton;
-// }
+function populateServiceUnitModalOnRowClick(event) {
+    if (event !== undefined) {
+        event.preventDefault();
+        let serviceUnitID = event.currentTarget.getAttribute("data-id");
+        
+        let siblings = $(this).parent().siblings();
+        
+        let month = siblings[0].innerText;
+        let year = siblings[1].innerText;
+        let units = siblings[2].innerText;
+
+        document.getElementById("btnServiceMonth").value = month;
+        document.getElementById("btnServiceMonth").innerHTML = month;
+        document.getElementById("btnServiceYear").value = year;
+        document.getElementById('btnServiceYear').innerHTML = year;
+
+        $("#txtServiceUnits").val(units);
+    }
+}
 
 
 function populateServiceUnitModalTable(serviceUnits) {
@@ -371,8 +378,10 @@ function populateServiceUnitModalTable(serviceUnits) {
         serviceUnitEditButton.classList.add("btn");
         serviceUnitEditButton.classList.add("btn-info");
         serviceUnitEditButton.classList.add("btn-sm");
+        serviceUnitEditButton.setAttribute("data-id", serviceUnit.ID);
         let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
         serviceUnitEditButton.innerHTML = faPencil;
+        serviceUnitEditButton.onclick = populateServiceUnitModalOnRowClick;
         serviceUnitCell.appendChild(serviceUnitEditButton);
 
         let serviceUnitMonthCell = serviceUnitRow.insertCell(1);
@@ -380,6 +389,9 @@ function populateServiceUnitModalTable(serviceUnits) {
 
         let serviceUnitYearCell = serviceUnitRow.insertCell(2);
         serviceUnitYearCell.innerText = serviceUnit.Year;
+
+        let unitsCell = serviceUnitRow.insertCell(3);
+        unitsCell.innerText = serviceUnit.Units;
 
     });
 
