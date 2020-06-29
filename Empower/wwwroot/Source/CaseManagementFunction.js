@@ -262,14 +262,11 @@ const CaseManagementFunction = (props) => {
                              /> 
                             : <div></div>
                         }
-                       program content
                     </Tab>
                     <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
                        assessment content
                     </Tab>
-                    <Tab eventKey="contact" title="Contact" disabled={isTabDisabled}>
-                        contact content
-                    </Tab>
+                   
                 </Tabs>
             </div>
 
