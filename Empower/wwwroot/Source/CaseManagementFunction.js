@@ -10,6 +10,7 @@ import SupplementalAdult from './SupplementalAdult';
 import SupplementalJuvenile from './SupplementalJuvenile';
 import {useStore} from './StateStores/store';
 import {ToastContainer, toast} from 'react-toastify';
+import {triggerToastMessage, triggerErrorMessage  } from './ToastHelper';
 import 'react-toastify/dist/ReactToastify.css';
 import {getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
@@ -80,29 +81,6 @@ const CaseManagementFunction = (props) => {
 
     let systems = getSystems();
 
-
-    function triggerToastMessage(message) {       
-        toast.success(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true
-            });
-    }
-
-    function triggerErrorMessage(message){
-        toast.error(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true
-        });
-    }
-
     function EnableTabs() {
         setEnabled(false);
         setDefaultTab("participantinfo");
@@ -132,6 +110,9 @@ const CaseManagementFunction = (props) => {
         //check to see if the Add New Profile button was clicked, set clienProfile to undefined if it was   
         setClientProfile(clientProfile); //updates the local state
         setPersonID(clientProfile.ClientProfile.Person.ID);
+
+        sessionStorage.setItem('clientProfileID', clientProfile.ClientProfile.ID);
+        sessionStorage.setItem('clientProfilePersonID', clientProfile.ClientProfile.PersonID);
 
         //to handle the birth date changing when a new row in the search grid is selected. this is because the datepicker is a third party library
         //infoRef.current.updateBirthDate(clientProfile.ClientProfile.Person.DOB);
@@ -274,6 +255,7 @@ const CaseManagementFunction = (props) => {
                                 serviceOutcomeValues = { serviceOutcomeOptions }
                                 staffValues = { staffOptions }
                                 clientProfile={clientProfile.ClientProfile }
+                                familyProfiles={clientProfile.Person }
                                 placement={clientProfile.Placement }
                                 createNotification={triggerToastMessage}
                                 createErrorNotification={triggerErrorMessage}
