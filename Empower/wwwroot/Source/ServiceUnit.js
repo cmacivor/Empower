@@ -46,6 +46,27 @@ const ServiceUnit = (props) => {
         oldestYear++;
         serviceUnitYears.push(oldestYear);
     }
+
+    function getServiceUnitsByEnrollmentID() {
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+        let enrollmentID = $("#hdnServiceUnitEnrollmentID").val();
+    
+        let fullGetPlacementsAddress = `${apiAddress}/api/ServiceUnit/GetByEnrollmentID/${enrollmentID}`;
+        let sessionStorageData = getSessionData();
+    
+       return fetch(fullGetPlacementsAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+        });
+
+    }
     
     function saveServiceUnit() {
 
@@ -115,6 +136,8 @@ const ServiceUnit = (props) => {
 
     
             triggerToastMessage("The service unit was successfully saved");
+
+            getServiceUnitsByEnrollmentID();
     
         });
     }

@@ -346,6 +346,7 @@ function populateServiceUnitModalOnRowClick(event) {
         document.getElementById('btnServiceYear').innerHTML = year;
 
         $("#txtServiceUnits").val(units);
+        $("#hdnServiceUnitID").val(serviceUnitID);
     }
 }
 
