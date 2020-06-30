@@ -4,6 +4,39 @@ import { getSessionData } from './commonAdmin';
 
 const ProgressNote = (props) => {
 
+    let contactTypes = props.contactTypeValues;
+    let subContactTypes = props.subContactTypeValues;
+
+
+    function ddlContactTypeSelectHandler(event) {
+
+    }
+
+    function ddlSubContactTypeSelectHandler(event) {
+
+    }
+
+    let contactTypeOptions = [];
+    if (contactTypes.length > 0) {
+        contactTypeOptions = contactTypes.map((value) => 
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlContactTypeSelectHandler } className="dropdown-item">{value.Description}</a>
+        );
+    }
+
+    let subContactTypeOptions = [];
+    if (subContactTypes.length > 0) {
+        subContactTypeOptions = subContactTypes.map((value) => 
+            <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlSubContactTypeSelectHandler } className="dropdown-item">{value.Description}</a>
+         );
+    }
+
+    // let careerPathWayValueOptions = [];
+    // if ( careerPathways.length > 0) {
+
+    //     careerPathWayValueOptions = careerPathways.map((value) =>
+    //         <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlCareerPathwayPositionSelectHandler  } className="dropdown-item">{value.Description}</a>
+    //     );
+    // }
 
     return <div>
              <form id="frmProgressNote">
@@ -37,7 +70,7 @@ const ProgressNote = (props) => {
                                             
                                         </button>
                                         <div className="dropdown-menu">
-                                          
+                                            {contactTypeOptions}
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +94,19 @@ const ProgressNote = (props) => {
                                     </table>
                                 </div>
                             </div>
-                    
+                            <div className="form-row">
+                                <div className="col-4">
+                                    <label><strong>Sub Contact Type</strong></label>
+                                    <div className="dropdown">
+                                        <button type="button" id="btnProgressNoteSubContactType" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            
+                                        </button>
+                                        <div className="dropdown-menu">
+                                            { subContactTypeOptions }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="modal-footer">
                             <button type="button" id="btnSaveProgressNote" className="btn btn-primary" >Save</button>

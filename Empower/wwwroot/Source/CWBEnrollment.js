@@ -32,6 +32,8 @@ const Enrollment = (props) => {
     let staff = props.staffValues;
     let serviceReleases = props.serviceReleaseValues;
     let serviceOutcomes = props.serviceOutcomeValues;
+    let contactTypes = props.contactTypeValues;
+    let subContactTypes = props.subContactTypeValues;
     
     useEffect(() => {
 
@@ -547,7 +549,10 @@ const Enrollment = (props) => {
          clientProfile ={props.clientProfile} />
          <EmploymentPlan />
          <ServiceUnit />
-         <ProgressNote />
+         <ProgressNote
+            contactTypeValues = { contactTypes }
+            subContactTypeValues = { subContactTypes }
+          />
     </div>
 }
 
