@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
+import {triggerToastMessage, triggerErrorMessage,  } from './ToastHelper';
+import { populateServiceUnitModalTable, getServiceUnitsByEnrollmentID } from './EnrollmentTabHelpers';
 
 const ProgressNote = (props) => {
 
@@ -8,11 +10,81 @@ const ProgressNote = (props) => {
     let subContactTypes = props.subContactTypeValues;
 
 
+    useEffect(() => {
+        document.getElementById('btnProgressNoteContactType').value = "Please Select";
+        document.getElementById("btnProgressNoteContactType").innerHTML = "Please Select";
+
+        document.getElementById('btnProgressNoteSubContactType').value = "Please Select";
+        document.getElementById("btnProgressNoteSubContactType").innerHTML = "Please Select";
+    });
+
     function ddlContactTypeSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
 
     }
 
     function ddlSubContactTypeSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+    }
+
+    function getDurationValue() {
+        let durationHour = document.getElementById("txtDurationHour").value;
+        let durationMinute = document.getElementById("txtDurationMinute").value;
+        let today = new Date();
+        let durationToSend = new Date(today.getFullYear(), today.getMonth(), today.getDate(), durationHour, durationMinute, today.getSeconds(), 0);
+        
+        return durationToSend;
+    }
+
+    function saveProgressNote() {
+
+        if ($("#txtProgressNoteDate").val() === "") {
+            $("#frmServiceUnit").addClass("was-validated");
+            return;
+        }
+
+        
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullProgressNoteAddress = `${apiAddress}/api/ProgressNote`;
+        let sessionStorageData = getSessionData();
+
+        let progressNote = {
+            EnrollmentID: $("#hdnProgressNoteEnrollmentID").val(),
+            CommentDate: new Date($("#txtProgressNoteDate").val()),
+            Comment: $("#txtProgressNoteComments").val(),
+            ContactTypeID: document.getElementById("btnProgressNoteContactType").value,
+            SubContactTypeID: document.getElementById("btnProgressNoteSubContactType").value,
+            Duration: getDurationValue(),
+            Active: true,
+            CreatedDate: new Date(),
+            CreatedBy: getSessionData().CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: getSessionData.CurrentUser
+        }
+
+        fetch(fullProgressNoteAddress, {
+            method: methodType,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(progressNote)
+        }).then(result => result.json())
+        .then(result => {
+            console.log(result);
+    
+            if (result === null || result.Message !== undefined) {
+                props.createErrorNotification("an error occurred while saving the record.");
+                return;
+            }
+
+    
+            triggerToastMessage("The service unit was successfully saved");
+
+            //getServiceUnitsByEnrollmentID();
+    
+        });
 
     }
 
@@ -30,15 +102,12 @@ const ProgressNote = (props) => {
          );
     }
 
-    // let careerPathWayValueOptions = [];
-    // if ( careerPathways.length > 0) {
-
-    //     careerPathWayValueOptions = careerPathways.map((value) =>
-    //         <a key={value.ID} value={value.ID} description={value.Description} onClick={ ddlCareerPathwayPositionSelectHandler  } className="dropdown-item">{value.Description}</a>
-    //     );
-    // }
-
+   
     return <div>
+              <input type="hidden" id="hdnProgressNoteID" />
+              <input type="hidden" id="hdnProgressNoteEnrollmentID" />
+              <input type="hidden" id="hdnProgressNoteCreatedDate" />
+              <input type="hidden" id="hdnProgressNoteCreatedBy" />
              <form id="frmProgressNote">
                 <div className="modal fade" id="progressNoteModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg" role="document">
@@ -57,11 +126,12 @@ const ProgressNote = (props) => {
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="col-4">
+                                <div className="col-8">
                                     <label htmlFor="btnProgressNoteComment"><strong> Comment</strong></label>
                                     <textarea id="txtProgressNoteComments" className="form-control" defaultValue="" />
                                 </div>
                             </div>
+                            <br/>
                             <div className="form-row">
                                 <div className="col-4">
                                     <label htmlFor="btnProgressNoteContactType"><strong> Contact Type</strong></label>
@@ -74,26 +144,16 @@ const ProgressNote = (props) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-4">
-                                    <label><strong>Duration</strong> </label>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td className="text-center"><i className="fa fa-arrow-up" aria-hidden="true"></i></td>
-                                                <td className="text-center"><i className="fa fa-arrow-up" aria-hidden="true"></i></td>
-                                            </tr>
-                                            <tr>
-                                                <td><input type="text"  className="form-control"></input></td>
-                                                <td><input type="text" className="form-control"></input></td>
-                                            </tr>
-                                            <tr>
-                                                <td className="text-center"><i className="fa fa-arrow-down" aria-hidden="true"></i></td>
-                                                <td className="text-center"><i className="fa fa-arrow-down" aria-hidden="true"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div className="col-2">
+                                    <label><strong>Duration (hours) </strong></label>
+                                    <input id="txtDurationHour" step="1" type="number" name="txtDurationHour" className="form-control" />
+                                </div>
+                                <div className="col-2">
+                                    <label><strong>Duration (minutes)</strong> </label>
+                                    <input id="txtDurationMinute" step="15" max="60" min="0" type="number" name="txtDurationMinute" className="form-control" />
                                 </div>
                             </div>
+                            <br/>
                             <div className="form-row">
                                 <div className="col-4">
                                     <label><strong>Sub Contact Type</strong></label>
@@ -109,7 +169,7 @@ const ProgressNote = (props) => {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" id="btnSaveProgressNote" className="btn btn-primary" >Save</button>
+                            <button type="button" id="btnSaveProgressNote" onClick={ saveProgressNote } className="btn btn-primary" >Save</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
