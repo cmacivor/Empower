@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
+import { triggerErrorMessage, triggerToastMessage } from './ToastHelper';
 
 
 
@@ -328,18 +329,325 @@ function buildPrintHeaderButton(placementRecord) {
       return printButton;
 }
 
-function buildPrintButton(enrollment) {
-        //add the print button and put it next to edit
-        let printButton = document.createElement("button");
-        printButton.classList.add("btn");
-        printButton.classList.add('btn-info');
-        printButton.classList.add('btn-sm');
-        printButton.setAttribute("data-id", enrollment.Enrollment.ID);
-        let faPrint = "<i class='fa fa-print' aria-hidden='true'></i>";
-        printButton.innerHTML = faPrint;
-        printButton.onclick = togglePrintScreen;
+export function getProgressNotesByEnrollmentID() {
+    let apiAddress = sessionStorage.getItem("baseApiAddress");
 
-        return printButton;
+    let enrollmentID = $("#hdnProgressNoteEnrollmentID").val();
+
+    let fullGetPlacementsAddress = `${apiAddress}/api/ProgressNote/GetByEnrollmentID/${enrollmentID}`;
+    let sessionStorageData = getSessionData();
+
+   return fetch(fullGetPlacementsAddress, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+    }).then(result => result.json())
+    .then(result => {
+        console.log(result);
+        //console.log(result);
+        //populateServiceUnitModalTable(result);
+        populateProgressNoteModalTable(result);
+    });
+}
+
+
+export function getServiceUnitsByEnrollmentID() {
+    let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+    let enrollmentID = $("#hdnServiceUnitEnrollmentID").val();
+
+    let fullGetPlacementsAddress = `${apiAddress}/api/ServiceUnit/GetByEnrollmentID/${enrollmentID}`;
+    let sessionStorageData = getSessionData();
+
+   return fetch(fullGetPlacementsAddress, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+    }).then(result => result.json())
+    .then(result => {
+        //console.log(result);
+        populateServiceUnitModalTable(result);
+    });
+
+}
+
+
+function deleteServiceUnitButtonClickHandler(event) {
+    if (event !== undefined) {
+        event.preventDefault();
+
+        let serviceUnitID = event.currentTarget.getAttribute("data-id");
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullDeleteServiceUnitAddress = `${apiAddress}/api/ServiceUnit/Delete/${serviceUnitID}`;
+        let sessionStorageData = getSessionData();
+        
+        fetch(fullDeleteServiceUnitAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            getServiceUnitsByEnrollmentID();
+
+            triggerToastMessage("the service unit was successfully deleted.");
+        });
+    }
+}
+
+function deleteProgressNoteButtonClickHandler(event) {
+    if (event !== undefined) {
+        event.preventDefault();
+
+        let serviceUnitID = event.currentTarget.getAttribute("data-id");
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullDeleteProgressNoteAddress = `${apiAddress}/api/ProgressNote/Delete/${serviceUnitID}`;
+        let sessionStorageData = getSessionData();
+        
+        fetch(fullDeleteProgressNoteAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            getProgressNotesByEnrollmentID();
+
+            triggerToastMessage("the progress note was successfully deleted.");
+        });
+    }
+}
+
+
+function populateServiceUnitModalOnRowClick(event) {
+    if (event !== undefined) {
+        event.preventDefault();
+        let serviceUnitID = event.currentTarget.getAttribute("data-id");
+        
+        // let siblings = $(this).parent().siblings();
+        
+        // let month = siblings[0].innerText;
+        // let year = siblings[1].innerText;
+        // let units = siblings[2].innerText;
+
+        // document.getElementById("btnServiceMonth").value = month;
+        // document.getElementById("btnServiceMonth").innerHTML = month;
+        // document.getElementById("btnServiceYear").value = year;
+        // document.getElementById('btnServiceYear').innerHTML = year;
+
+        // $("#txtServiceUnits").val(units);
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullGetServiceUnitByIDAddress = `${apiAddress}/api/ServiceUnit/GetByID/${serviceUnitID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetServiceUnitByIDAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            ///console.log(result);
+
+            document.getElementById("btnServiceMonth").value = result.Month;
+            document.getElementById("btnServiceMonth").innerText = result.Month;
+
+            document.getElementById("btnServiceYear").value = result.Year;
+            document.getElementById("btnServiceYear").innerText = result.Year;
+
+            $("#txtServiceUnits").val(result.Units);
+
+            $("#hdnServiceUnitCreatedDate").val(result.CreatedDate);
+            $("#hdnServiceUnitCreatedBy").val(result.CreatedBy);
+            $("#hdnServiceUnitID").val(serviceUnitID);
+        });
+
+
+
+    }
+}
+
+function populateProgressNoteModalOnRowClick(event) {
+    if (event !== undefined) {
+
+        event.preventDefault();
+
+        let progressNoteID = event.currentTarget.getAttribute("data-id");
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullGetProgressNoteByIDAddress = `${apiAddress}/api/ProgressNote/GetByID/${progressNoteID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetProgressNoteByIDAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+
+            let convertedCommentDate = moment(new Date(result.CommentDate)).format('YYYY-MM-DD');
+            $("#txtProgressNoteDate").val(convertedCommentDate);
+            $("#txtProgressNoteComments").val(result.Comment);
+
+            if (result.ContactType !== null) {
+                $("#btnProgressNoteContactType").val(result.ContactType.ID);
+                document.getElementById("btnProgressNoteContactType").innerText = result.ContactType.Name;
+            }
+
+            if (result.SubContactType !== null) {
+                $("#btnProgressNoteSubContactType").val(result.SubContactType.ID);
+                document.getElementById("btnProgressNoteSubContactType").innerText = result.SubContactType.Name;
+            }
+
+            let duration = new Date(result.Duration);
+            console.log('the duration: ');
+            console.log(duration);
+            let hours = duration.getHours();
+            let minutes = duration.getMinutes();
+            console.log('the hours');
+            console.log(hours);
+            console.log('the minutes');
+            console.log(minutes);
+
+            let hoursToDisplay = hours - 4;
+            $("#txtDurationHour").val(hoursToDisplay);
+            $("#txtDurationMinute").val(minutes);
+
+            $("#hdnProgressNoteID").val(progressNoteID);
+            $("#hdnProgressNoteCreatedDate").val(result.CreatedDate);
+            $("#hdnProgressNoteCreatedBy").val(result.CreatedBy);
+
+        });
+    }
+}
+
+function populateProgressNoteModalTable(progressNotes) {
+    let progressNoteDiv = document.getElementById("divProgressNotesTableContainer");
+    progressNoteDiv.innerHTML = "";
+    let table = document.createElement("table");
+    table.classList.add("table");
+    let header = table.createTHead();
+    let headerRow = header.insertRow(0);
+    let detailsCell = headerRow.insertCell(0); //for the edit button column
+    let dateCell = headerRow.insertCell(1);
+    dateCell.innerHTML = "<strong>Date</strong>";
+    let contactTypeCell = headerRow.insertCell(2);
+    contactTypeCell.innerHTML = "<strong>Contact Type</strong>";
+    let commentCell = headerRow.insertCell(3);
+    commentCell.innerHTML = "<strong>Comment</strong>";
+    let deleteCell = headerRow.insertCell(4);
+
+    let tbody = table.createTBody();
+
+    let progressNoteRowIndex = 0;
+    progressNotes.forEach(progressNote => {
+
+        let progressNoteRow = tbody.insertRow(progressNoteRowIndex);
+        let progressNoteCell = progressNoteRow.insertCell(0);
+        //create the edit button
+        let progressNoteEditButton = document.createElement("button");
+        progressNoteEditButton.classList.add("btn");
+        progressNoteEditButton.classList.add("btn-info");
+        progressNoteEditButton.classList.add("btn-sm");
+        progressNoteEditButton.setAttribute("data-id", progressNote.ID);
+        let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
+        progressNoteEditButton.innerHTML = faPencil;
+        progressNoteEditButton.onclick = populateProgressNoteModalOnRowClick;
+        progressNoteCell.appendChild(progressNoteEditButton);
+
+        let progressNoteMonthCell = progressNoteRow.insertCell(1);
+        let convertedCommentDate = moment(new Date(progressNote.CommentDate)).format('YYYY-MM-DD');
+        progressNoteMonthCell.innerText = convertedCommentDate; //progressNote.CommentDate;
+
+        let progressNoteYearCell = progressNoteRow.insertCell(2);
+        progressNoteYearCell.innerText = progressNote.ContactType.Name;
+
+        let unitsCell = progressNoteRow.insertCell(3);
+        unitsCell.innerText = progressNote.Comment;
+
+        let deleteButtonCell = progressNoteRow.insertCell(4);
+        let progressNoteDeleteButton = document.createElement("button");
+        progressNoteDeleteButton.classList.add("btn");
+        progressNoteDeleteButton.classList.add("btn-info");
+        progressNoteDeleteButton.classList.add("btn-danger");
+        progressNoteDeleteButton.setAttribute("data-id", progressNote.ID);
+        let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
+        progressNoteDeleteButton.innerHTML = faTrash;
+        progressNoteDeleteButton.onclick = deleteProgressNoteButtonClickHandler
+        deleteButtonCell.appendChild(progressNoteDeleteButton);
+
+    });
+
+    progressNoteDiv.appendChild(table);
+}
+
+
+export function populateServiceUnitModalTable(serviceUnits) {
+
+    let serviceUnitDiv = document.getElementById("divServiceUnitsTableContainer");
+    serviceUnitDiv.innerHTML = "";
+    let table = document.createElement("table");
+    table.classList.add("table");
+    let header = table.createTHead();
+    let headerRow = header.insertRow(0);
+    let detailsCell = headerRow.insertCell(0); //for the edit button column
+    let monthCell = headerRow.insertCell(1);
+    monthCell.innerHTML = "<strong>Month</strong>";
+    let yearCell = headerRow.insertCell(2);
+    yearCell.innerHTML = "<strong>Year</strong>";
+    let unitsCell = headerRow.insertCell(3);
+    unitsCell.innerHTML = "<strong>Units</strong>";
+    let deleteCell = headerRow.insertCell(4);
+
+    let tbody = table.createTBody();
+
+    let serviceUnitRowIndex = 0;
+    serviceUnits.forEach(serviceUnit => {
+        let serviceUnitRow = tbody.insertRow(serviceUnitRowIndex);
+        let serviceUnitCell = serviceUnitRow.insertCell(0);
+        //create the edit button
+        let serviceUnitEditButton = document.createElement("button");
+        serviceUnitEditButton.classList.add("btn");
+        serviceUnitEditButton.classList.add("btn-info");
+        serviceUnitEditButton.classList.add("btn-sm");
+        serviceUnitEditButton.setAttribute("data-id", serviceUnit.ID);
+        let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
+        serviceUnitEditButton.innerHTML = faPencil;
+        serviceUnitEditButton.onclick = populateServiceUnitModalOnRowClick;
+        serviceUnitCell.appendChild(serviceUnitEditButton);
+
+        let serviceUnitMonthCell = serviceUnitRow.insertCell(1);
+        serviceUnitMonthCell.innerText = serviceUnit.Month;
+
+        let serviceUnitYearCell = serviceUnitRow.insertCell(2);
+        serviceUnitYearCell.innerText = serviceUnit.Year;
+
+        let unitsCell = serviceUnitRow.insertCell(3);
+        unitsCell.innerText = serviceUnit.Units;
+
+        let deleteButtonCell = serviceUnitRow.insertCell(4);
+        let serviceUnitDeleteButton = document.createElement("button");
+        serviceUnitDeleteButton.classList.add("btn");
+        serviceUnitDeleteButton.classList.add("btn-info");
+        serviceUnitDeleteButton.classList.add("btn-danger");
+        serviceUnitDeleteButton.setAttribute("data-id", serviceUnit.ID);
+        let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
+        serviceUnitDeleteButton.innerHTML = faTrash;
+        serviceUnitDeleteButton.onclick = deleteServiceUnitButtonClickHandler
+        deleteButtonCell.appendChild(serviceUnitDeleteButton);
+
+    });
+
+    serviceUnitDiv.appendChild(table);
 }
 
 export function generateTable(placements) {
@@ -413,7 +721,10 @@ export function generateTable(placements) {
         let enrollmentRowsIndex = 0;
         if (placement.Enrollment !== undefined && placement.Enrollment !== null) {
             placement.Enrollment.forEach(function(enrollment) {
-                //console.log(enrollment);
+                console.log('the enrollment');
+                console.log(enrollment);
+
+                populateServiceUnitModalTable(enrollment.ServiceUnit);
 
                 let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
                 enrollmentRowsIndex = enrollmentRowsIndex + 1;
@@ -429,7 +740,7 @@ export function generateTable(placements) {
                 editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
                 let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
                 editEnrollmentButton.innerHTML = faPencil;
-                //editEnrollmentButton.innerText = "Edit Referral";
+                editEnrollmentButton.title = "Edit Referral";
                 editEnrollmentButton.onclick = getEnrollment;
                 editButtonCell.appendChild(editEnrollmentButton);
 
@@ -438,12 +749,24 @@ export function generateTable(placements) {
                 serviceUnitButton.classList.add("btn");
                 serviceUnitButton.classList.add("btn-info");
                 serviceUnitButton.classList.add("btn-sm");
+                serviceUnitButton.classList.add("mr-2");
                 serviceUnitButton.setAttribute("data-id", enrollment.Enrollment.ID);
                 let faSuitCase = "<i class='fa fa-suitcase' aria-hidden='true'></i>";
                 serviceUnitButton.innerHTML = faSuitCase;
+                serviceUnitButton.title = "Edit Service Unit";
                 serviceUnitButton.onclick = toggleServiceUnitModal;
-
                 editButtonCell.appendChild(serviceUnitButton);
+
+                let progressNoteButton = document.createElement("button");
+                progressNoteButton.classList.add("btn");
+                progressNoteButton.classList.add("btn-info");
+                progressNoteButton.classList.add("btn-sm");
+                progressNoteButton.setAttribute("data-id", enrollment.Enrollment.ID);
+                let stickyNote = "<i class='fa fa-sticky-note-o' aria-hidden='true'></i>";
+                progressNoteButton.innerHTML = stickyNote;
+                progressNoteButton.title = "Edit Progress Note";
+                progressNoteButton.onclick = toggleProgressNoteModal;
+                editButtonCell.appendChild(progressNoteButton);
 
                 //add the Add/Edit Employment Plan button
                 //keeping this commented out because it seems that this functionality is never used
@@ -479,7 +802,7 @@ export function generateTable(placements) {
                 let deleteButtonCell = enrollmentRow.insertCell(5);
                 let deleteEnrollmentButton = document.createElement("button");
                 deleteEnrollmentButton.classList.add("btn");
-                deleteEnrollmentButton.classList.add("btn-secondary");
+                deleteEnrollmentButton.classList.add("btn-danger");
                 deleteEnrollmentButton.classList.add("btn-sm");
                 deleteEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
                 let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
@@ -711,13 +1034,58 @@ function togglePrintScreen(event) {
     $("#printModal").modal('toggle');
 }
 
+function clearServiceUnitForm() {
+    $("#hdnServiceUnitID").val("");
+    $("#hdnServiceUnitCreatedDate").val("");
+    $("#hdnServiceUnitCreatedBy").val("");
+    document.getElementById("btnServiceMonth").value = "";
+    document.getElementById("btnServiceMonth").innerText = "Please Select";
+    document.getElementById("btnServiceYear").value = "";
+    document.getElementById("btnServiceYear").innerText = "Please Select";
+    $("#txtServiceUnits").val("");
+}
+
+
 export function toggleServiceUnitModal(event) {
+    clearServiceUnitForm();
     if (event !== undefined) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
 
-        $("#hdnServiceUnitEnrollmentID").val(selectedEnrollmentID)
+        $("#hdnServiceUnitEnrollmentID").val(selectedEnrollmentID);
+
+        getServiceUnitsByEnrollmentID();
 
     }
 
     $("#serviceUnitModal").modal('toggle');
+}
+
+function clearProgressNoteForm() {
+    $("#hdnProgressNoteID").val("");
+    $("#hdnProgressNoteCreatedDate").val("");
+    $("#hdnProgressNoteCreatedBy").val("");
+    $("#txtProgressNoteDate").val("");
+    $("#txtProgressNoteComments").val("");
+    document.getElementById("btnProgressNoteContactType").value = "";
+    document.getElementById("btnProgressNoteContactType").innerText = "Please Select";
+
+    $("#txtDurationHour").val("");
+    $("#txtDurationMinute").val("");
+
+    document.getElementById("btnProgressNoteSubContactType").value = "";
+    document.getElementById("btnProgressNoteSubContactType").innerText = "Please Select";
+}
+
+
+function toggleProgressNoteModal(event) {
+    clearProgressNoteForm();
+
+    if (event !== undefined) {
+        let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
+        $("#hdnProgressNoteEnrollmentID").val(selectedEnrollmentID);
+
+        getProgressNotesByEnrollmentID();
+    }   
+
+    $("#progressNoteModal").modal("toggle");
 }

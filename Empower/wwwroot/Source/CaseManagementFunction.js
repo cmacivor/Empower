@@ -50,6 +50,8 @@ const CaseManagementFunction = (props) => {
     const [staffOptions, setStaffOptions] = useState([]);
     const [serviceReleaseOptions, setServiceReleaseOptions] = useState([]);
     const [serviceOutcomeOptions, setServiceOutcomeOptions] = useState([]);
+    const [contactTypeOptions, setContactTypeOptions ] = useState([]);
+    const [subContactTypeOptions, setSubContactTypeOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -65,6 +67,8 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("Relationship").then(relationships => setRelationshipOptions(relationships));
         Api.getConfigDataByType("AssistanceType").then(assistanceTypes => setAssistanceTypeOptions(assistanceTypes));
         Api.getConfigDataByType("CareerPathway").then(careerPathways => setCareerPathWayOptions(careerPathways));
+        Api.getConfigDataByType("ContactType").then(contactTypes => setContactTypeOptions(contactTypes));
+        Api.getConfigDataByType("SubContactType").then(subContactTypes => setSubContactTypeOptions(subContactTypes));
         //TODO: how to reduce the number of API calls?
         if (staffOptions.length === 0) {
             Api.getConfigDataByType("Staff").then(staff => setStaffOptions(staff));
@@ -253,6 +257,8 @@ const CaseManagementFunction = (props) => {
                                 careerPathwayValues = { careerPathwayOptions }
                                 serviceReleaseValues = { serviceReleaseOptions }
                                 serviceOutcomeValues = { serviceOutcomeOptions }
+                                contactTypeValues = { contactTypeOptions }
+                                subContactTypeValues = { subContactTypeOptions }
                                 staffValues = { staffOptions }
                                 clientProfile={clientProfile.ClientProfile }
                                 familyProfiles={clientProfile.Person }
@@ -262,14 +268,11 @@ const CaseManagementFunction = (props) => {
                              /> 
                             : <div></div>
                         }
-                       program content
                     </Tab>
                     <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
                        assessment content
                     </Tab>
-                    <Tab eventKey="contact" title="Contact" disabled={isTabDisabled}>
-                        contact content
-                    </Tab>
+                   
                 </Tabs>
             </div>
 

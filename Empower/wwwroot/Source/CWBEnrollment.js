@@ -6,6 +6,7 @@ import Referral from './Referral';
 import PrintEnrollment from './PrintEnrollment';
 import EmploymentPlan from './EmploymentPlan';
 import ServiceUnit from './ServiceUnit';
+import ProgressNote from './ProgressNote';
 import { generateTable, 
     getPlacementsByClientProfileID, 
     togglePlacementModal,
@@ -31,6 +32,8 @@ const Enrollment = (props) => {
     let staff = props.staffValues;
     let serviceReleases = props.serviceReleaseValues;
     let serviceOutcomes = props.serviceOutcomeValues;
+    let contactTypes = props.contactTypeValues;
+    let subContactTypes = props.subContactTypeValues;
     
     useEffect(() => {
 
@@ -244,7 +247,9 @@ const Enrollment = (props) => {
             let middleNameCell = dataRow.insertCell(2);
             middleNameCell.innerText = familyProfile.FamilyProfile.Person.MiddleName;
             let suffixCell = dataRow.insertCell(3);
-            suffixCell.innerText = familyProfile.FamilyProfile.Person.Suffix.Name;
+            if (familyProfile.FamilyProfile.Person.Suffix !== null) {
+                suffixCell.innerText = familyProfile.FamilyProfile.Person.Suffix.Name;
+            }
             let relationshipCell = dataRow.insertCell(4);
             relationshipCell.innerText = familyProfile.FamilyProfile.Relationship.Description;
             let homePhoneCell = dataRow.insertCell(5);
@@ -544,6 +549,10 @@ const Enrollment = (props) => {
          clientProfile ={props.clientProfile} />
          <EmploymentPlan />
          <ServiceUnit />
+         <ProgressNote
+            contactTypeValues = { contactTypes }
+            subContactTypeValues = { subContactTypes }
+          />
     </div>
 }
 
