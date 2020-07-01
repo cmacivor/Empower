@@ -21,18 +21,25 @@ const ProgressNote = (props) => {
     function ddlContactTypeSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
 
+        document.getElementById("btnProgressNoteContactType").value = selectedValue;
+
     }
 
     function ddlSubContactTypeSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
+
+        document.getElementById("btnProgressNoteSubContactType").value = selectedValue;
 
     }
 
     function getDurationValue() {
         let durationHour = document.getElementById("txtDurationHour").value;
         let durationMinute = document.getElementById("txtDurationMinute").value;
+        console.log(parseInt(durationHour));
+        console.log(parseInt(durationMinute));
         let today = new Date();
-        let durationToSend = new Date(today.getFullYear(), today.getMonth(), today.getDate(), durationHour, durationMinute, today.getSeconds(), 0);
+        let offset = new Date().getTimezoneOffset();
+        let durationToSend = new Date(today.getFullYear(), today.getMonth(), today.getDate(), parseInt(durationHour), parseInt(durationMinute), today.getSeconds(), 0);
         
         return durationToSend;
     }
@@ -49,6 +56,8 @@ const ProgressNote = (props) => {
         let fullProgressNoteAddress = `${apiAddress}/api/ProgressNote`;
         let sessionStorageData = getSessionData();
 
+        let methodType = '';
+
         let progressNote = {
             EnrollmentID: $("#hdnProgressNoteEnrollmentID").val(),
             CommentDate: new Date($("#txtProgressNoteDate").val()),
@@ -57,10 +66,18 @@ const ProgressNote = (props) => {
             SubContactTypeID: document.getElementById("btnProgressNoteSubContactType").value,
             Duration: getDurationValue(),
             Active: true,
-            CreatedDate: new Date(),
-            CreatedBy: getSessionData().CurrentUser,
+            //CreatedDate: new Date(),
+            //CreatedBy: getSessionData().CurrentUser,
             UpdatedDate: new Date(),
-            UpdatedBy: getSessionData.CurrentUser
+            UpdatedBy: getSessionData().CurrentUser
+        }
+
+        if ($("#hdnProgressNoteID").val() === "") {
+            methodType = 'POST';
+            progressNote.CreatedDate = new Date();
+            progressNote.CreatedBy = getSessionData().CurrentUser;
+        } else {
+            methodType = 'PUT';
         }
 
         fetch(fullProgressNoteAddress, {
@@ -75,7 +92,7 @@ const ProgressNote = (props) => {
             console.log(result);
     
             if (result === null || result.Message !== undefined) {
-                props.createErrorNotification("an error occurred while saving the record.");
+                triggerErrorMessage("an error occurred while saving the record.");
                 return;
             }
 

@@ -854,7 +854,8 @@ export function toggleServiceUnitModal(event) {
 function toggleProgressNoteModal(event) {
     if (event !== undefined) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
-    }
+        $("#hdnProgressNoteEnrollmentID").val(selectedEnrollmentID);
+    }   
 
     $("#progressNoteModal").modal("toggle");
 }
