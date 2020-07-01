@@ -348,6 +348,7 @@ export function getProgressNotesByEnrollmentID() {
         console.log(result);
         //console.log(result);
         //populateServiceUnitModalTable(result);
+        populateProgressNoteModalTable(result);
     });
 }
 
@@ -430,61 +431,62 @@ function populateProgressNoteModalOnRowClick(event) {
 }
 
 function populateProgressNoteModalTable(progressNotes) {
-    let serviceUnitDiv = document.getElementById("divProgressNotesTableContainer");
-    serviceUnitDiv.innerHTML = "";
+    let progressNoteDiv = document.getElementById("divProgressNotesTableContainer");
+    progressNoteDiv.innerHTML = "";
     let table = document.createElement("table");
     table.classList.add("table");
     let header = table.createTHead();
     let headerRow = header.insertRow(0);
     let detailsCell = headerRow.insertCell(0); //for the edit button column
-    let monthCell = headerRow.insertCell(1);
-    monthCell.innerHTML = "<strong>Date</strong>";
-    let yearCell = headerRow.insertCell(2);
-    yearCell.innerHTML = "<strong>Contact Type</strong>";
-    let unitsCell = headerRow.insertCell(3);
-    unitsCell.innerHTML = "<strong>Comment</strong>";
+    let dateCell = headerRow.insertCell(1);
+    dateCell.innerHTML = "<strong>Date</strong>";
+    let contactTypeCell = headerRow.insertCell(2);
+    contactTypeCell.innerHTML = "<strong>Contact Type</strong>";
+    let commentCell = headerRow.insertCell(3);
+    commentCell.innerHTML = "<strong>Comment</strong>";
     let deleteCell = headerRow.insertCell(4);
 
     let tbody = table.createTBody();
 
-    let serviceUnitRowIndex = 0;
-    serviceUnits.forEach(serviceUnit => {
-        let serviceUnitRow = tbody.insertRow(serviceUnitRowIndex);
-        let serviceUnitCell = serviceUnitRow.insertCell(0);
+    let progressNoteRowIndex = 0;
+    progressNotes.forEach(progressNote => {
+
+        let progressNoteRow = tbody.insertRow(progressNoteRowIndex);
+        let progressNoteCell = progressNoteRow.insertCell(0);
         //create the edit button
-        let serviceUnitEditButton = document.createElement("button");
-        serviceUnitEditButton.classList.add("btn");
-        serviceUnitEditButton.classList.add("btn-info");
-        serviceUnitEditButton.classList.add("btn-sm");
-        serviceUnitEditButton.setAttribute("data-id", serviceUnit.ID);
+        let progressNoteEditButton = document.createElement("button");
+        progressNoteEditButton.classList.add("btn");
+        progressNoteEditButton.classList.add("btn-info");
+        progressNoteEditButton.classList.add("btn-sm");
+        progressNoteEditButton.setAttribute("data-id", progressNote.ID);
         let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
-        serviceUnitEditButton.innerHTML = faPencil;
-        serviceUnitEditButton.onclick = populateProgressNoteModalOnRowClick;
-        serviceUnitCell.appendChild(serviceUnitEditButton);
+        progressNoteEditButton.innerHTML = faPencil;
+        progressNoteEditButton.onclick = populateProgressNoteModalOnRowClick;
+        progressNoteCell.appendChild(progressNoteEditButton);
 
-        let serviceUnitMonthCell = serviceUnitRow.insertCell(1);
-        serviceUnitMonthCell.innerText = serviceUnit.Month;
+        let progressNoteMonthCell = progressNoteRow.insertCell(1);
+        progressNoteMonthCell.innerText = progressNote.CommentDate;
 
-        let serviceUnitYearCell = serviceUnitRow.insertCell(2);
-        serviceUnitYearCell.innerText = serviceUnit.Year;
+        let progressNoteYearCell = progressNoteRow.insertCell(2);
+        progressNoteYearCell.innerText = progressNote.ContactType.Name;
 
-        let unitsCell = serviceUnitRow.insertCell(3);
-        unitsCell.innerText = serviceUnit.Units;
+        let unitsCell = progressNoteRow.insertCell(3);
+        unitsCell.innerText = progressNote.Comment;
 
-        let deleteButtonCell = serviceUnitRow.insertCell(4);
-        let serviceUnitDeleteButton = document.createElement("button");
-        serviceUnitDeleteButton.classList.add("btn");
-        serviceUnitDeleteButton.classList.add("btn-info");
-        serviceUnitDeleteButton.classList.add("btn-danger");
-        serviceUnitDeleteButton.setAttribute("data-id", serviceUnit.ID);
+        let deleteButtonCell = progressNoteRow.insertCell(4);
+        let progressNoteDeleteButton = document.createElement("button");
+        progressNoteDeleteButton.classList.add("btn");
+        progressNoteDeleteButton.classList.add("btn-info");
+        progressNoteDeleteButton.classList.add("btn-danger");
+        progressNoteDeleteButton.setAttribute("data-id", progressNote.ID);
         let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
-        serviceUnitDeleteButton.innerHTML = faTrash;
-        serviceUnitDeleteButton.onclick = deleteProgressNoteButtonClickHandler
-        deleteButtonCell.appendChild(serviceUnitDeleteButton);
+        progressNoteDeleteButton.innerHTML = faTrash;
+        progressNoteDeleteButton.onclick = deleteProgressNoteButtonClickHandler
+        deleteButtonCell.appendChild(progressNoteDeleteButton);
 
     });
 
-    serviceUnitDiv.appendChild(table);
+    progressNoteDiv.appendChild(table);
 }
 
 
@@ -946,6 +948,8 @@ function toggleProgressNoteModal(event) {
     if (event !== undefined) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
         $("#hdnProgressNoteEnrollmentID").val(selectedEnrollmentID);
+
+        getProgressNotesByEnrollmentID();
     }   
 
     $("#progressNoteModal").modal("toggle");
