@@ -482,6 +482,16 @@ function populateProgressNoteModalOnRowClick(event) {
             let duration = new Date(result.Duration);
             console.log('the duration: ');
             console.log(duration);
+            let hours = duration.getHours();
+            let minutes = duration.getMinutes();
+            console.log('the hours');
+            console.log(hours);
+            console.log('the minutes');
+            console.log(minutes);
+
+            let hoursToDisplay = hours - 4;
+            $("#txtDurationHour").val(hoursToDisplay);
+            $("#txtDurationMinute").val(minutes);
 
             //populate
             console.log(result);
