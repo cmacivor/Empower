@@ -493,8 +493,10 @@ function populateProgressNoteModalOnRowClick(event) {
             $("#txtDurationHour").val(hoursToDisplay);
             $("#txtDurationMinute").val(minutes);
 
-            //populate
-            console.log(result);
+            $("#hdnProgressNoteID").val(progressNoteID);
+            $("#hdnProgressNoteCreatedDate").val(result.CreatedDate);
+            $("#hdnProgressNoteCreatedBy").val(result.CreatedBy);
+
         });
     }
 }
@@ -1032,7 +1034,7 @@ function clearProgressNoteForm() {
 
 function toggleProgressNoteModal(event) {
     clearProgressNoteForm();
-    
+
     if (event !== undefined) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
         $("#hdnProgressNoteEnrollmentID").val(selectedEnrollmentID);

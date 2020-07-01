@@ -91,6 +91,9 @@ const ProgressNote = (props) => {
             progressNote.CreatedBy = getSessionData().CurrentUser;
         } else {
             methodType = 'PUT';
+            progressNote.ID = $("#hdnProgressNoteID").val();
+            progressNote.CreatedDate = new Date($("#hdnProgressNoteCreatedDate").val());
+            progressNote.CreatedBy = $("#hdnProgressNoteCreatedBy").val();
         }
 
         fetch(fullProgressNoteAddress, {
