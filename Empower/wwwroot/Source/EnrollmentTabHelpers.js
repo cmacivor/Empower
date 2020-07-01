@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
-import { triggerErrorMessage } from './ToastHelper';
+import { triggerErrorMessage, triggerToastMessage } from './ToastHelper';
 
 
 
@@ -395,13 +395,33 @@ function deleteServiceUnitButtonClickHandler(event) {
         .then(result => {
             getServiceUnitsByEnrollmentID();
 
-            triggerErrorMessage("the service unit was successfully deleted.");
+            triggerToastMessage("the service unit was successfully deleted.");
         });
     }
 }
 
 function deleteProgressNoteButtonClickHandler(event) {
+    if (event !== undefined) {
+        event.preventDefault();
 
+        let serviceUnitID = event.currentTarget.getAttribute("data-id");
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullDeleteProgressNoteAddress = `${apiAddress}/api/ProgressNote/Delete/${serviceUnitID}`;
+        let sessionStorageData = getSessionData();
+        
+        fetch(fullDeleteProgressNoteAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            getProgressNotesByEnrollmentID();
+
+            triggerToastMessage("the progress note was successfully deleted.");
+        });
+    }
 }
 
 
