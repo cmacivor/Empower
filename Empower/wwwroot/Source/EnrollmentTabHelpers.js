@@ -447,7 +447,27 @@ function populateServiceUnitModalOnRowClick(event) {
 }
 
 function populateProgressNoteModalOnRowClick(event) {
+    if (event !== undefined) {
 
+        event.preventDefault();
+
+        let progressNoteID = event.currentTarget.getAttribute("data-id");
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullGetProgressNoteByIDAddress = `${apiAddress}/api/ProgressNote/GetByID/${progressNoteID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetProgressNoteByIDAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            //populate
+            console.log(result);
+        });
+    }
 }
 
 function populateProgressNoteModalTable(progressNotes) {
