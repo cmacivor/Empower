@@ -119,6 +119,12 @@ const ProgressNote = (props) => {
 
     }
 
+   
+
+    function addNewButtonClickHandler() {
+  
+    }
+
     let contactTypeOptions = [];
     if (contactTypes.length > 0) {
         contactTypeOptions = contactTypes.map((value) => 
@@ -150,6 +156,11 @@ const ProgressNote = (props) => {
                             </button>
                         </div>
                         <div className="modal-body">
+                            {/* <div className="form-row">
+                                <div className="col-4">
+                                    <button id="btnAddNew" className="btn btn-primary" onClick={ addNewButtonClickHandler } >Add New</button>
+                                </div>
+                            </div> */}
                             <div className="form-row">
                                 <div className="col-4">
                                     <label htmlFor="btnServiceMonth"><strong> Date *</strong></label>
@@ -204,6 +215,7 @@ const ProgressNote = (props) => {
                             </div>
                         </div>
                         <div className="modal-footer">
+                            {/* <button type="button" id="btnAddNew" onClick={ addNewButtonClickHandler } className="btn btn-primary">Add New</button> */}
                             <button type="button" id="btnSaveProgressNote" onClick={ saveProgressNote } className="btn btn-primary" >Save</button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>

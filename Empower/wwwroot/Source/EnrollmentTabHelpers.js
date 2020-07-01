@@ -1014,7 +1014,25 @@ export function toggleServiceUnitModal(event) {
     $("#serviceUnitModal").modal('toggle');
 }
 
+function clearProgressNoteForm() {
+    $("#hdnProgressNoteID").val("");
+    $("#hdnProgressNoteCreatedDate").val("");
+    $("#hdnProgressNoteCreatedBy").val("");
+    $("#txtProgressNoteDate").val("");
+    $("#txtProgressNoteComments").val("");
+    document.getElementById("btnProgressNoteContactType").value = "";
+    document.getElementById("btnProgressNoteContactType").innerText = "Please Select";
+
+    $("#txtDurationHour").val("");
+    $("#txtDurationMinute").val("");
+
+    document.getElementById("btnProgressNoteSubContactType").value = "";
+    document.getElementById("btnProgressNoteSubContactType").innerText = "Please Select";
+}
+
 function toggleProgressNoteModal(event) {
+    clearProgressNoteForm();
+    
     if (event !== undefined) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
         $("#hdnProgressNoteEnrollmentID").val(selectedEnrollmentID);
