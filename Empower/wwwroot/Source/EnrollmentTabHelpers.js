@@ -329,6 +329,29 @@ function buildPrintHeaderButton(placementRecord) {
       return printButton;
 }
 
+export function getProgressNotesByEnrollmentID() {
+    let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+    let enrollmentID = $("#hdnProgressNoteEnrollmentID").val();
+
+    let fullGetPlacementsAddress = `${apiAddress}/api/ProgressNote/GetByEnrollmentID/${enrollmentID}`;
+    let sessionStorageData = getSessionData();
+
+   return fetch(fullGetPlacementsAddress, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorageData.Token
+        }
+    }).then(result => result.json())
+    .then(result => {
+        console.log(result);
+        //console.log(result);
+        //populateServiceUnitModalTable(result);
+    });
+}
+
+
 export function getServiceUnitsByEnrollmentID() {
     let apiAddress = sessionStorage.getItem("baseApiAddress");
 
@@ -376,6 +399,10 @@ function deleteServiceUnitButtonClickHandler(event) {
     }
 }
 
+function deleteProgressNoteButtonClickHandler(event) {
+
+}
+
 
 function populateServiceUnitModalOnRowClick(event) {
     if (event !== undefined) {
@@ -396,6 +423,68 @@ function populateServiceUnitModalOnRowClick(event) {
         $("#txtServiceUnits").val(units);
         $("#hdnServiceUnitID").val(serviceUnitID);
     }
+}
+
+function populateProgressNoteModalOnRowClick(event) {
+
+}
+
+function populateProgressNoteModalTable(progressNotes) {
+    let serviceUnitDiv = document.getElementById("divProgressNotesTableContainer");
+    serviceUnitDiv.innerHTML = "";
+    let table = document.createElement("table");
+    table.classList.add("table");
+    let header = table.createTHead();
+    let headerRow = header.insertRow(0);
+    let detailsCell = headerRow.insertCell(0); //for the edit button column
+    let monthCell = headerRow.insertCell(1);
+    monthCell.innerHTML = "<strong>Date</strong>";
+    let yearCell = headerRow.insertCell(2);
+    yearCell.innerHTML = "<strong>Contact Type</strong>";
+    let unitsCell = headerRow.insertCell(3);
+    unitsCell.innerHTML = "<strong>Comment</strong>";
+    let deleteCell = headerRow.insertCell(4);
+
+    let tbody = table.createTBody();
+
+    let serviceUnitRowIndex = 0;
+    serviceUnits.forEach(serviceUnit => {
+        let serviceUnitRow = tbody.insertRow(serviceUnitRowIndex);
+        let serviceUnitCell = serviceUnitRow.insertCell(0);
+        //create the edit button
+        let serviceUnitEditButton = document.createElement("button");
+        serviceUnitEditButton.classList.add("btn");
+        serviceUnitEditButton.classList.add("btn-info");
+        serviceUnitEditButton.classList.add("btn-sm");
+        serviceUnitEditButton.setAttribute("data-id", serviceUnit.ID);
+        let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
+        serviceUnitEditButton.innerHTML = faPencil;
+        serviceUnitEditButton.onclick = populateProgressNoteModalOnRowClick;
+        serviceUnitCell.appendChild(serviceUnitEditButton);
+
+        let serviceUnitMonthCell = serviceUnitRow.insertCell(1);
+        serviceUnitMonthCell.innerText = serviceUnit.Month;
+
+        let serviceUnitYearCell = serviceUnitRow.insertCell(2);
+        serviceUnitYearCell.innerText = serviceUnit.Year;
+
+        let unitsCell = serviceUnitRow.insertCell(3);
+        unitsCell.innerText = serviceUnit.Units;
+
+        let deleteButtonCell = serviceUnitRow.insertCell(4);
+        let serviceUnitDeleteButton = document.createElement("button");
+        serviceUnitDeleteButton.classList.add("btn");
+        serviceUnitDeleteButton.classList.add("btn-info");
+        serviceUnitDeleteButton.classList.add("btn-danger");
+        serviceUnitDeleteButton.setAttribute("data-id", serviceUnit.ID);
+        let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
+        serviceUnitDeleteButton.innerHTML = faTrash;
+        serviceUnitDeleteButton.onclick = deleteProgressNoteButtonClickHandler
+        deleteButtonCell.appendChild(serviceUnitDeleteButton);
+
+    });
+
+    serviceUnitDiv.appendChild(table);
 }
 
 

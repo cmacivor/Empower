@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import {triggerToastMessage, triggerErrorMessage,  } from './ToastHelper';
-import { populateServiceUnitModalTable, getServiceUnitsByEnrollmentID } from './EnrollmentTabHelpers';
+import { getProgressNotesByEnrollmentID } from './EnrollmentTabHelpers';
 
 const ProgressNote = (props) => {
 
@@ -35,10 +35,10 @@ const ProgressNote = (props) => {
     function getDurationValue() {
         let durationHour = document.getElementById("txtDurationHour").value;
         let durationMinute = document.getElementById("txtDurationMinute").value;
-        console.log(parseInt(durationHour));
-        console.log(parseInt(durationMinute));
+        ///console.log(parseInt(durationHour));
+        //console.log(parseInt(durationMinute));
         let today = new Date();
-        let offset = new Date().getTimezoneOffset();
+        //let offset = new Date().getTimezoneOffset();
         let durationToSend = new Date(today.getFullYear(), today.getMonth(), today.getDate(), parseInt(durationHour), parseInt(durationMinute), today.getSeconds(), 0);
         
         return durationToSend;
@@ -100,6 +100,7 @@ const ProgressNote = (props) => {
             triggerToastMessage("The service unit was successfully saved");
 
             //getServiceUnitsByEnrollmentID();
+            getProgressNotesByEnrollmentID();
     
         });
 
@@ -183,6 +184,10 @@ const ProgressNote = (props) => {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <br/>
+                            <div id="divProgressNotesTableContainer" >
+
                             </div>
                         </div>
                         <div className="modal-footer">
