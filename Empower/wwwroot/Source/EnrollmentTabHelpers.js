@@ -464,6 +464,25 @@ function populateProgressNoteModalOnRowClick(event) {
             }
         }).then(result => result.json())
         .then(result => {
+
+            let convertedCommentDate = moment(new Date(result.CommentDate)).format('YYYY-MM-DD');
+            $("#txtProgressNoteDate").val(convertedCommentDate);
+            $("#txtProgressNoteComments").val(result.Comment);
+
+            if (result.ContactType !== null) {
+                $("#btnProgressNoteContactType").val(result.ContactType.ID);
+                document.getElementById("btnProgressNoteContactType").innerText = result.ContactType.Name;
+            }
+
+            if (result.SubContactType !== null) {
+                $("#btnProgressNoteSubContactType").val(result.SubContactType.ID);
+                document.getElementById("btnProgressNoteSubContactType").innerText = result.SubContactType.Name;
+            }
+
+            let duration = new Date(result.Duration);
+            console.log('the duration: ');
+            console.log(duration);
+
             //populate
             console.log(result);
         });
