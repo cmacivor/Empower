@@ -933,7 +933,9 @@ export function toggleServiceUnitModal(event) {
     if (event !== undefined) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
 
-        $("#hdnServiceUnitEnrollmentID").val(selectedEnrollmentID)
+        $("#hdnServiceUnitEnrollmentID").val(selectedEnrollmentID);
+
+        getServiceUnitsByEnrollmentID();
 
     }
 
