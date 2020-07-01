@@ -430,19 +430,48 @@ function populateServiceUnitModalOnRowClick(event) {
         event.preventDefault();
         let serviceUnitID = event.currentTarget.getAttribute("data-id");
         
-        let siblings = $(this).parent().siblings();
+        // let siblings = $(this).parent().siblings();
         
-        let month = siblings[0].innerText;
-        let year = siblings[1].innerText;
-        let units = siblings[2].innerText;
+        // let month = siblings[0].innerText;
+        // let year = siblings[1].innerText;
+        // let units = siblings[2].innerText;
 
-        document.getElementById("btnServiceMonth").value = month;
-        document.getElementById("btnServiceMonth").innerHTML = month;
-        document.getElementById("btnServiceYear").value = year;
-        document.getElementById('btnServiceYear').innerHTML = year;
+        // document.getElementById("btnServiceMonth").value = month;
+        // document.getElementById("btnServiceMonth").innerHTML = month;
+        // document.getElementById("btnServiceYear").value = year;
+        // document.getElementById('btnServiceYear').innerHTML = year;
 
-        $("#txtServiceUnits").val(units);
-        $("#hdnServiceUnitID").val(serviceUnitID);
+        // $("#txtServiceUnits").val(units);
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullGetServiceUnitByIDAddress = `${apiAddress}/api/ServiceUnit/GetByID/${serviceUnitID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetServiceUnitByIDAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            ///console.log(result);
+
+            document.getElementById("btnServiceMonth").value = result.Month;
+            document.getElementById("btnServiceMonth").innerText = result.Month;
+
+            document.getElementById("btnServiceYear").value = result.Year;
+            document.getElementById("btnServiceYear").innerText = result.Year;
+
+            $("#txtServiceUnits").val(result.Units);
+
+            $("#hdnServiceUnitCreatedDate").val(result.CreatedDate);
+            $("#hdnServiceUnitCreatedBy").val(result.CreatedBy);
+            $("#hdnServiceUnitID").val(serviceUnitID);
+        });
+
+
+
     }
 }
 
@@ -711,7 +740,7 @@ export function generateTable(placements) {
                 editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
                 let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
                 editEnrollmentButton.innerHTML = faPencil;
-                //editEnrollmentButton.innerText = "Edit Referral";
+                editEnrollmentButton.title = "Edit Referral";
                 editEnrollmentButton.onclick = getEnrollment;
                 editButtonCell.appendChild(editEnrollmentButton);
 
@@ -724,6 +753,7 @@ export function generateTable(placements) {
                 serviceUnitButton.setAttribute("data-id", enrollment.Enrollment.ID);
                 let faSuitCase = "<i class='fa fa-suitcase' aria-hidden='true'></i>";
                 serviceUnitButton.innerHTML = faSuitCase;
+                serviceUnitButton.title = "Edit Service Unit";
                 serviceUnitButton.onclick = toggleServiceUnitModal;
                 editButtonCell.appendChild(serviceUnitButton);
 
@@ -734,6 +764,7 @@ export function generateTable(placements) {
                 progressNoteButton.setAttribute("data-id", enrollment.Enrollment.ID);
                 let stickyNote = "<i class='fa fa-sticky-note-o' aria-hidden='true'></i>";
                 progressNoteButton.innerHTML = stickyNote;
+                progressNoteButton.title = "Edit Progress Note";
                 progressNoteButton.onclick = toggleProgressNoteModal;
                 editButtonCell.appendChild(progressNoteButton);
 
@@ -1003,7 +1034,20 @@ function togglePrintScreen(event) {
     $("#printModal").modal('toggle');
 }
 
+function clearServiceUnitForm() {
+    $("#hdnServiceUnitID").val("");
+    $("#hdnServiceUnitCreatedDate").val("");
+    $("#hdnServiceUnitCreatedBy").val("");
+    document.getElementById("btnServiceMonth").value = "";
+    document.getElementById("btnServiceMonth").innerText = "Please Select";
+    document.getElementById("btnServiceYear").value = "";
+    document.getElementById("btnServiceYear").innerText = "Please Select";
+    $("#txtServiceUnits").val("");
+}
+
+
 export function toggleServiceUnitModal(event) {
+    clearServiceUnitForm();
     if (event !== undefined) {
         let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
 
@@ -1031,6 +1075,7 @@ function clearProgressNoteForm() {
     document.getElementById("btnProgressNoteSubContactType").value = "";
     document.getElementById("btnProgressNoteSubContactType").innerText = "Please Select";
 }
+
 
 function toggleProgressNoteModal(event) {
     clearProgressNoteForm();

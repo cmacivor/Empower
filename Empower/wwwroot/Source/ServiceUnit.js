@@ -93,6 +93,7 @@ const ServiceUnit = (props) => {
             methodType = 'PUT';
             serviceUnit.CreatedDate = new Date($("#hdnServiceUnitCreatedDate").val());
             serviceUnit.CreatedBy = $("#hdnServiceUnitCreatedBy").val();
+            serviceUnit.ID = $("#hdnServiceUnitID").val();
     
         } else {
             methodType = 'POST';
