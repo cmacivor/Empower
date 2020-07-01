@@ -465,7 +465,8 @@ function populateProgressNoteModalTable(progressNotes) {
         progressNoteCell.appendChild(progressNoteEditButton);
 
         let progressNoteMonthCell = progressNoteRow.insertCell(1);
-        progressNoteMonthCell.innerText = progressNote.CommentDate;
+        let convertedCommentDate = moment(new Date(progressNote.CommentDate)).format('YYYY-MM-DD');
+        progressNoteMonthCell.innerText = convertedCommentDate; //progressNote.CommentDate;
 
         let progressNoteYearCell = progressNoteRow.insertCell(2);
         progressNoteYearCell.innerText = progressNote.ContactType.Name;

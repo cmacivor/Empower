@@ -23,12 +23,25 @@ const ProgressNote = (props) => {
 
         document.getElementById("btnProgressNoteContactType").value = selectedValue;
 
+
+        let selectedContactType =  contactTypes.filter(function (contactType) {
+            return contactType.ID === parseInt(selectedValue)
+        });
+
+        document.getElementById("btnProgressNoteContactType").innerHTML = selectedContactType[0].Description;
+
     }
 
     function ddlSubContactTypeSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
 
         document.getElementById("btnProgressNoteSubContactType").value = selectedValue;
+
+        let selectedSubContactType = subContactTypes.filter(function (subContactType) {
+            return subContactType.ID === parseInt(selectedValue)
+        });
+
+        document.getElementById("btnProgressNoteSubContactType").innerHTML = selectedSubContactType[0].Description;
 
     }
 
