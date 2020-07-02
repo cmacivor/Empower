@@ -7,7 +7,8 @@ import { generateTable,
     toggleCaseEnrollmentModal,
     createColumnGroup, 
     createRow } from './EnrollmentTabHelpers';
-import { addActive  } from './AutoComplete';
+import { addActive, onKeyDownHandler  } from './AutoComplete';
+import {  Api } from './commonAdmin';
 
 const EnrollmentCaseModal = (props) => {
 
@@ -17,33 +18,15 @@ const EnrollmentCaseModal = (props) => {
 
 
     function placementChargesOnKeyDownEventHandler(e) {
-        let searchInput = document.getElementById("txtPlacementCharges");
-    
-        var x = document.getElementById(searchInput.id + "autocomplete-list");
-        if (x) x = x.getElementsByTagName("div");
-        if (e.keyCode == 40) {
-          /*If the arrow DOWN key is pressed,
-          increase the currentFocus variable:*/
-          currentFocus++;
-          /*and and make the current item more visible:*/
-          addActive(x, currentFocus);
-        } else if (e.keyCode == 38) { //up
-          /*If the arrow UP key is pressed,
-          decrease the currentFocus variable:*/
-          currentFocus--;
-          /*and and make the current item more visible:*/
-          addActive(x, currentFocus);
-        } else if (e.keyCode == 13) {
-          /*If the ENTER key is pressed, prevent the form from being submitted,*/
-          e.preventDefault();
-          if (currentFocus > -1) {
-            /*and simulate a click on the "active" item:*/
-            if (x) x[currentFocus].click();
-          }
-        }
+        onKeyDownHandler(e, "txtPlacementCharges");
     }
 
-    
+    function onPlacementChargeChangeEventHandler(event) {
+        //Api.getConfigDataByType("SubContactType").then(subContactTypes => setSubContactTypeOptions(subContactTypes));
+        Api.getConfigDataByType("Offense").then(offense => {
+            console.log(offense);
+        });
+    }
 
     return <div>
         <h3>Referral</h3>
@@ -98,7 +81,7 @@ const EnrollmentCaseModal = (props) => {
                                 </div>
                                 <div className="form-row">
                                     <label htmlFor="txtPlacementCharges"><strong>Placement Charges *</strong></label>
-                                    <input id="txtPlacementCharges" onKeyDown={ placementChargesOnKeyDownEventHandler } className="form-control" />
+                                    <input id="txtPlacementCharges" onKeyDown={ placementChargesOnKeyDownEventHandler } onChange={ onPlacementChargeChangeEventHandler } className="form-control" />
                                 </div>
                                 <div id="divPlacementChargesContainer">
 

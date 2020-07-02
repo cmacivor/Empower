@@ -116,7 +116,75 @@
             }
         }
 
+        //this handles the Address Search functionality for all the apps.
         export function populateSearchBox(result, searchBoxId, populateCallBack) {
+          let addresses = [];
+                
+          let searchInput = document.getElementById(searchBoxId);
+          
+          if (result !== null && result.candidates !== null) {
+    
+              result.candidates.forEach(element => {
+                  addresses.push(element.address);
+              });
+    
+              var a, b, i, val = searchInput.value;
+              /*close any already open lists of autocompleted values*/
+              closeAllLists(searchBoxId);
+              if (!val) { return false;}
+              currentFocus = -1;
+              /*create a DIV element that will contain the items (values):*/
+              a = document.createElement("DIV");
+              a.setAttribute("id", searchInput.id + "autocomplete-list");
+              a.setAttribute("class", "autocomplete-items");
+              /*append the DIV element as a child of the autocomplete container:*/
+              searchInput.parentNode.appendChild(a);
+              /*for each item in the array...*/
+              for (i = 0; i < addresses.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (addresses[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                  /*create a DIV element for each matching element:*/
+                  b = document.createElement("DIV");
+                  /*make the matching letters bold:*/
+                  b.innerHTML = "<strong>" + addresses[i].substr(0, val.length) + "</strong>";
+                  b.innerHTML += addresses[i].substr(val.length);
+                  /*insert a input field that will hold the current array item's value:*/
+                  b.innerHTML += "<input type='hidden' class='addressItem' value='" + addresses[i] + "'>";
+                  /*execute a function when someone clicks on the item value (DIV element):*/
+                  b.addEventListener("click", function(e) {
+                      /*insert the value for the autocomplete text field:*/
+                      searchInput.value = e.target.innerText;
+    
+                      //populate the fields
+                      let addressProperties = result.candidates.filter(function(address){
+                          return address.address === e.target.innerText;
+                      });
+
+                      populateCallBack(addressProperties);
+    
+                      //console.log(addressProperties);
+    
+                      // if (addressTypeId === 1) {
+                   
+                      // }
+    
+                      // if (addressTypeId === 3) {
+                   
+                      // }
+    
+                      /*close the list of autocompleted values,
+                      (or any other open lists of autocompleted values:*/
+                      closeAllLists(searchBoxId);
+                  });
+                  a.appendChild(b);
+                }
+              }
+          }
+        }
+
+
+        //this is the for the Placment Charges field on the Case modal, shown under the Referral tab in Empower Juvenile.
+        export function populatePlacementChargesBox(result, searchBoxId, populateCallBack) {
           let addresses = [];
                 
           let searchInput = document.getElementById(searchBoxId);
