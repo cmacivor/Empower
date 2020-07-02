@@ -6,8 +6,9 @@ import { generateTable,
     getPlacementsByClientProfileID, 
     toggleCaseEnrollmentModal,
     createColumnGroup, 
-    createRow } from './EnrollmentTabHelpers';
-import { addActive, onKeyDownHandler  } from './AutoComplete';
+    createRow, 
+    populateServiceUnitModalTable} from './EnrollmentTabHelpers';
+import { addActive, onKeyDownHandler, populatePlacementChargesBox  } from './AutoComplete';
 import {  Api } from './commonAdmin';
 
 const EnrollmentCaseModal = (props) => {
@@ -24,8 +25,14 @@ const EnrollmentCaseModal = (props) => {
     function onPlacementChargeChangeEventHandler(event) {
         //Api.getConfigDataByType("SubContactType").then(subContactTypes => setSubContactTypeOptions(subContactTypes));
         Api.getConfigDataByType("Offense").then(offense => {
-            console.log(offense);
+
+            populatePlacementChargesBox(offense, "txtPlacementCharges", populateChargeSelectionBox);
+            //console.log(offense);
         });
+    }
+
+    function populateChargeSelectionBox() {
+
     }
 
     return <div>

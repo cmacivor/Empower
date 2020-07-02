@@ -185,14 +185,14 @@
 
         //this is the for the Placment Charges field on the Case modal, shown under the Referral tab in Empower Juvenile.
         export function populatePlacementChargesBox(result, searchBoxId, populateCallBack) {
-          let addresses = [];
+          let offenses = [];
                 
           let searchInput = document.getElementById(searchBoxId);
           
-          if (result !== null && result.candidates !== null) {
+          if (result !== null) {
     
-              result.candidates.forEach(element => {
-                  addresses.push(element.address);
+              result.forEach(element => {
+                offenses.push(element.Name);
               });
     
               var a, b, i, val = searchInput.value;
@@ -207,40 +207,29 @@
               /*append the DIV element as a child of the autocomplete container:*/
               searchInput.parentNode.appendChild(a);
               /*for each item in the array...*/
-              for (i = 0; i < addresses.length; i++) {
+              for (i = 0; i < offenses.length; i++) {
                 /*check if the item starts with the same letters as the text field value:*/
-                if (addresses[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                if (offenses[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                   /*create a DIV element for each matching element:*/
                   b = document.createElement("DIV");
                   /*make the matching letters bold:*/
-                  b.innerHTML = "<strong>" + addresses[i].substr(0, val.length) + "</strong>";
-                  b.innerHTML += addresses[i].substr(val.length);
+                  b.innerHTML = "<strong>" + offenses[i].substr(0, val.length) + "</strong>";
+                  b.innerHTML += offenses[i].substr(val.length);
                   /*insert a input field that will hold the current array item's value:*/
-                  b.innerHTML += "<input type='hidden' class='addressItem' value='" + addresses[i] + "'>";
+                  b.innerHTML += "<input type='hidden' class='addressItem' value='" + offenses[i] + "'>";
                   /*execute a function when someone clicks on the item value (DIV element):*/
                   b.addEventListener("click", function(e) {
                       /*insert the value for the autocomplete text field:*/
                       searchInput.value = e.target.innerText;
     
                       //populate the fields
-                      let addressProperties = result.candidates.filter(function(address){
-                          return address.address === e.target.innerText;
+                      let offenseProperties = result.filter(function(offense){
+                          return offense.Name === e.target.innerText;
                       });
 
-                      populateCallBack(addressProperties);
+                      populateCallBack(offenseProperties);
     
-                      //console.log(addressProperties);
-    
-                      // if (addressTypeId === 1) {
-                   
-                      // }
-    
-                      // if (addressTypeId === 3) {
-                   
-                      // }
-    
-                      /*close the list of autocompleted values,
-                      (or any other open lists of autocompleted values:*/
+                
                       closeAllLists(searchBoxId);
                   });
                   a.appendChild(b);
