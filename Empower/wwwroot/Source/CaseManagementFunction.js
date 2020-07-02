@@ -20,6 +20,7 @@ import AddressAdult from './AddressAdult';
 import AddressCWB from './AddressCWB';
 import FamilyInfo from './FamilyInfo';
 import CWBEnrollment from './CWBEnrollment';
+import EnrollmentCaseModal from './EnrollmentCaseModal';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -268,6 +269,11 @@ const CaseManagementFunction = (props) => {
                              /> 
                             : <div></div>
                         }
+                        {
+                            parseInt(sessionData.SystemID) === systems.Juvenile ? 
+                            <EnrollmentCaseModal /> : <div></div>
+                        }
+
                     </Tab>
                     <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
                        assessment content

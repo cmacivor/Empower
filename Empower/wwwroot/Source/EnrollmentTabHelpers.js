@@ -61,9 +61,15 @@ export function toggleEmploymentPlanModal(event) {
     $("#employmentPlanModal").modal('toggle');
 }
 
+//this is the modal used by CWB
 export function toggleEnrollmentModal() {
     //TODO: add function to clear the modal on opening
     $("#enrollmentModal").modal('toggle');
+}
+
+//this modal is used by Juvenile, and saves an Enrollment record, but is titled "Case"
+export function toggleCaseEnrollmentModal() {
+    $("#caseEnrollmentModal").modal('toggle');
 }
 
 function fetchPlacements() {
