@@ -192,7 +192,7 @@
           if (result !== null) {
     
               result.forEach(element => {
-                offenses.push(element.Name);
+                offenses.push(element.VCCCode + "(" + element.Description + ")");
               });
     
               var a, b, i, val = searchInput.value;
@@ -215,8 +215,11 @@
                   /*make the matching letters bold:*/
                   b.innerHTML = "<strong>" + offenses[i].substr(0, val.length) + "</strong>";
                   b.innerHTML += offenses[i].substr(val.length);
+
+                  let offenseID = result[i].ID;
+
                   /*insert a input field that will hold the current array item's value:*/
-                  b.innerHTML += "<input type='hidden' class='addressItem' value='" + offenses[i] + "'>";
+                  b.innerHTML += "<input type='hidden' data-id='" + offenseID + "' class='addressItem' value='" + offenses[i] + "'>";
                   /*execute a function when someone clicks on the item value (DIV element):*/
                   b.addEventListener("click", function(e) {
                       /*insert the value for the autocomplete text field:*/
