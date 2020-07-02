@@ -329,6 +329,19 @@ function buildPrintHeaderButton(placementRecord) {
       return printButton;
 }
 
+function buildAddReferralButton(placementRecord) {
+    let addReferralButton = document.createElement("button");
+    addReferralButton.classList.add("btn");
+    addReferralButton.classList.add("btn-secondary");
+    addReferralButton.classList.add("btn-sm");
+    addReferralButton.setAttribute("data-id", placementRecord.ID);
+    
+    addReferralButton.innerText = "Add Referral";
+    addReferralButton.onclick = togglePlacementModal;
+
+    return addReferralButton;
+}
+
 export function getProgressNotesByEnrollmentID() {
     let apiAddress = sessionStorage.getItem("baseApiAddress");
 
@@ -650,6 +663,66 @@ export function populateServiceUnitModalTable(serviceUnits) {
     serviceUnitDiv.appendChild(table);
 }
 
+function buildEditEnrollmentButton(enrollment, placementRecord) {
+    let editEnrollmentButton = document.createElement("button");
+    editEnrollmentButton.classList.add("btn");
+    editEnrollmentButton.classList.add("btn-info");
+    editEnrollmentButton.classList.add("btn-sm");
+    editEnrollmentButton.classList.add("mr-2");
+    editEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
+    editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
+    let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
+    editEnrollmentButton.innerHTML = faPencil;
+    editEnrollmentButton.title = "Edit Referral";
+    editEnrollmentButton.onclick = getEnrollment;
+
+    return editEnrollmentButton;
+}
+
+function buildServiceUnitButton(enrollment) {
+    let serviceUnitButton = document.createElement("button");
+    serviceUnitButton.classList.add("btn");
+    serviceUnitButton.classList.add("btn-info");
+    serviceUnitButton.classList.add("btn-sm");
+    serviceUnitButton.classList.add("mr-2");
+    serviceUnitButton.setAttribute("data-id", enrollment.Enrollment.ID);
+    let faSuitCase = "<i class='fa fa-suitcase' aria-hidden='true'></i>";
+    serviceUnitButton.innerHTML = faSuitCase;
+    serviceUnitButton.title = "Edit Service Unit";
+    serviceUnitButton.onclick = toggleServiceUnitModal;
+
+    return serviceUnitButton;
+}
+
+function buildProgressNoteButton(enrollment) {
+    let progressNoteButton = document.createElement("button");
+    progressNoteButton.classList.add("btn");
+    progressNoteButton.classList.add("btn-info");
+    progressNoteButton.classList.add("btn-sm");
+    progressNoteButton.setAttribute("data-id", enrollment.Enrollment.ID);
+    let stickyNote = "<i class='fa fa-sticky-note-o' aria-hidden='true'></i>";
+    progressNoteButton.innerHTML = stickyNote;
+    progressNoteButton.title = "Edit Progress Note";
+    progressNoteButton.onclick = toggleProgressNoteModal;
+
+    return progressNoteButton;
+}
+
+function buildDeleteEnrollmentButton(enrollment) {
+    let deleteEnrollmentButton = document.createElement("button");
+    deleteEnrollmentButton.classList.add("btn");
+    deleteEnrollmentButton.classList.add("btn-danger");
+    deleteEnrollmentButton.classList.add("btn-sm");
+    deleteEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
+    let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
+    deleteEnrollmentButton.innerHTML = faTrash;
+    //deleteEnrollmentButton.innerText = "Delete";
+    deleteEnrollmentButton.onclick = deleteEnrollment;
+
+    return deleteEnrollmentButton;
+}
+
+//generates the main page of cards- holding Placements
 export function generateTable(placements) {
 
     let divRef = document.getElementById("placementsContainer");
@@ -693,14 +766,7 @@ export function generateTable(placements) {
         let addReferralCell = addReferralRow.insertCell(0);
 
         //button to add new Referrals/Enrollments
-        let addReferralButton = document.createElement("button");
-        addReferralButton.classList.add("btn");
-        addReferralButton.classList.add("btn-secondary");
-        addReferralButton.classList.add("btn-sm");
-        addReferralButton.setAttribute("data-id", placementRecord.ID);
-        
-        addReferralButton.innerText = "Add Referral";
-        addReferralButton.onclick = togglePlacementModal;
+        let addReferralButton = buildAddReferralButton(placementRecord);
 
         addReferralCell.appendChild(addReferralButton);
 
@@ -731,41 +797,17 @@ export function generateTable(placements) {
 
                 //button to edit a Referral/Enrollment
                 let editButtonCell = enrollmentRow.insertCell(0);
-                let editEnrollmentButton = document.createElement("button");
-                editEnrollmentButton.classList.add("btn");
-                editEnrollmentButton.classList.add("btn-info");
-                editEnrollmentButton.classList.add("btn-sm");
-                editEnrollmentButton.classList.add("mr-2");
-                editEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
-                let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
-                editEnrollmentButton.innerHTML = faPencil;
-                editEnrollmentButton.title = "Edit Referral";
-                editEnrollmentButton.onclick = getEnrollment;
+
+                let editEnrollmentButton = buildEditEnrollmentButton(enrollment, placementRecord);
+
                 editButtonCell.appendChild(editEnrollmentButton);
 
                 //add button for Service Units
-                let serviceUnitButton = document.createElement("button");
-                serviceUnitButton.classList.add("btn");
-                serviceUnitButton.classList.add("btn-info");
-                serviceUnitButton.classList.add("btn-sm");
-                serviceUnitButton.classList.add("mr-2");
-                serviceUnitButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                let faSuitCase = "<i class='fa fa-suitcase' aria-hidden='true'></i>";
-                serviceUnitButton.innerHTML = faSuitCase;
-                serviceUnitButton.title = "Edit Service Unit";
-                serviceUnitButton.onclick = toggleServiceUnitModal;
+                let serviceUnitButton = buildServiceUnitButton(enrollment);
+
                 editButtonCell.appendChild(serviceUnitButton);
 
-                let progressNoteButton = document.createElement("button");
-                progressNoteButton.classList.add("btn");
-                progressNoteButton.classList.add("btn-info");
-                progressNoteButton.classList.add("btn-sm");
-                progressNoteButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                let stickyNote = "<i class='fa fa-sticky-note-o' aria-hidden='true'></i>";
-                progressNoteButton.innerHTML = stickyNote;
-                progressNoteButton.title = "Edit Progress Note";
-                progressNoteButton.onclick = toggleProgressNoteModal;
+                let progressNoteButton = buildProgressNoteButton(enrollment);
                 editButtonCell.appendChild(progressNoteButton);
 
                 //add the Add/Edit Employment Plan button
@@ -800,15 +842,9 @@ export function generateTable(placements) {
                 }
 
                 let deleteButtonCell = enrollmentRow.insertCell(5);
-                let deleteEnrollmentButton = document.createElement("button");
-                deleteEnrollmentButton.classList.add("btn");
-                deleteEnrollmentButton.classList.add("btn-danger");
-                deleteEnrollmentButton.classList.add("btn-sm");
-                deleteEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
-                deleteEnrollmentButton.innerHTML = faTrash;
-                //deleteEnrollmentButton.innerText = "Delete";
-                deleteEnrollmentButton.onclick = deleteEnrollment
+
+                let deleteEnrollmentButton = buildDeleteEnrollmentButton(enrollment);
+
                 deleteButtonCell.appendChild(deleteEnrollmentButton);
 
             });
