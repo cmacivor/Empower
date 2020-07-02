@@ -13,6 +13,8 @@ import {  Api } from './commonAdmin';
 
 const EnrollmentCaseModal = (props) => {
 
+    let offenseValues = props.offenseValues;
+
     useEffect(() => {
 
     });
@@ -23,12 +25,8 @@ const EnrollmentCaseModal = (props) => {
     }
 
     function onPlacementChargeChangeEventHandler(event) {
-        //Api.getConfigDataByType("SubContactType").then(subContactTypes => setSubContactTypeOptions(subContactTypes));
-        Api.getConfigDataByType("Offense").then(offense => {
 
-            populatePlacementChargesBox(offense, "txtPlacementCharges", populateChargeSelectionBox);
-            //console.log(offense);
-        });
+        populatePlacementChargesBox(offenseValues, "txtPlacementCharges", populateChargeSelectionBox);
     }
 
     function populateChargeSelectionBox() {

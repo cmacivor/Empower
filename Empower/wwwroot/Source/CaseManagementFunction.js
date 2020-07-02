@@ -53,6 +53,7 @@ const CaseManagementFunction = (props) => {
     const [serviceOutcomeOptions, setServiceOutcomeOptions] = useState([]);
     const [contactTypeOptions, setContactTypeOptions ] = useState([]);
     const [subContactTypeOptions, setSubContactTypeOptions] = useState([]);
+    const [offenseOptions, setOffenseOptions ] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -70,12 +71,14 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("CareerPathway").then(careerPathways => setCareerPathWayOptions(careerPathways));
         Api.getConfigDataByType("ContactType").then(contactTypes => setContactTypeOptions(contactTypes));
         Api.getConfigDataByType("SubContactType").then(subContactTypes => setSubContactTypeOptions(subContactTypes));
+
         //TODO: how to reduce the number of API calls?
         if (staffOptions.length === 0) {
             Api.getConfigDataByType("Staff").then(staff => setStaffOptions(staff));
         }
         Api.getConfigDataByType("ServiceRelease").then(serviceReleases => setServiceReleaseOptions(serviceReleases));
         Api.getConfigDataByType("ServiceOutcome").then(serviceOutcomes => setServiceOutcomeOptions(serviceOutcomes));
+        Api.getConfigDataByType("Offense").then(offenses => setOffenseOptions(offenses));
 
      }, []);
 
@@ -271,7 +274,9 @@ const CaseManagementFunction = (props) => {
                         }
                         {
                             parseInt(sessionData.SystemID) === systems.Juvenile ? 
-                            <EnrollmentCaseModal /> : <div></div>
+                            <EnrollmentCaseModal 
+                                offenseValues = { offenseOptions }
+                             /> : <div></div>
                         }
 
                     </Tab>
