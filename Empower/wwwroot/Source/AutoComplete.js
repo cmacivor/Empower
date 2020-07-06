@@ -222,12 +222,25 @@
                   b.innerHTML += "<input type='hidden' data-id='" + offenseID + "' class='addressItem' value='" + offenses[i] + "'>";
                   /*execute a function when someone clicks on the item value (DIV element):*/
                   b.addEventListener("click", function(e) {
+                     console.log(e);
                       /*insert the value for the autocomplete text field:*/
                       searchInput.value = e.target.innerText;
+
+                      let $innerText = $($.parseHTML(e.target.innerHTML));
+                      //console.log($innerText);
+                      //console.log($innerText[2].attributes[1].value);
+                     
+                      //console.log($innerText[2].data("id"));
+
+                      //let dataID = $innerText.attributes[1].value;
+                      //console.log(dataID);
+                      //let $input = $innerText.find('input');
+                      //let dataOffenseID = $input.data('id');
+                      //console.log(dataOffenseID);
     
                       //populate the fields
                       let offenseProperties = result.filter(function(offense){
-                          return offense.Name === e.target.innerText;
+                          return offense.ID === parseInt($innerText[2].attributes[1].value); //e.target.innerText;
                       });
 
                       populateCallBack(offenseProperties);

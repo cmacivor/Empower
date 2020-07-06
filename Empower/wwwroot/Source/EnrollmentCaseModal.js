@@ -67,8 +67,8 @@ const EnrollmentCaseModal = (props) => {
         populatePlacementChargesBox(offenseValues, "txtPlacementCharges", populateChargeSelectionBox);
     }
 
-    function populateChargeSelectionBox() {
-        
+    function populateChargeSelectionBox(offenseProperties) {
+        console.log(offenseProperties);
     }
 
     let placementLevelOptions = [];
