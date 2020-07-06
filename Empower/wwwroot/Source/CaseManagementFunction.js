@@ -54,6 +54,7 @@ const CaseManagementFunction = (props) => {
     const [contactTypeOptions, setContactTypeOptions ] = useState([]);
     const [subContactTypeOptions, setSubContactTypeOptions] = useState([]);
     const [offenseOptions, setOffenseOptions ] = useState([]);
+    const [placementLevelOptions, setPlacementLevelOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -79,7 +80,7 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("ServiceRelease").then(serviceReleases => setServiceReleaseOptions(serviceReleases));
         Api.getConfigDataByType("ServiceOutcome").then(serviceOutcomes => setServiceOutcomeOptions(serviceOutcomes));
         Api.getConfigDataByType("Offense").then(offenses => setOffenseOptions(offenses));
-
+        Api.getConfigDataByType("PlacementLevel").then(placementLevels => setPlacementLevelOptions(placementLevels));
      }, []);
 
 
@@ -276,6 +277,7 @@ const CaseManagementFunction = (props) => {
                             parseInt(sessionData.SystemID) === systems.Juvenile ? 
                             <EnrollmentCaseModal 
                                 offenseValues = { offenseOptions }
+                                placementLevelValues = { placementLevelOptions }
                              /> : <div></div>
                         }
 

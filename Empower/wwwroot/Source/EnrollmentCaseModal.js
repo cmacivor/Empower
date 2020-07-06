@@ -14,10 +14,15 @@ import {  Api } from './commonAdmin';
 const EnrollmentCaseModal = (props) => {
 
     let offenseValues = props.offenseValues;
+    let placementLevels = props.placementLevelValues;
 
     useEffect(() => {
 
     });
+
+    function overallRiskSelectHandler(event) {
+
+    }
 
 
     function placementChargesOnKeyDownEventHandler(e) {
@@ -31,6 +36,13 @@ const EnrollmentCaseModal = (props) => {
 
     function populateChargeSelectionBox() {
 
+    }
+
+    let placementLevelOptions = [];
+    if ( placementLevels.length > 0) {
+        placementLevelOptions = placementLevels.map((value) =>
+        <a key={value.ID} value={value.ID} description={value.Name} onClick={ overallRiskSelectHandler } className="dropdown-item">{value.Name}</a>
+      );
     }
 
     return <div>
@@ -60,7 +72,7 @@ const EnrollmentCaseModal = (props) => {
                                                 
                                             </button>
                                             <div className="dropdown-menu">
-
+                                                {placementLevelOptions}
                                             </div>
                                         </div>
                                         <div style={{display:'none'}} id="divOverallRiskError" className='errorDiv'>Please select a value.</div> 
@@ -94,7 +106,7 @@ const EnrollmentCaseModal = (props) => {
                                 <br/>
                                 <div className="form-row">
                                     <label><strong>Court Order Narrative</strong></label>
-                                    <input id="txtCourtOrderNarrative" className="form-control" />
+                                    <textarea id="txtCourtOrderNarrative" className="form-control"></textarea>
                                 </div>
                             </div>
                             <div className="modal-footer">
