@@ -18,7 +18,11 @@ const EnrollmentCaseModal = (props) => {
     let judges = props.judgeValues;
 
     useEffect(() => {
+        document.getElementById('btnOverallRisk').value = 'Please Select';
+        document.getElementById('btnOverallRisk').innerText = 'Please Select';
 
+        document.getElementById('btnJudge').value = 'Please Select';
+        document.getElementById('btnJudge').innerText = 'Please Select';
     });
 
     function overallRiskSelectHandler(event) {
@@ -64,7 +68,7 @@ const EnrollmentCaseModal = (props) => {
     }
 
     function populateChargeSelectionBox() {
-
+        
     }
 
     let placementLevelOptions = [];
