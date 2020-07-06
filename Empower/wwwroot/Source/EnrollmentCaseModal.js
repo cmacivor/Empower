@@ -22,11 +22,35 @@ const EnrollmentCaseModal = (props) => {
     });
 
     function overallRiskSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
 
+        //console.log(selectedValue);
+        
+        let selectedPlacementLevel = placementLevels.filter(function(placementLevel) {
+            return placementLevel.ID === parseInt(selectedValue);
+        });
+
+        console.log(selectedPlacementLevel);
+
+        $("#btnOverallRisk").val(selectedValue);
+
+        document.getElementById("btnOverallRisk").innerText = selectedPlacementLevel[0].Description;
     }
 
     function judgeSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
 
+        //console.log(selectedValue);
+        
+        let selectedJudge = judges.filter(function(judge) {
+            return judge.ID === parseInt(selectedValue);
+        });
+
+        console.log(selectedJudge);
+
+        $("#btnJudge").val(selectedValue);
+
+        document.getElementById("btnJudge").innerText = selectedJudge[0].Description
     }
 
 
