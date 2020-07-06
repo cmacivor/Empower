@@ -15,12 +15,17 @@ const EnrollmentCaseModal = (props) => {
 
     let offenseValues = props.offenseValues;
     let placementLevels = props.placementLevelValues;
+    let judges = props.judgeValues;
 
     useEffect(() => {
 
     });
 
     function overallRiskSelectHandler(event) {
+
+    }
+
+    function judgeSelectHandler(event) {
 
     }
 
@@ -45,6 +50,13 @@ const EnrollmentCaseModal = (props) => {
       );
     }
 
+    let judgeOptions = [];
+    if ( judges.length > 0) {
+        judgeOptions = judges.map((value) =>
+        <a key={value.ID} value={value.ID} description={value.Name} onClick={ judgeSelectHandler } className="dropdown-item">{value.Name}</a>
+      );
+    }
+
     return <div>
         <h3>Referral</h3>
         <br/>
@@ -66,8 +78,8 @@ const EnrollmentCaseModal = (props) => {
                                         <input type="date" defaultValue="" id="txtCourtOrderDate" className="form-control"></input>
                                     </div>
                                     <div className="col-6">
+                                        <label htmlFor="btnOverallRisk"><strong>Overall Risk at Time of Placement *</strong></label>
                                         <div className="dropdown">
-                                            <label htmlFor="btnOverallRisk"><strong>Overall Risk at Time of Placement *</strong></label>
                                             <button type="button" id="btnOverallRisk" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                 
                                             </button>
@@ -90,7 +102,7 @@ const EnrollmentCaseModal = (props) => {
                                                 
                                             </button>
                                             <div className="dropdown-menu">
-
+                                                {judgeOptions}
                                             </div>
                                         </div>
                                         <div style={{display:'none'}} id="divJudgeError" className='errorDiv'>Please select a value.</div> 
