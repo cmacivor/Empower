@@ -282,6 +282,8 @@ const CaseManagementFunction = (props) => {
                                 offenseValues = { offenseOptions }
                                 placementLevelValues = { placementLevelOptions }
                                 judgeValues = { judgeOptions }
+                                createNotification={triggerToastMessage}
+                                createErrorNotification={triggerErrorMessage}
                              /> : <div></div>
                         }
 

@@ -796,7 +796,9 @@ export function generateTable(placements) {
                 console.log('the enrollment');
                 console.log(enrollment);
 
-                populateServiceUnitModalTable(enrollment.ServiceUnit);
+                if (enrollment.ServiceUnit.length > 0) {
+                    populateServiceUnitModalTable(enrollment.ServiceUnit);
+                }
 
                 let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
                 enrollmentRowsIndex = enrollmentRowsIndex + 1;
