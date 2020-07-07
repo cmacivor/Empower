@@ -21,6 +21,10 @@ const EnrollmentCaseModal = (props) => {
 
         //personId = props.clientProfile.Person.ID;
         clientProfileId = props.clientProfile.ID;
+
+        generateTable(props.placement);
+
+        //generatePrintModal(props.placement, props.familyProfiles.FamilyProfile);
     }
 
     let offenseValues = props.offenseValues;
@@ -37,8 +41,6 @@ const EnrollmentCaseModal = (props) => {
 
     function overallRiskSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-
-        //console.log(selectedValue);
         
         let selectedPlacementLevel = placementLevels.filter(function(placementLevel) {
             return placementLevel.ID === parseInt(selectedValue);
@@ -53,8 +55,6 @@ const EnrollmentCaseModal = (props) => {
 
     function judgeSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-
-        //console.log(selectedValue);
         
         let selectedJudge = judges.filter(function(judge) {
             return judge.ID === parseInt(selectedValue);
@@ -105,18 +105,13 @@ const EnrollmentCaseModal = (props) => {
 
 
         let placement ={
-            //AssistanceTypeID: getElementValue("btnAssistanceType"),
-            //CareerPathwayID: getElementValue("btnCareerPathwayPosition"),
             ClientProfileID:  clientProfileId,
             CourtOrderDate: enrollmentDate,
             PlacementLevelID: getElementValue("btnOverallRisk"),
             NextCourtDate: new Date($("#txtNextCourtDate").val()),
             JudgeID: getElementValue("btnJudge"), //"Judge"  
-            CourtOrderNarrative: getElementValue("txtCourtOrderNarrative"), //Court Order Narrative
-            
+            CourtOrderNarrative: getElementValue("txtCourtOrderNarrative"), 
             Active: true,
-            //CreatedDate: new Date(),
-            //CreatedBy: sessionStorageData.CurrentUser,
             UpdatedDate: new Date(),
             UpdatedBy: sessionStorageData.CurrentUser
         }
@@ -143,19 +138,6 @@ const EnrollmentCaseModal = (props) => {
             Enrollment: null,
             PlacementOffense: null,
         }
-
-        //let placementOffenses = [];
-
-  
-
-        // if (placementOffenses.length > 0) {
-        //     placementViewModel.PlacementOffense = placementOffenses;
-        // }
-
-        // let placementOffense = {
-
-        // }
-
         
         fetch(fullPersonPlacementAddress, {
             method: methodType,
@@ -166,7 +148,6 @@ const EnrollmentCaseModal = (props) => {
             body: JSON.stringify(placementViewModel)
         }).then(result => result.json())
         .then(result => {
-            //console.log(result);
 
             if (result === null || result.Message !== undefined) {
                 props.createErrorNotification("an error occurred while saving the record.");
