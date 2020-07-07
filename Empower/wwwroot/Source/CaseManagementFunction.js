@@ -277,7 +277,8 @@ const CaseManagementFunction = (props) => {
                         }
                         {
                             parseInt(sessionData.SystemID) === systems.Juvenile ? 
-                            <EnrollmentCaseModal 
+                            <EnrollmentCaseModal
+                                clientProfile={clientProfile.ClientProfile } 
                                 offenseValues = { offenseOptions }
                                 placementLevelValues = { placementLevelOptions }
                                 judgeValues = { judgeOptions }

@@ -13,6 +13,16 @@ import {  Api } from './commonAdmin';
 
 const EnrollmentCaseModal = (props) => {
 
+    let clientProfileId = '';
+
+    const [selectedOffense, setSelectedOffense ] = useState(Object);
+
+    if (props.clientProfile !== undefined) {
+
+        //personId = props.clientProfile.Person.ID;
+        clientProfileId = props.clientProfile.ID;
+    }
+
     let offenseValues = props.offenseValues;
     let placementLevels = props.placementLevelValues;
     let judges = props.judgeValues;
@@ -23,7 +33,7 @@ const EnrollmentCaseModal = (props) => {
 
         document.getElementById('btnJudge').value = 'Please Select';
         document.getElementById('btnJudge').innerText = 'Please Select';
-    });
+    }, [selectedOffense]);
 
     function overallRiskSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -69,6 +79,101 @@ const EnrollmentCaseModal = (props) => {
 
     function populateChargeSelectionBox(offenseProperties) {
         console.log(offenseProperties);
+        let offenseID = offenseProperties[0].ID;
+
+        $("#hdnOffenseID").val(offenseID);
+
+        setSelectedOffense(offenseProperties);
+    }
+
+    function savePlacement() {
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullPersonPlacementAddress = `${apiAddress}/api/Placement`;
+        let sessionStorageData = getSessionData();
+       
+        let enrollmentDate = new Date($("#txtEnrollmentDate").val());
+
+        //let snapEt = document.getElementById("btnSnapEt").value; 
+
+        //let viewTanf = document.getElementById("btnViewTanf").value;
+
+        // if (snapEt === 'Please Select') {
+        //     $("#frmEnrollment").addClass("was-validated");
+        //     document.getElementById("divSnapEtError").removeAttribute("style");
+        //     return;
+        // }
+
+        // if (viewTanf === 'Please Select') {
+        //     $("#frmEnrollment").addClass("was-validated");
+        //     document.getElementById("divViewTanfError").removeAttribute("style");
+        //     return;
+        // }
+
+        let placement ={
+            //AssistanceTypeID: getElementValue("btnAssistanceType"),
+            //CareerPathwayID: getElementValue("btnCareerPathwayPosition"),
+            ClientProfileID:  clientProfileId,
+            CourtOrderDate: enrollmentDate,
+            PlacementLevelID: getElementValue("btnOverallRisk"),
+            NextCourtDate: new Date($("#txtNextCourtDate").val()),
+            JudgeID: getElementValue("btnJudge"), //"Judge"  
+            CourtOrderNarrative: getElementValue("txtCourtOrderNarrative"), //Court Order Narrative
+            
+            Active: true,
+            //CreatedDate: new Date(),
+            //CreatedBy: sessionStorageData.CurrentUser,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
+        }
+
+        let methodType = "";
+        let placementID = $("#hdnPlacementID").val();
+
+        if (placementID !== "") {
+            methodType = "PUT"
+            placement.CreatedDate = $("#hdnPlacementCreatedDate").val();
+            placement.CreatedBy = $("#hdnPlacementCreatedBy").val();
+            placement.ID = $("#hdnPlacementID").val();
+        } else {
+            methodType = "POST";
+            placement.CreatedDate = new Date(),
+            placement.CreatedBy = sessionStorageData.CurrentUser;
+        }
+
+        let offense = {
+
+        }
+
+
+        let placementViewModel = {
+            Placement: placement,
+            Enrollment: null,
+            PlacementOffense: null,
+        }
+
+        
+        fetch(fullPersonPlacementAddress, {
+            method: methodType,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(placementViewModel)
+        }).then(result => result.json())
+        .then(result => {
+            //console.log(result);
+
+            if (result === null || result.Message !== undefined) {
+                props.createErrorNotification("an error occurred while saving the record.");
+                return;
+            }
+
+            getPlacementsByClientProfileID();
+
+            props.createNotification('The placement was successfully saved.');
+
+            toggleEnrollmentModal();
+        });
     }
 
     let placementLevelOptions = [];
@@ -86,6 +191,12 @@ const EnrollmentCaseModal = (props) => {
     }
 
     return <div>
+        <input type="hidden" id="hdnPlacementID" />
+        <input type="hidden" id="hdnOffenseID" />
+        <input type="hidden" id="hdnPlacementCreatedDate" />
+        <input type="hidden" id="hdnPlacementCreatedBy" />
+        <input type="hidden" id="hdnPlacementUpdatedDate" />
+        <input type="hidden" id="hdnPlacementUpdatedBy" />
         <h3>Referral</h3>
         <br/>
         <button id="btnAddCaseEnrollment" className="btn btn-primary" onClick={toggleCaseEnrollmentModal} >Add Case Info</button>
@@ -150,7 +261,7 @@ const EnrollmentCaseModal = (props) => {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" id="btnSaveServiceUnit" className="btn btn-primary">Save</button>
+                                <button type="button" id="btnSavePlacement" className="btn btn-primary">Save</button>
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
