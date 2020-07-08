@@ -250,6 +250,30 @@ function populateEditPlacementModal(placement) {
      toggleEnrollmentModal();
 }
 
+function deletePlacementOffense(event) {
+    if (event !== undefined) {
+        let selectedPlacementOffenseID = event.currentTarget.getAttribute("data-id");
+        
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        //let clientProfileID = sessionStorage.getItem("clientProfileID");
+        let fullDeletePlacementOffenseAddress = `${apiAddress}/api/PlacementOffense/Delete/${selectedPlacementOffenseID}`;
+        let sessionStorageData = getSessionData();
+        
+    
+        fetch(fullDeletePlacementOffenseAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => {
+            triggerToastMessage("the placement offense was deleted.");
+        }).catch((error) => {
+            triggerErrorMessage("an error occurred.");
+        });
+    }
+}
+
 function populateJuvenileEditPlacementModal(placement) {
     console.log(placement);
 
@@ -292,13 +316,18 @@ function populateJuvenileEditPlacementModal(placement) {
 
         let span = document.createElement("span");
         span.setAttribute("aria-hidden", "true");
+        span.setAttribute("data-id", placementOffense.ID);
         span.innerHTML = "&times;";
+        span.onclick = deletePlacementOffense;
 
         deleteButton.appendChild(span);
 
         darkAlertDiv.innerText = placementOffense.Offense.Description;
         darkAlertDiv.appendChild(deleteButton);
 
+        let lineBreak = document.createElement("br");
+
+        divPlacementChargesContainer.appendChild(lineBreak);
         divPlacementChargesContainer.appendChild(darkAlertDiv);
     });
 
