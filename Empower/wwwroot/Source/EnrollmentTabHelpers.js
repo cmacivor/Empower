@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
 import { triggerErrorMessage, triggerToastMessage } from './ToastHelper';
+import { getSystems } from './Constants';
 
 
 
@@ -191,6 +192,94 @@ export function togglePlacementModal(event) {
     $("#referralModal").modal('toggle');
 }
 
+//this will be for CWB
+function populateEditPlacementModal(placement) {
+    if (placement.AssistanceType !== undefined && placement.AssistanceType !== null) {
+        document.getElementById("btnAssistanceType").innerHTML = placement.AssistanceType.Name;
+        document.getElementById("btnAssistanceType").value = placement.AssistanceTypeID;
+    }
+
+    if (placementk.CareerPathway !== undefined && placement.CareerPathway !== null) {
+        document.getElementById("btnCareerPathwayPosition").innerHTML = placement.CareerPathway.Name;
+        document.getElementById("btnCareerPathwayPosition").value = placement.CareerPathwayID;
+    }
+
+    let convertedEnrollmentDate = moment(new Date(placement.CourtOrderDate)).format('YYYY-MM-DD');
+    $("#txtEnrollmentDate").val(convertedEnrollmentDate);
+    $("#txtEnrollmentComments").val(placement.CourtOrderNarrative);
+    
+    if (placement.EmployerBenefits !== null) {
+        document.getElementById("btnEnrollmentBenefits").innerHTML = placement.EmployerBenefits;
+        document.getElementById("btnEnrollmentBenefits").value = placement.EmployerBenefits;
+    }
+
+    if (placement.EmployerFullPartTime !== null) {
+        document.getElementById("btnFullTimePartTime").innerText = placement.EmployerFullPartTime;
+        document.getElementById("btnFullTimePartTime").value = placement.EmployerFullPartTime;
+    }
+
+    $("#txtEnrollmentEmployerName").val(placement.EmployerName);
+    $("#txtEnrollmentPosition").val(placement.EmployerPosition);
+
+    let convertedEmployerStartDate = moment(new Date(placement.EmployerStartDate)).format('YYYY-MM-DD');
+    $("#txtEnrollmentStartDate").val(convertedEmployerStartDate);
+
+    $("#txtEnrollmentWagesPerHour").val(placement.EmployerWages);
+
+    //View/TANF
+    if (placement.Judge !== undefined && placement.Judge !== null) {
+        document.getElementById("btnViewTanf").innerText = placement.Judge.Name;
+        document.getElementById("btnViewTanf").value = placement.JudgeID;
+    }
+
+    let convertedNextCourtDate = moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD');
+    $("#txtApptDate").val(convertedNextCourtDate);
+
+    if (result.PlacementLevel !== undefined && placement.PlacementLevel !== null) {
+        document.getElementById("btnSnapEt").innerText = placement.PlacementLevel.Name;
+        document.getElementById("btnSnapEt").value = placement.PlacementLevelID;
+    }
+
+    $("#hdnPlacementID").val(placement.ID);
+    $("#hdnPlacementCreatedDate").val(placement.CreatedDate);
+    $("#hdnPlacementCreatedBy").val(placement.CreatedBy);
+    $("#hdnPlacementUpdatedDate").val(placement.UpdatedDate);
+    $("#hdnPlacementUpdatedBy").val(placement.UpdatedBy);
+
+
+     toggleEnrollmentModal();
+}
+
+function populateJuvenileEditPlacementModal(placement) {
+    console.log(placement);
+
+    let formattedCourOrderDate = moment(new Date(placement.CourtOrderDate)).format('YYYY-MM-DD');
+    $("#txtCourtOrderDate").val(formattedCourOrderDate);
+
+    if (placement.PlacementLevel !== null){
+        document.getElementById("btnOverallRisk").innerText = placement.PlacementLevel.Name;
+        document.getElementById("btnOverallRisk").value = placement.PlacementLevelID;
+    }
+
+    let formattedNextCourtDate = moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD');
+    $("#txtNextCourtDate").val(formattedNextCourtDate);
+
+    if (placement.Judge !== null) {
+        document.getElementById("btnJudge").innerText = placement.Judge.Name;
+        document.getElementById("btnJudge").value = placement.JudgeID;
+    }
+
+    $("#txtCourtOrderNarrative").val(placement.CourtOrderNarrative);
+
+    $("#hdnPlacementID").val(placement.ID);
+    $("#hdnPlacementCreatedDate").val(placement.CreatedDate);
+    $("#hdnPlacementCreatedBy").val(placement.CreatedBy);
+
+    toggleCaseEnrollmentModal();
+}
+
+
+
 function getPlacement(event) {
 
     let selectedPlacementID = event.currentTarget.getAttribute("data-id");
@@ -207,56 +296,14 @@ function getPlacement(event) {
     }).then(result => result.json())
     .then(result => {
         
-        if (result.AssistanceType !== undefined && result.AssistanceType !== null) {
-            document.getElementById("btnAssistanceType").innerHTML = result.AssistanceType.Name;
-            document.getElementById("btnAssistanceType").value = result.AssistanceTypeID;
+        //let systemID = getSystems()
+        let systemID = getSessionData().SystemID;
+
+        if (parseInt(systemID) === parseInt(getSystems().OCWB)) {
+            populateEditPlacementModal();
+        } else {
+            populateJuvenileEditPlacementModal(result);
         }
-
-        if (result.CareerPathway !== undefined && result.CareerPathway !== null) {
-            document.getElementById("btnCareerPathwayPosition").innerHTML = result.CareerPathway.Name;
-            document.getElementById("btnCareerPathwayPosition").value = result.CareerPathwayID;
-        }
-
-        let convertedEnrollmentDate = moment(new Date(result.CourtOrderDate)).format('YYYY-MM-DD');
-        $("#txtEnrollmentDate").val(convertedEnrollmentDate);
-        $("#txtEnrollmentComments").val(result.CourtOrderNarrative);
-        
-        document.getElementById("btnEnrollmentBenefits").innerHTML = result.EmployerBenefits;
-        document.getElementById("btnEnrollmentBenefits").value = result.EmployerBenefits;
-
-        document.getElementById("btnFullTimePartTime").innerText = result.EmployerFullPartTime;
-        document.getElementById("btnFullTimePartTime").value = result.EmployerFullPartTime;
-
-        $("#txtEnrollmentEmployerName").val(result.EmployerName);
-        $("#txtEnrollmentPosition").val(result.EmployerPosition);
-
-        let convertedEmployerStartDate = moment(new Date(result.EmployerStartDate)).format('YYYY-MM-DD');
-        $("#txtEnrollmentStartDate").val(convertedEmployerStartDate);
-
-        $("#txtEnrollmentWagesPerHour").val(result.EmployerWages);
-
-        //View/TANF
-        if (result.Judge !== undefined && result.Judge !== null) {
-            document.getElementById("btnViewTanf").innerText = result.Judge.Name;
-            document.getElementById("btnViewTanf").value = result.JudgeID;
-        }
-
-        let convertedNextCourtDate = moment(new Date(result.NextCourtDate)).format('YYYY-MM-DD');
-        $("#txtApptDate").val(convertedNextCourtDate);
-
-        if (result.PlacementLevel !== undefined && result.PlacementLevel !== null) {
-            document.getElementById("btnSnapEt").innerText = result.PlacementLevel.Name;
-            document.getElementById("btnSnapEt").value = result.PlacementLevelID;
-        }
-
-        $("#hdnPlacementID").val(result.ID);
-        $("#hdnPlacementCreatedDate").val(result.CreatedDate);
-        $("#hdnPlacementCreatedBy").val(result.CreatedBy);
-        $("#hdnPlacementUpdatedDate").val(result.UpdatedDate);
-        $("#hdnPlacementUpdatedBy").val(result.UpdatedBy);
-
-
-         toggleEnrollmentModal();
 
     });
 }
