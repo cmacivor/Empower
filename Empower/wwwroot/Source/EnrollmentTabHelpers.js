@@ -253,27 +253,54 @@ function populateEditPlacementModal(placement) {
 function populateJuvenileEditPlacementModal(placement) {
     console.log(placement);
 
-    let formattedCourOrderDate = moment(new Date(placement.CourtOrderDate)).format('YYYY-MM-DD');
+    let formattedCourOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
     $("#txtCourtOrderDate").val(formattedCourOrderDate);
 
-    if (placement.PlacementLevel !== null){
-        document.getElementById("btnOverallRisk").innerText = placement.PlacementLevel.Name;
-        document.getElementById("btnOverallRisk").value = placement.PlacementLevelID;
+    if (placement.Placement.PlacementLevel !== null){
+        document.getElementById("btnOverallRisk").innerText = placement.Placement.PlacementLevel.Name;
+        document.getElementById("btnOverallRisk").value = placement.Placement.PlacementLevelID;
     }
 
-    let formattedNextCourtDate = moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD');
+    let formattedNextCourtDate = moment(new Date(placement.Placement.NextCourtDate)).format('YYYY-MM-DD');
     $("#txtNextCourtDate").val(formattedNextCourtDate);
 
     if (placement.Judge !== null) {
-        document.getElementById("btnJudge").innerText = placement.Judge.Name;
-        document.getElementById("btnJudge").value = placement.JudgeID;
+        document.getElementById("btnJudge").innerText = placement.Placement.Judge.Name;
+        document.getElementById("btnJudge").value = placement.Placement.JudgeID;
     }
 
-    $("#txtCourtOrderNarrative").val(placement.CourtOrderNarrative);
+    $("#txtCourtOrderNarrative").val(placement.Placement.CourtOrderNarrative);
 
-    $("#hdnPlacementID").val(placement.ID);
-    $("#hdnPlacementCreatedDate").val(placement.CreatedDate);
-    $("#hdnPlacementCreatedBy").val(placement.CreatedBy);
+    $("#hdnPlacementID").val(placement.Placement.ID);
+    $("#hdnPlacementCreatedDate").val(placement.Placement.CreatedDate);
+    $("#hdnPlacementCreatedBy").val(placement.Placement.CreatedBy);
+
+    let divPlacementChargesContainer = document.getElementById("divPlacementChargesContainer");
+    divPlacementChargesContainer.innerHTML = "";
+
+    placement.PlacementOffense.forEach(function(placementOffense) {
+        let darkAlertDiv = document.createElement("div");
+        darkAlertDiv.classList.add("alert");
+        darkAlertDiv.classList.add("alert-dark");
+        darkAlertDiv.classList.add("alert-dismissable");
+
+        let deleteButton = document.createElement("button");
+        deleteButton.classList.add("close");
+        deleteButton.setAttribute("type", "button");
+        deleteButton.setAttribute("data-dismiss", "alert");
+        deleteButton.setAttribute("aria-label", "Close");
+
+        let span = document.createElement("span");
+        span.setAttribute("aria-hidden", "true");
+        span.innerHTML = "&times;";
+
+        deleteButton.appendChild(span);
+
+        darkAlertDiv.innerText = placementOffense.Offense.Description;
+        darkAlertDiv.appendChild(deleteButton);
+
+        divPlacementChargesContainer.appendChild(darkAlertDiv);
+    });
 
     toggleCaseEnrollmentModal();
 }
@@ -284,8 +311,10 @@ function getPlacement(event) {
 
     let selectedPlacementID = event.currentTarget.getAttribute("data-id");
     let apiAddress = sessionStorage.getItem("baseApiAddress");
-    let fullGetPlacementAddress = `${apiAddress}/api/Placement/GetPlacement/${selectedPlacementID}`;
+    let clientProfileID = sessionStorage.getItem("clientProfileID");
+    let fullGetPlacementAddress = `${apiAddress}/api/ClientProfile/GetPlacementsByClientProfileId/${clientProfileID}`;
     let sessionStorageData = getSessionData();
+    
 
     fetch(fullGetPlacementAddress, {
         method: 'GET',
@@ -295,14 +324,23 @@ function getPlacement(event) {
         }
     }).then(result => result.json())
     .then(result => {
+        console.log(result);
         
         //let systemID = getSystems()
         let systemID = getSessionData().SystemID;
 
         if (parseInt(systemID) === parseInt(getSystems().OCWB)) {
-            populateEditPlacementModal();
+            populateEditPlacementModal(placement);
         } else {
-            populateJuvenileEditPlacementModal(result);
+
+            let selectedPlacement = result.filter(function(placement) {
+                return placement.Placement.ID === parseInt(selectedPlacementID);
+            });
+
+            console.log('the selected');
+            console.log(selectedPlacement);
+
+            populateJuvenileEditPlacementModal(selectedPlacement[0]);
         }
 
     });
