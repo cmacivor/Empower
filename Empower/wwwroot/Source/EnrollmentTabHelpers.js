@@ -255,7 +255,7 @@ function deletePlacementOffense(event) {
         let selectedPlacementOffenseID = event.currentTarget.getAttribute("data-id");
         
         let apiAddress = sessionStorage.getItem("baseApiAddress");
-        //let clientProfileID = sessionStorage.getItem("clientProfileID");
+
         let fullDeletePlacementOffenseAddress = `${apiAddress}/api/PlacementOffense/Delete/${selectedPlacementOffenseID}`;
         let sessionStorageData = getSessionData();
         
