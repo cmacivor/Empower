@@ -15,11 +15,8 @@ const EnrollmentCaseModal = (props) => {
 
     let clientProfileId = '';
 
-    const [selectedOffense, setSelectedOffense ] = useState(Object);
-
     if (props.clientProfile !== undefined) {
 
-        //personId = props.clientProfile.Person.ID;
         clientProfileId = props.clientProfile.ID;
 
         generateTable(props.placement);
@@ -37,7 +34,8 @@ const EnrollmentCaseModal = (props) => {
 
         document.getElementById('btnJudge').value = 'Please Select';
         document.getElementById('btnJudge').innerText = 'Please Select';
-    }, [selectedOffense]);
+
+    });
 
     function overallRiskSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -83,7 +81,6 @@ const EnrollmentCaseModal = (props) => {
 
         $("#hdnOffenseID").val(offenseID);
 
-        setSelectedOffense(offenseProperties);
     }
 
     function getElementValue(element) {
@@ -154,11 +151,11 @@ const EnrollmentCaseModal = (props) => {
                 return;
             }
 
-            if (selectedOffense.length > 0 && selectedOffense[0].ID !== undefined && selectedOffense[0].ID !== null) {
+            if ($("#hdnOffenseID").val() !== "") {
 
                 let placementOffense = {
                     PlacementID: result.ID,
-                    OffenseID: selectedOffense[0].ID,
+                    OffenseID: $("#hdnOffenseID").val(),  
                     Active: true,
                     CreatedDate: new Date(),
                     CreatedBy: sessionStorageData.CurrentUser,
@@ -166,7 +163,6 @@ const EnrollmentCaseModal = (props) => {
                     UpdatedBy: sessionStorageData.CurrentUser
                 }
                 
-                //placementOffenses.push(placementOffense);
 
                 fetch(fullPlacementOffenseAddress, {
                     method: methodType,
