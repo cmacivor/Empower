@@ -98,12 +98,9 @@ const EnrollmentCaseModal = (props) => {
         let fullPlacementOffenseAddress= `${apiAddress}/api/PlacementOffense`;
         let sessionStorageData = getSessionData();
        
-        let enrollmentDate = new Date($("#txtEnrollmentDate").val());
-
-
         let placement ={
             ClientProfileID:  clientProfileId,
-            CourtOrderDate: enrollmentDate,
+            CourtOrderDate: new Date($("#txtCourtOrderDate").val()), 
             PlacementLevelID: getElementValue("btnOverallRisk"),
             NextCourtDate: new Date($("#txtNextCourtDate").val()),
             JudgeID: getElementValue("btnJudge"), //"Judge"  
