@@ -10,6 +10,7 @@ import { generateTable,
     populateServiceUnitModalTable} from './EnrollmentTabHelpers';
 import { addActive, onKeyDownHandler, populatePlacementChargesBox  } from './AutoComplete';
 import {  Api } from './commonAdmin';
+import { triggerErrorMessage } from './ToastHelper';
 
 const EnrollmentCaseModal = (props) => {
 
@@ -151,7 +152,7 @@ const EnrollmentCaseModal = (props) => {
             if ($("#hdnOffenseID").val() !== "") {
 
                 let placementOffense = {
-                    PlacementID: result.ID,
+                    PlacementID: result.Placement.ID,
                     OffenseID: $("#hdnOffenseID").val(),  
                     Active: true,
                     CreatedDate: new Date(),
@@ -162,16 +163,14 @@ const EnrollmentCaseModal = (props) => {
                 
 
                 fetch(fullPlacementOffenseAddress, {
-                    method: methodType,
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + sessionStorageData.Token
                     },
                     body: JSON.stringify(placementOffense)
-                }).then(result => result.json())
-                .then(result => {
-                    
-                    
+                }).catch(error => {
+                    triggerErrorMessage("an error occurred while saving the offense record.");
                 });
             }
 
