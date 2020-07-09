@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
+import ServiceUnit from './ServiceUnit';
 import moment from 'moment';
 import { generateTable, 
     getPlacementsByClientProfileID, 
@@ -279,6 +280,7 @@ const EnrollmentCaseModal = (props) => {
                 </div>
             </div>
         </form>
+        <ServiceUnit />
     </div>
 }
 
