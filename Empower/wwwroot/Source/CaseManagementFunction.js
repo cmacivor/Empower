@@ -281,7 +281,12 @@ const CaseManagementFunction = (props) => {
                                 clientProfile={clientProfile.ClientProfile } 
                                 offenseValues = { offenseOptions }
                                 placementLevelValues = { placementLevelOptions }
+                                serviceReleaseValues = { serviceReleaseOptions }
+                                serviceOutcomeValues = { serviceOutcomeOptions }
                                 judgeValues = { judgeOptions }
+                                contactTypeValues = { contactTypeOptions }
+                                subContactTypeValues = { subContactTypeOptions }
+                                staffValues = { staffOptions }
                                 placement={clientProfile.Placement }
                                 familyProfiles={clientProfile.Person }
                                 createNotification={triggerToastMessage}

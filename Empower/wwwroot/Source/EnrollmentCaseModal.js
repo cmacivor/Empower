@@ -2,10 +2,14 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import ServiceUnit from './ServiceUnit';
+import ProgressNote from './ProgressNote';
+import Referral from './Referral';
+import PrintEnrollment from './PrintEnrollment';
 import moment from 'moment';
 import { generateTable, 
     getPlacementsByClientProfileID, 
     toggleCaseEnrollmentModal,
+    togglePlacementModal,
     createColumnGroup, 
     createRow, 
     populateServiceUnitModalTable} from './EnrollmentTabHelpers';
@@ -29,6 +33,11 @@ const EnrollmentCaseModal = (props) => {
     let offenseValues = props.offenseValues;
     let placementLevels = props.placementLevelValues;
     let judges = props.judgeValues;
+    let contactTypes = props.contactTypeValues;
+    let subContactTypes = props.subContactTypeValues;
+    let staff = props.staffValues;
+    let serviceReleases = props.serviceReleaseValues;
+    let serviceOutcomes = props.serviceOutcomeValues;
 
     useEffect(() => {
         document.getElementById('btnOverallRisk').value = 'Please Select';
@@ -280,7 +289,23 @@ const EnrollmentCaseModal = (props) => {
                 </div>
             </div>
         </form>
+        <Referral
+            staffValues = {staff}
+            serviceReleaseValues = {serviceReleases }
+            serviceOutcomeValues = { serviceOutcomes }
+            togglePlacementModal={togglePlacementModal}
+            refreshEnrollmentGrid = { getPlacementsByClientProfileID }
+            createNotification={props.createNotification}
+            createErrorNotification={props.createErrorNotification}
+         />
+         <PrintEnrollment 
+         clientProfileID = {clientProfileId }
+         clientProfile ={props.clientProfile} />
         <ServiceUnit />
+        <ProgressNote
+            contactTypeValues = { contactTypes }
+            subContactTypeValues = { subContactTypes }
+        />
     </div>
 }
 
