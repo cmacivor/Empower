@@ -20,6 +20,7 @@ import AddressAdult from './AddressAdult';
 import AddressCWB from './AddressCWB';
 import FamilyInfo from './FamilyInfo';
 import CWBEnrollment from './CWBEnrollment';
+import EnrollmentCaseModal from './EnrollmentCaseModal';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -52,6 +53,9 @@ const CaseManagementFunction = (props) => {
     const [serviceOutcomeOptions, setServiceOutcomeOptions] = useState([]);
     const [contactTypeOptions, setContactTypeOptions ] = useState([]);
     const [subContactTypeOptions, setSubContactTypeOptions] = useState([]);
+    const [offenseOptions, setOffenseOptions ] = useState([]);
+    const [placementLevelOptions, setPlacementLevelOptions] = useState([]);
+    const [judgeOptions, setJudgeOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -69,13 +73,16 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("CareerPathway").then(careerPathways => setCareerPathWayOptions(careerPathways));
         Api.getConfigDataByType("ContactType").then(contactTypes => setContactTypeOptions(contactTypes));
         Api.getConfigDataByType("SubContactType").then(subContactTypes => setSubContactTypeOptions(subContactTypes));
+
         //TODO: how to reduce the number of API calls?
         if (staffOptions.length === 0) {
             Api.getConfigDataByType("Staff").then(staff => setStaffOptions(staff));
         }
         Api.getConfigDataByType("ServiceRelease").then(serviceReleases => setServiceReleaseOptions(serviceReleases));
         Api.getConfigDataByType("ServiceOutcome").then(serviceOutcomes => setServiceOutcomeOptions(serviceOutcomes));
-
+        Api.getConfigDataByType("Offense").then(offenses => setOffenseOptions(offenses));
+        Api.getConfigDataByType("PlacementLevel").then(placementLevels => setPlacementLevelOptions(placementLevels));
+        Api.getConfigDataByType("Judge").then(judges => setJudgeOptions(judges));
      }, []);
 
 
@@ -268,6 +275,25 @@ const CaseManagementFunction = (props) => {
                              /> 
                             : <div></div>
                         }
+                        {
+                            parseInt(sessionData.SystemID) === systems.Juvenile ? 
+                            <EnrollmentCaseModal
+                                clientProfile={clientProfile.ClientProfile } 
+                                offenseValues = { offenseOptions }
+                                placementLevelValues = { placementLevelOptions }
+                                serviceReleaseValues = { serviceReleaseOptions }
+                                serviceOutcomeValues = { serviceOutcomeOptions }
+                                judgeValues = { judgeOptions }
+                                contactTypeValues = { contactTypeOptions }
+                                subContactTypeValues = { subContactTypeOptions }
+                                staffValues = { staffOptions }
+                                placement={clientProfile.Placement }
+                                familyProfiles={clientProfile.Person }
+                                createNotification={triggerToastMessage}
+                                createErrorNotification={triggerErrorMessage}
+                             /> : <div></div>
+                        }
+
                     </Tab>
                     <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
                        assessment content

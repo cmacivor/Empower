@@ -116,6 +116,7 @@
             }
         }
 
+        //this handles the Address Search functionality for all the apps.
         export function populateSearchBox(result, searchBoxId, populateCallBack) {
           let addresses = [];
                 
@@ -173,6 +174,78 @@
     
                       /*close the list of autocompleted values,
                       (or any other open lists of autocompleted values:*/
+                      closeAllLists(searchBoxId);
+                  });
+                  a.appendChild(b);
+                }
+              }
+          }
+        }
+
+
+        //this is the for the Placment Charges field on the Case modal, shown under the Referral tab in Empower Juvenile.
+        export function populatePlacementChargesBox(result, searchBoxId, populateCallBack) {
+          let offenses = [];
+                
+          let searchInput = document.getElementById(searchBoxId);
+          
+          if (result !== null) {
+    
+              result.forEach(element => {
+                offenses.push(element.VCCCode + "(" + element.Description + ")");
+              });
+    
+              var a, b, i, val = searchInput.value;
+              /*close any already open lists of autocompleted values*/
+              closeAllLists(searchBoxId);
+              if (!val) { return false;}
+              currentFocus = -1;
+              /*create a DIV element that will contain the items (values):*/
+              a = document.createElement("DIV");
+              a.setAttribute("id", searchInput.id + "autocomplete-list");
+              a.setAttribute("class", "autocomplete-items");
+              /*append the DIV element as a child of the autocomplete container:*/
+              searchInput.parentNode.appendChild(a);
+              /*for each item in the array...*/
+              for (i = 0; i < offenses.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (offenses[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                  /*create a DIV element for each matching element:*/
+                  b = document.createElement("DIV");
+                  /*make the matching letters bold:*/
+                  b.innerHTML = "<strong>" + offenses[i].substr(0, val.length) + "</strong>";
+                  b.innerHTML += offenses[i].substr(val.length);
+
+                  let offenseID = result[i].ID;
+
+                  /*insert a input field that will hold the current array item's value:*/
+                  b.innerHTML += "<input type='hidden' data-id='" + offenseID + "' class='addressItem' value='" + offenses[i] + "'>";
+                  /*execute a function when someone clicks on the item value (DIV element):*/
+                  b.addEventListener("click", function(e) {
+                     console.log(e);
+                      /*insert the value for the autocomplete text field:*/
+                      searchInput.value = e.target.innerText;
+
+                      let $innerText = $($.parseHTML(e.target.innerHTML));
+                      //console.log($innerText);
+                      //console.log($innerText[2].attributes[1].value);
+                     
+                      //console.log($innerText[2].data("id"));
+
+                      //let dataID = $innerText.attributes[1].value;
+                      //console.log(dataID);
+                      //let $input = $innerText.find('input');
+                      //let dataOffenseID = $input.data('id');
+                      //console.log(dataOffenseID);
+    
+                      //populate the fields
+                      let offenseProperties = result.filter(function(offense){
+                          return offense.ID === parseInt($innerText[2].attributes[1].value); //e.target.innerText;
+                      });
+
+                      populateCallBack(offenseProperties);
+    
+                
                       closeAllLists(searchBoxId);
                   });
                   a.appendChild(b);

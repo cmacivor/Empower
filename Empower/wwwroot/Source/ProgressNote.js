@@ -11,12 +11,16 @@ const ProgressNote = (props) => {
 
 
     useEffect(() => {
+        setDropdowns();
+    });
+
+    function setDropdowns() {
         document.getElementById('btnProgressNoteContactType').value = "Please Select";
         document.getElementById("btnProgressNoteContactType").innerHTML = "Please Select";
 
         document.getElementById('btnProgressNoteSubContactType').value = "Please Select";
         document.getElementById("btnProgressNoteSubContactType").innerHTML = "Please Select";
-    });
+    }
 
     function ddlContactTypeSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -117,12 +121,23 @@ const ProgressNote = (props) => {
 
             //getServiceUnitsByEnrollmentID();
             getProgressNotesByEnrollmentID();
+            
+            setDropdowns();
+            clearFields();
     
         });
-
     }
 
-   
+    function clearFields() {
+        $("#hdnProgressNoteID").val("");
+        $("#hdnProgressNoteCreatedDate").val("");
+        $("#hdnProgressNoteCreatedBy").val("");
+
+        $("#txtProgressNoteDate").val("");
+        $("#txtProgressNoteComments").val("");
+        $("#txtDurationHour").val("");
+        $("#txtDurationMinute").val("");
+    }
 
     let contactTypeOptions = [];
     if (contactTypes.length > 0) {

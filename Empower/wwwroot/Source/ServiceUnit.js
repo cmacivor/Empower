@@ -11,13 +11,17 @@ import { populateServiceUnitModalTable, getServiceUnitsByEnrollmentID } from './
 const ServiceUnit = (props) => {
 
     useEffect(() => {
+        setDropdowns();
+
+    });
+
+    function setDropdowns() {
         document.getElementById('btnServiceYear').value = "Please Select";
         document.getElementById("btnServiceYear").innerHTML = "Please Select";
 
         document.getElementById('btnServiceMonth').value = "Please Select";
         document.getElementById("btnServiceMonth").innerHTML = "Please Select";
-
-    });
+    }
 
 
     function ddlServiceUnitYearSelectHandler(event) {
@@ -121,8 +125,19 @@ const ServiceUnit = (props) => {
             triggerToastMessage("The service unit was successfully saved");
 
             getServiceUnitsByEnrollmentID();
+
+            setDropdowns();
+            clearFields();
     
         });
+    }
+
+    function clearFields() {
+        $("#hdnServiceUnitID").val("");
+        //$("#hdnServiceUnitEnrollmentID").val("");
+        $("#txtServiceUnits").val("");
+        $("#hdnServiceUnitCreatedDate").val("");
+        $("#hdnServiceUnitCreatedBy").val("");
     }
     
     

@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
 import { triggerErrorMessage, triggerToastMessage } from './ToastHelper';
+import { getSystems } from './Constants';
 
 
 
@@ -61,9 +62,15 @@ export function toggleEmploymentPlanModal(event) {
     $("#employmentPlanModal").modal('toggle');
 }
 
+//this is the modal used by CWB
 export function toggleEnrollmentModal() {
     //TODO: add function to clear the modal on opening
     $("#enrollmentModal").modal('toggle');
+}
+
+//this modal is used by Juvenile, and saves an Enrollment record, but is titled "Case"
+export function toggleCaseEnrollmentModal() {
+    $("#caseEnrollmentModal").modal('toggle');
 }
 
 function fetchPlacements() {
@@ -185,12 +192,158 @@ export function togglePlacementModal(event) {
     $("#referralModal").modal('toggle');
 }
 
+//this will be for CWB
+function populateEditPlacementModal(placement) {
+    if (placement.AssistanceType !== undefined && placement.AssistanceType !== null) {
+        document.getElementById("btnAssistanceType").innerHTML = placement.AssistanceType.Name;
+        document.getElementById("btnAssistanceType").value = placement.AssistanceTypeID;
+    }
+
+    if (placementk.CareerPathway !== undefined && placement.CareerPathway !== null) {
+        document.getElementById("btnCareerPathwayPosition").innerHTML = placement.CareerPathway.Name;
+        document.getElementById("btnCareerPathwayPosition").value = placement.CareerPathwayID;
+    }
+
+    let convertedEnrollmentDate = moment(new Date(placement.CourtOrderDate)).format('YYYY-MM-DD');
+    $("#txtEnrollmentDate").val(convertedEnrollmentDate);
+    $("#txtEnrollmentComments").val(placement.CourtOrderNarrative);
+    
+    if (placement.EmployerBenefits !== null) {
+        document.getElementById("btnEnrollmentBenefits").innerHTML = placement.EmployerBenefits;
+        document.getElementById("btnEnrollmentBenefits").value = placement.EmployerBenefits;
+    }
+
+    if (placement.EmployerFullPartTime !== null) {
+        document.getElementById("btnFullTimePartTime").innerText = placement.EmployerFullPartTime;
+        document.getElementById("btnFullTimePartTime").value = placement.EmployerFullPartTime;
+    }
+
+    $("#txtEnrollmentEmployerName").val(placement.EmployerName);
+    $("#txtEnrollmentPosition").val(placement.EmployerPosition);
+
+    let convertedEmployerStartDate = moment(new Date(placement.EmployerStartDate)).format('YYYY-MM-DD');
+    $("#txtEnrollmentStartDate").val(convertedEmployerStartDate);
+
+    $("#txtEnrollmentWagesPerHour").val(placement.EmployerWages);
+
+    //View/TANF
+    if (placement.Judge !== undefined && placement.Judge !== null) {
+        document.getElementById("btnViewTanf").innerText = placement.Judge.Name;
+        document.getElementById("btnViewTanf").value = placement.JudgeID;
+    }
+
+    let convertedNextCourtDate = moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD');
+    $("#txtApptDate").val(convertedNextCourtDate);
+
+    if (result.PlacementLevel !== undefined && placement.PlacementLevel !== null) {
+        document.getElementById("btnSnapEt").innerText = placement.PlacementLevel.Name;
+        document.getElementById("btnSnapEt").value = placement.PlacementLevelID;
+    }
+
+    $("#hdnPlacementID").val(placement.ID);
+    $("#hdnPlacementCreatedDate").val(placement.CreatedDate);
+    $("#hdnPlacementCreatedBy").val(placement.CreatedBy);
+    $("#hdnPlacementUpdatedDate").val(placement.UpdatedDate);
+    $("#hdnPlacementUpdatedBy").val(placement.UpdatedBy);
+
+
+     toggleEnrollmentModal();
+}
+
+function deletePlacementOffense(event) {
+    if (event !== undefined) {
+        let selectedPlacementOffenseID = event.currentTarget.getAttribute("data-id");
+        
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+
+        let fullDeletePlacementOffenseAddress = `${apiAddress}/api/PlacementOffense/Delete/${selectedPlacementOffenseID}`;
+        let sessionStorageData = getSessionData();
+        
+    
+        fetch(fullDeletePlacementOffenseAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => {
+            triggerToastMessage("the placement offense was deleted.");
+        }).catch((error) => {
+            triggerErrorMessage("an error occurred.");
+        });
+    }
+}
+
+function populateJuvenileEditPlacementModal(placement) {
+    console.log(placement);
+
+    let formattedCourOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
+    $("#txtCourtOrderDate").val(formattedCourOrderDate);
+
+    if (placement.Placement.PlacementLevel !== null){
+        document.getElementById("btnOverallRisk").innerText = placement.Placement.PlacementLevel.Name;
+        document.getElementById("btnOverallRisk").value = placement.Placement.PlacementLevelID;
+    }
+
+    let formattedNextCourtDate = moment(new Date(placement.Placement.NextCourtDate)).format('YYYY-MM-DD');
+    $("#txtNextCourtDate").val(formattedNextCourtDate);
+
+    if (placement.Judge !== null) {
+        document.getElementById("btnJudge").innerText = placement.Placement.Judge.Name;
+        document.getElementById("btnJudge").value = placement.Placement.JudgeID;
+    }
+
+    $("#txtCourtOrderNarrative").val(placement.Placement.CourtOrderNarrative);
+
+    $("#hdnPlacementID").val(placement.Placement.ID);
+    $("#hdnPlacementCreatedDate").val(placement.Placement.CreatedDate);
+    $("#hdnPlacementCreatedBy").val(placement.Placement.CreatedBy);
+
+    let divPlacementChargesContainer = document.getElementById("divPlacementChargesContainer");
+    divPlacementChargesContainer.innerHTML = "";
+
+    placement.PlacementOffense.forEach(function(placementOffense) {
+        let darkAlertDiv = document.createElement("div");
+        darkAlertDiv.classList.add("alert");
+        darkAlertDiv.classList.add("alert-dark");
+        darkAlertDiv.classList.add("alert-dismissable");
+
+        let deleteButton = document.createElement("button");
+        deleteButton.classList.add("close");
+        deleteButton.setAttribute("type", "button");
+        deleteButton.setAttribute("data-dismiss", "alert");
+        deleteButton.setAttribute("aria-label", "Close");
+
+        let span = document.createElement("span");
+        span.setAttribute("aria-hidden", "true");
+        span.setAttribute("data-id", placementOffense.ID);
+        span.innerHTML = "&times;";
+        span.onclick = deletePlacementOffense;
+
+        deleteButton.appendChild(span);
+
+        darkAlertDiv.innerText = placementOffense.Offense.Description;
+        darkAlertDiv.appendChild(deleteButton);
+
+        let lineBreak = document.createElement("br");
+
+        divPlacementChargesContainer.appendChild(lineBreak);
+        divPlacementChargesContainer.appendChild(darkAlertDiv);
+    });
+
+    toggleCaseEnrollmentModal();
+}
+
+
+
 function getPlacement(event) {
 
     let selectedPlacementID = event.currentTarget.getAttribute("data-id");
     let apiAddress = sessionStorage.getItem("baseApiAddress");
-    let fullGetPlacementAddress = `${apiAddress}/api/Placement/GetPlacement/${selectedPlacementID}`;
+    let clientProfileID = sessionStorage.getItem("clientProfileID");
+    let fullGetPlacementAddress = `${apiAddress}/api/ClientProfile/GetPlacementsByClientProfileId/${clientProfileID}`;
     let sessionStorageData = getSessionData();
+    
 
     fetch(fullGetPlacementAddress, {
         method: 'GET',
@@ -200,57 +353,24 @@ function getPlacement(event) {
         }
     }).then(result => result.json())
     .then(result => {
+        console.log(result);
         
-        if (result.AssistanceType !== undefined && result.AssistanceType !== null) {
-            document.getElementById("btnAssistanceType").innerHTML = result.AssistanceType.Name;
-            document.getElementById("btnAssistanceType").value = result.AssistanceTypeID;
+        //let systemID = getSystems()
+        let systemID = getSessionData().SystemID;
+
+        if (parseInt(systemID) === parseInt(getSystems().OCWB)) {
+            populateEditPlacementModal(placement);
+        } else {
+
+            let selectedPlacement = result.filter(function(placement) {
+                return placement.Placement.ID === parseInt(selectedPlacementID);
+            });
+
+            console.log('the selected');
+            console.log(selectedPlacement);
+
+            populateJuvenileEditPlacementModal(selectedPlacement[0]);
         }
-
-        if (result.CareerPathway !== undefined && result.CareerPathway !== null) {
-            document.getElementById("btnCareerPathwayPosition").innerHTML = result.CareerPathway.Name;
-            document.getElementById("btnCareerPathwayPosition").value = result.CareerPathwayID;
-        }
-
-        let convertedEnrollmentDate = moment(new Date(result.CourtOrderDate)).format('YYYY-MM-DD');
-        $("#txtEnrollmentDate").val(convertedEnrollmentDate);
-        $("#txtEnrollmentComments").val(result.CourtOrderNarrative);
-        
-        document.getElementById("btnEnrollmentBenefits").innerHTML = result.EmployerBenefits;
-        document.getElementById("btnEnrollmentBenefits").value = result.EmployerBenefits;
-
-        document.getElementById("btnFullTimePartTime").innerText = result.EmployerFullPartTime;
-        document.getElementById("btnFullTimePartTime").value = result.EmployerFullPartTime;
-
-        $("#txtEnrollmentEmployerName").val(result.EmployerName);
-        $("#txtEnrollmentPosition").val(result.EmployerPosition);
-
-        let convertedEmployerStartDate = moment(new Date(result.EmployerStartDate)).format('YYYY-MM-DD');
-        $("#txtEnrollmentStartDate").val(convertedEmployerStartDate);
-
-        $("#txtEnrollmentWagesPerHour").val(result.EmployerWages);
-
-        //View/TANF
-        if (result.Judge !== undefined && result.Judge !== null) {
-            document.getElementById("btnViewTanf").innerText = result.Judge.Name;
-            document.getElementById("btnViewTanf").value = result.JudgeID;
-        }
-
-        let convertedNextCourtDate = moment(new Date(result.NextCourtDate)).format('YYYY-MM-DD');
-        $("#txtApptDate").val(convertedNextCourtDate);
-
-        if (result.PlacementLevel !== undefined && result.PlacementLevel !== null) {
-            document.getElementById("btnSnapEt").innerText = result.PlacementLevel.Name;
-            document.getElementById("btnSnapEt").value = result.PlacementLevelID;
-        }
-
-        $("#hdnPlacementID").val(result.ID);
-        $("#hdnPlacementCreatedDate").val(result.CreatedDate);
-        $("#hdnPlacementCreatedBy").val(result.CreatedBy);
-        $("#hdnPlacementUpdatedDate").val(result.UpdatedDate);
-        $("#hdnPlacementUpdatedBy").val(result.UpdatedBy);
-
-
-         toggleEnrollmentModal();
 
     });
 }
@@ -327,6 +447,19 @@ function buildPrintHeaderButton(placementRecord) {
       printButton.onclick = togglePrintScreen;
 
       return printButton;
+}
+
+function buildAddReferralButton(placementRecord) {
+    let addReferralButton = document.createElement("button");
+    addReferralButton.classList.add("btn");
+    addReferralButton.classList.add("btn-secondary");
+    addReferralButton.classList.add("btn-sm");
+    addReferralButton.setAttribute("data-id", placementRecord.ID);
+    
+    addReferralButton.innerText = "Add Referral";
+    addReferralButton.onclick = togglePlacementModal;
+
+    return addReferralButton;
 }
 
 export function getProgressNotesByEnrollmentID() {
@@ -650,6 +783,66 @@ export function populateServiceUnitModalTable(serviceUnits) {
     serviceUnitDiv.appendChild(table);
 }
 
+function buildEditEnrollmentButton(enrollment, placementRecord) {
+    let editEnrollmentButton = document.createElement("button");
+    editEnrollmentButton.classList.add("btn");
+    editEnrollmentButton.classList.add("btn-info");
+    editEnrollmentButton.classList.add("btn-sm");
+    editEnrollmentButton.classList.add("mr-2");
+    editEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
+    editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
+    let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
+    editEnrollmentButton.innerHTML = faPencil;
+    editEnrollmentButton.title = "Edit Referral";
+    editEnrollmentButton.onclick = getEnrollment;
+
+    return editEnrollmentButton;
+}
+
+function buildServiceUnitButton(enrollment) {
+    let serviceUnitButton = document.createElement("button");
+    serviceUnitButton.classList.add("btn");
+    serviceUnitButton.classList.add("btn-info");
+    serviceUnitButton.classList.add("btn-sm");
+    serviceUnitButton.classList.add("mr-2");
+    serviceUnitButton.setAttribute("data-id", enrollment.Enrollment.ID);
+    let faSuitCase = "<i class='fa fa-suitcase' aria-hidden='true'></i>";
+    serviceUnitButton.innerHTML = faSuitCase;
+    serviceUnitButton.title = "Edit Service Unit";
+    serviceUnitButton.onclick = toggleServiceUnitModal;
+
+    return serviceUnitButton;
+}
+
+function buildProgressNoteButton(enrollment) {
+    let progressNoteButton = document.createElement("button");
+    progressNoteButton.classList.add("btn");
+    progressNoteButton.classList.add("btn-info");
+    progressNoteButton.classList.add("btn-sm");
+    progressNoteButton.setAttribute("data-id", enrollment.Enrollment.ID);
+    let stickyNote = "<i class='fa fa-sticky-note-o' aria-hidden='true'></i>";
+    progressNoteButton.innerHTML = stickyNote;
+    progressNoteButton.title = "Edit Progress Note";
+    progressNoteButton.onclick = toggleProgressNoteModal;
+
+    return progressNoteButton;
+}
+
+function buildDeleteEnrollmentButton(enrollment) {
+    let deleteEnrollmentButton = document.createElement("button");
+    deleteEnrollmentButton.classList.add("btn");
+    deleteEnrollmentButton.classList.add("btn-danger");
+    deleteEnrollmentButton.classList.add("btn-sm");
+    deleteEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
+    let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
+    deleteEnrollmentButton.innerHTML = faTrash;
+    //deleteEnrollmentButton.innerText = "Delete";
+    deleteEnrollmentButton.onclick = deleteEnrollment;
+
+    return deleteEnrollmentButton;
+}
+
+//generates the main page of cards- holding Placements
 export function generateTable(placements) {
 
     let divRef = document.getElementById("placementsContainer");
@@ -693,14 +886,7 @@ export function generateTable(placements) {
         let addReferralCell = addReferralRow.insertCell(0);
 
         //button to add new Referrals/Enrollments
-        let addReferralButton = document.createElement("button");
-        addReferralButton.classList.add("btn");
-        addReferralButton.classList.add("btn-secondary");
-        addReferralButton.classList.add("btn-sm");
-        addReferralButton.setAttribute("data-id", placementRecord.ID);
-        
-        addReferralButton.innerText = "Add Referral";
-        addReferralButton.onclick = togglePlacementModal;
+        let addReferralButton = buildAddReferralButton(placementRecord);
 
         addReferralCell.appendChild(addReferralButton);
 
@@ -724,48 +910,26 @@ export function generateTable(placements) {
                 console.log('the enrollment');
                 console.log(enrollment);
 
-                populateServiceUnitModalTable(enrollment.ServiceUnit);
+                if (enrollment.ServiceUnit.length > 0) {
+                    populateServiceUnitModalTable(enrollment.ServiceUnit);
+                }
 
                 let enrollmentRow = tbody.insertRow(enrollmentRowsIndex);
                 enrollmentRowsIndex = enrollmentRowsIndex + 1;
 
                 //button to edit a Referral/Enrollment
                 let editButtonCell = enrollmentRow.insertCell(0);
-                let editEnrollmentButton = document.createElement("button");
-                editEnrollmentButton.classList.add("btn");
-                editEnrollmentButton.classList.add("btn-info");
-                editEnrollmentButton.classList.add("btn-sm");
-                editEnrollmentButton.classList.add("mr-2");
-                editEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                editEnrollmentButton.setAttribute("data-placementid", placementRecord.ID);
-                let faPencil = "<i class='fa fa-pencil-square-o' aria-hidden='true'></i>";
-                editEnrollmentButton.innerHTML = faPencil;
-                editEnrollmentButton.title = "Edit Referral";
-                editEnrollmentButton.onclick = getEnrollment;
+
+                let editEnrollmentButton = buildEditEnrollmentButton(enrollment, placementRecord);
+
                 editButtonCell.appendChild(editEnrollmentButton);
 
                 //add button for Service Units
-                let serviceUnitButton = document.createElement("button");
-                serviceUnitButton.classList.add("btn");
-                serviceUnitButton.classList.add("btn-info");
-                serviceUnitButton.classList.add("btn-sm");
-                serviceUnitButton.classList.add("mr-2");
-                serviceUnitButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                let faSuitCase = "<i class='fa fa-suitcase' aria-hidden='true'></i>";
-                serviceUnitButton.innerHTML = faSuitCase;
-                serviceUnitButton.title = "Edit Service Unit";
-                serviceUnitButton.onclick = toggleServiceUnitModal;
+                let serviceUnitButton = buildServiceUnitButton(enrollment);
+
                 editButtonCell.appendChild(serviceUnitButton);
 
-                let progressNoteButton = document.createElement("button");
-                progressNoteButton.classList.add("btn");
-                progressNoteButton.classList.add("btn-info");
-                progressNoteButton.classList.add("btn-sm");
-                progressNoteButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                let stickyNote = "<i class='fa fa-sticky-note-o' aria-hidden='true'></i>";
-                progressNoteButton.innerHTML = stickyNote;
-                progressNoteButton.title = "Edit Progress Note";
-                progressNoteButton.onclick = toggleProgressNoteModal;
+                let progressNoteButton = buildProgressNoteButton(enrollment);
                 editButtonCell.appendChild(progressNoteButton);
 
                 //add the Add/Edit Employment Plan button
@@ -800,15 +964,9 @@ export function generateTable(placements) {
                 }
 
                 let deleteButtonCell = enrollmentRow.insertCell(5);
-                let deleteEnrollmentButton = document.createElement("button");
-                deleteEnrollmentButton.classList.add("btn");
-                deleteEnrollmentButton.classList.add("btn-danger");
-                deleteEnrollmentButton.classList.add("btn-sm");
-                deleteEnrollmentButton.setAttribute("data-id", enrollment.Enrollment.ID);
-                let faTrash = "<i class='fa fa-trash-o' aria-hidden='true'></i>";
-                deleteEnrollmentButton.innerHTML = faTrash;
-                //deleteEnrollmentButton.innerText = "Delete";
-                deleteEnrollmentButton.onclick = deleteEnrollment
+
+                let deleteEnrollmentButton = buildDeleteEnrollmentButton(enrollment);
+
                 deleteButtonCell.appendChild(deleteEnrollmentButton);
 
             });
