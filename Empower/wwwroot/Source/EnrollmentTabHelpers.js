@@ -455,6 +455,28 @@ function buildAddReferralButton(placementRecord) {
     addReferralButton.classList.add("btn-secondary");
     addReferralButton.classList.add("btn-sm");
     addReferralButton.setAttribute("data-id", placementRecord.ID);
+
+    //clear the modal of values
+    $("#txtReferralDate").val("");
+    document.getElementById('btnCareerAdvisorName').value = 'Please Select';
+    document.getElementById('btnCareerAdvisorName').innerText = 'Please Select';
+    $("#txtReferralPhone").empty();
+    $("#txtReferralEmail").empty();
+    $("#txtReferralFax").empty();
+    $("#txtReferralTitle").empty();
+    document.getElementById('btnReferToService').value = 'Please Select';
+    document.getElementById('btnReferToService').innerText = 'Please Select';
+    $("#txtReferralNotes").val("");
+    $("#hdnReferralCreatedDate").val("");
+    $("#hdnCreatedBy").val("");
+    $("#txtServiceBeginDate").val("");
+    $("#txtServiceEndDate").val("");
+    document.getElementById('btnCaseStatus').value = 'Please Select';
+    document.getElementById('btnCaseStatus').innerText = 'Please Select';
+    document.getElementById('btnServiceOutcome').value = 'Please Select';
+    document.getElementById('btnServiceOutcome').innerText = 'Please Select';
+    $("#txtDateCaseAssigned").val("");
+
     
     addReferralButton.innerText = "Add Referral";
     addReferralButton.onclick = togglePlacementModal;
@@ -951,12 +973,10 @@ export function generateTable(placements) {
                 }
 
                 let beginDateCell = enrollmentRow.insertCell(2);
-                //let convertedBeginDate = moment(new Date(enrollment.Enrollment.BeginDate)).format('YYYY-MM-DD');
                 let convertedBeginDate = enrollment.Enrollment.BeginDate !== null ? moment(new Date(enrollment.Enrollment.BeginDate)).format('YYYY-MM-DD') : "";
                 beginDateCell.innerText = convertedBeginDate;
 
                 let endDateCell = enrollmentRow.insertCell(3);
-                // let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
                 let convertedEndDate = enrollment.Enrollment.EndDate !== null ? moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD') : "";
                 endDateCell.innerText = convertedEndDate;
 
