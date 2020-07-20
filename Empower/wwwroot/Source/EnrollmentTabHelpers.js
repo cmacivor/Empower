@@ -112,7 +112,7 @@ function getEnrollment(event) {
         }
     }).then(result => result.json())
     .then(result => {
-        //console.log(result);
+        console.log(result);
 
         //txtReferralDate
         let referralDate = moment(new Date(result.ReferralDate)).format('YYYY-MM-DD');
@@ -129,9 +129,10 @@ function getEnrollment(event) {
         $("#txtReferralNotes").val(result.Comments);
         $("#txtReferralStatusNotes").val(result.SuppComments);
 
-        let serviceBeginDate = moment(new Date(result.BeginDate)).format('YYYY-MM-DD');
+        let serviceBeginDate = result.BeginDate !== null ? moment(new Date(result.BeginDate)).format('YYYY-MM-DD') : "";
         $("#txtServiceBeginDate").val(serviceBeginDate);
-        let serviceEndDate = moment(new Date(result.EndDate)).format('YYYY-MM-DD');
+
+        let serviceEndDate = result.EndDate !== null ? moment(new Date(result.EndDate)).format('YYYY-MM-DD') : "";
         $("#txtServiceEndDate").val(serviceEndDate);
 
         if (result.ServiceRelease !== null) {
@@ -144,14 +145,15 @@ function getEnrollment(event) {
             document.getElementById("btnServiceOutcome").innerText = result.ServiceOutcome.Name;
         }
 
-        let DateCaseAssigned = moment(new Date(result.DateCaseAssigned)).format('YYYY-MM-DD');
+        let DateCaseAssigned = result.DateCaseAssigned !== null ? moment(new Date(result.DateCaseAssigned)).format('YYYY-MM-DD') : "";
         $("#txtDateCaseAssigned").val(DateCaseAssigned);
 
         $("#hdnEnrollmentID").val(result.ID);
         $("#hdnReferralCreatedDate").val(result.CreatedDate);
         $("#hdnCreatedBy").val(result.CreatedBy);
 
-        togglePlacementModal();
+        //togglePlacementModal();
+        $("#referralModal").modal('toggle');
     });
 }
 
@@ -188,6 +190,27 @@ export function togglePlacementModal(event) {
         //$("#btnSaveEnrollment").data()
         document.getElementById("btnSaveEnrollment").setAttribute("data-id", selectedPlacementID);
     }
+
+     //clear the modal of values
+     $("#txtReferralDate").val("");
+     document.getElementById('btnCareerAdvisorName').value = 'Please Select';
+     document.getElementById('btnCareerAdvisorName').innerText = 'Please Select';
+     $("#txtReferralPhone").empty();
+     $("#txtReferralEmail").empty();
+     $("#txtReferralFax").empty();
+     $("#txtReferralTitle").empty();
+     document.getElementById('btnReferToService').value = 'Please Select';
+     document.getElementById('btnReferToService').innerText = 'Please Select';
+     $("#txtReferralNotes").val("");
+     $("#hdnReferralCreatedDate").val("");
+     $("#hdnCreatedBy").val("");
+     $("#txtServiceBeginDate").val("");
+     $("#txtServiceEndDate").val("");
+     document.getElementById('btnCaseStatus').value = 'Please Select';
+     document.getElementById('btnCaseStatus').innerText = 'Please Select';
+     document.getElementById('btnServiceOutcome').value = 'Please Select';
+     document.getElementById('btnServiceOutcome').innerText = 'Please Select';
+     $("#txtDateCaseAssigned").val("");
 
     $("#referralModal").modal('toggle');
 }
@@ -455,27 +478,6 @@ function buildAddReferralButton(placementRecord) {
     addReferralButton.classList.add("btn-secondary");
     addReferralButton.classList.add("btn-sm");
     addReferralButton.setAttribute("data-id", placementRecord.ID);
-
-    //clear the modal of values
-    $("#txtReferralDate").val("");
-    document.getElementById('btnCareerAdvisorName').value = 'Please Select';
-    document.getElementById('btnCareerAdvisorName').innerText = 'Please Select';
-    $("#txtReferralPhone").empty();
-    $("#txtReferralEmail").empty();
-    $("#txtReferralFax").empty();
-    $("#txtReferralTitle").empty();
-    document.getElementById('btnReferToService').value = 'Please Select';
-    document.getElementById('btnReferToService').innerText = 'Please Select';
-    $("#txtReferralNotes").val("");
-    $("#hdnReferralCreatedDate").val("");
-    $("#hdnCreatedBy").val("");
-    $("#txtServiceBeginDate").val("");
-    $("#txtServiceEndDate").val("");
-    document.getElementById('btnCaseStatus').value = 'Please Select';
-    document.getElementById('btnCaseStatus').innerText = 'Please Select';
-    document.getElementById('btnServiceOutcome').value = 'Please Select';
-    document.getElementById('btnServiceOutcome').innerText = 'Please Select';
-    $("#txtDateCaseAssigned").val("");
 
     
     addReferralButton.innerText = "Add Referral";
