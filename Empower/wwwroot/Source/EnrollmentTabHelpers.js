@@ -951,11 +951,13 @@ export function generateTable(placements) {
                 }
 
                 let beginDateCell = enrollmentRow.insertCell(2);
-                let convertedBeginDate = moment(new Date(enrollment.Enrollment.BeginDate)).format('YYYY-MM-DD');
+                //let convertedBeginDate = moment(new Date(enrollment.Enrollment.BeginDate)).format('YYYY-MM-DD');
+                let convertedBeginDate = enrollment.Enrollment.BeginDate !== null ? moment(new Date(enrollment.Enrollment.BeginDate)).format('YYYY-MM-DD') : "";
                 beginDateCell.innerText = convertedBeginDate;
 
                 let endDateCell = enrollmentRow.insertCell(3);
-                let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
+                // let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
+                let convertedEndDate = enrollment.Enrollment.EndDate !== null ? moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD') : "";
                 endDateCell.innerText = convertedEndDate;
 
                 let caseStatusCell = enrollmentRow.insertCell(4);

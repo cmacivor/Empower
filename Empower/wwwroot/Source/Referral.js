@@ -154,6 +154,8 @@ const Referral = (props) => {
         let careerAdvisor = getElementValue("btnCareerAdvisorName"); 
         let referToService = getElementValue("btnReferToService"); 
         let comments = $("#txtReferralNotes").val();
+        let serviceBeginDate = $("#txtServiceBeginDate").val() !== "" ? new Date($("#txtServiceBeginDate").val()) : null;
+        let serviceEndDate = $("#txtServiceEndDate").val() !== "" ? new Date($("#txtServiceEndDate").val()) : null;
 
         let serviceReleaseID = getElementValue("btnCaseStatus");
        
@@ -180,8 +182,8 @@ const Referral = (props) => {
             ServiceProgramCategoryID: referToService,
             Comments: comments,
             SuppComments: $("#txtReferralStatusNotes").val(),
-            BeginDate: new Date($("#txtServiceBeginDate").val()), 
-            EndDate: new Date($("#txtServiceEndDate").val()), 
+            BeginDate: serviceBeginDate, //new Date($("#txtServiceBeginDate").val()), 
+            EndDate: serviceEndDate, //new Date($("#txtServiceEndDate").val()), 
             ServiceReleaseID: serviceReleaseID, 
             ServiceOutcomeID: serviceOutcomeID,
             DateCaseAssigned: $("#txtDateCaseAssigned").val(),
