@@ -75,12 +75,15 @@ const Referral = (props) => {
 
         let txtReferralTitle = document.getElementById("txtReferralTitle");
         txtReferralTitle.innerText = selectedAdvisor[0].JobTitle.Name;
+
+
+        if (selectedValue !== '') {
+            document.getElementById("divCareerAdvisorName").setAttribute("style", "display:none");
+        }
     }
 
     function ddlServiceProgramCategorySelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-
-        //console.log(selectedValue);
         
         let selectedServiceProgramCategory = serviceProgramCategories.filter(function(spc) {
             return spc.ServiceProgramCategoryID === parseInt(selectedValue);
@@ -92,6 +95,9 @@ const Referral = (props) => {
 
         document.getElementById("btnReferToService").innerText = selectedServiceProgramCategory[0].ServiceName;
 
+        if (selectedValue !== '') {
+            document.getElementById("divReferToService").setAttribute("style", "display:none");
+        }
     }
 
     
@@ -137,39 +143,49 @@ const Referral = (props) => {
     }
 
     function saveEnrollment(event) {
+
         let selectedPlacementID = event.currentTarget.getAttribute("data-id");
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonEnrollmentAddress = `${apiAddress}/api/Enrollment`;
         let sessionStorageData = getSessionData();
 
-        //let convReferralDate = new Date( $("#txtReferralDate").val());
-        let referralDate =  new Date($("#txtReferralDate").val()); //moment(convReferralDate).format('YYYY-MM-DD');
-        let careerAdvisor = getElementValue("btnCareerAdvisorName"); //$("#btnCareerAdvisorName").val();
-        let referToService = getElementValue("btnReferToService"); //$("#btnReferToService").val();
+        let referralDate =  new Date($("#txtReferralDate").val()); 
+        let careerAdvisor = getElementValue("btnCareerAdvisorName"); 
+        let referToService = getElementValue("btnReferToService"); 
         let comments = $("#txtReferralNotes").val();
 
-        //let serviceReleaseID = $("#btnCaseStatus").val();
         let serviceReleaseID = getElementValue("btnCaseStatus");
-        //let serviceOutcomeID = $("#btnServiceOutcome").val();
+       
         let serviceOutcomeID = getElementValue("btnServiceOutcome");
 
+        if (careerAdvisor === null) {
+            $("#frmReferral").addClass("was-validated");   
+            document.getElementById("divCareerAdvisorName").removeAttribute("style");
+        }
+
+        if (referToService === null) {
+            $("#frmReferral").addClass("was-validated");   
+            document.getElementById("divReferToService").removeAttribute("style");
+        }
+
+        if (careerAdvisor === null || referToService === null) {
+            return;
+        }
+
         let enrollment = {
-            PlacementID: selectedPlacementID, //$("#hdnPlacementID").val(),
+            PlacementID: selectedPlacementID, 
             ReferralDate: referralDate,
-            //ServiceProgramCategoryID: $("#btnCareerAdvisorName").val(),
             CounselorID: careerAdvisor,
             ServiceProgramCategoryID: referToService,
             Comments: comments,
             SuppComments: $("#txtReferralStatusNotes").val(),
-            BeginDate: new Date($("#txtServiceBeginDate").val()), //moment(new Date($("#txtServiceBeginDate").val())).format('YYYY-MM-DD'),
-            EndDate: new Date($("#txtServiceEndDate").val()), //moment(new Date($("#txtServiceEndDate").val())).format('YYYY-MM-DD'),
-            ServiceReleaseID: serviceReleaseID, //$("#btnCaseStatus").val(),
-            ServiceOutcomeID: serviceOutcomeID,//$("#btnServiceOutcome").val(),
+            BeginDate: new Date($("#txtServiceBeginDate").val()), 
+            EndDate: new Date($("#txtServiceEndDate").val()), 
+            ServiceReleaseID: serviceReleaseID, 
+            ServiceOutcomeID: serviceOutcomeID,
             DateCaseAssigned: $("#txtDateCaseAssigned").val(),
             Active: true,
-            //CreatedDate: new Date(),
-            //CreatedBy: sessionStorageData.CurrentUser,
             UpdatedDate: new Date(),
             UpdatedBy: sessionStorageData.CurrentUser
         }
@@ -280,6 +296,7 @@ const Referral = (props) => {
                                                         { careerAdvisorValueOptions }
                                                     </div>
                                                 </div>
+                                                <div style={{display:'none'}} id="divCareerAdvisorName" className='errorDiv'>Please select a value.</div>
                                             </div>
                                         </div>
                                         <div className="form-row">
@@ -326,6 +343,7 @@ const Referral = (props) => {
                                                         {serviceProgramCategoryOptions}
                                                     </div>
                                                 </div>
+                                                <div style={{display:'none'}} id="divReferToService" className='errorDiv'>Please select a value.</div>
                                             </div>
                                         </div>
                                         <div className="form-row">
