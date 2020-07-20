@@ -55,11 +55,15 @@ const EnrollmentCaseModal = (props) => {
             return placementLevel.ID === parseInt(selectedValue);
         });
 
-        console.log(selectedPlacementLevel);
+        //console.log(selectedPlacementLevel);
 
         $("#btnOverallRisk").val(selectedValue);
 
         document.getElementById("btnOverallRisk").innerText = selectedPlacementLevel[0].Description;
+
+        if (selectedValue !== '') {
+            document.getElementById("divOverallRiskError").setAttribute("style", "display:none");
+        }
     }
 
     function judgeSelectHandler(event) {
@@ -69,11 +73,15 @@ const EnrollmentCaseModal = (props) => {
             return judge.ID === parseInt(selectedValue);
         });
 
-        console.log(selectedJudge);
+        //console.log(selectedJudge);
 
         $("#btnJudge").val(selectedValue);
 
         document.getElementById("btnJudge").innerText = selectedJudge[0].Description
+
+        if (selectedValue !== '') {
+            document.getElementById("divJudgeError").setAttribute("style", "display:none");
+        }
     }
 
 
@@ -92,6 +100,8 @@ const EnrollmentCaseModal = (props) => {
 
         $("#hdnOffenseID").val(offenseID);
 
+        document.getElementById("divPlacementCharges").setAttribute("style", "display:none");
+
     }
 
     function getElementValue(element) {
@@ -104,6 +114,32 @@ const EnrollmentCaseModal = (props) => {
     }
 
     function savePlacement() {
+
+        let overallRisk = getElementValue("btnOverallRisk");
+
+        let judgeID = getElementValue("btnJudge");
+
+        let offenseID = $("#hdnOffenseID").val();
+
+        if (overallRisk === null) {
+            $("#frmCaseEnrollment").addClass("was-validated");   
+            document.getElementById("divOverallRiskError").removeAttribute("style");
+        }
+
+        if (judgeID === null) {
+            $("#frmCaseEnrollment").addClass("was-validated");
+            document.getElementById("divJudgeError").removeAttribute("style");
+        }
+
+        if (offenseID === "") {
+            $("#frmCaseEnrollment").addClass("was-validated");
+            document.getElementById("divPlacementCharges").removeAttribute("style");
+        }
+
+        if (overallRisk === null || judgeID === null || offenseID === "") {
+            return;
+        }
+
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonPlacementAddress = `${apiAddress}/api/Placement`;
         let fullPlacementOffenseAddress= `${apiAddress}/api/PlacementOffense`;
@@ -273,6 +309,7 @@ const EnrollmentCaseModal = (props) => {
                                 <label htmlFor="txtPlacementCharges"><strong>Placement Charges *</strong></label>
                                 <input id="txtPlacementCharges" onKeyDown={ placementChargesOnKeyDownEventHandler } onChange={ onPlacementChargeChangeEventHandler } className="form-control" />
                             </div>
+                            <div style={{display:'none'}} id="divPlacementCharges" className='errorDiv'>Please select a value.</div>
                             <div id="divPlacementChargesContainer">
 
                             </div>
