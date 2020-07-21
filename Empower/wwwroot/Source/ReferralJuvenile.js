@@ -153,7 +153,7 @@ const ReferralJuvenile = (props) => {
         let referralDate =  new Date($("#txtReferralDate").val()); 
         let careerAdvisor = getElementValue("btnCareerAdvisorName"); 
         let referToService = getElementValue("btnReferToService"); 
-        let comments = $("#txtReferralNotes").val();
+        //let comments = $("#txtReferralNotes").val();
         let serviceBeginDate = $("#txtServiceBeginDate").val() !== "" ? new Date($("#txtServiceBeginDate").val()) : null;
         let serviceEndDate = $("#txtServiceEndDate").val() !== "" ? new Date($("#txtServiceEndDate").val()) : null;
 
@@ -180,14 +180,17 @@ const ReferralJuvenile = (props) => {
             ReferralDate: referralDate,
             CounselorID: careerAdvisor,
             ServiceProgramCategoryID: referToService,
-            Comments: comments,
+            //Comments: comments,
             SuppComments: $("#txtReferralStatusNotes").val(),
             BeginDate: serviceBeginDate, //new Date($("#txtServiceBeginDate").val()), 
             EndDate: serviceEndDate, //new Date($("#txtServiceEndDate").val()), 
             ServiceReleaseID: serviceReleaseID, 
             ServiceOutcomeID: serviceOutcomeID,
             DateCaseAssigned: $("#txtDateCaseAssigned").val(),
+            BasisofReferral: $("#txtBasisofRecommendation").val(),
             Active: true,
+            ICN: $("#txtICNNumber").val(),
+            SourceNotes: $("#txtSourceNotes").val(),
             UpdatedDate: new Date(),
             UpdatedBy: sessionStorageData.CurrentUser
         }
@@ -223,10 +226,8 @@ const ReferralJuvenile = (props) => {
             props.createNotification('The enrollment was successfully saved.');
 
             togglePlacementModal();
-            //props.togglePlacementModal();
 
             getPlacementsByClientProfileID();
-            //props.refreshEnrollmentGrid();
         });
     }
 
@@ -286,10 +287,14 @@ const ReferralJuvenile = (props) => {
                                                 <label htmlFor="txtReferralDate"><strong>Referral Date</strong></label>
                                                 <input type="date" defaultValue="" id="txtReferralDate" className="form-control"></input>
                                             </div>
+                                            <div className="col-4">
+                                                <label htmlFor="txtICNNumber"><strong>ICN* Number</strong></label>
+                                                <input type="text" defaultValue="" id="txtICNNumber" className="form-control"></input>
+                                            </div>
                                         </div>
                                         <div className="form-row">
                                             <div className="col-6">
-                                                <label htmlFor="ddlReferralDate"><strong>Career Advisor Name *</strong></label>
+                                                <label htmlFor="ddlReferralDate"><strong>Referral Source *</strong></label>
                                                 <div className="dropdown">
                                                     <button type="button" id="btnCareerAdvisorName" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                         
@@ -350,8 +355,16 @@ const ReferralJuvenile = (props) => {
                                         </div>
                                         <div className="form-row">
                                             <div className="col-6">
-                                                <label htmlFor="txtReferralNotes"><strong>Notes</strong></label>
-                                                <textarea  className="form-control" defaultValue="" id="txtReferralNotes" />
+                                                {/* <label htmlFor="txtReferralNotes"><strong>Notes</strong></label>
+                                                <textarea  className="form-control" defaultValue="" id="txtReferralNotes" /> */}
+                                                <label htmlFor="txtBasisofRecommendation"><strong>Basis of Recommendation* / Referral </strong></label>
+                                                <textarea id="txtBasisofRecommendation" className="form-control" defaultValue=""/>
+                                            </div>
+                                        </div>
+                                        <div className="form-row">
+                                            <div className="col-6">
+                                                <label htmlFor="txtSourceNotes"><strong>Case Manager / Service Provider Dialog Notes</strong> </label>
+                                                <textarea id="txtSourceNotes" className="form-control" defaultValue="" />
                                             </div>
                                         </div>
                                     </div>

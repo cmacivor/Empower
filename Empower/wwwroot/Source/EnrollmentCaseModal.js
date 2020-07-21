@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
+import { getRoles, getSystems } from './Constants';
 import ServiceUnit from './ServiceUnit';
 import ProgressNote from './ProgressNote';
 import ReferralCWB from './ReferralCWB';
@@ -16,6 +17,7 @@ import { generateTable,
 import { addActive, onKeyDownHandler, populatePlacementChargesBox  } from './AutoComplete';
 import {  Api } from './commonAdmin';
 import { triggerErrorMessage } from './ToastHelper';
+import ReferralJuvenile from './ReferralJuvenile';
 
 const EnrollmentCaseModal = (props) => {
 
@@ -29,6 +31,11 @@ const EnrollmentCaseModal = (props) => {
 
         //generatePrintModal(props.placement, props.familyProfiles.FamilyProfile);
     }
+
+    
+    let sessionData = getSessionData();
+
+    let systems = getSystems();
 
     let offenseValues = props.offenseValues;
     let placementLevels = props.placementLevelValues;
@@ -330,7 +337,9 @@ const EnrollmentCaseModal = (props) => {
                 </div>
             </div>
         </form>
-        <ReferralCWB
+        {
+            parseInt(sessionData.SystemID) === systems.OCWB ?
+            <ReferralCWB
             staffValues = {staff}
             serviceReleaseValues = {serviceReleases }
             serviceOutcomeValues = { serviceOutcomes }
@@ -338,7 +347,21 @@ const EnrollmentCaseModal = (props) => {
             refreshEnrollmentGrid = { getPlacementsByClientProfileID }
             createNotification={props.createNotification}
             createErrorNotification={props.createErrorNotification}
-         />
+         /> : <div></div>
+        }
+        {
+            parseInt(sessionData.SystemID) === systems.Juvenile ?
+            <ReferralJuvenile
+                staffValues = {staff}
+                serviceReleaseValues = {serviceReleases }
+                serviceOutcomeValues = { serviceOutcomes }
+                togglePlacementModal={togglePlacementModal}
+                refreshEnrollmentGrid = { getPlacementsByClientProfileID }
+                createNotification={props.createNotification}
+                createErrorNotification={props.createErrorNotification} 
+            /> : <div></div>
+        }
+   
          <PrintEnrollment 
          clientProfileID = {clientProfileId }
          clientProfile ={props.clientProfile} />
