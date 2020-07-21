@@ -142,6 +142,18 @@ function getEnrollment(event) {
             document.getElementById("btnServiceOutcome").innerText = result.ServiceOutcome.Name;
         }
 
+        if (result.ICN !== null) {
+            $("#txtICNNumber").val(result.ICN);
+        }
+
+        if (result.BasisofReferral !== null) {
+            $("#txtBasisofRecommendation").val(result.BasisofReferral);
+        }
+
+        if (result.SourceNotes !== null) {
+            $("#txtSourceNotes").val(result.SourceNotes)
+        }
+
         let DateCaseAssigned = result.DateCaseAssigned !== null ? moment(new Date(result.DateCaseAssigned)).format('YYYY-MM-DD') : "";
         $("#txtDateCaseAssigned").val(DateCaseAssigned);
 
@@ -207,6 +219,9 @@ export function togglePlacementModal(event) {
      $("#hdnCreatedBy").val("");
      $("#txtServiceBeginDate").val("");
      $("#txtServiceEndDate").val("");
+     $("#txtBasisofRecommendation").val("");
+     $("#txtICNNumber").val("");
+     $("#txtSourceNotes").val("");
      document.getElementById('btnCaseStatus').value = 'Please Select';
      document.getElementById('btnCaseStatus').innerText = 'Please Select';
      document.getElementById('btnServiceOutcome').value = 'Please Select';
