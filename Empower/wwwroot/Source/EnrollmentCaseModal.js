@@ -3,7 +3,7 @@ import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import ServiceUnit from './ServiceUnit';
 import ProgressNote from './ProgressNote';
-import Referral from './Referral';
+import ReferralCWB from './ReferralCWB';
 import PrintEnrollment from './PrintEnrollment';
 import moment from 'moment';
 import { generateTable, 
@@ -330,7 +330,7 @@ const EnrollmentCaseModal = (props) => {
                 </div>
             </div>
         </form>
-        <Referral
+        <ReferralCWB
             staffValues = {staff}
             serviceReleaseValues = {serviceReleases }
             serviceOutcomeValues = { serviceOutcomes }

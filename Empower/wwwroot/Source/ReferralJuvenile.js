@@ -4,7 +4,7 @@ import { getSessionData } from './commonAdmin';
 import moment from 'moment';
 import { generateTable, getPlacementsByClientProfileID, togglePlacementModal, toggleEnrollmentModal } from './EnrollmentTabHelpers';
 
-const Referral = (props) => {
+const ReferralJuvenile = (props) => {
 
     let careerAdvisors = props.staffValues;
     let serviceReleases = props.serviceReleaseValues;
@@ -429,4 +429,4 @@ const Referral = (props) => {
     </div>
 }
 
-export default Referral;
+export default ReferralJuvenile;

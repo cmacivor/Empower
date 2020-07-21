@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
-import Referral from './Referral';
+import Referral from './ReferralCWB';
 import PrintEnrollment from './PrintEnrollment';
 import EmploymentPlan from './EmploymentPlan';
 import ServiceUnit from './ServiceUnit';
