@@ -22,7 +22,6 @@ function getEmploymentPlan(selectedEnrollmentID) {
         }
     }).then(result => result.json())
     .then(result => {
-        //console.log(result);
 
         if (result !== null) {
             $("#txtEmploymentGoal").val(result.EmploymentGoal);
@@ -112,9 +111,7 @@ function getEnrollment(event) {
         }
     }).then(result => result.json())
     .then(result => {
-        console.log(result);
 
-        //txtReferralDate
         let referralDate = moment(new Date(result.ReferralDate)).format('YYYY-MM-DD');
         $("#txtReferralDate").val(referralDate);
         if (result.Counselor !== null) {
@@ -159,6 +156,8 @@ function getEnrollment(event) {
 
 
 function deleteEnrollment(event) {
+    $("#enrollmentSpinner").show();
+
     let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
 
     let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -181,6 +180,8 @@ function deleteEnrollment(event) {
 
         getPlacementsByClientProfileID();
 
+        $("#enrollmentSpinner").hide();
+        triggerToastMessage("the enrollment was deleted.");
     });
 }
 
@@ -298,8 +299,7 @@ function deletePlacementOffense(event) {
 }
 
 function populateJuvenileEditPlacementModal(placement) {
-    console.log(placement);
-
+    
     let formattedCourOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
     $("#txtCourtOrderDate").val(formattedCourOrderDate);
 
@@ -376,9 +376,7 @@ function getPlacement(event) {
         }
     }).then(result => result.json())
     .then(result => {
-        console.log(result);
         
-        //let systemID = getSystems()
         let systemID = getSessionData().SystemID;
 
         if (parseInt(systemID) === parseInt(getSystems().OCWB)) {
@@ -388,9 +386,6 @@ function getPlacement(event) {
             let selectedPlacement = result.filter(function(placement) {
                 return placement.Placement.ID === parseInt(selectedPlacementID);
             });
-
-            console.log('the selected');
-            console.log(selectedPlacement);
 
             populateJuvenileEditPlacementModal(selectedPlacement[0]);
         }
@@ -502,9 +497,6 @@ export function getProgressNotesByEnrollmentID() {
         }
     }).then(result => result.json())
     .then(result => {
-        console.log(result);
-        //console.log(result);
-        //populateServiceUnitModalTable(result);
         populateProgressNoteModalTable(result);
     });
 }
@@ -526,7 +518,6 @@ export function getServiceUnitsByEnrollmentID() {
         }
     }).then(result => result.json())
     .then(result => {
-        //console.log(result);
         populateServiceUnitModalTable(result);
     });
 
@@ -612,7 +603,6 @@ function populateServiceUnitModalOnRowClick(event) {
             }
         }).then(result => result.json())
         .then(result => {
-            ///console.log(result);
 
             document.getElementById("btnServiceMonth").value = result.Month;
             document.getElementById("btnServiceMonth").innerText = result.Month;
@@ -666,15 +656,10 @@ function populateProgressNoteModalOnRowClick(event) {
             }
 
             let duration = new Date(result.Duration);
-            console.log('the duration: ');
-            console.log(duration);
+
             let hours = duration.getHours();
             let minutes = duration.getMinutes();
-            console.log('the hours');
-            console.log(hours);
-            console.log('the minutes');
-            console.log(minutes);
-
+           
             let hoursToDisplay = hours - 4;
             $("#txtDurationHour").val(hoursToDisplay);
             $("#txtDurationMinute").val(minutes);
@@ -872,7 +857,7 @@ export function generateTable(placements) {
     let divRef = document.getElementById("placementsContainer");
     divRef.innerHTML = "";
     placements.forEach(placement => {
-        //console.log(placement);
+        
         let placementRecord;
         if (placement.Placement !== undefined) {
             placementRecord = placement.Placement;
@@ -931,8 +916,6 @@ export function generateTable(placements) {
         let enrollmentRowsIndex = 0;
         if (placement.Enrollment !== undefined && placement.Enrollment !== null) {
             placement.Enrollment.forEach(function(enrollment) {
-                console.log('the enrollment');
-                console.log(enrollment);
 
                 if (enrollment.ServiceUnit.length > 0) {
                     populateServiceUnitModalTable(enrollment.ServiceUnit);
@@ -1127,9 +1110,7 @@ function buildPlacementInfoBoxForPrintModal(placement) {
 function generateEnrollmentRows(enrollments) {
     let divEnrollments = document.getElementById("divEnrollments");
     divEnrollments.innerText = "";
-    //console.log('the enrollments');
-    //console.log(enrollments);
-
+   
     //for each enrollment, write the enrollment -> Staff rows, and then the enrollment.
     enrollments.Enrollment.forEach(enrollment => {
         
@@ -1191,19 +1172,13 @@ function togglePrintScreen(event) {
 
     if (event !== undefined) {
         let selectedPlacementID = event.currentTarget.getAttribute("data-id");
-        console.log(selectedPlacementID);
-
+        
         fetchPlacements().then(placement => {
 
             let selectedPlacement = placement.filter(function(selected) {
                 return selected.Placement.ID === parseInt(selectedPlacementID);
             });
-            console.log('here it is');
-            console.log(selectedPlacement);
-
-            // console.log('here it is');
-            // console.log(selectedPlacement[0].Placement);
-
+     
             let placementBox = buildPlacementInfoBoxForPrintModal(selectedPlacement[0].Placement);
             let divPlacements = document.getElementById("divPlacements");
             divPlacements.appendChild(placementBox);

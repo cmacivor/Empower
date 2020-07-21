@@ -257,6 +257,7 @@ const EnrollmentCaseModal = (props) => {
         <button id="btnAddCaseEnrollment" className="btn btn-primary" onClick={toggleCaseEnrollmentModal} >Add Case Info</button>
         <br/>
         <br/>
+        <div id="enrollmentSpinner" style={{display:'none'}} className="spinner"></div>
         <div id="placementsContainer">
 
         </div>
