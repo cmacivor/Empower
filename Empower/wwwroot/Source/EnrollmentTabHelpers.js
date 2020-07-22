@@ -321,6 +321,7 @@ function populateJuvenileEditPlacementModal(placement) {
     if (placement.Placement.PlacementLevel !== null){
         document.getElementById("btnOverallRisk").innerText = placement.Placement.PlacementLevel.Name;
         document.getElementById("btnOverallRisk").value = placement.Placement.PlacementLevelID;
+        //document.getElementById("placementTitle").innerText = placement.Placement.PlacementLevel.Name;
     }
 
     let formattedNextCourtDate = moment(new Date(placement.Placement.NextCourtDate)).format('YYYY-MM-DD');
@@ -886,6 +887,11 @@ export function generateTable(placements) {
         
         let headerDiv = document.createElement("div");
         headerDiv.classList.add("card-header");
+        let headerTitleContent = placementRecord.PlacementLevel.Name;
+        let headerTitle = document.createElement("p");
+        headerTitle.innerText = headerTitleContent;
+        headerDiv.appendChild(headerTitle);
+
         parentCard.appendChild(headerDiv);
 
         let placementButton = buildEditPlacementButton(placementRecord);
