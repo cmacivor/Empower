@@ -244,7 +244,7 @@ function populateCWBEditPlacementModal(placement) {
         document.getElementById("btnCareerPathwayPosition").value = placement.CareerPathwayID;
     }
 
-    let convertedEnrollmentDate = moment(new Date(placement.CourtOrderDate)).format('YYYY-MM-DD');
+    let convertedEnrollmentDate = placement.CourtOrderDate !== null ? moment(new Date(placement.CourtOrderDate)).format('YYYY-MM-DD') : "";
     $("#txtEnrollmentDate").val(convertedEnrollmentDate);
     $("#txtEnrollmentComments").val(placement.CourtOrderNarrative);
     
@@ -261,7 +261,7 @@ function populateCWBEditPlacementModal(placement) {
     $("#txtEnrollmentEmployerName").val(placement.EmployerName);
     $("#txtEnrollmentPosition").val(placement.EmployerPosition);
 
-    let convertedEmployerStartDate = moment(new Date(placement.EmployerStartDate)).format('YYYY-MM-DD');
+    let convertedEmployerStartDate = placement.EmployerStartDate !== null ? moment(new Date(placement.EmployerStartDate)).format('YYYY-MM-DD') : "";
     $("#txtEnrollmentStartDate").val(convertedEmployerStartDate);
 
     $("#txtEnrollmentWagesPerHour").val(placement.EmployerWages);
@@ -272,7 +272,7 @@ function populateCWBEditPlacementModal(placement) {
         document.getElementById("btnViewTanf").value = placement.JudgeID;
     }
 
-    let convertedNextCourtDate = moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD');
+    let convertedNextCourtDate = placement.NextCourtDate !== null ? moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD') : "";
     $("#txtApptDate").val(convertedNextCourtDate);
 
     if (placement.PlacementLevel !== undefined && placement.PlacementLevel !== null) {
