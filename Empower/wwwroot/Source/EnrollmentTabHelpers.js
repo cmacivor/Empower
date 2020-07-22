@@ -872,7 +872,7 @@ function buildDeleteEnrollmentButton(enrollment) {
 
 //generates the main page of cards- holding Placements
 export function generateTable(placements) {
-
+    let systemID = getSessionData().SystemID;
     let divRef = document.getElementById("placementsContainer");
     divRef.innerHTML = "";
     placements.forEach(placement => {
@@ -890,11 +890,15 @@ export function generateTable(placements) {
         
         let headerDiv = document.createElement("div");
         headerDiv.classList.add("card-header");
-        let headerTitleContent = placementRecord.PlacementLevel.Name;
-        let headerTitle = document.createElement("p");
-        headerTitle.innerText = headerTitleContent;
-        headerDiv.appendChild(headerTitle);
 
+        if (parseInt(systemID) === parseInt(getSystems().Juvenile)) {
+            let headerTitleContent = placementRecord.PlacementLevel.Name;
+            let headerTitle = document.createElement("p");
+            headerTitle.innerText = headerTitleContent;
+            headerDiv.appendChild(headerTitle);    
+        }
+   
+        
         parentCard.appendChild(headerDiv);
 
         let placementButton = buildEditPlacementButton(placementRecord);
