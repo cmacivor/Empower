@@ -411,6 +411,7 @@ function getPlacement(event) {
 }
 
 function deletePlacement(event) {
+    $("#enrollmentSpinner").show();
     let selectedPlacementID = event.currentTarget.getAttribute("data-id");
     let apiAddress = sessionStorage.getItem("baseApiAddress");
     let fullDeletePlacementAddress = `${apiAddress}/api/Placement/Deleteplacement/${selectedPlacementID}`;
@@ -426,15 +427,16 @@ function deletePlacement(event) {
     .then(result => {
         
         if (result === null || result.Message !== undefined) {
-            //props.createErrorNotification("an error occurred while deleting the record.");
             return;
         }
 
-        // generateTable(placementVM);
         getPlacementsByClientProfileID();
 
-        //props.createNotification('The placement was successfully deleted.');
+        triggerToastMessage("The placement was successfully deleted.");
+        $("#enrollmentSpinner").hide();
 
+    }).catch(result => {
+        triggerErrorMessage("an error occurred while deleting the placement.");
     });
 }
 
