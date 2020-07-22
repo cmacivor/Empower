@@ -232,7 +232,8 @@ export function togglePlacementModal(event) {
 }
 
 //this will be for CWB
-function populateEditPlacementModal(placement) {
+function populateCWBEditPlacementModal(placement) {
+   
     if (placement.AssistanceType !== undefined && placement.AssistanceType !== null) {
         document.getElementById("btnAssistanceType").innerHTML = placement.AssistanceType.Name;
         document.getElementById("btnAssistanceType").value = placement.AssistanceTypeID;
@@ -396,7 +397,7 @@ function getPlacement(event) {
         let systemID = getSessionData().SystemID;
 
         if (parseInt(systemID) === parseInt(getSystems().OCWB)) {
-            populateEditPlacementModal(result[0].Placement);
+            populateCWBEditPlacementModal(result[0].Placement);
         } else {
 
             let selectedPlacement = result.filter(function(placement) {
