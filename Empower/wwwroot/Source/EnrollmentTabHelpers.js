@@ -238,7 +238,7 @@ function populateEditPlacementModal(placement) {
         document.getElementById("btnAssistanceType").value = placement.AssistanceTypeID;
     }
 
-    if (placementk.CareerPathway !== undefined && placement.CareerPathway !== null) {
+    if (placement.CareerPathway !== undefined && placement.CareerPathway !== null) {
         document.getElementById("btnCareerPathwayPosition").innerHTML = placement.CareerPathway.Name;
         document.getElementById("btnCareerPathwayPosition").value = placement.CareerPathwayID;
     }
@@ -274,7 +274,7 @@ function populateEditPlacementModal(placement) {
     let convertedNextCourtDate = moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD');
     $("#txtApptDate").val(convertedNextCourtDate);
 
-    if (result.PlacementLevel !== undefined && placement.PlacementLevel !== null) {
+    if (placement.PlacementLevel !== undefined && placement.PlacementLevel !== null) {
         document.getElementById("btnSnapEt").innerText = placement.PlacementLevel.Name;
         document.getElementById("btnSnapEt").value = placement.PlacementLevelID;
     }
@@ -396,7 +396,7 @@ function getPlacement(event) {
         let systemID = getSessionData().SystemID;
 
         if (parseInt(systemID) === parseInt(getSystems().OCWB)) {
-            populateEditPlacementModal(placement);
+            populateEditPlacementModal(result[0].Placement);
         } else {
 
             let selectedPlacement = result.filter(function(placement) {
