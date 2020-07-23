@@ -18,6 +18,7 @@ import { addActive, onKeyDownHandler, populatePlacementChargesBox  } from './Aut
 import {  Api } from './commonAdmin';
 import { triggerErrorMessage } from './ToastHelper';
 import ReferralJuvenile from './ReferralJuvenile';
+import { func } from 'prop-types';
 
 const EnrollmentCaseModalAdult = (props) => {
 
@@ -45,6 +46,7 @@ const EnrollmentCaseModalAdult = (props) => {
     let staff = props.staffValues;
     let serviceReleases = props.serviceReleaseValues;
     let serviceOutcomes = props.serviceOutcomeValues;
+    let courtNames = props.courtNameValues;
 
     useEffect(() => {
         document.getElementById('btnOverallRisk').value = 'Please Select';
@@ -53,6 +55,8 @@ const EnrollmentCaseModalAdult = (props) => {
         document.getElementById('btnJudge').value = 'Please Select';
         document.getElementById('btnJudge').innerText = 'Please Select';
 
+        document.getElementById('btnCourtName').value = 'Please Select';
+        document.getElementById('btnCourtName').innerText = 'Please Select';
     });
 
     function overallRiskSelectHandler(event) {
@@ -89,6 +93,16 @@ const EnrollmentCaseModalAdult = (props) => {
         if (selectedValue !== '') {
             document.getElementById("divJudgeError").setAttribute("style", "display:none");
         }
+    }
+
+    function courtNameSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        let courtName = courtNames.filter(function(courtName) {
+            return courtName.ID = parseInt(selectedValue);
+        }); 
+
+
     }
 
 
@@ -252,6 +266,13 @@ const EnrollmentCaseModalAdult = (props) => {
       );
     }
 
+    let courtNameOptions = [];
+    if (courtNames.length > 0) {
+        courtNameOptions = courtNames.map((value) =>
+            <a key={value.ID} value={value.ID} description={value.Name} onClick={ courtNameSelectHandler } className="dropdown-item">{value.Name}</a>
+        );
+    }
+
     return <div>
         <input type="hidden" id="hdnPlacementID" />
         <input type="hidden" id="hdnOffenseID" />
@@ -284,6 +305,17 @@ const EnrollmentCaseModalAdult = (props) => {
                                 <div className="col-4">
                                     <label htmlFor="txtCaseNumber"><strong>Case Number</strong></label>
                                     <input type="text" defaultValue="" id="txtCaseNumber" className="form-control"></input>
+                                </div>
+                                <div className="col-6">
+                                    <label><strong>Court Name</strong></label>
+                                    <div className="dropdown">
+                                        <button type="button" id="btnCourtName" value="" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            
+                                        </button>
+                                        <div className="dropdown-menu">
+                                            { courtNameOptions }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="form-row">

@@ -57,6 +57,7 @@ const CaseManagementFunction = (props) => {
     const [offenseOptions, setOffenseOptions ] = useState([]);
     const [placementLevelOptions, setPlacementLevelOptions] = useState([]);
     const [judgeOptions, setJudgeOptions] = useState([]);
+    const [courtNameOptions, setCourtNameOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -84,6 +85,7 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("Offense").then(offenses => setOffenseOptions(offenses));
         Api.getConfigDataByType("PlacementLevel").then(placementLevels => setPlacementLevelOptions(placementLevels));
         Api.getConfigDataByType("Judge").then(judges => setJudgeOptions(judges));
+        Api.getConfigDataByType("CourtName").then(courtNames => setCourtNameOptions(courtNames));
      }, []);
 
 
@@ -308,6 +310,7 @@ const CaseManagementFunction = (props) => {
                                 staffValues = { staffOptions }
                                 placement={clientProfile.Placement }
                                 familyProfiles={clientProfile.Person }
+                                courtNameValues={courtNameOptions}
                                 createNotification={triggerToastMessage}
                                 createErrorNotification={triggerErrorMessage}
                              /> : <div></div> 
