@@ -102,7 +102,9 @@ const EnrollmentCaseModalAdult = (props) => {
             return courtName.ID = parseInt(selectedValue);
         }); 
 
+        $("#btnCourtName").val(selectedValue);
 
+        document.getElementById("btnCourtName").innerText = courtName[0].Description;
     }
 
 
@@ -171,6 +173,9 @@ const EnrollmentCaseModalAdult = (props) => {
             CourtOrderDate: new Date($("#txtCourtOrderDate").val()), 
             PlacementLevelID: getElementValue("btnOverallRisk"),
             NextCourtDate: new Date($("#txtNextCourtDate").val()),
+            CourtNameID: getElementValue("btnCourtName"),
+            CaseNumber: getElementValue("txtCaseNumber"),
+            Comments: getElementValue("txtComments"),
             JudgeID: getElementValue("btnJudge"), //"Judge"  
             CourtOrderNarrative: getElementValue("txtCourtOrderNarrative"), 
             Active: true,

@@ -315,6 +315,8 @@ function deletePlacementOffense(event) {
 }
 
 function populateJuvenileEditPlacementModal(placement) {
+    console.log('the placement');
+    console.log(placement);
     
     let formattedCourOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
     $("#txtCourtOrderDate").val(formattedCourOrderDate);
@@ -341,6 +343,16 @@ function populateJuvenileEditPlacementModal(placement) {
 
     let divPlacementChargesContainer = document.getElementById("divPlacementChargesContainer");
     divPlacementChargesContainer.innerHTML = "";
+
+    let systemID = getSessionData().SystemID;
+    if (parseInt(systemID) === parseInt(getSystems().Adult)) { 
+        $("#txtCaseNumber").val(placement.Placement.CaseNumber);
+        if (placement.Placement.CourtName !== null) {
+            document.getElementById("btnCourtName").value = placement.Placement.CourtName.ID;
+            document.getElementById("btnCourtName").innerText = placement.Placement.CourtName.Name;
+        }
+        $("#txtComments").val(placement.Placement.Comments);
+    }
 
     placement.PlacementOffense.forEach(function(placementOffense) {
         let darkAlertDiv = document.createElement("div");
