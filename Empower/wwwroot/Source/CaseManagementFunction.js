@@ -21,6 +21,7 @@ import AddressCWB from './AddressCWB';
 import FamilyInfo from './FamilyInfo';
 import CWBEnrollment from './CWBEnrollment';
 import EnrollmentCaseModal from './EnrollmentCaseModal';
+import EnrollmentCaseModalAdult from './EnrollmentCaseModalAdult';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -292,6 +293,24 @@ const CaseManagementFunction = (props) => {
                                 createNotification={triggerToastMessage}
                                 createErrorNotification={triggerErrorMessage}
                              /> : <div></div>
+                        }
+                        {
+                            parseInt(sessionData.SystemID) === systems.Adult ?
+                            <EnrollmentCaseModalAdult
+                                clientProfile={clientProfile.ClientProfile } 
+                                offenseValues = { offenseOptions }
+                                placementLevelValues = { placementLevelOptions }
+                                serviceReleaseValues = { serviceReleaseOptions }
+                                serviceOutcomeValues = { serviceOutcomeOptions }
+                                judgeValues = { judgeOptions }
+                                contactTypeValues = { contactTypeOptions }
+                                subContactTypeValues = { subContactTypeOptions }
+                                staffValues = { staffOptions }
+                                placement={clientProfile.Placement }
+                                familyProfiles={clientProfile.Person }
+                                createNotification={triggerToastMessage}
+                                createErrorNotification={triggerErrorMessage}
+                             /> : <div></div> 
                         }
 
                     </Tab>
