@@ -161,7 +161,6 @@ function getEnrollment(event) {
         $("#hdnReferralCreatedDate").val(result.CreatedDate);
         $("#hdnCreatedBy").val(result.CreatedBy);
 
-        //togglePlacementModal();
         $("#referralModal").modal('toggle');
     });
 }
@@ -315,8 +314,8 @@ function deletePlacementOffense(event) {
 }
 
 function populateJuvenileEditPlacementModal(placement) {
-    console.log('the placement');
-    console.log(placement);
+    //console.log('the placement');
+    //console.log(placement);
     
     let formattedCourOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
     $("#txtCourtOrderDate").val(formattedCourOrderDate);
@@ -343,6 +342,7 @@ function populateJuvenileEditPlacementModal(placement) {
 
     let divPlacementChargesContainer = document.getElementById("divPlacementChargesContainer");
     divPlacementChargesContainer.innerHTML = "";
+    $("#txtPlacementCharges").val("");
 
     let systemID = getSessionData().SystemID;
     if (parseInt(systemID) === parseInt(getSystems().Adult)) { 

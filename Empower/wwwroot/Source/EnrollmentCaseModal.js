@@ -213,8 +213,15 @@ const EnrollmentCaseModal = (props) => {
 
             if ($("#hdnOffenseID").val() !== "") {
 
+                let placementID = "";
+                if (result.Placement !== undefined && result.Placement !== null) {
+                    placementID = result.Placement.ID;
+                } else {
+                    placementID = result.ID;
+                }
+
                 let placementOffense = {
-                    PlacementID: result.Placement.ID,
+                    PlacementID: placementID, //result.Placement.ID,
                     OffenseID: $("#hdnOffenseID").val(),  
                     Active: true,
                     CreatedDate: new Date(),
@@ -245,6 +252,27 @@ const EnrollmentCaseModal = (props) => {
         });
     }
 
+    function clearCaseEnrollmentModal() {
+        $("#txtCourtOrderDate").val("");
+        document.getElementById('btnOverallRisk').value = 'Please Select';
+        document.getElementById('btnOverallRisk').innerText = 'Please Select';
+
+        document.getElementById('btnJudge').value = 'Please Select';
+        document.getElementById('btnJudge').innerText = 'Please Select';
+
+        $("#txtNextCourtDate").val("");
+        $("#txtPlacementCharges").val("");
+        $("#divPlacementChargesContainer").empty();
+        $("#txtCourtOrderNarrative").val("");
+
+        $("#hdnPlacementID").val("");
+        $("#hdnOffenseID").val("");
+        $("#hdnPlacementCreatedDate").val("");
+        $("#hdnPlacementCreatedBy").val("");
+
+        toggleCaseEnrollmentModal();
+    }
+
     let placementLevelOptions = [];
     if ( placementLevels.length > 0) {
         placementLevelOptions = placementLevels.map((value) =>
@@ -268,7 +296,7 @@ const EnrollmentCaseModal = (props) => {
         <input type="hidden" id="hdnPlacementUpdatedBy" />
         <h3>Referral</h3>
         <br/>
-        <button id="btnAddCaseEnrollment" className="btn btn-primary" onClick={toggleCaseEnrollmentModal} >Add Case Info</button>
+        <button id="btnAddCaseEnrollment" className="btn btn-primary" onClick={clearCaseEnrollmentModal} >Add Case Info</button>
         <br/>
         <br/>
         <div id="enrollmentSpinner" style={{display:'none'}} className="spinner"></div>
