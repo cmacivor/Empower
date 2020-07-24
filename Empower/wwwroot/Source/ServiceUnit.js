@@ -26,10 +26,13 @@ const ServiceUnit = (props) => {
 
     function ddlServiceUnitYearSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
-        //console.log(selectedValue);
-    
+        
         document.getElementById('btnServiceYear').value = selectedValue;
         document.getElementById("btnServiceYear").innerHTML = selectedValue;
+
+        if (selectedValue !== '') {
+            document.getElementById("divServiceYears").setAttribute("style", "display:none");
+        }
     }
     
     function ddlServiceUnitMonthSelectHandler(event) {
@@ -37,14 +40,16 @@ const ServiceUnit = (props) => {
     
         document.getElementById('btnServiceMonth').value = selectedValue;
         document.getElementById("btnServiceMonth").innerHTML = selectedValue;
+
+        if (selectedValue !== '') {
+            document.getElementById("divServiceMonth").setAttribute("style", "display:none");
+        }
     }
     
     let serviceUnitYears = [];
     serviceUnitYears.push('Please Select');
     let currentYear = new Date().getFullYear();
     let oldestYear = currentYear - 20;
-    // console.log("current year: " + currentYear);
-    // console.log("oldest: " + oldestYear);
     
     var i;
     for (i = 0; i < 20; i++) {
@@ -55,23 +60,25 @@ const ServiceUnit = (props) => {
 
     
     function saveServiceUnit() {
+        $("#enrollmentSpinner").show();
 
         let serviceYear = document.getElementById('btnServiceYear').value;
         let serviceMonth = document.getElementById('btnServiceMonth').value;
         let units = $("#txtServiceUnits").val();
 
-        if (serviceYear === "Please Select") {
+        if (serviceYear === "") {
             document.getElementById("divServiceYears").removeAttribute("style");
-            return;
         }
 
-        if (serviceMonth === "Please Select") {
+        if (serviceMonth === "") {
             document.getElementById("divServiceMonth").removeAttribute("style");
-            return;
         }
 
         if (units === "") {
             $("#frmServiceUnit").addClass("was-validated");
+        }
+
+        if (serviceYear === "" || serviceMonth === "" || units === "") {
             return;
         }
 
@@ -121,14 +128,14 @@ const ServiceUnit = (props) => {
                 return;
             }
 
-    
+
             triggerToastMessage("The service unit was successfully saved");
 
             getServiceUnitsByEnrollmentID();
 
             setDropdowns();
             clearFields();
-    
+            $("#enrollmentSpinner").hide();
         });
     }
 

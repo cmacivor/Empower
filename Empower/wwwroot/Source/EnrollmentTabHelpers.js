@@ -22,7 +22,6 @@ function getEmploymentPlan(selectedEnrollmentID) {
         }
     }).then(result => result.json())
     .then(result => {
-        //console.log(result);
 
         if (result !== null) {
             $("#txtEmploymentGoal").val(result.EmploymentGoal);
@@ -112,9 +111,7 @@ function getEnrollment(event) {
         }
     }).then(result => result.json())
     .then(result => {
-        //console.log(result);
 
-        //txtReferralDate
         let referralDate = moment(new Date(result.ReferralDate)).format('YYYY-MM-DD');
         $("#txtReferralDate").val(referralDate);
         if (result.Counselor !== null) {
@@ -129,9 +126,10 @@ function getEnrollment(event) {
         $("#txtReferralNotes").val(result.Comments);
         $("#txtReferralStatusNotes").val(result.SuppComments);
 
-        let serviceBeginDate = moment(new Date(result.BeginDate)).format('YYYY-MM-DD');
+        let serviceBeginDate = result.BeginDate !== null ? moment(new Date(result.BeginDate)).format('YYYY-MM-DD') : "";
         $("#txtServiceBeginDate").val(serviceBeginDate);
-        let serviceEndDate = moment(new Date(result.EndDate)).format('YYYY-MM-DD');
+
+        let serviceEndDate = result.EndDate !== null ? moment(new Date(result.EndDate)).format('YYYY-MM-DD') : "";
         $("#txtServiceEndDate").val(serviceEndDate);
 
         if (result.ServiceRelease !== null) {
@@ -144,19 +142,33 @@ function getEnrollment(event) {
             document.getElementById("btnServiceOutcome").innerText = result.ServiceOutcome.Name;
         }
 
-        let DateCaseAssigned = moment(new Date(result.DateCaseAssigned)).format('YYYY-MM-DD');
+        if (result.ICN !== null) {
+            $("#txtICNNumber").val(result.ICN);
+        }
+
+        if (result.BasisofReferral !== null) {
+            $("#txtBasisofRecommendation").val(result.BasisofReferral);
+        }
+
+        if (result.SourceNotes !== null) {
+            $("#txtSourceNotes").val(result.SourceNotes)
+        }
+
+        let DateCaseAssigned = result.DateCaseAssigned !== null ? moment(new Date(result.DateCaseAssigned)).format('YYYY-MM-DD') : "";
         $("#txtDateCaseAssigned").val(DateCaseAssigned);
 
         $("#hdnEnrollmentID").val(result.ID);
         $("#hdnReferralCreatedDate").val(result.CreatedDate);
         $("#hdnCreatedBy").val(result.CreatedBy);
 
-        togglePlacementModal();
+        $("#referralModal").modal('toggle');
     });
 }
 
 
 function deleteEnrollment(event) {
+    $("#enrollmentSpinner").show();
+
     let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
 
     let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -179,6 +191,8 @@ function deleteEnrollment(event) {
 
         getPlacementsByClientProfileID();
 
+        $("#enrollmentSpinner").hide();
+        triggerToastMessage("the enrollment was deleted.");
     });
 }
 
@@ -189,22 +203,47 @@ export function togglePlacementModal(event) {
         document.getElementById("btnSaveEnrollment").setAttribute("data-id", selectedPlacementID);
     }
 
+     //clear the modal of values
+     $("#txtReferralDate").val("");
+     document.getElementById('btnCareerAdvisorName').value = 'Please Select';
+     document.getElementById('btnCareerAdvisorName').innerText = 'Please Select';
+     $("#txtReferralPhone").empty();
+     $("#txtReferralEmail").empty();
+     $("#txtReferralFax").empty();
+     $("#txtReferralTitle").empty();
+     document.getElementById('btnReferToService').value = 'Please Select';
+     document.getElementById('btnReferToService').innerText = 'Please Select';
+     $("#txtReferralNotes").val("");
+     $("#hdnReferralCreatedDate").val("");
+     $("#hdnCreatedBy").val("");
+     $("#txtServiceBeginDate").val("");
+     $("#txtServiceEndDate").val("");
+     $("#txtBasisofRecommendation").val("");
+     $("#txtICNNumber").val("");
+     $("#txtSourceNotes").val("");
+     document.getElementById('btnCaseStatus').value = 'Please Select';
+     document.getElementById('btnCaseStatus').innerText = 'Please Select';
+     document.getElementById('btnServiceOutcome').value = 'Please Select';
+     document.getElementById('btnServiceOutcome').innerText = 'Please Select';
+     $("#txtDateCaseAssigned").val("");
+
     $("#referralModal").modal('toggle');
 }
 
 //this will be for CWB
-function populateEditPlacementModal(placement) {
+function populateCWBEditPlacementModal(placement) {
+   
     if (placement.AssistanceType !== undefined && placement.AssistanceType !== null) {
         document.getElementById("btnAssistanceType").innerHTML = placement.AssistanceType.Name;
         document.getElementById("btnAssistanceType").value = placement.AssistanceTypeID;
     }
 
-    if (placementk.CareerPathway !== undefined && placement.CareerPathway !== null) {
+    if (placement.CareerPathway !== undefined && placement.CareerPathway !== null) {
         document.getElementById("btnCareerPathwayPosition").innerHTML = placement.CareerPathway.Name;
         document.getElementById("btnCareerPathwayPosition").value = placement.CareerPathwayID;
     }
 
-    let convertedEnrollmentDate = moment(new Date(placement.CourtOrderDate)).format('YYYY-MM-DD');
+    let convertedEnrollmentDate = placement.CourtOrderDate !== null ? moment(new Date(placement.CourtOrderDate)).format('YYYY-MM-DD') : "";
     $("#txtEnrollmentDate").val(convertedEnrollmentDate);
     $("#txtEnrollmentComments").val(placement.CourtOrderNarrative);
     
@@ -221,7 +260,7 @@ function populateEditPlacementModal(placement) {
     $("#txtEnrollmentEmployerName").val(placement.EmployerName);
     $("#txtEnrollmentPosition").val(placement.EmployerPosition);
 
-    let convertedEmployerStartDate = moment(new Date(placement.EmployerStartDate)).format('YYYY-MM-DD');
+    let convertedEmployerStartDate = placement.EmployerStartDate !== null ? moment(new Date(placement.EmployerStartDate)).format('YYYY-MM-DD') : "";
     $("#txtEnrollmentStartDate").val(convertedEmployerStartDate);
 
     $("#txtEnrollmentWagesPerHour").val(placement.EmployerWages);
@@ -232,10 +271,10 @@ function populateEditPlacementModal(placement) {
         document.getElementById("btnViewTanf").value = placement.JudgeID;
     }
 
-    let convertedNextCourtDate = moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD');
+    let convertedNextCourtDate = placement.NextCourtDate !== null ? moment(new Date(placement.NextCourtDate)).format('YYYY-MM-DD') : "";
     $("#txtApptDate").val(convertedNextCourtDate);
 
-    if (result.PlacementLevel !== undefined && placement.PlacementLevel !== null) {
+    if (placement.PlacementLevel !== undefined && placement.PlacementLevel !== null) {
         document.getElementById("btnSnapEt").innerText = placement.PlacementLevel.Name;
         document.getElementById("btnSnapEt").value = placement.PlacementLevelID;
     }
@@ -275,14 +314,16 @@ function deletePlacementOffense(event) {
 }
 
 function populateJuvenileEditPlacementModal(placement) {
-    console.log(placement);
-
+    //console.log('the placement');
+    //console.log(placement);
+    
     let formattedCourOrderDate = moment(new Date(placement.Placement.CourtOrderDate)).format('YYYY-MM-DD');
     $("#txtCourtOrderDate").val(formattedCourOrderDate);
 
     if (placement.Placement.PlacementLevel !== null){
         document.getElementById("btnOverallRisk").innerText = placement.Placement.PlacementLevel.Name;
         document.getElementById("btnOverallRisk").value = placement.Placement.PlacementLevelID;
+        //document.getElementById("placementTitle").innerText = placement.Placement.PlacementLevel.Name;
     }
 
     let formattedNextCourtDate = moment(new Date(placement.Placement.NextCourtDate)).format('YYYY-MM-DD');
@@ -301,6 +342,17 @@ function populateJuvenileEditPlacementModal(placement) {
 
     let divPlacementChargesContainer = document.getElementById("divPlacementChargesContainer");
     divPlacementChargesContainer.innerHTML = "";
+    $("#txtPlacementCharges").val("");
+
+    let systemID = getSessionData().SystemID;
+    if (parseInt(systemID) === parseInt(getSystems().Adult)) { 
+        $("#txtCaseNumber").val(placement.Placement.CaseNumber);
+        if (placement.Placement.CourtName !== null) {
+            document.getElementById("btnCourtName").value = placement.Placement.CourtName.ID;
+            document.getElementById("btnCourtName").innerText = placement.Placement.CourtName.Name;
+        }
+        $("#txtComments").val(placement.Placement.Comments);
+    }
 
     placement.PlacementOffense.forEach(function(placementOffense) {
         let darkAlertDiv = document.createElement("div");
@@ -353,21 +405,16 @@ function getPlacement(event) {
         }
     }).then(result => result.json())
     .then(result => {
-        console.log(result);
         
-        //let systemID = getSystems()
         let systemID = getSessionData().SystemID;
 
         if (parseInt(systemID) === parseInt(getSystems().OCWB)) {
-            populateEditPlacementModal(placement);
+            populateCWBEditPlacementModal(result[0].Placement);
         } else {
 
             let selectedPlacement = result.filter(function(placement) {
                 return placement.Placement.ID === parseInt(selectedPlacementID);
             });
-
-            console.log('the selected');
-            console.log(selectedPlacement);
 
             populateJuvenileEditPlacementModal(selectedPlacement[0]);
         }
@@ -376,6 +423,7 @@ function getPlacement(event) {
 }
 
 function deletePlacement(event) {
+    $("#enrollmentSpinner").show();
     let selectedPlacementID = event.currentTarget.getAttribute("data-id");
     let apiAddress = sessionStorage.getItem("baseApiAddress");
     let fullDeletePlacementAddress = `${apiAddress}/api/Placement/Deleteplacement/${selectedPlacementID}`;
@@ -391,15 +439,16 @@ function deletePlacement(event) {
     .then(result => {
         
         if (result === null || result.Message !== undefined) {
-            //props.createErrorNotification("an error occurred while deleting the record.");
             return;
         }
 
-        // generateTable(placementVM);
         getPlacementsByClientProfileID();
 
-        //props.createNotification('The placement was successfully deleted.');
+        triggerToastMessage("The placement was successfully deleted.");
+        $("#enrollmentSpinner").hide();
 
+    }).catch(result => {
+        triggerErrorMessage("an error occurred while deleting the placement.");
     });
 }
 
@@ -455,6 +504,7 @@ function buildAddReferralButton(placementRecord) {
     addReferralButton.classList.add("btn-secondary");
     addReferralButton.classList.add("btn-sm");
     addReferralButton.setAttribute("data-id", placementRecord.ID);
+
     
     addReferralButton.innerText = "Add Referral";
     addReferralButton.onclick = togglePlacementModal;
@@ -478,9 +528,6 @@ export function getProgressNotesByEnrollmentID() {
         }
     }).then(result => result.json())
     .then(result => {
-        console.log(result);
-        //console.log(result);
-        //populateServiceUnitModalTable(result);
         populateProgressNoteModalTable(result);
     });
 }
@@ -502,7 +549,6 @@ export function getServiceUnitsByEnrollmentID() {
         }
     }).then(result => result.json())
     .then(result => {
-        //console.log(result);
         populateServiceUnitModalTable(result);
     });
 
@@ -588,7 +634,6 @@ function populateServiceUnitModalOnRowClick(event) {
             }
         }).then(result => result.json())
         .then(result => {
-            ///console.log(result);
 
             document.getElementById("btnServiceMonth").value = result.Month;
             document.getElementById("btnServiceMonth").innerText = result.Month;
@@ -642,15 +687,10 @@ function populateProgressNoteModalOnRowClick(event) {
             }
 
             let duration = new Date(result.Duration);
-            console.log('the duration: ');
-            console.log(duration);
+
             let hours = duration.getHours();
             let minutes = duration.getMinutes();
-            console.log('the hours');
-            console.log(hours);
-            console.log('the minutes');
-            console.log(minutes);
-
+           
             let hoursToDisplay = hours - 4;
             $("#txtDurationHour").val(hoursToDisplay);
             $("#txtDurationMinute").val(minutes);
@@ -844,11 +884,11 @@ function buildDeleteEnrollmentButton(enrollment) {
 
 //generates the main page of cards- holding Placements
 export function generateTable(placements) {
-
+    let systemID = getSessionData().SystemID;
     let divRef = document.getElementById("placementsContainer");
     divRef.innerHTML = "";
     placements.forEach(placement => {
-        //console.log(placement);
+        
         let placementRecord;
         if (placement.Placement !== undefined) {
             placementRecord = placement.Placement;
@@ -862,6 +902,15 @@ export function generateTable(placements) {
         
         let headerDiv = document.createElement("div");
         headerDiv.classList.add("card-header");
+
+        if (parseInt(systemID) === parseInt(getSystems().Juvenile)) {
+            let headerTitleContent = placementRecord.PlacementLevel.Name;
+            let headerTitle = document.createElement("p");
+            headerTitle.innerText = headerTitleContent;
+            headerDiv.appendChild(headerTitle);    
+        }
+   
+        
         parentCard.appendChild(headerDiv);
 
         let placementButton = buildEditPlacementButton(placementRecord);
@@ -907,8 +956,6 @@ export function generateTable(placements) {
         let enrollmentRowsIndex = 0;
         if (placement.Enrollment !== undefined && placement.Enrollment !== null) {
             placement.Enrollment.forEach(function(enrollment) {
-                console.log('the enrollment');
-                console.log(enrollment);
 
                 if (enrollment.ServiceUnit.length > 0) {
                     populateServiceUnitModalTable(enrollment.ServiceUnit);
@@ -951,11 +998,11 @@ export function generateTable(placements) {
                 }
 
                 let beginDateCell = enrollmentRow.insertCell(2);
-                let convertedBeginDate = moment(new Date(enrollment.Enrollment.BeginDate)).format('YYYY-MM-DD');
+                let convertedBeginDate = enrollment.Enrollment.BeginDate !== null ? moment(new Date(enrollment.Enrollment.BeginDate)).format('YYYY-MM-DD') : "";
                 beginDateCell.innerText = convertedBeginDate;
 
                 let endDateCell = enrollmentRow.insertCell(3);
-                let convertedEndDate = moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD');
+                let convertedEndDate = enrollment.Enrollment.EndDate !== null ? moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD') : "";
                 endDateCell.innerText = convertedEndDate;
 
                 let caseStatusCell = enrollmentRow.insertCell(4);
@@ -1103,9 +1150,7 @@ function buildPlacementInfoBoxForPrintModal(placement) {
 function generateEnrollmentRows(enrollments) {
     let divEnrollments = document.getElementById("divEnrollments");
     divEnrollments.innerText = "";
-    //console.log('the enrollments');
-    //console.log(enrollments);
-
+   
     //for each enrollment, write the enrollment -> Staff rows, and then the enrollment.
     enrollments.Enrollment.forEach(enrollment => {
         
@@ -1167,19 +1212,13 @@ function togglePrintScreen(event) {
 
     if (event !== undefined) {
         let selectedPlacementID = event.currentTarget.getAttribute("data-id");
-        console.log(selectedPlacementID);
-
+        
         fetchPlacements().then(placement => {
 
             let selectedPlacement = placement.filter(function(selected) {
                 return selected.Placement.ID === parseInt(selectedPlacementID);
             });
-            console.log('here it is');
-            console.log(selectedPlacement);
-
-            // console.log('here it is');
-            // console.log(selectedPlacement[0].Placement);
-
+     
             let placementBox = buildPlacementInfoBoxForPrintModal(selectedPlacement[0].Placement);
             let divPlacements = document.getElementById("divPlacements");
             divPlacements.appendChild(placementBox);

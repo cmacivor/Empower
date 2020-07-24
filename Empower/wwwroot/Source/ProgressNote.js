@@ -64,7 +64,7 @@ const ProgressNote = (props) => {
     function saveProgressNote() {
 
         if ($("#txtProgressNoteDate").val() === "") {
-            $("#frmServiceUnit").addClass("was-validated");
+            $("#frmProgressNote").addClass("was-validated");
             return;
         }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import moment from 'moment';
-import Referral from './Referral';
+import Referral from './ReferralCWB';
 import PrintEnrollment from './PrintEnrollment';
 import EmploymentPlan from './EmploymentPlan';
 import ServiceUnit from './ServiceUnit';
@@ -293,6 +293,8 @@ const Enrollment = (props) => {
             return;
         }
 
+        $("#enrollmentSpinner").show();
+
         let placement ={
             AssistanceTypeID: getElementValue("btnAssistanceType"),
             CareerPathwayID: getElementValue("btnCareerPathwayPosition"),
@@ -383,6 +385,7 @@ const Enrollment = (props) => {
         <button id="btnAddEnrollment" onClick={toggleEnrollmentModal} className="btn btn-primary">Add Enrollment</button>
         <br/>
         <br/>
+        <div id="enrollmentSpinner" style={{display:'none'}} className="spinner"></div>
         <input type="hidden" id="hdnPlacementID" />
         <input type="hidden" id="hdnPlacementCreatedDate" />
         <input type="hidden" id="hdnPlacementCreatedBy" />

@@ -209,7 +209,8 @@
               /*for each item in the array...*/
               for (i = 0; i < offenses.length; i++) {
                 /*check if the item starts with the same letters as the text field value:*/
-                if (offenses[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                //if (offenses[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                  if (offenses[i].toUpperCase().includes(val.toUpperCase())) {
                   /*create a DIV element for each matching element:*/
                   b = document.createElement("DIV");
                   /*make the matching letters bold:*/

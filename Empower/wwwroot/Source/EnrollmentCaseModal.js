@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
+import { getRoles, getSystems } from './Constants';
 import ServiceUnit from './ServiceUnit';
 import ProgressNote from './ProgressNote';
-import Referral from './Referral';
+import ReferralCWB from './ReferralCWB';
 import PrintEnrollment from './PrintEnrollment';
 import moment from 'moment';
 import { generateTable, 
@@ -16,6 +17,7 @@ import { generateTable,
 import { addActive, onKeyDownHandler, populatePlacementChargesBox  } from './AutoComplete';
 import {  Api } from './commonAdmin';
 import { triggerErrorMessage } from './ToastHelper';
+import ReferralJuvenile from './ReferralJuvenile';
 
 const EnrollmentCaseModal = (props) => {
 
@@ -29,6 +31,11 @@ const EnrollmentCaseModal = (props) => {
 
         //generatePrintModal(props.placement, props.familyProfiles.FamilyProfile);
     }
+
+    
+    let sessionData = getSessionData();
+
+    let systems = getSystems();
 
     let offenseValues = props.offenseValues;
     let placementLevels = props.placementLevelValues;
@@ -55,11 +62,15 @@ const EnrollmentCaseModal = (props) => {
             return placementLevel.ID === parseInt(selectedValue);
         });
 
-        console.log(selectedPlacementLevel);
+        //console.log(selectedPlacementLevel);
 
         $("#btnOverallRisk").val(selectedValue);
 
         document.getElementById("btnOverallRisk").innerText = selectedPlacementLevel[0].Description;
+
+        if (selectedValue !== '') {
+            document.getElementById("divOverallRiskError").setAttribute("style", "display:none");
+        }
     }
 
     function judgeSelectHandler(event) {
@@ -69,11 +80,15 @@ const EnrollmentCaseModal = (props) => {
             return judge.ID === parseInt(selectedValue);
         });
 
-        console.log(selectedJudge);
+        //console.log(selectedJudge);
 
         $("#btnJudge").val(selectedValue);
 
         document.getElementById("btnJudge").innerText = selectedJudge[0].Description
+
+        if (selectedValue !== '') {
+            document.getElementById("divJudgeError").setAttribute("style", "display:none");
+        }
     }
 
 
@@ -92,6 +107,8 @@ const EnrollmentCaseModal = (props) => {
 
         $("#hdnOffenseID").val(offenseID);
 
+        document.getElementById("divPlacementCharges").setAttribute("style", "display:none");
+
     }
 
     function getElementValue(element) {
@@ -104,6 +121,36 @@ const EnrollmentCaseModal = (props) => {
     }
 
     function savePlacement() {
+
+        let overallRisk = getElementValue("btnOverallRisk");
+
+        let judgeID = getElementValue("btnJudge");
+
+        if (overallRisk === null) {
+            $("#frmCaseEnrollment").addClass("was-validated");   
+            document.getElementById("divOverallRiskError").removeAttribute("style");
+        }
+
+        if (judgeID === null) {
+            $("#frmCaseEnrollment").addClass("was-validated");
+            document.getElementById("divJudgeError").removeAttribute("style");
+        }
+
+        //need to check the contents of divPlacementChargesContainer
+        let placementCharges = document.getElementById("divPlacementChargesContainer").innerHTML; //one was created earlier
+        let selectedPlacementCharge = $("#txtPlacementCharges").val();
+        if (placementCharges === "" && selectedPlacementCharge === "") {
+            $("#frmCaseEnrollment").addClass("was-validated");
+            document.getElementById("divPlacementCharges").removeAttribute("style");
+            return;
+        }
+
+        if (overallRisk === null || judgeID === null) {
+            return;
+        }
+
+        $("#enrollmentSpinner").show();
+
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonPlacementAddress = `${apiAddress}/api/Placement`;
         let fullPlacementOffenseAddress= `${apiAddress}/api/PlacementOffense`;
@@ -161,8 +208,15 @@ const EnrollmentCaseModal = (props) => {
 
             if ($("#hdnOffenseID").val() !== "") {
 
+                let placementID = "";
+                if (result.Placement !== undefined && result.Placement !== null) {
+                    placementID = result.Placement.ID;
+                } else {
+                    placementID = result.ID;
+                }
+
                 let placementOffense = {
-                    PlacementID: result.Placement.ID,
+                    PlacementID: placementID, 
                     OffenseID: $("#hdnOffenseID").val(),  
                     Active: true,
                     CreatedDate: new Date(),
@@ -189,8 +243,31 @@ const EnrollmentCaseModal = (props) => {
             props.createNotification('The placement was successfully saved.');
 
             toggleCaseEnrollmentModal();
+
+            $("#enrollmentSpinner").hide();
    
         });
+    }
+
+    function clearCaseEnrollmentModal() {
+        $("#txtCourtOrderDate").val("");
+        document.getElementById('btnOverallRisk').value = 'Please Select';
+        document.getElementById('btnOverallRisk').innerText = 'Please Select';
+
+        document.getElementById('btnJudge').value = 'Please Select';
+        document.getElementById('btnJudge').innerText = 'Please Select';
+
+        $("#txtNextCourtDate").val("");
+        $("#txtPlacementCharges").val("");
+        $("#divPlacementChargesContainer").empty();
+        $("#txtCourtOrderNarrative").val("");
+
+        $("#hdnPlacementID").val("");
+        $("#hdnOffenseID").val("");
+        $("#hdnPlacementCreatedDate").val("");
+        $("#hdnPlacementCreatedBy").val("");
+
+        toggleCaseEnrollmentModal();
     }
 
     let placementLevelOptions = [];
@@ -216,9 +293,10 @@ const EnrollmentCaseModal = (props) => {
         <input type="hidden" id="hdnPlacementUpdatedBy" />
         <h3>Referral</h3>
         <br/>
-        <button id="btnAddCaseEnrollment" className="btn btn-primary" onClick={toggleCaseEnrollmentModal} >Add Case Info</button>
+        <button id="btnAddCaseEnrollment" className="btn btn-primary" onClick={clearCaseEnrollmentModal} >Add Case Info</button>
         <br/>
         <br/>
+        <div id="enrollmentSpinner" style={{display:'none'}} className="spinner"></div>
         <div id="placementsContainer">
 
         </div>
@@ -228,6 +306,7 @@ const EnrollmentCaseModal = (props) => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">Service Units</h5>
+                            
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -273,6 +352,7 @@ const EnrollmentCaseModal = (props) => {
                                 <label htmlFor="txtPlacementCharges"><strong>Placement Charges *</strong></label>
                                 <input id="txtPlacementCharges" onKeyDown={ placementChargesOnKeyDownEventHandler } onChange={ onPlacementChargeChangeEventHandler } className="form-control" />
                             </div>
+                            <div style={{display:'none'}} id="divPlacementCharges" className='errorDiv'>Please select a value.</div>
                             <div id="divPlacementChargesContainer">
 
                             </div>
@@ -290,7 +370,9 @@ const EnrollmentCaseModal = (props) => {
                 </div>
             </div>
         </form>
-        <Referral
+        {
+            parseInt(sessionData.SystemID) === systems.OCWB ?
+            <ReferralCWB
             staffValues = {staff}
             serviceReleaseValues = {serviceReleases }
             serviceOutcomeValues = { serviceOutcomes }
@@ -298,7 +380,21 @@ const EnrollmentCaseModal = (props) => {
             refreshEnrollmentGrid = { getPlacementsByClientProfileID }
             createNotification={props.createNotification}
             createErrorNotification={props.createErrorNotification}
-         />
+         /> : <div></div>
+        }
+        {
+            parseInt(sessionData.SystemID) === systems.Juvenile ?
+            <ReferralJuvenile
+                staffValues = {staff}
+                serviceReleaseValues = {serviceReleases }
+                serviceOutcomeValues = { serviceOutcomes }
+                togglePlacementModal={togglePlacementModal}
+                refreshEnrollmentGrid = { getPlacementsByClientProfileID }
+                createNotification={props.createNotification}
+                createErrorNotification={props.createErrorNotification} 
+            /> : <div></div>
+        }
+   
          <PrintEnrollment 
          clientProfileID = {clientProfileId }
          clientProfile ={props.clientProfile} />
