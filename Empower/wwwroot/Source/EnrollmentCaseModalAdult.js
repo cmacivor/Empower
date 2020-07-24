@@ -88,7 +88,7 @@ const EnrollmentCaseModalAdult = (props) => {
 
         $("#btnJudge").val(selectedValue);
 
-        document.getElementById("btnJudge").innerText = selectedJudge[0].Description
+        document.getElementById("btnJudge").innerText = selectedJudge[0].Name
 
         if (selectedValue !== '') {
             document.getElementById("divJudgeError").setAttribute("style", "display:none");
@@ -163,6 +163,8 @@ const EnrollmentCaseModalAdult = (props) => {
             return;
         }
 
+        $("#enrollmentSpinner").show();
+
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonPlacementAddress = `${apiAddress}/api/Placement`;
         let fullPlacementOffenseAddress= `${apiAddress}/api/PlacementOffense`;
@@ -223,10 +225,16 @@ const EnrollmentCaseModalAdult = (props) => {
 
             if ($("#hdnOffenseID").val() !== "") {
 
-                //console.log(result);
+                
+                let placementID = "";
+                if (result.Placement !== undefined && result.Placement !== null) {
+                    placementID = result.Placement.ID;
+                } else {
+                    placementID = result.ID;
+                }
 
                 let placementOffense = {
-                    PlacementID: result.ID,
+                    PlacementID: placementID,
                     OffenseID: $("#hdnOffenseID").val(),  
                     Active: true,
                     CreatedDate: new Date(),
@@ -253,6 +261,8 @@ const EnrollmentCaseModalAdult = (props) => {
             props.createNotification('The placement was successfully saved.');
 
             toggleCaseEnrollmentModal();
+
+            $("#enrollmentSpinner").hide();
    
         });
     }

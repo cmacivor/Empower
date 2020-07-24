@@ -126,8 +126,6 @@ const EnrollmentCaseModal = (props) => {
 
         let judgeID = getElementValue("btnJudge");
 
-        //let offenseID = $("#hdnOffenseID").val();
-
         if (overallRisk === null) {
             $("#frmCaseEnrollment").addClass("was-validated");   
             document.getElementById("divOverallRiskError").removeAttribute("style");
@@ -147,14 +145,11 @@ const EnrollmentCaseModal = (props) => {
             return;
         }
 
-        // if (offenseID === "") {
-        //     $("#frmCaseEnrollment").addClass("was-validated");
-        //     document.getElementById("divPlacementCharges").removeAttribute("style");
-        // }
-
         if (overallRisk === null || judgeID === null) {
             return;
         }
+
+        $("#enrollmentSpinner").show();
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
         let fullPersonPlacementAddress = `${apiAddress}/api/Placement`;
@@ -221,7 +216,7 @@ const EnrollmentCaseModal = (props) => {
                 }
 
                 let placementOffense = {
-                    PlacementID: placementID, //result.Placement.ID,
+                    PlacementID: placementID, 
                     OffenseID: $("#hdnOffenseID").val(),  
                     Active: true,
                     CreatedDate: new Date(),
@@ -248,6 +243,8 @@ const EnrollmentCaseModal = (props) => {
             props.createNotification('The placement was successfully saved.');
 
             toggleCaseEnrollmentModal();
+
+            $("#enrollmentSpinner").hide();
    
         });
     }

@@ -293,6 +293,8 @@ const Enrollment = (props) => {
             return;
         }
 
+        $("#enrollmentSpinner").show();
+
         let placement ={
             AssistanceTypeID: getElementValue("btnAssistanceType"),
             CareerPathwayID: getElementValue("btnCareerPathwayPosition"),
@@ -383,6 +385,7 @@ const Enrollment = (props) => {
         <button id="btnAddEnrollment" onClick={toggleEnrollmentModal} className="btn btn-primary">Add Enrollment</button>
         <br/>
         <br/>
+        <div id="enrollmentSpinner" style={{display:'none'}} className="spinner"></div>
         <input type="hidden" id="hdnPlacementID" />
         <input type="hidden" id="hdnPlacementCreatedDate" />
         <input type="hidden" id="hdnPlacementCreatedBy" />
