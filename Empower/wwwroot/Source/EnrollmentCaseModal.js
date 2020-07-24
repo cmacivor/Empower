@@ -213,10 +213,8 @@ const EnrollmentCaseModal = (props) => {
 
             if ($("#hdnOffenseID").val() !== "") {
 
-                //console.log(result);
-
                 let placementOffense = {
-                    PlacementID: result.ID,
+                    PlacementID: result.Placement.ID,
                     OffenseID: $("#hdnOffenseID").val(),  
                     Active: true,
                     CreatedDate: new Date(),
