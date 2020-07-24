@@ -126,7 +126,7 @@ const EnrollmentCaseModal = (props) => {
 
         let judgeID = getElementValue("btnJudge");
 
-        let offenseID = $("#hdnOffenseID").val();
+        //let offenseID = $("#hdnOffenseID").val();
 
         if (overallRisk === null) {
             $("#frmCaseEnrollment").addClass("was-validated");   
@@ -138,12 +138,21 @@ const EnrollmentCaseModal = (props) => {
             document.getElementById("divJudgeError").removeAttribute("style");
         }
 
-        if (offenseID === "") {
+        //need to check the contents of divPlacementChargesContainer
+        let placementCharges = document.getElementById("divPlacementChargesContainer").innerHTML; //one was created earlier
+        let selectedPlacementCharge = $("#txtPlacementCharges").val();
+        if (placementCharges === "" && selectedPlacementCharge === "") {
             $("#frmCaseEnrollment").addClass("was-validated");
             document.getElementById("divPlacementCharges").removeAttribute("style");
+            return;
         }
 
-        if (overallRisk === null || judgeID === null || offenseID === "") {
+        // if (offenseID === "") {
+        //     $("#frmCaseEnrollment").addClass("was-validated");
+        //     document.getElementById("divPlacementCharges").removeAttribute("style");
+        // }
+
+        if (overallRisk === null || judgeID === null) {
             return;
         }
 
