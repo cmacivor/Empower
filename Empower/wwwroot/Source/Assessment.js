@@ -8,12 +8,12 @@ const Assessment = (props) => {
 
 
     function addAssessment() {
-        $("#assessmentModal").modal('toggle');
+        $("#assessmentModal").modal({show: true});
     }
 
     return <div>
         <br/>
-        <button id="btnAddAssessment" onClick={addAssessment} className="btn btn-primary">Add Assessment</button>
+        <button type="button" id="btnAddAssessment" onClick={addAssessment} className="btn btn-primary">Add Assessment</button>
         <br/>
         <div className="modal fade" id="assessmentModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg" role="document">
