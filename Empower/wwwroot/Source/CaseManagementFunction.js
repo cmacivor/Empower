@@ -141,6 +141,15 @@ const CaseManagementFunction = (props) => {
         infoTabTitle = "Participant Info";
     }
 
+    let referralTabTitle = '';
+    if (parseInt(sessionData.SystemID) === parseInt(systems.Juvenile)) {
+        referralTabTitle = "Referral";
+    } else if (parseInt(sessionData.SystemID) === parseInt(systems.Adult)) {
+        referralTabTitle = "Referral";
+    } else if (parseInt(sessionData.SystemID) === parseInt(systems.OCWB)) {
+        referralTabTitle = "Program";
+    }
+
     return <div>
             {
                 isSpinnerVisible ? 
@@ -259,7 +268,7 @@ const CaseManagementFunction = (props) => {
                             createErrorNotification={triggerErrorMessage}
                         />
                     </Tab>
-                    <Tab eventKey="program" title="Program" disabled={isTabDisabled}>
+                    <Tab eventKey="program" title={referralTabTitle} disabled={isTabDisabled}>
                         {
                             parseInt(sessionData.SystemID) === systems.OCWB ?
                             <CWBEnrollment 
