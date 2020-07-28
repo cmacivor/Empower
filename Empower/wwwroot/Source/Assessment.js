@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
-import { triggerToastMessage } from './ToastHelper';
+import { triggerToastMessage, triggerErrorMessage } from './ToastHelper';
 import moment from 'moment';
 
 
@@ -45,6 +45,59 @@ const Assessment = (props) => {
         document.getElementById('btnStaffPerson').innerText = 'Please Select';
     });
 
+    function getAssessmentDetails(event) {
+        let assessmentID = event.currentTarget.getAttribute("data-id");
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullGetAssessmentAddress = `${apiAddress}/api/Assessment/GetAssessment/${assessmentID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetAssessmentAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => {
+            return result.json();
+        }).then(result => {
+            //populate the modal
+            console.log('the result');
+            console.log(result);
+
+            if (result.AssessmentType !== null) {
+                document.getElementById('btnAssessmentType').value = result.AssessmentType.ID;
+                document.getElementById('btnAssessmentType').innerText = result.AssessmentType.Name;
+            }
+
+            if (result.AssessmentSubtype !== null) {  
+                document.getElementById('btnAssessmentSubType').value = result.AssessmentSubtype.ID;
+                document.getElementById('btnAssessmentSubType').innerText = result.AssessmentSubtype.Name;
+            }
+
+            if (result.AssessmentDate !== null) {
+                $("#txtDateOfAssessment").val(new Date(result.AssessmentDate));
+            }
+
+            $("#txtAssessmentScore").val(result.AssessmentScore);
+
+            if (result.Staff !== null) {
+                document.getElementById('btnStaffPerson').value =  result.Staff.ID;
+                document.getElementById('btnStaffPerson').innerText = result.LastName + ", " + result.FirstName;
+            }
+
+
+            $("#hdnAssessmentID").val(result.ID);
+            $("#hdnAssessmentCreatedDate").val(result.CreatedDate);
+            $("#hdnAssessmentCreatedBy").val(result.CreatedBy);
+
+            $("#assessmentModal").modal({show: true});
+        });
+        // }).catch(function() {
+        //     triggerErrorMessage('an error occurred while retrieving the Assessment.');
+        // });
+    }
+
     function generateTable(assessments) {
 
         if (assessments === undefined) return;
@@ -62,10 +115,11 @@ const Assessment = (props) => {
             editButton.classList.add("btn");
             editButton.classList.add("btn-secondary");
             editButton.classList.add("btn-sm");
-            //editButton.setAttribute("data-id", props.clientProfile.Person.ID);
+            editButton.setAttribute("data-id", assessment.ID);
             //editButton.setAttribute("data-familymemberid", profile.FamilyProfile.ID);
             editButton.innerText = "Edit";
             editButton.title = "edit the Assessment";
+            editButton.onclick = getAssessmentDetails;
             //editButton.onclick = getFamilyMemberDetails;
 
             let assessmentButtonCell = newRow.insertCell(0);
