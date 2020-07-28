@@ -76,7 +76,8 @@ const Assessment = (props) => {
             }
 
             if (result.AssessmentDate !== null) {
-                $("#txtDateOfAssessment").val(new Date(result.AssessmentDate));
+                let convertedAssessmentDate = result.AssessmentDate !== null ? moment(new Date(result.AssessmentDate)).format('YYYY-MM-DD') : "";
+                $("#txtDateOfAssessment").val(convertedAssessmentDate); //assessment.AssessmentDate !== null ? moment(new Date(assessment.AssessmentDate)).format('YYYY-MM-DD') : "";
             }
 
             $("#txtAssessmentScore").val(result.AssessmentScore);
@@ -86,6 +87,7 @@ const Assessment = (props) => {
                 document.getElementById('btnStaffPerson').innerText = result.LastName + ", " + result.FirstName;
             }
 
+            $("#txtAssessmentNotes").val(result.Notes);
 
             $("#hdnAssessmentID").val(result.ID);
             $("#hdnAssessmentCreatedDate").val(result.CreatedDate);
@@ -397,7 +399,7 @@ const Assessment = (props) => {
                         <div className="form-row">
                             <div className="col-6">
                                 <label htmlFor="txtAssessmentNotes"><strong>Notes</strong></label>
-                                <input type="text" className="form-control" id="txtAssessmentNotes" />
+                                <textarea type="text" className="form-control" id="txtAssessmentNotes" />
                             </div>
                         </div>
                     </div>
