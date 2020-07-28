@@ -10,6 +10,17 @@ const Assessment = (props) => {
     let assessmentSubTypes = props.assessmentSubTypeValues;
     let staff = props.staffValues;
 
+    let computedStaff = [];
+
+    staff.forEach(element => {
+        let staffDDLItem = {
+            ID: element.ID,
+            Name: element.LastName + ', ' + element.FirstName,
+        }
+
+        computedStaff.push(staffDDLItem);
+    });
+
     useEffect(() => {
         document.getElementById('btnAssessmentType').value = 'Please Select';
         document.getElementById('btnAssessmentType').innerText = 'Please Select';
@@ -48,13 +59,13 @@ const Assessment = (props) => {
     function staffSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
 
-        let selectedStaff = staff.filter(function(staff) {
+        let selectedStaff = computedStaff.filter(function(staff) {
             return staff.ID === parseInt(selectedValue);
         });
 
         $("#btnStaffPerson").val(selectedValue);
 
-        document.getElementById("btnAssessmentSubType").innerText = selectedStaff[0].Description;
+        document.getElementById("btnStaffPerson").innerText = selectedStaff[0].Name;
     }
 
     function addAssessment() {
@@ -91,8 +102,8 @@ const Assessment = (props) => {
     }
 
     let staffOptions = [];
-    if ( staff.length > 0) {
-        staffOptions = staffOptions.map((value) =>
+    if ( computedStaff.length > 0) {
+        staffOptions = computedStaff.map((value) =>
         <a key={value.ID} value={value.ID} description={value.Name} onClick={ staffSelectHandler } className="dropdown-item">{value.Name}</a>
       );
     }
