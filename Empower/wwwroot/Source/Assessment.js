@@ -3,6 +3,7 @@ import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
 import { triggerToastMessage } from './ToastHelper';
+import moment from 'moment';
 
 
 const Assessment = (props) => {
@@ -12,10 +13,16 @@ const Assessment = (props) => {
     let staff = props.staffValues;
     let clientProfileID = '';
 
+    let assessmentsTable;
     let computedStaff = [];
 
     if (props.clientProfile !== undefined) {
+
         clientProfileID = props.clientProfile.ID;
+
+        let assessments = props.assessments;
+
+        assessmentsTable = generateTable(assessments);
      }
 
     staff.forEach(element => {
@@ -37,6 +44,96 @@ const Assessment = (props) => {
         document.getElementById('btnStaffPerson').value = 'Please Select';
         document.getElementById('btnStaffPerson').innerText = 'Please Select';
     });
+
+    function generateTable(assessments) {
+
+        if (assessments === undefined) return;
+
+        let tableRef = document.getElementById("tblAssessments").getElementsByTagName('tbody')[0];
+        tableRef.innerHTML = "";
+        assessments.forEach(assessment => {
+
+            //console.log('heres the assessment');
+            //console.log(assessment);
+            let newRow = tableRef.insertRow();
+
+            // //add the edit button
+            let editButton = document.createElement("button");
+            editButton.classList.add("btn");
+            editButton.classList.add("btn-secondary");
+            editButton.classList.add("btn-sm");
+            //editButton.setAttribute("data-id", props.clientProfile.Person.ID);
+            //editButton.setAttribute("data-familymemberid", profile.FamilyProfile.ID);
+            editButton.innerText = "Edit";
+            editButton.title = "edit the Assessment";
+            //editButton.onclick = getFamilyMemberDetails;
+
+            let assessmentButtonCell = newRow.insertCell(0);
+            assessmentButtonCell.appendChild(editButton);
+            // editFamilyButtonCell.appendChild(editButton);
+
+            // //add the Address button
+            // let addressButton = document.createElement("button");
+            // addressButton.classList.add("btn");
+            // addressButton.classList.add("btn-secondary");
+            // addressButton.classList.add("btn-sm");
+            // addressButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
+            // addressButton.innerText = "Address";
+            // addressButton.title = "edit the family member's address";
+            // addressButton.onclick = toggleAddressModal;
+
+            // let addressButtonCell = newRow.insertCell(1);
+            // addressButtonCell.appendChild(addressButton);
+
+             let assessmentTypeCell = newRow.insertCell(1);
+             assessmentTypeCell.innerText = (assessment.AssessmentType.Name !== null) ? assessment.AssessmentType.Name : ""; //profile.FamilyProfile.Person.LastName;
+            
+             let domainCell = newRow.insertCell(2);
+             domainCell.innerText = assessment.AssessmentSubtype.Name !== null ? assessment.AssessmentSubtype.Name : "";
+
+             //let convertedEndDate = enrollment.Enrollment.EndDate !== null ? moment(new Date(enrollment.Enrollment.EndDate)).format('YYYY-MM-DD') : "";
+             let assessmentDateCell = newRow.insertCell(3);
+             assessmentDateCell.innerText = assessment.AssessmentDate !== null ? moment(new Date(assessment.AssessmentDate)).format('YYYY-MM-DD') : "";
+
+             let assessmentScoreCell = newRow.insertCell(4);
+             assessmentScoreCell.innerText = assessment.AssessmentScore;
+
+            // let firstNameCell = newRow.insertCell(3);
+            // firstNameCell.innerText = profile.FamilyProfile.Person.FirstName;
+
+            // let middleNameCell = newRow.insertCell(4);
+            // middleNameCell.innerText = profile.FamilyProfile.Person.MiddleName;           
+
+            // let suffixCell = newRow.insertCell(5);
+            // suffixCell.innerText = (profile.FamilyProfile.Person.Suffix !== null) ? profile.FamilyProfile.Person.Suffix.Description : '';
+
+            // let relationshipCell = newRow.insertCell(6);
+            // relationshipCell.innerText = (profile.FamilyProfile.Relationship !== null) ? profile.FamilyProfile.Relationship.Description : '';
+
+            // let homePhoneCell = newRow.insertCell(7);
+            // homePhoneCell.innerText = profile.PersonSupplemental.HomePhone;
+
+            // let workPhoneCell = newRow.insertCell(8);
+            // workPhoneCell.innerText = profile.PersonSupplemental.WorkPhone;
+
+            // let emergencyContactCell = newRow.insertCell(9);
+            // emergencyContactCell.innerText = (profile.PersonSupplemental.HasEmergencyContactNo === true) ? 'Yes' : 'No';
+
+            // //add the delete button for each row
+            // let deleteButton = document.createElement("button");
+            // deleteButton.classList.add("btn");
+            // deleteButton.classList.add("btn-danger");
+            // deleteButton.classList.add("btn-sm");
+            // deleteButton.setAttribute("data-id", profile.FamilyProfile.FamilyMemberID);
+            // deleteButton.innerText = "Delete";
+            // deleteButton.title = "delete the family member";
+            // deleteButton.onclick = deleteFamilyMember;
+
+            // let deleteButtonCell = newRow.insertCell(10);
+            // deleteButtonCell.appendChild(deleteButton);
+
+        });
+    }
 
     function assessmentTypeSelectHandler(event) {
         let selectedValue = event.currentTarget.getAttribute('value');
@@ -167,6 +264,21 @@ const Assessment = (props) => {
         <br/>
         <button type="button" id="btnAddAssessment" onClick={addAssessment} className="btn btn-primary">Add Assessment</button>
         <br/>
+        <table id="tblAssessments" className="table">
+             <thead>
+                 <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Domain</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Score</th>
+                    <th scope="col"></th>
+                 </tr>
+             </thead>
+             <tbody>
+
+             </tbody>
+         </table>
         <input type="hidden" id="hdnAssessmentID" />
         <input type="hidden" id="hdnAssessmentCreatedDate" />
         <input type="hidden" id="hdnAssessmentCreatedBy" />
