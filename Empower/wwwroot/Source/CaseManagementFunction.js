@@ -334,6 +334,7 @@ const CaseManagementFunction = (props) => {
                     </Tab>
                     <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
                        <Assessment
+                            clientProfile={clientProfile.ClientProfile }
                             assessmentTypeValues={assessmentTypeOptions}
                             assessmentSubTypeValues={assessmentSubTypeOptions}
                             staffValues={staffOptions}

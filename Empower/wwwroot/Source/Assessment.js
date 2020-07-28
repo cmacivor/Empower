@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, createRef } from 'react';
 import $ from 'jquery';
 import { getSessionData } from './commonAdmin';
 import { getRoles, getSystems } from './Constants';
+import { triggerToastMessage } from './ToastHelper';
 
 
 const Assessment = (props) => {
@@ -9,8 +10,13 @@ const Assessment = (props) => {
     let assessmentTypes = props.assessmentTypeValues;
     let assessmentSubTypes = props.assessmentSubTypeValues;
     let staff = props.staffValues;
+    let clientProfileID = '';
 
     let computedStaff = [];
+
+    if (props.clientProfile !== undefined) {
+        clientProfileID = props.clientProfile.ID;
+     }
 
     staff.forEach(element => {
         let staffDDLItem = {
@@ -82,9 +88,58 @@ const Assessment = (props) => {
     }
 
     function saveAssessment() {
-        let assessment = {
 
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullPersonAssessmentAddress = `${apiAddress}/api/Assessment`;
+        let sessionStorageData = getSessionData();
+
+        let assessment = {
+            ClientProfileID: clientProfileID,
+            AssessmentTypeID: getElementValue("btnAssessmentType"),
+            AssessmentSubtypeID: getElementValue("btnAssessmentSubType"),
+            AssessmentDate: new Date($("#txtDateOfAssessment").val()),
+            AssessmentScore: $("#txtAssessmentScore").val(),
+            StaffID: getElementValue("btnStaffPerson"),
+            Notes: $("#txtAssessmentNotes").val(),
+            Active: true,
+            UpdatedDate: new Date(),
+            UpdatedBy: sessionStorageData.CurrentUser
         }
+
+        let methodType = "";
+        let assessmentID = $("#hdnAssessmentID").val();
+        if (assessmentID === "") {
+            methodType = 'POST';
+            assessment.CreatedDate = new Date();
+            assessment.CreatedBy = sessionStorageData.CurrentUser;
+        } else {
+            methodType = 'PUT';
+            assessment.CreatedDate = $("#hdnAssessmentCreatedDate").val();
+            assessment.CreatedBy = $("#hdnAssessmentCreatedBy").val();
+            assessment.ID = $("#hdnAssessmentID").val();
+        }
+
+        fetch(fullPersonAssessmentAddress, {
+            method: methodType,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            },
+            body: JSON.stringify(assessment)
+        }).then(result => result.json())
+        .then(result => {
+
+            if ($("#hdnAssessmentID").val() === "") {
+
+            }
+
+            triggerToastMessage("the assessment was successfully saved.");
+
+        })
+        .catch(function() {
+            triggerErrorMessage("an error occurred while saving the assessment record.");
+        });
+        
     }
 
     let assessmentTypeOptions = [];
@@ -112,6 +167,9 @@ const Assessment = (props) => {
         <br/>
         <button type="button" id="btnAddAssessment" onClick={addAssessment} className="btn btn-primary">Add Assessment</button>
         <br/>
+        <input type="hidden" id="hdnAssessmentID" />
+        <input type="hidden" id="hdnAssessmentCreatedDate" />
+        <input type="hidden" id="hdnAssessmentCreatedBy" />
         <div className="modal fade" id="assessmentModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg" role="document">
                 <div className="modal-content">
@@ -178,7 +236,7 @@ const Assessment = (props) => {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" id="btnSavePlacement" className="btn btn-primary">Save</button>
+                        <button type="button" id="btnSavePlacement" onClick={saveAssessment} className="btn btn-primary">Save</button>
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
