@@ -6,9 +6,95 @@ import { getRoles, getSystems } from './Constants';
 
 const Assessment = (props) => {
 
+    let assessmentTypes = props.assessmentTypeValues;
+    let assessmentSubTypes = props.assessmentSubTypeValues;
+    let staff = props.staffValues;
+
+    useEffect(() => {
+        document.getElementById('btnAssessmentType').value = 'Please Select';
+        document.getElementById('btnAssessmentType').innerText = 'Please Select';
+
+        document.getElementById('btnAssessmentSubType').value = 'Please Select';
+        document.getElementById('btnAssessmentSubType').innerText = 'Please Select';
+
+        document.getElementById('btnStaffPerson').value = 'Please Select';
+        document.getElementById('btnStaffPerson').innerText = 'Please Select';
+    });
+
+    function assessmentTypeSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+        
+        let selectedAssessmentType = assessmentTypes.filter(function(assessmentType) {
+            return assessmentType.ID === parseInt(selectedValue);
+        });
+
+        $("#btnAssessmentType").val(selectedValue);
+
+        document.getElementById("btnAssessmentType").innerText = selectedAssessmentType[0].Description;
+    }
+
+    function assessmentSubTypeSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        let selectedAssessmentSubType = assessmentSubTypes.filter(function(assessmentSubType) {
+            return assessmentSubType.ID === parseInt(selectedValue);
+        });
+
+        $("#btnAssessmentSubType").val(selectedValue);
+
+        document.getElementById("btnAssessmentSubType").innerText = selectedAssessmentSubType[0].Description;
+    }
+
+    function staffSelectHandler(event) {
+        let selectedValue = event.currentTarget.getAttribute('value');
+
+        let selectedStaff = staff.filter(function(staff) {
+            return staff.ID === parseInt(selectedValue);
+        });
+
+        $("#btnStaffPerson").val(selectedValue);
+
+        document.getElementById("btnAssessmentSubType").innerText = selectedStaff[0].Description;
+    }
 
     function addAssessment() {
         $("#assessmentModal").modal({show: true});
+    }
+
+    function getElementValue(element) {
+        let value = document.getElementById(element).value;
+
+        if (value === "" || value === "Please Select") {
+            return null;
+        }
+        return value;
+    }
+
+    function saveAssessment() {
+        let assessment = {
+
+        }
+    }
+
+    let assessmentTypeOptions = [];
+    if ( assessmentTypes.length > 0) {
+        assessmentTypeOptions = assessmentTypes.map((value) =>
+        <a key={value.ID} value={value.ID} description={value.Name} onClick={ assessmentTypeSelectHandler } className="dropdown-item">{value.Name}</a>
+      );
+    }
+
+    let assessmentSubTypeOptions = [];
+    if ( assessmentSubTypes.length > 0) {
+        assessmentSubTypeOptions = assessmentSubTypes.map((value) =>
+        <a key={value.ID} value={value.ID} description={value.Name} onClick={ assessmentSubTypeSelectHandler } className="dropdown-item">{value.Name}</a>
+      );
+    }
+
+    let staffOptions = [];
+    if ( staff.length > 0) {
+        staffOptions = staffOptions.map((value) =>
+        <a key={value.ID} value={value.ID} description={value.Name} onClick={ staffSelectHandler } className="dropdown-item">{value.Name}</a>
+      );
     }
 
     return <div>
@@ -34,7 +120,7 @@ const Assessment = (props) => {
                                         
                                     </button>
                                     <div className="dropdown-menu">
-                                        {/* {placementLevelOptions} */}
+                                        { assessmentTypeOptions }
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +131,7 @@ const Assessment = (props) => {
                                         
                                     </button>
                                     <div className="dropdown-menu">
-                                        {/* {placementLevelOptions} */}
+                                        { assessmentSubTypeOptions }
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +154,7 @@ const Assessment = (props) => {
                                         
                                     </button>
                                     <div className="dropdown-menu">
-                                        {/* {placementLevelOptions} */}
+                                        { staffOptions }
                                     </div>
                                 </div>
                             </div>

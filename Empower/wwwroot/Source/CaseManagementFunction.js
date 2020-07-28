@@ -60,7 +60,7 @@ const CaseManagementFunction = (props) => {
     const [judgeOptions, setJudgeOptions] = useState([]);
     const [courtNameOptions, setCourtNameOptions] = useState([]);
     const [assessmentTypeOptions, setAssessmentTypeOptions ] = useState([]);
-    const [assessmentSubTypeOption, setAssessmentSubTypeOptions] = useState([]);
+    const [assessmentSubTypeOptions, setAssessmentSubTypeOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -333,7 +333,13 @@ const CaseManagementFunction = (props) => {
 
                     </Tab>
                     <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
-                       <Assessment />
+                       <Assessment
+                            assessmentTypeValues={assessmentTypeOptions}
+                            assessmentSubTypeValues={assessmentSubTypeOptions}
+                            staffValues={staffOptions}
+                            createNotification={triggerToastMessage}
+                            createErrorNotification={triggerErrorMessage}
+                        />
                     </Tab>
                    
                 </Tabs>
