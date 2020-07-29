@@ -113,7 +113,24 @@ const Assessment = (props) => {
     }
 
     function deleteAssessment(event) {
+        let assessmentID = event.currentTarget.getAttribute("data-id");
 
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullDeleteAssessmentAddress = `${apiAddress}/api/Assessment/DeleteAssessment/${assessmentID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullDeleteAssessmentAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => result.json())
+        .then(result => {
+            triggerToastMessage("the assessment was deleted.");
+
+            getAssessments();
+        });
     }
 
     function getAssessments() {
