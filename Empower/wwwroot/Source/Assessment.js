@@ -113,6 +113,8 @@ const Assessment = (props) => {
     }
 
     function deleteAssessment(event) {
+        confirm("Are you sure you want to delete this record?")
+
         let assessmentID = event.currentTarget.getAttribute("data-id");
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
