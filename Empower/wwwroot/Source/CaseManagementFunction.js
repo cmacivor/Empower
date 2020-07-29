@@ -22,6 +22,7 @@ import FamilyInfo from './FamilyInfo';
 import CWBEnrollment from './CWBEnrollment';
 import EnrollmentCaseModal from './EnrollmentCaseModal';
 import EnrollmentCaseModalAdult from './EnrollmentCaseModalAdult';
+import Assessment from './Assessment';
 
 const CaseManagementFunction = (props) => {
     const [isTabDisabled, setEnabled] = useState(true);
@@ -58,6 +59,8 @@ const CaseManagementFunction = (props) => {
     const [placementLevelOptions, setPlacementLevelOptions] = useState([]);
     const [judgeOptions, setJudgeOptions] = useState([]);
     const [courtNameOptions, setCourtNameOptions] = useState([]);
+    const [assessmentTypeOptions, setAssessmentTypeOptions ] = useState([]);
+    const [assessmentSubTypeOptions, setAssessmentSubTypeOptions] = useState([]);
 
     useEffect(() => {
         Api.getConfigDataByType("Gender").then(genders => setGenderOptions(genders));
@@ -75,7 +78,7 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("CareerPathway").then(careerPathways => setCareerPathWayOptions(careerPathways));
         Api.getConfigDataByType("ContactType").then(contactTypes => setContactTypeOptions(contactTypes));
         Api.getConfigDataByType("SubContactType").then(subContactTypes => setSubContactTypeOptions(subContactTypes));
-
+        
         //TODO: how to reduce the number of API calls?
         if (staffOptions.length === 0) {
             Api.getConfigDataByType("Staff").then(staff => setStaffOptions(staff));
@@ -86,6 +89,9 @@ const CaseManagementFunction = (props) => {
         Api.getConfigDataByType("PlacementLevel").then(placementLevels => setPlacementLevelOptions(placementLevels));
         Api.getConfigDataByType("Judge").then(judges => setJudgeOptions(judges));
         Api.getConfigDataByType("CourtName").then(courtNames => setCourtNameOptions(courtNames));
+        Api.getConfigDataByType("AssessmentType").then(assessmentTypes => setAssessmentTypeOptions(assessmentTypes));
+        Api.getConfigDataByType("AssessmentSubtype").then(assessmentSubTypes => setAssessmentSubTypeOptions(assessmentSubTypes));
+        
      }, []);
 
 
@@ -139,6 +145,15 @@ const CaseManagementFunction = (props) => {
         infoTabTitle = "Adult Info";
     } else if (parseInt(sessionData.SystemID) === parseInt(systems.OCWB)) {
         infoTabTitle = "Participant Info";
+    }
+
+    let referralTabTitle = '';
+    if (parseInt(sessionData.SystemID) === parseInt(systems.Juvenile)) {
+        referralTabTitle = "Referral";
+    } else if (parseInt(sessionData.SystemID) === parseInt(systems.Adult)) {
+        referralTabTitle = "Referral";
+    } else if (parseInt(sessionData.SystemID) === parseInt(systems.OCWB)) {
+        referralTabTitle = "Program";
     }
 
     return <div>
@@ -259,7 +274,7 @@ const CaseManagementFunction = (props) => {
                             createErrorNotification={triggerErrorMessage}
                         />
                     </Tab>
-                    <Tab eventKey="program" title="Program" disabled={isTabDisabled}>
+                    <Tab eventKey="program" title={referralTabTitle} disabled={isTabDisabled}>
                         {
                             parseInt(sessionData.SystemID) === systems.OCWB ?
                             <CWBEnrollment 
@@ -318,7 +333,15 @@ const CaseManagementFunction = (props) => {
 
                     </Tab>
                     <Tab eventKey="assessment" title="Assessment" disabled={isTabDisabled}>
-                       assessment content
+                       <Assessment
+                            clientProfile={clientProfile.ClientProfile }
+                            assessments={clientProfile.Assessment }
+                            assessmentTypeValues={assessmentTypeOptions}
+                            assessmentSubTypeValues={assessmentSubTypeOptions}
+                            staffValues={staffOptions}
+                            createNotification={triggerToastMessage}
+                            createErrorNotification={triggerErrorMessage}
+                        />
                     </Tab>
                    
                 </Tabs>

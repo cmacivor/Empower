@@ -111,6 +111,9 @@ const FamilyInfo = (props) => {
     }
 
     function deleteFamilyMember(event) {
+        let userInput = confirm("Are you sure you want to delete this family member?");
+        if (!userInput) return;
+
         let selectedFamilyMemberId = event.currentTarget.getAttribute("data-id");
 
         let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -236,8 +239,6 @@ const FamilyInfo = (props) => {
         }).then(result => result.json())
         .then(result => {
 
-            console.log(result);
-
             if (result === null || result === undefined || result.length === 0)  {
                 props.createErrorNotification("an error occurred while retrieving the record.");
                 return;
@@ -248,15 +249,10 @@ const FamilyInfo = (props) => {
                 return familyMember.FamilyProfile.ID === parseInt(familyMemberID);
             });
 
-            //console.log(selectedFamilyMember);
-
             let person = selectedFamilyMember[0].FamilyProfile.Person;
             let relationship = selectedFamilyMember[0].FamilyProfile.Relationship;
             let personSupplemental = selectedFamilyMember[0].PersonSupplemental;
             let familyProfile = selectedFamilyMember[0].FamilyProfile;
-
-            console.log('this is the family profile');
-            console.log(familyProfile);
 
             $("#txtFMLastName").val(person.LastName);
             $("#txtFMFirstName").val(person.FirstName);
