@@ -113,7 +113,8 @@ const Assessment = (props) => {
     }
 
     function deleteAssessment(event) {
-        confirm("Are you sure you want to delete this record?")
+        let userInput = confirm("Are you sure you want to delete this record?");
+        if (!userInput) return;
 
         let assessmentID = event.currentTarget.getAttribute("data-id");
 

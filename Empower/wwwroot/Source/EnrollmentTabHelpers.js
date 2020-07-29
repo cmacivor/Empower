@@ -167,6 +167,9 @@ function getEnrollment(event) {
 
 
 function deleteEnrollment(event) {
+   let userInput =  confirm("Are you sure you want to delete the enrollment?");
+    if (!userInput) return;
+
     $("#enrollmentSpinner").show();
 
     let selectedEnrollmentID = event.currentTarget.getAttribute("data-id");
@@ -290,6 +293,9 @@ function populateCWBEditPlacementModal(placement) {
 }
 
 function deletePlacementOffense(event) {
+   let userInput = confirm("Are you sure you want to delete the placement offense?");
+    if (!userInput) return;
+
     if (event !== undefined) {
         let selectedPlacementOffenseID = event.currentTarget.getAttribute("data-id");
         
@@ -423,6 +429,9 @@ function getPlacement(event) {
 }
 
 function deletePlacement(event) {
+    let userInput =  confirm("Are you sure you want to delete the placement?");
+    if (!userInput) return;
+
     $("#enrollmentSpinner").show();
     let selectedPlacementID = event.currentTarget.getAttribute("data-id");
     let apiAddress = sessionStorage.getItem("baseApiAddress");
@@ -556,6 +565,9 @@ export function getServiceUnitsByEnrollmentID() {
 
 
 function deleteServiceUnitButtonClickHandler(event) {
+    let userInput = confirm("Are you sure you want to delete the service unit?");
+    if (!userInput) return;
+
     if (event !== undefined) {
         event.preventDefault();
 
@@ -580,6 +592,9 @@ function deleteServiceUnitButtonClickHandler(event) {
 }
 
 function deleteProgressNoteButtonClickHandler(event) {
+    let userInput = confirm("Are you sure you want to delete the progress note?");
+    if (!userInput) return;
+
     if (event !== undefined) {
         event.preventDefault();
 
