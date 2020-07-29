@@ -179,10 +179,10 @@ const Assessment = (props) => {
             assessmentButtonCell.appendChild(editButton);
 
              let assessmentTypeCell = newRow.insertCell(1);
-             assessmentTypeCell.innerText = (assessment.AssessmentType.Name !== null) ? assessment.AssessmentType.Name : "";
+             assessmentTypeCell.innerText = (assessment.AssessmentType !== null) ? assessment.AssessmentType.Name : "";
             
              let domainCell = newRow.insertCell(2);
-             domainCell.innerText = assessment.AssessmentSubtype.Name !== null ? assessment.AssessmentSubtype.Name : "";
+             domainCell.innerText = assessment.AssessmentSubtype !== null ? assessment.AssessmentSubtype.Name : "";
 
              let assessmentDateCell = newRow.insertCell(3);
              assessmentDateCell.innerText = assessment.AssessmentDate !== null ? moment(new Date(assessment.AssessmentDate)).format('YYYY-MM-DD') : "";
