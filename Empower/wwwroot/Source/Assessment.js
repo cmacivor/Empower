@@ -92,14 +92,14 @@ const Assessment = (props) => {
 
             if (result.AssessmentDate !== null) {
                 let convertedAssessmentDate = result.AssessmentDate !== null ? moment(new Date(result.AssessmentDate)).format('YYYY-MM-DD') : "";
-                $("#txtDateOfAssessment").val(convertedAssessmentDate); //assessment.AssessmentDate !== null ? moment(new Date(assessment.AssessmentDate)).format('YYYY-MM-DD') : "";
+                $("#txtDateOfAssessment").val(convertedAssessmentDate); 
             }
 
             $("#txtAssessmentScore").val(result.AssessmentScore);
 
             if (result.Staff !== null) {
                 document.getElementById('btnStaffPerson').value =  result.Staff.ID;
-                document.getElementById('btnStaffPerson').innerText = result.LastName + ", " + result.FirstName;
+                document.getElementById('btnStaffPerson').innerText = result.Staff.LastName + ", " + result.Staff.FirstName;
             }
 
             $("#txtAssessmentNotes").val(result.Notes);
@@ -114,6 +114,25 @@ const Assessment = (props) => {
 
     function deleteAssessment(event) {
 
+    }
+
+    function getAssessments() {
+
+        let apiAddress = sessionStorage.getItem("baseApiAddress");
+        let fullGetAssessmentAddress = `${apiAddress}/api/Assessment/GetAssessments/${clientProfileID}`;
+        let sessionStorageData = getSessionData();
+
+        fetch(fullGetAssessmentAddress, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sessionStorageData.Token
+            }
+        }).then(result => {
+            return result.json();
+        }).then(result => {
+            generateTable(result);       
+        });
     }
 
     function generateTable(assessments) {
@@ -261,6 +280,10 @@ const Assessment = (props) => {
 
             triggerToastMessage("the assessment was successfully saved.");
 
+            $("#assessmentModal").modal('hide');
+
+            getAssessments();
+
         })
         .catch(function() {
             triggerErrorMessage("an error occurred while saving the assessment record.");
@@ -292,6 +315,7 @@ const Assessment = (props) => {
     return <div>
         <br/>
         <button type="button" id="btnAddAssessment" onClick={createNewAssessment} className="btn btn-primary">Add Assessment</button>
+        <br/>
         <br/>
         <table id="tblAssessments" className="table">
              <thead>
