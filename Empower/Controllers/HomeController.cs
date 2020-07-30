@@ -55,7 +55,8 @@ namespace Empower.Controllers
                 SystemID = authResponse.systemID,
                 RoleID = authResponse.roleID,
                 DocumentMenuItems = results,
-                DocumentBaseUrl =  _appsettings.Value.LocationUrl          
+                DocumentBaseUrl =  _appsettings.Value.LocationUrl,
+                GisUrl = _appsettings.Value.GisUrl
             };
 
             viewModel.GetAppTitle();

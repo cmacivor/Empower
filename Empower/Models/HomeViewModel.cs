@@ -12,5 +12,7 @@ namespace Empower.Models
         public string Token { get; set; }
 
         public string BaseApiAddress { get; set; }
+
+        public string GisUrl { get; set; }
     }
 }
