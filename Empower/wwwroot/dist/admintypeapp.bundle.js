@@ -80275,6 +80275,7 @@ function getSessionData() {
   var currentUser = sessionStorage.getItem("userName");
   var systemID = sessionStorage.getItem("systemID");
   var roleID = sessionStorage.getItem("roleID");
+  var gisUrl = sessionStorage.getItem("gisUrl");
   var adminType = getCurrentUrl();
   var fullCreateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Create");
   var fullUpdateAddress = "".concat(apiAddress, "/api/").concat(adminType, "/Update");
@@ -80286,6 +80287,7 @@ function getSessionData() {
     AdminType: getCurrentUrl(),
     SystemID: systemID,
     RoleID: roleID,
+    GisUrl: gisUrl,
     CreateApiUrl: fullCreateAddress,
     UpdateApiUrl: fullUpdateAddress,
     DeleteApiUrl: fullDeleteAddress,

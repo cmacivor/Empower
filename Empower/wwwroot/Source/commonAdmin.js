@@ -17,6 +17,8 @@ export function getSessionData() {
 
     let roleID = sessionStorage.getItem("roleID");
 
+    let gisUrl = sessionStorage.getItem("gisUrl");
+
     let adminType = getCurrentUrl();
 
     let fullCreateAddress = `${apiAddress}/api/${adminType}/Create`;
@@ -34,6 +36,7 @@ export function getSessionData() {
         AdminType : getCurrentUrl(),
         SystemID: systemID,
         RoleID: roleID,
+        GisUrl: gisUrl,
         CreateApiUrl: fullCreateAddress,
         UpdateApiUrl: fullUpdateAddress,
         DeleteApiUrl: fullDeleteAddress,
