@@ -425,11 +425,11 @@ const Info = (props, ref) => {
             }
 
             //they already exist, and this is an update
-            let hdnPersonID = $("#hdnPersonID").val();
+            let hdnPersonID = personID; //$("#hdnPersonID").val();
             if (hdnPersonID !== '') {
        
-                let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
-                alert('The Unique License Number is: ' + uniqueID);
+                //let uniqueID = GenerateUniqueID(lastName, firstName, middleName, birthDate, genderID);
+                //alert('The Unique License Number is: ' + uniqueID);
 
                 UpdateClient(fullPersonAddress, postData);
 
@@ -478,7 +478,7 @@ const Info = (props, ref) => {
 
         let hdnCreatedDate = $("#hdnCreatedDate").val();
         let hdnCreatedBy = $("#hdnCreatedBy").val();
-        let hdnPersonID = $("#hdnPersonID").val();
+        let hdnPersonID = personID; //$("#hdnPersonID").val();
 
         postData.CreatedDate = hdnCreatedDate;
         postData.CreatedBy = hdnCreatedBy;
