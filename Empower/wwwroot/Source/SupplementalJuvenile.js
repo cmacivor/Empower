@@ -15,7 +15,8 @@ const SupplementalJuvenile = (props) => {
     let clientLanguage = '';
     let clientPhysicalHealth = '';
     let clientMentalHealth = '';
-    let clientInterpreterNeeded = false;
+    //let clientInterpreterNeeded = false;
+    let clientHasExceptionalEducation = false;
     let clientMedicaid = false;
     let clientInsurance = false;
     let clientDriversLicense = false;
@@ -82,7 +83,7 @@ const SupplementalJuvenile = (props) => {
         clientLanguage = (personSupplemental.Language !== null) ? personSupplemental.Language : '';
         clientPhysicalHealth = (personSupplemental.PhysicalHealth !== null) ? personSupplemental.PhysicalHealth : '';
         clientMentalHealth = (personSupplemental.MentalHealth !== null) ? personSupplemental.MentalHealth : '';
-        clientInterpreterNeeded = (personSupplemental.HasInterpreter !== null) ? personSupplemental.HasInterpreter : false;
+        clientHasExceptionalEducation = (personSupplemental.HasExceptionEduc !== null) ? personSupplemental.HasExceptionEduc : false;
         clientMedicaid = (personSupplemental.HasMedicaid !== null ) ? personSupplemental.HasMedicaid : false;
         clientInsurance = (personSupplemental.HasInsurance !== null ) ? personSupplemental.HasInsurance : false;
         clientDriversLicense = (personSupplemental.HasDriversLicense !== null) ? personSupplemental.HasDriversLicense : false;
@@ -188,7 +189,7 @@ const SupplementalJuvenile = (props) => {
         $("#txtEmployerCity").val(clientEmployerAddressCity);
         $("#txtEmployerZipCode").val(clientEmployerAddressZip);
 
-        setRadioButtonState("rdpInterpreterNeededYes", "rdpInterpreterNeededNo", clientInterpreterNeeded);
+        setRadioButtonState("rdpExceptionalEducationYes", "rdpExceptionalEducationNo", clientHasExceptionalEducation);
         setRadioButtonState("rdpMedicaidNeededYes", "rdpMedicaidNeededNo", clientMedicaid);
         setRadioButtonState("rdpHasInsuranceYes", "rdpHasInsuranceNo", clientInsurance);
         setRadioButtonState("rdpHasDriversLicenseYes", "rdpHasDriversLicenseNo", clientDriversLicense);
@@ -366,7 +367,7 @@ const SupplementalJuvenile = (props) => {
             EducationLevelID: getElementValue("btnDDLCurrentGrade"), 
             PhysicalHealth: getElementValue("txtPhysicalHealth"),
             MentalHealth : getElementValue("txtMentalHealth"),
-            HasInterpreter: getRadioButtonState("rdpInterpreterNeededYes"),
+            HasExceptionEduc: getRadioButtonState("rdpExceptionalEducationYes"),
             HasMedicaid: getRadioButtonState("rdpMedicaidNeededYes"),
             HasInsurance: getRadioButtonState("rdpHasInsuranceYes"),
             HasDriversLicense: getRadioButtonState("rdpHasDriversLicenseYes"),
@@ -529,10 +530,6 @@ const SupplementalJuvenile = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <div className="col-4">
-                                        <label htmlFor="txtSchoolYear"><strong>Year</strong></label>
-                                        <input type="text" className="form-control" defaultValue="" id="txtSchoolYear"></input>
-                                    </div> */}
                                 </div>
                                 <br/>
                                 <div className="form-row">
@@ -547,18 +544,18 @@ const SupplementalJuvenile = (props) => {
                                 </div>
                                 <br></br>
                                 <div className="form-row">
-                                    <div className="col-3">
-                                        <label><strong>Is Interpreter Needed</strong></label>
+                                    <div className="col-3">                                      
+                                        <label><strong>Exceptional Education</strong></label>
                                         <div>
                                             <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpInterpreterNeeded" id="rdpInterpreterNeededYes"  />
+                                                <input className="form-check-input" type="radio" name="rdpExceptionalEducation" id="rdpExceptionalEducationYes"  />
                                                 <label className="form-check-label">Yes</label>         
                                             </div>
                                             <div className="form-check form-check-inline">
-                                                <input className="form-check-input" type="radio" name="rdpInterpreterNeeded" id="rdpInterpreterNeededNo"  />
+                                                <input className="form-check-input" type="radio" name="rdpExceptionalEducation" id="rdpExceptionalEducationNo"  />
                                                 <label className="form-check-label">No</label>
                                             </div>
-                                        </div> 
+                                        </div>  
                                     </div>
                                     <div className="col-3">
                                         <label><strong>Medicaid*</strong></label>
