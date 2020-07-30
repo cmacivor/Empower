@@ -288,6 +288,7 @@ const Info = (props, ref) => {
         $("#txtMiddleName").val(clientMiddleName);
         $("#txtSSN").val(clientSSN);
         $("#txtFbiNcicNumber").val(clientFbiNcic);
+        $("#txtCurrentAge").val(diffInYears);
 
         let birthDateObj = new Date(clientBirthDate);
         let convertedBirthDate = moment(birthDateObj).format('YYYY-MM-DD');  
@@ -321,8 +322,7 @@ const Info = (props, ref) => {
     function calculateAge(birthDate) {
         let difference = moment(new Date()).diff(birthDate);
         let duration = moment.duration(difference, 'milliseconds');
-        diffInYears = Math.round(duration.asYears());
-        return diffInYears;
+        return duration._data.years;
     }
 
 
