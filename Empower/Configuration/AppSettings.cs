@@ -10,5 +10,7 @@ namespace Empower.Configuration
         public string ApiUrl { get; set; }
 
         public string LocationUrl { get; set; }
+
+        public string GisUrl { get; set; }
     }
 }

@@ -173,7 +173,7 @@ const AddressModal = (props) => {
         
         let input = event.target.value;
         
-        let url = "https://starappdev2.richva.ci.richmond.va.us/services/geodataapi/api/searchaddress?street=";
+        let url = getSessionData().GisUrl;
 
         if (input.length < 5){
             return;    

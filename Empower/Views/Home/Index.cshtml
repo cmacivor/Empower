@@ -9,10 +9,18 @@
 <input id="hdnBaseApiAddress" type="hidden" value="@Model.BaseApiAddress"/>
 <input id="hdnSystemID" type="hidden" value="@Model.SystemID"/>
 <input id="hdnRoleID" type="hidden" value="@Model.RoleID" />
+<input id="hdnGisUrl" type="hidden" value="@Model.GisUrl" />
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @{
+        if (Convert.ToInt32(Model.SystemID) == 3){
+            <h1>Welcome to the Office of Community Wealth Building</h1>
+            <img src="~/img/backgroundcwb.jpg" style="height:900px;width:1400px;" />
+        } else if (Convert.ToInt32(Model.SystemID) == 2 || Convert.ToInt32(Model.SystemID) == 1) {
+            <h1>Welcome to Empower!</h1>
+            <img src="~/img/backgroundempower.jpg" style="height:900px:height:1400px;" />
+        } 
+    }
 </div>
 <div id="root"></div>
 
@@ -29,10 +37,13 @@
 
         let roleID = document.getElementById("hdnRoleID").value;
 
+        let gisUrl = document.getElementById("hdnGisUrl").value;
+
         sessionStorage.setItem("token", token);
         sessionStorage.setItem("userName", userName);
         sessionStorage.setItem("baseApiAddress", baseApiAddress);
         sessionStorage.setItem("systemID", systemID);
         sessionStorage.setItem("roleID", roleID);
+        sessionStorage.setItem("gisUrl", gisUrl);
     };
 </script>
