@@ -110,5 +110,24 @@ namespace Empower.Controllers
             return View(viewModel);
         }
 
+        [Route("signup")]
+        public IActionResult SignUp()
+        {
+            var authResponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse");
+
+            if (authResponse == null)
+            {
+                return RedirectToAction("Authenticate", "Login");
+            }
+
+            var viewModel = new SignupViewModel
+            {
+                SystemID = authResponse.systemID,
+                UserName = authResponse.userName,
+            };
+
+            return View(viewModel);
+        }
+
     }
 }
