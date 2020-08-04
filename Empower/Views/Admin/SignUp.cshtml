@@ -5,22 +5,151 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>SignUp</h1>
 
-<h4>SignupViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="SignUp">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+<h4>Register User</h4>
+<div class="form-row">
+    <div class="col-3">
+        <label><strong>User Name</strong></label>
+        <input type="text" class="form-control" id="txtRegisterUserName" />
+    </div>
+    <div class="col-3">
+        <label><strong>Password</strong> </label>
+        <input type="password" class="form-control" id="txtRegisterPassword" />
+    </div>
+    <div class="col-3">
+        <label><strong>Confirm Password</strong></label>
+        <input type="password" class="form-control" id="txtConfirmPassword" />
+    </div>
+    @{
+        if (Model.SystemID == "1")
+        {
+            <div class="col-3">
+                <label><strong>User Role </strong></label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Please Select
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" data-id="superuser">superuser</a>
+                        <a class="dropdown-item" href="#" data-id="admin">admin</a>
+                        <a class="dropdown-item" href="#" data-id="djs">djs</a>
+                        <a class="dropdown-item" href="#" data-id="csu">csu</a>
+                    </div>
+                </div>
             </div>
-        </form>
+        }
+        if (Model.SystemID == "2")
+        {
+            <div class="col-3">
+                <label><strong>User Role </strong></label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Please Select
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" data-id="AdultAdmin">AdultAdmin</a>
+                        <a class="dropdown-item" href="#" data-id="AdultCaseManager">AdultCaseManager</a>
+                    </div>
+                </div>
+            </div>
+        }
+        if (Model.SystemID == "3")
+        {
+            <div class="col-3">
+                <label><strong>User Role </strong></label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Please Select
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" data-id="OCWBAdmin">OCWBAdmin</a>
+                        <a class="dropdown-item" href="#" data-id="OCWBCaseManager">OCWBCaseManager</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+<br />
+<div class="form-row">
+    <div class="col-3">
+        <button class="btn btn-primary" id="btnRegisterUser" >Register</button>
+        <button class="btn btn-primary" id="btnResetRegisterUser" >Reset</button>
+    </div>
+</div>
+<br />
+<h4>Reset Password</h4>
+<div class="form-row">
+    <div class="col-3">
+        <label><strong>User Name</strong></label>
+        <input type="text" class="form-control" id="txtResetPasswordUserName" />
+    </div>
+    <div class="col-3">
+        <label><strong>New Password</strong></label>
+        <input type="text" class="form-control" id="txtResetNewPassword" />
+    </div>
+    <div class="col-3">
+        <button class="btn btn-primary">Reset Password</button>
+    </div>
+</div>
+<br />
+<h4>Remove User</h4>
+<div class="form-row">
+    <div class="col-3">
+        <input type="text" id="txtRemoveUser" class="form-control" />
+    </div>
+    <div class="col-3">
+        <button class="btn btn-primary">Delete user</button>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+       let token = sessionStorage.getItem("token");
+       let loggedInUserName = sessionStorage.getItem("userName");
+       let baseApiAddress =  sessionStorage.getItem("baseApiAddress");
+       let systemID = sessionStorage.getItem("systemID");
+       let roleID = sessionStorage.getItem("roleID");
+
+        //let fullAddress = `${baseApiAddress}/api/Account/UserRoles/${loggedInUserName}`;
+        //let fullAddress = `${baseApiAddress}/api/Account/getuser`;
+
+        //fetch(fullAddress, {
+        //    method: 'GET',
+        //    headers: {
+        //        'Content-Type': 'application/json',
+        //        'Authorization': 'Bearer ' + token
+        //    },
+        //}).then(result => result.json())
+        //    .then(result => {
+        //        console.log(result);
+        //    });
+
+        $("#btnRegisterUser").on('click', function () {
+            let userName = $("#txtRegisterUserName").val();
+            let password = $("#txtRegisterPassword").val();
+            let confirmPassword = $("#txtConfirmPassword").val();
+
+            let userModel = {
+                UserName: userName,
+                Password: password,
+                ConfirmPassword: confirmPassword
+            }
+
+            console.log(userModel);
+
+        });
+
+        $(".dropdown-item").on('click', function () {
+            let id = $(this).data("id");
+            console.log(id);
+        })
+    });
+</script>
+
 
