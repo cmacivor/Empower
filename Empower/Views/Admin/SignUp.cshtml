@@ -105,7 +105,7 @@
         <input type="text" id="txtRemoveUser" class="form-control" />
     </div>
     <div class="col-3">
-        <button class="btn btn-primary">Delete user</button>
+        <button class="btn btn-primary" id="btnDeleteUser" >Delete user</button>
     </div>
 </div>
 
@@ -120,19 +120,26 @@
        let systemID = sessionStorage.getItem("systemID");
        let roleID = sessionStorage.getItem("roleID");
 
-        //let fullAddress = `${baseApiAddress}/api/Account/UserRoles/${loggedInUserName}`;
-        //let fullAddress = `${baseApiAddress}/api/Account/getuser`;
+        $("#btnDeleteUser").on('click', function () {
+            let userToRemove = $("#txtRemoveUser").val();
 
-        //fetch(fullAddress, {
-        //    method: 'GET',
-        //    headers: {
-        //        'Content-Type': 'application/json',
-        //        'Authorization': 'Bearer ' + token
-        //    },
-        //}).then(result => result.json())
-        //    .then(result => {
-        //        console.log(result);
-        //    });
+            let fullAddress = `${baseApiAddress}/api/Account/Remove/?name=${userToRemove}`;
+
+            fetch(fullAddress, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+            }).then(result => {
+                if (result.status === 200) {
+                    alert('the user was deleted.');
+                    $("#txtRemoveUser").val();
+                } else {
+                    alert('an error occurred');
+                }
+            });
+        });
 
         $("#btnResetPassword").on('click', function () {
             let userName = $("#txtResetPasswordUserName").val();
@@ -153,7 +160,6 @@
                 },
                 body: JSON.stringify(resetPassword)
             }).then(result => {
-                //console.log(result);
                 if (result.status === 200) {
                     alert('the password was successfully changed');
                 } else {
