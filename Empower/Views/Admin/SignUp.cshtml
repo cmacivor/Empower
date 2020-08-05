@@ -94,7 +94,8 @@
         <input type="text" class="form-control" id="txtResetNewPassword" />
     </div>
     <div class="col-3">
-        <button class="btn btn-primary">Reset Password</button>
+        <label></label>
+        <button class="btn btn-primary" id="btnResetPassword">Reset Password</button>
     </div>
 </div>
 <br />
@@ -133,6 +134,49 @@
         //        console.log(result);
         //    });
 
+        $("#btnResetPassword").on('click', function () {
+            let userName = $("#txtResetPasswordUserName").val();
+            let newPassword = $("#txtResetNewPassword").val();
+
+            let fullAddress = `${baseApiAddress}/api/Account/Reset`;
+
+            let resetPassword = {
+                name: userName,
+                NewPassword: newPassword
+            }
+
+            fetch(fullAddress, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(resetPassword)
+            }).then(result => {
+                //console.log(result);
+                if (result.status === 200) {
+                    alert('the password was successfully changed');
+                } else {
+                    alert('an error occurred');
+                }
+            }).catch(result => {
+                alert('an error occurred');
+            });
+
+        });
+
+        function clearRegisterUserFields() {
+            $("#txtRegisterUserName").val("");
+            $("#txtRegisterPassword").val("");
+            $("#txtConfirmPassword").val("");
+            $("#btnRoleID").val("");
+            $("#btnRoleID").text("");
+        }
+
+        $("#btnResetRegisterUser").on('click', function () {
+            clearRegisterUserFields();
+        });
+
         $("#btnRegisterUser").on('click', function () {
 
             let userName = $("#txtRegisterUserName").val();
@@ -168,7 +212,7 @@
                 }
             }).then(result => {
                      
-                    console.log(result);
+                    //console.log(result);
                     if (result !== undefined && result.ModelState !== undefined && result.ModelState !== null) {
                         
                         let messages = result.ModelState;
@@ -182,7 +226,7 @@
                                 }
                             }
                         }
-                        console.log(errors);
+                        //console.log(errors);
 
                         //console.log(messages);
                         //messages.forEach(function (message) {
@@ -196,6 +240,7 @@
                     }
 
                     $("#divError").hide();
+                    clearRegisterUserFields();
                     alert('the user was successfully added.');
                 });
 
