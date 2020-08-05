@@ -1,0 +1,265 @@
+﻿@model Empower.Models.SignupViewModel
+
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h4>Register User</h4>
+<div id="divError" class="alert alert-danger" role="alert" style="display:none">
+    Please fill out all required fields.
+</div>
+<div class="form-row">
+    <div class="col-3">
+        <label><strong>User Name</strong></label>
+        <input type="text" class="form-control" id="txtRegisterUserName" />
+    </div>
+    <div class="col-3">
+        <label><strong>Password</strong> </label>
+        <input type="password" class="form-control" id="txtRegisterPassword" />
+    </div>
+    <div class="col-3">
+        <label><strong>Confirm Password</strong></label>
+        <input type="password" class="form-control" id="txtConfirmPassword" />
+    </div>
+    @{
+        if (Model.SystemID == "1")
+        {
+            <div class="col-3">
+                <label><strong>User Role </strong></label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="btnRoleID" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Please Select
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" data-id="superuser">superuser</a>
+                        <a class="dropdown-item" href="#" data-id="admin">admin</a>
+                        <a class="dropdown-item" href="#" data-id="djs">djs</a>
+                        <a class="dropdown-item" href="#" data-id="csu">csu</a>
+                    </div>
+                </div>
+            </div>
+        }
+        if (Model.SystemID == "2")
+        {
+            <div class="col-3">
+                <label><strong>User Role </strong></label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="btnRoleID" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Please Select
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" data-id="AdultAdmin">AdultAdmin</a>
+                        <a class="dropdown-item" href="#" data-id="AdultCaseManager">AdultCaseManager</a>
+                    </div>
+                </div>
+            </div>
+        }
+        if (Model.SystemID == "3")
+        {
+            <div class="col-3">
+                <label><strong>User Role </strong></label>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="btnRoleID" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Please Select
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" data-id="OCWBAdmin">OCWBAdmin</a>
+                        <a class="dropdown-item" href="#" data-id="OCWBCaseManager">OCWBCaseManager</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+<br />
+<div class="form-row">
+    <div class="col-3">
+        <button class="btn btn-primary" id="btnRegisterUser" >Register</button>
+        <button class="btn btn-primary" id="btnResetRegisterUser" >Reset</button>
+    </div>
+</div>
+<br />
+<h4>Reset Password</h4>
+<div class="form-row">
+    <div class="col-3">
+        <label><strong>User Name</strong></label>
+        <input type="text" class="form-control" id="txtResetPasswordUserName" />
+    </div>
+    <div class="col-3">
+        <label><strong>New Password</strong></label>
+        <input type="text" class="form-control" id="txtResetNewPassword" />
+    </div>
+    <div class="col-3">
+        <label></label>
+        <button class="btn btn-primary" id="btnResetPassword">Reset Password</button>
+    </div>
+</div>
+<br />
+<h4>Remove User</h4>
+<div class="form-row">
+    <div class="col-3">
+        <input type="text" id="txtRemoveUser" class="form-control" />
+    </div>
+    <div class="col-3">
+        <button class="btn btn-primary" id="btnDeleteUser" >Delete user</button>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+       let token = sessionStorage.getItem("token");
+       let loggedInUserName = sessionStorage.getItem("userName");
+       let baseApiAddress =  sessionStorage.getItem("baseApiAddress");
+       let systemID = sessionStorage.getItem("systemID");
+       let roleID = sessionStorage.getItem("roleID");
+
+        $("#btnDeleteUser").on('click', function () {
+            let userToRemove = $("#txtRemoveUser").val();
+
+            let fullAddress = `${baseApiAddress}/api/Account/Remove/?name=${userToRemove}`;
+
+            fetch(fullAddress, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+            }).then(result => {
+                if (result.status === 200) {
+                    alert('the user was deleted.');
+                    $("#txtRemoveUser").val();
+                } else {
+                    alert('an error occurred');
+                }
+            });
+        });
+
+        $("#btnResetPassword").on('click', function () {
+            let userName = $("#txtResetPasswordUserName").val();
+            let newPassword = $("#txtResetNewPassword").val();
+
+            let fullAddress = `${baseApiAddress}/api/Account/Reset`;
+
+            let resetPassword = {
+                name: userName,
+                NewPassword: newPassword
+            }
+
+            fetch(fullAddress, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(resetPassword)
+            }).then(result => {
+                if (result.status === 200) {
+                    alert('the password was successfully changed');
+                } else {
+                    alert('an error occurred');
+                }
+            }).catch(result => {
+                alert('an error occurred');
+            });
+
+        });
+
+        function clearRegisterUserFields() {
+            $("#txtRegisterUserName").val("");
+            $("#txtRegisterPassword").val("");
+            $("#txtConfirmPassword").val("");
+            $("#btnRoleID").val("");
+            $("#btnRoleID").text("");
+        }
+
+        $("#btnResetRegisterUser").on('click', function () {
+            clearRegisterUserFields();
+        });
+
+        $("#btnRegisterUser").on('click', function () {
+
+            let userName = $("#txtRegisterUserName").val();
+            let password = $("#txtRegisterPassword").val();
+            let confirmPassword = $("#txtConfirmPassword").val();
+            let role = $("#btnRoleID").val();
+
+            if (userName === "" || password === "" || confirmPassword === "" || role === "Please Select") {
+                $("#divError").show();
+
+                return;
+            }
+
+            let userModel = {
+                UserName: userName,
+                Password: password,
+                ConfirmPassword: confirmPassword,
+                UserRole: role
+            }
+
+            let fullAddress = `${baseApiAddress}/api/Account/Register`;
+
+            fetch(fullAddress, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(userModel)
+            }).then(response => {
+                if (response.status !== 200) {
+                    return response.json();
+                }
+            }).then(result => {
+                     
+                    //console.log(result);
+                    if (result !== undefined && result.ModelState !== undefined && result.ModelState !== null) {
+                        
+                        let messages = result.ModelState;
+                        let totalMessage = "";
+                        let errors = [];
+                        for (var key in messages) {
+                            if (messages.hasOwnProperty(key)) {
+                                for (var i = 0; i < messages[key].length; i++) {
+                                    totalMessage = (totalMessage == "" ? "" : totalMessage + "<br/>") + messages[key][i];
+                                    errors.push(messages[key][i]);
+                                }
+                            }
+                        }
+                        //console.log(errors);
+
+                        //console.log(messages);
+                        //messages.forEach(function (message) {
+                        //    totalMessage += message + "<br/>";
+                        //});
+                        $("#divError").text(totalMessage);
+                        $("#divError").show();
+
+                        //alert(message);
+                        return;
+                    }
+
+                    $("#divError").hide();
+                    clearRegisterUserFields();
+                    alert('the user was successfully added.');
+                });
+
+            //console.log(userModel);
+
+        });
+
+        $(".dropdown-item").on('click', function () {
+            let id = $(this).data("id");
+            $("#btnRoleID").val(id);
+            document.getElementById("btnRoleID").innerText = id;
+        })
+    });
+</script>
+
+

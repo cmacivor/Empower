@@ -17,13 +17,18 @@ namespace Empower.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpClientFactory _clientFactory;
+        private readonly HttpClient _httpClient;
+
         public IOptions<AppSettings> _appsettings { get; set; }
+
+
 
         public AdminController(ILogger<HomeController> logger, IHttpClientFactory clientFactory, IOptions<AppSettings> options) : base(logger, clientFactory, options)
         {
             _logger = logger;
             _clientFactory = clientFactory;
             _appsettings = options;
+            //_httpClient = httpClient;
         }
 
 
@@ -105,6 +110,26 @@ namespace Empower.Controllers
                 SystemID = authResponse.systemID,
                 UserName = authResponse.userName,
                 AdminType = title
+            };
+
+            return View(viewModel);
+        }
+
+        [Route("signup")]
+        public IActionResult SignUp()
+        {
+            var authResponse = HttpContext.Session.Get<AuthenticationResponse>("AuthenticationResponse"); 
+
+            if (authResponse == null)
+            {
+                return RedirectToAction("Authenticate", "Login");
+            }
+
+
+            var viewModel = new SignupViewModel
+            {
+                SystemID = authResponse.systemID,
+                UserName = authResponse.userName,
             };
 
             return View(viewModel);

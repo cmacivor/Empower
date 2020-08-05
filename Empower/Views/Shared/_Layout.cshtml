@@ -93,53 +93,56 @@
                             <!--Adult Admin-->
                             @if (systemID == (int)Empower.Authentication.AppVersion.Adult)
                             {
-                                <div class="dropdown-menu" aria-labelledby="adminDropdownMenuLink">
-                                    <a class="dropdown-item" href="~/admin/document">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Upload a Service Profile
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/assessmenttype">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Assessment Type
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/assessmentsubtype">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Assessment SubType
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/jobstatus">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Job Status
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/judge">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Judge
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/offense">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Offense
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/race">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Race
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/relationship">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Relationship
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/servicecategory">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Service Category
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/reason">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Reason
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/serviceprogramcategory">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Service Program Category
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/servicerelease">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Case Status
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/suffix">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Suffix
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/contacttype">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
-                                    </a>
-                                    <a class="dropdown-item" href="~/admin/subcontacttype">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Sub Contact Type
-                                    </a>
-                                </div>
+                            <div class="dropdown-menu" aria-labelledby="adminDropdownMenuLink">
+                                <a class="dropdown-item" href="~/admin/document">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Upload a Service Profile
+                                </a>
+                                <a class="dropdown-item" href="~/admin/assessmenttype">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Assessment Type
+                                </a>
+                                <a class="dropdown-item" href="~/admin/assessmentsubtype">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Assessment SubType
+                                </a>
+                                <a class="dropdown-item" href="~/admin/jobstatus">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Job Status
+                                </a>
+                                <a class="dropdown-item" href="~/admin/judge">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Judge
+                                </a>
+                                <a class="dropdown-item" href="~/admin/offense">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Offense
+                                </a>
+                                <a class="dropdown-item" href="~/admin/race">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Race
+                                </a>
+                                <a class="dropdown-item" href="~/admin/relationship">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Relationship
+                                </a>
+                                <a class="dropdown-item" href="~/admin/servicecategory">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Service Category
+                                </a>
+                                <a class="dropdown-item" href="~/admin/reason">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Reason
+                                </a>
+                                <a class="dropdown-item" href="~/admin/serviceprogramcategory">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Service Program Category
+                                </a>
+                                <a class="dropdown-item" href="~/admin/servicerelease">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Case Status
+                                </a>
+                                <a class="dropdown-item" href="~/admin/suffix">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Suffix
+                                </a>
+                                <a class="dropdown-item" href="~/admin/contacttype">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
+                                </a>
+                                <a class="dropdown-item" href="~/admin/subcontacttype">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Sub Contact Type
+                                </a>
+                                <a class="dropdown-item" href="~/admin/signup">
+                                    <span class="oi oi-plus" aria-hidden="true"></span> Create/Update User
+                                </a>
+                            </div>
                             }
                             else if (systemID == (int)Empower.Authentication.AppVersion.CWB)
                             {
@@ -185,6 +188,9 @@
                                     </a>
                                     <a class="dropdown-item" href="~/admin/contacttype">
                                         <span class="oi oi-plus" aria-hidden="true"></span> Contact Type
+                                    </a>
+                                    <a class="dropdown-item" href="~/admin/signup">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Create/Update User
                                     </a>
                                 </div>
                             }
