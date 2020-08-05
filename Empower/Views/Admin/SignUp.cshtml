@@ -8,6 +8,9 @@
 
 
 <h4>Register User</h4>
+<div id="divError" class="alert alert-danger" role="alert" style="display:none">
+    Please fill out all required fields.
+</div>
 <div class="form-row">
     <div class="col-3">
         <label><strong>User Name</strong></label>
@@ -27,7 +30,7 @@
             <div class="col-3">
                 <label><strong>User Role </strong></label>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="btnRoleID" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Please Select
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -44,7 +47,7 @@
             <div class="col-3">
                 <label><strong>User Role </strong></label>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="btnRoleID" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Please Select
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -59,7 +62,7 @@
             <div class="col-3">
                 <label><strong>User Role </strong></label>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="btnRoleID" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Please Select
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -131,23 +134,75 @@
         //    });
 
         $("#btnRegisterUser").on('click', function () {
+
             let userName = $("#txtRegisterUserName").val();
             let password = $("#txtRegisterPassword").val();
             let confirmPassword = $("#txtConfirmPassword").val();
+            let role = $("#UserRole").val();
+
+            if (userName === "" || password === "" || confirmPassword === "" || role === "Please Select") {
+                $("#divError").show();
+
+                return;
+            }
 
             let userModel = {
                 UserName: userName,
                 Password: password,
-                ConfirmPassword: confirmPassword
+                ConfirmPassword: confirmPassword,
+                UserRole: role
             }
 
-            console.log(userModel);
+            let fullAddress = `${baseApiAddress}/api/Account/Register`;
+
+            fetch(fullAddress, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(userModel)
+            }).then(result => result.json())
+                .then(result => {
+                    //console.log(result);
+                    if (result.ModelState !== undefined && result.ModelState !== null) {
+                        
+                        let messages = result.ModelState;
+                        let totalMessage = "";
+                        let errors = [];
+                        for (var key in messages) {
+                            if (messages.hasOwnProperty(key)) {
+                                for (var i = 0; i < messages[key].length; i++) {
+                                    totalMessage = (totalMessage == "" ? "" : totalMessage + "<br/>") + messages[key][i];
+                                    errors.push(messages[key][i]);
+                                }
+                            }
+                        }
+                        console.log(errors);
+
+                        //console.log(messages);
+                        //messages.forEach(function (message) {
+                        //    totalMessage += message + "<br/>";
+                        //});
+                        $("#divError").text(totalMessage);
+                        $("#divError").show();
+
+                        //alert(message);
+                        return;
+                    }
+
+                    $("#divError").hide();
+                    alert('the user was successfully added.');
+                });
+
+            //console.log(userModel);
 
         });
 
         $(".dropdown-item").on('click', function () {
             let id = $(this).data("id");
-            console.log(id);
+            $("#btnRoleID").val(id);
+            document.getElementById("btnRoleID").innerText = id;
         })
     });
 </script>
