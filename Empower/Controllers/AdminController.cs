@@ -125,15 +125,6 @@ namespace Empower.Controllers
                 return RedirectToAction("Authenticate", "Login");
             }
 
-            //get the roles and filter by system ID
-            //var strings = new List<string>();
-
-            //var url = _appsettings.Value.ApiUrl;
-
-            //var request = new HttpRequestMessage(HttpMethod.Get, url);
-
-            
-
 
             var viewModel = new SignupViewModel
             {
