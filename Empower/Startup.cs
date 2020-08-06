@@ -39,15 +39,30 @@ namespace Empower
             services.AddHttpClient();
 
             services.AddHttpClient<ILoginService, LoginService>();
-            
 
-            services.AddDistributedMemoryCache();
+            //var AppName = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["APP_Name"];
+
+            //services.AddDistributedMemoryCache();
+            //services.AddSession(options =>
+            //{
+            //    options.IdleTimeout = TimeSpan.FromSeconds(300); //For easy testing TODO: will want to increase this
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.IsEssential = true;
+            //});
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = @"Server=DIT-SQL1603-Dv;Database=JusticeServices;User Id=JusticeServicesAppId;Password=kidyovr99!!;MultipleActiveResultSets=True";
+                options.SchemaName = "dbo";
+                options.TableName = "SQLSessions";
+            });
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(300); //For easy testing TODO: will want to increase this
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+
 
             //app settings file
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
