@@ -40,7 +40,7 @@ namespace Empower
 
             services.AddHttpClient<ILoginService, LoginService>();
 
-            //var AppName = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["APP_Name"];
+            var connectionString = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["ConnectionString"];
 
             //services.AddDistributedMemoryCache();
             //services.AddSession(options =>
@@ -51,7 +51,7 @@ namespace Empower
             //});
             services.AddDistributedSqlServerCache(options =>
             {
-                options.ConnectionString = @"Server=DIT-SQL1603-Dv;Database=JusticeServices;User Id=JusticeServicesAppId;Password=kidyovr99!!;MultipleActiveResultSets=True";
+                options.ConnectionString = connectionString; 
                 options.SchemaName = "dbo";
                 options.TableName = "SQLSessions";
             });
